@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatDrawerToggleResult, MatSidenav} from '@angular/material';
 import {PortalWrapper} from '../models/portal-wrapper';
 import {SideMenuService} from '../services/side-menu.service';
 import {Observable} from 'rxjs';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import {tap} from 'rxjs/operators';
+import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
 
 @Component({
     selector: 'nae-side-menu-container',

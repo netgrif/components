@@ -1,5 +1,5 @@
 import {HeaderColumnType} from '../header-column';
-import {SortDirection} from '@angular/material';
+import {SortDirection} from '@angular/material/sort';
 import {ColumnHeaderChange} from './column-header-change';
 
 /**

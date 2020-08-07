@@ -1,8 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {AbstractDialog} from '../../models/abstract-dialog';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {DialogResult} from '../../models/DialogResult';
 import {DialogData} from '../../models/DialogData';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 /**
  * Question modal dialog with its own layout (which asks the user a question and wait for the answer)

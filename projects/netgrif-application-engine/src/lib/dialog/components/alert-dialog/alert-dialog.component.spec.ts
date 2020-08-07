@@ -1,11 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../../material/material.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AlertDialogComponent} from './alert-dialog.component';
 import {DialogModule} from '../../dialog.module';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 describe('SimpleDialogComponent', () => {
     let component: AlertDialogComponent;
@@ -13,7 +12,7 @@ describe('SimpleDialogComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, DialogModule, BrowserAnimationsModule],
+            imports: [MaterialModule, DialogModule, NoopAnimationsModule],
             declarations: [],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },

@@ -6,8 +6,8 @@ import {Filter} from '../../../filter/models/filter';
 import {FilterSelectorInjectionData} from './model/filter-selector-injection-data';
 import {FilteredArray} from './model/filtered-array';
 import {FilterType} from '../../../filter/models/filter-type';
-import {MatSelectionList, MatSelectionListChange} from '@angular/material';
 import {FormControl} from '@angular/forms';
+import {MatSelectionList, MatSelectionListChange} from '@angular/material/list';
 
 /**
  * Allows user to choose a {@link Filter} from the {@link FilterRepository}.

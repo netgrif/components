@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatSidenav} from '@angular/material';
+import {MatSidenav} from '@angular/material/sidenav';
 
 const railAnimation = trigger('transform', [
     state('expand', style({

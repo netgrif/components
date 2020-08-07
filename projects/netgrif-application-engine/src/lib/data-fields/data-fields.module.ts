@@ -28,12 +28,12 @@ import {ButtonFieldComponent} from './button-field/button-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
 import {CovalentModule} from '../covalent/covalent.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import {DateAdapter} from '@angular/material';
 import {CustomDateAdapter} from './date-field/models/custom-date-adapter';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-textarea-field.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
+import {DateAdapter} from '@angular/material/core';
 import { FileListFieldComponent } from './file-list-field/file-list-field.component';
 
 @NgModule({

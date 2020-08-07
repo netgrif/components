@@ -1,11 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {DashboardContentComponent} from './dashboard-content.component';
-import {MatGridListModule} from '@angular/material';
 import {DashboardModule} from '../dashboard.module';
 import {Component} from '@angular/core';
 import {DashboardParams} from './dashboard-params';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {MatGridListModule} from '@angular/material/grid-list';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DashboardContentComponent', () => {

@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatSelectionList} from '@angular/material';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {RoleAssignmentService} from './services/role-assignment.service';
 import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
@@ -7,6 +6,7 @@ import {UserService} from '../../user/services/user.service';
 import {FormControl} from '@angular/forms';
 import {debounceTime} from 'rxjs/operators';
 import {UserListItem, UserListService} from '../../user/services/user-list.service';
+import {MatSelectionList} from '@angular/material/list';
 
 @Component({
     selector: 'nae-role-assignment',

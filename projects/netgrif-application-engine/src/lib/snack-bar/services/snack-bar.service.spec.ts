@@ -1,7 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-
 import {SnackBarService} from './snack-bar.service';
-import {MatSnackBar} from '@angular/material';
 import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -10,6 +8,7 @@ import {ErrorSnackBarComponent} from '../components/error-snack-bar/error-snack-
 import {WarningSnackBarComponent} from '../components/warning-snack-bar/warning-snack-bar.component';
 import {GenericSnackBarComponent} from '../components/generic-snack-bar/generic-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 describe('SnackBarService', () => {
     let service: SnackBarService;

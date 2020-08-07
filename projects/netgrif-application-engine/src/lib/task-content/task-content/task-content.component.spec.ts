@@ -1,7 +1,6 @@
 import {TaskContentComponent} from './task-content.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {MatExpansionModule} from '@angular/material';
 import {PanelModule} from '../../panel/panel.module';
 import {MaterialModule} from '../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -13,6 +12,7 @@ import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 describe('TaskContentComponent', () => {
     let component: TaskContentComponent;
