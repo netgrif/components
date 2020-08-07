@@ -13,6 +13,7 @@ import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {Page} from '../interface/page';
+import {CaseGetRequestBody} from '../interface/case-get-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -119,6 +120,15 @@ export class CaseResourceService implements CountService {
      */
     public getCasesQueryDSL(body: object): Observable<Array<Case>> {
         return this.provider.post$('workflow/case/search2', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+    }
+
+    /**
+     * Generic case search with object encoded search query. Similar to [getCasesQueryDSL]{@link CaseResourceService#getCasesQueryDSL}
+     * POST
+     * {{baseUrl}}/api/workflow/case/search_mongo
+     */
+    public getCases(body: CaseGetRequestBody): Observable<Array<Case>> {
+        return this.provider.post$('workflow/case/search_mongo', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
     }
 
 
