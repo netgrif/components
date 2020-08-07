@@ -6,7 +6,11 @@
 
 <ng-template #button let-showLargeLayout="showLargeLayout">
     <div>
-        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}<nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label></mat-label>
+        <mat-label *ngIf="!showLargeLayout.value">
+            {{dataField.title}}
+            <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
+            <br>
+        </mat-label>
         <button mat-button
                 [ngClass]="{
                 'mat-raised-button': dataField.view === 'raised',
