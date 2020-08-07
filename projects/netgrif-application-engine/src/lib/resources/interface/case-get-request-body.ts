@@ -42,6 +42,11 @@ export interface CaseGetRequestBody {
     data?: {
         [key: string]: object
     };
+    /**
+     * Returned cases must have the specified string ID.
+     * If more than one string ID is specified, the returned cases must have one of them.
+     */
+    stringId?: string | Array<string>;
 }
 
 /**
