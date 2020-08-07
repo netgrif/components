@@ -404,6 +404,7 @@ export class CaseTreeService implements OnDestroy {
                     this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
                 }
                 operationResult.next(true);
+                operationResult.complete();
             });
         });
     }
