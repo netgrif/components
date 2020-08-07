@@ -129,9 +129,11 @@ export class CaseResourceService implements CountService {
      * Generic case search with object encoded search query. Similar to [getCasesQueryDSL]{@link CaseResourceService#getCasesQueryDSL}
      * POST
      * {{baseUrl}}/api/workflow/case/search_mongo
+     * @param body object defining the search query
+     * @param params request parameters, that can be used for sorting of results.
      */
-    public getCases(body: CaseGetRequestBody): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/search_mongo', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+    public getCases(body: CaseGetRequestBody, params?: Params): Observable<Array<Case>> {
+        return this.provider.post$('workflow/case/search_mongo', this.SERVER_URL, body, params).pipe(map(r => changeType(r, 'cases')));
     }
 
     /**
