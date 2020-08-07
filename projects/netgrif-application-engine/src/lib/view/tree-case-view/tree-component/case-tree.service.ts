@@ -14,7 +14,7 @@ import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {OptionSelectorComponent} from '../../../side-menu/content-components/option-selector/option-selector.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
-import {Observable, of, ReplaySubject, Subject} from 'rxjs';
+import {Observable, of, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';
@@ -351,12 +351,12 @@ export class CaseTreeService implements OnDestroy {
                     title: clickedNode.case.title,
                     options: nets.map(net => ({text: net.title, value: net.identifier}))
                 });
-                let dataReceived = false;
-                sideMeuRef.onClose.subscribe(event => {
+                let sideMenuSubscription: Subscription;
+                sideMenuSubscription = sideMeuRef.onClose.subscribe(event => {
                     if (!!event.data) {
-                        dataReceived = true;
                         this.createAndAddChildCase(event.data.value, childTitle, clickedNode, ret);
-                    } else if (!dataReceived) {
+                        sideMenuSubscription.unsubscribe();
+                    } else {
                         clickedNode.addingNode.off();
                         ret.next(false);
                         ret.complete();
