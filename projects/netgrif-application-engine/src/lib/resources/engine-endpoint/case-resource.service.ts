@@ -131,6 +131,15 @@ export class CaseResourceService implements CountService {
         return this.provider.post$('workflow/case/search_mongo', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
     }
 
+    /**
+     * Search one case by it's id.
+     * GET
+     * {{baseUrl}}/api/workflow/case/:id
+     */
+    public getOneCase(caseId: string): Observable<Case> {
+        return this.provider.get$('workflow/case/' + caseId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+    }
+
 
     /**
      * Get options for enumeration or multiple-choice data field
