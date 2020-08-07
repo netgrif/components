@@ -601,23 +601,11 @@ export class CaseTreeService implements OnDestroy {
         }
 
         caseRefField.value = newCaseRefValue;
-        this._caseResourceService.searchCases(new SimpleFilter('', FilterType.CASE, {
-            query: 'stringId:' + newCaseRefValue[newCaseRefValue.length - 1]
-        })).subscribe(page => {
-            if (!hasContent(page)) {
-                // the page should have content, since we got the id from the set data response which means
-                // a case with this id was created and thus must exist => try to search again
-                setTimeout(() => {
-                    this.processChildNodeAdd(affectedNode, caseRefField, newCaseRefValue, attemptNumber + 1).subscribe(() => {
-                        result$.next();
-                        result$.complete();
-                    });
-                }, 200);
-                return;
-            } else if (page.content.length === 1) {
-                this.pushChildToTree(affectedNode, page.content[0]);
+        this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
+            if (childCase) {
+                this.pushChildToTree(affectedNode, childCase);
             } else {
-                this._logger.error('Found multiple cases when searching for child. Only one case expected.');
+                this._logger.error('New child case was not found, illegal state', childCase);
             }
             result$.next();
             result$.complete();
@@ -676,13 +664,13 @@ export class CaseTreeService implements OnDestroy {
      */
     protected reloadCurrentCase(): void {
         if (this._currentNode) {
-            this._caseResourceService.searchCases(this.createCaseFilter(this._currentCase.stringId)).subscribe(page => {
-                if (hasContent(page) && page.content.length === 1) {
-                    Object.assign(this._currentCase, page.content[0]);
+            this._caseResourceService.getOneCase(this._currentCase.stringId).subscribe(currentCase => {
+                if (currentCase) {
+                    Object.assign(this._currentCase, currentCase);
                     this._treeCaseViewService.loadTask$.next(this._currentCase);
                     this._logger.debug('Case Tree Node reloaded');
                 } else {
-                    this._logger.error('Case Tree Node could not be reloaded. Invalid server response', page);
+                    this._logger.error('Case Tree Node could not be reloaded. Invalid server response', currentCase);
                 }
             }, error => {
                 this._logger.error('Case Tree Node reload request failed', error);
@@ -690,13 +678,5 @@ export class CaseTreeService implements OnDestroy {
         } else {
             this._logger.debug('No Tree Case Node selected, nothing to reload');
         }
-    }
-
-    /**
-     * @param caseId ID of the desired Case
-     * @returns a {@link Filter} that matches the desired case by it's ID
-     */
-    protected createCaseFilter(caseId: string): Filter {
-        return new SimpleFilter(`caseWithId-${caseId}`, FilterType.CASE, {query: `stringId:${caseId}`});
     }
 }
