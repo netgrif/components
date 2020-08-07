@@ -172,7 +172,8 @@
             "wontUploadSameFiles": "Vybrané súbory už boli nahrané. Ak chcete súbory aktualizovať odstránte už nahrané súbory",
             "fileUploadFailed": "Súbor sa nepodarilo nahrať",
             "fileDeleteFailed":  "Súbor sa nepodarilo vymazať",
-            "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: "
+            "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
+            "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: "
         },
         "noFile": "Žiadny súbor"
     },

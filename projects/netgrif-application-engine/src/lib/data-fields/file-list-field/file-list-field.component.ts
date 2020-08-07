@@ -23,12 +23,14 @@ export interface FilesState {
 })
 export class FileListFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
 
-    /**
-     * Keep display name.
-     */
     public uploadedFiles: Array<string>;
     public state: FilesState;
 
+    /**
+     * Values from file list field validation (eg. maxFiles 5)
+     * maxFilesNumber - maximum uploadable files
+     * maxFilesMessage - error message if number of files is exceeded
+     */
     private maxFilesNumber: number;
     private maxFilesMessage: string;
 
@@ -97,17 +99,28 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
         if (!this.fileUploadEl.nativeElement.files || this.fileUploadEl.nativeElement.files.length === 0) {
             return;
         }
+        if (!this.taskId) {
+            this._log.error('File cannot be uploaded. No task is set to the field.');
+            return;
+        }
         if (this.fileUploadEl.nativeElement.files.length + this.uploadedFiles.length > this.maxFilesNumber) {
             this._snackbar.openErrorSnackBar(this.maxFilesMessage ? this.maxFilesMessage :
                 this._translate.instant('dataField.snackBar.maxFilesExceeded') + this.maxFilesNumber
             );
             return;
         }
-        if (!this.taskId) {
-            this._log.error('File cannot be uploaded. No task is set to the field.');
-            return;
-        }
+
         let filesToUpload = Array.from(this.fileUploadEl.nativeElement.files);
+        let sum = 0;
+        filesToUpload.forEach(item => sum += item.size);
+        if (this.dataField.maxUploadSizeInBytes &&
+            this.dataField.maxUploadSizeInBytes < sum) {
+            this._log.error('Files cannot be uploaded. Maximum size of files exceeded.');
+            this._snackbar.openErrorSnackBar(
+                this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
+            );
+        }
+
         if (this.dataField.value && this.dataField.value.names && this.dataField.value.names.length !== 0) {
             this.dataField.value.names.forEach(name => {
                 filesToUpload = filesToUpload.filter(fileToUpload => fileToUpload.name !== name);
@@ -244,12 +257,14 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
     }
 
     private parseResponse(): void {
-        if (this.dataField.value.names && this.dataField.value.names.length !== 0) {
-            this.dataField.value.names.forEach(name => {
-                this.uploadedFiles.push(name);
-            });
-        } else {
-            this.dataField.value.names = new Array<string>();
+        if (this.dataField.value) {
+            if (this.dataField.value.names && this.dataField.value.names.length !== 0) {
+                this.dataField.value.names.forEach(name => {
+                    this.uploadedFiles.push(name);
+                });
+            } else {
+                this.dataField.value.names = new Array<string>();
+            }
         }
     }
 }

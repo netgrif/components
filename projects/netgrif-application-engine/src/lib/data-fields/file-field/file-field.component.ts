@@ -116,6 +116,13 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFile'));
             return;
         }
+        if (this.dataField.maxUploadSizeInBytes &&
+            this.dataField.maxUploadSizeInBytes < this.fileUploadEl.nativeElement.files.item(0).size) {
+            this._log.error('File cannot be uploaded. Maximum size of file exceeded.');
+            this._snackbar.openErrorSnackBar(
+                this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
+            );
+        }
 
         this.state = this.defaultState;
         this.state.uploading = true;

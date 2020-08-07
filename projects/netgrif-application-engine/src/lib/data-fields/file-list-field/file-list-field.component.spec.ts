@@ -8,8 +8,6 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {FileFieldService} from '../file-field/services/file-field.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {FileUploadService} from '../file-field/services/upload/file-upload.service';
-import {FileDownloadService} from '../file-field/services/download/file-download.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
@@ -40,8 +38,6 @@ describe('FileListFieldComponent', () => {
             providers: [
                 FileFieldService,
                 SideMenuService,
-                FileUploadService,
-                FileDownloadService,
                 AuthenticationMethodService,
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

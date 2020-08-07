@@ -52,22 +52,14 @@ export class FileField extends DataField<FileFieldValue> {
      * Placeholder is a substitute for the value name if not set value.
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
-                layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
-                private _zipped: boolean = false, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
+                layout?: Layout, private _maxUploadSizeInBytes?: number,
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
         super(stringId, title, value, behavior, placeholder, description, layout);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
     }
 
     get maxUploadSizeInBytes(): number {
         return this._maxUploadSizeInBytes;
-    }
-
-    get maxUploadFiles(): number {
-        return this._maxUploadFiles;
-    }
-
-    get zipped(): boolean {
-        return this._zipped;
     }
 
     get allowTypes(): string {

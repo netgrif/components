@@ -27,8 +27,6 @@ import {DateTimeFieldComponent} from './date-time-field/date-time-field.componen
 import {ButtonFieldComponent} from './button-field/button-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
 import {CovalentModule} from '../covalent/covalent.module';
-import {FileUploadService} from './file-field/services/upload/file-upload.service';
-import {FileDownloadService} from './file-field/services/download/file-download.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DateAdapter} from '@angular/material';
 import {CustomDateAdapter} from './date-field/models/custom-date-adapter';
@@ -89,8 +87,6 @@ import { FileListFieldComponent } from './file-list-field/file-list-field.compon
         TranslateLibModule
     ],
     providers: [
-        FileUploadService,
-        FileDownloadService,
         {provide: DateAdapter, useClass: CustomDateAdapter}
     ]
 })

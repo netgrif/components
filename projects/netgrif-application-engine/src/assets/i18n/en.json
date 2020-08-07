@@ -172,7 +172,8 @@
             "wontUploadSameFiles": "The selected files have already been uploaded. To update files, delete files that have already been uploaded",
             "fileUploadFailed": "The file failed to upload",
             "fileDeleteFailed":  "The file could not be deleted",
-            "maxFilesExceeded": "Maximum number of uploadable files exceeded: "
+            "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
+            "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: "
         },
         "noFile": "No file"
     },
