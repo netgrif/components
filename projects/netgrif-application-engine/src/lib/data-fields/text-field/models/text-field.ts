@@ -52,12 +52,20 @@ export class TextField extends DataField<string> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes('length')) {
+            if (item.validationRule.includes('minLength')) {
                 const tmp = item.validationRule.split(' ');
                 if (tmp[1] !== undefined) {
                     const length = parseInt(tmp[1], 10);
                     if (!isNaN(length)) {
                         result.push(Validators.minLength(length));
+                    }
+                }
+            } else if (item.validationRule.includes('maxLength')) {
+                const tmp = item.validationRule.split(' ');
+                if (tmp[1] !== undefined) {
+                    const length = parseInt(tmp[1], 10);
+                    if (!isNaN(length)) {
+                        result.push(Validators.maxLength(length));
                     }
                 }
             } else if (item.validationRule.includes('regex')) {
