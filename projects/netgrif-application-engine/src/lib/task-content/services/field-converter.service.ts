@@ -17,7 +17,7 @@ import {
 import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
-import {ButtonField} from '../../data-fields/button-field/models/button-field';
+import {ButtonField, ButtonFieldView} from '../../data-fields/button-field/models/button-field';
 import {FileField} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
@@ -112,8 +112,9 @@ export class FieldConverterService {
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout);
             case 'button':
+                const typeBtn = this.resolveButtonView(item);
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
-                    item.placeholder, item.description, item.layout);
+                    item.placeholder, item.description, item.layout, typeBtn);
             case 'file':
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout);
@@ -141,6 +142,35 @@ export class FieldConverterService {
             return 'file';
         } else if (item instanceof UserField) {
             return 'user';
+        }
+    }
+
+    public resolveButtonView(item: DataFieldResource): ButtonFieldView {
+        if (item.view !== undefined && item.view.value !== undefined) {
+            switch (item.view.value) {
+                case ButtonFieldView.STROKED:
+                    return ButtonFieldView.STROKED;
+                    break;
+                case ButtonFieldView.RAISED:
+                    return ButtonFieldView.RAISED;
+                    break;
+                case ButtonFieldView.FAB:
+                    return ButtonFieldView.FAB;
+                    break;
+                case ButtonFieldView.FLAT:
+                    return ButtonFieldView.FLAT;
+                    break;
+                case ButtonFieldView.ICON:
+                    return ButtonFieldView.ICON;
+                    break;
+                case ButtonFieldView.MINIFAB:
+                    return ButtonFieldView.MINIFAB;
+                    break;
+                default:
+                    return ButtonFieldView.STANDARD;
+            }
+        } else if (item instanceof ButtonField) {
+            return ButtonFieldView.STANDARD;
         }
     }
 
