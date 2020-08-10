@@ -1,4 +1,5 @@
 import {Link} from './link';
+import {PetriNetReference} from './petri-net-reference';
 
 /**
  * Object response message
@@ -14,6 +15,21 @@ export interface MessageResource {
      * @ignore
      */
     links?: Link;
+    /**
+     * Success Message
+     */
+    success?: string;
+}
+
+export interface PetriNetMessageResource {
+    /**
+     * Error message
+     */
+    error?: string;
+    /**
+     * @ignore
+     */
+    net?: PetriNetReference;
     /**
      * Success Message
      */
