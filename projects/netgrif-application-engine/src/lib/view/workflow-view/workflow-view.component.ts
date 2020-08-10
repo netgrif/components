@@ -10,6 +10,7 @@ import {Net} from '../../process/net';
 import {tap} from 'rxjs/operators';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../logger/services/logger.service';
+import {ProcessService} from '../../process/process.service';
 
 
 @Component({
@@ -29,7 +30,10 @@ export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewI
 
     private _viewport: CdkVirtualScrollViewport;
 
-    constructor(private _sideMenuService: SideMenuService, private _workflowViewService: WorkflowViewService, private _log: LoggerService) {
+    constructor(private _sideMenuService: SideMenuService,
+                private _workflowViewService: WorkflowViewService,
+                private _log: LoggerService,
+                private _processService: ProcessService) {
         super(_workflowViewService);
         this.workflows$ = this._workflowViewService.workflows$.pipe(
             tap(nets => {
@@ -55,6 +59,9 @@ export class WorkflowViewComponent extends ViewWithHeaders implements AfterViewI
         this._sideMenuService.open(ImportNetComponent).onClose.subscribe(event => {
             if (event.data !== undefined) {
                 this._workflowViewService.reload();
+                if (event.data.net) {
+                    this._processService.updateNet(new Net(event.data.net));
+                }
             }
         });
     }
