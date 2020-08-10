@@ -659,7 +659,7 @@ export class CaseTreeService implements OnDestroy {
             this._reloadedCaseId = this._currentNode.case.stringId;
             this._caseResourceService.getOneCase(this._currentCase.stringId).subscribe(reloadedCurrentCase => {
                 if (reloadedCurrentCase) {
-                    if (reloadedCurrentCase.stringId === this._reloadedCaseId && this._reloadedCaseId === this._currentNode.case.stringId) {
+                    if (reloadedCurrentCase.stringId === this._currentNode.case.stringId) {
                         this._reloadedCaseId = undefined;
                         Object.assign(this._currentCase, reloadedCurrentCase);
                         this._treeCaseViewService.loadTask$.next(this._currentCase);
