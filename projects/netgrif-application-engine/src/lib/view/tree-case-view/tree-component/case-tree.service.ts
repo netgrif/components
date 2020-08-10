@@ -659,13 +659,14 @@ export class CaseTreeService implements OnDestroy {
             this._reloadedCaseId = this._currentNode.case.stringId;
             this._caseResourceService.getOneCase(this._currentCase.stringId).subscribe(reloadedCurrentCase => {
                 if (reloadedCurrentCase) {
-                    if (reloadedCurrentCase.stringId === this._reloadedCaseId) {
+                    if (reloadedCurrentCase.stringId === this._reloadedCaseId && this._reloadedCaseId === this._currentNode.case.stringId) {
                         this._reloadedCaseId = undefined;
                         Object.assign(this._currentCase, reloadedCurrentCase);
                         this._treeCaseViewService.loadTask$.next(this._currentCase);
                         this._logger.debug('Current Case Tree Node reloaded');
                     } else {
-                        this._logger.debug('Discarding case reload response, since the current case has changed before it was received');
+                        this._logger
+                            .debug('Discarding case reload response, since the current node has changed before it\'s case was received');
                     }
                 } else {
                     this._logger.error('Current Case Tree Node could not be reloaded. Invalid server response', reloadedCurrentCase);
