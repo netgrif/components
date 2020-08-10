@@ -20,8 +20,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {hasContent} from '../../../utility/pagination/page-has-content';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {ofVoid} from '../../../utility/ofVoid';
+import {ofVoid} from '../../../utility/of-void';
 import {CaseGetRequestBody} from '../../../resources/interface/case-get-request-body';
+import {getImmediateData} from '../../../utility/get-immediate-data';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
@@ -193,7 +194,7 @@ export class CaseTreeService implements OnDestroy {
     protected updateNodeChildren(node: CaseTreeNode): Observable<void> {
         node.loadingChildren.on();
 
-        const childrenCaseRef = this.getImmediateData(node.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const childrenCaseRef = getImmediateData(node.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         if (!childrenCaseRef || childrenCaseRef.value.length === 0) {
             node.children = [];
             this.refreshTree();
@@ -299,7 +300,7 @@ export class CaseTreeService implements OnDestroy {
      * Returns `undefined` if the provided `node` doesn't contain enough information to create the request body.
      */
     protected createChildRequestBody(node: CaseTreeNode): CaseGetRequestBody {
-        const childCaseRef = this.getImmediateData(node.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const childCaseRef = getImmediateData(node.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         if (!childCaseRef) {
             return undefined;
         }
@@ -330,7 +331,7 @@ export class CaseTreeService implements OnDestroy {
     public addChildNode(clickedNode: CaseTreeNode): Observable<boolean> {
         const ret = new ReplaySubject<boolean>(1);
         clickedNode.addingNode.on();
-        const caseRefField = this.getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const caseRefField = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
 
         if (caseRefField.allowedNets.length === 0) {
             this._logger.error(`Case ${clickedNode.case.stringId} can add new tree nodes but has no allowed nets`);
@@ -338,7 +339,7 @@ export class CaseTreeService implements OnDestroy {
             return of(false);
         }
 
-        const childTitleImmediate = this.getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILD_NODE_TITLE);
+        const childTitleImmediate = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILD_NODE_TITLE);
         const childTitle = childTitleImmediate ? childTitleImmediate.value : this._translateService.instant('caseTree.newNodeDefaultName');
 
         if (caseRefField.allowedNets.length === 1) {
@@ -381,7 +382,7 @@ export class CaseTreeService implements OnDestroy {
                 title: childTitle,
                 netId: net.stringId
             }).subscribe(childCase => {
-                const caseRefField = this.getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+                const caseRefField = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
                 const setCaseRefValue = [...caseRefField.value, childCase.stringId];
                 this.performCaseRefCall(clickedNode.case.stringId, setCaseRefValue).subscribe(
                     valueChange => this.updateTreeAfterChildAdd(clickedNode, valueChange ? valueChange : setCaseRefValue, operationResult)
@@ -410,15 +411,6 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
-     * @param useCase the {@link Case} object who's immediate data we want to get
-     * @param fieldId the identifier of the field we want to get
-     * @returns the immediate data field if it exists on the case, `undefined` otherwise
-     */
-    protected getImmediateData(useCase: Case, fieldId: TreePetriflowIdentifiers): ImmediateData | undefined {
-        return useCase.immediateData.find(field => field.stringId === fieldId);
-    }
-
-    /**
      * removes the provided non-root node if the underlying case allows it.
      *
      * The underlying case is removed from the case ref of it's parent element with the help from the `remove`
@@ -432,7 +424,7 @@ export class CaseTreeService implements OnDestroy {
         }
 
         node.removingNode.on();
-        const caseRefImmediate = this.getImmediateData(node.parent.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const caseRefImmediate = getImmediateData(node.parent.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         const setCaseRefValue = (caseRefImmediate.value as Array<string>).filter(id => id !== node.case.stringId);
         this.performCaseRefCall(node.parent.case.stringId, setCaseRefValue).subscribe(caseRefChange => {
             const newCaseRefValue = caseRefChange ? caseRefChange : setCaseRefValue;
@@ -453,7 +445,7 @@ export class CaseTreeService implements OnDestroy {
      */
     protected deleteRemovedNodes(parentNode: CaseTreeNode, newCaseRefValue: Array<string>): void {
         const removedChildren = new Set<string>();
-        this.getImmediateData(parentNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value.forEach(id => removedChildren.add(id));
+        getImmediateData(parentNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value.forEach(id => removedChildren.add(id));
         newCaseRefValue.forEach(id => removedChildren.delete(id));
         removedChildren.forEach(removedId => this._caseResourceService.deleteCase(removedId, true)
             .subscribe(responseMessage => {
@@ -551,7 +543,7 @@ export class CaseTreeService implements OnDestroy {
      */
     private updateNodeChildrenFromChangedFields(affectedNode: CaseTreeNode,
                                                 newCaseRefValue: Array<string>): Observable<void> {
-        const caseRefField = this.getImmediateData(affectedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const caseRefField = getImmediateData(affectedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         const newChildren = new Set<string>();
         newCaseRefValue.forEach(id => newChildren.add(id));
 
