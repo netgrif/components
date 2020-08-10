@@ -29,6 +29,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     protected _loading$: LoadingEmitter;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
+    protected _initiallyOpenOneTask: boolean;
 
     // Kovy fix
     protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
@@ -39,7 +40,6 @@ export class TaskViewService extends SortableViewWithAllowedNets {
      */
     private readonly _parentCaseId: string = undefined;
     private readonly _initializing: boolean = true;
-    private readonly _taskArray: Array<TaskPanelData>;
     private _clear = false;
     private _reloadPage = false;
 
@@ -50,9 +50,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 protected _searchService: SearchService,
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
-                allowedNets: Observable<Array<Net>> = of([])) { // need for translations
+                allowedNets: Observable<Array<Net>> = of([]),
+                initiallyOpenOneTask: Observable<boolean> = of(true)) {
         super(allowedNets);
-        this._taskArray = [];
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
@@ -110,7 +110,19 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         );
         this._tasks$ = tasksMap$.pipe(
             map(v => Object.values(v) as Array<TaskPanelData>),
+            map(taskArray => {
+                if (taskArray.length === 1 && this._initiallyOpenOneTask) {
+                    taskArray[0].task.finishDate === undefined ?
+                        taskArray[0].initiallyExpanded = true :
+                        taskArray[0].initiallyExpanded = false;
+                }
+                return taskArray;
+            }),
             tap(v => this._panelUpdate$.next(v)));
+
+        initiallyOpenOneTask.subscribe(bool => {
+            this._initiallyOpenOneTask = bool;
+        });
     }
 
     public get tasks$(): Observable<Array<TaskPanelData>> {
@@ -179,91 +191,11 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         this.blockTaskFields(old, !(old.user && this._userComparator.compareUsers(old.user)));
     }
 
-    public loadTasks() {
-        if (this._loading$.isActive || this._initializing) {
-            return;
-        }
-        this._loading$.on();
-        let params: HttpParams = new HttpParams();
-        params = this.addSortParams(params);
-
-        // TODO 12.5.2020 - better solution for mongo searching
-        if (!this._searchService.additionalFiltersApplied && !!this._parentCaseId) {
-            this._taskService.getTasks({case: this._parentCaseId}, params).subscribe(tasks => this.processTasks(tasks.content),
-                error => this.processError());
-        } else {
-            // TODO 7.4.2020 - task sorting is currently not supported, see case view for implementation
-            this._taskService.searchTask(this._searchService.activeFilter).subscribe(tasks => this.processTasks(tasks.content),
-                error => this.processError());
-        }
-    }
-
-    private processTasks(tasks: Array<Task>): void {
-        if (tasks instanceof Array) {
-            if (this._taskArray.length) {
-                tasks = this.resolveUpdate(tasks);
-            }
-            tasks.forEach(task => {
-                // this._taskArray.push({
-                //     task,
-                //     changedFields: this._changedFields$
-                // });
-            });
-        } else {
-            this._taskArray.splice(0, this._taskArray.length);
-            this._snackBarService.openWarningSnackBar(this._translate.instant('tasks.snackbar.noTasksFound'));
-        }
-        this._loading$.off();
-        // this._tasks$.next(this._taskArray);
-    }
-
-    private processError(): void {
-        this._snackBarService.openErrorSnackBar(
-            this._translate.instant('tasks.snackbar.failedToLoad')
-        );
-        this._loading$.off();
-    }
-
-    private resolveUpdate(tasks) {
-        const tasksToDelete = []; // saved are only indexes for work later
-        this._taskArray.forEach((item, i) => {
-            const index = tasks.findIndex(r => r.caseId === item.task.caseId && r.transitionId === item.task.transitionId);
-            if (index === -1) {
-                tasksToDelete.push(i);
-            } else {
-                Object.keys(this._taskArray[i].task).forEach(key => {
-                    if (tasks[index][key] !== undefined) {
-                        this._taskArray[i].task[key] = tasks[index][key];
-                    }
-                });
-                this.blockFields(!(this._taskArray[i].task.user &&
-                    this._userComparator.compareUsers(this._taskArray[i].task.user)), i);
-                this._taskArray[i].changedFields = this._changedFields$;
-                tasks.splice(index, 1);
-            }
-        });
-        tasksToDelete.sort((a, b) => b - a);
-        tasksToDelete.forEach(index => {
-            this._taskArray.splice(index, 1);
-        });
-        return tasks;
-    }
-
     private blockTaskFields(task: Task, block: boolean): void {
         if (!task.dataGroups) {
             return;
         }
         task.dataGroups.forEach(g => g.fields.forEach(f => f.block = block));
-    }
-
-    private blockFields(bool: boolean, index: number) {
-        if (this._taskArray[index].task.dataGroups) {
-            this._taskArray[index].task.dataGroups.forEach(group => {
-                group.fields.forEach(field => {
-                    field.block = bool;
-                });
-            });
-        }
     }
 
     public nextPage(renderedRange: ListRange, totalLoaded: number): void {

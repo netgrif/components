@@ -59,13 +59,6 @@ describe('TaskViewService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should load tasks', () => {
-        service.loadTasks();
-        // expect(service.tasks$.length).toEqual(1);
-        service.reload();
-        // expect(service.taskArray.length).toEqual(1);
-    });
-
     afterAll(() => {
         TestBed.resetTestingModule();
     });
