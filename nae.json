@@ -701,19 +701,19 @@
         "all-cases": {
             "title": "All Cases",
             "access": "public",
-            "query": {},
+            "body": {},
             "type": "Case"
         },
         "all-tasks": {
             "title": "All Tasks",
             "access": "public",
-            "query": {},
+            "body": {},
             "type": "Task"
         },
         "data-cases": {
             "title": "Data Cases",
             "access": "public",
-            "query": {
+            "body": {
                 "petriNet": {
                     "identifier": "data"
                 }

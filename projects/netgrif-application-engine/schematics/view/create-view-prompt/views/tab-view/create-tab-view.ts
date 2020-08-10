@@ -44,7 +44,7 @@ export function createTabView(
 
     if (!!params.defaultTaskView) {
         processEmbeddedView(params.defaultTaskView, tabViews, view, args.path,
-                            viewCounterStart, tree, createViewFunctionRef);
+            viewCounterStart, tree, createViewFunctionRef);
         viewCounterStart++;
     }
 
@@ -99,13 +99,12 @@ export function createTabView(
     return chain(rules);
 }
 
-function processTabViewContents(
-    tree: Tree,
-    tabViewParams: TabViewParams,
-    hostViewPath: string,
-    hostClassName: ViewClassInfo,
-    createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
-    viewCounterStartValue: number = 0
+function processTabViewContents(tree: Tree,
+                                tabViewParams: TabViewParams,
+                                hostViewPath: string,
+                                hostClassName: ViewClassInfo,
+                                createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
+                                viewCounterStartValue: number = 0
 ): TabViews {
 
     const result = newTabViews();
@@ -136,11 +135,11 @@ function processEmbeddedView(embeddedView: EmbeddedView,
         tabTemplate = processEmbeddedComponent(embeddedView, result, hostClassName);
     } else if (embeddedView.view !== undefined) {
         tabTemplate = processEmbeddedNewView(embeddedView,
-                                             result,
-                                             hostClassName,
-                                             `${hostViewPath}/content/${viewNumber}`,
-                                             tree,
-                                             createViewFunctionRef);
+            result,
+            hostClassName,
+            `${hostViewPath}/content/${viewNumber}`,
+            tree,
+            createViewFunctionRef);
     } else {
         throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
     }
@@ -172,7 +171,7 @@ function processEmbeddedComponent(embeddedComponent: EmbeddedView, result: TabVi
     }
 
     result.tabViewImports.push(new ImportToAdd(embeddedComponent.component.class,
-                                               createRelativePath(hostClassName.fileImportPath, embeddedComponent.component.classPath))
+        createRelativePath(hostClassName.fileImportPath, embeddedComponent.component.classPath))
     );
     result.entryComponentsImports.push(new ImportToAdd(embeddedComponent.component.class, embeddedComponent.component.classPath));
 

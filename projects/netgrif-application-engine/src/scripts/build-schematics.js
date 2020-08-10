@@ -32,6 +32,7 @@ function copySchematicFiles() {
     copyFiles(sourcePrefix, destinationPrefix, {exact: 'files'});
 
     fs.copyFileSync(path.join(sourcePrefix, 'collection.json'), path.join(destinationPrefix, 'collection.json'));
+    fs.copyFileSync(path.join(sourcePrefix, 'migrations.json'), path.join(destinationPrefix, 'migrations.json'));
 }
 
 function copyFiles(sourcePrefix, destinationPrefix, target, relativePath = '') {
