@@ -19,6 +19,7 @@ import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {hasContent} from '../../../utility/pagination/page-has-content';
 import {getImmediateData} from '../../../utility/get-immediate-data';
+import {filter} from 'rxjs/operators';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -50,7 +51,7 @@ export class TreeTaskContentService implements OnDestroy {
             }
         });
 
-        _treeCaseService.loadTask$.asObservable().subscribe(selectedCase => {
+        _treeCaseService.loadTask$.asObservable().pipe(filter(selectedCase => this.taskChanged(selectedCase))).subscribe(selectedCase => {
             this.cancelAndLoadFeaturedTask(selectedCase);
         });
 
@@ -84,10 +85,6 @@ export class TreeTaskContentService implements OnDestroy {
      * @param selectedCase the Case who's task should be now displayed
      */
     protected cancelAndLoadFeaturedTask(selectedCase: Case | undefined) {
-        if (!this.taskChanged(selectedCase)) {
-            return;
-        }
-
         this._processingTaskChange.on();
         if (this.shouldCancelTask) {
             this._cancel.cancel(this._callchain.create(() => {
