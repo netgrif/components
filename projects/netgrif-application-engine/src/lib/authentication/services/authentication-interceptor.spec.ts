@@ -6,13 +6,14 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HTTP_INTERCEPTORS, HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {SessionService} from '../session/services/session.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AuthenticationInterceptor', () => {
     let service: SessionService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SessionService,
