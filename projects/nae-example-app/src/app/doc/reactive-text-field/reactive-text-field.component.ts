@@ -120,7 +120,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // USER FIELD
     @ViewChild('userFieldComponent') naeUserField: UserFieldComponent;
     userField = new UserField('userFieldId', 'Reactive user field',  {visible: true, editable: true},
-        new UserValue(0, 'Name', 'Surname', 'surname@netgrif.com'), []);
+        new UserValue('0', 'Name', 'Surname', 'surname@netgrif.com'), []);
 
     changeStream = new Subject<ChangedFields>();
 
