@@ -55,90 +55,92 @@ pipeline {
       }
     }
 
-    stage('Publish') {
-        parallel {
-            stage('Publish to Nexus NPM') {
-                steps {
-                    sh '''
-                        echo "npm publishing"
-                        mv .npmrc .npmrc_renamed
-                        echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
-                        echo "email=jenkins@netgrif.com" >> .npmrc
-                        echo -n "_auth=" >> .npmrc
-                        echo -n $NEXUS_CRED | openssl base64 >> .npmrc
-                        cat .npmrc
-                        npm publish dist/netgrif-application-engine
-                        rm .npmrc
-                        mv .npmrc_renamed .npmrc
-                    '''
-                 }
-            }
+    stage('Publish to Nexus NPM') {
+        steps {
+            sh '''
+                echo "npm publishing"
+                mv .npmrc .npmrc_renamed
+                echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
+                echo "email=jenkins@netgrif.com" >> .npmrc
+                echo -n "_auth=" >> .npmrc
+                echo -n $NEXUS_CRED | openssl base64 >> .npmrc
+                cat .npmrc
+                npm publish dist/netgrif-application-engine
+                rm .npmrc
+                mv .npmrc_renamed .npmrc
+            '''
+         }
+    }
 
-            stage('Publish docs') {
-                steps {
-                    script {
-                        packageJson = readJSON(file: 'package.json')
-                    }
-                    echo 'Uploading documentation via sshPublisher'
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'developer.netgrif.com',
-                                transfers: [
-                                    sshTransfer(
-                                        cleanRemote: true,
-                                        excludes: '',
-                                        execCommand: '',
-                                        execTimeout: 120000,
-                                        flatten: false,
-                                        makeEmptyDirs: false,
-                                        noDefaultExcludes: false,
-                                        patternSeparator: '[, ]+',
-                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/docs",
-                                        remoteDirectorySDF: false,
-                                        removePrefix: 'docs/compodoc',
-                                        sourceFiles: 'docs/compodoc/**')],
-                                usePromotionTimestamp: false,
-                                useWorkspaceInPromotion: false,
-                                verbose: true)])
-                }
+    stage('Publish docs') {
+        steps {
+            script {
+                packageJson = readJSON(file: 'package.json')
             }
-
-            stage('Publish test reports') {
-                steps {
-                    script {
-                        packageJson = readJSON(file: 'package.json')
-                    }
-                    echo 'Uploading test reports via sshPublisher'
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'developer.netgrif.com',
-                                transfers: [
-                                    sshTransfer(
-                                        cleanRemote: true,
-                                        excludes: '',
-                                        execCommand: '',
-                                        execTimeout: 120000,
-                                        flatten: false,
-                                        makeEmptyDirs: false,
-                                        noDefaultExcludes: false,
-                                        patternSeparator: '[, ]+',
-                                        remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/coverage",
-                                        remoteDirectorySDF: false,
-                                        removePrefix: 'coverage/netgrif-application-engine',
-                                        sourceFiles: 'coverage/netgrif-application-engine/**')],
-                                usePromotionTimestamp: false,
-                                useWorkspaceInPromotion: false,
-                                verbose: true)])
-                }
-            }
+            echo 'Uploading documentation via sshPublisher'
+            sshPublisher(
+                publishers: [
+                    sshPublisherDesc(
+                        configName: 'developer.netgrif.com',
+                        transfers: [
+                            sshTransfer(
+                                cleanRemote: true,
+                                excludes: '',
+                                execCommand: '',
+                                execTimeout: 120000,
+                                flatten: false,
+                                makeEmptyDirs: false,
+                                noDefaultExcludes: false,
+                                patternSeparator: '[, ]+',
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/docs",
+                                remoteDirectorySDF: false,
+                                removePrefix: 'docs/compodoc',
+                                sourceFiles: 'docs/compodoc/**')],
+                        usePromotionTimestamp: false,
+                        useWorkspaceInPromotion: false,
+                        verbose: true)])
         }
-     }
+    }
+
+    stage('Publish test reports') {
+        steps {
+            script {
+                packageJson = readJSON(file: 'package.json')
+            }
+            echo 'Uploading test reports via sshPublisher'
+            sshPublisher(
+                publishers: [
+                    sshPublisherDesc(
+                        configName: 'developer.netgrif.com',
+                        transfers: [
+                            sshTransfer(
+                                cleanRemote: true,
+                                excludes: '',
+                                execCommand: '',
+                                execTimeout: 120000,
+                                flatten: false,
+                                makeEmptyDirs: false,
+                                noDefaultExcludes: false,
+                                patternSeparator: '[, ]+',
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/coverage",
+                                remoteDirectorySDF: false,
+                                removePrefix: 'coverage/netgrif-application-engine',
+                                sourceFiles: 'coverage/netgrif-application-engine/**')],
+                        usePromotionTimestamp: false,
+                        useWorkspaceInPromotion: false,
+                        verbose: true)])
+        }
+    }
 
      stage('Build Examples') {
         steps {
-            sh 'npm run nae:local-build && npm run example:build'
+            script {
+                packageJson = readJSON(file: 'package.json')
+            }
+            sh '''
+                npm run nae:local-build
+                ng build --prod --base-href /projects/engine-frontend/${packageJson['version']}/examples
+            '''
         }
      }
 
@@ -184,7 +186,7 @@ pipeline {
     success {
         bitbucketStatusNotify(buildState: 'SUCCESSFUL')
         script {
-            DATETIME_TAG = java.time.LocalDateTime.now()
+            DATETIME_TAG = java.time.LocalDateTime.now().toString().replace(':','_')
         }
         zip zipFile: "NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", archive: false, dir: 'dist/netgrif-application-engine'
         archiveArtifacts artifacts:"NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", fingerprint: true

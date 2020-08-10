@@ -19,18 +19,21 @@ import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-re
 import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
             providers: [
                 ArrayTaskViewServiceFactory,
-                {   provide: TaskViewService,
+                {
+                    provide: TaskViewService,
                     useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]},
+                    deps: [ArrayTaskViewServiceFactory]
+                },
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
