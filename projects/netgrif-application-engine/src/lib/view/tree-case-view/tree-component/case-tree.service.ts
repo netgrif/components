@@ -577,20 +577,12 @@ export class CaseTreeService implements OnDestroy {
      * @param affectedNode the node in the tree that had a child added
      * @param caseRefField the case ref field of the affected node
      * @param newCaseRefValue the new value of the case ref field in the node
-     * @param attemptNumber the number of attempts that failed before a call to this function.
-     * If the number is greater than 2 no more attempts will be made.
      * @returns an `Observable` that emits when add operation completes (either successfully or not)
      */
     protected processChildNodeAdd(affectedNode: CaseTreeNode,
                                   caseRefField: ImmediateData,
-                                  newCaseRefValue: Array<string>,
-                                  attemptNumber = 0): Observable<void> {
+                                  newCaseRefValue: Array<string>): Observable<void> {
         const result$ = new Subject<void>();
-
-        if (attemptNumber > 2) {
-            this._logger.error('Failed to find child node within 3 attempts. Giving up...');
-            return ofVoid();
-        }
 
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
