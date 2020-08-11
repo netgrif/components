@@ -14,8 +14,6 @@ import {Subject} from 'rxjs';
 @Injectable()
 export class FinishPolicyService extends TaskHandlingService {
 
-    private afterAction: Subject<boolean>;
-
     constructor(protected _dataFocusPolicyService: DataFocusPolicyService,
                 protected _finishTaskService: FinishTaskService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
@@ -28,11 +26,10 @@ export class FinishPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the finish policy finishes
      */
     public performFinishPolicy(afterAction: Subject<boolean> = new Subject<boolean>()): void {
-        this.afterAction = afterAction;
         if (this._safeTask.finishPolicy === FinishPolicy.autoNoData) {
-            this.autoNoDataFinishPolicy();
+            this.autoNoDataFinishPolicy(afterAction);
         } else {
-            this.manualFinishPolicy();
+            this.manualFinishPolicy(afterAction);
         }
     }
 
@@ -41,15 +38,17 @@ export class FinishPolicyService extends TaskHandlingService {
      *
      * If the task has no data performs finish and [closes]{@link TaskOperations#close} the task.
      * Otherwise [opens]{@link TaskOperations#open} it and performs the [data focus policy]{@link DataFocusPolicyService}.
+     *
+     * @param afterAction the action that should be performed when the finish policy finishes
      */
-    private autoNoDataFinishPolicy(): void {
+    private autoNoDataFinishPolicy(afterAction: Subject<boolean>): void {
         if (this._safeTask.dataSize <= 0) {
-            this._finishTaskService.validateDataAndFinish(this.afterAction);
+            this._finishTaskService.validateDataAndFinish(afterAction);
             this._taskOperations.close();
         } else {
             this._taskOperations.open();
             this._dataFocusPolicyService.performDataFocusPolicy();
-            this.afterAction.next(true);
+            afterAction.next(true);
         }
     }
 
@@ -57,10 +56,12 @@ export class FinishPolicyService extends TaskHandlingService {
      * Performs the actions that correspond to the [Manual Finish Policy]{@link FinishPolicy#manual}.
      *
      * [Opens]{@link TaskOperations#open} the task and performs the [data focus policy]{@link DataFocusPolicyService}.
+     *
+     * @param afterAction the action that should be performed when the finish policy finishes
      */
-    private manualFinishPolicy(): void {
+    private manualFinishPolicy(afterAction: Subject<boolean>): void {
         this._taskOperations.open();
         this._dataFocusPolicyService.performDataFocusPolicy();
-        this.afterAction.next(true);
+        afterAction.next(true);
     }
 }

@@ -17,8 +17,6 @@ import {Subject} from 'rxjs';
 @Injectable()
 export class AssignPolicyService extends TaskHandlingService {
 
-    private afterAction: Subject<boolean>;
-
     constructor(protected _taskDataService: TaskDataService,
                 protected _assignTaskService: AssignTaskService,
                 protected _cancelTaskService: CancelTaskService,
@@ -35,23 +33,23 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     public performAssignPolicy(taskOpened: boolean, afterAction: Subject<boolean> = new Subject<boolean>()): void {
-        this.afterAction = afterAction;
         if (this._safeTask.assignPolicy === AssignPolicy.auto) {
-            this.autoAssignPolicy(taskOpened);
+            this.autoAssignPolicy(taskOpened, afterAction);
         } else {
-            this.manualAssignPolicy(taskOpened);
+            this.manualAssignPolicy(taskOpened, afterAction);
         }
     }
 
     /**
      * Performs the actions that correspond to the [Auto Assign Policy]{@link AssignPolicy#auto}.
      * @param taskOpened whether the Task was 'opened' (eg. task panel is expanding) or 'closed' (eg. task panel is collapsing)
+     * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected autoAssignPolicy(taskOpened: boolean): void {
+    protected autoAssignPolicy(taskOpened: boolean, afterAction: Subject<boolean>): void {
         if (taskOpened) {
-            this.autoAssignOpenedPolicy();
+            this.autoAssignOpenedPolicy(afterAction);
         } else {
-            this.autoAssignClosedPolicy();
+            this.autoAssignClosedPolicy(afterAction);
         }
     }
 
@@ -62,11 +60,13 @@ export class AssignPolicyService extends TaskHandlingService {
      * Assigns the task, reloads the current task page, loads task data and performs the finish policy.
      *
      * See [finish policy]{@link FinishPolicyService#performFinishPolicy} for more information.
+     *
+     * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected autoAssignOpenedPolicy(): void {
+    protected autoAssignOpenedPolicy(afterAction: Subject<boolean>): void {
         this._assignTaskService.assign(
             this._callchain.create((assignSuccess => {
-                this.afterAssignOpenPolicy(assignSuccess);
+                this.afterAssignOpenPolicy(assignSuccess, afterAction);
             }))
         );
     }
@@ -74,33 +74,36 @@ export class AssignPolicyService extends TaskHandlingService {
     /**
      * Reloads the current page of tasks if the preceding assign operation succeeded. Then initializes the task's data fields.
      * @param assignSuccess whether the preceding assign succeeded or not
+     * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected afterAssignOpenPolicy(assignSuccess: boolean): void {
+    protected afterAssignOpenPolicy(assignSuccess: boolean, afterAction: Subject<boolean>): void {
         this._taskOperations.reload();
         if (assignSuccess) {
             this._taskDataService.initializeTaskDataFields(
                 this._callchain.create((requestSuccessful) => {
                     if (requestSuccessful) {
-                        this._finishPolicyService.performFinishPolicy(this.afterAction);
+                        this._finishPolicyService.performFinishPolicy(afterAction);
                     } else {
-                        this.afterAction.next(false);
+                        afterAction.next(false);
                     }
                 })
             );
         } else {
-            this.afterAction.next(false);
+            afterAction.next(false);
         }
     }
 
     /**
      * Requests a reload of the task and then requests the task to be closed.
+     *
+     * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected autoAssignClosedPolicy(): void {
+    protected autoAssignClosedPolicy(afterAction: Subject<boolean>): void {
         this._cancelTaskService.cancel(
             this._callchain.create((requestSuccess) => {
                 this._taskOperations.reload();
                 this._taskOperations.close();
-                this.afterAction.next(requestSuccess);
+                afterAction.next(requestSuccess);
             })
         );
     }
@@ -108,12 +111,13 @@ export class AssignPolicyService extends TaskHandlingService {
     /**
      * Performs the actions that correspond to the [Manual Assign Policy]{@link AssignPolicy#manual}.
      * @param taskOpened whether the Task was 'opened' (eg. task panel is expanding) or 'closed' (eg. task panel is collapsing)
+     * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected manualAssignPolicy(taskOpened: boolean): void {
+    protected manualAssignPolicy(taskOpened: boolean, afterAction: Subject<boolean>): void {
         if (taskOpened) {
-            this.manualAssignOpenedPolicy();
+            this.manualAssignOpenedPolicy(afterAction);
         } else {
-            this.afterAction.next(false);
+            afterAction.next(false);
         }
     }
 
@@ -124,14 +128,16 @@ export class AssignPolicyService extends TaskHandlingService {
      * Loads task data and performs the [finish policy]{@link FinishPolicyService#performFinishPolicy}.
      *
      * See [finish policy]{@link FinishPolicyService#performFinishPolicy} for more information.
+     *
+     * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected manualAssignOpenedPolicy(): void {
+    protected manualAssignOpenedPolicy(afterAction: Subject<boolean>): void {
         this._taskDataService.initializeTaskDataFields(
             this._callchain.create((requestSuccessful) => {
                 if (requestSuccessful) {
-                    this._finishPolicyService.performFinishPolicy(this.afterAction);
+                    this._finishPolicyService.performFinishPolicy(afterAction);
                 } else {
-                    this.afterAction.next(false);
+                    afterAction.next(false);
                 }
             })
         );
