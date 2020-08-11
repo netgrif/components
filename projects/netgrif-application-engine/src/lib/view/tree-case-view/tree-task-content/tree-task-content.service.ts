@@ -20,6 +20,7 @@ import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {hasContent} from '../../../utility/pagination/page-has-content';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {filter} from 'rxjs/operators';
+import {LoggerService} from '../../../logger/services/logger.service';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -27,6 +28,12 @@ export class TreeTaskContentService implements OnDestroy {
     private _selectedCase: Case;
     private _processingTaskChange: LoadingEmitter;
     private _displayedTaskText$: Subject<string>;
+    /**
+     * a unique identifier consisting of caseId and transition ID
+     *
+     * Is set if a reload of the given task is currently taking place, `undefined` otherwise.
+     */
+    private _reloadedTaskUniqueIdentifier: string;
 
     constructor(protected _treeCaseService: TreeCaseViewService,
                 protected _taskDataService: TaskDataService,
@@ -37,6 +44,7 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _cancel: CancelTaskService,
                 protected _userComparator: UserComparatorService,
                 protected _callchain: CallChainService,
+                protected _logger: LoggerService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: SubjectTaskOperations) {
         this._processingTaskChange = new LoadingEmitter();
         this._displayedTaskText$ = new ReplaySubject<string>();
@@ -198,9 +206,16 @@ export class TreeTaskContentService implements OnDestroy {
      * Updates the state of the current Task from backend
      */
     protected updateTaskState(): void {
+        const uniqueTaskIdentifier = this.getUniqueTaskIdentifier();
+        if (uniqueTaskIdentifier === this._reloadedTaskUniqueIdentifier) {
+            this._logger.debug('The currently selected task is already being reloaded. Ignoring reload request.');
+            return;
+        }
+        this._reloadedTaskUniqueIdentifier = uniqueTaskIdentifier;
         this._taskResourceService.getTasks(this.getTaskRequestBody()).subscribe(page => {
             if (hasContent(page)) {
-                if (this._taskContentService.task) {
+                if (this._taskContentService.task && this._taskContentService.task.stringId === page.content[0].stringId) {
+                    this._reloadedTaskUniqueIdentifier = undefined;
                     Object.assign(this._taskContentService.task, page.content[0]);
                 }
                 this.resolveTaskBlockState();
@@ -232,5 +247,17 @@ export class TreeTaskContentService implements OnDestroy {
         if (this.shouldCancelTask) {
             this._cancel.cancel();
         }
+    }
+
+    /**
+     * @returns a unique identifier for the currently selected task, that consists of it's case's id and it's transition id.
+     *
+     * Returns `undefined`, if no task is currently selected.
+     */
+    protected getUniqueTaskIdentifier(): string {
+        if (!this._selectedCase) {
+            return undefined;
+        }
+        return `${this._selectedCase.stringId}#${this.getTransitionId(this._selectedCase)}`;
     }
 }
