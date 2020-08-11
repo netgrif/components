@@ -79,14 +79,14 @@ export class TaskDataService extends TaskHandlingService {
         if (force) {
             this._safeTask.dataSize = 0;
         }
-        this._taskState.startLoading();
 
-        const gottenTask = this._safeTask.stringId;
+        const gottenTaskId = this._safeTask.stringId;
+        this._taskState.startLoading(gottenTaskId);
 
         this._taskResourceService.getData(this._safeTask.stringId).subscribe(dataGroups => {
-            if (this._safeTask.stringId !== gottenTask) {
+            if (this._safeTask.stringId !== gottenTaskId) {
                 this._log.debug('current task changed before the get data response could be received, discarding...');
-                this._taskState.stopLoading();
+                this._taskState.stopLoading(gottenTaskId);
                 return;
             }
 
@@ -111,14 +111,14 @@ export class TaskDataService extends TaskHandlingService {
                     this._safeTask.dataSize += group.fields.length;
                 });
             }
-            this._taskState.stopLoading();
+            this._taskState.stopLoading(gottenTaskId);
             afterAction.next(true);
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
         }, (error: HttpErrorResponse) => {
-            this._taskState.stopLoading();
+            this._taskState.stopLoading(gottenTaskId);
             this._log.debug('getting task data failed', error);
 
-            if (this._safeTask.stringId !== gottenTask) {
+            if (this._safeTask.stringId !== gottenTaskId) {
                 this._log.debug('current task changed before the get data error could be received');
                 return;
             }
@@ -146,11 +146,13 @@ export class TaskDataService extends TaskHandlingService {
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      */
     public updateTaskDataFields(afterAction = new Subject<boolean>()): void {
+        const setTaskId = this._safeTask.stringId;
+
         if (this._safeTask.dataSize <= 0) {
             return;
         }
 
-        if (this._taskState.isUpdating) {
+        if (this._taskState.isUpdating(setTaskId)) {
             afterAction.next(true);
             return;
         }
@@ -168,16 +170,14 @@ export class TaskDataService extends TaskHandlingService {
             return;
         }
 
-        this._taskState.startLoading();
-        this._taskState.startUpdating();
-
-        const setTask = this._safeTask.stringId;
+        this._taskState.startLoading(setTaskId);
+        this._taskState.startUpdating(setTaskId);
 
         this._taskResourceService.setData(this._safeTask.stringId, body).subscribe(response => {
-            if (this._safeTask.stringId !== setTask) {
+            if (this._safeTask.stringId !== setTaskId) {
                 this._log.debug('current task changed before the set data response could be received, discarding...');
-                this._taskState.stopLoading();
-                this._taskState.stopUpdating();
+                this._taskState.stopLoading(setTaskId);
+                this._taskState.stopUpdating(setTaskId);
                 return;
             }
 
@@ -186,19 +186,19 @@ export class TaskDataService extends TaskHandlingService {
             }
             this.clearChangedFlagFromDataFields(body);
             this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
-            this.updateStateInfo(afterAction, true);
+            this.updateStateInfo(afterAction, true, setTaskId);
         }, error => {
             this._log.debug('setting task data failed', error);
 
-            if (this._safeTask.stringId !== setTask) {
+            if (this._safeTask.stringId !== setTaskId) {
                 this._log.debug('current task changed before the get data error could be received');
-                this._taskState.stopLoading();
-                this._taskState.stopUpdating();
+                this._taskState.stopLoading(setTaskId);
+                this._taskState.stopUpdating(setTaskId);
                 return;
             }
 
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
-            this.updateStateInfo(afterAction, false);
+            this.updateStateInfo(afterAction, false, setTaskId);
             this._taskOperations.reload();
         });
     }
@@ -248,10 +248,11 @@ export class TaskDataService extends TaskHandlingService {
      *
      * @param afterAction the call chain steam of the update data method
      * @param result result of the update data request
+     * @param setTaskId the Id of the {@link Task}, who's state should be updated
      */
-    private updateStateInfo(afterAction: Subject<boolean>, result: boolean): void {
-        this._taskState.stopLoading();
-        this._taskState.stopUpdating();
+    private updateStateInfo(afterAction: Subject<boolean>, result: boolean, setTaskId: string): void {
+        this._taskState.stopLoading(setTaskId);
+        this._taskState.stopUpdating(setTaskId);
         if (this._updateSuccess$.observers.length !== 0) {
             this._updateSuccess$.next(result);
         }

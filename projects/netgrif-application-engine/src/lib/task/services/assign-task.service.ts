@@ -41,20 +41,20 @@ export class AssignTaskService extends TaskHandlingService {
      * @param afterAction if assign completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     public assign(afterAction = new Subject<boolean>()): void {
-        if (this._taskState.isLoading) {
+        const assignedTaskId = this._safeTask.stringId;
+
+        if (this._taskState.isLoading(assignedTaskId)) {
             return;
         }
         if (this._safeTask.user) {
             this.completeSuccess(afterAction);
             return;
         }
-        this._taskState.startLoading();
-
-        const assignedTask = this._safeTask.stringId;
+        this._taskState.startLoading(assignedTaskId);
 
         this._taskResourceService.assignTask(this._safeTask.stringId).subscribe(response => {
-            this._taskState.stopLoading();
-            if (this._safeTask.stringId !== assignedTask) {
+            this._taskState.stopLoading(assignedTaskId);
+            if (this._safeTask.stringId !== assignedTaskId) {
                 this._log.debug('current task changed before the assign response could be received, discarding...');
                 return;
             }
@@ -67,10 +67,10 @@ export class AssignTaskService extends TaskHandlingService {
                 afterAction.next(false);
             }
         }, error => {
-            this._taskState.stopLoading();
+            this._taskState.stopLoading(assignedTaskId);
             this._log.debug('assigning task failed', error);
 
-            if (this._safeTask.stringId !== assignedTask) {
+            if (this._safeTask.stringId !== assignedTaskId) {
                 this._log.debug('current task changed before the assign error could be received');
                 return;
             }

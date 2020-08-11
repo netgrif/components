@@ -47,7 +47,9 @@ export class DelegateTaskService extends TaskHandlingService {
      * @param afterAction if delegate completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     delegate(afterAction = new Subject<boolean>()) {
-        if (this._taskState.isLoading) {
+        const delegatedTaskId = this._safeTask.stringId;
+
+        if (this._taskState.isLoading(delegatedTaskId)) {
             return;
         }
         this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM,
@@ -59,13 +61,11 @@ export class DelegateTaskService extends TaskHandlingService {
             } as UserListInjectedData).onClose.subscribe(event => {
             this._log.debug('Delegate sidemenu event:' + event);
             if (event.data !== undefined) {
-                this._taskState.startLoading();
-
-                const delegatedTask = this._safeTask.stringId;
+                this._taskState.startLoading(delegatedTaskId);
 
                 this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(response => {
-                    this._taskState.stopLoading();
-                    if (this._safeTask.stringId !== delegatedTask) {
+                    this._taskState.stopLoading(delegatedTaskId);
+                    if (this._safeTask.stringId !== delegatedTaskId) {
                         this._log.debug('current task changed before the delegate response could be received, discarding...');
                         return;
                     }
@@ -78,10 +78,10 @@ export class DelegateTaskService extends TaskHandlingService {
                         afterAction.next(false);
                     }
                 }, error => {
-                    this._taskState.stopLoading();
+                    this._taskState.stopLoading(delegatedTaskId);
                     this._log.debug('getting task data failed', error);
 
-                    if (this._safeTask.stringId !== delegatedTask) {
+                    if (this._safeTask.stringId !== delegatedTaskId) {
                         this._log.debug('current task changed before the delegate error could be received');
                         return;
                     }

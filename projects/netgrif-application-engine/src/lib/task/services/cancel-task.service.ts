@@ -44,7 +44,9 @@ export class CancelTaskService extends TaskHandlingService {
      * @param afterAction if cancel completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     cancel(afterAction = new Subject<boolean>()) {
-        if (this._taskState.isLoading) {
+        const canceledTaskId = this._safeTask.stringId;
+
+        if (this._taskState.isLoading(canceledTaskId)) {
             return;
         }
         if (!this._safeTask.user
@@ -55,12 +57,10 @@ export class CancelTaskService extends TaskHandlingService {
             afterAction.next(false);
             return;
         }
-        this._taskState.startLoading();
-
-        const canceledTaskId = this._safeTask.stringId;
+        this._taskState.startLoading(canceledTaskId);
 
         this._taskResourceService.cancelTask(this._safeTask.stringId).subscribe(response => {
-            this._taskState.stopLoading();
+            this._taskState.stopLoading(canceledTaskId);
 
             if (this._safeTask.stringId !== canceledTaskId) {
                 this._log.debug('current task changed before the cancel response could be received, discarding...');
@@ -76,7 +76,7 @@ export class CancelTaskService extends TaskHandlingService {
                 afterAction.next(false);
             }
         }, error => {
-            this._taskState.stopLoading();
+            this._taskState.stopLoading(canceledTaskId);
             this._log.debug('canceling task failed', error);
 
             if (this._safeTask.stringId !== canceledTaskId) {

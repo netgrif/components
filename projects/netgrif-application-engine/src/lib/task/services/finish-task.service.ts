@@ -51,9 +51,10 @@ export class FinishTaskService extends TaskHandlingService {
                 }
             }));
         } else if (this._taskContentService.validateTaskData()) {
+            const finishedTaskId = this._safeTask.stringId;
             this._taskDataService.updateTaskDataFields(this._callChain.create(success => {
                 if (success) {
-                    if (this._taskState.isUpdating) {
+                    if (this._taskState.isUpdating(finishedTaskId)) {
                         this._taskDataService.updateSuccess$.pipe(take(1)).subscribe(bool => {
                             if (bool) {
                                 this.sendFinishTaskRequest(afterAction);
@@ -82,16 +83,16 @@ export class FinishTaskService extends TaskHandlingService {
      * otherwise `false` will be emitted
      */
     private sendFinishTaskRequest(afterAction: Subject<boolean>): void {
-        if (this._taskState.isLoading) {
+        const finishedTaskId = this._safeTask.stringId;
+
+        if (this._taskState.isLoading(finishedTaskId)) {
             return;
         }
-        this._taskState.startLoading();
-
-        const finishedTask = this._safeTask.stringId;
+        this._taskState.startLoading(finishedTaskId);
 
         this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(response => {
-            this._taskState.stopLoading();
-            if (this._safeTask.stringId !== finishedTask) {
+            this._taskState.stopLoading(finishedTaskId);
+            if (this._safeTask.stringId !== finishedTaskId) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
                 return;
             }
@@ -106,10 +107,10 @@ export class FinishTaskService extends TaskHandlingService {
                 afterAction.next(false);
             }
         }, error => {
-            this._taskState.stopLoading();
+            this._taskState.stopLoading(finishedTaskId);
             this._log.debug('finishing task failed', error);
 
-            if (this._safeTask.stringId !== finishedTask) {
+            if (this._safeTask.stringId !== finishedTaskId) {
                 this._log.debug('current task changed before the finish error could be received');
                 return;
             }
