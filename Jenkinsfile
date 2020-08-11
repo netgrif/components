@@ -137,10 +137,9 @@ pipeline {
             script {
                 packageJson = readJSON(file: 'package.json')
             }
-            sh '''
-                npm run nae:local-build
-                ng build --prod --base-href /projects/engine-frontend/${packageJson['version']}/examples
-            '''
+            sh 'npm run nae:local-build'
+            sh "ng build --prod --base-href /projects/engine-frontend/${packageJson['version']}/examples"
+
         }
      }
 
