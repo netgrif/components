@@ -655,31 +655,30 @@ export class CaseTreeService implements OnDestroy {
      * Note that the parent node, nor the child nodes are reloaded.
      */
     protected reloadCurrentCase(): void {
-        if (this._currentNode && this._currentNode.case.stringId !== this._reloadedCaseId) {
-            this._reloadedCaseId = this._currentNode.case.stringId;
-            this._caseResourceService.getOneCase(this._currentCase.stringId).subscribe(reloadedCurrentCase => {
-                if (reloadedCurrentCase) {
-                    if (this._currentNode && reloadedCurrentCase.stringId === this._currentNode.case.stringId) {
-                        this._reloadedCaseId = undefined;
-                        Object.assign(this._currentCase, reloadedCurrentCase);
-                        this._treeCaseViewService.loadTask$.next(this._currentCase);
-                        this._logger.debug('Current Case Tree Node reloaded');
-                    } else {
-                        this._logger
-                            .debug('Discarding case reload response, since the current node has changed before it\'s case was received');
-                    }
-                } else {
-                    this._logger.error('Current Case Tree Node could not be reloaded. Invalid server response', reloadedCurrentCase);
-                }
-            }, error => {
-                this._logger.error('Current Case Tree Node reload request failed', error);
-            });
-        } else {
-            if (!this._currentNode) {
-                this._logger.debug('No Tree Case Node selected, nothing to reload');
-            } else {
-                this._logger.debug('Reload of the current case already in progress');
-            }
+        if (!this._currentNode) {
+            this._logger.debug('No Tree Case Node selected, nothing to reload');
+            return;
         }
+        if (this._currentNode.case.stringId !== this._reloadedCaseId) {
+            this._logger.debug('Reload of the current case already in progress');
+            return;
+        }
+        this._reloadedCaseId = this._currentNode.case.stringId;
+        this._caseResourceService.getOneCase(this._currentCase.stringId).subscribe(reloadedCurrentCase => {
+            if (!reloadedCurrentCase) {
+                this._logger.error('Current Case Tree Node could not be reloaded. Invalid server response', reloadedCurrentCase);
+                return;
+            }
+            if (this._currentNode && reloadedCurrentCase.stringId === this._currentNode.case.stringId) {
+                this._reloadedCaseId = undefined;
+                Object.assign(this._currentCase, reloadedCurrentCase);
+                this._treeCaseViewService.loadTask$.next(this._currentCase);
+                this._logger.debug('Current Case Tree Node reloaded');
+            } else {
+                this._logger.debug('Discarding case reload response, since the current node has changed before it\'s case was received');
+            }
+        }, error => {
+            this._logger.error('Current Case Tree Node reload request failed', error);
+        });
     }
 }
