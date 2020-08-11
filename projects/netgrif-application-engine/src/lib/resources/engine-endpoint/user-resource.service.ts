@@ -141,9 +141,9 @@ export class UserResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user/search
      */
-    public search(body: object, params?: Params): Observable<Array<User>> {
+    public search(body: object, params?: Params): Observable<Page<User>> {
         return this.provider.post$('user/search', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, 'users')));
+            .pipe(map(r => getResourcePage<User>(r, 'users')));
     }
 
     /**
