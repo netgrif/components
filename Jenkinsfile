@@ -138,7 +138,7 @@ pipeline {
                 packageJson = readJSON(file: 'package.json')
             }
             sh 'npm run nae:local-build'
-            sh "npm run example:build -- --base-href=/projects/engine-frontend/${packageJson['version']}/examples"
+            sh "npm run example:build -- --base-href=/projects/engine-frontend/${packageJson['version']}/examples/"
 
         }
      }
