@@ -12,6 +12,7 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {UserAssignService} from './service/user-assign.service';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 
 describe('UserAssignComponent', () => {
     let component: UserAssignComponent;
@@ -23,7 +24,8 @@ describe('UserAssignComponent', () => {
                 MaterialModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                SnackBarModule
             ],
             providers: [
                 UserAssignService,

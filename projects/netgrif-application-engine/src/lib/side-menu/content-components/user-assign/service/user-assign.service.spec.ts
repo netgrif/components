@@ -35,4 +35,8 @@ describe('UserAssignService', () => {
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
