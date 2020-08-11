@@ -65,6 +65,9 @@ export class TaskDataService extends TaskHandlingService {
      * Beware that if the Task has some data already loaded this function does nothing
      * and only passes `true` to the `afterAction` argument.
      *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the `afterAction` will not be executed.
+     *
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      * @param force set to `true` if you need force reload of all task data
      */
@@ -77,7 +80,16 @@ export class TaskDataService extends TaskHandlingService {
             this._safeTask.dataSize = 0;
         }
         this._taskState.startLoading();
+
+        const gottenTask = this._safeTask.stringId;
+
         this._taskResourceService.getData(this._safeTask.stringId).subscribe(dataGroups => {
+            if (this._safeTask.stringId !== gottenTask) {
+                this._log.debug('current task changed before the get data response could be received, discarding...');
+                this._taskState.stopLoading();
+                return;
+            }
+
             this._safeTask.dataGroups = dataGroups;
             if (dataGroups.length === 0) {
                 this._log.info('Task has no data ' + this._safeTask);
@@ -103,8 +115,14 @@ export class TaskDataService extends TaskHandlingService {
             afterAction.next(true);
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
         }, (error: HttpErrorResponse) => {
-            this._log.debug('getting task data failed', error);
             this._taskState.stopLoading();
+            this._log.debug('getting task data failed', error);
+
+            if (this._safeTask.stringId !== gottenTask) {
+                this._log.debug('current task changed before the get data error could be received');
+                return;
+            }
+
             if (error.status === 500 && error.error.message && error.error.message.startsWith('Could not find task with id')) {
                 this._snackBar.openWarningSnackBar(this._translate.instant('tasks.snackbar.noLongerExists'));
                 this._taskOperations.reload();
@@ -121,6 +139,9 @@ export class TaskDataService extends TaskHandlingService {
      *
      * If the request is successful clears the [changed]{@link DataField#changed} flag on all data fields that were a part of the request
      * and emits a {@link ChangedFields} object into this object's [changedFields$]{@link TaskDataService#changedFields$} stream.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the `afterAction` will not be executed.
      *
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      */
@@ -149,7 +170,17 @@ export class TaskDataService extends TaskHandlingService {
 
         this._taskState.startLoading();
         this._taskState.startUpdating();
+
+        const setTask = this._safeTask.stringId;
+
         this._taskResourceService.setData(this._safeTask.stringId, body).subscribe(response => {
+            if (this._safeTask.stringId !== setTask) {
+                this._log.debug('current task changed before the set data response could be received, discarding...');
+                this._taskState.stopLoading();
+                this._taskState.stopUpdating();
+                return;
+            }
+
             if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
                 this._changedFields$.next(response.changedFields as ChangedFields);
             }
@@ -157,8 +188,16 @@ export class TaskDataService extends TaskHandlingService {
             this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
             this.updateStateInfo(afterAction, true);
         }, error => {
+            this._log.debug('setting task data failed', error);
+
+            if (this._safeTask.stringId !== setTask) {
+                this._log.debug('current task changed before the get data error could be received');
+                this._taskState.stopLoading();
+                this._taskState.stopUpdating();
+                return;
+            }
+
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
-            this._log.debug(error);
             this.updateStateInfo(afterAction, false);
             this._taskOperations.reload();
         });

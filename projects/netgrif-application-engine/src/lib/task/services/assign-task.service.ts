@@ -35,6 +35,9 @@ export class AssignTaskService extends TaskHandlingService {
      *
      * The argument can be used to chain operations together,
      * or to execute code conditionally based on the success state of the assign operation.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the `afterAction` will not be executed.
      * @param afterAction if assign completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     public assign(afterAction = new Subject<boolean>()): void {
@@ -46,8 +49,16 @@ export class AssignTaskService extends TaskHandlingService {
             return;
         }
         this._taskState.startLoading();
+
+        const assignedTask = this._safeTask.stringId;
+
         this._taskResourceService.assignTask(this._safeTask.stringId).subscribe(response => {
             this._taskState.stopLoading();
+            if (this._safeTask.stringId !== assignedTask) {
+                this._log.debug('current task changed before the assign response could be received, discarding...');
+                return;
+            }
+
             if (response.success) {
                 this._taskContentService.removeStateData();
                 this.completeSuccess(afterAction);
@@ -56,10 +67,16 @@ export class AssignTaskService extends TaskHandlingService {
                 afterAction.next(false);
             }
         }, error => {
+            this._taskState.stopLoading();
+            this._log.debug('assigning task failed', error);
+
+            if (this._safeTask.stringId !== assignedTask) {
+                this._log.debug('current task changed before the assign error could be received');
+                return;
+            }
+
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
              ${this._taskContentService.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this._log.debug(error);
-            this._taskState.stopLoading();
             afterAction.next(false);
         });
     }

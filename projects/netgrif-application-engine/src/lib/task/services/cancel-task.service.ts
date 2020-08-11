@@ -38,6 +38,9 @@ export class CancelTaskService extends TaskHandlingService {
      *
      * The argument can be used to chain operations together,
      * or to execute code conditionally based on the success state of the cancel operation.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the `afterAction` will not be executed.
      * @param afterAction if cancel completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     cancel(afterAction = new Subject<boolean>()) {
@@ -53,29 +56,37 @@ export class CancelTaskService extends TaskHandlingService {
             return;
         }
         this._taskState.startLoading();
+
+        const canceledTaskId = this._safeTask.stringId;
+
         this._taskResourceService.cancelTask(this._safeTask.stringId).subscribe(response => {
             this._taskState.stopLoading();
+
+            if (this._safeTask.stringId !== canceledTaskId) {
+                this._log.debug('current task changed before the cancel response could be received, discarding...');
+                return;
+            }
+
             if (response.success) {
                 this._taskContentService.removeStateData();
-                this.completeSuccess(afterAction);
+                this._taskOperations.reload();
+                afterAction.next(true);
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
                 afterAction.next(false);
             }
-        }, () => {
+        }, error => {
+            this._taskState.stopLoading();
+            this._log.debug('canceling task failed', error);
+
+            if (this._safeTask.stringId !== canceledTaskId) {
+                this._log.debug('current task changed before the cancel error could be received');
+                return;
+            }
+
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this._taskState.stopLoading();
             afterAction.next(false);
         });
-    }
-
-    /**
-     * @ignore
-     * Reloads the task and emits `true` to the `afterAction` stream
-     */
-    private completeSuccess(afterAction: Subject<boolean>): void {
-        this._taskOperations.reload();
-        afterAction.next(true);
     }
 }

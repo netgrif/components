@@ -41,6 +41,9 @@ export class DelegateTaskService extends TaskHandlingService {
      *
      * The argument can be used to chain operations together,
      * or to execute code conditionally based on the success state of the delegate operation.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the `afterAction` will not be executed.
      * @param afterAction if delegate completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     delegate(afterAction = new Subject<boolean>()) {
@@ -54,12 +57,19 @@ export class DelegateTaskService extends TaskHandlingService {
                     this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
                 )
             } as UserListInjectedData).onClose.subscribe(event => {
-            this._log.info('Sidemenu event:' + event);
+            this._log.debug('Delegate sidemenu event:' + event);
             if (event.data !== undefined) {
                 this._taskState.startLoading();
 
+                const delegatedTask = this._safeTask.stringId;
+
                 this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(response => {
                     this._taskState.stopLoading();
+                    if (this._safeTask.stringId !== delegatedTask) {
+                        this._log.debug('current task changed before the delegate response could be received, discarding...');
+                        return;
+                    }
+
                     if (response.success) {
                         this._taskContentService.removeStateData();
                         this.completeSuccess(afterAction);
@@ -68,9 +78,16 @@ export class DelegateTaskService extends TaskHandlingService {
                         afterAction.next(false);
                     }
                 }, error => {
+                    this._taskState.stopLoading();
+                    this._log.debug('getting task data failed', error);
+
+                    if (this._safeTask.stringId !== delegatedTask) {
+                        this._log.debug('current task changed before the delegate error could be received');
+                        return;
+                    }
+
                     this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
                      ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-                    this._taskState.stopLoading();
                     afterAction.next(false);
                 });
             }
