@@ -95,12 +95,15 @@ export class TreeTaskContentService implements OnDestroy {
     protected cancelAndLoadFeaturedTask(selectedCase: Case | undefined) {
         this._processingTaskChange.on();
         if (this.shouldCancelTask) {
-            this._cancel.cancel(this._callchain.create(() => {
-                this.loadFeaturedTask(selectedCase);
+            this._cancel.cancel(this._callchain.create(success => {
+                if (success) {
+                    this._logger.debug('Old tree task successfully canceled');
+                } else {
+                    this._logger.warn('Old tree task could not be canceled');
+                }
             }));
-        } else {
-            this.loadFeaturedTask(selectedCase);
         }
+        this.loadFeaturedTask(selectedCase);
     }
 
     /**
