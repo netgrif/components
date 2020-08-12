@@ -94,6 +94,7 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected cancelAndLoadFeaturedTask(selectedCase: Case | undefined) {
         this._processingTaskChange.on();
+        this._taskContentService.blockFields(true);
         if (this.shouldCancelTask) {
             this._cancel.cancel(this._callchain.create(success => {
                 if (success) {
@@ -191,6 +192,7 @@ export class TreeTaskContentService implements OnDestroy {
     protected switchToTask(task: Task): void {
         task.assignPolicy = AssignPolicy.auto;
         this._taskContentService.task = task;
+        this._taskContentService.blockFields(true);
         this._assignPolicy.performAssignPolicy(true, this._callchain.create(() => {
             this._processingTaskChange.off();
         }));
