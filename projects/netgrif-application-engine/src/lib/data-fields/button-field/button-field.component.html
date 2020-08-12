@@ -23,7 +23,8 @@
                 [matTooltip]="dataField.description"
                 [disabled]="formControl.disabled"
                 (click)="formControl.setValue(formControl.value + 1)">
-            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : dataField.placeholder }}
+            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : (( dataField.view === 'fab' || dataField.view === 'minifab' ) ? '' : dataField.placeholder) }}
+            <mat-icon *ngIf="dataField.view === 'fab' || dataField.view === 'minifab'">{{dataField.placeholder}}</mat-icon>
         </button>
         <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
     </div>
