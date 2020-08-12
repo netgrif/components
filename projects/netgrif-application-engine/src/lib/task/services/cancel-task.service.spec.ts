@@ -13,6 +13,7 @@ import {TaskContentService} from '../../task-content/services/task-content.servi
 import {TaskRequestStateService} from './task-request-state.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../models/subject-task-operations';
+import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -23,8 +24,8 @@ describe('CancelTaskService', () => {
             providers: [
                 CancelTaskService,
                 TaskEventService,
-                TaskContentService,
                 TaskRequestStateService,
+                {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: NullAuthenticationService}

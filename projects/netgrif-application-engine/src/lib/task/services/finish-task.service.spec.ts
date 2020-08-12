@@ -24,6 +24,7 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
@@ -46,7 +47,7 @@ describe('FinishTaskService', () => {
                 TaskRequestStateService,
                 TaskDataService,
                 DataFocusPolicyService,
-                TaskContentService,
+                {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: TaskResourceService, useClass: TestTaskResourceService}
@@ -92,8 +93,9 @@ describe('FinishTaskService', () => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {success: 'success'};
         service.validateDataAndFinish(callChainService.create((result) => {
-            expect(testTask.startDate).toBeTruthy();
             expect(result).toBeTrue();
+            expect(testTask.startDate).toBeFalsy();
+            expect(testTask.finishDate).toBeFalsy();
             done();
         }));
     });

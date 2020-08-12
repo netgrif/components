@@ -21,6 +21,8 @@ import {AuthenticationMethodService} from '../../../authentication/services/auth
 import {NAE_TASK_OPERATIONS} from '../../../task/models/task-operations-injection-token';
 import {TaskContentService} from '../../../task-content/services/task-content.service';
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
+import {UnlimitedTaskContentService} from '../../../task-content/services/unlimited-task-content.service';
+import {SelectedCaseService} from '../../../task/services/selected-case.service';
 
 describe('TreeTaskContentService', () => {
     let service: TreeTaskContentService;
@@ -47,7 +49,8 @@ describe('TreeTaskContentService', () => {
                 CancelTaskService,
                 TaskEventService,
                 AuthenticationMethodService,
-                TaskContentService,
+                SelectedCaseService,
+                {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations}
             ]
