@@ -79,6 +79,10 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param force set to `true` if you need force reload of all task data
      */
     public initializeTaskDataFields(afterAction = new Subject<boolean>(), force: boolean = false): void {
+        if (!this.isTaskPresent()) {
+            return;
+        }
+
         if (this._safeTask.dataSize > 0 && !force) {
             afterAction.next(true);
             return;
@@ -153,6 +157,10 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      */
     public updateTaskDataFields(afterAction = new Subject<boolean>()): void {
+        if (!this.isTaskPresent()) {
+            return;
+        }
+
         const setTaskId = this._safeTask.stringId;
 
         if (this._safeTask.dataSize <= 0) {

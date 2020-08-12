@@ -37,6 +37,13 @@ export abstract class TaskHandlingService {
     }
 
     /**
+     * @returns `true` if a {@link Task} instance is set, `false` otherwise
+     */
+    protected isTaskPresent(): boolean {
+        return !!this._taskContentService.task;
+    }
+
+    /**
      * Checks whether the current state of the {@link TaskContentService} and optionally of the {@link SelectedCaseService}, is still
      * relevant to the task that was requested.
      *
@@ -47,10 +54,11 @@ export abstract class TaskHandlingService {
      * @returns `true` if the requested task is still relevant to the state of the frontend. Returns `false` otherwise.
      */
     protected isTaskRelevant(requestedTaskId: string): boolean {
-        return this._task !== undefined
+        return this.isTaskPresent()
             && this._task.stringId === requestedTaskId
-            && (!!this._selectedCaseService
-                || (!!this._selectedCaseService.selectedCase
+            && (!this._selectedCaseService
+                || (!!this._selectedCaseService
+                    && !!this._selectedCaseService.selectedCase
                     && this._task.caseId === this._selectedCaseService.selectedCase.stringId
                 )
             );

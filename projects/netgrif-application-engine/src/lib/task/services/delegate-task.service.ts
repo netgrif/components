@@ -63,6 +63,11 @@ export class DelegateTaskService extends TaskHandlingService {
             } as UserListInjectedData).onClose.subscribe(event => {
             this._log.debug('Delegate sidemenu event:' + event);
             if (event.data !== undefined) {
+                if (!this.isTaskRelevant(delegatedTaskId)) {
+                    this._log.debug('current task changed before the delegate side menu data was received, discarding...');
+                    return;
+                }
+
                 this._taskState.startLoading(delegatedTaskId);
 
                 this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(response => {

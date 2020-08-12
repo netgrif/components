@@ -33,7 +33,7 @@ export class TaskRequestStateService extends TaskHandlingService implements OnDe
      * If no value is provided, the state of the task held in the {@link TaskContentService} will be returned.
      */
     public isLoading(taskId?: string): boolean | undefined {
-        if (taskId !== undefined && this._safeTask.stringId !== taskId) {
+        if (taskId !== undefined && !this.isTaskRelevant(taskId)) {
             return undefined;
         }
         return this._loading.isActive;
@@ -47,7 +47,7 @@ export class TaskRequestStateService extends TaskHandlingService implements OnDe
      * @param taskId stringId of the {@link Task} who's loading state we want to change
      */
     public startLoading(taskId: string): void {
-        if (this._safeTask.stringId !== taskId) {
+        if (!this.isTaskRelevant(taskId)) {
             return;
         }
         this._loading.on();
@@ -61,7 +61,7 @@ export class TaskRequestStateService extends TaskHandlingService implements OnDe
      * @param taskId stringId of the {@link Task} who's loading state we want to change
      */
     public stopLoading(taskId: string): void {
-        if (this._safeTask.stringId !== taskId) {
+        if (!this.isTaskRelevant(taskId)) {
             return;
         }
         this._loading.off();
@@ -75,7 +75,7 @@ export class TaskRequestStateService extends TaskHandlingService implements OnDe
      * If no value is provided, the state of the task held in the {@link TaskContentService} will be returned.
      */
     public isUpdating(taskId?: string): boolean | undefined {
-        if (taskId !== undefined && this._safeTask.stringId !== taskId) {
+        if (taskId !== undefined && !this.isTaskRelevant(taskId)) {
             return undefined;
         }
         return this._updating.isActive;
@@ -89,7 +89,7 @@ export class TaskRequestStateService extends TaskHandlingService implements OnDe
      * @param taskId stringId of the {@link Task} who's loading state we want to change
      */
     public startUpdating(taskId: string): void {
-        if (this._safeTask.stringId !== taskId) {
+        if (!this.isTaskRelevant(taskId)) {
             return;
         }
         this._updating.on();
@@ -103,7 +103,7 @@ export class TaskRequestStateService extends TaskHandlingService implements OnDe
      * @param taskId stringId of the {@link Task} who's loading state we want to change
      */
     public stopUpdating(taskId: string): void {
-        if (this._safeTask.stringId !== taskId) {
+        if (!this.isTaskRelevant(taskId)) {
             return;
         }
         this._updating.off();
