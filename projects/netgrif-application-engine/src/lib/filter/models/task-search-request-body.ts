@@ -9,26 +9,31 @@
 export interface TaskSearchRequestBody {
     /**
      * Returned tasks must have the role with the specified role ID.
+     *
      * If more than one role ID is specified, the returned tasks must have at least one of them.
      */
     role?: string | Array<string>;
     /**
      * Returned tasks must be of case with the specified case ID.
+     *
      * If more than one case ID is specified, the returned tasks must be of one of them.
      */
     case?: string | Array<string>;
     /**
      * Returned tasks must have the specified title (default value).
+     *
      * If more than one title is specified, the returned tasks must have one of them.
      */
     title?: string | Array<string>;
     /**
      * Returned tasks must be assigned to the user with the specified user ID.
+     *
      * If more than one user ID is specified, the returned tasks must be assigned to one of the users.
      */
     user?: number | Array<number>;
     /**
      * Returned tasks must be of process with the specified process ID.
+     *
      * If more than one process ID is specified, the returned tasks must be of one of them.
      */
     process?: string | Array<string>;
@@ -46,4 +51,10 @@ export interface TaskSearchRequestBody {
      * for more information.
      */
     query?: string;
+    /**
+     * Returned tasks must have the specified transition ID.
+     *
+     * If more than one transition ID is specified, the returned tasks must have one of them.
+     */
+    transitionId?: string | Array<string>;
 }
