@@ -12,7 +12,7 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
                           description?: string, layout?: Layout, public validations?: any) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        this.materialAppearance = !!layout ? this.layout.appearance : 'legacy';
+        this.materialAppearance = !!layout ? this.layout.appearance : 'outline';
     }
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {

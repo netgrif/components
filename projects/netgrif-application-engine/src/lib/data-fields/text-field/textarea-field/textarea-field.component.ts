@@ -20,6 +20,12 @@ export class TextareaFieldComponent extends AbstractTextFieldComponent {
         super(_translate);
     }
 
+    public getHeight() {
+        const oneHeight = this.textAreaField.layout && this.textAreaField.layout.appearance === 'outline' ? 27 : 34;
+        return this.textAreaField.layout && this.textAreaField.layout.rows && this.textAreaField.layout.rows !== 1 ?
+            (this.textAreaField.layout.rows - 1) * 105 + oneHeight : oneHeight;
+    }
+
     public getErrorMessage() {
         return this.buildErrorMessage(this.textAreaField, this.formControlRef);
     }

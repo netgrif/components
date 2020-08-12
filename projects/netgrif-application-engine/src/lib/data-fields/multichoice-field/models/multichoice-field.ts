@@ -19,11 +19,7 @@ export class MultichoiceField  extends DataField<Array<string>> {
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
                 private _view = MultichoiceFieldView.DEFAULT) {
         super(stringId, title, values, behavior, placeholder, description, layout);
-        if (layout) {
-            this.materialAppearance = this.layout.appearance;
-        } else {
-            this.materialAppearance = 'legacy';
-        }
+        this.materialAppearance = !!layout ? this.layout.appearance : 'outline';
     }
 
     set choices(choices: Array<MultichoiceFieldValue>) {

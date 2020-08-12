@@ -11,11 +11,7 @@ export class NumberField extends DataField<number> {
     constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[],
                 placeholder?: string, description?: string, layout?: Layout) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        if (layout) {
-            this.materialAppearance = this.layout.appearance;
-        } else {
-            this.materialAppearance = 'legacy';
-        }
+        this.materialAppearance = !!layout ? this.layout.appearance : 'outline';
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

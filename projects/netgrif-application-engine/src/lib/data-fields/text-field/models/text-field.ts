@@ -18,11 +18,7 @@ export class TextField extends DataField<string> {
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, public validations?: Validation[], private _view = TextFieldView.DEFAULT) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        if (layout) {
-            this.materialAppearance = this.layout.appearance;
-        } else {
-            this.materialAppearance = 'legacy';
-        }
+        this.materialAppearance = !!layout ? this.layout.appearance : 'outline';
     }
 
     get view(): TextFieldView {
