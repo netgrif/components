@@ -1,0 +1,21 @@
+.case-view-container {
+    margin: 16px;
+    height: calc(100% - 32px);
+}
+
+.case-view-search-container {
+    padding: 16px;
+}
+
+.case-header-padding {
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.search-width {
+    width: 100%;
+}
