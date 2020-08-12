@@ -30,6 +30,9 @@
         white-space: normal !important;
         line-height: normal !important;
         padding: 8px 0 !important;
+        display: flex !important;
+        justify-content: center;
+        flex-direction: column;
     }
 }
 
