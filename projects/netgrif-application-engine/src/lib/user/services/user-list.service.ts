@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, forkJoin, Observable, of, timer} from 'rxjs';
+import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from 'rxjs';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Pagination} from '../../resources/interface/pagination';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
@@ -54,6 +54,7 @@ export class UserListService {
      */
     private _searchQuery: string;
     private _updateProgress$: LoadingEmitter;
+    private _usersChanges$: Subject<void>;
 
     /**
      * Inject services.
@@ -71,6 +72,7 @@ export class UserListService {
                 private _translate: TranslateService) {
         this._loading$ = new LoadingEmitter();
         this._updateProgress$ = new LoadingEmitter();
+        this._usersChanges$ = new Subject<void>();
         this._endOfData = false;
         this._nextPage$ = new BehaviorSubject<number>(null);
         this._pagination = {
@@ -84,6 +86,9 @@ export class UserListService {
 
         const usersMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
+            tap(() => {
+                if (!this._clear) { this._usersChanges$.next(); }
+            }),
             scan((acc, value) => {
                 const result = this._clear ? {} : {...acc, ...value};
                 this._clear = false;
@@ -91,7 +96,7 @@ export class UserListService {
             }, {})
         );
         this._users$ = usersMap.pipe(
-            map(v => Object.values(v))
+            map(v => Object.values(v) as UserListItem[]),
         );
     }
 
@@ -101,6 +106,10 @@ export class UserListService {
 
     public get loading$(): Observable<boolean> {
         return this._loading$.asObservable();
+    }
+
+    public get usersChanges$(): Observable<void> {
+        return this._usersChanges$.asObservable();
     }
 
     public get users$(): Observable<Array<UserListItem>> {
