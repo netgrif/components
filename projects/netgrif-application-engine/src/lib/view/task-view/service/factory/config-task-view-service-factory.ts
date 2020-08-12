@@ -44,7 +44,7 @@ export class ConfigTaskViewServiceFactory {
      * It is used to load [allowedNets]{@link SortableViewWithAllowedNets#_allowedNets$} from configuration.
      * @returns an instance of {@link TaskViewService} configured for view at the specified path.
      */
-    public create(webViewPath: string): TaskViewService {
+    public create(webViewPath: string, initiallyOpenOneTask = of(true)): TaskViewService {
         const view = this._configService.getViewByPath(webViewPath);
         if (view && view.layout && view.layout.params) {
             const viewParams = view.layout.params as TaskViewParams;
@@ -62,7 +62,8 @@ export class ConfigTaskViewServiceFactory {
                 this._searchService,
                 this._log,
                 this._userComparator,
-                nets
+                nets,
+                initiallyOpenOneTask
             );
         } else {
             throw new Error(`Can't load configuration for view with webPath: '${webViewPath}'`);
