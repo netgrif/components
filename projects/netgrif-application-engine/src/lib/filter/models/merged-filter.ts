@@ -33,6 +33,14 @@ export class MergedFilter extends Filter {
         });
     }
 
+    public set operator(operator: MergeOperator) {
+        this._operator = operator;
+    }
+
+    public get operator(): MergeOperator {
+        return this._operator;
+    }
+
     /**
      * See [Filter.clone()]{@link Filter#clone}
      */
