@@ -1,11 +1,20 @@
+/**
+ * Used by [UserField]{@link UserField} and [UserAssignComponent]{@link UserAssignComponent}.
+ *
+ * Represents the value of the user.
+ */
 export class UserValue {
-
-    private _selected: boolean;
-
-    constructor(private _id: number, private _name: string, private _surname: string, private _email: string) {
+    /**
+     * An object that represents the selected user in {@link UserField} and [UserAssignComponent]{@link UserAssignComponent}.
+     * @param _id the id of the selected user
+     * @param _name the first name of the selected user
+     * @param _surname the surname of the selected user
+     * @param _email email of the selected user
+     */
+    constructor(private _id: string, private _name: string, private _surname: string, private _email: string) {
     }
 
-    get id(): number {
+    get id(): string {
         return this._id;
     }
 
@@ -23,13 +32,5 @@ export class UserValue {
 
     get email(): string {
         return this._email;
-    }
-
-    get selected(): boolean {
-        return this._selected;
-    }
-
-    set selected(value: boolean) {
-        this._selected = value;
     }
 }

@@ -11,9 +11,8 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
-import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {UserAssignService} from './service/user-assign.service';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 
 describe('UserAssignComponent', () => {
     let component: UserAssignComponent;
@@ -25,27 +24,20 @@ describe('UserAssignComponent', () => {
                 MaterialModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                SnackBarModule
             ],
             providers: [
-                { provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
+                UserAssignService,
+                {provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
                     }, new Observable<boolean>(), null)},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [
                 UserAssignComponent,
                 UserAssignListComponent,
-                UserAssignItemComponent,
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
+                UserAssignItemComponent
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [
-                    ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
-                ]
-            }
         }).compileComponents();
     }));
 

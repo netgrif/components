@@ -163,7 +163,7 @@ describe('UserResourceService', () => {
     it('should search', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.search({}).subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res.pagination.totalElements).toEqual(0);
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/user/search');

@@ -6,12 +6,14 @@ import {Credentials} from '../../models/credentials';
 import {Observable, of} from 'rxjs';
 import {User} from '../../models/user';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AuthenticationService', () => {
     let service: AuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MyAuth},
@@ -32,7 +34,7 @@ describe('AuthenticationService', () => {
     it('should login', () => {
         service.login({username: '', password: ''}).subscribe( res => {
             expect(res.id).toEqual('id');
-            expect(service.isAuthenticated()).toBe(true);
+            expect(service.isAuthenticated).toBe(true);
         });
     });
 
