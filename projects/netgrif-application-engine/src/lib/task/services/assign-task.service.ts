@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {Subject} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -9,6 +9,7 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
+import {SelectedCaseService} from './selected-case.service';
 
 
 /**
@@ -23,8 +24,9 @@ export class AssignTaskService extends TaskHandlingService {
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
-        super(_taskContentService);
+        super(_taskContentService, _selectedCaseService);
     }
 
     /**
@@ -54,7 +56,7 @@ export class AssignTaskService extends TaskHandlingService {
 
         this._taskResourceService.assignTask(this._safeTask.stringId).subscribe(response => {
             this._taskState.stopLoading(assignedTaskId);
-            if (this._safeTask.stringId !== assignedTaskId) {
+            if (!this.isTaskRelevant(assignedTaskId)) {
                 this._log.debug('current task changed before the assign response could be received, discarding...');
                 return;
             }
@@ -70,7 +72,7 @@ export class AssignTaskService extends TaskHandlingService {
             this._taskState.stopLoading(assignedTaskId);
             this._log.debug('assigning task failed', error);
 
-            if (this._safeTask.stringId !== assignedTaskId) {
+            if (!this.isTaskRelevant(assignedTaskId)) {
                 this._log.debug('current task changed before the assign error could be received');
                 return;
             }

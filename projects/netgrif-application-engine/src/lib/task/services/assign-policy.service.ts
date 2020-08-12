@@ -78,19 +78,20 @@ export class AssignPolicyService extends TaskHandlingService {
      */
     protected afterAssignOpenPolicy(assignSuccess: boolean, afterAction: Subject<boolean>): void {
         this._taskOperations.reload();
-        if (assignSuccess) {
-            this._taskDataService.initializeTaskDataFields(
-                this._callchain.create((requestSuccessful) => {
-                    if (requestSuccessful) {
-                        this._finishPolicyService.performFinishPolicy(afterAction);
-                    } else {
-                        afterAction.next(false);
-                    }
-                })
-            );
-        } else {
+        if (!assignSuccess) {
             afterAction.next(false);
+            return;
         }
+
+        this._taskDataService.initializeTaskDataFields(
+            this._callchain.create((requestSuccessful) => {
+                if (requestSuccessful) {
+                    this._finishPolicyService.performFinishPolicy(afterAction);
+                } else {
+                    afterAction.next(false);
+                }
+            })
+        );
     }
 
     /**

@@ -21,11 +21,11 @@ import {hasContent} from '../../../utility/pagination/page-has-content';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {filter} from 'rxjs/operators';
 import {LoggerService} from '../../../logger/services/logger.service';
+import {SelectedCaseService} from '../../../task/services/selected-case.service';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
 
-    private _selectedCase: Case;
     private _processingTaskChange: LoadingEmitter;
     private _displayedTaskText$: Subject<string>;
     /**
@@ -45,6 +45,7 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _userComparator: UserComparatorService,
                 protected _callchain: CallChainService,
                 protected _logger: LoggerService,
+                protected _selectedCaseService: SelectedCaseService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: SubjectTaskOperations) {
         this._processingTaskChange = new LoadingEmitter();
         this._displayedTaskText$ = new ReplaySubject<string>();
@@ -112,7 +113,7 @@ export class TreeTaskContentService implements OnDestroy {
      * @param selectedCase the Case who's task should be now displayed
      */
     protected loadFeaturedTask(selectedCase: Case | undefined): void {
-        this._selectedCase = selectedCase;
+        this._selectedCaseService.selectedCase = selectedCase;
 
         const requestBody = this.getTaskRequestBody();
         if (requestBody === undefined) {
@@ -138,13 +139,13 @@ export class TreeTaskContentService implements OnDestroy {
      * Returns `false` otherwise.
      */
     private taskChanged(newCase: Case | undefined): boolean {
-        const currentCaseId = this._selectedCase ? this._selectedCase.stringId : undefined;
+        const currentCaseId = this._selectedCaseService.selectedCase ? this._selectedCaseService.selectedCase.stringId : undefined;
         const newCaseId = newCase ? newCase.stringId : undefined;
         if (currentCaseId !== newCaseId) {
             return true;
         }
 
-        const currentTransitionId = this.getTransitionId(this._selectedCase);
+        const currentTransitionId = this.getTransitionId(this._selectedCaseService.selectedCase);
         const newTransitionId = this.getTransitionId(newCase);
         return currentTransitionId !== newTransitionId;
     }
@@ -162,10 +163,10 @@ export class TreeTaskContentService implements OnDestroy {
      * immediate data field. Returns `undefined` if the request body cannot be created.
      */
     protected getTaskRequestBody(): TaskGetRequestBody | undefined {
-        const transitionId = this.getTransitionId(this._selectedCase);
+        const transitionId = this.getTransitionId(this._selectedCaseService.selectedCase);
         if (transitionId) {
             return {
-                case: this._selectedCase.stringId,
+                case: this._selectedCaseService.selectedCase.stringId,
                 transition: transitionId
             };
         }
@@ -190,6 +191,11 @@ export class TreeTaskContentService implements OnDestroy {
      * @param task the Task that should now be selected
      */
     protected switchToTask(task: Task): void {
+        if (task.caseId !== this._selectedCaseService.selectedCase.stringId) {
+            this._logger.debug('Tree featured task has been loaded, but the selected case has changed since. Discarding...');
+            return;
+        }
+
         task.assignPolicy = AssignPolicy.auto;
         this._taskContentService.task = task;
         this._taskContentService.blockFields(true);
@@ -260,9 +266,9 @@ export class TreeTaskContentService implements OnDestroy {
      * Returns `undefined`, if no task is currently selected.
      */
     protected getUniqueTaskIdentifier(): string {
-        if (!this._selectedCase) {
+        if (!this._selectedCaseService.selectedCase) {
             return undefined;
         }
-        return `${this._selectedCase.stringId}#${this.getTransitionId(this._selectedCase)}`;
+        return `${this._selectedCaseService.selectedCase.stringId}#${this.getTransitionId(this._selectedCaseService.selectedCase)}`;
     }
 }

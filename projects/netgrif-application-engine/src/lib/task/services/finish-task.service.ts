@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {Subject} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -12,6 +12,7 @@ import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
+import {SelectedCaseService} from './selected-case.service';
 
 
 /**
@@ -28,8 +29,9 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _taskDataService: TaskDataService,
                 protected _callChain: CallChainService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
-        super(_taskContentService);
+        super(_taskContentService, _selectedCaseService);
     }
 
     /**
@@ -92,7 +94,7 @@ export class FinishTaskService extends TaskHandlingService {
 
         this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(response => {
             this._taskState.stopLoading(finishedTaskId);
-            if (this._safeTask.stringId !== finishedTaskId) {
+            if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
                 return;
             }
@@ -110,7 +112,7 @@ export class FinishTaskService extends TaskHandlingService {
             this._taskState.stopLoading(finishedTaskId);
             this._log.debug('finishing task failed', error);
 
-            if (this._safeTask.stringId !== finishedTaskId) {
+            if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish error could be received');
                 return;
             }

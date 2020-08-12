@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {Subject} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -11,6 +11,7 @@ import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {SelectedCaseService} from './selected-case.service';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -26,8 +27,9 @@ export class CancelTaskService extends TaskHandlingService {
                 protected _taskState: TaskRequestStateService,
                 protected _userComparator: UserComparatorService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
-        super(_taskContentService);
+        super(_taskContentService, _selectedCaseService);
     }
 
     /**
@@ -62,7 +64,7 @@ export class CancelTaskService extends TaskHandlingService {
         this._taskResourceService.cancelTask(this._safeTask.stringId).subscribe(response => {
             this._taskState.stopLoading(canceledTaskId);
 
-            if (this._safeTask.stringId !== canceledTaskId) {
+            if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel response could be received, discarding...');
                 return;
             }
@@ -79,7 +81,7 @@ export class CancelTaskService extends TaskHandlingService {
             this._taskState.stopLoading(canceledTaskId);
             this._log.debug('canceling task failed', error);
 
-            if (this._safeTask.stringId !== canceledTaskId) {
+            if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel error could be received');
                 return;
             }

@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -15,13 +15,14 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FileField} from '../../data-fields/file-field/models/file-field';
+import {SelectedCaseService} from './selected-case.service';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
  * a single Task object managed by a {@link TaskContentService} instance.
  */
 @Injectable()
-export class TaskDataService extends TaskHandlingService {
+export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     protected _updateSuccess$: Subject<boolean>;
     protected _changedFields$: Subject<ChangedFields>;
@@ -34,10 +35,16 @@ export class TaskDataService extends TaskHandlingService {
                 protected _fieldConverterService: FieldConverterService,
                 protected _dataFocusPolicyService: DataFocusPolicyService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
-        super(_taskContentService);
+        super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ = new Subject<boolean>();
         this._changedFields$ = new Subject<ChangedFields>();
+    }
+
+    ngOnDestroy(): void {
+        this._updateSuccess$.complete();
+        this._changedFields$.complete();
     }
 
     /**
@@ -84,7 +91,7 @@ export class TaskDataService extends TaskHandlingService {
         this._taskState.startLoading(gottenTaskId);
 
         this._taskResourceService.getData(this._safeTask.stringId).subscribe(dataGroups => {
-            if (this._safeTask.stringId !== gottenTaskId) {
+            if (!this.isTaskRelevant(gottenTaskId)) {
                 this._log.debug('current task changed before the get data response could be received, discarding...');
                 this._taskState.stopLoading(gottenTaskId);
                 return;
@@ -118,7 +125,7 @@ export class TaskDataService extends TaskHandlingService {
             this._taskState.stopLoading(gottenTaskId);
             this._log.debug('getting task data failed', error);
 
-            if (this._safeTask.stringId !== gottenTaskId) {
+            if (!this.isTaskRelevant(gottenTaskId)) {
                 this._log.debug('current task changed before the get data error could be received');
                 return;
             }
@@ -174,7 +181,7 @@ export class TaskDataService extends TaskHandlingService {
         this._taskState.startUpdating(setTaskId);
 
         this._taskResourceService.setData(this._safeTask.stringId, body).subscribe(response => {
-            if (this._safeTask.stringId !== setTaskId) {
+            if (!this.isTaskRelevant(setTaskId)) {
                 this._log.debug('current task changed before the set data response could be received, discarding...');
                 this._taskState.stopLoading(setTaskId);
                 this._taskState.stopUpdating(setTaskId);
@@ -190,7 +197,7 @@ export class TaskDataService extends TaskHandlingService {
         }, error => {
             this._log.debug('setting task data failed', error);
 
-            if (this._safeTask.stringId !== setTaskId) {
+            if (!this.isTaskRelevant(setTaskId)) {
                 this._log.debug('current task changed before the get data error could be received');
                 this._taskState.stopLoading(setTaskId);
                 this._taskState.stopUpdating(setTaskId);
