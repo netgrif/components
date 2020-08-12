@@ -8,5 +8,28 @@
     .editor-preview > h2 {
         border-bottom: 1px solid #eee;
     }
+
+    .mat-option {
+        height: auto !important;
+        min-height: 48px;
+        white-space: normal !important;
+        line-height: normal !important;
+        padding: 8px 16px !important;
+    }
+
+    .mat-radio-label {
+        height: auto !important;
+        min-height: 48px;
+        white-space: normal !important;
+        line-height: normal !important;
+    }
+
+    .mat-list-option {
+        height: auto !important;
+        min-height: 48px;
+        white-space: normal !important;
+        line-height: normal !important;
+        padding: 8px 0 !important;
+    }
 }
 
