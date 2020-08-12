@@ -63,7 +63,7 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
                 case 'file':
                     return {value: immediate.value, icon: 'insert_drive_file'};
                 case 'user':
-                    return {value: immediate.value, icon: 'account_circle'};
+                    return {value: immediate.value.fullName, icon: 'account_circle'};
                 default:
                     // TODO 8.4.2020 - File field value rendering once file field works
                     // TODO 8.4.2020 - User field value rendering once user field works
