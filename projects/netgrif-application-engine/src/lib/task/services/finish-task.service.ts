@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {Subject} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -12,6 +12,7 @@ import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
+import {SelectedCaseService} from './selected-case.service';
 
 
 /**
@@ -28,8 +29,9 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _taskDataService: TaskDataService,
                 protected _callChain: CallChainService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
-        super(_taskContentService);
+        super(_taskContentService, _selectedCaseService);
     }
 
     /**
@@ -51,9 +53,10 @@ export class FinishTaskService extends TaskHandlingService {
                 }
             }));
         } else if (this._taskContentService.validateTaskData()) {
+            const finishedTaskId = this._safeTask.stringId;
             this._taskDataService.updateTaskDataFields(this._callChain.create(success => {
                 if (success) {
-                    if (this._taskState.isUpdating) {
+                    if (this._taskState.isUpdating(finishedTaskId)) {
                         this._taskDataService.updateSuccess$.pipe(take(1)).subscribe(bool => {
                             if (bool) {
                                 this.sendFinishTaskRequest(afterAction);
@@ -75,38 +78,48 @@ export class FinishTaskService extends TaskHandlingService {
      *
      * The argument can be used to chain operations together,
      * or to execute code conditionally based on the success state of the finish request.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the `afterAction` will not be executed.
      * @param afterAction if finish request completes successfully `true` will be emitted into this Subject,
      * otherwise `false` will be emitted
      */
     private sendFinishTaskRequest(afterAction: Subject<boolean>): void {
-        if (this._taskState.isLoading) {
+        const finishedTaskId = this._safeTask.stringId;
+
+        if (this._taskState.isLoading(finishedTaskId)) {
             return;
         }
-        this._taskState.startLoading();
+        this._taskState.startLoading(finishedTaskId);
+
         this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(response => {
-            this._taskState.stopLoading();
+            this._taskState.stopLoading(finishedTaskId);
+            if (!this.isTaskRelevant(finishedTaskId)) {
+                this._log.debug('current task changed before the finish response could be received, discarding...');
+                return;
+            }
+
             if (response.success) {
                 this._taskContentService.removeStateData();
-                this.completeSuccess(afterAction);
+                this._taskOperations.reload();
+                afterAction.next(true);
                 this._taskOperations.close();
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
                 afterAction.next(false);
             }
-        }, () => {
+        }, error => {
+            this._taskState.stopLoading(finishedTaskId);
+            this._log.debug('finishing task failed', error);
+
+            if (!this.isTaskRelevant(finishedTaskId)) {
+                this._log.debug('current task changed before the finish error could be received');
+                return;
+            }
+
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this._taskState.stopLoading();
             afterAction.next(false);
         });
-    }
-
-    /**
-     * @ignore
-     * Reloads the task and emits `true` to the `afterAction` stream
-     */
-    private completeSuccess(afterAction: Subject<boolean>): void {
-        this._taskOperations.reload();
-        afterAction.next(true);
     }
 }

@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {Subject} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -9,6 +9,7 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
+import {SelectedCaseService} from './selected-case.service';
 
 
 /**
@@ -23,8 +24,9 @@ export class AssignTaskService extends TaskHandlingService {
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
-        super(_taskContentService);
+        super(_taskContentService, _selectedCaseService);
     }
 
     /**
@@ -35,19 +37,30 @@ export class AssignTaskService extends TaskHandlingService {
      *
      * The argument can be used to chain operations together,
      * or to execute code conditionally based on the success state of the assign operation.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the `afterAction` will not be executed.
      * @param afterAction if assign completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     public assign(afterAction = new Subject<boolean>()): void {
-        if (this._taskState.isLoading) {
+        const assignedTaskId = this._safeTask.stringId;
+
+        if (this._taskState.isLoading(assignedTaskId)) {
             return;
         }
         if (this._safeTask.user) {
             this.completeSuccess(afterAction);
             return;
         }
-        this._taskState.startLoading();
+        this._taskState.startLoading(assignedTaskId);
+
         this._taskResourceService.assignTask(this._safeTask.stringId).subscribe(response => {
-            this._taskState.stopLoading();
+            this._taskState.stopLoading(assignedTaskId);
+            if (!this.isTaskRelevant(assignedTaskId)) {
+                this._log.debug('current task changed before the assign response could be received, discarding...');
+                return;
+            }
+
             if (response.success) {
                 this._taskContentService.removeStateData();
                 this.completeSuccess(afterAction);
@@ -56,10 +69,16 @@ export class AssignTaskService extends TaskHandlingService {
                 afterAction.next(false);
             }
         }, error => {
+            this._taskState.stopLoading(assignedTaskId);
+            this._log.debug('assigning task failed', error);
+
+            if (!this.isTaskRelevant(assignedTaskId)) {
+                this._log.debug('current task changed before the assign error could be received');
+                return;
+            }
+
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
              ${this._taskContentService.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this._log.debug(error);
-            this._taskState.stopLoading();
             afterAction.next(false);
         });
     }

@@ -8,6 +8,8 @@ export * from './services/task-data.service';
 export * from './services/data-focus-policy.service';
 export * from './services/assign-policy.service';
 export * from './services/finish-policy.service';
+export * from './services/task-handling-service';
+export * from './services/selected-case.service';
 
 /* MODELS */
 export * from './models/task-operations-injection-token';
