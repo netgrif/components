@@ -12,6 +12,10 @@ export enum ButtonFieldView {
     MINIFAB = 'minifab'
  }
 
+export enum ButtonFieldValidation {
+    REQUIRED = 'required'
+}
+
 export class ButtonField extends DataField<number> {
 
     constructor(stringId: string, title: string, behavior: Behavior, value?: number,

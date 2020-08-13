@@ -162,7 +162,8 @@
             "email": "Zadaný text musí byť email",
             "dateRange": "Zadaný dátum musí byť v rozsahu {{range}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
-            "workday": "Zadaný dátum musí byť pracovný deň"
+            "workday": "Zadaný dátum musí byť pracovný deň",
+            "enumeration": "Musí byť vybraná jedna z možností"
         },
         "snackBar": {
             "downloadFail": " stahovanie zlyhalo",

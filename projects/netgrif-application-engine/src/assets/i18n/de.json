@@ -162,7 +162,8 @@
             "email": "Der eingegebene Text muss ein E-Mail sein",
             "dateRange": "Das eingegebene Datum muss aus dem gegebenen Bereich {{range}} sein",
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
-            "workday": "Das eingegebene Datum muss ein Wochentag sein"
+            "workday": "Das eingegebene Datum muss ein Wochentag sein",
+            "enumeration": "One of the options must be selected"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",

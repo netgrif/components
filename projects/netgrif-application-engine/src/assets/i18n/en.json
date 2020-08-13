@@ -162,7 +162,8 @@
             "email": "Entered text must be in email format",
             "dateRange": "Entered date must be in range {{range}}",
             "weekend": "Entered date must be weekend day",
-            "workday": "Entered date must be week day"
+            "workday": "Entered date must be week day",
+            "enumeration": "One of the options must be selected"
         },
         "snackBar": {
             "downloadFail": " failed to download",

@@ -2,8 +2,9 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {EnumerationField, EnumerationFieldValue} from '../models/enumeration-field';
+import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nae-enumeration-autocomplete-select-field',
@@ -18,6 +19,9 @@ export class EnumerationAutocompleteSelectFieldComponent implements OnInit {
     @ViewChild('input') text: ElementRef;
 
     filteredOptions: Observable<EnumerationFieldValue[]>;
+
+    constructor(private _translate: TranslateService) {
+    }
 
     ngOnInit() {
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
@@ -51,5 +55,14 @@ export class EnumerationAutocompleteSelectFieldComponent implements OnInit {
             }
         }
         return key;
+    }
+
+    public buildErrorMessage() {
+        if (this.formControlRef.hasError(EnumerationFieldValidation.REQUIRED)) {
+            return this._translate.instant('dataField.validations.required');
+        }
+        if (this.formControlRef.hasError(EnumerationFieldValidation.WRONG_VALUE)) {
+            return this._translate.instant('dataField.validations.enumeration');
+        }
     }
 }
