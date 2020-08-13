@@ -37,7 +37,7 @@ describe('BasicAuthenticationService', () => {
                 expect(res.id).toEqual('id');
             });
 
-            tick(500);
+            tick(100);
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/login');
             expect(reqLog.request.method).toEqual('GET');
