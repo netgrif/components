@@ -1,7 +1,6 @@
 import {ElementRef, Injectable} from '@angular/core';
 import * as JSZip from 'jszip';
 import {FileField, FileUploadDataModel} from '../models/file-field';
-import {FileUploadService} from './upload/file-upload.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
@@ -42,7 +41,6 @@ export class FileFieldService {
 
     /**
      * After complete file upload set value for file field.
-     * @param _fileUploadService Provides upload file to backend
      * @param _sideMenuService Open right side menu
      * @param _snackBarService Notify user about exceeded validations
      * @param _translate for translations
@@ -50,16 +48,12 @@ export class FileFieldService {
      * @param _taskResourceService Provides upload and download file
      * @param _log Log error of file upload
      */
-    constructor(private _fileUploadService: FileUploadService,
-                private _sideMenuService: SideMenuService,
+    constructor(private _sideMenuService: SideMenuService,
                 private _snackBarService: SnackBarService,
                 private _translate: TranslateService,
                 private _lang: LanguageService,
                 private _taskResourceService: TaskResourceService,
                 private _log: LoggerService) {
-        this._fileUploadService.fileUploadCompleted.subscribe(() => {
-            // this.fileField.value = this.resolveFilesArray();
-        });
     }
 
     /**
@@ -71,7 +65,6 @@ export class FileFieldService {
         this.allFiles.forEach(file => {
             zip.folder('fileFieldZipFolder').file((file.data as FileUploadDataModel).file.name);
         });
-        this._fileUploadService.uploadFile(zip.files);
         this._sideMenuService.close();
     }
 
@@ -152,11 +145,6 @@ export class FileFieldService {
      */
     public fileUpload(taskId: string) {
         this.fileUploadEl.nativeElement.onchange = () => {
-            if ((this.allFiles.length + this.fileUploadEl.nativeElement.files.length) > this.fileField.maxUploadFiles) {
-                this._snackBarService.openWarningSnackBar(this._translate.instant('dataField.snackBar.moreFiles'),
-                    SnackBarVerticalPosition.BOTTOM, SnackBarHorizontalPosition.RIGHT, 2);
-                return;
-            }
             Array.from(this.fileUploadEl.nativeElement.files).forEach(file => {
                 const fileUploadModel = this.createFileUploadModel(file);
                 if (this.allFiles.find(
@@ -193,33 +181,31 @@ export class FileFieldService {
             return;
         }
 
-        if (!this.fileField.zipped) {
-            const fileFormData = new FormData();
-            fileFormData.append('file', (fileUploadModel.data as FileUploadDataModel).file as File);
+        const fileFormData = new FormData();
+        fileFormData.append('file', (fileUploadModel.data as FileUploadDataModel).file as File);
 
-            fileUploadModel.inProgress = true;
-            fileUploadModel.completed = false;
-            fileUploadModel.error = false;
-            fileUploadModel.sub = this._taskResourceService.uploadFile(taskId,
-                fileUploadModel.stringId, fileFormData).subscribe(response => {
-                if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
-                    fileUploadModel.progress = (response as ProviderProgress).progress;
-                    if (fileUploadModel.progress === 100) {
-                        fileUploadModel.uploaded = true;
-                    }
-                } else {
-                    fileUploadModel.inProgress = false;
-                    fileUploadModel.completed = true;
-
+        fileUploadModel.inProgress = true;
+        fileUploadModel.completed = false;
+        fileUploadModel.error = false;
+        fileUploadModel.sub = this._taskResourceService.uploadFile(taskId,
+            fileUploadModel.stringId, fileFormData, false).subscribe(response => {
+            if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
+                fileUploadModel.progress = (response as ProviderProgress).progress;
+                if (fileUploadModel.progress === 100) {
+                    fileUploadModel.uploaded = true;
                 }
-            }, error => {
+            } else {
                 fileUploadModel.inProgress = false;
-                fileUploadModel.completed = false;
-                fileUploadModel.error = true;
-                this._log.error('File uploading has failed!', error);
-                this._snackBarService.openErrorSnackBar('Uploading file has failed');
-            });
-        }
+                fileUploadModel.completed = true;
+
+            }
+        }, error => {
+            fileUploadModel.inProgress = false;
+            fileUploadModel.completed = false;
+            fileUploadModel.error = true;
+            this._log.error('File uploading has failed!', error);
+            this._snackBarService.openErrorSnackBar('Uploading file has failed');
+        });
     }
 
     /**
@@ -253,12 +239,4 @@ export class FileFieldService {
         }
         return false;
     }
-
-    /**
-     * Returns successfully uploaded files as File.
-     */
-    private resolveFilesArray(): Array<File> {
-        return this.allFiles.filter(f => f.completed).map(f => (f.data as FileUploadDataModel).file);
-    }
-
 }

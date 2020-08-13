@@ -15,6 +15,7 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FileField} from '../../data-fields/file-field/models/file-field';
+import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -90,7 +91,7 @@ export class TaskDataService extends TaskHandlingService {
                                 this.updateTaskDataFields();
                             }
                         });
-                        if (field instanceof FileField) {
+                        if (field instanceof FileField || field instanceof FileListField) {
                             field.changedFields$.subscribe(change => {
                                 this._changedFields$.next(change.changedFields);
                             });
