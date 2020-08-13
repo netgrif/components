@@ -15,7 +15,7 @@ export abstract class Filter {
      * @param _type type of resources that the filter can query
      * @param _title human readable filter name
      */
-    protected constructor(protected readonly _id: string, protected readonly _type: FilterType, protected readonly _title: string = '') {
+    protected constructor(protected _id: string, protected readonly _type: FilterType, protected readonly _title: string = '') {
     }
 
     /**
@@ -23,6 +23,10 @@ export abstract class Filter {
      */
     public get id(): string {
         return this._id;
+    }
+
+    public set id(id: string) {
+        this._id = id;
     }
 
     /**

@@ -38,6 +38,10 @@
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-file-field>
 
+            <nae-file-list-field *ngSwitchCase="'fileList'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
+                                 [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
+            </nae-file-list-field>
+
             <nae-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item"
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-user-field>
