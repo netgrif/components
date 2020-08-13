@@ -1,4 +1,4 @@
-import {InjectedTabData, TabContent, TabViewInterface} from '../interfaces';
+import {TabContent, TabViewInterface} from '../interfaces';
 import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';

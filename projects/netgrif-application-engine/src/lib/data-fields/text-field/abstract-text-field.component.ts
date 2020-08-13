@@ -11,11 +11,11 @@ export abstract class AbstractTextFieldComponent {
         if (formControlRef.hasError(TextFieldValidation.REQUIRED)) {
             return this._translate.instant('dataField.validations.required');
         }
-        if (formControlRef.hasError(TextFieldValidation.MIN_LENGTH)) {
+        if (formControlRef.hasError(TextFieldValidation.VALID_MIN_LENGTH)) {
             return this.resolveErrorMessage(textField, TextFieldValidation.MIN_LENGTH,
                 this._translate.instant('dataField.validations.minLength', {length: formControlRef.errors.minlength.requiredLength}));
         }
-        if (formControlRef.hasError(TextFieldValidation.MAX_LENGTH)) {
+        if (formControlRef.hasError(TextFieldValidation.VALID_MAX_LENGTH)) {
             return this.resolveErrorMessage(textField, TextFieldValidation.MAX_LENGTH,
                 this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.minlength.requiredLength}));
         }

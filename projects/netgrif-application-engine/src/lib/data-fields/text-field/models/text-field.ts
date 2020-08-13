@@ -17,8 +17,10 @@ export enum TextAreaHeight {
 
 export enum TextFieldValidation {
     REQUIRED = 'required',
-    MIN_LENGTH = 'minlength',
-    MAX_LENGTH = 'maxlength',
+    MIN_LENGTH = 'minLength',
+    MAX_LENGTH = 'maxLength',
+    VALID_MIN_LENGTH = 'minlength',
+    VALID_MAX_LENGTH = 'maxlength',
     PATTERN = 'pattern',
     REGEX = 'regex',
     VALID_TEL_NUMBER = 'validTelNumber',
