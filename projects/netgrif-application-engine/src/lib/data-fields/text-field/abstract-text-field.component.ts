@@ -12,8 +12,12 @@ export abstract class AbstractTextFieldComponent {
             return this._translate.instant('dataField.validations.required');
         }
         if (formControlRef.hasError('minlength')) {
-            return this.resolveErrorMessage(textField, 'length',
-                this._translate.instant('dataField.validations.length', {length: formControlRef.errors.minlength.requiredLength}));
+            return this.resolveErrorMessage(textField, 'minLength',
+                this._translate.instant('dataField.validations.minLength', {length: formControlRef.errors.minlength.requiredLength}));
+        }
+        if (formControlRef.hasError('maxlength')) {
+            return this.resolveErrorMessage(textField, 'maxLength',
+                this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.minlength.requiredLength}));
         }
         if (formControlRef.hasError('pattern')) {
             return this.resolveErrorMessage(textField, 'regex', this._translate.instant('dataField.validations.pattern'));
