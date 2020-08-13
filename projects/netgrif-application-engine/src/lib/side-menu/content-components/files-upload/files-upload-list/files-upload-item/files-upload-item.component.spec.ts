@@ -6,8 +6,6 @@ import {MaterialModule} from '../../../../../material/material.module';
 import {CovalentModule} from '../../../../../covalent/covalent.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
-import {FileUploadService} from '../../../../../data-fields/file-field/services/upload/file-upload.service';
-import {FileDownloadService} from '../../../../../data-fields/file-field/services/download/file-download.service';
 import {ConfigurationService} from '../../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../../utility/tests/test-config';
 import {FileUploadModel} from '../../models/file-upload-model';
@@ -32,8 +30,6 @@ describe('FilesUploadItemComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                FileUploadService,
-                FileDownloadService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         })

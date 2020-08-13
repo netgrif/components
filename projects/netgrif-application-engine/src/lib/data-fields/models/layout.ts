@@ -13,6 +13,6 @@ export interface Layout extends GridLayout {
     /**
      * Determines the appearance of the form field.
      */
-    offset: number;
     appearance: MaterialAppearance;
+    offset: number;
 }

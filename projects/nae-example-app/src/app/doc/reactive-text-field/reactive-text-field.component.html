@@ -283,6 +283,22 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
+            <nae-file-list-field #fileListFieldComponent [dataField]="fileListField" [changedFields]="changeStream"></nae-file-list-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <mat-checkbox formControlName="fileFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="fileFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="fileFieldHidden">hidden</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+    field value: {{fileListField.value}}<br>
+    field errors: {{fileListFieldComponent.formControl.errors | json}}<br>
+
+    <mat-divider></mat-divider>
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
             <nae-user-field #userFieldComponent [dataField]="userField" [changedFields]="changeStream"></nae-user-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">

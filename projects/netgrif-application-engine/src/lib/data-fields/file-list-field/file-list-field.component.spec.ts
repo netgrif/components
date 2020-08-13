@@ -1,27 +1,29 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {FileFieldComponent} from './file-field.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { FileListFieldComponent } from './file-list-field.component';
 import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {FileField} from './models/file-field';
-import {FileFieldService} from './services/file-field.service';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {FileFieldService} from '../file-field/services/file-field.service';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {FileFieldComponent} from '../file-field/file-field.component';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {FileListField} from './models/file-list-field';
 
-describe('FileFieldComponent', () => {
-    let component: FileFieldComponent;
+describe('FileListFieldComponent', () => {
+    let component: FileListFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(async(() => {
@@ -31,8 +33,7 @@ describe('FileFieldComponent', () => {
                 AngularResizedEventModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
-                TranslateLibModule,
-                NoopAnimationsModule
+                TranslateLibModule
             ],
             providers: [
                 FileFieldService,
@@ -73,10 +74,10 @@ describe('FileFieldComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-file-field [dataField]="field" taskId="666"></nae-file-field>'
+    template: '<nae-file-list-field [dataField]="field" taskId="666"></nae-file-list-field>'
 })
 class TestWrapperComponent {
-    field = new FileField('', '', {
+    field = new FileListField('', '', {
         required: true,
         optional: true,
         visible: true,
@@ -84,4 +85,3 @@ class TestWrapperComponent {
         hidden: true
     });
 }
-
