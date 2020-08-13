@@ -10,6 +10,17 @@ export enum TextFieldView {
     RICHTEXTAREA = 'richtextarea'
 }
 
+export enum TextFieldValidation {
+    REQUIRED = 'required',
+    MIN_LENGTH = 'minlength',
+    MAX_LENGTH = 'maxlength',
+    PATTERN = 'pattern',
+    REGEX = 'regex',
+    VALID_TEL_NUMBER = 'validTelNumber',
+    TEL_NUMBER = 'telNumber',
+    EMAIL = 'email'
+}
+
 export class TextField extends DataField<string> {
 
     private _validators: Array<ValidatorFn>;
@@ -46,7 +57,7 @@ export class TextField extends DataField<string> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes('minLength')) {
+            if (item.validationRule.includes(TextFieldValidation.MIN_LENGTH)) {
                 const tmp = item.validationRule.split(' ');
                 if (tmp[1] !== undefined) {
                     const length = parseInt(tmp[1], 10);
@@ -54,7 +65,7 @@ export class TextField extends DataField<string> {
                         result.push(Validators.minLength(length));
                     }
                 }
-            } else if (item.validationRule.includes('maxLength')) {
+            } else if (item.validationRule.includes(TextFieldValidation.MAX_LENGTH)) {
                 const tmp = item.validationRule.split(' ');
                 if (tmp[1] !== undefined) {
                     const length = parseInt(tmp[1], 10);
@@ -62,7 +73,7 @@ export class TextField extends DataField<string> {
                         result.push(Validators.maxLength(length));
                     }
                 }
-            } else if (item.validationRule.includes('regex')) {
+            } else if (item.validationRule.includes(TextFieldValidation.REGEX)) {
                 if (item.validationRule.startsWith('regex ')) {
                     const tmp = item.validationRule.split(' ');
                     if (tmp[1] !== undefined) {
@@ -71,9 +82,9 @@ export class TextField extends DataField<string> {
                 } else if (item.validationRule.startsWith('regex("')) {
                     result.push(Validators.pattern(new RegExp(item.validationRule.substring(7, item.validationRule.length - 2))));
                 }
-            } else if (item.validationRule.includes('email')) {
+            } else if (item.validationRule.includes(TextFieldValidation.EMAIL)) {
                 result.push(Validators.email);
-            } else if (item.validationRule.includes('telNumber')) {
+            } else if (item.validationRule.includes(TextFieldValidation.TEL_NUMBER)) {
                 result.push(this.validTelNumber);
             }
         });

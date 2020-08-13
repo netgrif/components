@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ButtonField} from './models/button-field';
+import {ButtonField, ButtonFieldValidation} from './models/button-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -17,7 +17,7 @@ export class ButtonFieldComponent extends AbstractDataFieldComponent {
     }
 
     public getErrorMessage() {
-        if (this.formControl.hasError('required')) {
+        if (this.formControl.hasError(ButtonFieldValidation.REQUIRED)) {
             return this._translate.instant('dataField.validations.required');
         }
     }

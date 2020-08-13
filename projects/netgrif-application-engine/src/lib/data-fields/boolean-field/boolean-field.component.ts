@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {BooleanField} from './models/boolean-field';
+import {BooleanField, BooleanFieldValidation} from './models/boolean-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
 import {FormControl} from '@angular/forms';
@@ -19,10 +19,10 @@ export class BooleanFieldComponent extends AbstractDataFieldComponent {
     }
 
     public getErrorMessage() {
-        if (this.formControl.hasError('required')) {
+        if (this.formControl.hasError(BooleanFieldValidation.REQUIRED)) {
             return this._translate.instant('dataField.validations.required');
-        } else if (this.formControl.hasError('requiredTrue')) {
-            return this.resolveErrorMessage(this.dataField, 'requiredTrue',
+        } else if (this.formControl.hasError(BooleanFieldValidation.REQUIRED_TRUE)) {
+            return this.resolveErrorMessage(this.dataField, BooleanFieldValidation.REQUIRED_TRUE,
                 this._translate.instant('dataField.validations.requiredTrue'));
         }
         return '';

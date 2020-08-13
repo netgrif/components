@@ -6,7 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
-import {FileListField} from './models/file-list-field';
+import {FileListField, FileListFieldValidation} from './models/file-list-field';
 
 export interface FilesState {
     progress: number;
@@ -61,7 +61,9 @@ export class FileListFieldComponent extends AbstractDataFieldComponent implement
         super.ngOnInit();
         this.parseResponse();
         if (this.dataField.validations && this.dataField.validations.length !== 0) {
-            const val = this.dataField.validations.find(validation => validation.validationRule.includes('maxFiles'));
+            const val = this.dataField.validations.find(validation =>
+                validation.validationRule.includes(FileListFieldValidation.MAX_FILES)
+            );
             if (val && val.validationRule.split(' ').length === 2 && !isNaN(parseInt(val.validationRule.split(' ')[1], 10))) {
                 this.maxFilesNumber = parseInt(val.validationRule.split(' ')[1], 10);
                 this.maxFilesMessage = val.validationMessage && val.validationMessage !== '' ? val.validationMessage : null;

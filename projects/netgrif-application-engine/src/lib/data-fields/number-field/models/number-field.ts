@@ -4,6 +4,23 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 
+export enum NumberFieldValidation {
+    ODD = 'odd',
+    EVEN = 'even',
+    POSITIVE = 'positive',
+    NEGATIVE = 'negative',
+    DECIMAL = 'decimal',
+    IN_RANGE = 'inrange',
+    INF = 'inf',
+    REQUIRED = 'required',
+    VALID_ODD = 'validOdd',
+    VALID_EVEN = 'validEven',
+    VALID_POSITIVE = 'validPositive',
+    VALID_NEGATIVE = 'validNegative',
+    VALID_DECIMAL = 'validDecimal',
+    VALID_IN_RANGE = 'validInRange'
+}
+
 export class NumberField extends DataField<number> {
     private _validators: Array<ValidatorFn>;
 
@@ -35,25 +52,25 @@ export class NumberField extends DataField<number> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes('odd')) {
+            if (item.validationRule.includes(NumberFieldValidation.ODD)) {
                 result.push(this.validOdd);
-            } else if (item.validationRule.includes('even')) {
+            } else if (item.validationRule.includes(NumberFieldValidation.EVEN)) {
                 result.push(this.validEven);
-            } else if (item.validationRule.includes('positive')) {
+            } else if (item.validationRule.includes(NumberFieldValidation.POSITIVE)) {
                 result.push(this.validPositive);
-            } else if (item.validationRule.includes('negative')) {
+            } else if (item.validationRule.includes(NumberFieldValidation.NEGATIVE)) {
                 result.push(this.validNegative);
-            } else if (item.validationRule.includes('decimal')) {
+            } else if (item.validationRule.includes(NumberFieldValidation.DECIMAL)) {
                 result.push(this.validDecimal);
-            } else if (item.validationRule.includes('inrange')) {
+            } else if (item.validationRule.includes(NumberFieldValidation.IN_RANGE)) {
                 const tmp = item.validationRule.split(' ');
                 const ranges = tmp[1].split(',');
                 const first = parseInt(ranges[0], 10);
                 const second = parseInt(ranges[1], 10);
 
-                if (isNaN(first) && !isNaN(second) && ranges[0].includes('inf')) {
+                if (isNaN(first) && !isNaN(second) && ranges[0].includes(NumberFieldValidation.INF)) {
                     result.push(this.validInRangeSmaller(second));
-                } else if (isNaN(second) && !isNaN(first) && ranges[1].includes('inf')) {
+                } else if (isNaN(second) && !isNaN(first) && ranges[1].includes(NumberFieldValidation.INF)) {
                     result.push(this.validInRangeBigger(first));
                 } else if (!isNaN(first) && !isNaN(second)) {
                     result.push(this.validInRange(first, second));
