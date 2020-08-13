@@ -54,7 +54,7 @@ export class UserListService {
      */
     private _searchQuery: string;
     private _updateProgress$: LoadingEmitter;
-    private _usersChanges$: Subject<void>;
+    private _usersReload$: Subject<void>;
 
     /**
      * Inject services.
@@ -72,7 +72,7 @@ export class UserListService {
                 private _translate: TranslateService) {
         this._loading$ = new LoadingEmitter();
         this._updateProgress$ = new LoadingEmitter();
-        this._usersChanges$ = new Subject<void>();
+        this._usersReload$ = new Subject<void>();
         this._endOfData = false;
         this._nextPage$ = new BehaviorSubject<number>(null);
         this._pagination = {
@@ -87,7 +87,7 @@ export class UserListService {
         const usersMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
             tap(() => {
-                if (!this._clear) { this._usersChanges$.next(); }
+                if (!this._clear) { this._usersReload$.next(); }
             }),
             scan((acc, value) => {
                 const result = this._clear ? {} : {...acc, ...value};
@@ -108,8 +108,8 @@ export class UserListService {
         return this._loading$.asObservable();
     }
 
-    public get usersChanges$(): Observable<void> {
-        return this._usersChanges$.asObservable();
+    public get usersReload$(): Observable<void> {
+        return this._usersReload$.asObservable();
     }
 
     public get users$(): Observable<Array<UserListItem>> {

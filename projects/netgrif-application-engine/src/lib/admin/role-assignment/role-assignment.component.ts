@@ -41,7 +41,7 @@ export class RoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     ngAfterViewInit(): void {
-        this.users.usersChanges$.subscribe(() => {
+        this.users.usersReload$.subscribe(() => {
             this.userList.deselectAll();
             this.userList.selectedOptions.clear();
             this.autoSelectRoles();
