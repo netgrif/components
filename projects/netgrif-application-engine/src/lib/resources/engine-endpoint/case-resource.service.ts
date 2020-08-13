@@ -69,8 +69,11 @@ export class CaseResourceService implements CountService {
      * DELETE
      * {{baseUrl}}/api/workflow/case/:id
      */
-    public deleteCase(caseID: string): Observable<MessageResource> {
-        return this.provider.delete$('workflow/case/' + caseID, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+    public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<MessageResource> {
+        return this.provider.delete$('workflow/case/' + caseID,
+            this.SERVER_URL,
+            deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
+            .pipe(map(r => changeType(r, undefined)));
     }
 
 

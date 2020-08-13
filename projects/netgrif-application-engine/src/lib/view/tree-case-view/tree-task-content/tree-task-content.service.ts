@@ -18,6 +18,7 @@ import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {hasContent} from '../../../utility/pagination/page-has-content';
+import {getImmediateData} from '../../../utility/get-immediate-data';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -169,8 +170,7 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected getTransitionId(examinedCase: Case): string | undefined {
         if (examinedCase && examinedCase.immediateData) {
-            const transitionId = examinedCase.immediateData
-                .find(imData => imData.stringId === TreePetriflowIdentifiers.FEATURED_TRANSITION);
+            const transitionId = getImmediateData(examinedCase, TreePetriflowIdentifiers.FEATURED_TRANSITION);
             return transitionId ? transitionId.value : undefined;
         }
         return undefined;
