@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {Subject} from 'rxjs';
-import {MatSpinner} from '@angular/material';
 import {map, scan} from 'rxjs/operators';
 import {ComponentPortal} from '@angular/cdk/portal';
+import {MatSpinner} from '@angular/material/progress-spinner';
 
 @Injectable({
     providedIn: 'root'
