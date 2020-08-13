@@ -62,7 +62,7 @@ export function createTabView(
             if (tabViews.tabViewImports[i].className.endsWith('CaseViewComponent')) {
                 const injectedData = {} as any;
                 injectedData.tabViewComponent = tabViews.tabViewImports[0].className;
-                injectedData.tabViewOrder = params.defaultTaskView.order;
+                injectedData.tabViewOrder = params.defaultTaskView.order ? params.defaultTaskView.order : 0;
                 tabViews.tabTemplates[i].injectedObject = injectedData;
             }
         }
@@ -143,9 +143,10 @@ function processEmbeddedView(embeddedView: EmbeddedView,
     } else {
         throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
     }
-    // TODO BUG 19.5.2020 - canBeClosed attribute does not transfer from config to generated file properly - no value is generated at all
     if (embeddedView.canBeClosed !== undefined) {
         tabTemplate.canBeDeleted = embeddedView.canBeClosed;
+    } else {
+        tabTemplate.canBeDeleted = false;
     }
     if (embeddedView.label !== undefined) {
         tabTemplate.icon = embeddedView.label.icon as string;

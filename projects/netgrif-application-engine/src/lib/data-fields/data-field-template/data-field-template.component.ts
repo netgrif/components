@@ -4,6 +4,7 @@ import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
 
 /**
  * Provides a responsive layout to data fields where their appearance can change based on the width of space they have available.
@@ -51,7 +52,7 @@ export class DataFieldTemplateComponent implements OnInit {
      */
     private _showLargeLayout: WrappedBoolean = new WrappedBoolean();
 
-    constructor(private _paperView: PaperViewService) {
+    constructor(private _paperView: PaperViewService, private _config: ConfigurationService) {
     }
 
     public ngOnInit() {
@@ -59,6 +60,7 @@ export class DataFieldTemplateComponent implements OnInit {
             this.offset += this.dataField.layout.offset;
         }
         this._showLargeLayout.value = this.evaluateTemplate();
+        this.dataField.resolveAppearance(this._config);
     }
 
     get showLargeLayout(): WrappedBoolean {
@@ -81,10 +83,21 @@ export class DataFieldTemplateComponent implements OnInit {
         if (!this.dataField) {
             return true;
         }
-        return !!this.dataField.layout ? this.dataField.layout.template === TemplateAppearance.NETGRIF : true;
+        return this.resolveTemplate();
     }
 
     public isPaperView() {
         return this._paperView.paperView;
+    }
+
+    private resolveTemplate() {
+        let temp = true;
+        if (this._config.get().services && this._config.get().services.dataFields && this._config.get().services.dataFields.template) {
+            temp = this._config.get().services.dataFields.template === TemplateAppearance.NETGRIF;
+        }
+        if (this.dataField.layout && this.dataField.layout.template) {
+            temp = this.dataField.layout.template === TemplateAppearance.NETGRIF;
+        }
+        return temp;
     }
 }

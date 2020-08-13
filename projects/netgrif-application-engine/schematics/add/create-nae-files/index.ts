@@ -60,7 +60,7 @@ function createRoutesModule(): Rule {
 function addInitialsImportsToAppModule(): Rule {
     return (tree: Tree) => {
         addImportsToAppModule(tree, [
-            new ImportToAdd('BrowserAnimationModule', '@angular/platform-browser/animations'),
+            new ImportToAdd('BrowserAnimationsModule', '@angular/platform-browser/animations'),
             new ImportToAdd('NavigationModule', '@netgrif/application-engine'),
             new ImportToAdd('SideMenuModule', '@netgrif/application-engine'),
             new ImportToAdd('SideMenuContentModule', '@netgrif/application-engine')
