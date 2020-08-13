@@ -755,6 +755,10 @@
         "routing": {
             "defaultRedirect": "authentication",
             "wildcardRedirect": "authentication"
+        },
+        "dataFields": {
+            "template": "netgrif",
+            "appearance": "standard"
         }
     }
 }
