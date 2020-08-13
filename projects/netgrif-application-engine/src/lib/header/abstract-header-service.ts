@@ -9,11 +9,11 @@ import {PetriNetReference} from '../resources/interface/petri-net-reference';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
-import {SortDirection} from '@angular/material';
 import {UserPreferenceService} from '../user/services/user-preference.service';
 import {ViewService} from '../routing/view-service/view.service';
 import {LoggerService} from '../logger/services/logger.service';
 import {LoadingEmitter} from '../utility/loading-emitter';
+import {SortDirection} from '@angular/material/sort';
 import {HeaderChangeType} from './models/user-changes/header-change-type';
 
 export abstract class AbstractHeaderService implements OnDestroy {

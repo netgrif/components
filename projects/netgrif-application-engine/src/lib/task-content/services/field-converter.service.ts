@@ -17,11 +17,12 @@ import {
 import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
-import {ButtonField} from '../../data-fields/button-field/models/button-field';
+import {ButtonField, ButtonFieldView} from '../../data-fields/button-field/models/button-field';
 import {FileField} from '../../data-fields/file-field/models/file-field';
 import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
+import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 
 @Injectable({
     providedIn: 'root'
@@ -84,11 +85,15 @@ export class FieldConverterService {
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout);
             case FieldTypeResource.BUTTON:
+                const typeBtn = this.resolveButtonView(item);
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
-                    item.placeholder, item.description, item.layout);
+                    item.placeholder, item.description, item.layout, typeBtn);
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout);
+            case 'fileList':
+                return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
+                    item.placeholder, item.description, item.layout, item.validations);
         }
     }
 
@@ -107,10 +112,41 @@ export class FieldConverterService {
             return FieldTypeResource.DATE_TIME;
         } else if (item instanceof FileField) {
             return FieldTypeResource.FILE;
+        } else if (item instanceof FileListField) {
+            return 'fileList';
         } else if (item instanceof UserField) {
             return FieldTypeResource.USER;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
             return item.fieldType;
+        }
+    }
+
+    public resolveButtonView(item: DataFieldResource): ButtonFieldView {
+        if (item.view !== undefined && item.view.value !== undefined) {
+            switch (item.view.value) {
+                case ButtonFieldView.STROKED:
+                    return ButtonFieldView.STROKED;
+                    break;
+                case ButtonFieldView.RAISED:
+                    return ButtonFieldView.RAISED;
+                    break;
+                case ButtonFieldView.FAB:
+                    return ButtonFieldView.FAB;
+                    break;
+                case ButtonFieldView.FLAT:
+                    return ButtonFieldView.FLAT;
+                    break;
+                case ButtonFieldView.ICON:
+                    return ButtonFieldView.ICON;
+                    break;
+                case ButtonFieldView.MINIFAB:
+                    return ButtonFieldView.MINIFAB;
+                    break;
+                default:
+                    return ButtonFieldView.STANDARD;
+            }
+        } else if (item instanceof ButtonField) {
+            return ButtonFieldView.STANDARD;
         }
     }
 

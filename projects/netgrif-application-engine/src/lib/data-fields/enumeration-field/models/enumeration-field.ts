@@ -17,19 +17,11 @@ export enum EnumerationFieldView {
 
 export class EnumerationField extends DataField<string> {
 
-    public materialAppearance: string;
-    private _validators: Array<ValidatorFn>;
-
     constructor(stringId: string, title: string, value: string,
                 private _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, private _view = EnumerationFieldView.DEFAULT,
                 private readonly _fieldType = FieldTypeResource.ENUMERATION) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        if (layout) {
-            this.materialAppearance = this.layout.appearance;
-        } else {
-            this.materialAppearance = 'legacy';
-        }
     }
 
     set choices(choices: Array<EnumerationFieldValue>) {

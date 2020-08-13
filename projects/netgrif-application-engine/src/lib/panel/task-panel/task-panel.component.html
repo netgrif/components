@@ -3,8 +3,8 @@
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <span fxLayoutAlign="start center" fxFlex>
-                <mat-icon class="task-panel-icon"
-                          [ngClass]="taskPanelData.task.caseColor">{{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
+                <mat-icon class="task-panel-icon panel-primary-icon">
+                    {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
                 <span>{{firstFeaturedValue}}</span>
             </span>
             <span *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
@@ -12,7 +12,7 @@
                   [fxHide.lt-lg]="i >= 2 && responsiveBody"
                   [fxHide.lt-md]="i >= 1 && responsiveBody"
                   [fxHide.lt-sm]="i >= 0 && responsiveBody">
-                <mat-icon class="task-panel-icon" *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
+                <mat-icon class="task-panel-icon panel-primary-icon" *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
                 {{field.value}}
             </span>
         </div>
@@ -23,11 +23,11 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item *ngIf="canAssign()" (click)="assign()">
                     <mat-icon>person</mat-icon>
-                    <span>{{ 'tasks.view.assign' | translate}}</span>
+                    <span>{{ getAssignTitle() | translate}}</span>
                 </button>
                 <button mat-menu-item *ngIf="canDo('delegate')" (click)="delegate()">
                     <mat-icon>person_outline</mat-icon>
-                    <span>{{ 'tasks.view.delegate' | translate}}</span>
+                    <span>{{ getDelegateTitle() | translate}}</span>
                 </button>
                 <button mat-menu-item *ngIf="canDo('delegate')" (click)="delegate()">
                     <mat-icon>person_add</mat-icon>
@@ -35,11 +35,11 @@
                 </button>
                 <button mat-menu-item *ngIf="canCancel()" (click)="cancel()">
                     <mat-icon>cancel</mat-icon>
-                    <span>{{ 'tasks.view.cancel' | translate}}</span>
+                    <span>{{ getCancelTitle() | translate}}</span>
                 </button>
                 <button mat-menu-item *ngIf="canFinish()" (click)="finish()">
                     <mat-icon>done</mat-icon>
-                    <span>{{ 'tasks.view.finish' | translate}}</span>
+                    <span>{{ getFinishTitle() | translate}}</span>
                 </button>
             </mat-menu>
             <mat-spinner *ngIf="isLoading" [diameter]="30"></mat-spinner>
@@ -53,15 +53,15 @@
             <mat-action-row>
                 <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100">
                     <button *ngIf="canAssign()" (click)="assign()" mat-button>
-                        {{ 'tasks.view.assign' | translate | uppercase }}</button>
+                        {{ getAssignTitle() | translate | uppercase }}</button>
                     <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button>
-                        {{ 'tasks.view.delegate' | translate | uppercase }}</button>
+                        {{ getDelegateTitle() | translate | uppercase }}</button>
                     <button *ngIf="canReassign()" (click)="delegate()" mat-button>
                         {{ 'tasks.view.reassign' | translate | uppercase }}</button>
                     <button *ngIf="canCancel()" (click)="cancel()" mat-button>
-                        {{ 'tasks.view.cancel' | translate | uppercase }}</button>
+                        {{ getCancelTitle() | translate | uppercase }}</button>
                     <button *ngIf="canFinish()" (click)="finish()" mat-button>
-                        {{ 'tasks.view.finish' | translate | uppercase }}</button>
+                        {{ getFinishTitle() | translate | uppercase }}</button>
                     <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-button>
                         {{ 'tasks.view.collapse' | translate | uppercase }}</button>
                 </div>

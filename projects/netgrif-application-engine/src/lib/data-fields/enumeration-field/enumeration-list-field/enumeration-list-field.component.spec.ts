@@ -6,7 +6,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {EnumerationField} from '../models/enumeration-field';
 import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormControl} from '@angular/forms';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -17,7 +17,14 @@ describe('EnumerationListFieldComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, TranslateLibModule, HttpClientTestingModule],
+            imports: [
+                MaterialModule,
+                AngularResizedEventModule,
+                BrowserAnimationsModule,
+                TranslateLibModule,
+                HttpClientTestingModule,
+                NoopAnimationsModule
+            ],
             declarations: [EnumerationListFieldComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })

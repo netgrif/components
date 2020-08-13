@@ -2,9 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {MatTreeNestedDataSource} from '@angular/material';
 import {CaseTreeNode} from './model/CaseTreeNode';
-import {NestedTreeControl} from '@angular/cdk/tree';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -23,6 +21,8 @@ import {tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CaseRefOperation, CaseRefSetDataBody} from './model/CaseRefSetDataBody';
 import {hasContent} from '../../../utility/pagination/page-has-content';
+import {NestedTreeControl} from '@angular/cdk/tree';
+import {MatTreeNestedDataSource} from '@angular/material/tree';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {

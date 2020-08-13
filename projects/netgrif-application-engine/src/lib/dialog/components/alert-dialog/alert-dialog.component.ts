@@ -1,8 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {AbstractDialog} from '../../models/abstract-dialog';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {DialogData} from '../../models/DialogData';
 import {DialogResult} from '../../models/DialogResult';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 /**
  * Simple modal dialog with its own layout (which only shows information) based on a material design

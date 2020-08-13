@@ -20,7 +20,8 @@ export abstract class TabbedCaseView extends AbstractCaseView {
     protected constructor(caseViewService: CaseViewService,
                           protected _loggerService: LoggerService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
-                          protected _autoswitchToTaskTab: boolean = true) {
+                          protected _autoswitchToTaskTab: boolean = true,
+                          protected _openExistingTab: boolean = true) {
 
         super(caseViewService);
         this._correctlyInjected = !!this._injectedTabData.tabViewComponent && this._injectedTabData.tabViewOrder !== undefined;
@@ -42,7 +43,7 @@ export abstract class TabbedCaseView extends AbstractCaseView {
         });
     }
 
-    private openTab(openCase: Case) {
+    protected openTab(openCase: Case) {
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,
@@ -56,6 +57,6 @@ export abstract class TabbedCaseView extends AbstractCaseView {
             },
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
-        }, this._autoswitchToTaskTab);
+        }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 }

@@ -1,14 +1,5 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {SearchModeComponent} from './search-mode.component';
-import {
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatSortModule
-} from '@angular/material';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
@@ -31,6 +22,13 @@ import {TestViewService} from '../../../utility/tests/test-view-service';
 import {RouterModule} from '@angular/router';
 import {MaterialModule} from '../../../material/material.module';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
+import {MatInputModule} from '@angular/material/input';
+import {MatSortModule} from '@angular/material/sort';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 describe('SearchModeComponent', () => {

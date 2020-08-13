@@ -27,15 +27,14 @@ import {DateTimeFieldComponent} from './date-time-field/date-time-field.componen
 import {ButtonFieldComponent} from './button-field/button-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
 import {CovalentModule} from '../covalent/covalent.module';
-import {FileUploadService} from './file-field/services/upload/file-upload.service';
-import {FileDownloadService} from './file-field/services/download/file-download.service';
 import {ReactiveFormsModule} from '@angular/forms';
-import {DateAdapter} from '@angular/material';
 import {CustomDateAdapter} from './date-field/models/custom-date-adapter';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-textarea-field.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
+import {DateAdapter} from '@angular/material/core';
+import { FileListFieldComponent } from './file-list-field/file-list-field.component';
 
 @NgModule({
     declarations: [
@@ -59,6 +58,7 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         DataFieldTemplateComponent,
         RequiredLabelComponent,
         RichTextareaFieldComponent,
+        FileListFieldComponent,
     ],
     exports: [
         TextFieldComponent,
@@ -70,7 +70,8 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         FileFieldComponent,
         UserFieldComponent,
         DateTimeFieldComponent,
-        ButtonFieldComponent
+        ButtonFieldComponent,
+        FileListFieldComponent
     ],
     imports: [
         CommonModule,
@@ -86,8 +87,6 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         TranslateLibModule
     ],
     providers: [
-        FileUploadService,
-        FileDownloadService,
         {provide: DateAdapter, useClass: CustomDateAdapter}
     ]
 })

@@ -10,7 +10,6 @@ import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {MatIconModule, MatSnackBarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
@@ -26,6 +25,8 @@ import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {CaseMetaField} from './case-menta-enum';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
 import {HeaderChangeType} from '../models/user-changes/header-change-type';
 import {EditChangeDescription} from '../models/user-changes/edit-change-description';
 import {ModeChangeDescription} from '../models/user-changes/mode-change-description';

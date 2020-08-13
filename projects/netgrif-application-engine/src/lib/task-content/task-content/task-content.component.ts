@@ -37,7 +37,7 @@ export class TaskContentComponent {
     @Input() displayNoDataIcon = true;
 
     constructor(private _fieldConverter: FieldConverterService,
-                private taskContentService: TaskContentService,
+                public taskContentService: TaskContentService,
                 private _paperView: PaperViewService,
                 private _logger: LoggerService) {
         this.loading = true;
@@ -255,6 +255,10 @@ export class TaskContentComponent {
             }
         }
         return returnResource;
+    }
+
+    isOffsetPresent() {
+        return !!this.taskContentService.task && !!this.taskContentService.task.layout && !!this.taskContentService.task.layout.offset;
     }
 
     private addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {

@@ -236,9 +236,11 @@ export class TaskResourceService implements CountService {
      * Download task file field value
      * GET
      */
-    // {{baseUrl}}/api/task/:id/file/:field
-    public downloadFile(taskId: string, fieldId: string): Observable<ProviderProgress | Blob> {
-        return this.provider.getBlob$('task/' + taskId + '/file/' + fieldId, this.SERVER_URL).pipe(
+    // {{baseUrl}}/api/task/:id/file/:field         - for file field
+    // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
+    public downloadFile(taskId: string, fieldId: string, name?: string): Observable<ProviderProgress | Blob> {
+        const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
+        return this.provider.getBlob$(url, this.SERVER_URL).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.DownloadProgress:
@@ -257,9 +259,12 @@ export class TaskResourceService implements CountService {
      * Upload file into the task
      * POST
      */
-    // {{baseUrl}}/api/task/:id/file/:field
-    public uploadFile(taskId: string, fieldId: string, body: object): Observable<ProviderProgress | ChangedFieldContainer> {
-        return this.provider.postWithEvent$<ChangedFieldContainer>('task/' + taskId + '/file/' + fieldId, this.SERVER_URL, body).pipe(
+    // {{baseUrl}}/api/task/:id/file/:field     - for file field
+    // {{baseUrl}}/api/task/:id/files/:field    - for file list field
+    public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
+        Observable<ProviderProgress | ChangedFieldContainer> {
+        const url = !multipleFiles ? 'task/' + taskId + '/file/' + fieldId : 'task/' + taskId + '/files/' + fieldId;
+        return this.provider.postWithEvent$<ChangedFieldContainer>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:
@@ -271,6 +276,17 @@ export class TaskResourceService implements CountService {
                 }
             }),
             filter(value => !!value)
+        );
+    }
+
+    /**
+     * Delete file from the task
+     * DELETE
+     */
+    public deleteFile(taskId: string, fieldId: string, name?: string): Observable<MessageResource> {
+        const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
+        return this.provider.delete$(url, this.SERVER_URL).pipe(
+            map(r => changeType(r, undefined))
         );
     }
 }

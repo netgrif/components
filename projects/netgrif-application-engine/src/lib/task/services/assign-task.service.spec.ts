@@ -73,7 +73,7 @@ describe('AssignTaskService', () => {
             dataFocusPolicy: DataFocusPolicy.manual,
             finishPolicy: FinishPolicy.manual,
             stringId: '',
-            layout: {rows: 1, cols: 1},
+            layout: {rows: 1, cols: 1, offset: 0},
             dataGroups: [],
             _links: {}
         };

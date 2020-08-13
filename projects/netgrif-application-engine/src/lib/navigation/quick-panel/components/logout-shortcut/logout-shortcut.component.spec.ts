@@ -27,7 +27,8 @@ describe('LogoutShortcutComponent', () => {
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                NoopAnimationsModule
             ],
             providers: [
                 AuthenticationMethodService,

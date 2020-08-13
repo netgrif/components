@@ -1,10 +1,10 @@
 import {Component, Input} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import {MatTreeNestedDataSource} from '@angular/material';
 import {Filter} from '../../../filter/models/filter';
 import {CaseTreeService} from './case-tree.service';
 import {CaseTreeNode} from './model/CaseTreeNode';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
+import {MatTreeNestedDataSource} from '@angular/material/tree';
 
 @Component({
     selector: 'nae-tree-component',

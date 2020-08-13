@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
-<% for(imp of imports) { %>
-import { <%= imp.className %> } from '<%= imp.importPath %>';<% } %>
+<% for(imp of imports) { %>import { <%= imp.className %> } from '<%= imp.fileImportPath %>';
+<% } %>
 
 @Component({
   selector: '<%= prefix %>-<%= dasherize(className) %>',

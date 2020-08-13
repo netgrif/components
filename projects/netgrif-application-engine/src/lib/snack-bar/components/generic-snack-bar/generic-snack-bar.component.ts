@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material';
 import {SnackBar} from '../../models/abstract-snack-bar';
 import {SnackBarInjectionData} from '../../models/snack-bar-injection-data';
+import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'nae-generic-snack-bar',

@@ -117,7 +117,7 @@ export interface TabViewInterface {
     /**
      * See [TabView.openTab]{@link TabView#openTab}
      */
-    openTab(tabContent: TabContent, autoswitch?: boolean): string;
+    openTab(tabContent: TabContent, autoswitch?: boolean, openExising?: boolean): string;
 
     /**
      * See [TabView.switchToTabIndex]{@link TabView#switchToTabIndex}

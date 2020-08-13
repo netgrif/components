@@ -5,12 +5,13 @@ import {TranslateInterceptor} from './translate-interceptor';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
 import {TranslateLibModule} from './translate-lib.module';
-import {MatSnackBarModule} from '@angular/material';
 import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TranslateInterceptor', () => {
 
@@ -19,7 +20,8 @@ describe('TranslateInterceptor', () => {
             imports: [
                 HttpClientTestingModule,
                 TranslateLibModule,
-                MatSnackBarModule
+                MatSnackBarModule,
+                NoopAnimationsModule
             ],
             providers: [
                 AuthenticationMethodService,

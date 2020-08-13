@@ -45,7 +45,6 @@ import {AuthenticationComponent} from './doc/authentication/authentication.compo
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MatButtonModule, MatCardModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule} from '@angular/material';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
@@ -74,6 +73,11 @@ import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 import {NaeExampleAppViewService} from './nae-example-app-view.service';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);

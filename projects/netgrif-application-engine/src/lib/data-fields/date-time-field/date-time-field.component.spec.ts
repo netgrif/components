@@ -19,6 +19,7 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DatetimeFieldComponent', () => {
     let component: DateTimeFieldComponent;
@@ -30,7 +31,7 @@ describe('DatetimeFieldComponent', () => {
                 MaterialModule,
                 AngularResizedEventModule,
                 NgxMatDatetimePickerModule,
-                TranslateLibModule, HttpClientTestingModule
+                TranslateLibModule, HttpClientTestingModule, NoopAnimationsModule
             ],
             providers: [
                 AuthenticationMethodService,

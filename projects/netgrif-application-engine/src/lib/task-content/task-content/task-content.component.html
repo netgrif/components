@@ -6,40 +6,56 @@
                        [rowspan]="item.layout.rows"
                        [ngSwitch]="item.type">
 
-            <nae-boolean-field *ngSwitchCase="fieldTypeResource.BOOLEAN" class="full-width-auto" [dataField]="item.item">
+            <nae-boolean-field *ngSwitchCase="fieldTypeResource.BOOLEAN" class="full-width-auto" [dataField]="item.item"
+                               [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-boolean-field>
 
-            <nae-text-field *ngSwitchCase="fieldTypeResource.TEXT" class="full-width-auto" [dataField]="item.item">
+            <nae-text-field *ngSwitchCase="fieldTypeResource.TEXT" class="full-width-auto" [dataField]="item.item"
+                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-text-field>
 
-            <nae-number-field *ngSwitchCase="fieldTypeResource.NUMBER" class="full-width-auto" [dataField]="item.item">
+            <nae-number-field *ngSwitchCase="fieldTypeResource.NUMBER" class="full-width-auto" [dataField]="item.item"
+                              [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-number-field>
 
-            <nae-enumeration-field *ngSwitchCase="fieldTypeResource.ENUMERATION" class="full-width-auto" [dataField]="item.item">
+            <nae-enumeration-field *ngSwitchCase="fieldTypeResource.ENUMERATION" class="full-width-auto" [dataField]="item.item"
+                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-enumeration-field>
 
-            <nae-enumeration-field *ngSwitchCase="fieldTypeResource.ENUMERATION_MAP" class="full-width-auto" [dataField]="item.item">
+            <nae-enumeration-field *ngSwitchCase="fieldTypeResource.ENUMERATION_MAP" class="full-width-auto" [dataField]="item.item"
+                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-enumeration-field>
 
-            <nae-multichoice-field *ngSwitchCase="fieldTypeResource.MULTICHOICE" class="full-width-auto" [dataField]="item.item">
+            <nae-multichoice-field *ngSwitchCase="fieldTypeResource.MULTICHOICE" class="full-width-auto" [dataField]="item.item"
+                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-multichoice-field>
 
-            <nae-multichoice-field *ngSwitchCase="fieldTypeResource.MULTICHOICE_MAP" class="full-width-auto" [dataField]="item.item">
+            <nae-multichoice-field *ngSwitchCase="fieldTypeResource.MULTICHOICE_MAP" class="full-width-auto" [dataField]="item.item"
+                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-multichoice-field>
 
-            <nae-date-field *ngSwitchCase="fieldTypeResource.DATE" class="full-width-auto" [dataField]="item.item">
+            <nae-date-field *ngSwitchCase="fieldTypeResource.DATE" class="full-width-auto" [dataField]="item.item"
+                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-date-field>
 
-            <nae-date-time-field *ngSwitchCase="fieldTypeResource.DATE_TIME" class="full-width-auto" [dataField]="item.item">
+            <nae-date-time-field *ngSwitchCase="fieldTypeResource.DATE_TIME" class="full-width-auto" [dataField]="item.item"
+                                 [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-date-time-field>
 
-            <nae-file-field *ngSwitchCase="fieldTypeResource.FILE" class="full-width-auto" [dataField]="item.item" [taskId]="taskId">
+            <nae-file-field *ngSwitchCase="fieldTypeResource.FILE" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
+                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-file-field>
 
-            <nae-user-field *ngSwitchCase="fieldTypeResource.USER" class="full-width-auto" [dataField]="item.item">
+            <nae-file-list-field *ngSwitchCase="'fileList'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
+                                 [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
+            </nae-file-list-field>
+
+            <nae-user-field *ngSwitchCase="fieldTypeResource.USER" class="full-width-auto" [dataField]="item.item"
+                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-user-field>
 
-            <nae-button-field *ngSwitchCase="fieldTypeResource.BUTTON" class="full-width-auto" [dataField]="item.item">
+            <nae-button-field *ngSwitchCase="fieldTypeResource.BUTTON" class="full-width-auto" [dataField]="item.item"
+                              [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-button-field>
 
             <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">

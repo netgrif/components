@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {FormControl} from '@angular/forms';
 import {debounceTime, map} from 'rxjs/operators';
-import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT} from '../../../moment/time-formats';
 import {UserAssignComponent} from '../../../side-menu/content-components/user-assign/user-assign.component';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
 
 @Component({
     selector: 'nae-search-mode',

@@ -9,4 +9,5 @@ export interface InjectedTabbedTaskViewData extends InjectedTabData {
      * So by not providing the nets, task search will be severely limited.
      */
     allowedNets?: Array<string>;
+    initiallyOpenOneTask?: boolean;
 }
