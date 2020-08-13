@@ -44,28 +44,22 @@ export class FileField extends DataField<FileFieldValue> {
      */
     private _changedFields$: Subject<ChangedFieldContainer>;
 
+    public downloaded: boolean;
+
     /**
      * Create new instance for file field with all his properties.
      *
      * Placeholder is a substitute for the value name if not set value.
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
-                layout?: Layout, private _maxUploadSizeInBytes?: number, private _maxUploadFiles: number = 1,
-                private _zipped: boolean = false, private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
+                layout?: Layout, private _maxUploadSizeInBytes?: number,
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
         super(stringId, title, value, behavior, placeholder, description, layout);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
     }
 
     get maxUploadSizeInBytes(): number {
         return this._maxUploadSizeInBytes;
-    }
-
-    get maxUploadFiles(): number {
-        return this._maxUploadFiles;
-    }
-
-    get zipped(): boolean {
-        return this._zipped;
     }
 
     get allowTypes(): string {
@@ -80,19 +74,11 @@ export class FileField extends DataField<FileFieldValue> {
         this._changedFields$.next(change);
     }
 
-    /**
-     * We assume that files are always given in the same order.
-     */
     protected valueEquality(a: FileFieldValue, b: FileFieldValue): boolean {
-        let array = true;
-        if (a && a.files) {
-            array = a.files.every((element, index) => element.name === b.files[index].name);
+        let file = !a === !b;
+        if (a && a.file && b && b.file) {
+            file = a.file.name === b.file.name;
         }
-        return (!a && !b) || (
-            !!a
-            && !!b
-            && a.name === b.name
-            && array
-        );
+        return (!a && !b) || (!!a && !!b && a.name === b.name && file);
     }
 }
