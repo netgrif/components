@@ -36,11 +36,11 @@ export class FilterRepository {
         Object.keys(filters).forEach(filterId => {
             const configFilter: ConfigFilter = filters[filterId];
             // TODO 17.4.2020 - don't ignore filter.access property
-            if (!configFilter.type || !configFilter.query) {
+            if (!configFilter.type || !configFilter.body) {
                 _log.warn(`Filter '${filterId}' doesn't define all the necessary properties. Skipping.`);
                 return;
             }
-            if (Array.isArray(configFilter.query)) {
+            if (Array.isArray(configFilter.body)) {
                 if (!configFilter.mergeOperator) {
                     _log.warn(`Filter '${filterId}' contains multiple filters, but doesn't define a merge operator. Skipping.`);
                     return;
@@ -48,12 +48,12 @@ export class FilterRepository {
                 this.warnIfFilterExists(filterId);
 
                 const filter = new MergedFilter(filterId, configFilter.type as FilterType,
-                    configFilter.query, configFilter.mergeOperator as MergeOperator, configFilter.title);
+                    configFilter.body, configFilter.mergeOperator as MergeOperator, configFilter.title);
                 this._filters.set(filterId, filter);
 
             } else {
                 this.warnIfFilterExists(filterId);
-                const filter = new SimpleFilter(filterId, configFilter.type as FilterType, configFilter.query, configFilter.title);
+                const filter = new SimpleFilter(filterId, configFilter.type as FilterType, configFilter.body, configFilter.title);
                 this._filters.set(filterId, filter);
             }
         });

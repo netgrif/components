@@ -11,3 +11,6 @@ export * from './authentication.module';
 
 
 /* SERVICES */
+
+/* COMPONENTS */
+export * from './components/authentication-overlay/authentication-overlay.component';
