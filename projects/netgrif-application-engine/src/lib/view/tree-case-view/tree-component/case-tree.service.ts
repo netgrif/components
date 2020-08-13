@@ -34,6 +34,10 @@ export class CaseTreeService implements OnDestroy {
     private _treeRootLoaded$: ReplaySubject<boolean>;
     private _rootNode: CaseTreeNode;
     private _showRoot: boolean;
+    /**
+     * string id of the case, that is currently being reloaded, `undefined` if no case is currently being reloaded
+     */
+    private _reloadedCaseId: string;
 
     constructor(protected _caseResourceService: CaseResourceService,
                 protected _treeCaseViewService: TreeCaseViewService,
@@ -85,6 +89,31 @@ export class CaseTreeService implements OnDestroy {
 
     protected get _currentCase(): Case | undefined {
         return this._currentNode ? this._currentNode.case : undefined;
+    }
+
+    /**
+     * @returns an `Observable` of the {@link LoadingEmitter} representing the loading state of the root node.
+     * Returns `undefined` if the tree has not yet been initialized.
+     *
+     * Wait for an emission on the [treeRootLoaded$]{@link CaseTreeService#treeRootLoaded$} stream before getting this Observable.
+     *
+     * The first value emitted by the Observable is `false`, when the tree finishes initializing.
+     */
+    public get rootNodeLoading$(): Observable<boolean> | undefined {
+        return !!this._rootNode ? this._rootNode.loadingChildren.asObservable() : undefined;
+    }
+
+    /**
+     * @returns an `Observable` of the {@link LoadingEmitter} representing whether the root node is currently
+     * in the process of adding a new child node or not.
+     * Returns `undefined` if the tree has not yet been initialized.
+     *
+     * Wait for an emission on the [treeRootLoaded$]{@link CaseTreeService#treeRootLoaded$} stream before getting this Observable.
+     *
+     * The first value emitted by the Observable is `false`, when the tree finishes initializing.
+     */
+    public get rootNodeAddingChild$(): Observable<boolean> | undefined {
+        return !!this._rootNode ? this._rootNode.addingNode.asObservable() : undefined;
     }
 
     /**
@@ -641,26 +670,40 @@ export class CaseTreeService implements OnDestroy {
 
     /**
      * Reloads the currently selected case node. The {@link Case} object held in the {@link CaseTreeNode} instance is not replaced,
-     * but the new Case is `Object.assign`-ed into it. THis means that the reference to the Case instance is unchanged but references
+     * but the new Case is `Object.assign`-ed into it. This means that the reference to the Case instance is unchanged but references
      * to all it's non-primitive attributes are changed.
      *
-     * Note that the child nodes, nor the parent nodes are reloaded.
+     * If a reload of the current node is initiated before the previous one completed, the new one is ignored.
+     *
+     * If the currently selected case changed before a response from backend was received the response is ignored.
+     *
+     * Note that the parent node, nor the child nodes are reloaded.
      */
     protected reloadCurrentCase(): void {
-        if (this._currentNode) {
-            this._caseResourceService.getOneCase(this._currentCase.stringId).subscribe(currentCase => {
-                if (currentCase) {
-                    Object.assign(this._currentCase, currentCase);
-                    this._treeCaseViewService.loadTask$.next(this._currentCase);
-                    this._logger.debug('Case Tree Node reloaded');
-                } else {
-                    this._logger.error('Case Tree Node could not be reloaded. Invalid server response', currentCase);
-                }
-            }, error => {
-                this._logger.error('Case Tree Node reload request failed', error);
-            });
-        } else {
+        if (!this._currentNode) {
             this._logger.debug('No Tree Case Node selected, nothing to reload');
+            return;
         }
+        if (this._currentNode.case.stringId !== this._reloadedCaseId) {
+            this._logger.debug('Reload of the current case already in progress');
+            return;
+        }
+        this._reloadedCaseId = this._currentNode.case.stringId;
+        this._caseResourceService.getOneCase(this._currentCase.stringId).subscribe(reloadedCurrentCase => {
+            if (!reloadedCurrentCase) {
+                this._logger.error('Current Case Tree Node could not be reloaded. Invalid server response', reloadedCurrentCase);
+                return;
+            }
+            if (this._currentNode && reloadedCurrentCase.stringId === this._currentNode.case.stringId) {
+                this._reloadedCaseId = undefined;
+                Object.assign(this._currentCase, reloadedCurrentCase);
+                this._treeCaseViewService.loadTask$.next(this._currentCase);
+                this._logger.debug('Current Case Tree Node reloaded');
+            } else {
+                this._logger.debug('Discarding case reload response, since the current node has changed before it\'s case was received');
+            }
+        }, error => {
+            this._logger.error('Current Case Tree Node reload request failed', error);
+        });
     }
 }

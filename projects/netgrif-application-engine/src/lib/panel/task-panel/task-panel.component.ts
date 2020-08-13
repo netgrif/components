@@ -120,12 +120,12 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
-            if (!this._taskState.isLoading) {
+            if (!this._taskState.isLoading()) {
                 this._assignPolicyService.performAssignPolicy(true);
             }
         });
         this.panelRef.closed.subscribe(() => {
-            if (!this._taskState.isLoading) {
+            if (!this._taskState.isLoading()) {
                 this._assignPolicyService.performAssignPolicy(false);
             }
         });
@@ -166,11 +166,11 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     public get isLoading(): boolean {
-        return this._taskState.isLoading;
+        return this._taskState.isLoading();
     }
 
     public stopLoading(): void {
-        this._taskState.stopLoading();
+        this._taskState.stopLoading(this._taskPanelData.task.stringId);
     }
 
     public preventPanelOpen($event: MouseEvent): boolean {
