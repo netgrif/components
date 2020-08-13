@@ -6,6 +6,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HTTP_INTERCEPTORS, HttpClient, HttpHeaders} from '@angular/common/http';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {SessionService} from '../session/services/session.service';
+import {RouterTestingModule} from '@angular/router/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AuthenticationInterceptor', () => {
@@ -13,7 +14,7 @@ describe('AuthenticationInterceptor', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SessionService,

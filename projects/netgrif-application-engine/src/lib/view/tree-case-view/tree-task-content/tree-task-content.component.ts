@@ -13,6 +13,7 @@ import {TreeTaskContentService} from './tree-task-content.service';
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
 import {AssignPolicyService} from '../../../task/services/assign-policy.service';
 import {FinishPolicyService} from '../../../task/services/finish-policy.service';
+import {SelectedCaseService} from '../../../task/services/selected-case.service';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -31,6 +32,7 @@ import {Observable} from 'rxjs';
         DataFocusPolicyService,
         AssignPolicyService,
         FinishPolicyService,
+        SelectedCaseService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
     ]
 })

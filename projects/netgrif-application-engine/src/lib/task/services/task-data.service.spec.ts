@@ -12,6 +12,7 @@ import {TaskContentService} from '../../task-content/services/task-content.servi
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -29,7 +30,7 @@ describe('TaskDataService', () => {
                 TaskDataService,
                 TaskRequestStateService,
                 DataFocusPolicyService,
-                TaskContentService,
+                {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations}
             ]

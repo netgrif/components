@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {Filter} from '../../../filter/models/filter';
 import {CaseTreeService} from './case-tree.service';
@@ -14,7 +14,39 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
 })
 export class TreeComponent {
 
+    /**
+     * `true` is emitted whenever the tree's root node is in it's loading state.
+     *
+     * `false` is emitted when the root node is no longer in the loading state.
+     *
+     * The first value emitted from this Output is `false`, when the tree finishes initializing.
+     *
+     * The root node enters it's loading state when it's children are being loaded.
+     */
+    @Output() treeRootLoading = new EventEmitter<boolean>();
+
+    /**
+     * `true` is emitted whenever the tree's root node is adding a new child node.
+     *
+     * `false` is emitted when the root node is no longer adding a new child node.
+     *
+     * The first value emitted from this Output is `false`, when the tree finishes initializing.
+     *
+     * No further calls to add a child node should be made, while a child is being added.
+     */
+    @Output() treeRootAddingChild = new EventEmitter<boolean>();
+
     constructor(private _treeService: CaseTreeService) {
+        this._treeService.treeRootLoaded$.subscribe(success => {
+            if (success) {
+                this._treeService.rootNodeLoading$.subscribe(loading => {
+                    this.treeRootLoading.emit(loading);
+                });
+                this._treeService.rootNodeAddingChild$.subscribe(addingChild => {
+                    this.treeRootAddingChild.emit(addingChild);
+                });
+            }
+        });
     }
 
     /**
