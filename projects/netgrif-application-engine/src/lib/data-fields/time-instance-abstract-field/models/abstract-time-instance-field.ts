@@ -7,12 +7,10 @@ import {Layout} from '../../models/layout';
 export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
     protected _validators: Array<ValidatorFn>;
-    public materialAppearance: string;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
                           description?: string, layout?: Layout, public validations?: any) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        this.materialAppearance = !!layout ? this.layout.appearance : 'legacy';
     }
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {

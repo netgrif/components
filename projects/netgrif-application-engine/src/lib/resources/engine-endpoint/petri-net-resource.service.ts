@@ -9,7 +9,7 @@ import Transition from '../../process/transition';
 import {HttpEventType, HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
-import {MessageResource} from '../interface/message-resource';
+import {MessageResource, PetriNetMessageResource} from '../interface/message-resource';
 import {PetriNetReference} from '../interface/petri-net-reference';
 
 @Injectable({
@@ -132,7 +132,7 @@ export class PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/import
      */
-    public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | MessageResource> {
+    public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | PetriNetMessageResource> {
         return this.provider.postWithEvent$<MessageResource>('petrinet/import', this.SERVER_URL, body, params).pipe(
             map(event => {
                 switch (event.type) {

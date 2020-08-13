@@ -5,6 +5,7 @@ import {
     CaseViewService,
     ConfigCaseViewServiceFactory,
     HeaderComponent,
+    SearchChipService,
     SearchService,
     SimpleFilter
 } from '@netgrif/application-engine';

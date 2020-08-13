@@ -13,16 +13,10 @@ export enum TextFieldView {
 export class TextField extends DataField<string> {
 
     private _validators: Array<ValidatorFn>;
-    public materialAppearance: string;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, public validations?: Validation[], private _view = TextFieldView.DEFAULT) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        if (layout) {
-            this.materialAppearance = this.layout.appearance;
-        } else {
-            this.materialAppearance = 'legacy';
-        }
     }
 
     get view(): TextFieldView {
@@ -52,7 +46,7 @@ export class TextField extends DataField<string> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes('length')) {
+            if (item.validationRule.includes('minLength')) {
                 const tmp = item.validationRule.split(' ');
                 if (tmp[1] !== undefined) {
                     const length = parseInt(tmp[1], 10);
@@ -60,12 +54,17 @@ export class TextField extends DataField<string> {
                         result.push(Validators.minLength(length));
                     }
                 }
+            } else if (item.validationRule.includes('maxLength')) {
+                const tmp = item.validationRule.split(' ');
+                if (tmp[1] !== undefined) {
+                    const length = parseInt(tmp[1], 10);
+                    if (!isNaN(length)) {
+                        result.push(Validators.maxLength(length));
+                    }
+                }
             } else if (item.validationRule.includes('regex')) {
                 if (item.validationRule.startsWith('regex ')) {
-                    const tmp = item.validationRule.split(' ');
-                    if (tmp[1] !== undefined) {
-                        result.push(Validators.pattern(new RegExp(tmp[1])));
-                    }
+                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(6, item.validationRule.length ))));
                 } else if (item.validationRule.startsWith('regex("')) {
                     result.push(Validators.pattern(new RegExp(item.validationRule.substring(7, item.validationRule.length - 2))));
                 }

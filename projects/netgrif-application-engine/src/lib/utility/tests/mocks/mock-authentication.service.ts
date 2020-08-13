@@ -12,7 +12,7 @@ export class MockAuthenticationService extends AuthenticationService {
         return of(undefined);
     }
 
-    isAuthenticated(): boolean {
+     get isAuthenticated(): boolean {
         return true;
     }
 

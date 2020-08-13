@@ -43,6 +43,37 @@ export abstract class ConfigurationService {
         }
     }
 
+    /**
+     * Get all URLs/paths of views with specified layout.
+     * @param layout Search views with this layout
+     * @returns Paths with prefixed '/' of all views with specified layout, empty array otherwise.
+     */
+    public getPathsByView(layout: string): Array<string> {
+        const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
+        const result = [];
+        if (!config.views) {
+            return result;
+        }
+        Object.values(config.views).forEach(view => {
+            result.push(...this.getView(layout, view).map(path => '/' + path));
+        });
+
+        return result;
+    }
+
+    private getView(searched: string, view: View): Array<string> {
+        const paths = [];
+        if (!!view.layout && view.layout.name === searched) {
+            paths.push(view.routing.path);
+        }
+        if (view.children && Object.keys(view.children).length !== 0) {
+            Object.values(view.children).forEach(child => {
+                paths.push(...this.getView(searched, child).map(path => view.routing.path + '/' + path));
+            });
+        }
+        return paths;
+    }
+
     private createConfigurationCopy(): any {
         return JSON.parse(JSON.stringify(this.configuration));
     }
