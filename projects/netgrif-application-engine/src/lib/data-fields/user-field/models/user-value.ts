@@ -5,11 +5,11 @@
  */
 export class UserValue {
     /**
-     * Create UserValue.
-     * @param _id User id : '5'
-     * @param _name User name : 'Admin'
-     * @param _surname User surname : 'Netgrif'
-     * @param _email User email : 'super@netgrif.com'
+     * An object that represents the selected user in {@link UserField} and [UserAssignComponent]{@link UserAssignComponent}.
+     * @param _id the id of the selected user
+     * @param _name the first name of the selected user
+     * @param _surname the surname of the selected user
+     * @param _email email of the selected user
      */
     constructor(private _id: string, private _name: string, private _surname: string, private _email: string) {
     }

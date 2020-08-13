@@ -31,9 +31,11 @@ describe('TaskViewService', () => {
                 NoopAnimationsModule],
             providers: [
                 ArrayTaskViewServiceFactory,
-                {   provide: TaskViewService,
+                {
+                    provide: TaskViewService,
                     useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]},
+                    deps: [ArrayTaskViewServiceFactory]
+                },
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

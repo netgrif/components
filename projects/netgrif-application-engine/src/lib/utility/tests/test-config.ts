@@ -286,19 +286,19 @@ export class TestConfigurationService extends ConfigurationService {
                     title: 'All Cases',
                     type: 'Case',
                     access: 'public',
-                    query: []
+                    body: []
                 },
                 'all-tasks': {
                     title: 'All Tasks',
                     type: 'Task',
                     access: 'public',
-                    query: {}
+                    body: {}
                 },
                 'some-tasks': {
                     title: 'All Tasks',
                     type: 'Task',
                     access: 'public',
-                    query: [{}],
+                    body: [{}],
                     mergeOperator: 'AND'
                 }
             },

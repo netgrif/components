@@ -27,11 +27,6 @@ describe('AuthenticationGuardService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should resolve login path', () => {
-        const test = new TestConfigurationService();
-        expect(service.resolveLoginPath(test.get().views.routes, AuthenticationGuardService.LOGIN_COMPONENT)).toBe('login');
-    });
-
     afterAll(() => {
         TestBed.resetTestingModule();
     });

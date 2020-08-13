@@ -10,6 +10,7 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../models/subject-task-operations';
 import {TaskContentService} from '../../task-content/services/task-content.service';
+import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
 
 describe('DelegateTaskService', () => {
     let service: DelegateTaskService;
@@ -20,7 +21,7 @@ describe('DelegateTaskService', () => {
             providers: [
                 DelegateTaskService,
                 TaskRequestStateService,
-                TaskContentService,
+                {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
