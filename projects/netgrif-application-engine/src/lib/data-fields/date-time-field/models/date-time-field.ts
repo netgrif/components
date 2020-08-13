@@ -9,7 +9,6 @@ export class DateTimeField extends AbstractTimeInstanceField {
     constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array<Validation>) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations);
-        this.materialAppearance = !!layout ? this.layout.appearance : 'outline';
     }
 
     protected valueEquality(a: Moment, b: Moment): boolean {
