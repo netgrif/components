@@ -7,7 +7,6 @@ import {Layout} from '../../models/layout';
 export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
     protected _validators: Array<ValidatorFn>;
-    public materialAppearance: string;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
                           description?: string, layout?: Layout, public validations?: any) {

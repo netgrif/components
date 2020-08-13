@@ -4,14 +4,15 @@
                        [apiModuleImport]="'LoginFormModule'"></nae-app-documentation>
 
 <ng-template #loginFormExample>
-    <div class="login-form-container" fxLayout="row" fxLayoutAlign="center center">
-        <div fxLayout="column" fxLayoutAlign="stretch">
-            <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="16px">
-                <mat-card fxFlex="100">
-                    <nae-login-form [downButtons]="false"></nae-login-form>
-
-                </mat-card>
+    <nae-authentication-overlay>
+        <div class="login-form-container" fxLayout="row" fxLayoutAlign="center center">
+            <div fxLayout="column" fxLayoutAlign="stretch">
+                <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="16px">
+                    <mat-card fxFlex="100">
+                        <nae-login-form (login)="onLogin($event)" [downButtons]="false"></nae-login-form>
+                    </mat-card>
+                </div>
             </div>
         </div>
-    </div>
+    </nae-authentication-overlay>
 </ng-template>

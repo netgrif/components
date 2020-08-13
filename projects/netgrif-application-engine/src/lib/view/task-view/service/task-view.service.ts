@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of, ReplaySubject, Subject, timer} from 'rxjs';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
@@ -30,9 +30,11 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _initiallyOpenOneTask: boolean;
+    protected _closeTaskTabOnNoTasks: boolean;
 
     // Kovy fix
     protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
+    protected _closeTab$: ReplaySubject<void>;
 
     /**
      * @ignore
@@ -51,7 +53,8 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
                 allowedNets: Observable<Array<Net>> = of([]),
-                initiallyOpenOneTask: Observable<boolean> = of(true)) {
+                initiallyOpenOneTask: Observable<boolean> = of(true),
+                closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
         super(allowedNets);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingEmitter();
@@ -65,6 +68,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             number: -1
         };
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
+        this._closeTab$ = new ReplaySubject<void>(1);
 
         const baseFilter = this._searchService.baseFilter;
         if (baseFilter instanceof SimpleFilter) {
@@ -123,6 +127,10 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         initiallyOpenOneTask.subscribe(bool => {
             this._initiallyOpenOneTask = bool;
         });
+
+        closeTaskTabOnNoTasks.subscribe(bool => {
+            this._closeTaskTabOnNoTasks = bool;
+        });
     }
 
     public get tasks$(): Observable<Array<TaskPanelData>> {
@@ -145,6 +153,10 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         return this._panelUpdate$.asObservable();
     }
 
+    public get closeTab(): Observable<void> {
+        return this._closeTab$.asObservable();
+    }
+
     public loadPage(page: number): Observable<{ [k: string]: TaskPanelData }> {
         if (this._loading$.isActive || page === null || page === undefined || page < 0 || this._clear) {
             return of({});
@@ -160,6 +172,12 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             catchError(err => {
                 this._log.error('Loading tasks has failed!', err);
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
+            }),
+            tap(t => {
+                if (this._pagination.totalElements && this._pagination.totalElements > 0 &&
+                    t.pagination.totalElements === 0 && !Array.isArray(t.content)) {
+                    this._closeTab$.next();
+                }
             }),
             tap(t => this._endOfData = !Array.isArray(t.content) ||
                 (Array.isArray(t.content) && t.content.length === 0) ||

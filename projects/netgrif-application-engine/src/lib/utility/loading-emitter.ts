@@ -17,4 +17,8 @@ export class LoadingEmitter extends BehaviorSubject<boolean> {
     public off() {
         this.next(false);
     }
+
+    public toggle() {
+        this.next(!this.getValue());
+    }
 }

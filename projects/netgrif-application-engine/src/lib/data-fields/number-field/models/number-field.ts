@@ -6,12 +6,10 @@ import {Validation} from '../../models/validation';
 
 export class NumberField extends DataField<number> {
     private _validators: Array<ValidatorFn>;
-    public materialAppearance: string;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[],
                 placeholder?: string, description?: string, layout?: Layout) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        this.materialAppearance = !!layout ? this.layout.appearance : 'outline';
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

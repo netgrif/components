@@ -1,7 +1,5 @@
 import {TestBed} from '@angular/core/testing';
 import {FileFieldService} from './file-field.service';
-import {FileDownloadService} from './download/file-download.service';
-import {FileUploadService} from './upload/file-upload.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -29,8 +27,6 @@ describe('FileFieldService', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                FileDownloadService,
-                FileUploadService,
                 SideMenuService,
                 SnackBarService,
                 FileFieldService,

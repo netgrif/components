@@ -13,13 +13,11 @@ export enum MultichoiceFieldView {
 }
 
 export class MultichoiceField  extends DataField<Array<string>> {
-    public materialAppearance: string;
 
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
                 private _view = MultichoiceFieldView.DEFAULT) {
         super(stringId, title, values, behavior, placeholder, description, layout);
-        this.materialAppearance = !!layout ? this.layout.appearance : 'outline';
     }
 
     set choices(choices: Array<MultichoiceFieldValue>) {

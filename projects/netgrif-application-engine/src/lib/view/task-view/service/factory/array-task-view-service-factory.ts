@@ -63,9 +63,10 @@ export class ArrayTaskViewServiceFactory {
      * Creates an instance of {@link TaskViewService} without having to provide all the dependencies yourself.
      * @param allowedNetsIds identifiers of the allowed nets.
      * @param initiallyOpenOneTask initially open task if its only one in task list
+     * @param closeTaskTabOnNoTasks allows to close tab after finish , if there is no tasks
      * @returns an instance of {@link TaskViewService} with the provided nets set as it's `allowedNets`.
      */
-    public create(allowedNetsIds: Array<string>, initiallyOpenOneTask = of(true)): TaskViewService {
+    public create(allowedNetsIds: Array<string>, initiallyOpenOneTask = of(true), closeTaskTabOnNoTasks = of(true)): TaskViewService {
         return new TaskViewService(
             this._taskResourceService,
             this._userService,
@@ -75,7 +76,8 @@ export class ArrayTaskViewServiceFactory {
             this._loggerService,
             this._userComparator,
             this._processService.getNets(allowedNetsIds),
-            initiallyOpenOneTask
+            initiallyOpenOneTask,
+            closeTaskTabOnNoTasks
         );
     }
 }
