@@ -10,6 +10,11 @@ export enum TextFieldView {
     RICHTEXTAREA = 'richtextarea'
 }
 
+export enum TextAreaHeight {
+    OUTLINE = 27,
+    FILL_STANDARD = 34
+}
+
 export enum TextFieldValidation {
     REQUIRED = 'required',
     MIN_LENGTH = 'minlength',
@@ -22,6 +27,7 @@ export enum TextFieldValidation {
 }
 
 export class TextField extends DataField<string> {
+    public static FIELD_HEIGHT = 105;
 
     private _validators: Array<ValidatorFn>;
 
