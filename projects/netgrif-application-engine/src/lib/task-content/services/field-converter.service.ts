@@ -4,16 +4,8 @@ import {DataField} from '../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
 import {TextField, TextFieldView} from '../../data-fields/text-field/models/text-field';
 import {NumberField} from '../../data-fields/number-field/models/number-field';
-import {
-    EnumerationField,
-    EnumerationFieldValue,
-    EnumerationFieldView
-} from '../../data-fields/enumeration-field/models/enumeration-field';
-import {
-    MultichoiceField,
-    MultichoiceFieldValue,
-    MultichoiceFieldView
-} from '../../data-fields/multichoice-field/models/multichoice-field';
+import {EnumerationField, EnumerationFieldValue, EnumerationFieldView} from '../../data-fields/enumeration-field/models/enumeration-field';
+import {MultichoiceField, MultichoiceFieldValue, MultichoiceFieldView} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
@@ -91,7 +83,7 @@ export class FieldConverterService {
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout);
-            case 'fileList':
+            case FieldTypeResource.FILE_LIST:
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout, item.validations);
         }
@@ -113,7 +105,7 @@ export class FieldConverterService {
         } else if (item instanceof FileField) {
             return FieldTypeResource.FILE;
         } else if (item instanceof FileListField) {
-            return 'fileList';
+            return FieldTypeResource.FILE_LIST;
         } else if (item instanceof UserField) {
             return FieldTypeResource.USER;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {

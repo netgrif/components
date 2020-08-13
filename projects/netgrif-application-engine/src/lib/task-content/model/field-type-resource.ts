@@ -9,6 +9,7 @@ export enum FieldTypeResource {
     USER = 'user',
     BUTTON = 'button',
     FILE = 'file',
+    FILE_LIST = 'fileList',
     ENUMERATION_MAP = 'enumeration_map',
     MULTICHOICE_MAP = 'multichoice_map',
 }
