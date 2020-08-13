@@ -42,7 +42,7 @@ export abstract class TabbedCaseView extends AbstractCaseView {
         });
     }
 
-    private openTab(openCase: Case) {
+    protected openTab(openCase: Case) {
         this._injectedTabData.tabViewRef.openTab({
             label: {
                 text: openCase.title,

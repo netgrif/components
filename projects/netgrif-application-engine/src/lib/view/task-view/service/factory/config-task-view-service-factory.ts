@@ -42,9 +42,11 @@ export class ConfigTaskViewServiceFactory {
      * Creates an instance of {@link TaskViewService} without having to provide all the dependencies yourself.
      * @param webViewPath path to the task view as specified in it's configuration. No leading backslash.
      * It is used to load [allowedNets]{@link SortableViewWithAllowedNets#_allowedNets$} from configuration.
+     * @param initiallyOpenOneTask initially open task if its only one in task list
+     * @param closeTaskTabOnNoTasks allows to close tab after finish , if there is no tasks
      * @returns an instance of {@link TaskViewService} configured for view at the specified path.
      */
-    public create(webViewPath: string): TaskViewService {
+    public create(webViewPath: string, initiallyOpenOneTask = of(true), closeTaskTabOnNoTasks = of(true)): TaskViewService {
         const view = this._configService.getViewByPath(webViewPath);
         if (view && view.layout && view.layout.params) {
             const viewParams = view.layout.params as TaskViewParams;
@@ -62,7 +64,9 @@ export class ConfigTaskViewServiceFactory {
                 this._searchService,
                 this._log,
                 this._userComparator,
-                nets
+                nets,
+                initiallyOpenOneTask,
+                closeTaskTabOnNoTasks
             );
         } else {
             throw new Error(`Can't load configuration for view with webPath: '${webViewPath}'`);
