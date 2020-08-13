@@ -25,6 +25,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -39,7 +40,8 @@ describe('TaskListComponent', () => {
                 NoopAnimationsModule,
                 CommonModule,
                 HttpClientTestingModule,
-                AuthenticationModule
+                AuthenticationModule,
+                RouterTestingModule.withRoutes([])
             ],
             declarations: [TestWrapperComponent],
             providers: [
