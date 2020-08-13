@@ -66,7 +66,7 @@ describe('UserAssignListComponent', () => {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-user-assign-list [searchUserControl]="formControl" [injectedData]="injectedData"></nae-user-assign-list>'
+    template: '<nae-user-assign-list [searchUserControl]="formControl"></nae-user-assign-list>'
 })
 class TestWrapperComponent {
     injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;

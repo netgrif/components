@@ -175,7 +175,7 @@ export interface Filters {
 export interface ConfigFilter {
     title: string;
     access?: string;
-    query: object | Array<object>;
+    body: object | Array<object>;
     type: 'Task' | 'Case';
     mergeOperator?: 'AND' | 'OR';
 

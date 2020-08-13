@@ -11,6 +11,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {UserListService} from '../../../user/services/user-list.service';
 
 describe('UserAssignComponent', () => {
@@ -23,7 +24,8 @@ describe('UserAssignComponent', () => {
                 MaterialModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                SnackBarModule
             ],
             providers: [
                 UserListService,

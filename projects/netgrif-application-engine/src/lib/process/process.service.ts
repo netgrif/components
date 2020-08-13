@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, of, Subject} from 'rxjs';
+import {forkJoin, Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {Net} from './net';
 import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../logger/services/logger.service';
@@ -20,14 +20,16 @@ export interface NetCache {
 })
 export class ProcessService {
 
-    private readonly _nets: NetCache;
-    private _netsSubject: Subject<NetCache>;
-    private _netUpdate: Subject<Net>;
+    protected readonly _nets: NetCache;
+    protected _netsSubject: Subject<NetCache>;
+    protected _netUpdate: Subject<Net>;
+    protected _requestCache: Map<string, ReplaySubject<Net>>;
 
     constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
         this._nets = {};
         this._netsSubject = new Subject<NetCache>();
         this._netUpdate = new Subject<Net>();
+        this._requestCache = new Map<string, ReplaySubject<Net>>();
     }
 
     /**
@@ -39,10 +41,7 @@ export class ProcessService {
      */
     public getNets(identifiers: Array<string>): Observable<Array<Net>> {
         return forkJoin(identifiers.map(i => {
-            if (this._nets[i]) {
-                return of(this._nets[i]);
-            }
-            return this.loadNet(i);
+            return this.getNet(i);
         })).pipe(
             map(nets => nets.filter(n => !!n)),
             tap(nets => {
@@ -64,13 +63,21 @@ export class ProcessService {
         if (this._nets[identifier]) {
             return of(this._nets[identifier]);
         }
-
+        if (this._requestCache.has(identifier)) {
+            return this._requestCache.get(identifier).asObservable();
+        }
+        this._requestCache.set(identifier, new ReplaySubject<Net>(1));
         return this.loadNet(identifier).pipe(
             tap(net => {
-                if (!net) {
-                    return;
+                const s = this._requestCache.get(identifier);
+                if (s) {
+                    s.next(net);
+                    s.complete();
+                    this._requestCache.delete(identifier);
                 }
-                this.publishUpdate(net);
+                if (net) {
+                    this.publishUpdate(net);
+                }
             })
         );
     }
@@ -95,8 +102,25 @@ export class ProcessService {
         if (!this._nets[net.identifier]) {
             return;
         }
-        this._nets[net.identifier] = net;
-        this.publishUpdate(net);
+        if (!net.transitions.length || !net.transactions.length || !net.roles.length) {
+            forkJoin({
+                transitions: this.loadTransitions(net.stringId),
+                transactions: this.loadTransactions(net.stringId),
+                roles: this.loadRoles(net.stringId)
+            }).subscribe(values => {
+                net.transitions = values.transitions;
+                net.transactions = values.transactions;
+                net.roles = values.roles;
+                this._nets[net.identifier] = net;
+                this.publishUpdate(net);
+            }, error => {
+                this._log.error('Failed to load part of Petri net ' + net.title, error);
+                // throw error;
+            });
+        } else {
+            this._nets[net.identifier] = net;
+            this.publishUpdate(net);
+        }
     }
 
     /**
@@ -117,7 +141,7 @@ export class ProcessService {
         return this._netUpdate.asObservable();
     }
 
-    private loadNet(id: string): Observable<Net> {
+    protected loadNet(id: string): Observable<Net> {
         const returnNet = new Subject<Net>();
         this._petriNetResource.getOne(id, '^').subscribe(net => {
             if (!net.stringId) {
@@ -152,7 +176,7 @@ export class ProcessService {
         return returnNet.asObservable();
     }
 
-    private loadTransitions(id: string): Observable<Array<Transition>> {
+    protected loadTransitions(id: string): Observable<Array<Transition>> {
         return this._petriNetResource.getPetriNetTranstions(id).pipe(
             map(trans => {
                 if (trans instanceof Array) {
@@ -172,7 +196,7 @@ export class ProcessService {
         );
     }
 
-    private loadTransactions(id: string): Observable<Array<Transaction>> {
+    protected loadTransactions(id: string): Observable<Array<Transaction>> {
         return this._petriNetResource.getPetriNetTransactions(id).pipe(
             map(trans => {
                 if (trans instanceof Array) {
@@ -192,7 +216,7 @@ export class ProcessService {
         );
     }
 
-    private loadRoles(id: string): Observable<Array<NetRole>> {
+    protected loadRoles(id: string): Observable<Array<NetRole>> {
         return this._petriNetResource.getPetriNetRoles(id).pipe(
             map(roles => {
                 if (roles instanceof Array) {
@@ -212,7 +236,7 @@ export class ProcessService {
         );
     }
 
-    private publishUpdate(net?: Net): void {
+    protected publishUpdate(net?: Net): void {
         this._netsSubject.next(this._nets);
         if (net) {
             this._netUpdate.next(net);
