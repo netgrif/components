@@ -1,4 +1,4 @@
 export interface FileFieldValue {
-    files?: Array<File>;
+    file?: File;
     name?: string;
 }

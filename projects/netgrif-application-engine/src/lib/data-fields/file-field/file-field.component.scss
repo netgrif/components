@@ -25,3 +25,9 @@
 .do-not-click:hover {
     cursor: not-allowed;
 }
+
+.file-button {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

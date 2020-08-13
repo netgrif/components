@@ -24,7 +24,7 @@ export class AuthenticationService {
                 private _userTransformer: UserTransformer) {
         this._authenticated$ = new BehaviorSubject<boolean>(false);
         this._sessionService.session$.subscribe(token => {
-            this._authenticated$.next(!!token && token.length !== 0);
+            this._authenticated$.next(!!token && token.length !== 0 && this._sessionService.verified);
         });
     }
 
@@ -54,7 +54,7 @@ export class AuthenticationService {
         );
     }
 
-    isAuthenticated(): boolean {
+    get isAuthenticated(): boolean {
         return this._authenticated$.getValue();
     }
 

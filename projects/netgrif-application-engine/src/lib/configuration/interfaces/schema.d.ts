@@ -175,7 +175,7 @@ export interface Filters {
 export interface ConfigFilter {
     title: string;
     access?: string;
-    query: object | Array<object>;
+    body: object | Array<object>;
     type: 'Task' | 'Case';
     mergeOperator?: 'AND' | 'OR';
 
@@ -257,6 +257,10 @@ export interface Services {
     routing?: {
         defaultRedirect?: string;
         wildcardRedirect?: string;
+    };
+    dataFields?: {
+        template?: string,
+        appearance?: string
     };
 
     [k: string]: any;

@@ -7,8 +7,6 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FileField} from './models/file-field';
 import {FileFieldService} from './services/file-field.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {FileUploadService} from './services/upload/file-upload.service';
-import {FileDownloadService} from './services/download/file-download.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -39,8 +37,6 @@ describe('FileFieldComponent', () => {
             providers: [
                 FileFieldService,
                 SideMenuService,
-                FileUploadService,
-                FileDownloadService,
                 AuthenticationMethodService,
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
