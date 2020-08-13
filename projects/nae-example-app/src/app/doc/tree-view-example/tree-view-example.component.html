@@ -1,10 +1,16 @@
 <div fxLayoutAlign="center start" class="height-100">
     <div class="fill-all-space" fxLayout="row" fxFlex="80">
         <mat-card class="fill-all-space" *ngIf="!loading">
-            <button mat-button (click)="tree.addRootChildNode()">Add root child</button>
-
             <div fxLayout="column" fxFlex="25" class="overflow-auto">
-                <nae-tree-component #tree [filter]="filter" [showTreeRoot]="false"></nae-tree-component>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-button fxFlex *ngIf="showButton()" (click)="tree.addRootChildNode()">Add root child</button>
+                    <mat-spinner *ngIf="!showButton()" [diameter]="36"></mat-spinner>
+                </div>
+                <nae-tree-component #tree fxFlex="100"
+                                    [filter]="filter"
+                                    [showTreeRoot]="false"
+                                    (treeRootLoading)="rootLoading($event)"
+                                    (treeRootAddingChild)="rootAddingChild($event)"></nae-tree-component>
             </div>
 
             <mat-divider [vertical]="true" class="divider-fix"></mat-divider>

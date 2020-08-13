@@ -92,6 +92,31 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
+     * @returns an `Observable` of the {@link LoadingEmitter} representing the loading state of the root node.
+     * Returns `undefined` if the tree has not yet been initialized.
+     *
+     * Wait for an emission on the [treeRootLoaded$]{@link CaseTreeService#treeRootLoaded$} stream before getting this Observable.
+     *
+     * The first value emitted by the Observable is `false`, when the tree finishes initializing.
+     */
+    public get rootNodeLoading$(): Observable<boolean> | undefined {
+        return !!this._rootNode ? this._rootNode.loadingChildren.asObservable() : undefined;
+    }
+
+    /**
+     * @returns an `Observable` of the {@link LoadingEmitter} representing whether the root node is currently
+     * in the process of adding a new child node or not.
+     * Returns `undefined` if the tree has not yet been initialized.
+     *
+     * Wait for an emission on the [treeRootLoaded$]{@link CaseTreeService#treeRootLoaded$} stream before getting this Observable.
+     *
+     * The first value emitted by the Observable is `false`, when the tree finishes initializing.
+     */
+    public get rootNodeAddingChild$(): Observable<boolean> | undefined {
+        return !!this._rootNode ? this._rootNode.addingNode.asObservable() : undefined;
+    }
+
+    /**
      * Loads and populates the topmost level of the tree.
      *
      * The displayed cases are determined by this object's [rootFilter]{@link CaseTreeService#rootFilter}.
