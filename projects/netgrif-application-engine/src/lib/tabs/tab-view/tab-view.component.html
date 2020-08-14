@@ -9,7 +9,7 @@
                 <div fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon class="icon-margin-right"
                               *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
-                    <span [matBadge]="(badgeCount(tab) | async)" [matBadgeHidden]="(badgeHidden(tab) | async)">{{tab.label.text}}</span>
+                    <span class="custom-badge" [matBadge]="(badgeCount(tab) | async)" [matBadgeHidden]="(badgeHidden(tab) | async)">{{tab.label.text + offset}}</span>
                 </div>
                 <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
                     <mat-icon>clear</mat-icon>
