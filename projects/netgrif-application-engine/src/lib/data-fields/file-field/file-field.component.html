@@ -29,7 +29,7 @@
                         <mat-icon *ngIf="state.completed && state.error" color="warn">error</mat-icon>
                         {{name}}
                     </button>
-                    <button mat-button *ngIf="dataField.value && (dataField.value.name || dataField.value.file)" [disabled]="formControl.disabled">
+                    <button mat-button *ngIf="dataField.value && (dataField.value.name || dataField.value.file) && !formControl.disabled">
                         <mat-icon color="warn" (click)="deleteFile()" matTooltip="Click to delete">close</mat-icon>
                     </button>
                 </div>
