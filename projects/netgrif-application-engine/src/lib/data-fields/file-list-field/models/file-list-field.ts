@@ -7,6 +7,10 @@ import {DataField} from '../../models/abstract-data-field';
 import {FileListFieldValue} from './file-list-field-value';
 import {Validation} from '../../models/validation';
 
+export enum FileListFieldValidation {
+    MAX_FILES = 'maxFiles'
+}
+
 export class FileListField extends DataField<FileListFieldValue> {
     /**
      * Used to forward the result of the upload file backend call to the task content

@@ -13,6 +13,9 @@ export class TreeViewExampleComponent {
     public filter: Filter;
     public loading: boolean;
 
+    private _rootLoading = true;
+    private _rootAddingChild = true;
+
     constructor(private _caseResource: CaseResourceService,
                 private _processService: ProcessService) {
         this.loading = true;
@@ -44,4 +47,15 @@ export class TreeViewExampleComponent {
             });
     }
 
+    rootLoading(state: boolean): void {
+        this._rootLoading = state;
+    }
+
+    rootAddingChild(state: boolean): void {
+        this._rootAddingChild = state;
+    }
+
+    showButton(): boolean {
+        return !(this._rootLoading || this._rootAddingChild);
+    }
 }

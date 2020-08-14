@@ -18,13 +18,22 @@ import {CallChainService} from '../../../utility/call-chain/call-chain.service';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {hasContent} from '../../../utility/pagination/page-has-content';
+import {getImmediateData} from '../../../utility/get-immediate-data';
+import {filter} from 'rxjs/operators';
+import {LoggerService} from '../../../logger/services/logger.service';
+import {SelectedCaseService} from '../../../task/services/selected-case.service';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
 
-    private _selectedCase: Case;
     private _processingTaskChange: LoadingEmitter;
     private _displayedTaskText$: Subject<string>;
+    /**
+     * a unique identifier consisting of caseId and transition ID
+     *
+     * Is set if a reload of the given task is currently taking place, `undefined` otherwise.
+     */
+    private _reloadedTaskUniqueIdentifier: string;
 
     constructor(protected _treeCaseService: TreeCaseViewService,
                 protected _taskDataService: TaskDataService,
@@ -35,6 +44,8 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _cancel: CancelTaskService,
                 protected _userComparator: UserComparatorService,
                 protected _callchain: CallChainService,
+                protected _logger: LoggerService,
+                protected _selectedCaseService: SelectedCaseService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: SubjectTaskOperations) {
         this._processingTaskChange = new LoadingEmitter();
         this._displayedTaskText$ = new ReplaySubject<string>();
@@ -49,7 +60,7 @@ export class TreeTaskContentService implements OnDestroy {
             }
         });
 
-        _treeCaseService.loadTask$.asObservable().subscribe(selectedCase => {
+        _treeCaseService.loadTask$.asObservable().pipe(filter(selectedCase => this.taskChanged(selectedCase))).subscribe(selectedCase => {
             this.cancelAndLoadFeaturedTask(selectedCase);
         });
 
@@ -83,18 +94,18 @@ export class TreeTaskContentService implements OnDestroy {
      * @param selectedCase the Case who's task should be now displayed
      */
     protected cancelAndLoadFeaturedTask(selectedCase: Case | undefined) {
-        if (!this.taskChanged(selectedCase)) {
-            return;
-        }
-
         this._processingTaskChange.on();
+        this._taskContentService.blockFields(true);
         if (this.shouldCancelTask) {
-            this._cancel.cancel(this._callchain.create(() => {
-                this.loadFeaturedTask(selectedCase);
+            this._cancel.cancel(this._callchain.create(success => {
+                if (success) {
+                    this._logger.debug('Old tree task successfully canceled');
+                } else {
+                    this._logger.warn('Old tree task could not be canceled');
+                }
             }));
-        } else {
-            this.loadFeaturedTask(selectedCase);
         }
+        this.loadFeaturedTask(selectedCase);
     }
 
     /**
@@ -102,7 +113,7 @@ export class TreeTaskContentService implements OnDestroy {
      * @param selectedCase the Case who's task should be now displayed
      */
     protected loadFeaturedTask(selectedCase: Case | undefined): void {
-        this._selectedCase = selectedCase;
+        this._selectedCaseService.selectedCase = selectedCase;
 
         const requestBody = this.getTaskRequestBody();
         if (requestBody === undefined) {
@@ -128,13 +139,13 @@ export class TreeTaskContentService implements OnDestroy {
      * Returns `false` otherwise.
      */
     private taskChanged(newCase: Case | undefined): boolean {
-        const currentCaseId = this._selectedCase ? this._selectedCase.stringId : undefined;
+        const currentCaseId = this._selectedCaseService.selectedCase ? this._selectedCaseService.selectedCase.stringId : undefined;
         const newCaseId = newCase ? newCase.stringId : undefined;
         if (currentCaseId !== newCaseId) {
             return true;
         }
 
-        const currentTransitionId = this.getTransitionId(this._selectedCase);
+        const currentTransitionId = this.getTransitionId(this._selectedCaseService.selectedCase);
         const newTransitionId = this.getTransitionId(newCase);
         return currentTransitionId !== newTransitionId;
     }
@@ -152,10 +163,10 @@ export class TreeTaskContentService implements OnDestroy {
      * immediate data field. Returns `undefined` if the request body cannot be created.
      */
     protected getTaskRequestBody(): TaskGetRequestBody | undefined {
-        const transitionId = this.getTransitionId(this._selectedCase);
+        const transitionId = this.getTransitionId(this._selectedCaseService.selectedCase);
         if (transitionId) {
             return {
-                case: this._selectedCase.stringId,
+                case: this._selectedCaseService.selectedCase.stringId,
                 transition: transitionId
             };
         }
@@ -169,8 +180,7 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected getTransitionId(examinedCase: Case): string | undefined {
         if (examinedCase && examinedCase.immediateData) {
-            const transitionId = examinedCase.immediateData
-                .find(imData => imData.stringId === TreePetriflowIdentifiers.FEATURED_TRANSITION);
+            const transitionId = getImmediateData(examinedCase, TreePetriflowIdentifiers.FEATURED_TRANSITION);
             return transitionId ? transitionId.value : undefined;
         }
         return undefined;
@@ -181,8 +191,14 @@ export class TreeTaskContentService implements OnDestroy {
      * @param task the Task that should now be selected
      */
     protected switchToTask(task: Task): void {
+        if (task.caseId !== this._selectedCaseService.selectedCase.stringId) {
+            this._logger.debug('Tree featured task has been loaded, but the selected case has changed since. Discarding...');
+            return;
+        }
+
         task.assignPolicy = AssignPolicy.auto;
         this._taskContentService.task = task;
+        this._taskContentService.blockFields(true);
         this._assignPolicy.performAssignPolicy(true, this._callchain.create(() => {
             this._processingTaskChange.off();
         }));
@@ -201,9 +217,16 @@ export class TreeTaskContentService implements OnDestroy {
      * Updates the state of the current Task from backend
      */
     protected updateTaskState(): void {
+        const uniqueTaskIdentifier = this.getUniqueTaskIdentifier();
+        if (uniqueTaskIdentifier === this._reloadedTaskUniqueIdentifier) {
+            this._logger.debug('The currently selected task is already being reloaded. Ignoring reload request.');
+            return;
+        }
+        this._reloadedTaskUniqueIdentifier = uniqueTaskIdentifier;
         this._taskResourceService.getTasks(this.getTaskRequestBody()).subscribe(page => {
             if (hasContent(page)) {
-                if (this._taskContentService.task) {
+                if (this._taskContentService.task && this._taskContentService.task.stringId === page.content[0].stringId) {
+                    this._reloadedTaskUniqueIdentifier = undefined;
                     Object.assign(this._taskContentService.task, page.content[0]);
                 }
                 this.resolveTaskBlockState();
@@ -235,5 +258,17 @@ export class TreeTaskContentService implements OnDestroy {
         if (this.shouldCancelTask) {
             this._cancel.cancel();
         }
+    }
+
+    /**
+     * @returns a unique identifier for the currently selected task, that consists of it's case's id and it's transition id.
+     *
+     * Returns `undefined`, if no task is currently selected.
+     */
+    protected getUniqueTaskIdentifier(): string {
+        if (!this._selectedCaseService.selectedCase) {
+            return undefined;
+        }
+        return `${this._selectedCaseService.selectedCase.stringId}#${this.getTransitionId(this._selectedCaseService.selectedCase)}`;
     }
 }

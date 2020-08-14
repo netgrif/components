@@ -14,20 +14,17 @@ export enum EnumerationFieldView {
     AUTOCOMPLETE = 'autocomplete'
 }
 
-export class EnumerationField extends DataField<string> {
+export enum EnumerationFieldValidation {
+    WRONG_VALUE = 'wrongValue',
+    REQUIRED = 'required'
+}
 
-    public materialAppearance: string;
-    private _validators: Array<ValidatorFn>;
+export class EnumerationField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string,
                 private _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, private _view = EnumerationFieldView.DEFAULT) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        if (layout) {
-            this.materialAppearance = this.layout.appearance;
-        } else {
-            this.materialAppearance = 'legacy';
-        }
     }
 
     set choices(choices: Array<EnumerationFieldValue>) {

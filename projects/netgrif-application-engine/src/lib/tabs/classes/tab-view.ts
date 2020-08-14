@@ -8,6 +8,8 @@ import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
+import {InjectedTabbedTaskViewData} from '../../view/task-view/models/injected-tabbed-task-view-data';
+import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
 
 /**
  * Holds the logic for tab management in {@link TabViewComponent}.
@@ -92,15 +94,38 @@ export class TabView implements TabViewInterface {
      * Opens a new tab with the provided content.
      * @param tabContent - content of the new tab
      * @param autoswitch - whether the newly opened tab should be switched to. Defaults to `false`.
+     * @param openExising - whether the opened tab already existing should be switched to existing one. Defaults to `true`.
      * @returns the `tabUniqueId` of the newly opened tab
      */
-    public openTab(tabContent: TabContent, autoswitch: boolean = false): string {
+    public openTab(tabContent: TabContent, autoswitch: boolean = false, openExising: boolean = true): string {
         if (tabContent.initial) {
             this._logger.warn(`'initial' attribute is not meant to be used with new tabs and will be ignored`);
             delete tabContent.initial;
         }
 
         const newTab = new OpenedTab(tabContent, `${this.getNextId()}`);
+        const indexExisting = this.findIndexExistingTab(newTab);
+        if (indexExisting === -1 || !openExising) {
+            return this.openNewTab(newTab, autoswitch);
+        } else {
+            this.selectedIndex.setValue(indexExisting);
+            return `${this.nextId - 1}`;
+        }
+    }
+
+    protected findIndexExistingTab(newTab: OpenedTab) {
+        return this.openedTabs.findIndex(existingTab =>
+            existingTab.injectedObject &&
+            (existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter &&
+            ((existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case &&
+            newTab.injectedObject &&
+            (newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter &&
+            ((newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case &&
+            (((existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case ===
+                ((newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case));
+    }
+
+    protected openNewTab(newTab: OpenedTab, autoswitch: boolean) {
         let index = this.openedTabs.findIndex(existingTab => existingTab.order > newTab.order);
         if (index === -1) {
             index = this.openedTabs.length;

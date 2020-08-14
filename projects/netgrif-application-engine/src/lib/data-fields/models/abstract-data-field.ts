@@ -4,6 +4,7 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {Layout} from './layout';
+import {ConfigurationService} from '../../configuration/configuration.service';
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -51,7 +52,11 @@ export abstract class DataField<T> {
      * All fields are touched before a task is finished to check their validity.
      */
     private _touch: Subject<boolean>;
-
+    /**
+     * @ignore
+     * Appearance of dataFields, possible values - outline, standard, fill, legacy
+     */
+    public materialAppearance: string;
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -268,5 +273,16 @@ export abstract class DataField<T> {
                     throw new Error(`Unknown attribute '${changedAttribute}' in change object`);
             }
         });
+    }
+
+    public resolveAppearance(config: ConfigurationService): void {
+        let appearance = 'outline';
+        if (config.get().services && config.get().services.dataFields && config.get().services.dataFields.appearance) {
+            appearance = config.get().services.dataFields.appearance;
+        }
+        if (this.layout && this.layout.appearance) {
+            appearance = this.layout.appearance;
+        }
+        this.materialAppearance = appearance;
     }
 }

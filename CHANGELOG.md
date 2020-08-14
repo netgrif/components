@@ -1,3 +1,18 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10792/tab/release-report-all-issues"></a>
+## 4.0.1 - Teal Steel (10.08.2020)
+### Bug Fixes
+ * [NAE-931](https://netgrif.atlassian.net/browse/NAE-931) - Task content algorithm function defined in loop
+ * [NAE-921](https://netgrif.atlassian.net/browse/NAE-921) - Touch state cleared after set data
+ * [NAE-920](https://netgrif.atlassian.net/browse/NAE-920) - Regex with spaces doesn't work
+ * [NAE-916](https://netgrif.atlassian.net/browse/NAE-916) - Search predicate index tracking
+ * [NAE-915](https://netgrif.atlassian.net/browse/NAE-915) - PetriNetSearchRequest is not exported
+ * [NAE-906](https://netgrif.atlassian.net/browse/NAE-906) - Dynamic routing does not work on server
+ * [NAE-905](https://netgrif.atlassian.net/browse/NAE-905) - Defaultne headre sa nezmenia
+ * [NAE-901](https://netgrif.atlassian.net/browse/NAE-901) - Authentication Guard does not consider validity of session token
+ * [NAE-878](https://netgrif.atlassian.net/browse/NAE-878) - UserAssignComponent With Pagination
+ * [NAE-869](https://netgrif.atlassian.net/browse/NAE-869) - AuthGuard token expiration
+ * [NAE-860](https://netgrif.atlassian.net/browse/NAE-860) - Tab View Schematic doesn't generate 'canBeClosed' attribute
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10632/tab/release-report-all-issues"></a>
 ## 4.0.0 - Blue Aluminium (24.07.2020)
 

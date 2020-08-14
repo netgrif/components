@@ -13,6 +13,7 @@ import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {Page} from '../interface/page';
+import {CaseGetRequestBody} from '../interface/case-get-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -68,8 +69,11 @@ export class CaseResourceService implements CountService {
      * DELETE
      * {{baseUrl}}/api/workflow/case/:id
      */
-    public deleteCase(caseID: string): Observable<MessageResource> {
-        return this.provider.delete$('workflow/case/' + caseID, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+    public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<MessageResource> {
+        return this.provider.delete$('workflow/case/' + caseID,
+            this.SERVER_URL,
+            deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
+            .pipe(map(r => changeType(r, undefined)));
     }
 
 
@@ -117,8 +121,29 @@ export class CaseResourceService implements CountService {
      * POST
      * {{baseUrl}}/api/workflow/case/search2
      */
-    public getCasesQueryDSL(body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/search2', this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+    public getCasesQueryDSL(body: object): Observable<Page<Case>> {
+        return this.provider.post$('workflow/case/search2', this.SERVER_URL, body).pipe(map(r => getResourcePage<Case>(r, 'cases')));
+    }
+
+    /**
+     * Generic case search with object encoded search query. Similar to [getCasesQueryDSL]{@link CaseResourceService#getCasesQueryDSL}
+     * POST
+     * {{baseUrl}}/api/workflow/case/search_mongo
+     * @param body object defining the search query
+     * @param params request parameters, that can be used for sorting of results.
+     */
+    public getCases(body: CaseGetRequestBody, params?: Params): Observable<Page<Case>> {
+        return this.provider.post$('workflow/case/search_mongo', this.SERVER_URL, body, params)
+            .pipe(map(r => getResourcePage<Case>(r, 'cases')));
+    }
+
+    /**
+     * Search one case by it's id.
+     * GET
+     * {{baseUrl}}/api/workflow/case/:id
+     */
+    public getOneCase(caseId: string): Observable<Case> {
+        return this.provider.get$('workflow/case/' + caseId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
     }
 
 

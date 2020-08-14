@@ -33,6 +33,7 @@ import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {AssignPolicyService} from '../../task/services/assign-policy.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
@@ -53,7 +54,8 @@ describe('TaskPanelComponent', () => {
                 CommonModule,
                 AuthenticationModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 ArrayTaskViewServiceFactory,

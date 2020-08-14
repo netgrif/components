@@ -6,7 +6,7 @@ import {SideMenuControl} from '../../models/side-menu-control';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {MessageResource} from '../../../resources/interface/message-resource';
+import {MessageResource, PetriNetMessageResource} from '../../../resources/interface/message-resource';
 import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 
@@ -33,6 +33,7 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
     public releaseTypes: string[] = ['Major', 'Minor', 'Patch'];
     public releaseTypeControl = new FormControl(this.releaseTypes[0]);
 
+    private _response: PetriNetMessageResource = undefined;
     private _fileInput: HTMLInputElement;
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl,
@@ -89,7 +90,7 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
         this._sideMenuControl.close({
             opened: false,
             message: 'All process files were processed',
-            data: this.fileList
+            data: this._response ? { net: this._response.net } : undefined
         });
     }
 
@@ -133,13 +134,14 @@ export class ImportNetComponent implements OnInit, AfterViewInit {
                     file.uploaded = true;
                 }
             } else {
-                this._log.info((response as MessageResource).success);
+                this._log.info((response as PetriNetMessageResource).success);
+                this._response = (response as PetriNetMessageResource);
                 file.inProgress = false;
                 file.completed = true;
                 this._sideMenuControl.publish({
                     opened: true,
                     message: 'Process ' + file.data.name + ' successfully uploaded',
-                    data: file
+                    data: {net: (response as PetriNetMessageResource).net}
                 });
             }
         }, error => {

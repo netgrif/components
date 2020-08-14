@@ -41,13 +41,13 @@ describe('AssignPolicyService', () => {
                 TaskRequestStateService,
                 DataFocusPolicyService,
                 SingleTaskContentService,
-                {provide: TaskContentService, useValue: SingleTaskContentService},
                 AssignTaskService,
                 CancelTaskService,
                 TaskEventService,
                 AuthenticationMethodService,
                 FinishPolicyService,
                 FinishTaskService,
+                {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations}
             ]

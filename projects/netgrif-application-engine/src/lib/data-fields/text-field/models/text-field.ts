@@ -10,19 +10,32 @@ export enum TextFieldView {
     RICHTEXTAREA = 'richtextarea'
 }
 
+export enum TextAreaHeight {
+    OUTLINE = 27,
+    FILL_STANDARD = 34
+}
+
+export enum TextFieldValidation {
+    REQUIRED = 'required',
+    MIN_LENGTH = 'minLength',
+    MAX_LENGTH = 'maxLength',
+    VALID_MIN_LENGTH = 'minlength',
+    VALID_MAX_LENGTH = 'maxlength',
+    PATTERN = 'pattern',
+    REGEX = 'regex',
+    VALID_TEL_NUMBER = 'validTelNumber',
+    TEL_NUMBER = 'telNumber',
+    EMAIL = 'email'
+}
+
 export class TextField extends DataField<string> {
+    public static FIELD_HEIGHT = 105;
 
     private _validators: Array<ValidatorFn>;
-    public materialAppearance: string;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, public validations?: Validation[], private _view = TextFieldView.DEFAULT) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        if (layout) {
-            this.materialAppearance = this.layout.appearance;
-        } else {
-            this.materialAppearance = 'legacy';
-        }
     }
 
     get view(): TextFieldView {
@@ -52,7 +65,7 @@ export class TextField extends DataField<string> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes('length')) {
+            if (item.validationRule.includes(TextFieldValidation.MIN_LENGTH)) {
                 const tmp = item.validationRule.split(' ');
                 if (tmp[1] !== undefined) {
                     const length = parseInt(tmp[1], 10);
@@ -60,18 +73,23 @@ export class TextField extends DataField<string> {
                         result.push(Validators.minLength(length));
                     }
                 }
-            } else if (item.validationRule.includes('regex')) {
-                if (item.validationRule.startsWith('regex ')) {
-                    const tmp = item.validationRule.split(' ');
-                    if (tmp[1] !== undefined) {
-                        result.push(Validators.pattern(new RegExp(tmp[1])));
+            } else if (item.validationRule.includes(TextFieldValidation.MAX_LENGTH)) {
+                const tmp = item.validationRule.split(' ');
+                if (tmp[1] !== undefined) {
+                    const length = parseInt(tmp[1], 10);
+                    if (!isNaN(length)) {
+                        result.push(Validators.maxLength(length));
                     }
+                }
+            } else if (item.validationRule.includes(TextFieldValidation.REGEX)) {
+                if (item.validationRule.startsWith('regex ')) {
+                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(6, item.validationRule.length ))));
                 } else if (item.validationRule.startsWith('regex("')) {
                     result.push(Validators.pattern(new RegExp(item.validationRule.substring(7, item.validationRule.length - 2))));
                 }
-            } else if (item.validationRule.includes('email')) {
+            } else if (item.validationRule.includes(TextFieldValidation.EMAIL)) {
                 result.push(Validators.email);
-            } else if (item.validationRule.includes('telNumber')) {
+            } else if (item.validationRule.includes(TextFieldValidation.TEL_NUMBER)) {
                 result.push(this.validTelNumber);
             }
         });

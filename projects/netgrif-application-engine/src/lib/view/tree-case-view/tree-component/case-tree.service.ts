@@ -7,22 +7,22 @@ import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ImmediateData} from '../../../resources/interface/immediate-data';
-import {SimpleFilter} from '../../../filter/models/simple-filter';
-import {FilterType} from '../../../filter/models/filter-type';
 import {Case} from '../../../resources/interface/case';
 import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {OptionSelectorComponent} from '../../../side-menu/content-components/option-selector/option-selector.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
-import {Observable, of, ReplaySubject, Subject} from 'rxjs';
+import {Observable, of, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
-import {CaseRefOperation, CaseRefSetDataBody} from './model/CaseRefSetDataBody';
 import {hasContent} from '../../../utility/pagination/page-has-content';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
+import {ofVoid} from '../../../utility/of-void';
+import {CaseGetRequestBody} from '../../../resources/interface/case-get-request-body';
+import {getImmediateData} from '../../../utility/get-immediate-data';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
@@ -34,6 +34,10 @@ export class CaseTreeService implements OnDestroy {
     private _treeRootLoaded$: ReplaySubject<boolean>;
     private _rootNode: CaseTreeNode;
     private _showRoot: boolean;
+    /**
+     * string id of the case, that is currently being reloaded, `undefined` if no case is currently being reloaded
+     */
+    private _reloadedCaseId: string;
 
     constructor(protected _caseResourceService: CaseResourceService,
                 protected _treeCaseViewService: TreeCaseViewService,
@@ -85,6 +89,31 @@ export class CaseTreeService implements OnDestroy {
 
     protected get _currentCase(): Case | undefined {
         return this._currentNode ? this._currentNode.case : undefined;
+    }
+
+    /**
+     * @returns an `Observable` of the {@link LoadingEmitter} representing the loading state of the root node.
+     * Returns `undefined` if the tree has not yet been initialized.
+     *
+     * Wait for an emission on the [treeRootLoaded$]{@link CaseTreeService#treeRootLoaded$} stream before getting this Observable.
+     *
+     * The first value emitted by the Observable is `false`, when the tree finishes initializing.
+     */
+    public get rootNodeLoading$(): Observable<boolean> | undefined {
+        return !!this._rootNode ? this._rootNode.loadingChildren.asObservable() : undefined;
+    }
+
+    /**
+     * @returns an `Observable` of the {@link LoadingEmitter} representing whether the root node is currently
+     * in the process of adding a new child node or not.
+     * Returns `undefined` if the tree has not yet been initialized.
+     *
+     * Wait for an emission on the [treeRootLoaded$]{@link CaseTreeService#treeRootLoaded$} stream before getting this Observable.
+     *
+     * The first value emitted by the Observable is `false`, when the tree finishes initializing.
+     */
+    public get rootNodeAddingChild$(): Observable<boolean> | undefined {
+        return !!this._rootNode ? this._rootNode.addingNode.asObservable() : undefined;
     }
 
     /**
@@ -194,13 +223,13 @@ export class CaseTreeService implements OnDestroy {
     protected updateNodeChildren(node: CaseTreeNode): Observable<void> {
         node.loadingChildren.on();
 
-        const childrenCaseRef = node.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const childrenCaseRef = getImmediateData(node.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         if (!childrenCaseRef || childrenCaseRef.value.length === 0) {
             node.children = [];
             this.refreshTree();
             node.dirtyChildren = false;
             node.loadingChildren.off();
-            return this.emitOneVoid();
+            return ofVoid();
         }
 
         if (node.children.length === childrenCaseRef.value.length) {
@@ -209,7 +238,7 @@ export class CaseTreeService implements OnDestroy {
             if (childrenCaseRef.value.every(caseId => existingChildren.has(caseId))) {
                 node.dirtyChildren = false;
                 node.loadingChildren.off();
-                return this.emitOneVoid();
+                return ofVoid();
             }
         }
 
@@ -234,8 +263,8 @@ export class CaseTreeService implements OnDestroy {
      * @returns next is emitted when loading of all pages completes (regardless of the outcome)
      */
     protected updatePageOfChildren(node: CaseTreeNode, pageNumber: number): Observable<void> {
-        const filter = this.createChildFilter(node);
-        if (!filter) {
+        const requestBody = this.createChildRequestBody(node);
+        if (!requestBody) {
             this._logger.error('Cannot create filter to find children of the given node', node.case);
             return;
         }
@@ -243,8 +272,8 @@ export class CaseTreeService implements OnDestroy {
         const done = new Subject<void>();
 
         let params: HttpParams = new HttpParams();
-        params = params.set('page', `${pageNumber}`).set('sort', 'creationDateSortable,asc');
-        this._caseResourceService.searchCases(filter, params).subscribe(page => {
+        params = params.set('page', `${pageNumber}`).set('sort', 'creationDate,asc');
+        this._caseResourceService.getCases(requestBody, params).subscribe(page => {
             if (!hasContent(page)) {
                 this._logger.error('Child cases invalid page content', page);
                 done.next();
@@ -296,17 +325,16 @@ export class CaseTreeService implements OnDestroy {
 
     /**
      * @param node the {@link CaseTreeNode} who's children the {@link Filter} should return
-     * @returns a {@link Filter} that finds all child cases of the given `node`.
-     * Returns `undefined` if the provided `node` doesn't contain enough information to create the {@link Filter}.
+     * @returns a request body that finds all child cases of the given `node`.
+     * Returns `undefined` if the provided `node` doesn't contain enough information to create the request body.
      */
-    protected createChildFilter(node: CaseTreeNode): Filter | undefined {
-        const childCaseRef = node.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+    protected createChildRequestBody(node: CaseTreeNode): CaseGetRequestBody {
+        const childCaseRef = getImmediateData(node.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         if (!childCaseRef) {
             return undefined;
         }
 
-        const caseQueries = childCaseRef.value.map(caseId => `(stringId:${caseId})`);
-        return new SimpleFilter(`childrenOf-${node.case.stringId}`, FilterType.CASE, {query: caseQueries.join('OR')});
+        return {stringId: (childCaseRef.value as Array<string>)};
     }
 
     /**
@@ -332,55 +360,83 @@ export class CaseTreeService implements OnDestroy {
     public addChildNode(clickedNode: CaseTreeNode): Observable<boolean> {
         const ret = new ReplaySubject<boolean>(1);
         clickedNode.addingNode.on();
-        const caseRefField = clickedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const caseRefField = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
 
         if (caseRefField.allowedNets.length === 0) {
             this._logger.error(`Case ${clickedNode.case.stringId} can add new tree nodes but has no allowed nets`);
             clickedNode.addingNode.off();
-            ret.next(false);
-            return ret;
+            return of(false);
         }
 
-        const childTitle = clickedNode.case.immediateData.find(field => field.stringId === TreePetriflowIdentifiers.CHILD_NODE_TITLE);
-        const addChildBody = {
-            operation: CaseRefOperation.ADD,
-            title: childTitle ? childTitle.value : this._translateService.instant('caseTree.newNodeDefaultName'),
-            processId: ''
-        };
-
-        const callback = (newCaseRefValue) => {
-            this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(() => {
-                clickedNode.addingNode.off();
-                this.expandNode(clickedNode).subscribe(expandSuccess => {
-                    if (expandSuccess) {
-                        this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
-                    }
-                    ret.next(true);
-                });
-            });
-        };
+        const childTitleImmediate = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILD_NODE_TITLE);
+        const childTitle = childTitleImmediate ? childTitleImmediate.value : this._translateService.instant('caseTree.newNodeDefaultName');
 
         if (caseRefField.allowedNets.length === 1) {
-            addChildBody.processId = caseRefField.allowedNets[0];
-            this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
+            this.createAndAddChildCase(caseRefField.allowedNets[0], childTitle, clickedNode, ret);
         } else {
             this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
                 const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
                     title: clickedNode.case.title,
                     options: nets.map(net => ({text: net.title, value: net.identifier}))
                 });
-                sideMeuRef.onClose.subscribe(event => {
+                let sideMenuSubscription: Subscription;
+                sideMenuSubscription = sideMeuRef.onClose.subscribe(event => {
                     if (!!event.data) {
-                        addChildBody.processId = event.data.value;
-                        this.performCaseRefCall(clickedNode.case.stringId, addChildBody).subscribe(callback);
+                        this.createAndAddChildCase(event.data.value, childTitle, clickedNode, ret);
+                        sideMenuSubscription.unsubscribe();
                     } else {
                         clickedNode.addingNode.off();
                         ret.next(false);
+                        ret.complete();
                     }
                 });
             });
         }
         return ret.asObservable();
+    }
+
+    /**
+     * Creates a new case and adds it to the children of the specified node
+     * @param processIdentifier identifier of the process that should be created
+     * @param childTitle the title of the new case
+     * @param clickedNode the node that is the parent of the new case
+     * @param operationResult the result of the operation will be emitted into this stream when the operation completes
+     */
+    protected createAndAddChildCase(processIdentifier: string,
+                                    childTitle: string,
+                                    clickedNode: CaseTreeNode,
+                                    operationResult: Subject<boolean>) {
+        this._processService.getNet(processIdentifier).subscribe(net => {
+            this._caseResourceService.createCase({
+                title: childTitle,
+                netId: net.stringId
+            }).subscribe(childCase => {
+                const caseRefField = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+                const setCaseRefValue = [...caseRefField.value, childCase.stringId];
+                this.performCaseRefCall(clickedNode.case.stringId, setCaseRefValue).subscribe(
+                    valueChange => this.updateTreeAfterChildAdd(clickedNode, valueChange ? valueChange : setCaseRefValue, operationResult)
+                );
+            });
+        });
+    }
+
+    /**
+     * Updates the tree after adding a new child
+     * @param clickedNode the parent node
+     * @param newCaseRefValue the new value of the parent node's case ref
+     * @param operationResult the result of the operation will be emitted into this stream when the operation completes
+     */
+    protected updateTreeAfterChildAdd(clickedNode: CaseTreeNode, newCaseRefValue: Array<string>, operationResult: Subject<boolean>): void {
+        this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(() => {
+            clickedNode.addingNode.off();
+            this.expandNode(clickedNode).subscribe(expandSuccess => {
+                if (expandSuccess) {
+                    this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
+                }
+                operationResult.next(true);
+                operationResult.complete();
+            });
+        });
     }
 
     /**
@@ -397,14 +453,42 @@ export class CaseTreeService implements OnDestroy {
         }
 
         node.removingNode.on();
-        this.performCaseRefCall(node.parent.case.stringId, {
-            operation: CaseRefOperation.REMOVE,
-            caseId: node.case.stringId
-        }).subscribe(newCaseRefValue => {
+        const caseRefImmediate = getImmediateData(node.parent.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const setCaseRefValue = (caseRefImmediate.value as Array<string>).filter(id => id !== node.case.stringId);
+        this.performCaseRefCall(node.parent.case.stringId, setCaseRefValue).subscribe(caseRefChange => {
+            const newCaseRefValue = caseRefChange ? caseRefChange : setCaseRefValue;
+            this.deleteRemovedNodes(node.parent, newCaseRefValue);
             this.updateNodeChildrenFromChangedFields(node.parent, newCaseRefValue);
+
             node.removingNode.off();
         });
 
+        this.deselectNodeIfDescendantOf(node);
+    }
+
+    /**
+     * Deletes the subtrees rooted at the nodes that are present in the parent node's child case ref values,
+     * but are no longer present in the new value
+     * @param parentNode an inner node of the tree that had some of it's children removed
+     * @param newCaseRefValue the new value of the parent node's case ref
+     */
+    protected deleteRemovedNodes(parentNode: CaseTreeNode, newCaseRefValue: Array<string>): void {
+        const removedChildren = new Set<string>();
+        getImmediateData(parentNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value.forEach(id => removedChildren.add(id));
+        newCaseRefValue.forEach(id => removedChildren.delete(id));
+        removedChildren.forEach(removedId => this._caseResourceService.deleteCase(removedId, true)
+            .subscribe(responseMessage => {
+                if (responseMessage.error) {
+                    this._logger.error('Removal of child case unsuccessful', responseMessage.error);
+                }
+            }));
+    }
+
+    /**
+     * Deselects the currently selected node if it is a descendant of the provided node
+     * @param node the node who's descendants should be deselected
+     */
+    protected deselectNodeIfDescendantOf(node: CaseTreeNode): void {
         let bubblingNode = this.currentNode;
         while (bubblingNode && bubblingNode !== this._rootNode) {
             if (bubblingNode === node) {
@@ -419,9 +503,9 @@ export class CaseTreeService implements OnDestroy {
      * Performs a backend call on the given case, and sets the value of the case ref field in the transition defined by
      * [CASE_REF_TRANSITION]{@link TreePetriflowIdentifiers#CASE_REF_TRANSITION}.
      * @param caseId string ID of the case that should have it's tree case ref set
-     * @param caseRefSetDataBody the request body that contains the operation we want to perform on the case ref
+     * @param newCaseRefValue the new value of the case ref field
      */
-    private performCaseRefCall(caseId: string, caseRefSetDataBody: CaseRefSetDataBody): Observable<Array<string>> {
+    private performCaseRefCall(caseId: string, newCaseRefValue: Array<string>): Observable<Array<string> | undefined> {
         const result$ = new Subject<Array<string>>();
 
         this._taskResourceService.getTasks({
@@ -444,18 +528,12 @@ export class CaseTreeService implements OnDestroy {
                 const body = {};
                 body[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {
                     type: 'caseRef',
-                    value: caseRefSetDataBody
+                    value: newCaseRefValue
                 };
                 this._taskResourceService.setData(task.stringId, body).subscribe(changeContainer => {
                     const changedFields = changeContainer.changedFields;
                     const caseRefChanges = changedFields[TreePetriflowIdentifiers.CHILDREN_CASE_REF];
-                    if (!caseRefChanges) {
-                        this._logger.error('No changed fields in case ref', changedFields);
-                        result$.complete();
-                        return;
-                    }
-
-                    result$.next(caseRefChanges.value);
+                    result$.next(caseRefChanges ? caseRefChanges.value : undefined);
                     result$.complete();
                     this._taskResourceService.finishTask(task.stringId).subscribe(finishResponse => {
                         if (finishResponse.success) {
@@ -494,7 +572,7 @@ export class CaseTreeService implements OnDestroy {
      */
     private updateNodeChildrenFromChangedFields(affectedNode: CaseTreeNode,
                                                 newCaseRefValue: Array<string>): Observable<void> {
-        const caseRefField = affectedNode.case.immediateData.find(it => it.stringId === TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        const caseRefField = getImmediateData(affectedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         const newChildren = new Set<string>();
         newCaseRefValue.forEach(id => newChildren.add(id));
 
@@ -513,7 +591,7 @@ export class CaseTreeService implements OnDestroy {
             caseRefField.value = newCaseRefValue;
             this._treeControl.collapseDescendants(affectedNode);
             affectedNode.dirtyChildren = true;
-            return this.emitOneVoid();
+            return ofVoid();
         }
 
         if (exactlyOneChildAdded) {
@@ -536,14 +614,11 @@ export class CaseTreeService implements OnDestroy {
         const result$ = new Subject<void>();
 
         caseRefField.value = newCaseRefValue;
-        this._caseResourceService.searchCases(new SimpleFilter('', FilterType.CASE, {
-            query: 'stringId:' + newCaseRefValue[newCaseRefValue.length - 1]
-        })).subscribe(page => {
-            if (!hasContent(page) || page.content.length !== 1) {
-                this._logger.error('Child node case could not be found');
+        this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
+            if (childCase) {
+                this.pushChildToTree(affectedNode, childCase);
             } else {
-                affectedNode.children.push(new CaseTreeNode(page.content[0], affectedNode));
-                this.refreshTree();
+                this._logger.error('New child case was not found, illegal state', childCase);
             }
             result$.next();
             result$.complete();
@@ -554,6 +629,16 @@ export class CaseTreeService implements OnDestroy {
         });
 
         return result$.asObservable();
+    }
+
+    /**
+     * Adds a new child node to the target parent node.
+     * @param parentNode the nodes whose child shoulc be added
+     * @param childCase the child case
+     */
+    protected pushChildToTree(parentNode: CaseTreeNode, childCase: Case): void {
+        parentNode.children.push(new CaseTreeNode(childCase, parentNode));
+        this.refreshTree();
     }
 
     /**
@@ -570,7 +655,7 @@ export class CaseTreeService implements OnDestroy {
         caseRefField.value.splice(index, 1);
         affectedNode.children.splice(index, 1);
         this.refreshTree();
-        return this.emitOneVoid();
+        return ofVoid();
     }
 
     /**
@@ -584,45 +669,41 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
-     * @returns a void Observable, that emits one value and then completes
-     */
-    private emitOneVoid(): Observable<void> {
-        const result$ = new ReplaySubject<void>(1);
-        result$.next();
-        result$.complete();
-        return result$.asObservable();
-    }
-
-    /**
      * Reloads the currently selected case node. The {@link Case} object held in the {@link CaseTreeNode} instance is not replaced,
-     * but the new Case is `Object.assign`-ed into it. THis means that the reference to the Case instance is unchanged but references
+     * but the new Case is `Object.assign`-ed into it. This means that the reference to the Case instance is unchanged but references
      * to all it's non-primitive attributes are changed.
      *
-     * Note that the child nodes, nor the parent nodes are reloaded.
+     * If a reload of the current node is initiated before the previous one completed, the new one is ignored.
+     *
+     * If the currently selected case changed before a response from backend was received the response is ignored.
+     *
+     * Note that the parent node, nor the child nodes are reloaded.
      */
     protected reloadCurrentCase(): void {
-        if (this._currentNode) {
-            this._caseResourceService.searchCases(this.createCaseFilter(this._currentCase.stringId)).subscribe(page => {
-                if (hasContent(page) && page.content.length === 1) {
-                    Object.assign(this._currentCase, page.content[0]);
-                    this._treeCaseViewService.loadTask$.next(this._currentCase);
-                    this._logger.debug('Case Tree Node reloaded');
-                } else {
-                    this._logger.error('Case Tree Node could not be reloaded. Invalid server response', page);
-                }
-            }, error => {
-                this._logger.error('Case Tree Node reload request failed', error);
-            });
-        } else {
+        if (!this._currentNode) {
             this._logger.debug('No Tree Case Node selected, nothing to reload');
+            return;
         }
-    }
-
-    /**
-     * @param caseId ID of the desired Case
-     * @returns a {@link Filter} that matches the desired case by it's ID
-     */
-    protected createCaseFilter(caseId: string): Filter {
-        return new SimpleFilter(`caseWithId-${caseId}`, FilterType.CASE, {query: `stringId:${caseId}`});
+        if (this._currentNode.case.stringId !== this._reloadedCaseId) {
+            this._logger.debug('Reload of the current case already in progress');
+            return;
+        }
+        this._reloadedCaseId = this._currentNode.case.stringId;
+        this._caseResourceService.getOneCase(this._currentCase.stringId).subscribe(reloadedCurrentCase => {
+            if (!reloadedCurrentCase) {
+                this._logger.error('Current Case Tree Node could not be reloaded. Invalid server response', reloadedCurrentCase);
+                return;
+            }
+            if (this._currentNode && reloadedCurrentCase.stringId === this._currentNode.case.stringId) {
+                this._reloadedCaseId = undefined;
+                Object.assign(this._currentCase, reloadedCurrentCase);
+                this._treeCaseViewService.loadTask$.next(this._currentCase);
+                this._logger.debug('Current Case Tree Node reloaded');
+            } else {
+                this._logger.debug('Discarding case reload response, since the current node has changed before it\'s case was received');
+            }
+        }, error => {
+            this._logger.error('Current Case Tree Node reload request failed', error);
+        });
     }
 }

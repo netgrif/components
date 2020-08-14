@@ -155,13 +155,15 @@
             "negative": "Die eingegebene Nummer muss negativ sein",
             "decimal": "Die eingegebene Nummer muss ein Dezimalzahl sein",
             "inrange": "Die eingegebene Nummer muss aus dem gegebenen Nummernbereich {{range}} sein",
-            "length": "Der eingegebene Text muss länger als {{length}} Zeichen sein",
+            "minLength": "Der eingegebene Text muss länger als {{length}} Zeichen sein",
+            "maxLength": "Der eingegebene Text muss kurzer als {{length}} Zeichen sein",
             "pattern": "Der eingegebene Text ist nicht im richtigen Format",
             "phone": "Der eingegebene Text muss ein Telefonnummer sein",
             "email": "Der eingegebene Text muss ein E-Mail sein",
             "dateRange": "Das eingegebene Datum muss aus dem gegebenen Bereich {{range}} sein",
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
-            "workday": "Das eingegebene Datum muss ein Wochentag sein"
+            "workday": "Das eingegebene Datum muss ein Wochentag sein",
+            "enumeration": "One of the options must be selected"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",

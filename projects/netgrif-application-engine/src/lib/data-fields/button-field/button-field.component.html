@@ -6,7 +6,11 @@
 
 <ng-template #button let-showLargeLayout="showLargeLayout">
     <div>
-        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}<nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label></mat-label>
+        <mat-label *ngIf="!showLargeLayout.value">
+            {{dataField.title}}
+            <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
+            <br>
+        </mat-label>
         <button mat-button
                 [ngClass]="{
                 'mat-raised-button': dataField.view === 'raised',
@@ -19,7 +23,8 @@
                 [matTooltip]="dataField.description"
                 [disabled]="formControl.disabled"
                 (click)="formControl.setValue(formControl.value + 1)">
-            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : dataField.placeholder }}
+            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : (( dataField.view === 'fab' || dataField.view === 'minifab' ) ? '' : dataField.placeholder) }}
+            <mat-icon *ngIf="dataField.view === 'fab' || dataField.view === 'minifab'">{{dataField.placeholder}}</mat-icon>
         </button>
         <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
     </div>
