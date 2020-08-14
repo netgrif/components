@@ -10,11 +10,11 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 export class RedirectService {
 
     public static readonly LOGIN_COMPONENT = 'login';
-    private _lastIntendedRoute: ActivatedRouteSnapshot;
+    protected _lastIntendedRoute: ActivatedRouteSnapshot;
 
-    constructor(private _router: Router,
-                private _log: LoggerService,
-                private _config: ConfigurationService) {
+    constructor(protected _router: Router,
+                protected _log: LoggerService,
+                protected _config: ConfigurationService) {
     }
 
     get lastUrl(): Array<UrlSegment> {
