@@ -8,7 +8,6 @@ import {CovalentTextEditorModule} from '@covalent/text-editor';
 
 
 @NgModule({
-    declarations: [],
     exports: [
         CovalentHighlightModule,
         CovalentMarkdownModule,

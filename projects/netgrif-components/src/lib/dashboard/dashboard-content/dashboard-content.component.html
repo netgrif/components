@@ -3,8 +3,8 @@
                    [colspan]="card.layout.cols"
                    [rowspan]="card.layout.rows"
                    [ngSwitch]="card.type">
-        <nae-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card.item" class="full-size"></nae-count-card>
-        <nae-iframe-card *ngSwitchCase="cardTypes.IFRAME" [card]="card.item" class="full-size"></nae-iframe-card>
+        <nc-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card.item" class="full-size"></nc-count-card>
+        <nc-iframe-card *ngSwitchCase="cardTypes.IFRAME" [card]="card.item" class="full-size"></nc-iframe-card>
         <div *ngSwitchCase="cardTypes.BLANK"></div>
     </mat-grid-tile>
 </mat-grid-list>

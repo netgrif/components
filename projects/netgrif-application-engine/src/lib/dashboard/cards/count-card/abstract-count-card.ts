@@ -1,27 +1,21 @@
-import {Component, Injector, Input, OnInit} from '@angular/core';
+import {Injector, Input, OnInit} from '@angular/core';
 import {CountCard} from '../model/count-card';
 import {CountService} from '../../../resources/abstract-endpoint/count-service';
+import {Filter} from '../../../filter/models/filter';
+import {FilterType} from '../../../filter/models/filter-type';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
-import {FilterType} from '../../../filter/models/filter-type';
-import {Filter} from '../../../filter/models/filter';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 
-
-@Component({
-    selector: 'nae-count-card',
-    templateUrl: './count-card.component.html',
-    styleUrls: ['./count-card.component.scss']
-})
-export class CountCardComponent implements OnInit {
+export abstract class AbstractCountCard implements OnInit {
 
     @Input() public card: CountCard;
-    private _countService: CountService;
-    private _filter: Filter;
+    protected _countService: CountService;
+    protected _filter: Filter;
     public loading: boolean;
     public count: number;
 
-    constructor(private _injector: Injector) {
+    constructor(protected _injector: Injector) {
         this.loading = true;
     }
 
@@ -48,5 +42,4 @@ export class CountCardComponent implements OnInit {
     private resolveFilter(): void {
         this._filter = new SimpleFilter('', this.card.resourceType, this.card.filter);
     }
-
 }

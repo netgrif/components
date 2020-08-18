@@ -3,12 +3,9 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
-    AdministrationModule,
-    AuthenticationModule,
     CaseViewModule,
     ConfigurationService,
     CovalentModule,
-    DashboardModule,
     DataFieldsModule,
     DialogModule,
     ForgottenPasswordFormModule,
@@ -78,6 +75,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {
+    AdminComponentModule,
+    AuthenticationComponentModule,
+    DashboardComponentModule
+} from '@netgrif/components';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -124,7 +126,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         FlexLayoutModule,
         MaterialModule,
         CovalentModule,
-        AuthenticationModule,
         SignUpModule,
         HttpClientModule,
         MatIconModule,
@@ -148,7 +149,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         }),
         MatCardModule,
         WorkflowViewModule,
-        DashboardModule,
         LoginFormModule,
         ForgottenPasswordFormModule,
         RegistrationFormModule,
@@ -159,13 +159,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         CaseViewModule,
         MatButtonModule,
         MatSidenavModule,
-        AdministrationModule,
         HeaderModule,
         CaseViewModule,
         PanelModule,
         TreeCaseViewModule,
         MatProgressSpinnerModule,
-        DashboardModule,
+        AuthenticationComponentModule,
+        AdminComponentModule,
+        DashboardComponentModule
     ],
     entryComponents: [
         ContentComponent,

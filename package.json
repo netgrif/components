@@ -38,7 +38,10 @@
         "nae:local-build": "npm run nae:build && npm i dist/netgrif-application-engine --save-optional",
         "nae:prod-build": "npm run nae:full-test && npm run nae:sonar && npm run nae:build && npm run nae:doc",
         "nae:prod-build-without-tests": "ng lint netgrif-application-engine && npm run nae:sonar && npm run nae:build && npm run nae:doc",
-        "project:start": "npm run nae:local-build && ng serve",
+        "nc:build": "ng build netgrif-components --prod",
+        "nc:local-build": "npm run nc:build && npm i dist/netgrif-components --save-optional",
+        "nc:build-schematics": "node projects/netgrif-components/src/scripts/build-schematics.js",
+        "project:start": "npm run nae:local-build && npm run nc:local-build && ng serve",
         "example:start": "ng serve",
         "example:build": "ng build --prod",
         "test": "ng test",
@@ -75,10 +78,10 @@
         "jszip": "^3.2.2",
         "moment": "~2.24.0",
         "natural-orderby": "^2.0.3",
+        "palette-creator": "^0.5.4",
         "rxjs": "^6.5.4",
         "tslib": "^1.11.1",
-        "zone.js": "~0.10.2",
-        "palette-creator": "^0.5.4"
+        "zone.js": "~0.10.2"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "^0.901.11",
@@ -119,6 +122,7 @@
         "unique-names-generator": "^4.2.0"
     },
     "optionalDependencies": {
-        "@netgrif/application-engine": "file:dist/netgrif-application-engine"
+        "@netgrif/application-engine": "file:dist/netgrif-application-engine",
+        "@netgrif/components": "file:dist/netgrif-components"
     }
 }

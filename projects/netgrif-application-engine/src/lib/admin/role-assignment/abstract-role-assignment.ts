@@ -1,22 +1,15 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {RoleAssignmentService} from './services/role-assignment.service';
-import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
-import {UserService} from '../../user/services/user.service';
-import {FormControl} from '@angular/forms';
-import {debounceTime} from 'rxjs/operators';
-import {UserListItem, UserListService} from '../../user/services/user-list.service';
+import {AfterViewInit, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {UserListItem, UserListService} from '../../user/services/user-list.service';
+import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
+import {FormControl} from '@angular/forms';
+import {RoleAssignmentService} from './services/role-assignment.service';
+import {UserService} from '../../user/services/user.service';
+import {debounceTime} from 'rxjs/operators';
 
-@Component({
-    selector: 'nae-role-assignment',
-    templateUrl: './role-assignment.component.html',
-    styleUrls: ['./role-assignment.component.scss'],
-    providers: [
-        RoleAssignmentService
-    ]
-})
-export class RoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy {
+
+export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('userList') public userList: MatSelectionList;
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
@@ -27,7 +20,7 @@ export class RoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy
     public searchUserControl = new FormControl();
     private SEARCH_DEBOUNCE_TIME = 200;
 
-    constructor(private _service: RoleAssignmentService, private _userService: UserService) {
+    constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
         this.users = this._service.userList;
         this.nets = this._service.processList;
         this.userMultiSelect = true;
