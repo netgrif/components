@@ -1,4 +1,5 @@
+import {FileFieldValue} from '../../file-field/models/file-field-value';
+
 export interface FileListFieldValue {
-    files?: Array<File>;
-    names?: Array<string>;
+    namesPaths?: Array<FileFieldValue>;
 }
