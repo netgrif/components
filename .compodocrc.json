@@ -8,7 +8,7 @@
     "customLogo": "assets/docs-title-logo.png",
     "customFavicon": "assets/docs-favicon.ico",
     "language": "en-US",
-    "disableSourceCode": true,
+    "disableSourceCode": false,
     "disablePrivate": true,
     "disableInternal": true
 }

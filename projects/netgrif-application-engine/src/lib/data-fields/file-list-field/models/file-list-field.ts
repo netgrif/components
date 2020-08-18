@@ -52,14 +52,8 @@ export class FileListField extends DataField<FileListFieldValue> {
      */
     protected valueEquality(a: FileListFieldValue, b: FileListFieldValue): boolean {
         let array = !a === !b;
-        if (a && a.files && b && b.files) {
-            array = a.files.every((element, index) => element.name === b.files[index].name);
-        }
-        if (!array) {
-            return false;
-        }
-        if (a && a.names && b && b.names) {
-            array = a.names.every((element, index) => element === b.names[index]);
+        if (a && a.namesPaths && b && b.namesPaths) {
+            array = a.namesPaths.every((element, index) => element.name === b.namesPaths[index].name);
         }
         return (!a && !b) || (!!a && !!b && array);
     }
