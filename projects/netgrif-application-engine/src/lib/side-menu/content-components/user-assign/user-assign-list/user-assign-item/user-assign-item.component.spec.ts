@@ -3,8 +3,8 @@ import {UserValue} from '../../../../../data-fields/user-field/models/user-value
 import {UserAssignItemComponent} from './user-assign-item.component';
 import {Component} from '@angular/core';
 import {MaterialModule} from '../../../../../material/material.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../../../translate/translate-lib.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UserAssignItemComponent', () => {
     let component: UserAssignItemComponent;
@@ -13,7 +13,8 @@ describe('UserAssignItemComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule,
-                TranslateLibModule],
+                TranslateLibModule,
+                NoopAnimationsModule],
             declarations: [
                 UserAssignItemComponent,
                 TestWrapperComponent

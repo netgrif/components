@@ -3,8 +3,6 @@ import {MaterialModule} from '../../../../material/material.module';
 import {CovalentModule} from '../../../../covalent/covalent.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
-import {FileUploadService} from '../../../../data-fields/file-field/services/upload/file-upload.service';
-import {FileDownloadService} from '../../../../data-fields/file-field/services/download/file-download.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {Component} from '@angular/core';
@@ -18,6 +16,7 @@ import {AuthenticationService} from '../../../../authentication/services/authent
 import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../../../utility/tests/mocks/mock-user-resource.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilesUploadListComponent', () => {
     let component: FilesUploadListComponent;
@@ -32,11 +31,10 @@ describe('FilesUploadListComponent', () => {
                 FlexModule,
                 FormsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                NoopAnimationsModule
             ],
             providers: [
-                FileUploadService,
-                FileDownloadService,
                 AuthenticationMethodService,
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

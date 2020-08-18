@@ -6,6 +6,7 @@ import {
     InjectedTabbedCaseViewData,
     LoggerService,
     NAE_TAB_DATA,
+    SearchChipService,
     SearchService,
     SimpleFilter,
     TabbedCaseView,
@@ -24,6 +25,7 @@ const searchServiceFactory = () => {
     templateUrl: './<%= dasherize(className) %>.component.html',
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
+        SearchChipService,
         ConfigCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},

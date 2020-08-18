@@ -56,7 +56,7 @@
             "done": "Dokončiť"
         },
         "new-case": {
-            "case": "Nová prípad",
+            "case": "Nový prípad",
             "choose": "Vyberte proces",
             "caseTitle": "Vyplňte názov prípadu",
             "color": "Vyberte farbu prípadu",
@@ -77,6 +77,10 @@
             "noUser": "Neexistujú žiadny používatelia",
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
+        },
+        "option-selector": {
+            "select": "Zvoliť",
+            "choose-one-option": "Vyberte jednu z možností"
         }
     },
     "search": {
@@ -151,23 +155,27 @@
             "negative": "Zadané číslo musí byť záporné",
             "decimal": "Zadané číslo musí byť decimálne",
             "inrange": "Zadané číslo musí byť v rozsahu {{range}}",
-            "length": "Zadaný text musí byť dlhý aspoň {{length}}",
+            "minLength": "Zadaný text musí mať aspoň {{length}} znakov",
+            "maxLength": "Zadaný text môže mať maximálne {{length}} znakov",
             "pattern": "Zadaný text je v nesprávnom formáte",
             "phone": "Zadaný text musí byť tel. číslo",
             "email": "Zadaný text musí byť email",
             "dateRange": "Zadaný dátum musí byť v rozsahu {{range}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
-            "workday": "Zadaný dátum musí byť pracovný deň"
+            "workday": "Zadaný dátum musí byť pracovný deň",
+            "enumeration": "Musí byť vybraná jedna z možností"
         },
         "snackBar": {
             "downloadFail": " stahovanie zlyhalo",
             "moreFiles": "Zvolil si viac súborov ako je povolené",
             "sameFiles": "Nemôžeš nahrať dva rovnaké súbory",
             "fileSize": "Veľkosť súboru presiahla povolený limit",
-            "cannotDownload": "Súbor nemôže byť stiahnutý bez definovanej úlohy",
-            "cannotUpload": "Súbor nemôže byť nahraný bez definovanej úlohy",
-            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru",
-            "fileUploadFailed": "Súbor sa nepodarilo nahrať"
+            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru alebo súbor odstránte",
+            "wontUploadSameFiles": "Vybrané súbory už boli nahrané. Ak chcete súbory aktualizovať odstránte už nahrané súbory",
+            "fileUploadFailed": "Súbor sa nepodarilo nahrať",
+            "fileDeleteFailed":  "Súbor sa nepodarilo vymazať",
+            "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
+            "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: "
         },
         "noFile": "Žiadny súbor"
     },
@@ -196,6 +204,7 @@
     "headers": {
         "newHeader": "Zvoľte novú hlavičku",
         "date": "Zvoľte dátum",
+        "selectUser": "Vyberte používateľa",
         "caseMeta": {
             "visualID": "Vizuálne ID",
             "title": "Názov",
@@ -253,7 +262,7 @@
     "admin": {
         "user-list": {
             "noUsersWereFound": "Momentálne nie sú v systéme žiadny používatelia",
-            "listTitle": "Users"
+            "listTitle": "Používatelia"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",
@@ -267,5 +276,9 @@
             "saveSuccess": "Vaše preferencie boli uložené",
             "saveFailure": "Nepodarilo sa uložiť preferencie"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "Nový Vrchol",
+        "noTaskSelected": "Momentálne nie je zvolený žiaden prípad. Pre vybranie prípadu zvoľte vrchol v strome."
     }
 }

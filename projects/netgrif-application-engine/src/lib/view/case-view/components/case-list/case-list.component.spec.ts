@@ -13,6 +13,7 @@ import {SearchService} from '../../../../search/search-service/search.service';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
 import {ConfigCaseViewServiceFactory} from '../../service/factory/config-case-view-service-factory';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
@@ -32,7 +33,8 @@ describe('CaseListComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                PanelModule
+                PanelModule,
+                NoopAnimationsModule
             ],
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},

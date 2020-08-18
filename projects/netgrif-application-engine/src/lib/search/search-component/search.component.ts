@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Optional, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
 import {BehaviorSubject, Observable, of} from 'rxjs';
@@ -9,10 +9,13 @@ import {SimpleSearchChip} from '../models/chips/simple-search-chip';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {AutocompleteCategory} from '../models/category/autocomplete-category';
 import {SearchInputType} from '../models/category/search-input-type';
-import {MAT_DATE_FORMATS} from '@angular/material';
 import {DATE_FORMAT, DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {Moment} from 'moment';
 import {CaseDataset} from '../models/category/case/case-dataset';
+import {SearchChipService} from '../search-chip-service/search-chip.service';
+import {ChipRequest} from '../models/chips/chip-request';
+import {LoggerService} from '../../logger/services/logger.service';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
 
 /**
  * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
@@ -93,7 +96,9 @@ export class SearchComponent implements OnInit {
     public renderSelection = (object: Category<any> | SearchAutocompleteOption) => this._renderSelection(object);
 
     constructor(private _translate: TranslateService,
-                private _searchService: SearchService) {
+                private _searchService: SearchService,
+                private _logger: LoggerService,
+                @Optional() private _searchChipService: SearchChipService) {
         this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.objectName(value)),
@@ -101,6 +106,9 @@ export class SearchComponent implements OnInit {
             mergeAll()
         );
         this._searchService.predicateRemoved$.subscribe(index => this.processChipRemoval(index));
+        if (this._searchChipService) {
+            this._searchChipService.addChipRequests$.subscribe(request => this.addExternalChip(request));
+        }
     }
 
     /**
@@ -206,6 +214,7 @@ export class SearchComponent implements OnInit {
                     this._selectedCategory.selectDatafields(inputValue.value);
                     this.appendTextToLastChip(`${inputValue.text}: `);
                     this.updateInputType();
+                    this._selectedCategory.selectDefaultOperator();
                     this._inputPlaceholder$.next(this._selectedCategory.inputPlaceholder);
                     this.clearFormControlValue();
                     return;
@@ -324,6 +333,29 @@ export class SearchComponent implements OnInit {
                 this.textInputRef.nativeElement.value = '';
             }
         });
+    }
+
+    /**
+     * Adds a chip into the search GUI and it's query into the {@link SearchService}
+     * @param addRequest object that defines the chip that should be added
+     */
+    private addExternalChip(addRequest: ChipRequest): void {
+        const chip: SimpleSearchChip = {text: addRequest.chipText};
+        if (addRequest.chipPredicate) {
+            chip.predicateIndex = this._searchService.addPredicate(addRequest.chipPredicate);
+        } else if (addRequest.predicateIndex !== undefined) {
+            chip.predicateIndex = addRequest.predicateIndex;
+        } else {
+            this._logger.error('Cannot add chip into search GUi that has neither \'chipPredicate\' nor \'predicateIndex\' defined');
+            return;
+        }
+
+        let chipPosition = this.searchChips.length;
+        if (this._selectedCategory) {
+            chipPosition--;
+        }
+
+        this.searchChips.splice(chipPosition, 0, chip);
     }
 
     /**

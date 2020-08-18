@@ -77,6 +77,10 @@
             "noUser": "Es gibt keine Benützer",
             "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
             "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
+        },
+        "option-selector": {
+            "select": "Auswählen",
+            "choose-one-option": "Wählen Sie eine Option aus"
         }
     },
     "search": {
@@ -151,23 +155,27 @@
             "negative": "Die eingegebene Nummer muss negativ sein",
             "decimal": "Die eingegebene Nummer muss ein Dezimalzahl sein",
             "inrange": "Die eingegebene Nummer muss aus dem gegebenen Nummernbereich {{range}} sein",
-            "length": "Der eingegebene Text muss länger als {{length}} Zeichen sein",
+            "minLength": "Der eingegebene Text muss länger als {{length}} Zeichen sein",
+            "maxLength": "Der eingegebene Text muss kurzer als {{length}} Zeichen sein",
             "pattern": "Der eingegebene Text ist nicht im richtigen Format",
             "phone": "Der eingegebene Text muss ein Telefonnummer sein",
             "email": "Der eingegebene Text muss ein E-Mail sein",
             "dateRange": "Das eingegebene Datum muss aus dem gegebenen Bereich {{range}} sein",
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
-            "workday": "Das eingegebene Datum muss ein Wochentag sein"
+            "workday": "Das eingegebene Datum muss ein Wochentag sein",
+            "enumeration": "One of the options must be selected"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",
             "moreFiles": "Sie haven zu viel Dateien ausgewählt",
             "sameFiles": "Sie können nicht dieselbe Datei zweimal hochladen",
             "fileSize": "Die Dateigröße hat das zulässige Limit überschritten",
-            "cannotDownload": "The file cannot be downloaded without defined task",
-            "cannotUpload": "The file cannot be uploaded without defined task",
             "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
-            "fileUploadFailed": "The file failed to upload"
+            "wontUploadSameFiles": "Die ausgewählten Dateien wurden bereits hochgeladen. Löschen Sie zum Aktualisieren von Dateien bereits hochgeladene Dateien",
+            "fileUploadFailed": "The file failed to upload",
+            "fileDeleteFailed":  "Die Datei konnte nicht gelöscht werden",
+            "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
+            "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: "
         },
         "noFile": "No file"
     },
@@ -196,6 +204,7 @@
     "headers": {
         "newHeader": "Kopfzeile auswählen",
         "date": "Datum auswählen",
+        "selectUser": "Benutzer auswählen",
         "caseMeta": {
             "visualID": "Visuelle ID",
             "title": "Fallname",
@@ -267,5 +276,9 @@
             "saveSuccess": "Benutzereinstellungen wurden gespeichert",
             "saveFailure": "Benutzereinstellungen können nicht gespeichert werden"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "Neuer Knoten",
+        "noTaskSelected": "Momentan ist keiner Fall ausgewählt. Klicken Sie einen Knoten in dem Baum an, um einen Fall auszuwählen."
     }
 }

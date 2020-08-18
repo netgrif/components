@@ -94,8 +94,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/me
      */
     public getLoggedUser(params?: Params): Observable<User> {
-        return this.provider.get$('user/me', this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this.provider.get$('user/me', this.SERVER_URL, params).pipe(
+                map(r => changeType(r, undefined)));
     }
 
     /**

@@ -5,6 +5,7 @@ import {TestConfigurationService} from '../utility/tests/test-config';
 import {SimpleFilter} from './models/simple-filter';
 import {FilterType} from './models/filter-type';
 import {LoggerService} from '../logger/services/logger.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilterRepository', () => {
     let service: FilterRepository;
@@ -12,6 +13,7 @@ describe('FilterRepository', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(FilterRepository);

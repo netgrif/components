@@ -88,6 +88,7 @@ export class SearchService implements OnDestroy {
     /**
      * Adds a {@link Predicate} to the Predicate root and updates the active Filter.
      * @param newPredicate Predicate that should be added to the search queries.
+     * @returns the index of the added Predicate
      */
     public addPredicate(newPredicate: Predicate): number {
         const result = this._rootPredicate.addPredicate(newPredicate);

@@ -5,7 +5,6 @@ import {
     ButtonField,
     ButtonFieldComponent,
     ButtonFieldView,
-    Change,
     ChangedFields,
     DataField,
     DateField,
@@ -17,6 +16,8 @@ import {
     EnumerationFieldView,
     FileField,
     FileFieldComponent,
+    FileListField,
+    FileListFieldComponent,
     MultichoiceField,
     MultichoiceFieldComponent,
     MultichoiceFieldView,
@@ -115,7 +116,12 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // FILE FIELD
     @ViewChild('fileFieldComponent') naeFileField: FileFieldComponent;
     fileField = new FileField('fileFieldId', 'Reactive file field',  {visible: true, editable: true},
-        undefined, undefined, undefined, undefined, undefined, 10, false);
+        undefined, undefined, undefined, undefined, undefined);
+
+    // FILE LIST FIELD
+    @ViewChild('fileListFieldComponent') naeFileListField: FileListFieldComponent;
+    fileListField = new FileListField('fileListFieldId', 'Reactive file list field',  {visible: true, editable: true},
+        undefined, undefined, undefined, undefined, undefined, undefined);
 
     // USER FIELD
     @ViewChild('userFieldComponent') naeUserField: UserFieldComponent;
@@ -139,6 +145,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         ...this.constructFormBuilderObject('multichoiceList', this.multichoiceListField),
         ...this.constructFormBuilderObject('multichoiceSelect', this.multichoiceSelectField),
         ...this.constructFormBuilderObject('file', this.fileField, false),
+        ...this.constructFormBuilderObject('fileList', this.fileListField, false),
         ...this.constructFormBuilderObject('user', this.userField, false),
     });
 
@@ -161,6 +168,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             {stringId: this.multichoiceListField.stringId, component: this.naeMultichoiceListField},
             {stringId: this.multichoiceSelectField.stringId, component: this.naeMultichoiceSelectField},
             {stringId: this.fileField.stringId, component: this.naeFileField},
+            {stringId: this.fileListField.stringId, component: this.naeFileListField},
             {stringId: this.userField.stringId, component: this.naeUserField},
         ];
         fields.forEach( field => {
@@ -187,6 +195,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             multichoiceListFieldId: this.constructChangeObject('multichoiceList'),
             multichoiceSelectFieldId: this.constructChangeObject('multichoiceSelect'),
             fileFieldId: this.constructChangeObject('file', false),
+            fileListFieldId: this.constructChangeObject('fileList', false),
             userFieldId: this.constructChangeObject('user', false),
         });
     }

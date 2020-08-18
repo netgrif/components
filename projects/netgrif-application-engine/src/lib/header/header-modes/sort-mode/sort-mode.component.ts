@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
-import {Sort} from '@angular/material';
+import {Sort} from '@angular/material/sort';
 
 @Component({
     selector: 'nae-sort-mode',
@@ -17,7 +17,10 @@ export class SortModeComponent {
 
     public sortHeaderChanged(sortEvent: Sort): void {
         const firstDash = sortEvent.active.indexOf('-');
-        this.headerService.sortHeaderChanged(sortEvent.active.substr(firstDash + 1, sortEvent.active.length), sortEvent.direction);
+        this.headerService.sortHeaderChanged(
+            parseInt(sortEvent.active.substring(0, firstDash), 10),
+            sortEvent.active.substr(firstDash + 1, sortEvent.active.length),
+            sortEvent.direction);
     }
 
 }

@@ -2,8 +2,8 @@
     <ng-template #casePanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <span fxLayoutAlign="start center" fxFlex>
-                <mat-icon class="case-panel-icon"
-                          [ngClass]="case_.color">{{case_.icon ? case_.icon : 'label'}}</mat-icon>
+                <mat-icon class="case-panel-icon panel-primary-icon" *ngIf="showCasePanelIcon">
+                    {{case_.icon ? case_.icon : 'label'}}</mat-icon>
                 <span>{{firstFeaturedValue}}</span>
             </span>
             <span *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
@@ -11,20 +11,22 @@
                   [fxHide.lt-lg]="i >= 2 && responsiveBody"
                   [fxHide.lt-md]="i >= 1 && responsiveBody"
                   [fxHide.lt-sm]="i >= 0 && responsiveBody">
-                <mat-icon class="case-panel-icon" *ngIf="field.icon && field.value">{{field.icon}}</mat-icon>
+                <mat-icon class="case-panel-icon panel-primary-icon" *ngIf="field.icon && field.value">{{field.icon}}</mat-icon>
                 {{field.value}}
             </span>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
-            <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                    <mat-icon>delete</mat-icon>
-                    <span>{{ 'panel.case.delete' | translate}}</span>
+            <div *ngIf="showDeleteMenu">
+                <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-            </mat-menu>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>delete</mat-icon>
+                        <span>{{ 'panel.case.delete' | translate}}</span>
+                    </button>
+                </mat-menu>
+            </div>
         </div>
     </ng-template>
 </nae-app-panel>

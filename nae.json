@@ -265,7 +265,7 @@
                 "class": "DashboardExampleComponent",
                 "from": "./doc/dashboard-example/dashboard-example.component"
             },
-            "access": "private",
+            "access": "public",
             "navigation": false,
             "routing": {
                 "path": "dashboard-view"
@@ -291,6 +291,17 @@
             "navigation": false,
             "routing": {
                 "path": "profile"
+            }
+        },
+        "demo-view-tree": {
+            "component": {
+                "class": "TreeViewExampleComponent",
+                "from": "./doc/tree-view-example/tree-view-example.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "tree-view"
             }
         },
         "demo-navigation-test": {
@@ -465,7 +476,9 @@
                         "test",
                         "all_data",
                         "zmluva",
-                        "address"
+                        "address",
+                        "NEW_CONTRACT",
+                        "data-test"
                     ]
                 },
                 "componentName": "MyCaseView"
@@ -752,6 +765,10 @@
         "routing": {
             "defaultRedirect": "authentication",
             "wildcardRedirect": "authentication"
+        },
+        "dataFields": {
+            "template": "netgrif",
+            "appearance": "standard"
         }
     }
 }

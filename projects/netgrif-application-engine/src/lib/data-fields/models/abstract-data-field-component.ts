@@ -21,7 +21,8 @@ export abstract class AbstractDataFieldComponent implements OnInit {
      * @ignore
      * See [formControl]{@link AbstractDataFieldComponent#formControl}
      */
-    private readonly _formControl: FormControl;
+    @Input() taskOffset = 0;
+    protected _formControl: FormControl;
 
     protected constructor() {
         this._formControl = new FormControl('', { updateOn: 'blur' });

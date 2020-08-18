@@ -19,6 +19,10 @@ export interface ImmediateData {
      * @ignore
      */
     value?: any;
+    /**
+     * Only for Fields of type CaseRef
+     */
+    allowedNets?: Array<string>;
 }
 
 /*

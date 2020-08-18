@@ -4,13 +4,15 @@ import {WorkflowViewService} from './workflow-view.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('WorkflowsViewService', () => {
     let service: WorkflowViewService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule,
+                NoopAnimationsModule],
             providers: [
                 WorkflowViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},

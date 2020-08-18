@@ -15,12 +15,12 @@ export abstract class ConfigurationService {
     }
 
     /**
-     * Get view configuration from nae.json for view at given path.
-     * @param viewPath - path to requested view. No leading backslash.
+     * Get view configuration from nae.json for view at given config path.
+     * @param viewConfigPath configuration path to the requested view. No leading backslash.
      * @return requested configuration if it exists. `undefined` otherwise.
      */
-    public getViewByPath(viewPath: string): View | undefined {
-        const pathFragments = viewPath.split('/');
+    public getViewByPath(viewConfigPath: string): View | undefined {
+        const pathFragments = viewConfigPath.split('/');
 
         const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
         if (!config.views) {

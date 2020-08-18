@@ -17,7 +17,7 @@ import {
     noNetsTaskViewServiceFactory
 } from '../../view/task-view/service/factory/array-task-view-service-factory';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../task-panel/policy';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
@@ -25,6 +25,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
@@ -39,7 +40,8 @@ describe('TaskListComponent', () => {
                 NoopAnimationsModule,
                 CommonModule,
                 HttpClientTestingModule,
-                AuthenticationModule
+                AuthenticationModule,
+                RouterTestingModule.withRoutes([])
             ],
             declarations: [TestWrapperComponent],
             providers: [

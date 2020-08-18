@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 import {Observable, ReplaySubject} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {UserAssignService} from '../service/user-assign.service';
 import {debounceTime} from 'rxjs/operators';
+import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
+import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 
 /**
  * Is responsible for displaying, filtering, loading and selecting users.
@@ -44,7 +44,7 @@ export class UserAssignListComponent implements OnInit, OnDestroy {
     /**
      * UserValue array stream, that represents users loading from backend.
      */
-    public users$: Observable<Array<UserValue>>;
+    public users$: Observable<Array<UserListItem>>;
     /**
      * Stream of selected user with his value that we can subscribe to like the observable.
      */
@@ -52,10 +52,10 @@ export class UserAssignListComponent implements OnInit, OnDestroy {
 
     /**
      * Inject and initialize attributes.
-     * @param _userAssignService Service to get paginated loading users from backend.
+     * @param _userListService Service to get paginated loading users from backend.
      */
-    constructor(private _userAssignService: UserAssignService) {
-        this.users$ = this._userAssignService.users$;
+    constructor(private _userListService: UserListService) {
+        this.users$ = this._userListService.users$;
         this.userSelected = new EventEmitter();
         this._selectedUser$ = new ReplaySubject<string>(1);
     }
@@ -69,7 +69,7 @@ export class UserAssignListComponent implements OnInit, OnDestroy {
             this._selectedUser$.next(this.initiallySelectedUser.id);
         }
         this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
-            this._userAssignService.reload(searchText);
+            this._userListService.reload(searchText);
         });
     }
 
@@ -82,7 +82,7 @@ export class UserAssignListComponent implements OnInit, OnDestroy {
     }
 
     public get loading(): boolean {
-        return this._userAssignService.loading;
+        return this._userListService.loading;
     }
 
     /**
@@ -100,8 +100,8 @@ export class UserAssignListComponent implements OnInit, OnDestroy {
      * Marks selected user in users list.
      * @param selectedUser [UserValue]{@link UserValue}
      */
-    public select(selectedUser: UserValue): void {
-        this.userSelected.emit(selectedUser);
+    public select(selectedUser: UserListItem): void {
+        this.userSelected.emit(new UserValue(selectedUser.id, selectedUser.name, selectedUser.surname, selectedUser.email));
         this._markSelectedUser(selectedUser);
     }
 
@@ -112,14 +112,14 @@ export class UserAssignListComponent implements OnInit, OnDestroy {
         if (!this.viewport) {
             return;
         }
-        this._userAssignService.nextPage(this.viewport.getRenderedRange().end, this.viewport.getDataLength());
+        this._userListService.nextPage(this.viewport.getRenderedRange().end, this.viewport.getDataLength());
     }
 
     /**
      * Marks user as selected in users list.
      * @param selectedUser Current select user value.
      */
-    private _markSelectedUser(selectedUser: UserValue) {
+    private _markSelectedUser(selectedUser: UserListItem) {
         if (!selectedUser) return;
         this._selectedUser$.next(selectedUser.id);
     }

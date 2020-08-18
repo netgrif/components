@@ -1,5 +1,4 @@
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
-
 import {Change, InsertChange} from '@schematics/angular/utility/change';
 import {getDecoratorMetadata, getMetadataField, insertImport} from '@schematics/angular/utility/ast-utils';
 
@@ -11,29 +10,35 @@ import {getDecoratorMetadata, getMetadataField, insertImport} from '@schematics/
 export function addProviderToModule(source: ts.SourceFile,
                                     modulePath: string, classifiedName: string,
                                     importPath: string, providerText?: string): Change[] {
-    return addSymbolToNgModuleMetadata(source, modulePath, 'providers', classifiedName, providerText, importPath);
+    return addSymbolToDecoratorMetadata(source, modulePath, 'NgModule', 'providers', classifiedName, providerText, importPath);
 }
 
 /**
- * copied from original at @schematics/angular/utility/ast-utils
- * our version allows for more freedom by adding the `insertedText` parameter
+ * copied from original method `addSymbolToNgModuleMetadata` at @schematics/angular/utility/ast-utils
  *
- * @param source - modified file
- * @param ngModulePath - path to module file
- * @param metadataField - name of the array, where the symbol is added
- * @param symbolName - name of the symbol eg. class name
- * @param insertedText - the exact text that should be included in the array. If none is provided `symbolName` is used instead
- * @param importPath - path for the import
+ * Changes in our version in comparison to the lib version:
+ *  - `editedFilePath` parameter - renamed from the original `ngModulePath` to better reflect it's use
+ *  - `metadataField` parameter - allows for more diverse uses such as editing component source files
+ *  - `insertedText` parameter - allows for more freedom and flexibility when adding more complicated providers
+ *
+ * @param source modified file
+ * @param editedFilePath path to edited file
+ * @param decoratorName name of the decorator, that should have a property added
+ * @param metadataField name of the array, where the symbol is added
+ * @param symbolName name of the symbol eg. class name
+ * @param insertedText the exact text that should be included in the array. If none is provided `symbolName` is used instead
+ * @param importPath path for the import
  */
-export function addSymbolToNgModuleMetadata(
+export function addSymbolToDecoratorMetadata(
     source: ts.SourceFile,
-    ngModulePath: string,
+    editedFilePath: string,
+    decoratorName: string,
     metadataField: string,
     symbolName: string,
     insertedText?: string,
     importPath: string | null = null,
 ): Change[] {
-    const nodes = getDecoratorMetadata(source, 'NgModule', '@angular/core');
+    const nodes = getDecoratorMetadata(source, decoratorName, '@angular/core');
     let node: any = nodes[0];  // tslint:disable-line:no-any
 
     // Find the decorator declaration.
@@ -77,11 +82,11 @@ export function addSymbolToNgModuleMetadata(
         }
         if (importPath !== null) {
             return [
-                new InsertChange(ngModulePath, exprPosition, strToInsert),
-                insertImport(source, ngModulePath, symbolName.replace(/\..*$/, ''), importPath),
+                new InsertChange(editedFilePath, exprPosition, strToInsert),
+                insertImport(source, editedFilePath, symbolName.replace(/\..*$/, ''), importPath),
             ];
         } else {
-            return [new InsertChange(ngModulePath, exprPosition, strToInsert)];
+            return [new InsertChange(editedFilePath, exprPosition, strToInsert)];
         }
     }
     const assignment = matchingProperties[0] as ts.PropertyAssignment;
@@ -149,10 +154,10 @@ export function addSymbolToNgModuleMetadata(
     }
     if (importPath !== null) {
         return [
-            new InsertChange(ngModulePath, position, toInsert),
-            insertImport(source, ngModulePath, symbolName.replace(/\..*$/, ''), importPath),
+            new InsertChange(editedFilePath, position, toInsert),
+            insertImport(source, editedFilePath, symbolName.replace(/\..*$/, ''), importPath),
         ];
     }
 
-    return [new InsertChange(ngModulePath, position, toInsert)];
+    return [new InsertChange(editedFilePath, position, toInsert)];
 }

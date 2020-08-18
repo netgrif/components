@@ -71,7 +71,7 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, [{validationRule: 'length 5', validationMessage: 'This is custom message!'}]);
+    }, undefined, undefined, undefined, [{validationRule: 'minLength 5', validationMessage: 'This is custom message!'}]);
     formControl = new FormControl();
 
     constructor() {

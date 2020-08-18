@@ -13,7 +13,7 @@ import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {MatIconModule} from '@angular/material';
+import {MatIconModule} from '@angular/material/icon';
 
 describe('ImportNetComponent', () => {
     let component: ImportNetComponent;

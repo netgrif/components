@@ -1,7 +1,5 @@
 import {TestBed} from '@angular/core/testing';
 import {FileFieldService} from './file-field.service';
-import {FileDownloadService} from './download/file-download.service';
-import {FileUploadService} from './upload/file-upload.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -14,6 +12,7 @@ import {AuthenticationService} from '../../../authentication/services/authentica
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FileFieldService', () => {
     let service: FileFieldService;
@@ -24,11 +23,10 @@ describe('FileFieldService', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                NoopAnimationsModule
             ],
             providers: [
-                FileDownloadService,
-                FileUploadService,
                 SideMenuService,
                 SnackBarService,
                 FileFieldService,

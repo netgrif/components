@@ -6,7 +6,7 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserValue} from './models/user-value';
-import {UserAssignInjectedData} from '../../side-menu/content-components/user-assign/model/user-assign-injected-data';
+import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
 
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
@@ -46,7 +46,7 @@ export class UserFieldComponent extends AbstractDataFieldComponent implements On
     public selectUser() {
         let valueReturned = false;
         this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM,
-            {roles: this.dataField.roles, value: this.dataField.value} as UserAssignInjectedData).onClose.subscribe($event => {
+            {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
             if ($event.data) {
                 this.dataField.value = $event.data as UserValue;
                 this._snackbar.openGenericSnackBar('User ' + this.dataField.value.fullName + ' was assigned', 'how_to_reg');

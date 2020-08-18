@@ -20,6 +20,8 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
     @Input() responsiveBody = true;
     @Input() first: boolean;
     @Input() last: boolean;
+    @Input() showCasePanelIcon = true;
+    @Input() showDeleteMenu = false;
 
     constructor() {
         super();
@@ -40,7 +42,7 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
                 return {value: this.case_.author.fullName, icon: 'account_circle'};
             case CaseMetaField.CREATION_DATE:
                 return {
-                    value: toMoment(this.case_.creationDate as NaeDate).format(DATE_TIME_FORMAT_STRING),
+                    value: toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING),
                     icon: 'event'
                 };
         }
@@ -61,7 +63,7 @@ export class CasePanelComponent extends PanelWithHeaderBinding {
                 case 'file':
                     return {value: immediate.value, icon: 'insert_drive_file'};
                 case 'user':
-                    return {value: immediate.value, icon: 'account_circle'};
+                    return {value: immediate.value.fullName, icon: 'account_circle'};
                 default:
                     // TODO 8.4.2020 - File field value rendering once file field works
                     // TODO 8.4.2020 - User field value rendering once user field works

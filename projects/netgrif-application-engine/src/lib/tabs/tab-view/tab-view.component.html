@@ -1,4 +1,6 @@
 <mat-tab-group [selectedIndex]="tabView.selectedIndex.value"
+               [class.center-tabs]="align === 'center'"
+               [class.end-tabs]="align === 'end'"
                (selectedIndexChange)="tabView.selectedIndex.setValue($event)" class="tab-group"
                [class.nae-tab-fill-height]="stretch" fxFlex>
     <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index">
@@ -7,7 +9,7 @@
                 <div fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon class="icon-margin-right"
                               *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
-                    <span>{{tab.label.text}}</span>
+                    <span [matBadge]="(badgeCount(tab) | async)" [matBadgeHidden]="(badgeHidden(tab) | async)">{{tab.label.text}}</span>
                 </div>
                 <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
                     <mat-icon>clear</mat-icon>

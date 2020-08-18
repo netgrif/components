@@ -258,6 +258,10 @@ export interface Services {
         defaultRedirect?: string;
         wildcardRedirect?: string;
     };
+    dataFields?: {
+        template?: string,
+        appearance?: string
+    };
 
     [k: string]: any;
 }

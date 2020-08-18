@@ -31,6 +31,11 @@ import {
     UserModule,
     WorkflowViewModule,
     ViewService,
+    TreeCaseViewModule,
+    NAE_SNACKBAR_HORIZONTAL_POSITION,
+    NAE_SNACKBAR_VERTICAL_POSITION,
+    SnackBarHorizontalPosition,
+    SnackBarVerticalPosition
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -40,7 +45,6 @@ import {AuthenticationComponent} from './doc/authentication/authentication.compo
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MatButtonModule, MatCardModule, MatIconModule, MatSidenavModule} from '@angular/material';
 import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.component';
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
@@ -68,6 +72,12 @@ import {NavigationExampleComponent} from './doc/navigation-example/navigation-ex
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 import {NaeExampleAppViewService} from './nae-example-app-view.service';
+import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -104,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
+        TreeViewExampleComponent
     ],
     imports: [
         BrowserModule,
@@ -152,6 +163,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         HeaderModule,
         CaseViewModule,
         PanelModule,
+        TreeCaseViewModule,
+        MatProgressSpinnerModule,
+        DashboardModule,
     ],
     entryComponents: [
         ContentComponent,
@@ -180,12 +194,15 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileComponent,
         NavigationExampleComponent,
         ButtonsNavComponent,
-        RolesAssignComponent
+        RolesAssignComponent,
+        TreeViewExampleComponent
     ],
     providers: [{
         provide: ConfigurationService,
         useClass: NaeExampleAppConfigurationService
     },
+        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP },
+        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT },
         ResourceProvider,
         TranslateService,
         TranslatePipe,
