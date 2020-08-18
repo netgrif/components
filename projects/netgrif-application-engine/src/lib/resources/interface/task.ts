@@ -1,6 +1,6 @@
 import {UserTask} from './user-task';
 import {DataGroup} from './data-groups';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../panel/task-panel/policy';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskLayout} from './task-layout';
 
 /**
@@ -58,4 +58,8 @@ export interface Task {
     dataSize?: number;
     icon?: string;
     priority?: number;
+    assignTitle?: string;
+    finishTitle?: string;
+    cancelTitle?: string;
+    delegateTitle?: string;
 }

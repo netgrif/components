@@ -29,7 +29,7 @@ export class ViewClassInfo extends ImportToAdd {
             this.prefix = ViewClassInfo.convertPathToClassNamePrefix(path);
             const classSuffix = ViewClassInfo.resolveClassSuffixForView(viewType);
             this.nameWithoutComponent = `${classify(this.prefix)}${classSuffix}`;
-            this.fileImportPath = `./views/${path}/${this.prefix}-${dasherize(classSuffix)}.component`;
+            this.fileImportPath = `./views/${path}/${dasherize(this.nameWithoutComponent)}.component`;
         } else {
             this.prefix = '';
             this.nameWithoutComponent = classify(customComponentName);
@@ -63,6 +63,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'SidenavAndToolbarView';
             case 'dashboard':
                 return 'Dashboard';
+            case 'treeCaseView':
+                return 'TreeCaseView';
             default:
                 throw new SchematicsException(`Unknown view type '${view}'`);
         }

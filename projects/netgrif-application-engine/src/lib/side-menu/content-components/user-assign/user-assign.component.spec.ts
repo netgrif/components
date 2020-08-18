@@ -11,8 +11,8 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {UserAssignService} from './service/user-assign.service';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
+import {UserListService} from '../../../user/services/user-list.service';
 
 describe('UserAssignComponent', () => {
     let component: UserAssignComponent;
@@ -28,7 +28,7 @@ describe('UserAssignComponent', () => {
                 SnackBarModule
             ],
             providers: [
-                UserAssignService,
+                UserListService,
                 {provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
                     }, new Observable<boolean>(), null)},
                 {provide: ConfigurationService, useClass: TestConfigurationService}

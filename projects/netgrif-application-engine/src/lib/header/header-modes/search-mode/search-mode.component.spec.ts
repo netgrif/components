@@ -1,14 +1,5 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {SearchModeComponent} from './search-mode.component';
-import {
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatSortModule
-} from '@angular/material';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
@@ -29,6 +20,15 @@ import {AuthenticationMethodService} from '../../../authentication/services/auth
 import {ViewService} from '../../../routing/view-service/view.service';
 import {TestViewService} from '../../../utility/tests/test-view-service';
 import {RouterModule} from '@angular/router';
+import {MaterialModule} from '../../../material/material.module';
+import {UserValue} from '../../../data-fields/user-field/models/user-value';
+import {MatInputModule} from '@angular/material/input';
+import {MatSortModule} from '@angular/material/sort';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 describe('SearchModeComponent', () => {
@@ -51,6 +51,7 @@ describe('SearchModeComponent', () => {
                 MatSnackBarModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
+                MaterialModule,
                 RouterModule.forRoot([])
             ],
             providers: [
@@ -83,10 +84,17 @@ describe('SearchModeComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call search header', () => {
-        component.headerSearchInputChanged(0, 'hladaj');
+    it('should call search header', fakeAsync(() => {
+        component.formControls[0].setValue('hladaj');
+        tick(400);
         expect(headerSpy).toHaveBeenCalledWith(0, 'hladaj');
-    });
+    }));
+
+    it('should transform UserValue into id', fakeAsync(() => {
+        component.formControls[0].setValue(new UserValue('7', '', '', ''));
+        tick(400);
+        expect(headerSpy).toHaveBeenCalledWith(0, '7');
+    }));
 
     afterAll(() => {
         TestBed.resetTestingModule();

@@ -3,6 +3,7 @@ import {FilterSelectorListItemComponent} from './filter-selector-list-item.compo
 import {Component} from '@angular/core';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilterSelectorListItemComponent', () => {
     let component: FilterSelectorListItemComponent;
@@ -10,6 +11,8 @@ describe('FilterSelectorListItemComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule],
             declarations: [
                 FilterSelectorListItemComponent,
                 TestWrapperComponent

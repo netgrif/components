@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import {MatTreeNestedDataSource} from '@angular/material';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {View, Views} from '../../configuration/interfaces/schema';
 import {NavigationEnd, Router} from '@angular/router';
+import {MatTreeNestedDataSource} from '@angular/material/tree';
 
 interface NavigationNode {
     name: string;
@@ -46,8 +46,8 @@ export class NavigationTreeComponent implements OnInit {
                 }
             });
             const view = this._config.getViewByPath(this.viewPath);
-            if (view && view.routes) {
-                this.dataSource.data = this.resolveNavigationNodes(view.routes, this.parentUrl);
+            if (view && view.children) {
+                this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
             }
             this.resolveLevels(this.dataSource.data);
         }
@@ -95,7 +95,7 @@ export class NavigationTreeComponent implements OnInit {
     }
 
     private hasSubRoutes(route: View): boolean {
-        if (!route.routes) {
+        if (!route.children) {
             return false;
         }
         if (typeof route.children === 'object') {

@@ -5,13 +5,14 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('CaseResourceService', () => {
     let service: CaseResourceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(CaseResourceService);
@@ -117,11 +118,11 @@ describe('CaseResourceService', () => {
 
     it('should getAllCaseUser', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
-            service.getAllCaseUser({}).subscribe(res => {
+            service.getAllCaseUser('id', {}).subscribe(res => {
                 expect(res.length).toEqual(0);
             });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/author/id');
             expect(reqLog.request.method).toEqual('POST');
 
             reqLog.flush([]);
@@ -131,10 +132,10 @@ describe('CaseResourceService', () => {
     it('should getCasesQueryDSL', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getCasesQueryDSL({}).subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res.content.length).toEqual(0);
             });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/search2');
             expect(reqLog.request.method).toEqual('POST');
 
             reqLog.flush([]);

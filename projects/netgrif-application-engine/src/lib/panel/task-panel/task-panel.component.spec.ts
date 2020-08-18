@@ -9,7 +9,7 @@ import {TaskPanelComponent} from './task-panel.component';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
 import {Observable, of, Subject, throwError} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from './policy';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
@@ -32,13 +32,19 @@ import {TaskMetaField} from '../../header/task-header/task-meta-enum';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {AssignPolicyService} from '../../task/services/assign-policy.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
-    let autoDataSpy: jasmine.Spy;
+    let assignSpy: jasmine.Spy;
 
     beforeEach(async(() => {
+        const mockAssignPolicyService = {
+            performAssignPolicy: () => {}
+        };
+
         TestBed.configureTestingModule({
             imports: [
                 MatExpansionModule,
@@ -48,10 +54,12 @@ describe('TaskPanelComponent', () => {
                 CommonModule,
                 AuthenticationModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 ArrayTaskViewServiceFactory,
+                SideMenuService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: TaskViewService,
@@ -61,7 +69,6 @@ describe('TaskPanelComponent', () => {
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: UserResourceService, useClass: MyUserResources},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
-                SideMenuService
             ],
             declarations: [
                 TestWrapperComponent,
@@ -73,135 +80,35 @@ describe('TaskPanelComponent', () => {
                     SuccessSnackBarComponent
                 ]
             }
-        }).compileComponents();
+        }).overrideProvider(AssignPolicyService, {useValue: mockAssignPolicyService}
+        ).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
 
-        autoDataSpy = spyOn<any>(component, 'autoRequiredDataFocusPolicy');
+        assignSpy = spyOn<any>(mockAssignPolicyService, 'performAssignPolicy');
     }));
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call show function', () => {
-        expect(component.show(new MouseEvent('type'))).toBeFalse();
-    });
-
-    it('should test getTaskDataFields, updateTaskDataFields and updateFromChangedFields functions', () => {
-        component.getTaskDataFields();
-        component.updateTaskDataFields();
-        expect(component.taskPanelData.task.dataGroups.length).toEqual(1);
-
-        component.taskPanelData.changedFields.next({number: {value: 10, behavior: {string: {editable: true}}}});
-        expect(component.taskPanelData.task.dataGroups[0].fields[0].value).toEqual(10);
-        expect(component.taskPanelData.task.dataGroups[0].fields[0].behavior).toEqual({editable: true});
-    });
-
-    it('should open and close panel, test policies', () => {
-        component.taskPanelData.task.stringId = 'true';
-
-        component.taskPanelData.task.finishPolicy = FinishPolicy.autoNoData;
-        component.taskPanelData.task.dataFocusPolicy = DataFocusPolicy.autoRequired;
-        component.taskPanelData.task.assignPolicy = AssignPolicy.auto;
+    it('should perform assign policy on panel open', () => {
         component.panelRef.open();
-        component.panelRef.close();
-
-        component.taskPanelData.task.assignPolicy = AssignPolicy.manual;
-        component.panelRef.open();
-        component.panelRef.close();
-
-        component.taskPanelData.task.dataFocusPolicy = DataFocusPolicy.manual;
-        component.taskPanelData.task.finishPolicy = FinishPolicy.manual;
-        component.panelRef.open();
-        component.panelRef.close();
-        expect(autoDataSpy).toHaveBeenCalled();
+        expect(assignSpy).toHaveBeenCalled();
     });
 
     it('should process tasks', () => {
         component.taskPanelData.task.stringId = 'true';
         component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
-        component.processTask('assign');
+        component.assign();
         expect(component.taskPanelData.task.startDate).toBe(undefined);
 
         component.taskPanelData.task.stringId = 'true';
-        component.loading = true;
-        component.processTask('assign');
-        component.loading = false;
-
-        component.taskPanelData.task.user = {
-            id: '1',
-            email: 'string',
-            name: 'string',
-            surname: 'string',
-            state: 'string',
-            authorities: [],
-            userProcessRoles: [],
-            processRoles: [],
-            groups: [],
-            fullName: 'string',
-            registered: true
-        };
-        component.processTask('assign');
-        component.taskPanelData.task.user = undefined;
-
-        component.loading = true;
-        component.processTask('delegate');
-        component.loading = false;
-
-        component.loading = true;
-        component.processTask('cancel');
-        component.loading = false;
-
-        component.processTask('cancel');
-
-        component.taskPanelData.task.stringId = 'true';
         component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
-        component.processTask('finish');
+        component.finish();
         expect(component.taskPanelData.task.startDate).toBe(undefined);
-    });
-
-    it('should test assign', async () => {
-        component.taskPanelData.task.stringId = 'true';
-        component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
-        const afterTrue = new Subject<boolean>();
-        afterTrue.subscribe(res => {
-            expect(res).toBeTrue();
-            expect(component.taskPanelData.task.startDate).toBe(undefined);
-        });
-        await component.assign(afterTrue);
-
-        component.taskPanelData.task.stringId = 'false';
-        const afterFalse = new Subject<boolean>();
-        afterFalse.subscribe(res => expect(res).toBeFalse());
-        await component.assign(afterFalse);
-
-        component.taskPanelData.task.stringId = 'error';
-        const afterErr = new Subject<boolean>();
-        afterErr.subscribe(res => expect(res).toBeFalse());
-        await component.assign(afterErr);
-    });
-
-    it('should test finish', async () => {
-        component.taskPanelData.task.stringId = 'true';
-        const afterTrue = new Subject<boolean>();
-        afterTrue.subscribe(res => {
-            expect(res).toBeTrue();
-        });
-        await component.finish(afterTrue);
-
-        component.taskPanelData.task.stringId = 'false';
-        const afterFalse = new Subject<boolean>();
-        afterFalse.subscribe(res => expect(res).toBeFalse());
-        await component.finish(afterFalse);
-
-        component.taskPanelData.task.stringId = 'error';
-        component.taskPanelData.task.dataSize = 0;
-        const afterErr = new Subject<boolean>();
-        afterErr.subscribe(res => expect(res).toBeFalse());
-        await component.finish(afterErr);
     });
 
     afterAll(() => {
@@ -230,6 +137,7 @@ class TestWrapperComponent {
             finishPolicy: FinishPolicy.manual,
             stringId: 'string',
             layout: {
+                offset: 0,
                 cols: undefined,
                 rows: undefined
             },
@@ -244,7 +152,6 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.TITLE, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.PRIORITY, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, TaskMetaField.USER, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'string'),
     ]);
 }
 

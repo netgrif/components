@@ -5,13 +5,14 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AuthenticationModule} from '../../../authentication.module';
 import {NullAuthenticationService} from './null-authentication.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('NullAuthenticationService', () => {
     let service: NullAuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthenticationModule, HttpClientTestingModule],
+            imports: [AuthenticationModule, HttpClientTestingModule, NoopAnimationsModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 HttpClient,

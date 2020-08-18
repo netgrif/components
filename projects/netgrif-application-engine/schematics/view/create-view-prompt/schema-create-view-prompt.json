@@ -22,7 +22,8 @@
                 "toolbarView",
                 "sidenavAndToolbarView",
                 "dashboard",
-                "customView"
+                "customView",
+                "treeCaseView"
             ],
             "x-prompt": {
                 "type": "list",
@@ -36,7 +37,8 @@
                     "toolbarView",
                     "sidenavAndToolbarView",
                     "dashboard",
-                    "customView"
+                    "customView",
+                    "treeCaseView"
                 ]
             }
         },

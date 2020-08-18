@@ -5,6 +5,11 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {TextField} from '../text-field/models/text-field';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {ViewService} from '../../routing/view-service/view.service';
+import {TestViewService} from '../../utility/tests/test-view-service';
 
 describe('DataFieldTemplateComponent', () => {
     let component: DataFieldTemplateComponent;
@@ -12,8 +17,12 @@ describe('DataFieldTemplateComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule],
+            imports: [MaterialModule, AngularResizedEventModule, NoopAnimationsModule],
             declarations: [DataFieldTemplateComponent, TestWrapperComponent],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ViewService, useClass: TestViewService}
+                ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();

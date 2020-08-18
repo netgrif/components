@@ -14,6 +14,7 @@ import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
 import {MaterialModule} from '../../../../material/material.module';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ArrayTaskViewServiceFactory', () => {
     let service: ArrayTaskViewServiceFactory;
@@ -23,7 +24,8 @@ describe('ArrayTaskViewServiceFactory', () => {
             imports: [
                 HttpClientTestingModule,
                 MaterialModule,
-                TranslateLibModule
+                TranslateLibModule,
+                NoopAnimationsModule
             ],
             providers: [
                 ArrayTaskViewServiceFactory,

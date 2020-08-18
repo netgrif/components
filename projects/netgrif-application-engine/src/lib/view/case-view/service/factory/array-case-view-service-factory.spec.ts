@@ -13,6 +13,7 @@ import {MaterialModule} from '../../../../material/material.module';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ArrayCaseViewServiceFactory', () => {
     let service: ArrayCaseViewServiceFactory;
@@ -22,7 +23,8 @@ describe('ArrayCaseViewServiceFactory', () => {
             imports: [
                 HttpClientTestingModule,
                 MaterialModule,
-                TranslateLibModule
+                TranslateLibModule,
+                NoopAnimationsModule
             ],
             providers: [
                 ArrayCaseViewServiceFactory,

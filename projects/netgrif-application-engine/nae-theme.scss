@@ -7,6 +7,7 @@
 @import "src/lib/admin/role-assignment/role-assignment.component.theme";
 @import "src/lib/side-menu/content-components/user-assign/user-assign-list/user-assign-item/theme/user-assign-item.component.theme";
 @import 'src/lib/view/view.theme';
+@import 'src/lib/tabs/tabs.theme';
 
 @mixin nae-lib-theme($app-theme, $app-typography-config) {
     @include nae-typography($app-typography-config);
@@ -18,6 +19,7 @@
     @include roles-assignment-theme($app-theme);
     @include user-assign-item-component-theme($app-theme);
     @include view-theme($app-theme);
+    @include tabs-theme($app-theme);
 }
 
 .mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {

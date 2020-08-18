@@ -1,14 +1,6 @@
-/*
- * Public API Surface of netgrif-application-engine
- */
-
 /* MODULES */
 export * from './panel.module';
-export * from './task-panel/task-panel-definition';
 export * from './workflow-panel/workflow-panel.component';
-
-/* SERVICES */
-export * from './task-panel/task-panel-content/field-convertor.service';
 
 /* COMPONENTS */
 export * from './panel.component';

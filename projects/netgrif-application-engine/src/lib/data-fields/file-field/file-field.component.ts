@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FileField} from './models/file-field';
 import {FileFieldService} from './services/file-field.service';
-import {FilesUploadComponent} from '../../side-menu/content-components/files-upload/files-upload.component';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 
 export interface FileState {
     progress: number;
@@ -27,10 +27,6 @@ export interface FileState {
     providers: [FileFieldService]
 })
 export class FileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
-    /**
-     * Decisions between choose one or multiple files.
-     */
-    public multiple: boolean;
     /**
      * Keep display name.
      */
@@ -66,18 +62,15 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
                 private _translate: TranslateService) {
         super();
         this.state = this.defaultState;
-        this.multiple = false;
     }
 
     /**
      * Set :
      *  - File field to [FileFieldService]{@link FileFieldService}
-     *  - Choice between one or multiple files
      *  - Display name
      */
     ngOnInit() {
         super.ngOnInit();
-        // this.multiple = this.dataField.maxUploadFiles > 1 ? 'multiple' : undefined;
         this.name = this.constructDisplayName();
     }
 
@@ -114,7 +107,6 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         }
         if (!this.taskId) {
             this._log.error('File cannot be uploaded. No task is set to the field.');
-            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.cannotUpload'));
             return;
         }
         if (this.dataField.value &&
@@ -124,6 +116,13 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFile'));
             return;
         }
+        if (this.dataField.maxUploadSizeInBytes &&
+            this.dataField.maxUploadSizeInBytes < this.fileUploadEl.nativeElement.files.item(0).size) {
+            this._log.error('File cannot be uploaded. Maximum size of file exceeded.');
+            this._snackbar.openErrorSnackBar(
+                this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
+            );
+        }
 
         this.state = this.defaultState;
         this.state.uploading = true;
@@ -131,25 +130,28 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         fileFormData.append('file', this.fileUploadEl.nativeElement.files.item(0) as File);
         this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
         this.name = this.constructDisplayName();
-        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData).subscribe(response => {
+        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                // TODO BUG 17.6.2020 - changedFields returned from backend are ignored here
-                // tslint:disable-next-line:max-line-length
-                this._log.debug(`File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`);
+                this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                this._log.debug(
+                    `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
+                );
                 this.state.completed = true;
                 this.state.error = false;
                 this.state.uploading = false;
                 this.state.progress = 0;
+                this.dataField.downloaded = false;
             }
         }, error => {
             this.state.completed = true;
             this.state.error = true;
             this.state.uploading = false;
             this.state.progress = 0;
-            // tslint:disable-next-line:max-line-length
-            this._log.error(`File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error);
+            this._log.error(
+                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
+            );
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
         });
     }
@@ -160,7 +162,6 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         }
         if (!this.taskId) {
             this._log.error('File cannot be downloaded. No task is set to the field.');
-            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.cannotDownload'));
             return;
         }
 
@@ -174,6 +175,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
                 this.downloadViaAnchor(response as Blob);
                 this.state.downloading = false;
                 this.state.progress = 0;
+                this.dataField.downloaded = true;
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
@@ -194,6 +196,31 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
+    }
+
+    public deleteFile() {
+        if (!this.dataField.value || !this.dataField.value.name) {
+            return;
+        }
+        if (!this.taskId) {
+            this._log.error('File cannot be deleted. No task is set to the field.');
+            return;
+        }
+
+        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).subscribe(response => {
+            if (response.success) {
+                this.dataField.value.name = null;
+                this.dataField.value.file = null;
+                this.name = this.constructDisplayName();
+                this.dataField.downloaded = false;
+                this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
+            } else {
+                this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
+                this._snackbar.openErrorSnackBar(
+                    this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.fileDeleteFailed')
+                );
+            }
+        });
     }
 
     private get defaultState(): FileState {

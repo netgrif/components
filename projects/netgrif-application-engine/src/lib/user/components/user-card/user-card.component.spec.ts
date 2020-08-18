@@ -12,6 +12,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {UserPreferenceService} from '../../services/user-preference.service';
 import {MockUserPreferenceService} from '../../../utility/tests/mocks/mock-user-preference.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UserCardComponent', () => {
     let component: UserCardComponent;
@@ -26,7 +27,8 @@ describe('UserCardComponent', () => {
                 MaterialModule,
                 HttpClientTestingModule,
                 RouterTestingModule.withRoutes([]),
-                TranslateLibModule
+                TranslateLibModule,
+                NoopAnimationsModule
             ],
             providers: [
                 AuthenticationMethodService,

@@ -4,6 +4,7 @@ import {InternalLinkComponent} from './internal-link.component';
 import {MaterialModule} from '../../../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('InternalLinkComponent', () => {
     let component: InternalLinkComponent;
@@ -15,7 +16,7 @@ describe('InternalLinkComponent', () => {
             imports: [
                 CommonModule,
                 RouterTestingModule,
-                MaterialModule
+                MaterialModule, NoopAnimationsModule
             ]
         })
             .compileComponents();

@@ -35,7 +35,8 @@
                         "sourceMap": true,
                         "codeCoverage": true,
                         "codeCoverageExclude": [
-                            "projects/netgrif-application-engine/src/test.ts"
+                            "projects/netgrif-application-engine/src/test.ts",
+                            "projects/netgrif-application-engine/src/commons/**"
                         ]
                     }
                 },

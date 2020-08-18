@@ -1,8 +1,9 @@
 import {TestBed} from '@angular/core/testing';
 import {DialogService} from './dialog.service';
-import {MatDialog, MatDialogModule} from '@angular/material';
 import {of} from 'rxjs';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DialogService', () => {
     let service: DialogService;
@@ -11,7 +12,7 @@ describe('DialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, TranslateLibModule],
+            imports: [MatDialogModule, TranslateLibModule, NoopAnimationsModule],
             providers: [MatDialog]
         });
         service = TestBed.inject(DialogService);

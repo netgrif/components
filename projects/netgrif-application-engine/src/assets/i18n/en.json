@@ -77,6 +77,10 @@
             "noUser": "There are no users",
             "err": "Users failed to load",
             "showcase": "User showcase mode not set!"
+        },
+        "option-selector": {
+            "select": "Select",
+            "choose-one-option": "Choose one of the provided options"
         }
     },
     "search": {
@@ -151,23 +155,27 @@
             "negative": "Entered number must be negative",
             "decimal": "Entered number must be decimal",
             "inrange": "Entered number must be in range {{range}}",
-            "length": "Entered text must be at the most {{length}}",
+            "minLength": "Entered text must be at least {{length}} characters long",
+            "maxLength": "Entered text must be at most {{length}} characters long",
             "pattern": "Entered text is in a wrong format",
             "phone": "Entered text must be in telephone number format",
             "email": "Entered text must be in email format",
             "dateRange": "Entered date must be in range {{range}}",
             "weekend": "Entered date must be weekend day",
-            "workday": "Entered date must be week day"
+            "workday": "Entered date must be week day",
+            "enumeration": "One of the options must be selected"
         },
         "snackBar": {
             "downloadFail": " failed to download",
             "moreFiles": "You choose more files as you allowed",
             "sameFiles": "You cannot upload two of the same files",
             "fileSize": "Files size exceeded allowed limit",
-            "cannotDownload": "The file cannot be downloaded without defined task",
-            "cannotUpload": "The file cannot be uploaded without defined task",
-            "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
-            "fileUploadFailed": "The file failed to upload"
+            "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it or delete existing file",
+            "wontUploadSameFiles": "The selected files have already been uploaded. To update files, delete files that have already been uploaded",
+            "fileUploadFailed": "The file failed to upload",
+            "fileDeleteFailed":  "The file could not be deleted",
+            "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
+            "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: "
         },
         "noFile": "No file"
     },
@@ -196,6 +204,7 @@
     "headers": {
         "newHeader": "Select new header",
         "date": "Choose a date",
+        "selectUser": "Choose a user",
         "caseMeta": {
             "visualID": "Visual ID",
             "title": "Title",
@@ -267,5 +276,9 @@
             "saveSuccess": "User preferences saved successfully",
             "saveFailure": "An error occurred while saving user preferences"
         }
+    },
+    "caseTree": {
+        "newNodeDefaultName": "New Node",
+        "noTaskSelected": "No case is currently selected. Click on a node in the tree to select a case."
     }
 }

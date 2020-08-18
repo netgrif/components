@@ -29,7 +29,7 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
             provide: TaskViewService,
             useFactory: tabbedTaskViewServiceFactory,
             deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]
-        },
+        }
     ]
 })
 export class TabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {

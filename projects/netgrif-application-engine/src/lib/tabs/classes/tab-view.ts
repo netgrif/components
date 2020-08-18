@@ -8,6 +8,8 @@ import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
+import {InjectedTabbedTaskViewData} from '../../view/task-view/models/injected-tabbed-task-view-data';
+import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
 
 /**
  * Holds the logic for tab management in {@link TabViewComponent}.
@@ -36,12 +38,18 @@ export class TabView implements TabViewInterface {
      * Holds a reference to an object that hides some public attributes and methods from tabs.
      */
     private tabViewInterface: TabViewInterface = {
+        currentlySelectedTab: () => this.currentlySelectedTab(),
         openTab: (tabContent: TabContent, autoswitch: boolean = false) => this.openTab(tabContent, autoswitch),
         switchToTabIndex: (index: number) => this.switchToTabIndex(index),
         switchToTabUniqueId: (uniqueId: string) => this.switchToTabUniqueId(uniqueId),
-        closeTabIndex: (index: number) => this.closeTabIndex(index),
-        closeTabUniqueId: (uniqueId: string) => this.closeTabUniqueId(uniqueId)
+        closeTabIndex: (index: number, force: boolean = false) => this.closeTabIndex(index, force),
+        closeTabUniqueId: (uniqueId: string, force: boolean = false) => this.closeTabUniqueId(uniqueId, force)
     };
+    /**
+     * Holds the index of the tab that is selected right now, so that when the currently
+     * selected index changes this information can be used to deduce the previously selected index.
+     */
+    protected _lastSelectedTabIndex = 0;
 
     /**
      * @param _viewService [ViewService]{@link ViewService} reference
@@ -59,21 +67,65 @@ export class TabView implements TabViewInterface {
         // orderBy is a stable sort
         // Native javascript implementation has undefined stability and it depends on it's implementation (browser)
         this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData => new OpenedTab(tabData, `${this.getNextId()}`));
+
+        this.selectedIndex.valueChanges.subscribe(newSelectedIndex => {
+            if (newSelectedIndex !== this._lastSelectedTabIndex) {
+                let tab = this.openedTabs[this._lastSelectedTabIndex];
+                if (tab) {
+                    tab.tabSelected$.next(false);
+                }
+                tab = this.openedTabs[newSelectedIndex];
+                if (tab) {
+                    tab.tabSelected$.next(true);
+                }
+                this._lastSelectedTabIndex = newSelectedIndex;
+            }
+        });
+    }
+
+    /**
+     * @returns the index of the currently selected tab
+     */
+    public currentlySelectedTab(): number {
+        return this.selectedIndex.value;
     }
 
     /**
      * Opens a new tab with the provided content.
      * @param tabContent - content of the new tab
      * @param autoswitch - whether the newly opened tab should be switched to. Defaults to `false`.
+     * @param openExising - whether the opened tab already existing should be switched to existing one. Defaults to `true`.
      * @returns the `tabUniqueId` of the newly opened tab
      */
-    public openTab(tabContent: TabContent, autoswitch: boolean = false): string {
+    public openTab(tabContent: TabContent, autoswitch: boolean = false, openExising: boolean = true): string {
         if (tabContent.initial) {
             this._logger.warn(`'initial' attribute is not meant to be used with new tabs and will be ignored`);
             delete tabContent.initial;
         }
 
         const newTab = new OpenedTab(tabContent, `${this.getNextId()}`);
+        const indexExisting = this.findIndexExistingTab(newTab);
+        if (indexExisting === -1 || !openExising) {
+            return this.openNewTab(newTab, autoswitch);
+        } else {
+            this.selectedIndex.setValue(indexExisting);
+            return `${this.nextId - 1}`;
+        }
+    }
+
+    protected findIndexExistingTab(newTab: OpenedTab) {
+        return this.openedTabs.findIndex(existingTab =>
+            existingTab.injectedObject &&
+            (existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter &&
+            ((existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case &&
+            newTab.injectedObject &&
+            (newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter &&
+            ((newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case &&
+            (((existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case ===
+                ((newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case));
+    }
+
+    protected openNewTab(newTab: OpenedTab, autoswitch: boolean) {
         let index = this.openedTabs.findIndex(existingTab => existingTab.order > newTab.order);
         if (index === -1) {
             index = this.openedTabs.length;
@@ -114,33 +166,45 @@ export class TabView implements TabViewInterface {
      * Throws an error if the `index` is invalid.
      *
      * Throws an error if the tab has it's `canBeClosed` property set to `false`.
-     * @param index - index of the tab that should be closed
+     * @param index index of the tab that should be closed
+     * @param force when `true` closes a tab even if it's `cantBeClosed` attribute is set to `true`
      */
-    public closeTabIndex(index: number): void {
-        this.checkIndexRange(index);
-        if (!this.openedTabs[index].canBeClosed) {
-            throw new Error(`Tab at index ${index} can't be closed`);
-        }
-        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
-            this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
-        }
-        this.openedTabs.splice(index, 1);
+    public closeTabIndex(index: number, force: boolean = false): void {
+        this.closeTab(index, force, `Tab at index ${index} can't be closed`);
     }
 
     /**
      * Closes the tab with the given `uniqueId`. Throws an error if the `uniqueId` is invalid.
      * Throws an error if the tab has it's `canBeClosed` property set to `false`.
      * @param uniqueId - id of the tab that should be closed
+     * @param force when `true` closes a tab even if it's `cantBeClosed` attribute is set to `true`
      */
-    public closeTabUniqueId(uniqueId: string): void {
+    public closeTabUniqueId(uniqueId: string, force: boolean = false): void {
         const index = this.getTabIndex(uniqueId);
-        if (!this.openedTabs[index].canBeClosed) {
-            throw new Error(`Tab with ID ${uniqueId} can't be closed`);
+        this.closeTab(index, force, `Tab with ID ${uniqueId} can't be closed`);
+    }
+
+    /**
+     * Closes the tab at the given index.
+     *
+     * If the conditions for closing a tab are not met throws an `Error` with the given message.
+     * @param index index of the tab that should be closed
+     * @param force when `true` closes a tab even if it's `cantBeClosed` attribute is set to `true`
+     * @param error the message that should be displayed if the conditions for closing a tab are not met
+     */
+    protected closeTab(index: number, force: boolean, error: string): void {
+        this.checkIndexRange(index);
+        if (!force && !this.openedTabs[index].canBeClosed) {
+            throw new Error(error);
         }
         if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
             this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
         }
-        this.openedTabs.splice(index, 1);
+        if (index === this.selectedIndex.value && this.selectedIndex.value + 1 < this.openedTabs.length) {
+            this.openedTabs[index + 1].tabSelected$.next(true);
+        }
+        const deleted = this.openedTabs.splice(index, 1);
+        deleted[0].destroy();
     }
 
     /**
@@ -154,7 +218,8 @@ export class TabView implements TabViewInterface {
         if (!tab.isTabInitialized) {
             Object.assign(tab.injectedObject, {
                 tabUniqueId: tab.uniqueId,
-                tabViewRef: this.tabViewInterface
+                tabViewRef: this.tabViewInterface,
+                tabSelected$: tab.tabSelected$.asObservable()
             });
 
             const providers: StaticProvider[] = [

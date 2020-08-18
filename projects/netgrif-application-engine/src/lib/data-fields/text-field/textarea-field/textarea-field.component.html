@@ -6,7 +6,11 @@
     <textarea matInput
               [placeholder]="textAreaField.placeholder"
               [required]="textAreaField.behavior.required"
-              [formControl]="formControlRef"></textarea>
+              [formControl]="formControlRef"
+              [ngStyle]="{'height': getHeight()+'px'}"
+    ></textarea>
     <mat-hint>{{textAreaField.description}}</mat-hint>
     <mat-error *ngIf="!formControlRef.valid">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
+
+

@@ -1,6 +1,7 @@
 <nae-data-field-template *ngIf="!dataField.behavior.hidden"
                          [dataField]="dataField"
-                         [dataFieldTemplate]="multiFieldTemplate">
+                         [dataFieldTemplate]="multiFieldTemplate"
+                         [offset]="taskOffset">
 </nae-data-field-template>
 
 <ng-template #multiFieldTemplate let-showLargeLayout="showLargeLayout">

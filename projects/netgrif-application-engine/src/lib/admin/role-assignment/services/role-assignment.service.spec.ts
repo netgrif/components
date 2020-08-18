@@ -12,10 +12,12 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {TranslateService} from '@ngx-translate/core';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const serviceFactory = (userResources: UserResourceService, processResources: PetriNetResourceService,
-                        snackbar: SnackBarService, log: LoggerService) => {
-    return new RoleAssignmentService(userResources, processResources, snackbar, log);
+                        snackbar: SnackBarService, log: LoggerService, translate: TranslateService) => {
+    return new RoleAssignmentService(userResources, processResources, snackbar, log, translate);
 };
 
 describe('RoleAssignmentService', () => {
@@ -23,7 +25,7 @@ describe('RoleAssignmentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 UserResourceService,
@@ -33,7 +35,7 @@ describe('RoleAssignmentService', () => {
                 {
                     provide: RoleAssignmentService,
                     useFactory: serviceFactory,
-                    deps: [UserResourceService, PetriNetResourceService, SnackBarService, LoggerService]
+                    deps: [UserResourceService, PetriNetResourceService, SnackBarService, LoggerService, TranslateService]
                 }
             ],
             declarations: [

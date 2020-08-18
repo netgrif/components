@@ -6,6 +6,7 @@ import {Credentials} from '../../models/credentials';
 import {Observable, of} from 'rxjs';
 import {User} from '../../models/user';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AuthenticationService', () => {
@@ -13,7 +14,7 @@ describe('AuthenticationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MyAuth},

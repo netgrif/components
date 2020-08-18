@@ -1,5 +1,10 @@
 /**
  * Describes objects that are used to search/filter cases from the backend. Returned cases must fulfill all provided criteria.
+ *
+ * This object is used as part of a {@link Filter} object for [searchCases()]{@link CaseResourceService#searchCases}
+ * method in {@link CaseResourceService}.
+ *
+ * Not to be confused with {@link CaseGetRequestBody}.
  */
 export interface CaseSearchRequestBody {
     /**
@@ -13,7 +18,7 @@ export interface CaseSearchRequestBody {
     // title?: string | Array<string>;
     /**
      * Returned cases were created by the specified author.
-     * If more than one author is specified, the returned cases were created by one of them
+     * If more than one author is specified, the returned cases were created by one of them.
      */
     author?: AuthorSearchRequest | Array<AuthorSearchRequest>;
     /**
@@ -47,6 +52,11 @@ export interface CaseSearchRequestBody {
      * for more information.
      */
     query?: string;
+    /**
+     * Returned cases must have the specified string ID.
+     * If more than one string ID is specified, the returned cases must have one of them.
+     */
+    stringId?: string | Array<string>;
 }
 
 /**

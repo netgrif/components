@@ -3,6 +3,7 @@ import {TabContent} from '../interfaces';
 import {TabView} from '../classes/tab-view';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
+import {ReplaySubject} from 'rxjs';
 
 /**
  * Component that renders a tab view.
@@ -26,6 +27,8 @@ export class TabViewComponent implements OnInit {
     @Input() public stretch: boolean;
     public tabView: TabView;
 
+    @Input() public align = 'start';
+
     /**
      * @ignore
      * lambda function that is passed to the {@link TabCreationDetectorComponent}s
@@ -37,5 +40,29 @@ export class TabViewComponent implements OnInit {
 
     ngOnInit(): void {
         this.tabView = new TabView(this._viewService, this._logger, this.initialTabs);
+    }
+
+    badgeHidden(tab: TabContent) {
+        const stream$ = new ReplaySubject<boolean>(1);
+        if (tab.label && tab.label.count) {
+            tab.label.count.subscribe(() => {
+                stream$.next(false);
+            });
+        } else {
+            stream$.next(true);
+        }
+        return stream$;
+    }
+
+    badgeCount(tab: TabContent) {
+        const stream$ = new ReplaySubject<string>(1);
+        if (tab.label && tab.label.count) {
+            tab.label.count.subscribe(count => {
+                stream$.next( count > 99 ? '99+' : count + '');
+            });
+        } else {
+            stream$.next('0');
+        }
+        return stream$;
     }
 }

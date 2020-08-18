@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
-import {UserValue} from '../../../../../data-fields/user-field/models/user-value';
+import {UserListItem} from '../../../../../user/services/user-list.service';
 
 /**
  * Includes avatar user icon and full username in the side menu.
@@ -14,7 +14,7 @@ export class UserAssignItemComponent {
     /**
      * Value of the user held in this item component
      */
-    @Input() user: UserValue;
+    @Input() user: UserListItem;
 
     /**
      * ID of the currently selected user

@@ -1,10 +1,12 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatSelectionList} from '@angular/material';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {RoleAssignmentService} from './services/role-assignment.service';
-import {UserList, UserListItem} from './services/UserList';
 import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
 import {UserService} from '../../user/services/user.service';
+import {FormControl} from '@angular/forms';
+import {debounceTime} from 'rxjs/operators';
+import {UserListItem, UserListService} from '../../user/services/user-list.service';
+import {MatSelectionList} from '@angular/material/list';
 
 @Component({
     selector: 'nae-role-assignment',
@@ -14,14 +16,16 @@ import {UserService} from '../../user/services/user.service';
         RoleAssignmentService
     ]
 })
-export class RoleAssignmentComponent implements OnInit, OnDestroy {
+export class RoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('userList') public userList: MatSelectionList;
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
-    public users: UserList;
+    public users: UserListService;
     public nets: ProcessList;
     public userMultiSelect: boolean;
+    public searchUserControl = new FormControl();
+    private SEARCH_DEBOUNCE_TIME = 200;
 
     constructor(private _service: RoleAssignmentService, private _userService: UserService) {
         this.users = this._service.userList;
@@ -31,6 +35,17 @@ export class RoleAssignmentComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.nets.loadProcesses();
+        this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
+            this.users.reload(searchText);
+        });
+    }
+
+    ngAfterViewInit(): void {
+        this.users.usersReload$.subscribe(() => {
+            this.userList.deselectAll();
+            this.userList.selectedOptions.clear();
+            this.autoSelectRoles();
+        });
     }
 
     ngOnDestroy(): void {
@@ -44,7 +59,7 @@ export class RoleAssignmentComponent implements OnInit, OnDestroy {
         this.users.nextPage(this.viewport.getRenderedRange().end, this.viewport.getDataLength());
     }
 
-    public autoSelectRoles(user: UserListItem): void {
+    public autoSelectRoles(): void {
         const all = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem).roles);
         if (all.length === 0) {
             this.nets.selectRoles(new Set<string>([]));
@@ -57,7 +72,7 @@ export class RoleAssignmentComponent implements OnInit, OnDestroy {
         this.nets.updateSelectedRoles(role);
         const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
         this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
-            this.autoSelectRoles(null);
+            this.autoSelectRoles();
         });
     }
 
@@ -65,7 +80,7 @@ export class RoleAssignmentComponent implements OnInit, OnDestroy {
         this.userList.options.forEach(option => {
             (option.value as UserListItem).selected = select;
         });
-        this.autoSelectRoles(null);
+        this.autoSelectRoles();
     }
 
     public toggleAllRoles(net: ProcessVersion, select: boolean): void {
@@ -75,8 +90,7 @@ export class RoleAssignmentComponent implements OnInit, OnDestroy {
         });
         const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
         this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {
-            this.autoSelectRoles(null);
+            this.autoSelectRoles();
         });
     }
-
 }

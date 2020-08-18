@@ -7,7 +7,7 @@ import {AuthenticationMethodService} from '../../../authentication/services/auth
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {of} from 'rxjs';
-import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../panel/task-panel/policy';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../task-content/model/policy';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {TestTaskSearchServiceFactory} from '../../../utility/tests/test-factory-methods';
@@ -20,13 +20,15 @@ import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-
 import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {WarningSnackBarComponent} from '../../../snack-bar/components/warning-snack-bar/warning-snack-bar.component';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule,
+                NoopAnimationsModule],
             providers: [
                 ArrayTaskViewServiceFactory,
                 {
@@ -43,13 +45,15 @@ describe('TaskViewService', () => {
             ],
             declarations: [
                 ErrorSnackBarComponent,
-                SuccessSnackBarComponent
+                SuccessSnackBarComponent,
+                WarningSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
                 entryComponents: [
                     ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
+                    SuccessSnackBarComponent,
+                    WarningSnackBarComponent
                 ]
             }
         });
@@ -58,13 +62,6 @@ describe('TaskViewService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
-    });
-
-    it('should load tasks', () => {
-        service.loadTasks();
-        // expect(service.tasks$.length).toEqual(1);
-        service.reload();
-        // expect(service.taskArray.length).toEqual(1);
     });
 
     afterAll(() => {

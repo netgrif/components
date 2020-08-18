@@ -4,15 +4,23 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 
+export enum AbstractTimeInstanceFieldValidation {
+    BETWEEN = 'between',
+    WORKDAY = 'workday',
+    WEEKEND = 'weekend',
+    REQUIRED = 'required',
+    VALID_BETWEEN = 'validBetween',
+    VALID_WORKDAY = 'validWorkday',
+    VALID_WEEKEND = 'validWeekend'
+}
+
 export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
     protected _validators: Array<ValidatorFn>;
-    public materialAppearance: string;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
                           description?: string, layout?: Layout, public validations?: any) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        this.materialAppearance = !!layout ? this.layout.appearance : 'legacy';
     }
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {
@@ -42,7 +50,7 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes('between')) {
+            if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)) {
                 const tmp = item.validationRule.split(' ');
                 const ranges = tmp[1].split(',');
 
@@ -58,9 +66,9 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
                         result.push(this.validBetween(moment(start), moment(end)));
                     }
                 }
-            } else if (item.validationRule.includes('workday')) {
+            } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WORKDAY)) {
                 result.push(this.validWorkday);
-            } else if (item.validationRule.includes('weekend')) {
+            } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WEEKEND)) {
                 result.push(this.validWeekend);
             }
         });

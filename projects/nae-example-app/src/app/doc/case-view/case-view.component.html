@@ -13,8 +13,8 @@
         </div>
     </mat-card>
 
-    <nae-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="false" class="case-header-padding"></nae-header>
+    <nae-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="false" hideEditMode="true" class="case-header-padding"></nae-header>
 
-    <nae-case-list [selectedHeaders$]="selectedHeaders$"
+    <nae-case-list [selectedHeaders$]="selectedHeaders$" [showCasePanelIcon]="false" [showDeleteMenu]="false"
                    (caseClick)="handleCaseClick($event)" [responsiveBody]="false" fxFlex></nae-case-list>
 </div>
