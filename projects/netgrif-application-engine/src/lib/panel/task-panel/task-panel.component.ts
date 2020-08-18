@@ -27,6 +27,7 @@ import {FinishPolicyService} from '../../task/services/finish-policy.service';
 import {NAE_TASK_OPERATIONS} from '../../task/models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
+import {CallChainService} from '../../utility/call-chain/call-chain.service';
 
 
 @Component({
@@ -76,7 +77,8 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
                 private _taskState: TaskRequestStateService,
                 private _taskDataService: TaskDataService,
                 private _assignPolicyService: AssignPolicyService,
-                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations) {
+                private _callChain: CallChainService,
+                @Inject(NAE_TASK_OPERATIONS) private _taskOperations: SubjectTaskOperations) {
         super();
         _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
@@ -195,7 +197,10 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
     }
 
     cancel() {
-        this._cancelTaskService.cancel();
+        this._cancelTaskService.cancel(this._callChain.create(() => {
+            this._taskOperations.reload();
+            this._taskOperations.close();
+        }));
     }
 
     finish() {

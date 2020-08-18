@@ -29,7 +29,7 @@
                     <mat-icon>person_outline</mat-icon>
                     <span>{{ getDelegateTitle() | translate}}</span>
                 </button>
-                <button mat-menu-item *ngIf="canDo('delegate')" (click)="delegate()">
+                <button mat-menu-item *ngIf="canReassign()" (click)="delegate()">
                     <mat-icon>person_add</mat-icon>
                     <span>{{ 'tasks.view.reassign' | translate}}</span>
                 </button>
