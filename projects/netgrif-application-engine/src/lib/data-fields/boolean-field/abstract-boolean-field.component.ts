@@ -1,19 +1,14 @@
-import {Component, Input} from '@angular/core';
+import {Input} from '@angular/core';
 import {BooleanField, BooleanFieldValidation} from './models/boolean-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
 import {FormControl} from '@angular/forms';
 
-@Component({
-    selector: 'nae-boolean-field',
-    templateUrl: './boolean-field.component.html',
-    styleUrls: ['./boolean-field.component.scss']
-})
-export class BooleanFieldComponent extends AbstractDataFieldComponent {
+export abstract class AbstractBooleanFieldComponent extends AbstractDataFieldComponent {
 
     @Input() dataField: BooleanField;
 
-    constructor(private _translate: TranslateService) {
+    constructor(protected _translate: TranslateService) {
         super();
         this._formControl = new FormControl('');
     }
@@ -35,5 +30,4 @@ export class BooleanFieldComponent extends AbstractDataFieldComponent {
         }
         return generalMessage;
     }
-
 }

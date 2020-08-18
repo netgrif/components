@@ -1,25 +1,25 @@
-<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+<nc-data-field-template *ngIf="!dataField.behavior.hidden"
                          [dataField]="dataField"
                          [dataFieldTemplate]="enumFieldTemplate"
                          [offset]="taskOffset">
-</nae-data-field-template>
+</nc-data-field-template>
 
 <ng-template #enumFieldTemplate let-showLargeLayout="showLargeLayout">
     <div [ngSwitch]="dataField.view">
-        <nae-enumeration-autocomplete-select-field *ngSwitchCase="'autocomplete'"
+        <nc-enumeration-autocomplete-select-field *ngSwitchCase="'autocomplete'"
                                                    [showLargeLayout]="showLargeLayout"
                                                    [enumerationField]="dataField"
                                                    [formControlRef]="formControl">
-        </nae-enumeration-autocomplete-select-field>
-        <nae-enumeration-list-field *ngSwitchCase="'list'"
+        </nc-enumeration-autocomplete-select-field>
+        <nc-enumeration-list-field *ngSwitchCase="'list'"
                                     [showLargeLayout]="showLargeLayout"
                                     [enumerationField]="dataField"
                                     [formControlRef]="formControl">
-        </nae-enumeration-list-field>
-        <nae-enumeration-select-field *ngSwitchDefault
+        </nc-enumeration-list-field>
+        <nc-enumeration-select-field *ngSwitchDefault
                                       [showLargeLayout]="showLargeLayout"
                                       [enumerationField]="dataField"
                                       [formControlRef]="formControl">
-        </nae-enumeration-select-field>
+        </nc-enumeration-select-field>
     </div>
 </ng-template>

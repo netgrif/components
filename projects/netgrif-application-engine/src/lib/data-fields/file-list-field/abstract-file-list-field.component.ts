@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -16,12 +16,7 @@ export interface FilesState {
     error: boolean;
 }
 
-@Component({
-  selector: 'nae-file-list-field',
-  templateUrl: './file-list-field.component.html',
-  styleUrls: ['./file-list-field.component.scss']
-})
-export class FileListFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
+export abstract class AbstractFileListFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
 
     public uploadedFiles: Array<string>;
     public state: FilesState;

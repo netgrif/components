@@ -64,7 +64,7 @@ describe('BooleanFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
+    selector: 'nc-test-wrapper',
     template: '<nae-boolean-field [dataField]="field"></nae-boolean-field>'
 })
 class TestWrapperComponent {

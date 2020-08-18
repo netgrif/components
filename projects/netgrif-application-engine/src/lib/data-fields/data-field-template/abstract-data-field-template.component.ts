@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef} from '@angular/core';
+import {Input, OnInit, TemplateRef} from '@angular/core';
 import {ResizedEvent} from 'angular-resize-event';
 import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
@@ -18,12 +18,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
  *
  * See {@link DataField} and {@link TemplateAppearance} for more information.
  */
-@Component({
-    selector: 'nae-data-field-template',
-    templateUrl: './data-field-template.component.html',
-    styleUrls: ['./data-field-template.component.scss']
-})
-export class DataFieldTemplateComponent implements OnInit {
+export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 
     /**
      * Datafield model object that should be displayed in the template
@@ -50,9 +45,9 @@ export class DataFieldTemplateComponent implements OnInit {
      * @ignore
      * The value determines whether the layout should be "small" or not. Data field fills 100% of the width in "small" layout.
      */
-    private _showLargeLayout: WrappedBoolean = new WrappedBoolean();
+    protected _showLargeLayout: WrappedBoolean = new WrappedBoolean();
 
-    constructor(private _paperView: PaperViewService, private _config: ConfigurationService) {
+    constructor(protected _paperView: PaperViewService, protected _config: ConfigurationService) {
     }
 
     public ngOnInit() {
@@ -79,7 +74,7 @@ export class DataFieldTemplateComponent implements OnInit {
     /**
      * @returns `false` if the data field uses the `TemplateAppearance.MATERIAL` and `true` otherwise.
      */
-    private evaluateTemplate(): boolean {
+    protected evaluateTemplate(): boolean {
         if (!this.dataField) {
             return true;
         }
@@ -90,7 +85,7 @@ export class DataFieldTemplateComponent implements OnInit {
         return this._paperView.paperView;
     }
 
-    private resolveTemplate() {
+    protected resolveTemplate() {
         let temp = true;
         if (this._config.get().services && this._config.get().services.dataFields && this._config.get().services.dataFields.template) {
             temp = this._config.get().services.dataFields.template === TemplateAppearance.NETGRIF;

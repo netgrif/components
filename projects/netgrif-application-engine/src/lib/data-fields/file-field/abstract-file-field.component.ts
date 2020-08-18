@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FileField} from './models/file-field';
 import {FileFieldService} from './services/file-field.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
@@ -20,13 +20,7 @@ export interface FileState {
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
-@Component({
-    selector: 'nae-file-field',
-    templateUrl: './file-field.component.html',
-    styleUrls: ['./file-field.component.scss'],
-    providers: [FileFieldService]
-})
-export class FileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
+export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
     /**
      * Keep display name.
      */
@@ -56,10 +50,10 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
      */
-    constructor(private _taskResourceService: TaskResourceService,
-                private _log: LoggerService,
-                private _snackbar: SnackBarService,
-                private _translate: TranslateService) {
+    constructor(protected _taskResourceService: TaskResourceService,
+                protected _log: LoggerService,
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
         super();
         this.state = this.defaultState;
     }
@@ -185,7 +179,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         });
     }
 
-    private downloadViaAnchor(blob: Blob): void {
+    protected downloadViaAnchor(blob: Blob): void {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
@@ -223,7 +217,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
         });
     }
 
-    private get defaultState(): FileState {
+    protected get defaultState(): FileState {
         return {
             progress: 0,
             completed: false,
@@ -236,7 +230,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
     /**
      * Construct display name.
      */
-    private constructDisplayName(): string {
+    protected constructDisplayName(): string {
         return this.dataField.value && this.dataField.value.name ? this.dataField.value.name :
             (this.dataField.placeholder ? this.dataField.placeholder : this._translate.instant('dataField.noFile'));
     }
@@ -244,7 +238,7 @@ export class FileFieldComponent extends AbstractDataFieldComponent implements On
     /**
      * Initialize file field image from backend if it is image type.
      */
-    private initFileFieldImage() {
+    protected initFileFieldImage() {
         // this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId)
         //     .subscribe(fileBlob => {
         //         const file: File = new File([fileBlob], this.name);

@@ -6,9 +6,9 @@
                        [rowspan]="item.layout.rows"
                        [ngSwitch]="item.type">
 
-            <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item"
-                               [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nae-boolean-field>
+<!--            <nae-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item"-->
+<!--                               [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">-->
+<!--            </nae-boolean-field>-->
 
             <nae-text-field *ngSwitchCase="'text'" class="full-width-auto" [dataField]="item.item"
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
@@ -18,21 +18,21 @@
                               [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-number-field>
 
-            <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item"
-                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nae-enumeration-field>
+<!--            <nae-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item"-->
+<!--                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">-->
+<!--            </nae-enumeration-field>-->
 
             <nae-multichoice-field *ngSwitchCase="'multichoice'" class="full-width-auto" [dataField]="item.item"
                                    [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-multichoice-field>
 
-            <nae-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item"
-                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nae-date-field>
+<!--            <nae-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item"-->
+<!--                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">-->
+<!--            </nae-date-field>-->
 
-            <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item"
-                                 [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nae-date-time-field>
+<!--            <nae-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item"-->
+<!--                                 [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">-->
+<!--            </nae-date-time-field>-->
 
             <nae-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
@@ -46,9 +46,9 @@
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nae-user-field>
 
-            <nae-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item"
-                              [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nae-button-field>
+<!--            <nae-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item"-->
+<!--                              [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">-->
+<!--            </nae-button-field>-->
 
             <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">
                 <div fxFlex="20" class="line-datagroup"></div>

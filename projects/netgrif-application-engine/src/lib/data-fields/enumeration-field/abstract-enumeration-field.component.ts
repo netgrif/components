@@ -1,14 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Input} from '@angular/core';
 import {EnumerationField} from './models/enumeration-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {FormControl} from '@angular/forms';
 
-@Component({
-    selector: 'nae-enumeration-field',
-    templateUrl: './enumeration-field.component.html',
-    styleUrls: ['./enumeration-field.component.scss']
-})
-export class EnumerationFieldComponent extends AbstractDataFieldComponent {
+export abstract class AbstractEnumerationFieldComponent extends AbstractDataFieldComponent {
 
     @Input() dataField: EnumerationField;
 
@@ -16,5 +11,4 @@ export class EnumerationFieldComponent extends AbstractDataFieldComponent {
         super();
         this._formControl = new FormControl('');
     }
-
 }

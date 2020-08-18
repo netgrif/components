@@ -1,18 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Input} from '@angular/core';
 import {ButtonField, ButtonFieldValidation} from './models/button-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
 
-@Component({
-    selector: 'nae-button-field',
-    templateUrl: './button-field.component.html',
-    styleUrls: ['./button-field.component.scss']
-})
-export class ButtonFieldComponent extends AbstractDataFieldComponent {
+export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComponent {
 
     @Input() dataField: ButtonField;
 
-    constructor(private _translate: TranslateService) {
+    constructor(protected _translate: TranslateService) {
         super();
     }
 
