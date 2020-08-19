@@ -25,7 +25,7 @@ export class UserAssignComponent {
     public searchUserControl = new FormControl();
 
     /**
-     * Data about preselected user send from [UserFieldComponent]{@link UserFieldComponent}.
+     * Data about preselected user send from [UserFieldComponent]{@link AbstractUserFieldComponent}.
      */
     public injectedData: UserListInjectedData;
 
@@ -35,7 +35,7 @@ export class UserAssignComponent {
     private _currentUser: UserValue;
 
     /**
-     * Inject and set data send from [UserFieldComponent]{@link UserFieldComponent} if the user is preselected.
+     * Inject and set data send from [UserFieldComponent]{@link AbstractUserFieldComponent} if the user is preselected.
      * @param _sideMenuControl Contains [Roles]{@link Role} and [UserValue]{@link UserValue}.
      */
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) private _sideMenuControl: SideMenuControl) {

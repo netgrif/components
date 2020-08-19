@@ -1,38 +1,40 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     BooleanField,
-    BooleanFieldComponent,
     ButtonField,
-    ButtonFieldComponent,
     ButtonFieldView,
     ChangedFields,
     DataField,
     DateField,
-    DateFieldComponent,
     DateTimeField,
-    DateTimeFieldComponent,
     EnumerationField,
-    EnumerationFieldComponent,
     EnumerationFieldView,
     FileField,
-    FileFieldComponent,
     FileListField,
-    FileListFieldComponent,
     MultichoiceField,
-    MultichoiceFieldComponent,
     MultichoiceFieldView,
     NumberField,
-    NumberFieldComponent,
     TextField,
-    TextFieldComponent,
     TextFieldView,
     UserField,
-    UserFieldComponent,
     UserValue
 } from '@netgrif/application-engine';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
 import moment from 'moment';
+import {
+    TextFieldComponent,
+    BooleanFieldComponent,
+    ButtonFieldComponent,
+    NumberFieldComponent,
+    DateFieldComponent,
+    DateTimeFieldComponent,
+    EnumerationFieldComponent,
+    MultichoiceFieldComponent,
+    FileFieldComponent,
+    FileListFieldComponent,
+    UserFieldComponent
+} from '@netgrif/components';
 
 @Component({
     selector: 'nae-app-reactive-text-field',

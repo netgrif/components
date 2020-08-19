@@ -1,16 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Input} from '@angular/core';
 import {TextAreaHeight, TextField} from '../models/text-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
-import {AbstractTextFieldComponent} from '../abstract-text-field.component';
 import {TranslateService} from '@ngx-translate/core';
+import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 
-@Component({
-    selector: 'nae-textarea-field',
-    templateUrl: './textarea-field.component.html',
-    styleUrls: ['./textarea-field.component.scss']
-})
-export class TextareaFieldComponent extends AbstractTextFieldComponent {
+export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsComponent {
 
     @Input() textAreaField: TextField;
     @Input() formControlRef: FormControl;

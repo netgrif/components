@@ -15,32 +15,32 @@
     <ng-template #content>
         <div class="panel-main-content" fxLayout="column">
             <div class="workflow-panel-body" fxFlex="100">
-                <div fxLayout="row">
-                    <div fxFlex="50">
-                        <nae-text-field [dataField]="panelContent.netIdentifier">
-                        </nae-text-field>
-                    </div>
-                    <div fxFlex="50">
-                        <nae-text-field [dataField]="panelContent.title">
-                        </nae-text-field>
-                    </div>
-                </div>
-                <div fxLayout="row">
-                    <div fxFlex="50">
-                        <nae-text-field [dataField]="panelContent.version">
-                        </nae-text-field>
-                    </div>
-                    <div fxFlex="50">
-                        <nae-text-field [dataField]="panelContent.author">
-                        </nae-text-field>
-                    </div>
-                </div>
-                <div fxLayout="row">
-                    <div fxFlex="50">
-                        <nae-date-time-field [dataField]="panelContent.uploaded">
-                        </nae-date-time-field>
-                    </div>
-                </div>
+<!--                <div fxLayout="row">-->
+<!--                    <div fxFlex="50">-->
+<!--                        <nae-text-field [dataField]="panelContent.netIdentifier">-->
+<!--                        </nae-text-field>-->
+<!--                    </div>-->
+<!--                    <div fxFlex="50">-->
+<!--                        <nae-text-field [dataField]="panelContent.title">-->
+<!--                        </nae-text-field>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div fxLayout="row">-->
+<!--                    <div fxFlex="50">-->
+<!--                        <nae-text-field [dataField]="panelContent.version">-->
+<!--                        </nae-text-field>-->
+<!--                    </div>-->
+<!--                    <div fxFlex="50">-->
+<!--                        <nae-text-field [dataField]="panelContent.author">-->
+<!--                        </nae-text-field>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div fxLayout="row">-->
+<!--                    <div fxFlex="50">-->
+<!--                        <nae-date-time-field [dataField]="panelContent.uploaded">-->
+<!--                        </nae-date-time-field>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <mat-action-row>
                 <button mat-button color="primary" (click)="panelRef.expanded = false">{{'tasks.view.collapse' | translate | uppercase }}</button>

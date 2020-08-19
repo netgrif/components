@@ -4,7 +4,6 @@ import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
-import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {SimpleTextFieldComponent} from './simple-text-field/simple-text-field.component';
 import {TextareaFieldComponent} from './textarea-field/textarea-field.component';
@@ -28,7 +27,6 @@ describe('TextFieldComponent', () => {
                 SimpleTextFieldComponent,
                 TextareaFieldComponent,
                 RichTextareaFieldComponent,
-                RequiredLabelComponent,
                 TestWrapperComponent
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

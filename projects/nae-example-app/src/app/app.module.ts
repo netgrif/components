@@ -6,7 +6,6 @@ import {
     CaseViewModule,
     ConfigurationService,
     CovalentModule,
-    DataFieldsModule,
     DialogModule,
     ForgottenPasswordFormModule,
     HeaderModule,
@@ -32,7 +31,8 @@ import {
     NAE_SNACKBAR_HORIZONTAL_POSITION,
     NAE_SNACKBAR_VERTICAL_POSITION,
     SnackBarHorizontalPosition,
-    SnackBarVerticalPosition
+    SnackBarVerticalPosition,
+    AuthenticationModule
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -78,7 +78,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {
     AdminComponentModule,
     AuthenticationComponentModule,
-    DashboardComponentModule
+    DashboardComponentModule,
+    DataFieldsModule
 } from '@netgrif/components';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -136,9 +137,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         PanelModule,
         DialogModule,
         TabsModule,
-        DataFieldsModule,
         HeaderModule,
-        DataFieldsModule,
         ToolbarModule,
         TranslateModule.forRoot({
             loader: {
@@ -166,7 +165,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatProgressSpinnerModule,
         AuthenticationComponentModule,
         AdminComponentModule,
-        DashboardComponentModule
+        DashboardComponentModule,
+        DataFieldsModule,
+        AuthenticationModule
     ],
     entryComponents: [
         ContentComponent,

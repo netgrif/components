@@ -1,18 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Input} from '@angular/core';
 import {NumberField, NumberFieldValidation} from './models/number-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
 
-@Component({
-  selector: 'nae-number-field',
-  templateUrl: './number-field.component.html',
-  styleUrls: ['./number-field.component.scss']
-})
-export class NumberFieldComponent extends AbstractDataFieldComponent {
+export abstract class AbstractNumberFieldComponent extends AbstractDataFieldComponent {
 
     @Input() public dataField: NumberField;
 
-    constructor(private _translate: TranslateService) {
+    constructor(protected _translate: TranslateService) {
         super();
     }
 

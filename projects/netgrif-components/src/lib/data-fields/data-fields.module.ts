@@ -24,6 +24,18 @@ import {
 } from './enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
 import {EnumerationSelectFieldComponent} from './enumeration-field/enumeration-select-field/enumeration-select-field.component';
 import {EnumerationListFieldComponent} from './enumeration-field/enumeration-list-field/enumeration-list-field.component';
+import {FileFieldComponent} from './file-field/file-field.component';
+import {FileListFieldComponent} from './file-field-list/file-list-field.component';
+import {MultichoiceFieldComponent} from './multichoice-field/multichoice-field.component';
+import {MultichoiceSelectFieldComponent} from './multichoice-field/multichoice-select-field/multichoice-select-field.component';
+import {MultichoiceListFieldComponent} from './multichoice-field/multichoice-list-field/multichoice-list-field.component';
+import {NumberFieldComponent} from './number-field/number-field.component';
+import {TextFieldComponent} from './text-field/text-field.component';
+import {TextareaFieldComponent} from './text-field/textarea-field/textarea-field.component';
+import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-textarea-field.component';
+import {SimpleTextFieldComponent} from './text-field/simple-text-field/simple-text-field.component';
+import {UserFieldComponent} from './user-field/user-field.component';
+import {RequiredLabelComponent} from './required-label/required-label.component';
 
 
 @NgModule({
@@ -36,7 +48,19 @@ import {EnumerationListFieldComponent} from './enumeration-field/enumeration-lis
         EnumerationFieldComponent,
         EnumerationAutocompleteSelectFieldComponent,
         EnumerationSelectFieldComponent,
-        EnumerationListFieldComponent
+        EnumerationListFieldComponent,
+        FileFieldComponent,
+        FileListFieldComponent,
+        MultichoiceFieldComponent,
+        MultichoiceSelectFieldComponent,
+        MultichoiceListFieldComponent,
+        NumberFieldComponent,
+        TextFieldComponent,
+        TextareaFieldComponent,
+        RichTextareaFieldComponent,
+        SimpleTextFieldComponent,
+        UserFieldComponent,
+        RequiredLabelComponent
     ],
     exports: [
         BooleanFieldComponent,
@@ -45,6 +69,12 @@ import {EnumerationListFieldComponent} from './enumeration-field/enumeration-lis
         DateFieldComponent,
         DateTimeFieldComponent,
         EnumerationFieldComponent,
+        FileFieldComponent,
+        FileListFieldComponent,
+        MultichoiceFieldComponent,
+        NumberFieldComponent,
+        TextFieldComponent,
+        UserFieldComponent
     ],
     imports: [
         CommonModule,
@@ -62,5 +92,5 @@ import {EnumerationListFieldComponent} from './enumeration-field/enumeration-lis
         {provide: DateAdapter, useClass: CustomDateAdapter}
     ]
 })
-export class DataFieldsModule {
+export class DataFieldsComponentModule {
 }

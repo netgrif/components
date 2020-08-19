@@ -9,14 +9,19 @@ export * from './date-time-field/abstract-date-time-field.component';
 export * from './enumeration-field/abstract-enumeration-field.component';
 export * from './enumeration-field/enumeration-select-field/abstract-enumeration-select-field.component';
 export * from './enumeration-field/enumeration-list-field/abstract-enumeration-list-field.component';
-export * from './enumeration-field/enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
+export * from './enumeration-field/enumeration-autocomplete-select-field/abstract-enumeration-autocomplete-select-field.component';
 export * from './file-field/abstract-file-field.component';
 export * from './file-list-field/abstract-file-list-field.component';
-
-export * from './text-field/text-field.component';
-export * from './number-field/number-field.component';
-export * from './multichoice-field/multichoice-field.component';
-export * from './user-field/user-field.component';
+export * from './multichoice-field/abstract-multichoice-field.component';
+export * from './multichoice-field/multichoice-list-field/abstract-multichoice-list-field.component';
+export * from './multichoice-field/multichoice-select-field/abstract-multichoice-select-field.component';
+export * from './number-field/abstract-number-field.component';
+export * from './text-field/abstract-text-field.component';
+export * from './text-field/abstract-text-errors.component';
+export * from './text-field/simple-text-field/abstract-simple-text-field.component';
+export * from './text-field/rich-textarea-field/abstract-rich-textarea-field.component';
+export * from './text-field/textarea-field/abstract-textarea-field.component';
+export * from './user-field/abstract-user-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -42,3 +47,6 @@ export * from './models/layout';
 /* Enums */
 export * from './models/template-appearance';
 export * from './models/material-appearance';
+
+/* Services */
+export * from './file-field/services/file-field.service';

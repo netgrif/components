@@ -5,7 +5,7 @@
         <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space" [ngClass]="{'padding-16px': isPaperView(), 'padding-32px': !isPaperView()}">
             <div fxFlex="{{offset}}"></div>
             <div fxFlex="{{47.5 - offset}}" class="cell-padding">
-                <span class="data-field-title" [matTooltip]="dataField.description">{{dataField.title}}<nae-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nae-required-label></span>
+                <span class="data-field-title" [matTooltip]="dataField.description">{{dataField.title}}<nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label></span>
             </div>
             <div fxFlex="5"></div>
             <div fxFlex="{{47.5 - offset}}" class="cell-padding">

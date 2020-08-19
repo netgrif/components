@@ -1,43 +1,12 @@
-import {FormControl} from '@angular/forms';
-import {TextField, TextFieldValidation} from './models/text-field';
-import {TranslateService} from '@ngx-translate/core';
+import {Input} from '@angular/core';
+import {TextField} from './models/text-field';
+import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 
-export abstract class AbstractTextFieldComponent {
+export abstract class AbstractTextFieldComponent extends AbstractDataFieldComponent {
 
-    protected constructor(protected _translate: TranslateService) {
-    }
+    @Input() dataField: TextField;
 
-    protected buildErrorMessage(textField: TextField, formControlRef: FormControl) {
-        if (formControlRef.hasError(TextFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
-        }
-        if (formControlRef.hasError(TextFieldValidation.VALID_MIN_LENGTH)) {
-            return this.resolveErrorMessage(textField, TextFieldValidation.MIN_LENGTH,
-                this._translate.instant('dataField.validations.minLength', {length: formControlRef.errors.minlength.requiredLength}));
-        }
-        if (formControlRef.hasError(TextFieldValidation.VALID_MAX_LENGTH)) {
-            return this.resolveErrorMessage(textField, TextFieldValidation.MAX_LENGTH,
-                this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.minlength.requiredLength}));
-        }
-        if (formControlRef.hasError(TextFieldValidation.PATTERN)) {
-            return this.resolveErrorMessage(textField, TextFieldValidation.REGEX, this._translate.instant('dataField.validations.pattern'));
-        }
-        if (formControlRef.hasError(TextFieldValidation.VALID_TEL_NUMBER)) {
-            return this.resolveErrorMessage(
-                textField, TextFieldValidation.TEL_NUMBER, this._translate.instant('dataField.validations.phone')
-            );
-        }
-        if (formControlRef.hasError(TextFieldValidation.EMAIL)) {
-            return this.resolveErrorMessage(textField, TextFieldValidation.EMAIL, this._translate.instant('dataField.validations.email'));
-        }
-        return '';
-    }
-
-    private resolveErrorMessage(textField: TextField, search: string, generalMessage: string) {
-        const validation = textField.validations.find(value => value.validationRule.includes(search));
-        if (validation.validationMessage && validation.validationMessage !== '') {
-            return validation.validationMessage;
-        }
-        return generalMessage;
+    constructor() {
+        super();
     }
 }

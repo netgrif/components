@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Input, OnInit} from '@angular/core';
 import {UserField} from './models/user-field';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
@@ -11,12 +11,7 @@ import {UserListInjectedData} from '../../side-menu/content-components/user-assi
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
-@Component({
-    selector: 'nae-user-field',
-    templateUrl: './user-field.component.html',
-    styleUrls: ['./user-field.component.scss']
-})
-export class UserFieldComponent extends AbstractDataFieldComponent implements OnInit {
+export abstract class AbstractUserFieldComponent extends AbstractDataFieldComponent implements OnInit {
     /**
      * Represents info about user from backend.
      */
@@ -27,8 +22,8 @@ export class UserFieldComponent extends AbstractDataFieldComponent implements On
      * @param _sideMenuService Service to open and close [UserAssignComponent]{@link UserAssignComponent} with user data.
      * @param _snackbar Service to displaying information to the user.
      */
-    constructor(private _sideMenuService: SideMenuService,
-                private _snackbar: SnackBarService) {
+    constructor(protected _sideMenuService: SideMenuService,
+                protected _snackbar: SnackBarService) {
         super();
     }
 
@@ -43,9 +38,9 @@ export class UserFieldComponent extends AbstractDataFieldComponent implements On
      *
      * After close side menu, the snackbar info will be displayed either for the unselected user or the selected one.
      */
-    public selectUser() {
+    public selectAbstractUser(component) {
         let valueReturned = false;
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM,
+        this._sideMenuService.open(component, SideMenuSize.MEDIUM,
             {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {
             if ($event.data) {
                 this.dataField.value = $event.data as UserValue;

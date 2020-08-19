@@ -26,8 +26,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      * maxFilesNumber - maximum uploadable files
      * maxFilesMessage - error message if number of files is exceeded
      */
-    private maxFilesNumber: number;
-    private maxFilesMessage: string;
+    protected maxFilesNumber: number;
+    protected maxFilesMessage: string;
 
     /**
      * Task mongo string id is binding property from parent component.
@@ -42,10 +42,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      */
     @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
 
-    constructor(private _taskResourceService: TaskResourceService,
-                private _log: LoggerService,
-                private _snackbar: SnackBarService,
-                private _translate: TranslateService) {
+    constructor(protected _taskResourceService: TaskResourceService,
+                protected _log: LoggerService,
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
         super();
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
@@ -194,7 +194,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         });
     }
 
-    private downloadViaAnchor(blob: Blob, fileName: string): void {
+    protected downloadViaAnchor(blob: Blob, fileName: string): void {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
@@ -236,7 +236,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         });
     }
 
-    private get defaultState(): FilesState {
+    protected get defaultState(): FilesState {
         return {
             progress: 0,
             completed: false,
@@ -253,7 +253,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         return this.dataField.placeholder ? this.dataField.placeholder : this._translate.instant('dataField.noFile');
     }
 
-    private parseResponse(): void {
+    protected parseResponse(): void {
         if (this.dataField.value) {
             if (this.dataField.value.names && this.dataField.value.names.length !== 0) {
                 this.dataField.value.names.forEach(name => {

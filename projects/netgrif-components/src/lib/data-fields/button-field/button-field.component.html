@@ -8,7 +8,7 @@
     <div>
         <mat-label *ngIf="!showLargeLayout.value">
             {{dataField.title}}
-            <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
+            <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>
         </mat-label>
         <button mat-button

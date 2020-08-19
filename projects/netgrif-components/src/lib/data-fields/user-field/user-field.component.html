@@ -1,14 +1,14 @@
-<nae-data-field-template *ngIf="!dataField.behavior.hidden"
+<nc-data-field-template *ngIf="!dataField.behavior.hidden"
                          [dataField]="dataField"
                          [dataFieldTemplate]="dataFieldTemplate"
                          [offset]="taskOffset">
-</nae-data-field-template>
+</nc-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
 
     <div>
         <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}
-            <nae-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nae-required-label>
+            <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>
         </mat-label>
         <button mat-stroked-button
