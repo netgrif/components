@@ -27,7 +27,16 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
         return (!a && !b) || (!!a && !!b && a.isSame(b, granularity));
     }
 
-    public static parseDate(date) {
+    /**
+     * Parse date from string:
+     * date is string 'past' - return string 'past'
+     * date is string 'future' - return string 'future'
+     * date is string 'today'/'now' - return moment instance of current date/time
+     * date is string build by combination of 'today'/'now'+/-ISO8601 (eg. today-P1DT1H) - return parsed moment instance of date
+     * date is string of specific date - return moment instance of this specific date
+     * @param date - string that should be parsed
+     */
+    public static parseDate(date: string) {
         if (date.includes('past')) {
             return 'past';
         } else if (date.includes('future')) {
