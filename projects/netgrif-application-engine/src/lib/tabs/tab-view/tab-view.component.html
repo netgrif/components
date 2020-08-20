@@ -1,7 +1,7 @@
-<mat-tab-group [selectedIndex]="tabView.selectedIndex.value"
+<mat-tab-group [selectedIndex]="tabView.selectedIndex"
                [class.center-tabs]="align === 'center'"
                [class.end-tabs]="align === 'end'"
-               (selectedIndexChange)="tabView.selectedIndex.setValue($event)" class="tab-group"
+               (selectedTabChange)="tabView.tabChange($event)" class="tab-group"
                [class.nae-tab-fill-height]="stretch" fxFlex>
     <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index">
         <ng-template mat-tab-label>
