@@ -46,23 +46,23 @@ describe('FieldConvertorService', () => {
             },
             validations: undefined
         };
-        expect(service.formatValue(service.toClass(dataField), null)).toEqual(null);
+        expect(service.formatValueForBackend(service.toClass(dataField), null)).toEqual(null);
 
         const date = moment();
         dataField.type = 'date';
-        expect(service.formatValue(service.toClass(dataField), null)).toEqual(undefined);
-        expect(service.formatValue(service.toClass(dataField), date))
+        expect(service.formatValueForBackend(service.toClass(dataField), null)).toEqual(undefined);
+        expect(service.formatValueForBackend(service.toClass(dataField), date))
             .toEqual(date.format('YYYY-MM-DD'));
 
         dataField.type = 'user';
-        expect(service.formatValue(service.toClass(dataField), {id: 5})).toEqual(5);
+        expect(service.formatValueForBackend(service.toClass(dataField), {id: 5})).toEqual(5);
 
         dataField.type = 'dateTime';
-        expect(service.formatValue(service.toClass(dataField), date))
+        expect(service.formatValueForBackend(service.toClass(dataField), date))
             .toEqual(date.format('DD.MM.YYYY HH:mm:ss'));
 
         dataField.type = 'number';
-        expect(service.formatValue(service.toClass(dataField), 5)).toEqual(5);
+        expect(service.formatValueForBackend(service.toClass(dataField), 5)).toEqual(5);
     });
 
     it('should test toClass and resolve method ', () => {

@@ -1,3 +1,18 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10807/tab/release-report-all-issues"></a>
+## 4.1.1 - Navy Brass (20.8.2020)
+### Bug fixes
+ * [NAE-956](https://netgrif.atlassian.net/browse/NAE-956) - Counters in tab
+ * [NAE-960](https://netgrif.atlassian.net/browse/NAE-960) - Tree does not reload cases
+ * [NAE-961](https://netgrif.atlassian.net/browse/NAE-961) - Cancel dont close the panel
+ * [NAE-963](https://netgrif.atlassian.net/browse/NAE-963) - Bad parsing multi-choice value
+ * [NAE-964](https://netgrif.atlassian.net/browse/NAE-964) - Validations works only with static dates
+
+### Improvements
+ * [NAE-958](https://netgrif.atlassian.net/browse/NAE-958) - Auto text stretching text area
+
+### Features
+ None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10782/tab/release-report-all-issues"></a>
 ## 4.1.0 - White Titanium (17.08.2020)
 ### Bug fixes
