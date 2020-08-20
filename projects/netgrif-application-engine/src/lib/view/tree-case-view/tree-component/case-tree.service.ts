@@ -684,7 +684,7 @@ export class CaseTreeService implements OnDestroy {
             this._logger.debug('No Tree Case Node selected, nothing to reload');
             return;
         }
-        if (this._currentNode.case.stringId !== this._reloadedCaseId) {
+        if (this._reloadedCaseId && this._currentNode.case.stringId !== this._reloadedCaseId) {
             this._logger.debug('Reload of the current case already in progress');
             return;
         }
