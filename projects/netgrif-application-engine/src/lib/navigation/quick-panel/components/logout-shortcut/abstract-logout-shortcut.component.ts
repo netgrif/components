@@ -1,17 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {OnInit} from '@angular/core';
 import {UserService} from '../../../../user/services/user.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {Router} from '@angular/router';
 
-@Component({
-    selector: 'nae-logout-shortcut',
-    templateUrl: './logout-shortcut.component.html',
-    styleUrls: ['./logout-shortcut.component.scss']
-})
-export class LogoutShortcutComponent implements OnInit {
+export abstract class AbstractLogoutShortcutComponent implements OnInit {
 
-    constructor(private _user: UserService, private _log: LoggerService, private _config: ConfigurationService, private _router: Router) {
+    constructor(protected _user: UserService,
+                protected _log: LoggerService,
+                protected _config: ConfigurationService,
+                protected _router: Router) {
     }
 
     ngOnInit(): void {

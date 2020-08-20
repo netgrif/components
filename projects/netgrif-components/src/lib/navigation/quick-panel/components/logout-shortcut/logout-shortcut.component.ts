@@ -1,31 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../../../user/services/user.service';
-import {LoggerService} from '../../../../logger/services/logger.service';
-import {ConfigurationService} from '../../../../configuration/configuration.service';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import {AbstractLogoutShortcutComponent, UserService, LoggerService, ConfigurationService} from '@netgrif/application-engine';
 
 @Component({
-    selector: 'nae-logout-shortcut',
+    selector: 'nc-logout-shortcut',
     templateUrl: './logout-shortcut.component.html',
     styleUrls: ['./logout-shortcut.component.scss']
 })
-export class LogoutShortcutComponent implements OnInit {
+export class LogoutShortcutComponent extends AbstractLogoutShortcutComponent {
 
-    constructor(private _user: UserService, private _log: LoggerService, private _config: ConfigurationService, private _router: Router) {
+    constructor(protected _user: UserService,
+                protected _log: LoggerService,
+                protected _config: ConfigurationService,
+                protected _router: Router) {
+        super(_user, _log, _config, _router);
     }
-
-    ngOnInit(): void {
-    }
-
-    logout(): void {
-        this._user.logout().subscribe(() => {
-            this._log.debug('User is logged out');
-            if (this._config.get().services && this._config.get().services.auth && this._config.get().services.auth.logoutRedirect) {
-                const redirectPath = this._config.get().services.auth.logoutRedirect;
-                this._log.info('Redirecting to ' + redirectPath);
-                this._router.navigate([redirectPath]);
-            }
-        });
-    }
-
 }

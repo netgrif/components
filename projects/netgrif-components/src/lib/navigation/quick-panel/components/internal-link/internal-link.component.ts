@@ -1,19 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-    selector: 'nae-internal-link',
+    selector: 'nc-internal-link',
     templateUrl: './internal-link.component.html',
     styleUrls: ['./internal-link.component.scss']
 })
-export class InternalLinkComponent implements OnInit {
-
-    @Input() public link: string;
-    @Input() public icon: string;
-
+export class InternalLinkComponent extends AbstractInternalLinkComponent {
     constructor() {
+        super();
     }
-
-    ngOnInit(): void {
-    }
-
 }

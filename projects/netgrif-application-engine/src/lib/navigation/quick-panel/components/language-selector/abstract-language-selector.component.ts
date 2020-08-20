@@ -1,12 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Input, OnInit} from '@angular/core';
 import {LanguageService} from '../../../../translate/language.service';
 
-@Component({
-    selector: 'nae-language-selector',
-    templateUrl: './language-selector.component.html',
-    styleUrls: ['./language-selector.component.scss']
-})
-export class LanguageSelectorComponent implements OnInit {
+export abstract class AbstractLanguageSelectorComponent implements OnInit {
 
     @Input() public language: string;
 
