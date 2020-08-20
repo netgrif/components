@@ -1,6 +1,7 @@
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {AbstractTimeInstanceField, AbstractTimeInstanceFieldValidation} from './models/abstract-time-instance-field';
 import {TranslateService} from '@ngx-translate/core';
+import moment, {Moment} from 'moment';
 
 export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFieldComponent {
 
@@ -16,8 +17,13 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
             const tmp = dataField.validations.find(value =>
                 value.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)
             ).validationRule.split(' ');
+            const parts = tmp[1].split(',');
+            let left = AbstractTimeInstanceField.parseDate(parts[0]);
+            let right = AbstractTimeInstanceField.parseDate(parts[1]);
+            left = moment.isMoment(left) ? (left as Moment).format('DD.MM.YYYY HH:mm:ss') : left;
+            right = moment.isMoment(right) ? (right as Moment).format('DD.MM.YYYY HH:mm:ss') : right;
             return this.resolveErrorMessage(dataField, AbstractTimeInstanceFieldValidation.BETWEEN,
-                this._translate.instant('dataField.validations.dateRange', {range: tmp[1]}));
+                this._translate.instant('dataField.validations.dateRange', {left, right}));
         }
         if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.VALID_WORKDAY)) {
             return this.resolveErrorMessage(
