@@ -175,7 +175,7 @@ export class FieldConverterService {
         }
     }
 
-    public formatValue(field: DataField<any>, value: any): any {
+    public formatValueForBackend(field: DataField<any>, value: any): any {
         if (this.resolveType(field) === 'text' && value === null)
             return null;
         if (value === undefined || value === null)
@@ -192,6 +192,34 @@ export class FieldConverterService {
             if (moment.isMoment(value)) {
                 return value.format('DD.MM.YYYY HH:mm:ss');
             }
+        }
+        return value;
+    }
+
+    public formatValueFromBackend(field: DataField<any>, value: any): any {
+        if (this.resolveType(field) === 'text' && value === null)
+            return null;
+        if (value === undefined || value === null)
+            return;
+        if (this.resolveType(field) === 'date') {
+            return moment(new Date(value[0], value[1] - 1, value[2]));
+        }
+        if (this.resolveType(field) === 'user') {
+            return new UserValue(value.id, value.name, value.surname, value.email);
+        }
+        if (this.resolveType(field) === 'dateTime') {
+            return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));
+        }
+        if (this.resolveType(field) === 'multichoice') {
+            const array = [];
+            value.forEach(v => {
+                if (v.defaultValue) {
+                    array.push(v.defaultValue);
+                } else {
+                    array.push(v);
+                }
+            });
+            return array;
         }
         return value;
     }
