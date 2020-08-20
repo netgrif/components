@@ -160,7 +160,7 @@
             "pattern": "Entered text is in a wrong format",
             "phone": "Entered text must be in telephone number format",
             "email": "Entered text must be in email format",
-            "dateRange": "Entered date must be in range {{range}}",
+            "dateRange": "Entered date must be between {{left}} and {{right}}",
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day",
             "enumeration": "One of the options must be selected"
