@@ -1,6 +1,5 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {Subject} from 'rxjs';
-import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
@@ -15,6 +14,7 @@ import {TaskOperations} from '../interfaces/task-operations';
 import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {SelectedCaseService} from './selected-case.service';
+import {NAE_USER_ASSIGN_COMPONENT} from '../../side-menu/content-components/injection-tokens';
 
 
 /**
@@ -30,6 +30,7 @@ export class DelegateTaskService extends TaskHandlingService {
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() @Inject(NAE_USER_ASSIGN_COMPONENT) protected _userAssignComponent: any,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
         super(_taskContentService, _selectedCaseService);
@@ -54,7 +55,7 @@ export class DelegateTaskService extends TaskHandlingService {
         if (this._taskState.isLoading(delegatedTaskId)) {
             return;
         }
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM,
+        this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
             {
                 roles: undefined,
                 value: new UserValue(

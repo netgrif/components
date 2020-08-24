@@ -6,12 +6,12 @@ import {RouterModule} from '@angular/router';
 import 'hammerjs';
 import {
     MaterialModule,
-    TranslateLibModule,
-    QuickPanelModule,
-    UserModule
+    TranslateLibModule
 } from '@netgrif/application-engine';
 import {NavigationRailComponent} from './navigation-rail/navigation-rail.component';
 import {NavigationTreeComponent} from './navigation-tree/navigation-tree.component';
+import {UserModule} from '../user/user.module';
+import {QuickPanelModule} from './quick-panel/quick-panel.module';
 
 
 @NgModule({
@@ -27,8 +27,8 @@ import {NavigationTreeComponent} from './navigation-tree/navigation-tree.compone
         FlexModule,
         FlexLayoutModule,
         QuickPanelModule,
-        UserModule,
-        TranslateLibModule
+        TranslateLibModule,
+        UserModule
     ],
     exports: [
         NavigationDrawerComponent,

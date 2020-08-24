@@ -41,7 +41,7 @@ export function tabbedTaskViewServiceFactory(factory: ArrayTaskViewServiceFactor
  * This is one of available `TaskViewServiceFactory` implementations, see {@link ArrayTaskViewServiceFactory} for another one.
  *
  * This implementation is useful if you need to provide {@link TaskViewService}  without having to
- * define the view in the configuration file. Most notably if the view is created dynamically, for example in a {@link TabViewComponent}.
+ * define the view in the configuration file. Most notably if the view is created dynamically, for example in a {@link AbstractTabViewComponent}.
  *
  * This class also provides a convenience method to create task views, that don't have `allowedNets`, without the
  * need for local factory methods.

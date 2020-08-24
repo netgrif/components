@@ -1,7 +1,6 @@
 import {Input, OnInit} from '@angular/core';
 import {UserField} from './models/user-field';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -19,7 +18,7 @@ export abstract class AbstractUserFieldComponent extends AbstractDataFieldCompon
 
     /**
      * Inject services.
-     * @param _sideMenuService Service to open and close [UserAssignComponent]{@link UserAssignComponent} with user data.
+     * @param _sideMenuService Service to open and close [UserAssignComponent]{@link AbstractUserAssignComponent} with user data.
      * @param _snackbar Service to displaying information to the user.
      */
     constructor(protected _sideMenuService: SideMenuService,
@@ -34,7 +33,7 @@ export abstract class AbstractUserFieldComponent extends AbstractDataFieldCompon
     /**
      * Call after click on user field button.
      *
-     * Open [UserAssignComponent]{@link UserAssignComponent} in side menu with data represents preselected user from backend.
+     * Open [UserAssignComponent]{@link AbstractUserAssignComponent} in side menu with data represents preselected user from backend.
      *
      * After close side menu, the snackbar info will be displayed either for the unselected user or the selected one.
      */

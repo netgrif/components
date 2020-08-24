@@ -1,0 +1,10 @@
+<div class="container-position-relative side-menu-root">
+    <mat-toolbar color="primary" class="container-position-relative">
+        {{ 'side-menu.files-upload.upload' | translate}}
+        <button mat-mini-fab class="add-files-button" (click)="onFileUpload()">
+            <mat-icon class="add-files-icon">add</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <nc-files-upload-list [allFiles]="allFiles" [fileFieldService]="fileFieldService"></nc-files-upload-list>
+</div>

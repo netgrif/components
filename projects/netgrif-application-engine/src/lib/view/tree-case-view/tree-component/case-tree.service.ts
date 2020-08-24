@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
@@ -10,7 +10,6 @@ import {ImmediateData} from '../../../resources/interface/immediate-data';
 import {Case} from '../../../resources/interface/case';
 import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
-import {OptionSelectorComponent} from '../../../side-menu/content-components/option-selector/option-selector.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {Observable, of, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
@@ -23,6 +22,7 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {ofVoid} from '../../../utility/of-void';
 import {CaseGetRequestBody} from '../../../resources/interface/case-get-request-body';
 import {getImmediateData} from '../../../utility/get-immediate-data';
+import {NAE_OPTION_SELECTOR_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
@@ -45,7 +45,8 @@ export class CaseTreeService implements OnDestroy {
                 protected _logger: LoggerService,
                 protected _processService: ProcessService,
                 protected _sideMenuService: SideMenuService,
-                protected _translateService: TranslateService) {
+                protected _translateService: TranslateService,
+                @Optional() @Inject(NAE_OPTION_SELECTOR_COMPONENT) protected _optionSelectorComponent: any) {
         this._treeDataSource = new MatTreeNestedDataSource<CaseTreeNode>();
         this._treeControl = new NestedTreeControl<CaseTreeNode>(node => node.children);
         _treeCaseViewService.reloadCase$.asObservable().subscribe(() => {
@@ -375,7 +376,7 @@ export class CaseTreeService implements OnDestroy {
             this.createAndAddChildCase(caseRefField.allowedNets[0], childTitle, clickedNode, ret);
         } else {
             this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
-                const sideMeuRef = this._sideMenuService.open(OptionSelectorComponent, SideMenuSize.MEDIUM, {
+                const sideMeuRef = this._sideMenuService.open(this._optionSelectorComponent, SideMenuSize.MEDIUM, {
                     title: clickedNode.case.title,
                     options: nets.map(net => ({text: net.title, value: net.identifier}))
                 });

@@ -1,0 +1,32 @@
+import {Component, Inject} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import {TranslateService} from '@ngx-translate/core';
+import {HotkeysService} from 'angular2-hotkeys';
+import {
+    NAE_SIDE_MENU_CONTROL,
+    SideMenuControl,
+    AbstractNewCaseComponent,
+    SnackBarService,
+    CaseResourceService
+} from '@netgrif/application-engine';
+
+@Component({
+    selector: 'nc-new-case',
+    templateUrl: './new-case.component.html',
+    styleUrls: ['./new-case.component.scss'],
+    providers: [{
+        provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+    }]
+})
+export class NewCaseComponent extends AbstractNewCaseComponent {
+
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
+                protected _formBuilder: FormBuilder,
+                protected _snackBarService: SnackBarService,
+                protected _caseResourceService: CaseResourceService,
+                protected _hotkeysService: HotkeysService,
+                protected _translate: TranslateService) {
+        super(_sideMenuControl, _formBuilder, _snackBarService, _caseResourceService, _hotkeysService, _translate);
+    }
+}

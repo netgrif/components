@@ -20,7 +20,7 @@ export interface UserListItem extends User {
 }
 
 /**
- * Performs paged loading users from backend for [UserAssignComponent]{@link UserAssignComponent}.
+ * Performs paged loading users from backend for [UserAssignComponent]{@link AbstractUserAssignComponent}.
  */
 @Injectable()
 export class UserListService {

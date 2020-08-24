@@ -22,7 +22,7 @@ export abstract class AbstractLanguageSelectorComponent implements OnInit {
             value: 'en'
         }];
 
-    constructor(private _select: LanguageService) {
+    constructor(protected _select: LanguageService) {
     }
 
     ngOnInit(): void {

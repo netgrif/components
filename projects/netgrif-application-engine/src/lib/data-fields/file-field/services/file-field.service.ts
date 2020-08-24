@@ -1,10 +1,9 @@
-import {ElementRef, Injectable} from '@angular/core';
+import {ElementRef, Inject, Injectable, Optional} from '@angular/core';
 import * as JSZip from 'jszip';
 import {FileField, FileUploadDataModel} from '../models/file-field';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadModel} from '../../../side-menu/content-components/files-upload/models/file-upload-model';
-import {FilesUploadComponent} from '../../../side-menu/content-components/files-upload/files-upload.component';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../../../translate/language.service';
@@ -12,10 +11,13 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarHorizontalPosition, SnackBarVerticalPosition} from '../../../snack-bar/models/snack-bar-enums';
+import {
+    NAE_FILES_UPLOAD_COMPONENT
+} from '../../../side-menu/content-components/injection-tokens';
 
 /**
  * Links communication between
- * [FileFieldComponent]{@link FileFieldComponent} and [FilesUploadComponent]{@link FilesUploadComponent}.
+ * [FileFieldComponent]{@link FileFieldComponent} and [FilesUploadComponent]{@link AbstractFilesUploadComponent}.
  */
 @Injectable()
 export class FileFieldService {
@@ -47,13 +49,15 @@ export class FileFieldService {
      * @param _lang Initialize languages
      * @param _taskResourceService Provides upload and download file
      * @param _log Log error of file upload
+     * @param _filesUploadComponent files upload component injection token
      */
     constructor(private _sideMenuService: SideMenuService,
                 private _snackBarService: SnackBarService,
                 private _translate: TranslateService,
                 private _lang: LanguageService,
                 private _taskResourceService: TaskResourceService,
-                private _log: LoggerService) {
+                private _log: LoggerService,
+                @Optional() @Inject(NAE_FILES_UPLOAD_COMPONENT) protected _filesUploadComponent: any) {
     }
 
     /**
@@ -165,7 +169,7 @@ export class FileFieldService {
             });
             this.fileUploadEl.nativeElement.value = '';
             if (!this._sideMenuService.isOpened()) {
-                this._sideMenuService.open(FilesUploadComponent, SideMenuSize.LARGE, this);
+                this._sideMenuService.open(this._filesUploadComponent, SideMenuSize.LARGE, this);
             }
         };
         this.fileUploadEl.nativeElement.click();

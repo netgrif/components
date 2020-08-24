@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {SnackBarService, SideMenuService, AbstractUserFieldComponent} from '@netgrif/application-engine';
+import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 
 @Component({
     selector: 'nc-user-field',
@@ -14,6 +15,6 @@ export class UserFieldComponent extends AbstractUserFieldComponent {
     }
 
     public selectUser() {
-        this.selectAbstractUser('UserAssignComponent');
+        this.selectAbstractUser(UserAssignComponent);
     }
 }

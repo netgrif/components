@@ -31,12 +31,16 @@ export * from './task-view/service/factory/array-task-view-service-factory';
 export * from './workflow-view/workflow-view.service';
 
 export * from './tree-case-view/tree-case-view.service';
+export * from './tree-case-view/tree-component/case-tree.service';
+export * from './tree-case-view/tree-task-content/tree-task-content.service';
 
 /* COMPONENTS */
-export * from './workflow-view/workflow-view.component';
-export * from './case-view/components/case-list/case-list.component';
-export * from './tree-case-view/tree-component/tree.component';
-export * from './tree-case-view/tree-task-content/tree-task-content.component';
+export * from './workflow-view/abstract-workflow-view.component';
+export * from './case-view/components/case-list/abstract-case-list.component';
+export * from './tree-case-view/tree-component/abstract-tree.component';
+export * from './tree-case-view/tree-component/add-child-node/abstract-add-child-node.component';
+export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.component';
+export * from './tree-case-view/tree-task-content/abstract-tree-task-content.component';
 
 /* MODULES */
 export * from './workflow-view.module';

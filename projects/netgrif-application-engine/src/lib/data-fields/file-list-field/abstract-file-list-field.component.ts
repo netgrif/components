@@ -88,7 +88,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      * Call after click on file field.
      *
      * If file field has no file uploaded
-     * [FilesUploadComponent]{@link FilesUploadComponent} via [SideMenu]{@link SideMenuService} opens.
+     * [FilesUploadComponent]{@link AbstractFilesUploadComponent} via [SideMenu]{@link SideMenuService} opens.
      *
      * Otherwise opens a file picker from which the user can select files.
      */

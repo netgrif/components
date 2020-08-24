@@ -12,7 +12,7 @@ import {InjectedTabbedTaskViewData} from '../../view/task-view/models/injected-t
 import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
 
 /**
- * Holds the logic for tab management in {@link TabViewComponent}.
+ * Holds the logic for tab management in {@link AbstractTabViewComponent}.
  * If you want to implement your own TabViewComponent, you might want to extend this class to hold your logic.
  */
 export class TabView implements TabViewInterface {

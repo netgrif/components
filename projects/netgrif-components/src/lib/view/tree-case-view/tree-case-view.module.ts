@@ -1,0 +1,38 @@
+import {NgModule} from '@angular/core';
+import {TreeComponent} from './tree-component/tree.component';
+import {TreeTaskContentComponent} from './tree-task-content/tree-task-content.component';
+import {CommonModule} from '@angular/common';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {PanelModule} from '../../panel/panel.module';
+import {MaterialModule, DataFieldsModule, TranslateLibModule} from '@netgrif/application-engine';
+import {TaskContentModule} from '../../task-content/task-content.module';
+import {AddChildNodeComponent} from './tree-component/add-child-node/add-child-node.component';
+import {RemoveNodeComponent} from './tree-component/remove-node/remove-node.component';
+import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
+
+@NgModule({
+    declarations: [
+        TreeComponent,
+        TreeTaskContentComponent,
+        AddChildNodeComponent,
+        RemoveNodeComponent
+    ],
+    imports: [
+        CommonModule,
+        FlexLayoutModule,
+        MaterialModule,
+        DataFieldsModule,
+        DataFieldsComponentModule,
+        TranslateLibModule,
+        PanelModule,
+        TaskContentModule
+    ],
+    exports: [
+        TreeComponent,
+        TreeTaskContentComponent,
+    ],
+    entryComponents: []
+
+})
+export class TreeCaseViewModule {
+}

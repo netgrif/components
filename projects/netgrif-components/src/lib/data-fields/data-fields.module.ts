@@ -36,6 +36,7 @@ import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-
 import {SimpleTextFieldComponent} from './text-field/simple-text-field/simple-text-field.component';
 import {UserFieldComponent} from './user-field/user-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
+import {SideMenuContentModule} from '../side-menu/content-components/side-menu-content.module';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import {RequiredLabelComponent} from './required-label/required-label.component'
         ReactiveFormsModule,
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
-        TranslateLibModule
+        TranslateLibModule,
+        SideMenuContentModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

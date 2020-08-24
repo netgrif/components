@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {DATE_FORMAT, AbstractSearchModeComponent, SideMenuService} from '@netgrif/application-engine';
+import {UserAssignComponent} from '../../../side-menu/content-components/user-assign/user-assign.component';
 
 @Component({
     selector: 'nc-search-mode',
@@ -17,6 +18,6 @@ export class SearchModeComponent extends AbstractSearchModeComponent {
     }
 
     public selectUser(column: number): void {
-        this.selectAbstractUser(column, 'UserAssignCOmponent');
+        this.selectAbstractUser(column, UserAssignComponent);
     }
 }
