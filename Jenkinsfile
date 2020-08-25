@@ -16,68 +16,143 @@ pipeline {
       }
     }
 
-    stage('Tests') {
+    stage('Tests NAE') {
       parallel {
         stage('Unit Test') {
           steps {
-            echo 'Starting tests using karma and jasmine'
+            echo 'Starting unit tests of netgrif-application-engine'
             sh 'npm run ng test netgrif-application-engine'
           }
         }
 
         stage('Lint') {
           steps {
-            echo 'Starting ts-lint'
+            echo 'Starting ts-lint of netgrif-application-engine'
             sh 'npm run ng lint netgrif-application-engine'
           }
         }
       }
     }
 
-    stage('Sonar') {
+    stage('Sonar NAE') {
         steps {
             echo 'Sent to SonarQube analysis'
             sh 'npm run nae:sonar'
         }
     }
 
-    stage('Build') {
+    stage('Build NAE') {
       steps {
         echo 'Starting building NAE library'
         sh 'npm run nae:build'
       }
     }
 
+    stage('NAE Local install') {
+        steps {
+            echo 'Installing NAE for local pipeline use'
+            sh 'npm i dist/netgrif-application-engine --save-optional'
+        }
+    }
+
+    stage('Test NC') {
+        parallel {
+            stage('Unit Test') {
+                steps {
+                    echo 'Starting unit tests of netgrif-components'
+                    sh 'npm run ng test netgrif-components'
+                }
+            }
+            stage('Lint') {
+                steps {
+                    echo 'Starting ts-lint of netgrif-components'
+                    sh 'npm run ng lint netgrif-components'
+                }
+            }
+        }
+    }
+
+    stage('Sonar NC') {
+        steps {
+            echo 'Sent to SonarQube analysis'
+            sh 'npm run nc:sonar'
+        }
+    }
+
+    stage('Build NC') {
+        steps {
+            echo 'Starting building NAE library'
+            sh 'npm run nc:build'
+        }
+    }
+
+    stage('NC Local install') {
+        steps {
+            echo 'Installing NAE for local pipeline use'
+            sh 'npm i dist/netgrif-components --save-optional'
+        }
+    }
+
     stage('Doc') {
-      steps {
-        echo 'Generating documentation'
-        sh 'npm run nae:doc'
-      }
+        parallel {
+            stage('Doc NAE') {
+                steps {
+                    echo 'Generating documentation'
+                    sh 'npm run nae:doc'
+                }
+            }
+            stage('Doc NC') {
+                steps {
+                    echo 'Generating documentation'
+                    sh 'npm run nc:doc'
+                }
+            }
+        }
     }
 
     stage('Publish to Nexus NPM') {
-        steps {
-            sh '''
-                echo "npm publishing"
-                mv .npmrc .npmrc_renamed
-                echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
-                echo "email=jenkins@netgrif.com" >> .npmrc
-                echo -n "_auth=" >> .npmrc
-                echo -n $NEXUS_CRED | openssl base64 >> .npmrc
-                cat .npmrc
-                npm publish dist/netgrif-application-engine
-                rm .npmrc
-                mv .npmrc_renamed .npmrc
-            '''
-         }
+        parallel {
+            stage('Publish NAE') {
+                steps {
+                    sh '''
+                        echo "npm publishing"
+                        mv .npmrc .npmrc_renamed
+                        echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
+                        echo "email=jenkins@netgrif.com" >> .npmrc
+                        echo -n "_auth=" >> .npmrc
+                        echo -n $NEXUS_CRED | openssl base64 >> .npmrc
+                        cat .npmrc
+                        npm publish dist/netgrif-application-engine
+                        rm .npmrc
+                        mv .npmrc_renamed .npmrc
+                    '''
+                }
+            }
+            stage('Publish NC') {
+                steps {
+                    sh '''
+                        echo "npm publishing"
+                        mv .npmrc .npmrc_renamed
+                        echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
+                        echo "email=jenkins@netgrif.com" >> .npmrc
+                        echo -n "_auth=" >> .npmrc
+                        echo -n $NEXUS_CRED | openssl base64 >> .npmrc
+                        cat .npmrc
+                        npm publish dist/netgrif-components
+                        rm .npmrc
+                        mv .npmrc_renamed .npmrc
+                    '''
+                }
+            }
+        }
     }
 
-    stage('Publish docs') {
+    stage('Publish NAE docs') {
         steps {
             script {
                 packageJson = readJSON(file: 'package.json')
             }
-            echo 'Uploading documentation via sshPublisher'
+            echo 'Uploading NAE documentation via sshPublisher'
             sshPublisher(
                 publishers: [
                     sshPublisherDesc(
@@ -92,22 +167,22 @@ pipeline {
                                 makeEmptyDirs: false,
                                 noDefaultExcludes: false,
                                 patternSeparator: '[, ]+',
-                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/docs",
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/nae/docs",
                                 remoteDirectorySDF: false,
-                                removePrefix: 'docs/compodoc',
-                                sourceFiles: 'docs/compodoc/**')],
+                                removePrefix: 'docs/netgrif-application-engine',
+                                sourceFiles: 'docs/netgrif-application-engine/**')],
                         usePromotionTimestamp: false,
                         useWorkspaceInPromotion: false,
                         verbose: true)])
         }
     }
 
-    stage('Publish test reports') {
+    stage('Publish NC docs') {
         steps {
             script {
                 packageJson = readJSON(file: 'package.json')
             }
-            echo 'Uploading test reports via sshPublisher'
+            echo 'Uploading NC documentation via sshPublisher'
             sshPublisher(
                 publishers: [
                     sshPublisherDesc(
@@ -122,10 +197,70 @@ pipeline {
                                 makeEmptyDirs: false,
                                 noDefaultExcludes: false,
                                 patternSeparator: '[, ]+',
-                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/coverage",
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/nc/docs",
+                                remoteDirectorySDF: false,
+                                removePrefix: 'docs/netgrif-components',
+                                sourceFiles: 'docs/netgrif-components/**')],
+                        usePromotionTimestamp: false,
+                        useWorkspaceInPromotion: false,
+                        verbose: true)])
+        }
+    }
+
+    stage('Publish NAE test reports') {
+        steps {
+            script {
+                packageJson = readJSON(file: 'package.json')
+            }
+            echo 'Uploading NAE test reports via sshPublisher'
+            sshPublisher(
+                publishers: [
+                    sshPublisherDesc(
+                        configName: 'developer.netgrif.com',
+                        transfers: [
+                            sshTransfer(
+                                cleanRemote: true,
+                                excludes: '',
+                                execCommand: '',
+                                execTimeout: 120000,
+                                flatten: false,
+                                makeEmptyDirs: false,
+                                noDefaultExcludes: false,
+                                patternSeparator: '[, ]+',
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/nae/coverage",
                                 remoteDirectorySDF: false,
                                 removePrefix: 'coverage/netgrif-application-engine',
                                 sourceFiles: 'coverage/netgrif-application-engine/**')],
+                        usePromotionTimestamp: false,
+                        useWorkspaceInPromotion: false,
+                        verbose: true)])
+        }
+    }
+
+    stage('Publish NC test reports') {
+        steps {
+            script {
+                packageJson = readJSON(file: 'package.json')
+            }
+            echo 'Uploading NC test reports via sshPublisher'
+            sshPublisher(
+                publishers: [
+                    sshPublisherDesc(
+                        configName: 'developer.netgrif.com',
+                        transfers: [
+                            sshTransfer(
+                                cleanRemote: true,
+                                excludes: '',
+                                execCommand: '',
+                                execTimeout: 120000,
+                                flatten: false,
+                                makeEmptyDirs: false,
+                                noDefaultExcludes: false,
+                                patternSeparator: '[, ]+',
+                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/nc/coverage",
+                                remoteDirectorySDF: false,
+                                removePrefix: 'coverage/netgrif-components',
+                                sourceFiles: 'coverage/netgrif-components/**')],
                         usePromotionTimestamp: false,
                         useWorkspaceInPromotion: false,
                         verbose: true)])
@@ -137,7 +272,6 @@ pipeline {
             script {
                 packageJson = readJSON(file: 'package.json')
             }
-            sh 'npm run nae:local-build'
             sh "npm run example:build -- --base-href=/projects/engine-frontend/${packageJson['version']}/examples/"
 
         }
@@ -180,6 +314,7 @@ pipeline {
         //          message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
 
         junit 'coverage/netgrif-application-engine/JUNITX-test-report.xml'
+        junit 'coverage/netgrif-components/JUNITX-test-report.xml'
     }
 
     success {
@@ -187,7 +322,12 @@ pipeline {
         script {
             DATETIME_TAG = java.time.LocalDateTime.now().toString().replace(':','_')
         }
-        zip zipFile: "NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", archive: false, dir: 'dist/netgrif-application-engine'
+        sh '''
+            mkdir dist/netgrif
+            cp dist/netgrif-application-engine dist/netgrif/netgrif-application-engine
+            cp dist/netgrif-components dist/netgrif/netgrif-components
+        '''
+        zip zipFile: "NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", archive: false, dir: 'dist/netgrif'
         archiveArtifacts artifacts:"NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", fingerprint: true
         // archiveArtifacts artifacts: 'dist/netgrif-application-engine/nae-frontend-dist.zip', fingerprint: true
     }
