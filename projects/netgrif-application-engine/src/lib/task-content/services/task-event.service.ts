@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {UserService} from '../../user/services/user.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AssignPolicy} from '../model/policy';
@@ -11,11 +11,11 @@ import {TaskEventNotification} from '../model/task-event-notification';
 /**
  * Holds logic about the available operations on a {@link Task} object based on it's state.
  *
- * Beware that it get's the Task from (@link TaskContentService) instance and thus the task might not be always initialized.
+ * Beware that it gets the Task from (@link TaskContentService) instance and thus the task might not be always initialized.
  * If the task is not initialized this class cannot work properly.
  */
 @Injectable()
-export class TaskEventService extends TaskHandlingService {
+export class TaskEventService extends TaskHandlingService implements OnDestroy {
 
     protected _taskEventNotifications$: Subject<TaskEventNotification>;
 
@@ -25,6 +25,13 @@ export class TaskEventService extends TaskHandlingService {
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
         this._taskEventNotifications$ = new Subject<TaskEventNotification>();
+    }
+
+    /**
+     * Completes the stream
+     */
+    ngOnDestroy(): void {
+        this._taskEventNotifications$.complete();
     }
 
     /**

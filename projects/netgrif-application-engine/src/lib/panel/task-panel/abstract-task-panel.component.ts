@@ -1,4 +1,4 @@
-import {AfterViewInit, Input, OnInit, Type} from '@angular/core';
+import {AfterViewInit, EventEmitter, Input, OnInit, Output, Type} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -24,6 +24,7 @@ import {AssignPolicyService} from '../../task/services/assign-policy.service';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
+import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
 
@@ -37,25 +38,30 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
     public portal: ComponentPortal<any>;
     public panelRef: MatExpansionPanel;
 
-    constructor(protected _taskContentService: TaskContentService,
-                protected _log: LoggerService,
-                protected _taskViewService: TaskViewService,
-                protected _paperView: PaperViewService,
-                protected _taskEventService: TaskEventService,
-                protected _assignTaskService: AssignTaskService,
-                protected _delegateTaskService: DelegateTaskService,
-                protected _cancelTaskService: CancelTaskService,
-                protected _finishTaskService: FinishTaskService,
-                protected _taskState: TaskRequestStateService,
-                protected _taskDataService: TaskDataService,
-                protected _assignPolicyService: AssignPolicyService,
-                protected _callChain: CallChainService,
-                protected _taskOperations: SubjectTaskOperations) {
+    protected constructor(protected _taskContentService: TaskContentService,
+                          protected _log: LoggerService,
+                          protected _taskViewService: TaskViewService,
+                          protected _paperView: PaperViewService,
+                          protected _taskEventService: TaskEventService,
+                          protected _assignTaskService: AssignTaskService,
+                          protected _delegateTaskService: DelegateTaskService,
+                          protected _cancelTaskService: CancelTaskService,
+                          protected _finishTaskService: FinishTaskService,
+                          protected _taskState: TaskRequestStateService,
+                          protected _taskDataService: TaskDataService,
+                          protected _assignPolicyService: AssignPolicyService,
+                          protected _callChain: CallChainService,
+                          protected _taskOperations: SubjectTaskOperations) {
         super();
+        this.taskEvent = new EventEmitter<TaskEventNotification>();
+        _taskEventService.taskEventNotifications$.subscribe(event => {
+            this.taskEvent.emit(event);
+        });
         _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
             if (this._taskContentService.task) {
