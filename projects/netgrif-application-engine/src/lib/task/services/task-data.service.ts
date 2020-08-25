@@ -230,7 +230,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 if (field.initialized && field.valid && field.changed) {
                     body[field.stringId] = {
                         type: this._fieldConverterService.resolveType(field),
-                        value: this._fieldConverterService.formatValue(field, field.value)
+                        value: this._fieldConverterService.formatValueForBackend(field, field.value)
                     };
                 }
             });

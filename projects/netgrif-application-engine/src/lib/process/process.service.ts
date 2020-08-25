@@ -149,12 +149,12 @@ export class ProcessService {
                 returnNet.complete();
                 return;
             }
-            this._nets[net.identifier] = new Net(net);
             forkJoin({
                 transitions: this.loadTransitions(net.stringId),
                 transactions: this.loadTransactions(net.stringId),
                 roles: this.loadRoles(net.stringId)
             }).subscribe(values => {
+                this._nets[net.identifier] = new Net(net);
                 this._nets[net.identifier].transitions = values.transitions;
                 this._nets[net.identifier].transactions = values.transactions;
                 this._nets[net.identifier].roles = values.roles;
@@ -172,7 +172,6 @@ export class ProcessService {
             returnNet.complete();
             // throw error;
         });
-
         return returnNet.asObservable();
     }
 
