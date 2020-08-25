@@ -22,6 +22,8 @@ import {TaskRequestStateService} from '../../task/services/task-request-state.se
 import {TaskDataService} from '../../task/services/task-data.service';
 import {AssignPolicyService} from '../../task/services/assign-policy.service';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
+import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
+import {CallChainService} from '../../utility/call-chain/call-chain.service';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
 
@@ -51,6 +53,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
                 protected _taskState: TaskRequestStateService,
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
+                protected _callChain: CallChainService,
                 _taskOperations: SubjectTaskOperations) {
         super();
         _taskDataService.changedFields$.subscribe(changedFields => {
@@ -159,7 +162,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     }
 
     cancel() {
-        this._cancelTaskService.cancel();
+        this._cancelTaskService.cancel(this._callChain.create(() => {
+            this._taskOperations.reload();
+            this._taskOperations.close();
+        }));
     }
 
     finish() {

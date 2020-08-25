@@ -24,6 +24,8 @@ export abstract class AbstractTabViewComponent implements OnInit {
 
     @Input() public align = 'start';
 
+    public offset = '';
+
     /**
      * @ignore
      * lambda function that is passed to the {@link AbstractTabCreationDetectorComponent}s
@@ -53,11 +55,16 @@ export abstract class AbstractTabViewComponent implements OnInit {
         const stream$ = new ReplaySubject<string>(1);
         if (tab.label && tab.label.count) {
             tab.label.count.subscribe(count => {
-                stream$.next( count > 99 ? '99+' : count + '');
+                stream$.next( count + '');
+                this.setOffset((count + '').length);
             });
         } else {
             stream$.next('0');
         }
         return stream$;
+    }
+
+    private setOffset(count: number) {
+        this.offset = Array(count * 2).join('\xa0');
     }
 }

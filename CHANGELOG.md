@@ -1,3 +1,64 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10807/tab/release-report-all-issues"></a>
+## 4.1.1 - Navy Brass (20.8.2020)
+### Bug fixes
+ * [NAE-956](https://netgrif.atlassian.net/browse/NAE-956) - Counters in tab
+ * [NAE-960](https://netgrif.atlassian.net/browse/NAE-960) - Tree does not reload cases
+ * [NAE-961](https://netgrif.atlassian.net/browse/NAE-961) - Cancel dont close the panel
+ * [NAE-963](https://netgrif.atlassian.net/browse/NAE-963) - Bad parsing multi-choice value
+ * [NAE-964](https://netgrif.atlassian.net/browse/NAE-964) - Validations works only with static dates
+
+### Improvements
+ * [NAE-958](https://netgrif.atlassian.net/browse/NAE-958) - Auto text stretching text area
+
+### Features
+ None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10782/tab/release-report-all-issues"></a>
+## 4.1.0 - White Titanium (17.08.2020)
+### Bug fixes
+ * [NAE-956](https://netgrif.atlassian.net/browse/NAE-956) - Counters in tab
+ * [NAE-951](https://netgrif.atlassian.net/browse/NAE-951) - Tree adds children to incorrect nodes
+ * [NAE-947](https://netgrif.atlassian.net/browse/NAE-947) - Role assignment component deselect users o search
+ * [NAE-945](https://netgrif.atlassian.net/browse/NAE-945) - Button field class
+ * [NAE-944](https://netgrif.atlassian.net/browse/NAE-944) - Tabbed view schematic bad generation
+ * [NAE-943](https://netgrif.atlassian.net/browse/NAE-943) - Add min and max validation on text field
+ * [NAE-941](https://netgrif.atlassian.net/browse/NAE-941) - User Value in Panel
+ * [NAE-937](https://netgrif.atlassian.net/browse/NAE-937) - Enumeration autocomplete bug
+ * [NAE-936](https://netgrif.atlassian.net/browse/NAE-936) - Behavior subject in user service
+ * [NAE-924](https://netgrif.atlassian.net/browse/NAE-924) - Selected task in tree doesn't switch
+ * [NAE-912](https://netgrif.atlassian.net/browse/NAE-912) - Task with no data cannot be finished
+ * [NAE-907](https://netgrif.atlassian.net/browse/NAE-907) - Task event title
+ * [NAE-900](https://netgrif.atlassian.net/browse/NAE-900) - resolveLoginPath in AuthenticationGuard
+
+### Improvements
+ * [NAE-958](https://netgrif.atlassian.net/browse/NAE-958) - Auto text stretching text area
+ * [NAE-955](https://netgrif.atlassian.net/browse/NAE-955) - Tree root child notification
+ * [NAE-954](https://netgrif.atlassian.net/browse/NAE-954) - Enmueration and multichoice responsive choices
+ * [NAE-953](https://netgrif.atlassian.net/browse/NAE-953) - Auto stretch text area
+ * [NAE-948](https://netgrif.atlassian.net/browse/NAE-948) - Configurable default template and appearance
+ * [NAE-942](https://netgrif.atlassian.net/browse/NAE-942) - Close tab after finish task
+ * [NAE-935](https://netgrif.atlassian.net/browse/NAE-935) - Change update strategy on some fields
+ * [NAE-933](https://netgrif.atlassian.net/browse/NAE-933) - Add counters to tab label 
+ * [NAE-929](https://netgrif.atlassian.net/browse/NAE-929) - Search on Role Assigment Component
+ * [NAE-925](https://netgrif.atlassian.net/browse/NAE-925) - Remove Case Delete button from panel
+ * [NAE-922](https://netgrif.atlassian.net/browse/NAE-922) - Injection token for SnackBar position
+ * [NAE-918](https://netgrif.atlassian.net/browse/NAE-918) - Filter ID and MergeOperator getter
+ * [NAE-913](https://netgrif.atlassian.net/browse/NAE-913) - Form components without card element
+ * [NAE-914](https://netgrif.atlassian.net/browse/NAE-914) - User Transformer methods
+ * [NAE-908](https://netgrif.atlassian.net/browse/NAE-908) - Update Angular dependency
+ * [NAE-894](https://netgrif.atlassian.net/browse/NAE-894) - Auto-convert config filters to SimpleFilter
+ * [NAE-864](https://netgrif.atlassian.net/browse/NAE-864) - Additional CaseViewService Factories
+ * [NAE-874](https://netgrif.atlassian.net/browse/NAE-874) - Customisable data field offset
+
+### Features
+ * [NAE-940](https://netgrif.atlassian.net/browse/NAE-940) - Automatically open one task in task list
+ * [NAE-939](https://netgrif.atlassian.net/browse/NAE-939) - Opening same tab
+ * [NAE-917](https://netgrif.atlassian.net/browse/NAE-917) - File list field
+ * [NAE-909](https://netgrif.atlassian.net/browse/NAE-909) - Search mode on headers
+ * [NAE-517](https://netgrif.atlassian.net/browse/NAE-517) - Background Screen
+ * [NAE-876](https://netgrif.atlassian.net/browse/) - Tree Case View	
+
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10792/tab/release-report-all-issues"></a>
 ## 4.0.1 - Teal Steel (10.08.2020)
 ### Bug Fixes
@@ -13,9 +74,9 @@
  * [NAE-869](https://netgrif.atlassian.net/browse/NAE-869) - AuthGuard token expiration
  * [NAE-860](https://netgrif.atlassian.net/browse/NAE-860) - Tab View Schematic doesn't generate 'canBeClosed' attribute
 
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10632/tab/release-report-all-issues"></a>
 ## 4.0.0 - Blue Aluminium (24.07.2020)
-
 ### Bug Fixes
   * [NAE-877](https://netgrif.atlassian.net/browse/NAE-877) -         Enumeration Keys With Dot
   * [NAE-878](https://netgrif.atlassian.net/browse/NAE-878) -         UserAssignComponent With Pagination

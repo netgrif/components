@@ -7,6 +7,7 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {FileListField, FileListFieldValidation} from './models/file-list-field';
+import {FileFieldValue} from '../file-field/models/file-field-value';
 
 export interface FilesState {
     progress: number;
@@ -118,9 +119,9 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             );
         }
 
-        if (this.dataField.value && this.dataField.value.names && this.dataField.value.names.length !== 0) {
-            this.dataField.value.names.forEach(name => {
-                filesToUpload = filesToUpload.filter(fileToUpload => fileToUpload.name !== name);
+        if (this.dataField.value && this.dataField.value.namesPaths && this.dataField.value.namesPaths.length !== 0) {
+            this.dataField.value.namesPaths.forEach(namePath => {
+                filesToUpload = filesToUpload.filter(fileToUpload => fileToUpload.name !== namePath.name);
             });
             if (filesToUpload.length === 0) {
                 this._log.error('User chose the same files that are already uploaded. Uploading skipped');
@@ -150,7 +151,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this.state.progress = 0;
                 filesToUpload.forEach(fileToUpload => {
                     this.uploadedFiles.push(fileToUpload.name);
-                    this.dataField.value.names.push(fileToUpload.name);
+                    this.dataField.value.namesPaths.push({name: fileToUpload.name});
                 });
             }
         }, error => {
@@ -166,7 +167,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
     }
 
     public download(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.names || !this.dataField.value.names.find(name => name === fileName)) {
+        if (!this.dataField.value || !this.dataField.value.namesPaths ||
+            !this.dataField.value.namesPaths.find(namePath => namePath.name === fileName)) {
             return;
         }
         if (!this.taskId) {
@@ -208,7 +210,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
     }
 
     public deleteFile(fileName: string) {
-        if (!this.dataField.value || !this.dataField.value.names || !this.dataField.value.names.includes(fileName)) {
+        if (!this.dataField.value || !this.dataField.value.namesPaths ||
+            !this.dataField.value.namesPaths.find(namePath => namePath.name === fileName)) {
             return;
         }
         if (!this.taskId) {
@@ -219,11 +222,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId, fileName).subscribe(response => {
             if (response.success) {
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
-                if (this.dataField.value.names) {
-                    this.dataField.value.names = this.dataField.value.names.filter(name => name !== fileName);
-                }
-                if (this.dataField.value.files) {
-                    this.dataField.value.files = this.dataField.value.files.filter(file => file.name !== fileName);
+                if (this.dataField.value.namesPaths) {
+                    this.dataField.value.namesPaths = this.dataField.value.namesPaths.filter(namePath => namePath.name !== fileName);
                 }
                 this.dataField.downloaded = this.dataField.downloaded.filter(one => one !== fileName);
                 this._log.debug(`File [${this.dataField.stringId}] ${fileName} was successfully deleted`);
@@ -255,12 +255,12 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
 
     protected parseResponse(): void {
         if (this.dataField.value) {
-            if (this.dataField.value.names && this.dataField.value.names.length !== 0) {
-                this.dataField.value.names.forEach(name => {
-                    this.uploadedFiles.push(name);
+            if (this.dataField.value.namesPaths && this.dataField.value.namesPaths.length !== 0) {
+                this.dataField.value.namesPaths.forEach(namePath => {
+                    this.uploadedFiles.push(namePath.name);
                 });
             } else {
-                this.dataField.value.names = new Array<string>();
+                this.dataField.value.namesPaths = new Array<FileFieldValue>();
             }
         }
     }

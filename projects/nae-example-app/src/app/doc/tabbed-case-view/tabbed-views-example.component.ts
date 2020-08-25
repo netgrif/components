@@ -20,7 +20,7 @@ export class TabbedViewsExampleComponent implements OnInit {
         this.tabs = [
             {
                 label: {
-                    text: 'WRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR',
+                    text: 'WRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR',
                     icon: 'storage',
                     count: stream
                 },
@@ -33,7 +33,7 @@ export class TabbedViewsExampleComponent implements OnInit {
             }
         ];
         setTimeout(() => {
-            stream.next(105);
+            stream.next(999999);
         }, 2000);
     }
 
