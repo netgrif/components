@@ -51,6 +51,6 @@ export * from './header-search-service/header-search.service';
 export * from './search-chip-service/search-chip.service';
 
 /* Components */
-export * from './search-component/search.component';
-export * from './search-component/case-search/case-search.component';
-export * from './search-component/task-search/task-search.component';
+export * from './search-component/abstract-search.component';
+export * from './search-component/case-search/abstract-case-search.component';
+export * from './search-component/task-search/abstract-task-search.component';

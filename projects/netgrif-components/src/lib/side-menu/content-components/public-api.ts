@@ -1,0 +1,18 @@
+/* MODULES */
+export * from './side-menu-content-component.module';
+export * from './files-upload/side-menu-files-upload-component.module';
+export * from './import-net/side-menu-import-net-component.module';
+export * from './new-case/side-menu-new-case-component.module';
+export * from './user-assign/side-menu-user-assign-component.module';
+export * from './filter-selector/side-menu-filter-selector-component.module';
+export * from './option-selector/side-menu-option-selector-component.module';
+
+/* COMPONENTS */
+export * from './files-upload/files-upload.component';
+export * from './import-net/import-net.component';
+export * from './new-case/new-case.component';
+export * from './user-assign/user-assign.component';
+export * from './filter-selector/filter-selector.component';
+export * from './option-selector/option-selector.component';
+
+/* MODELS */

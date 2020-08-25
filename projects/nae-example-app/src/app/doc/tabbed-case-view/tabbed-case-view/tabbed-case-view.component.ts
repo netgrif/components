@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseViewService,
-    HeaderComponent,
     InjectedTabbedCaseViewData,
     LoggerService,
     NAE_TAB_DATA,
@@ -11,6 +10,7 @@ import {
     SearchChipService,
     AllNetsCaseViewServiceFactory
 } from '@netgrif/application-engine';
+import {HeaderComponent} from '@netgrif/components';
 
 const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => {
     return factory.create();

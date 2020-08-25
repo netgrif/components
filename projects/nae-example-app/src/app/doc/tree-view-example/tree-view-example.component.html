@@ -6,17 +6,17 @@
                     <button mat-button fxFlex *ngIf="showButton()" (click)="tree.addRootChildNode()">Add root child</button>
                     <mat-spinner *ngIf="!showButton()" [diameter]="36"></mat-spinner>
                 </div>
-                <nae-tree-component #tree fxFlex="100"
+                <nc-tree-component #tree fxFlex="100"
                                     [filter]="filter"
                                     [showTreeRoot]="false"
                                     (treeRootLoading)="rootLoading($event)"
-                                    (treeRootAddingChild)="rootAddingChild($event)"></nae-tree-component>
+                                    (treeRootAddingChild)="rootAddingChild($event)"></nc-tree-component>
             </div>
 
             <mat-divider [vertical]="true" class="divider-fix"></mat-divider>
 
             <div fxLayout="column" fxFlex="75" class="overflow-auto">
-                <nae-tree-task-content [displayTaskControlButtons]="false"></nae-tree-task-content>
+                <nc-tree-task-content [displayTaskControlButtons]="false"></nc-tree-task-content>
             </div>
         </mat-card>
         <mat-progress-spinner *ngIf="loading"></mat-progress-spinner>

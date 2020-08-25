@@ -3,10 +3,11 @@
  */
 
 /* COMPONENTS */
-export * from './header.component';
-export * from './header-modes/sort-mode/sort-mode.component';
-export * from './header-modes/edit-mode/edit-mode.component';
-export * from './header-modes/search-mode/search-mode.component';
+export * from './abstract-header.component';
+export * from './header-modes/sort-mode/abstract-sort-mode.component';
+export * from './header-modes/edit-mode/abstract-edit-mode.component';
+export * from './header-modes/loading-mode/abstract-loading-mode.component';
+export * from './header-modes/search-mode/abstract-search-mode.component';
 
 /* MODELS */
 export * from './models/public-api';

@@ -4,8 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import sk from '../assets/i18n/sk.json';
 import en from '../assets/i18n/en.json';
 import 'hammerjs';
-import {LanguageService} from '@netgrif/application-engine';
-import {RoutingBuilderService} from '@netgrif/application-engine';
+import {LanguageService, RoutingBuilderService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-root',

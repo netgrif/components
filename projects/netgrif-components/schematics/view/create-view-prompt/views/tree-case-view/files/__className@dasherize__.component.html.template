@@ -1,0 +1,15 @@
+<div fxLayoutAlign="center start" class="height-100">
+    <div  class="fill-all-space" fxLayout="row" fxFlex="80">
+        <mat-card class="fill-all-space">
+            <div fxLayout="column" fxFlex="25" class="overflow-auto">
+                <nc-tree-component [filter]="filter" [showTreeRoot]="true"></nc-tree-component>
+            </div>
+
+            <mat-divider [vertical]="true" class="divider-fix"></mat-divider>
+
+            <div fxLayout="column" fxFlex="75" class="overflow-auto">
+                <nc-tree-task-content></nc-tree-task-content>
+            </div>
+        </mat-card>
+    </div>
+</div>

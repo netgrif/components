@@ -1,10 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
-import {NewCaseComponent} from '../../../side-menu/content-components/new-case/new-case.component';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
@@ -16,6 +15,10 @@ import {Pagination} from '../../../resources/interface/pagination';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
+import {
+    NAE_NEW_CASE_COMPONENT, NAE_OPTION_SELECTOR_COMPONENT,
+    NAE_USER_ASSIGN_COMPONENT
+} from '../../../side-menu/content-components/injection-tokens';
 
 
 @Injectable()
@@ -35,7 +38,8 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
-                protected _translate: TranslateService) {
+                protected _translate: TranslateService,
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
         super(allowedNets);
         this._loading$ = new LoadingEmitter();
         this._searchService.activeFilter$.subscribe(() => {
@@ -115,7 +119,8 @@ export class CaseViewService extends SortableViewWithAllowedNets {
 
     public createNewCase(): Observable<Case> {
         const myCase = new Subject<Case>();
-        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
+        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
+            {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.reload();

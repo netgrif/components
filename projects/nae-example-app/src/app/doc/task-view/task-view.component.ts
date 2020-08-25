@@ -2,11 +2,11 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
     ConfigTaskViewServiceFactory,
-    HeaderComponent,
     SearchService,
     SimpleFilter,
     TaskViewService
 } from '@netgrif/application-engine';
+import {HeaderComponent} from '@netgrif/components';
 
 const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
     return factory.create('case');

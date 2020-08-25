@@ -1,0 +1,72 @@
+//@import "projects/netgrif-application-engine/src/styles/core";
+
+.full-showcase-container {
+    width: 200px;
+
+    .user-banner {
+        height: 100px;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+
+    .user-avatar-large {
+        margin-top: -32px;
+    }
+}
+
+.user-avatar-large {
+    width: 64px;
+    height: 64px;
+    border-radius: 64px;
+}
+
+.user-avatar-small {
+    width: 46px;
+    height: 46px;
+    border-radius: 46px;
+}
+
+.full-showcase-text {
+    text-align: center;
+
+    span {
+        &:first-child {
+            font-size: 20px;
+            color: #424242;
+            margin-bottom: 4px;
+        }
+
+        font-size: 12px;
+        color: #616161;
+    }
+}
+
+.horizontal-showcase-container {
+    height: 80px;
+    border: 1px solid #fd971f;
+    border-radius: 6px;
+
+    .user-avatar-large {
+        margin-right: 8px;
+    }
+}
+
+.vertical-showcase-container {
+    width: 160px;
+    border: 1px solid #f0ad4e;
+    border-radius: 6px;
+    white-space: pre-line;
+
+    .user-avatar-large {
+        margin-bottom: 8px;
+    }
+}
+
+::ng-deep .mat-tooltip {
+    white-space: pre-line !important;
+    text-align: center;
+}
+
+.no-outline {
+    outline: none !important;
+}

@@ -6,15 +6,10 @@ import {SideMenuModule} from '../side-menu/side-menu.module';
 import {HeaderModule} from '../header/header.module';
 import {PanelModule} from '../panel/panel.module';
 import {DataFieldsModule} from '../data-fields/data-fields.module';
-import {ImportNetComponent} from '../side-menu/content-components/import-net/import-net.component';
-import {WorkflowViewComponent} from './workflow-view/workflow-view.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 
 
 @NgModule({
-    declarations: [
-        WorkflowViewComponent,
-    ],
     imports: [
         CommonModule,
         FlexLayoutModule,
@@ -24,13 +19,6 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
         PanelModule,
         DataFieldsModule,
         TranslateLibModule
-    ],
-    exports: [
-        WorkflowViewComponent,
-    ],
-    entryComponents: [
-        ImportNetComponent
     ]
-
 })
 export class WorkflowViewModule { }

@@ -1,0 +1,20 @@
+import {Component, Inject} from '@angular/core';
+import {UserListService, NAE_SIDE_MENU_CONTROL, SideMenuControl, AbstractUserAssignComponent} from '@netgrif/application-engine';
+
+/**
+ * Is the main - parent component of the entire user assignment in the side menu.
+ *
+ * Holds logic link of the [UserAssignListComponent]{@link UserAssignListComponent}
+ * along with searching, selecting, and then assigning to the user field.
+ */
+@Component({
+    selector: 'nc-user-assign',
+    templateUrl: './user-assign.component.html',
+    styleUrls: ['./user-assign.component.scss'],
+    providers: [UserListService]
+})
+export class UserAssignComponent extends AbstractUserAssignComponent {
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl) {
+        super(_sideMenuControl);
+    }
+}

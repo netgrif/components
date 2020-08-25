@@ -1,3 +1,0 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="full-height">
-    <nae-tab-view [initialTabs]="tabs" stretch="true" class="full-height" fxFlex="100"></nae-tab-view>
-</div>

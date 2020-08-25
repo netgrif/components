@@ -3,12 +3,12 @@ import {
     AbstractCaseView,
     Case,
     CaseViewService,
-    HeaderComponent,
     SearchChipService,
     SearchService,
     SimpleFilter,
     AllNetsCaseViewServiceFactory
 } from '@netgrif/application-engine';
+import {HeaderComponent} from '@netgrif/components';
 
 const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => {
     return factory.create();

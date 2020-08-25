@@ -10,3 +10,4 @@ export * from './model/policy';
 
 /* MODULES */
 export * from './task-content.module';
+export * from './task-content/abstract-task-content.component';

@@ -1,13 +1,10 @@
 /* APIS */
 
-/* COMPONENTS */
-export * from './role-assignment/role-assignment.component';
-
 /* MODULES */
 export * from './administration.module';
 
 /* CLASSES */
-
+export * from './role-assignment/abstract-role-assignment';
 
 /* SERVICES */
 export * from './role-assignment/services/role-assignment.service';
