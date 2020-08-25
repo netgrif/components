@@ -5,6 +5,8 @@ import {AssignPolicy} from '../model/policy';
 import {TaskContentService} from './task-content.service';
 import {TaskHandlingService} from '../../task/services/task-handling-service';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {Observable, Subject} from 'rxjs';
+import {TaskEventNotification} from '../model/task-event-notification';
 
 /**
  * Holds logic about the available operations on a {@link Task} object based on it's state.
@@ -15,11 +17,29 @@ import {UserComparatorService} from '../../user/services/user-comparator.service
 @Injectable()
 export class TaskEventService extends TaskHandlingService {
 
+    protected _taskEventNotifications$: Subject<TaskEventNotification>;
+
     constructor(protected _userService: UserService,
                 protected _logger: LoggerService,
                 protected _userComparator: UserComparatorService,
                 _taskContentService: TaskContentService) {
         super(_taskContentService);
+        this._taskEventNotifications$ = new Subject<TaskEventNotification>();
+    }
+
+    /**
+     * Provides information about results of events executed on the managed {@link Task}
+     */
+    public get taskEventNotifications$(): Observable<TaskEventNotification> {
+        return this._taskEventNotifications$.asObservable();
+    }
+
+    /**
+     * Emits a new {@link TaskEventNotification} into the notifications stream
+     * @param event the event information that will be pushed into the stream
+     */
+    public publishTaskEvent(event: TaskEventNotification): void {
+        this._taskEventNotifications$.next(event);
     }
 
     /**

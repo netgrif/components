@@ -17,6 +17,9 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {FileField} from '../../data-fields/file-field/models/file-field';
 import {SelectedCaseService} from './selected-case.service';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
+import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
+import {TaskEventService} from '../../task-content/services/task-event.service';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -35,6 +38,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _taskResourceService: TaskResourceService,
                 protected _fieldConverterService: FieldConverterService,
                 protected _dataFocusPolicyService: DataFocusPolicyService,
+                protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -85,6 +89,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
 
         if (this._safeTask.dataSize > 0 && !force) {
+            this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.next(true);
             return;
         }
@@ -124,6 +129,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 });
             }
             this._taskState.stopLoading(gottenTaskId);
+            this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.next(true);
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
         }, (error: HttpErrorResponse) => {
@@ -142,6 +148,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
              ${this._taskContentService.task.title} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
             }
+            this.sendNotification(TaskEvent.GET_DATA, false);
             afterAction.next(false);
         });
     }
@@ -182,6 +189,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         const body = this.createUpdateRequestBody();
 
         if (Object.keys(body).length === 0) {
+            this.sendNotification(TaskEvent.SET_DATA, true);
             afterAction.next(true);
             return;
         }
@@ -272,6 +280,16 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (this._updateSuccess$.observers.length !== 0) {
             this._updateSuccess$.next(result);
         }
+        this.sendNotification(TaskEvent.SET_DATA, result);
         afterAction.next(result);
+    }
+
+    /**
+     * Publishes a get/set data notification to the {@link TaskEventService}
+     * @param event the event that occurred to the task
+     * @param success whether the get/set data operation was successful or not
+     */
+    private sendNotification(event: TaskEvent.GET_DATA | TaskEvent.SET_DATA, success: boolean): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, event, success));
     }
 }

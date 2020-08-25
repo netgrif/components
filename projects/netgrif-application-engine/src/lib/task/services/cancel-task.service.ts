@@ -12,6 +12,8 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
 import {SelectedCaseService} from './selected-case.service';
+import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -26,6 +28,7 @@ export class CancelTaskService extends TaskHandlingService {
                 protected _snackBar: SnackBarService,
                 protected _taskState: TaskRequestStateService,
                 protected _userComparator: UserComparatorService,
+                protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -56,6 +59,7 @@ export class CancelTaskService extends TaskHandlingService {
                 !this._userComparator.compareUsers(this._safeTask.user)
                 && !this._taskEventService.canDo('perform')
             )) {
+            this.sendNotification(false);
             afterAction.next(false);
             return;
         }
@@ -72,9 +76,11 @@ export class CancelTaskService extends TaskHandlingService {
             if (response.success) {
                 this._taskContentService.removeStateData();
                 this._taskOperations.reload();
+                this.sendNotification(true);
                 afterAction.next(true);
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
+                this.sendNotification(false);
                 afterAction.next(false);
             }
         }, error => {
@@ -88,7 +94,16 @@ export class CancelTaskService extends TaskHandlingService {
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
+            this.sendNotification(false);
             afterAction.next(false);
         });
+    }
+
+    /**
+     * Publishes a cancel notification to the {@link TaskEventService}
+     * @param success whether the cancel operation was successful or not
+     */
+    private sendNotification(success: boolean): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.CANCEL, success));
     }
 }
