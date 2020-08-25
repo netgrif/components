@@ -13,6 +13,9 @@ export abstract class AbstractTaskListComponent implements OnInit {
     @Input() loading$: Observable<boolean>;
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
+    /**
+     * Emits notifications about task events
+     */
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;

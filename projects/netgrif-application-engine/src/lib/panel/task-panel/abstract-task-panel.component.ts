@@ -38,6 +38,9 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    /**
+     * Emits notifications about task events
+     */
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
     public portal: ComponentPortal<any>;
