@@ -1,17 +1,19 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
-import {SideMenuControl} from '../../models/side-menu-control';
 import {Observable, of, Subject} from 'rxjs';
-import {ConfigurationService} from '../../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {SideMenuImportNetModule} from './side-menu-import-net.module';
+import {SideMenuImportNetComponentModule} from './side-menu-import-net-component.module';
 import {ImportNetComponent} from './import-net.component';
-import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {ErrorSnackBarComponent} from '../../../snack-bar/components/error-snack-bar/error-snack-bar.component';
-import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-snack-bar/success-snack-bar.component';
+import {
+    TranslateLibModule,
+    ConfigurationService,
+    TestConfigurationService,
+    NAE_SIDE_MENU_CONTROL,
+    SideMenuControl,
+    PetriNetResourceService,
+    ErrorSnackBarComponent,
+    SuccessSnackBarComponent,
+} from '@netgrif/application-engine';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatIconModule} from '@angular/material/icon';
 
@@ -23,7 +25,7 @@ describe('ImportNetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                SideMenuImportNetModule,
+                SideMenuImportNetComponentModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
                 TranslateLibModule,

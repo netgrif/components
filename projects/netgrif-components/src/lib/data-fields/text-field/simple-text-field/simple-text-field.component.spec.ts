@@ -1,21 +1,23 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SimpleTextFieldComponent} from './simple-text-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
-import {TextField} from '../models/text-field';
-import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormControl} from '@angular/forms';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    TextField,
+    WrappedBoolean
+} from '@netgrif/application-engine';
 
 describe('SimpleTextFieldComponent', () => {
     let component: SimpleTextFieldComponent;
@@ -59,11 +61,11 @@ describe('SimpleTextFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: `<nae-simple-text-field [showLargeLayout]="label"
+    selector: 'nc-test-wrapper',
+    template: `<nc-simple-text-field [showLargeLayout]="label"
                                       [textField]="field"
                                       [formControlRef]="formControl">
-                </nae-simple-text-field>`
+                </nc-simple-text-field>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

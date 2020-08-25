@@ -2,16 +2,11 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CountCardComponent} from './count-card.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {Component} from '@angular/core';
-import {CountCard} from '../model/count-card';
-import {DashboardCardTypes} from '../model/dashboard-card-types';
-import {CountService} from '../../../resources/abstract-endpoint/count-service';
 import {Observable, of} from 'rxjs';
-import {Count} from '../../../resources/interface/count';
-import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {FilterType} from '../../../filter/models/filter-type';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {CaseResourceService, CountService, CountCard, FilterType, DashboardCardTypes, Count} from '@netgrif/application-engine';
 
 describe('CountCardComponent', () => {
     let component: CountCardComponent;
@@ -45,8 +40,8 @@ describe('CountCardComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-count-card [card]="card"></nae-count-card>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-count-card [card]="card"></nc-count-card>'
 })
 class TestWrapperComponent {
     card: CountCard = {

@@ -1,15 +1,17 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RemoveNodeComponent} from './remove-node.component';
-import {MaterialModule} from '../../../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {CaseTreeService} from '../case-tree.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../../utility/tests/test-config';
-import {TreeCaseViewService} from '../../tree-case-view.service';
-import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {Component} from '@angular/core';
-import {CaseTreeNode} from '../model/CaseTreeNode';
+import {
+    MaterialModule,
+    ConfigurationService,
+    TestConfigurationService,
+    TreeCaseViewService,
+    TranslateLibModule,
+    CaseTreeService,
+    CaseTreeNode
+} from '@netgrif/application-engine';
 
 describe('RemoveNodeComponent', () => {
     let component: RemoveNodeComponent;
@@ -47,8 +49,8 @@ describe('RemoveNodeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-remove-node [node]="node"></nae-remove-node>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-remove-node [node]="node"></nc-remove-node>'
 })
 class TestComponent {
     node = new CaseTreeNode(undefined, undefined);

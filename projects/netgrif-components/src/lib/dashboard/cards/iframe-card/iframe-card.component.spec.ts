@@ -1,8 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IframeCardComponent} from './iframe-card.component';
 import {Component} from '@angular/core';
-import {DashboardCardTypes} from '../model/dashboard-card-types';
-import {IframeCard} from '../model/iframe-card';
+import {IframeCard, DashboardCardTypes} from '@netgrif/application-engine';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatCardModule} from '@angular/material/card';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -35,8 +34,8 @@ describe('IframeCardComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-iframe-card [card]="card"></nae-iframe-card>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-iframe-card [card]="card"></nc-iframe-card>'
 })
 class TestWrapperComponent {
     card: IframeCard = {

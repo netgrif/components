@@ -3,8 +3,6 @@
     "dest": "../../dist/netgrif-application-engine",
     "assets": [
         "./src/assets",
-        "**/*theme.scss",
-        "./nae-typography.scss",
         "./src/schema/nae-schema.json"
     ],
     "lib": {

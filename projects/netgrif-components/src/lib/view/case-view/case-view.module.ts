@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CaseListComponent} from './components/case-list/case-list.component';
 import {FlexModule} from '@angular/flex-layout';
-import {PanelModule} from '../../panel/panel.module';
+import {PanelComponentModule} from '../../panel/panel.module';
 import {TranslateLibModule, MaterialModule} from '@netgrif/application-engine';
 
 
@@ -13,9 +13,9 @@ import {TranslateLibModule, MaterialModule} from '@netgrif/application-engine';
         CommonModule,
         MaterialModule,
         FlexModule,
-        PanelModule,
+        PanelComponentModule,
         TranslateLibModule
     ]
 })
-export class CaseViewModule {
+export class CaseViewComponentModule {
 }

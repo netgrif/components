@@ -2,24 +2,27 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {WorkflowPanelComponent} from './workflow-panel.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
-import {MaterialModule} from '../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {DataFieldsModule} from '../../data-fields/data-fields.module';
+import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {of} from 'rxjs';
-import {PetriNetReference} from '../../resources/interface/petri-net-reference';
-import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {
+    MaterialModule,
+    UserResourceService,
+    ConfigurationService,
+    TestConfigurationService,
+    AuthenticationMethodService,
+    AuthenticationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TranslateLibModule,
+    HeaderColumn,
+    HeaderColumnType,
+    WorkflowMetaField,
+    PetriNetReference
+} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 
 
 describe('WorkflowPanelComponent', () => {
@@ -33,7 +36,7 @@ describe('WorkflowPanelComponent', () => {
                 CommonModule,
                 FlexModule,
                 BrowserAnimationsModule,
-                DataFieldsModule,
+                DataFieldsComponentModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
@@ -66,8 +69,8 @@ describe('WorkflowPanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nae-workflow-panel>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nc-workflow-panel>'
 })
 class TestWrapperComponent {
     public selectedHeaders = of([

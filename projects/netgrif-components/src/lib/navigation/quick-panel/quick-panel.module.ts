@@ -31,5 +31,5 @@ import {
         TranslateLibModule
     ]
 })
-export class QuickPanelModule {
+export class QuickPanelComponentModule {
 }

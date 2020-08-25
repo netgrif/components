@@ -1,6 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
@@ -9,9 +8,7 @@ import {SimpleTextFieldComponent} from './simple-text-field/simple-text-field.co
 import {TextareaFieldComponent} from './textarea-field/textarea-field.component';
 import {RichTextareaFieldComponent} from './rich-textarea-field/rich-textarea-field.component';
 import {TextFieldComponent} from './text-field.component';
-import {TextField} from './models/text-field';
-import {CovalentModule} from '../../covalent/covalent.module';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {TranslateLibModule, CovalentModule, MaterialModule, TextField} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('TextFieldComponent', () => {
@@ -47,8 +44,8 @@ describe('TextFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-text-field [dataField]="field"></nae-text-field>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-text-field [dataField]="field"></nc-text-field>'
 })
 class TestWrapperComponent {
     field = new TextField('', '', '', {

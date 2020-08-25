@@ -1,18 +1,20 @@
 import {TaskContentComponent} from './task-content.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {PanelModule} from '../../panel/panel.module';
-import {MaterialModule} from '../../material/material.module';
+import {PanelComponentModule} from '../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
-import {TaskContentService} from '../services/task-content.service';
-import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
-import {MaterialAppearance} from '../../data-fields/models/material-appearance';
-import {TemplateAppearance} from '../../data-fields/models/template-appearance';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    ConfigurationService,
+    TestConfigurationService,
+    BooleanField,
+    TaskViewService,
+    TaskContentService,
+    MaterialAppearance,
+    TemplateAppearance
+} from '@netgrif/application-engine';
 
 describe('TaskContentComponent', () => {
     let component: TaskContentComponent;
@@ -22,7 +24,7 @@ describe('TaskContentComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MatExpansionModule,
-                PanelModule,
+                PanelComponentModule,
                 MaterialModule,
                 NoopAnimationsModule,
                 CommonModule,

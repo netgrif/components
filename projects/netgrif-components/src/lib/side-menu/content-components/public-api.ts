@@ -1,11 +1,11 @@
 /* MODULES */
-export * from './side-menu-content.module';
-export * from './files-upload/side-menu-files-upload.module';
-export * from './import-net/side-menu-import-net.module';
-export * from './new-case/side-menu-new-case.module';
-export * from './user-assign/side-menu-user-assign.module';
-export * from './filter-selector/side-menu-filter-selector.module';
-export * from './option-selector/side-menu-option-selector.module';
+export * from './side-menu-content-component.module';
+export * from './files-upload/side-menu-files-upload-component.module';
+export * from './import-net/side-menu-import-net-component.module';
+export * from './new-case/side-menu-new-case-component.module';
+export * from './user-assign/side-menu-user-assign-component.module';
+export * from './filter-selector/side-menu-filter-selector-component.module';
+export * from './option-selector/side-menu-option-selector-component.module';
 
 /* COMPONENTS */
 export * from './files-upload/files-upload.component';

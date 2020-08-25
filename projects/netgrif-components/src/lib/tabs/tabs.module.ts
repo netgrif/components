@@ -22,4 +22,4 @@ import {MaterialModule} from '@netgrif/application-engine';
         FlexLayoutModule,
     ]
 })
-export class TabsModule { }
+export class TabsComponentModule { }

@@ -1,16 +1,18 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AddChildNodeComponent} from './add-child-node.component';
-import {MaterialModule} from '../../../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TranslateLibModule} from '../../../../translate/translate-lib.module';
-import {CaseTreeService} from '../case-tree.service';
-import {TreeCaseViewService} from '../../tree-case-view.service';
-import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {
+    MaterialModule,
+    ConfigurationService,
+    TestConfigurationService,
+    TreeCaseViewService,
+    TranslateLibModule,
+    CaseTreeService,
+    CaseTreeNode
+} from '@netgrif/application-engine';
 import {Component} from '@angular/core';
-import {CaseTreeNode} from '../model/CaseTreeNode';
 
 describe('AddChildNodeComponent', () => {
     let component: AddChildNodeComponent;
@@ -48,8 +50,8 @@ describe('AddChildNodeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-add-child-node [node]="node"></nae-add-child-node>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-add-child-node [node]="node"></nc-add-child-node>'
 })
 class TestComponent {
     node = new CaseTreeNode(undefined, undefined);

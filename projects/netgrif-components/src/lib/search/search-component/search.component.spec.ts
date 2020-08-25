@@ -1,20 +1,22 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchComponent} from './search.component';
-import {MaterialModule} from '../../material/material.module';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {SearchService} from '../search-service/search.service';
-import {TestCaseSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 import {Component} from '@angular/core';
-import {SearchModule} from '../search.module';
+import {SearchComponentModule} from '../search.module';
+import {
+    MaterialModule,
+    UserResourceService,
+    ConfigurationService,
+    TestConfigurationService,
+    SearchService,
+    AuthenticationMethodService,
+    AuthenticationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestCaseSearchServiceFactory,
+    TranslateLibModule,
+} from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
-import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 
 describe('SearchComponent', () => {
     let component: SearchComponent;
@@ -26,7 +28,7 @@ describe('SearchComponent', () => {
                 MaterialModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                SearchModule,
+                SearchComponentModule,
                 NoopAnimationsModule,
             ],
             providers: [
@@ -55,8 +57,8 @@ describe('SearchComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-search [searchCategories]="arr"></nae-search>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-search [searchCategories]="arr"></nc-search>'
 })
 class TestComponent {
     arr = [];

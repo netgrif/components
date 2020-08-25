@@ -24,4 +24,5 @@ export * from './option-selector/abstract-option-selector.component';
 export * from './files-upload/models/file-upload-model';
 export * from './filter-selector/model/filter-selector-injection-data';
 export * from './option-selector/model/option-selector-injection-data';
+export * from './user-assign/model/user-list-injected-data';
 export * from './injection-tokens';

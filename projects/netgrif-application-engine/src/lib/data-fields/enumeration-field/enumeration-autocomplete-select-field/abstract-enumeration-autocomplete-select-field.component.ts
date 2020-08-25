@@ -50,7 +50,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
             }
         }
         return key;
-    };
+    }
 
     public buildErrorMessage() {
         if (this.formControlRef.hasError(EnumerationFieldValidation.REQUIRED)) {

@@ -4,25 +4,27 @@ import {LoadingModeComponent} from './loading-mode.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
-import {CaseHeaderService} from '../../case-header/case-header.service';
-import {AbstractEditModeComponent} from '../edit-mode/abstract-edit-mode.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MaterialModule} from '../../../material/material.module';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {RouterModule} from '@angular/router';
-import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
-import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {SearchService} from '../../../search/search-service/search.service';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
-import {CaseViewService} from '../../../view/case-view/service/case-view-service';
-import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {ViewService} from '../../../routing/view-service/view.service';
-import {TestViewService} from '../../../utility/tests/test-view-service';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    CaseHeaderService,
+    ConfigCaseViewServiceFactory,
+    AuthenticationMethodService,
+    SearchService,
+    TestCaseSearchServiceFactory,
+    CaseViewService,
+    TestCaseViewFactory,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    ViewService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    TestViewService,
+} from '@netgrif/application-engine';
 
 describe('LoadingModeComponent', () => {
     let component: LoadingModeComponent;
@@ -77,8 +79,8 @@ describe('LoadingModeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-loading-mode [headerService]="service"></nae-loading-mode>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-loading-mode [headerService]="service"></nc-loading-mode>'
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

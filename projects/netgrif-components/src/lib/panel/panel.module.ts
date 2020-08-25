@@ -12,8 +12,8 @@ import {
     TranslateLibModule,
     SnackBarModule
 } from '@netgrif/application-engine';
-import {SideMenuContentModule} from '../side-menu/content-components/side-menu-content.module';
-import {TaskContentModule} from '../task-content/task-content.module';
+import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
+import {TaskContentComponentModule} from '../task-content/task-content.module';
 @NgModule({
     declarations: [
         PanelComponent,
@@ -29,8 +29,8 @@ import {TaskContentModule} from '../task-content/task-content.module';
         DataFieldsComponentModule,
         TranslateLibModule,
         SnackBarModule,
-        TaskContentModule,
-        SideMenuContentModule
+        TaskContentComponentModule,
+        SideMenuContentComponentModule
     ],
     exports: [
         PanelComponent,
@@ -40,5 +40,5 @@ import {TaskContentModule} from '../task-content/task-content.module';
         TaskListComponent,
     ]
 })
-export class PanelModule {
+export class PanelComponentModule {
 }

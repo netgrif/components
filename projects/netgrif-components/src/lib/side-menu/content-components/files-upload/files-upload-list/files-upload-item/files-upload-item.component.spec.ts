@@ -1,14 +1,16 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {FilesUploadItemComponent} from './files-upload-item.component';
-import {FileFieldService} from '../../../../../data-fields/file-field/services/file-field.service';
-import {MaterialModule} from '../../../../../material/material.module';
-import {CovalentModule} from '../../../../../covalent/covalent.module';
+import {
+    MaterialModule,
+    CovalentModule,
+    ConfigurationService,
+    TestConfigurationService,
+    FileFieldService,
+    FileUploadModel
+} from '@netgrif/application-engine';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
-import {ConfigurationService} from '../../../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../../../utility/tests/test-config';
-import {FileUploadModel} from '../../models/file-upload-model';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilesUploadItemComponent', () => {
@@ -50,8 +52,8 @@ describe('FilesUploadItemComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-files-upload-item [file]="file" [fileFieldService]="service"></nae-files-upload-item>',
+    selector: 'nc-test-wrapper',
+    template: '<nc-files-upload-item [file]="file" [fileFieldService]="service"></nc-files-upload-item>',
     providers: [FileFieldService]
 })
 class TestWrapperComponent {

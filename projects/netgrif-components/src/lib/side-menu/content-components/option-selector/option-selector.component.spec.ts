@@ -1,11 +1,13 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {OptionSelectorComponent} from './option-selector.component';
-import {MaterialModule} from '../../../material/material.module';
 import {TranslateModule} from '@ngx-translate/core';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    NAE_SIDE_MENU_CONTROL,
+} from '@netgrif/application-engine';
 
 describe('OptionSelectorComponent', () => {
     let component: OptionSelectorComponent;

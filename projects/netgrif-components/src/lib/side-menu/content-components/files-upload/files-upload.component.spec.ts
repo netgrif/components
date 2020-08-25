@@ -1,15 +1,17 @@
 import {FilesUploadComponent} from './files-upload.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {SideMenuFilesUploadModule} from './side-menu-files-upload.module';
+import {SideMenuFilesUploadComponentModule} from './side-menu-files-upload-component.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
-import {SideMenuControl} from '../../models/side-menu-control';
 import {Observable} from 'rxjs';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {FileFieldService} from '../../../data-fields/file-field/services/file-field.service';
 import {NgModule} from '@angular/core';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {
+    TranslateLibModule,
+    FileFieldService,
+    TestConfigurationService,
+    ConfigurationService,
+    SideMenuControl,
+    NAE_SIDE_MENU_CONTROL
+} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('FilesUploadComponent', () => {
@@ -19,7 +21,7 @@ describe('FilesUploadComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                SideMenuFilesUploadModule,
+                SideMenuFilesUploadComponentModule,
                 NoopAnimationsModule,
                 TestFileFieldServiceProviderModule,
                 TranslateLibModule, HttpClientTestingModule

@@ -1,22 +1,24 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RichTextareaFieldComponent} from './rich-textarea-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
-import {TextField} from '../models/text-field';
 import {FormControl} from '@angular/forms';
-import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CovalentModule} from '../../../covalent/covalent.module';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    TextField,
+    CovalentModule,
+    WrappedBoolean
+} from '@netgrif/application-engine';
 
 describe('RichTextareaFieldComponent', () => {
     let component: RichTextareaFieldComponent;
@@ -61,11 +63,11 @@ describe('RichTextareaFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
+    selector: 'nc-test-wrapper',
     template: `
-        <nae-rich-textarea-field [showLargeLayout]="label"
+        <nc-rich-textarea-field [showLargeLayout]="label"
                                  [formControlRef]="formControl"
-                                 [textAreaField]="dataField"></nae-rich-textarea-field>`
+                                 [textAreaField]="dataField"></nc-rich-textarea-field>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

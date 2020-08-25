@@ -8,7 +8,7 @@ export * from './sign-up/public-api';
 export * from './authentication.module';
 
 /* CLASSES */
-
+export * from './authentication.factory';
 
 /* SERVICES */
 

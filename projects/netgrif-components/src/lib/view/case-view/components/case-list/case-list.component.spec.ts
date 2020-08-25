@@ -1,18 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case-list.component';
-import {MaterialModule} from '../../../../material/material.module';
-import {CaseViewService} from '../../service/case-view-service';
-import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
-import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    ConfigurationService,
+    TestConfigurationService,
+    ConfigCaseViewServiceFactory,
+    SearchService,
+    SimpleFilter,
+    FilterType,
+    CaseResourceService,
+    CaseViewService
+} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {of} from 'rxjs';
-import {PanelModule} from '../../../../panel/panel.module';
-import {SearchService} from '../../../../search/search-service/search.service';
-import {SimpleFilter} from '../../../../filter/models/simple-filter';
-import {FilterType} from '../../../../filter/models/filter-type';
-import {ConfigCaseViewServiceFactory} from '../../service/factory/config-case-view-service-factory';
+import {PanelComponentModule} from '../../../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
@@ -33,7 +35,7 @@ describe('CaseListComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                PanelModule,
+                PanelComponentModule,
                 NoopAnimationsModule
             ],
             providers: [

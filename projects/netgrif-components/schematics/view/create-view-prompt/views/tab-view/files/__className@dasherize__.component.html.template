@@ -1,0 +1,3 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="full-height">
+    <nc-tab-view [initialTabs]="tabs" stretch="true" class="full-height" fxFlex="100"></nc-tab-view>
+</div>

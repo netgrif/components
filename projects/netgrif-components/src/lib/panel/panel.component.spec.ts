@@ -1,12 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PanelComponent} from './panel.component';
-import {MaterialModule} from '../material/material.module';
+import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {TranslateLibModule} from '../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('PanelComponent', () => {
@@ -19,7 +18,7 @@ describe('PanelComponent', () => {
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],

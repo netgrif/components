@@ -1,21 +1,23 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {BooleanFieldComponent} from './boolean-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {BooleanField} from './models/boolean-field';
-import {MaterialModule} from '../../material/material.module';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    BooleanField
+} from '@netgrif/application-engine';
 
 describe('BooleanFieldComponent', () => {
     let component: BooleanFieldComponent;
@@ -65,7 +67,7 @@ describe('BooleanFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nae-boolean-field [dataField]="field"></nae-boolean-field>'
+    template: '<nc-boolean-field [dataField]="field"></nc-boolean-field>'
 })
 class TestWrapperComponent {
     field = new BooleanField('', '', false, {

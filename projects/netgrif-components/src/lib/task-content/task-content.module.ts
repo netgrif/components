@@ -25,5 +25,5 @@ import {SnackBarModule, MaterialModule, TranslateLibModule} from '@netgrif/appli
         TaskContentComponent
     ]
 })
-export class TaskContentModule {
+export class TaskContentComponentModule {
 }

@@ -1,25 +1,27 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {WorkflowViewComponent} from './workflow-view.component';
-import {MaterialModule} from '../../material/material.module';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {PanelModule} from '../../panel/panel.module';
-import {SideMenuContentModule} from '../../side-menu/content-components/side-menu-content.module';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HeaderModule} from '../../header/header.module';
-import {WorkflowHeaderService} from '../../header/workflow-header/workflow-header.service';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
-import {ViewService} from '../../routing/view-service/view.service';
-import {TestViewService} from '../../utility/tests/test-view-service';
+import {SideMenuContentComponentModule} from '../../side-menu/content-components/side-menu-content-component.module';
 import {RouterModule} from '@angular/router';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    ViewService,
+    TestViewService,
+    WorkflowHeaderService
+} from '@netgrif/application-engine';
+import {PanelComponentModule} from '../../panel/panel.module';
+import {HeaderComponentModule} from '../../header/header.module';
 
 describe('WorkflowViewComponent', () => {
     let component: WorkflowViewComponent;
@@ -34,10 +36,10 @@ describe('WorkflowViewComponent', () => {
                 MaterialModule,
                 NoopAnimationsModule,
                 HttpClientModule,
-                PanelModule,
-                HeaderModule,
+                PanelComponentModule,
+                HeaderComponentModule,
                 HttpClientTestingModule,
-                SideMenuContentModule,
+                SideMenuContentComponentModule,
                 TranslateLibModule,
                 RouterModule.forRoot([])
             ],

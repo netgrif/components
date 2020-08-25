@@ -31,5 +31,5 @@ import {LoadingModeComponent} from './header-modes/loading-mode/loading-mode.com
         MaterialModule
     ]
 })
-export class HeaderModule {
+export class HeaderComponentModule {
 }

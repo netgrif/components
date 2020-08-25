@@ -1,17 +1,18 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {LoginFormComponent} from './login-form.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Credentials} from '../../authentication/models/credentials';
 import {Observable, of} from 'rxjs';
-import {User} from '../../authentication/models/user';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {
+    TranslateLibModule,
+    MaterialModule,
+    Credentials,
+    TestConfigurationService,
+    ConfigurationService,
+    AuthenticationMethodService,
+} from '@netgrif/application-engine';
 
 describe('LoginFormComponent', () => {
     let component: LoginFormComponent;
@@ -61,7 +62,12 @@ describe('LoginFormComponent', () => {
 });
 
 class MyAuth extends AuthenticationMethodService {
-    login(credentials: Credentials): Observable<User> {
+
+    constructor() {
+        super();
+    }
+
+    login(credentials: Credentials): Observable<any> {
         return of({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
     }
 

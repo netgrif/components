@@ -3,15 +3,17 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UserCardComponent} from './user-card.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {MaterialModule} from '../../../material/material.module';
-import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    ConfigurationService,
+    TestConfigurationService,
+    UserPreferenceService,
+    MockUserPreferenceService
+} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {UserPreferenceService} from '../../services/user-preference.service';
-import {MockUserPreferenceService} from '../../../utility/tests/mocks/mock-user-preference.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UserCardComponent', () => {

@@ -2,16 +2,13 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NavigationTreeComponent} from './navigation-tree.component';
 import {CommonModule} from '@angular/common';
-import {MaterialModule} from '../../material/material.module';
+import {MaterialModule, ConfigurationService, TestConfigurationService, TranslateLibModule} from '@netgrif/application-engine';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
-import {QuickPanelModule} from '../quick-panel/quick-panel.module';
-import {UserModule} from '../../user/user.module';
-import {ConfigurationService} from '../../configuration/configuration.service';
+import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
+import {UserComponentModule} from '../../user/user.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('NavigationTreeComponent', () => {
     let component: NavigationTreeComponent;
@@ -28,8 +25,8 @@ describe('NavigationTreeComponent', () => {
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
-                QuickPanelModule,
-                UserModule,
+                QuickPanelComponentModule,
+                UserComponentModule,
                 RouterTestingModule.withRoutes([]),
                 HttpClientTestingModule,
                 TranslateLibModule, NoopAnimationsModule

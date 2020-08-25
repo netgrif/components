@@ -1,13 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EnumerationSelectFieldComponent} from './enumeration-select-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {EnumerationField} from '../models/enumeration-field';
-import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {TranslateLibModule, WrappedBoolean, MaterialModule, EnumerationField} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('EnumerationSelectFieldComponent', () => {
@@ -43,9 +40,9 @@ describe('EnumerationSelectFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-enumeration-select-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</nae-enumeration-select-field>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-enumeration-select-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</nc-enumeration-select-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

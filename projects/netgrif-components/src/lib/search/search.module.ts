@@ -27,5 +27,5 @@ import {
         NgxMatDatetimePickerModule,
     ]
 })
-export class SearchModule {
+export class SearchComponentModule {
 }

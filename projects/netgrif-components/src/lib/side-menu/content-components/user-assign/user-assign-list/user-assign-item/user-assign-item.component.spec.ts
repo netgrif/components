@@ -1,9 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {UserValue} from '../../../../../data-fields/user-field/models/user-value';
 import {UserAssignItemComponent} from './user-assign-item.component';
 import {Component} from '@angular/core';
-import {MaterialModule} from '../../../../../material/material.module';
-import {TranslateLibModule} from '../../../../../translate/translate-lib.module';
+import {TranslateLibModule, MaterialModule, UserValue} from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UserAssignItemComponent', () => {
@@ -36,8 +34,8 @@ describe('UserAssignItemComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-user-assign-item [user]="user"></nae-user-assign-item>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-user-assign-item [user]="user"></nc-user-assign-item>'
 })
 class TestWrapperComponent {
     user = new UserValue('0', '', '', '');

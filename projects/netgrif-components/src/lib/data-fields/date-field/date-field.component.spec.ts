@@ -1,21 +1,23 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {DateFieldComponent} from './date-field.component';
-import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {DateField} from './models/date-field';
 import moment from 'moment';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    DateField
+} from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DateFieldComponent', () => {
@@ -65,8 +67,8 @@ describe('DateFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-date-field [dataField]="field"></nae-date-field>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-date-field [dataField]="field"></nc-date-field>'
 })
 class TestWrapperComponent {
     field = new DateField('', '', moment(new Date()), {

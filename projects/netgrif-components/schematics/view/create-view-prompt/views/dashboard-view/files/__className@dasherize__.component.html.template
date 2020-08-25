@@ -1,0 +1,1 @@
+<nc-dashboard-content [params]="params"></nc-dashboard-content>

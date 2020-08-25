@@ -2,16 +2,18 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NavigationDrawerComponent} from './navigation-drawer.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
-import {QuickPanelModule} from '../quick-panel/quick-panel.module';
-import {UserModule} from '../../user/user.module';
+import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {NavigationTreeComponent} from '../navigation-tree/navigation-tree.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
+import {
+    TestConfigurationService,
+    ConfigurationService,
+    TranslateLibModule,
+    MaterialModule
+} from '@netgrif/application-engine';
+import {UserComponentModule} from '../../user/user.module';
 
 describe('NavigationDrawerComponent', () => {
     let component: NavigationDrawerComponent;
@@ -26,8 +28,8 @@ describe('NavigationDrawerComponent', () => {
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
-                QuickPanelModule,
-                UserModule,
+                QuickPanelComponentModule,
+                UserComponentModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule

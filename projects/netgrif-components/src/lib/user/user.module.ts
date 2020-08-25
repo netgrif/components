@@ -17,5 +17,5 @@ import {RouterModule} from '@angular/router';
         TranslateLibModule
     ]
 })
-export class UserModule {
+export class UserComponentModule {
 }

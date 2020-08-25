@@ -2,13 +2,10 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MultichoiceListFieldComponent} from './multichoice-list-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
-import {MultichoiceField} from '../models/multichoice-field';
-import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormControl} from '@angular/forms';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {TranslateLibModule, MaterialModule, MultichoiceField, WrappedBoolean} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('MultichoiceListFieldComponent', () => {
@@ -45,9 +42,9 @@ describe('MultichoiceListFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-multichoice-list-field [showLargeLayout]="label" [multichoiceField]="field" [formControlRef]="form">' +
-        '</nae-multichoice-list-field>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-multichoice-list-field [showLargeLayout]="label" [multichoiceField]="field" [formControlRef]="form">' +
+        '</nc-multichoice-list-field>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

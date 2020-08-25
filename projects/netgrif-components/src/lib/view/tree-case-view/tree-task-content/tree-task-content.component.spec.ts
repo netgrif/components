@@ -2,14 +2,17 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TreeTaskContentComponent} from './tree-task-content.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TaskContentModule} from '../../../task-content/task-content.module';
-import {MaterialModule} from '../../../material/material.module';
-import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {ConfigurationService} from '../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {NullAuthenticationService} from '../../../authentication/services/methods/null-authentication/null-authentication.service';
-import {TreeCaseViewService} from '../tree-case-view.service';
+import {TaskContentComponentModule} from '../../../task-content/task-content.module';
+import {
+    MaterialModule,
+    ConfigurationService,
+    TestConfigurationService,
+    TreeCaseViewService,
+    TranslateLibModule,
+    CaseTreeNode,
+    AuthenticationMethodService,
+    NullAuthenticationService
+} from '@netgrif/application-engine';
 
 describe('TreeTaskContentComponent', () => {
     let component: TreeTaskContentComponent;
@@ -17,7 +20,7 @@ describe('TreeTaskContentComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, TaskContentModule, MaterialModule, TranslateLibModule],
+            imports: [NoopAnimationsModule, TaskContentComponentModule, MaterialModule, TranslateLibModule],
             providers: [
                 TreeCaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},

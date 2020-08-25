@@ -2,13 +2,10 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {UserFieldComponent} from './user-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {UserField} from './models/user-field';
-import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {TranslateLibModule, SideMenuService, MaterialModule, UserField} from '@netgrif/application-engine';
 
 describe('UserFieldComponent', () => {
     let component: UserFieldComponent;
@@ -37,8 +34,8 @@ describe('UserFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-user-field [dataField]="field"> </nae-user-field>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-user-field [dataField]="field"> </nc-user-field>'
 })
 class TestWrapperComponent {
     field = new UserField('', '', {

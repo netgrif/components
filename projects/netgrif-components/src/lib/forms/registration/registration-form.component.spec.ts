@@ -1,15 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RegistrationFormComponent} from './registration-form.component';
-import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {TranslateLibModule, TestConfigurationService, ConfigurationService,
+    SignUpService, MaterialModule} from '@netgrif/application-engine';
 
 describe('RegistrationPanelComponent', () => {
     let component: RegistrationFormComponent;

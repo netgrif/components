@@ -3,9 +3,9 @@
     "version": "4.1.0-alpha.17",
     "scripts": {
         "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
-        "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/netgrif-application-engine/ && cp --parents schematics/*/*/schema.json ../../dist/netgrif-application-engine/",
-        "copy:files": "cp --parents -pr schematics/*/*/files/** ../../dist/netgrif-application-engine/",
-        "copy:collection": "cp schematics/collection.json ../../dist/netgrif-application-engine/schematics/collection.json",
+        "copy:schemas": "cp --parents ../netgrif-components/schematics/*/schema.json ../../dist/netgrif-application-engine/ && cp --parents schematics/*/*/schema.json ../../dist/netgrif-application-engine/",
+        "copy:files": "cp --parents -pr ../netgrif-components/schematics/*/*/files/** ../../dist/netgrif-application-engine/",
+        "copy:collection": "cp ../netgrif-components/schematics/collection.json ../../dist/netgrif-application-engine/schematics/collection.json",
         "postbuild": "npm run copy:schemas && npm run copy:files && npm run copy:collection"
     },
     "description": "Netgrif Application engine frontend Angular library",

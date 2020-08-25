@@ -21,5 +21,5 @@ import {MaterialModule} from '@netgrif/application-engine';
         SideMenuContainerComponent
     ]
 })
-export class SideMenuModule {
+export class SideMenuComponentModule {
 }

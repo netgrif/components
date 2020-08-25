@@ -1,20 +1,21 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FilterSelectorComponent} from './filter-selector.component';
-import {SideMenuFilterSelectorModule} from './side-menu-filter-selector.module';
-import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
-import {SideMenuControl} from '../../models/side-menu-control';
+import {SideMenuFilterSelectorComponentModule} from './side-menu-filter-selector-component.module';
 import {Observable} from 'rxjs';
-import {ConfigurationService} from '../../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {SimpleFilter} from '../../../filter/models/simple-filter';
-import {FilterType} from '../../../filter/models/filter-type';
-import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
+import {
+    AuthenticationMethodService,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    NAE_SIDE_MENU_CONTROL,
+    SideMenuControl,
+    SimpleFilter, FilterType
+} from '@netgrif/application-engine';
 import {MatSelectionListChange} from '@angular/material/list';
 
 describe('FilterSelectorComponent', () => {
@@ -26,7 +27,7 @@ describe('FilterSelectorComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                SideMenuFilterSelectorModule,
+                SideMenuFilterSelectorComponentModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
                 HttpClientTestingModule

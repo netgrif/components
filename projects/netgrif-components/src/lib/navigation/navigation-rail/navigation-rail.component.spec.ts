@@ -3,12 +3,11 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NavigationRailComponent} from './navigation-rail.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
-import {QuickPanelModule} from '../quick-panel/quick-panel.module';
-import {UserModule} from '../../user/user.module';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
+import {UserComponentModule} from '../../user/user.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule, MaterialModule} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('NavigationRailComponent', () => {
@@ -24,9 +23,9 @@ describe('NavigationRailComponent', () => {
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
-                QuickPanelModule,
-                UserModule,
-                BrowserAnimationsModule,
+                QuickPanelComponentModule,
+                UserComponentModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],

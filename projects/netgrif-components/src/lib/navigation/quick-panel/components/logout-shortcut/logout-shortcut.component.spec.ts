@@ -1,18 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LogoutShortcutComponent} from './logout-shortcut.component';
-import {MaterialModule} from '../../../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
-import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
-import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TestConfigurationService} from '../../../../utility/tests/test-config';
-import {LoggerService} from '../../../../logger/services/logger.service';
-import {UserService} from '../../../../user/services/user.service';
 import {of} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateLibModule} from '../../../../translate/translate-lib.module';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    ConfigurationService,
+    UserService,
+    TestConfigurationService,
+    LoggerService
+} from '@netgrif/application-engine';
 
 describe('LogoutShortcutComponent', () => {
     let component: LogoutShortcutComponent;

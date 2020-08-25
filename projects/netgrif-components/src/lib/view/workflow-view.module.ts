@@ -1,12 +1,13 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {SideMenuModule} from '../side-menu/side-menu.module';
-import {HeaderModule} from '../header/header.module';
-import {PanelModule} from '../panel/panel.module';
+import {SideMenuComponentModule} from '../side-menu/side-menu.module';
+import {HeaderComponentModule} from '../header/header.module';
+import {PanelComponentModule} from '../panel/panel.module';
 import {ImportNetComponent} from '../side-menu/content-components/import-net/import-net.component';
 import {WorkflowViewComponent} from './workflow-view/workflow-view.component';
-import {TranslateLibModule, DataFieldsModule, MaterialModule} from '@netgrif/application-engine';
+import {TranslateLibModule, MaterialModule} from '@netgrif/application-engine';
+import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
 
 
 @NgModule({
@@ -17,10 +18,10 @@ import {TranslateLibModule, DataFieldsModule, MaterialModule} from '@netgrif/app
         CommonModule,
         FlexLayoutModule,
         MaterialModule,
-        SideMenuModule,
-        HeaderModule,
-        PanelModule,
-        DataFieldsModule,
+        SideMenuComponentModule,
+        HeaderComponentModule,
+        PanelComponentModule,
+        DataFieldsComponentModule,
         TranslateLibModule
     ],
     exports: [
@@ -31,4 +32,4 @@ import {TranslateLibModule, DataFieldsModule, MaterialModule} from '@netgrif/app
     ]
 
 })
-export class WorkflowViewModule { }
+export class WorkflowViewComponentModule { }

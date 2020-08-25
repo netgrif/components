@@ -1,18 +1,16 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CasePanelComponent} from './case-panel.component';
-import {MaterialModule} from '../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {DataFieldsModule} from '../../data-fields/data-fields.module';
+import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
-import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CaseMetaField} from '../../header/case-header/case-menta-enum';
+import {CaseMetaField, MaterialModule,
+    TranslateLibModule, HeaderColumn, HeaderColumnType} from '@netgrif/application-engine';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -25,7 +23,7 @@ describe('CasePanelComponent', () => {
                 CommonModule,
                 FlexModule,
                 BrowserAnimationsModule,
-                DataFieldsModule,
+                DataFieldsComponentModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
@@ -52,8 +50,8 @@ describe('CasePanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nae-case-panel>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nc-case-panel>'
 })
 class TestWrapperComponent {
     selectedHeaders =  of([

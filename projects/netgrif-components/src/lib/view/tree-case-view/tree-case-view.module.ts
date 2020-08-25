@@ -3,9 +3,9 @@ import {TreeComponent} from './tree-component/tree.component';
 import {TreeTaskContentComponent} from './tree-task-content/tree-task-content.component';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {PanelModule} from '../../panel/panel.module';
-import {MaterialModule, DataFieldsModule, TranslateLibModule} from '@netgrif/application-engine';
-import {TaskContentModule} from '../../task-content/task-content.module';
+import {PanelComponentModule} from '../../panel/panel.module';
+import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {TaskContentComponentModule} from '../../task-content/task-content.module';
 import {AddChildNodeComponent} from './tree-component/add-child-node/add-child-node.component';
 import {RemoveNodeComponent} from './tree-component/remove-node/remove-node.component';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
@@ -21,11 +21,10 @@ import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
         CommonModule,
         FlexLayoutModule,
         MaterialModule,
-        DataFieldsModule,
         DataFieldsComponentModule,
         TranslateLibModule,
-        PanelModule,
-        TaskContentModule
+        PanelComponentModule,
+        TaskContentComponentModule
     ],
     exports: [
         TreeComponent,
@@ -34,5 +33,5 @@ import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
     entryComponents: []
 
 })
-export class TreeCaseViewModule {
+export class TreeCaseViewComponentModule {
 }

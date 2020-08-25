@@ -10,8 +10,8 @@ import {
 } from '@netgrif/application-engine';
 import {NavigationRailComponent} from './navigation-rail/navigation-rail.component';
 import {NavigationTreeComponent} from './navigation-tree/navigation-tree.component';
-import {UserModule} from '../user/user.module';
-import {QuickPanelModule} from './quick-panel/quick-panel.module';
+import {UserComponentModule} from '../user/user.module';
+import {QuickPanelComponentModule} from './quick-panel/quick-panel.module';
 
 
 @NgModule({
@@ -26,9 +26,9 @@ import {QuickPanelModule} from './quick-panel/quick-panel.module';
         MaterialModule,
         FlexModule,
         FlexLayoutModule,
-        QuickPanelModule,
+        QuickPanelComponentModule,
         TranslateLibModule,
-        UserModule
+        UserComponentModule
     ],
     exports: [
         NavigationDrawerComponent,
@@ -36,5 +36,5 @@ import {QuickPanelModule} from './quick-panel/quick-panel.module';
         NavigationTreeComponent
     ]
 })
-export class NavigationModule {
+export class NavigationComponentModule {
 }

@@ -1,22 +1,24 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MaterialModule} from '../../../../material/material.module';
-import {CovalentModule} from '../../../../covalent/covalent.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
-import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {Component} from '@angular/core';
-import {FileFieldService} from '../../../../data-fields/file-field/services/file-field.service';
 import {FilesUploadListComponent} from './files-upload-list.component';
 import {FilesUploadItemComponent} from './files-upload-item/files-upload-item.component';
-import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
-import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../../../utility/tests/mocks/mock-user-resource.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {
+    MaterialModule,
+    CovalentModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    FileFieldService
+} from '@netgrif/application-engine';
 
 describe('FilesUploadListComponent', () => {
     let component: FilesUploadListComponent;
@@ -62,8 +64,8 @@ describe('FilesUploadListComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-files-upload-list [allFiles]="[]" [fileFieldService]="service"></nae-files-upload-list>',
+    selector: 'nc-test-wrapper',
+    template: '<nc-files-upload-list [allFiles]="[]" [fileFieldService]="service"></nc-files-upload-list>',
     providers: [FileFieldService]
 })
 class TestWrapperComponent {

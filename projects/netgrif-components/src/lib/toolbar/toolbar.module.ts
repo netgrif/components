@@ -16,5 +16,5 @@ import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
         ToolbarComponent
     ]
 })
-export class ToolbarModule {
+export class ToolbarComponentModule {
 }

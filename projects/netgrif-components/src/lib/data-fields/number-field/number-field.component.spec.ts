@@ -1,22 +1,24 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NumberFieldComponent} from './number-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {NumberField} from './models/number-field';
-import {MaterialModule} from '../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
-import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
-import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
-import {LanguageService} from '../../translate/language.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    AuthenticationService,
+    UserResourceService,
+    ConfigurationService,
+    MockAuthenticationService,
+    MockUserResourceService,
+    TestConfigurationService,
+    NumberField,
+    LanguageService
+} from '@netgrif/application-engine';
 
 describe('NumberFieldComponent', () => {
     let component: NumberFieldComponent;
@@ -69,8 +71,8 @@ describe('NumberFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-number-field [dataField]="field"></nae-number-field>'
+    selector: 'nc-test-wrapper',
+    template: '<nc-number-field [dataField]="field"></nc-number-field>'
 })
 class TestWrapperComponent {
     field = new NumberField('', '', 4, {

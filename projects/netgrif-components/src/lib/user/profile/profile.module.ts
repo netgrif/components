@@ -15,5 +15,5 @@ import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
         TranslateLibModule
     ]
 })
-export class ProfileModule {
+export class ProfileComponentModule {
 }
