@@ -18,7 +18,8 @@ import {
     NAE_TASK_OPERATIONS,
     SubjectTaskOperations,
     SingleTaskContentService,
-    AbstractTaskPanelComponent
+    AbstractTaskPanelComponent,
+    CallChainService
 } from '@netgrif/application-engine';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 
@@ -55,10 +56,11 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _taskState: TaskRequestStateService,
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
+                protected _callChain: CallChainService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _taskOperations);
+            _assignPolicyService, _callChain, _taskOperations);
     }
 
     protected createContentPortal(): void {

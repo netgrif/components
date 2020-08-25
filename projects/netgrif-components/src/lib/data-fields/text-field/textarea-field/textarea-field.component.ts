@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import { AbstractTextareaFieldComponent} from '@netgrif/application-engine';
 
@@ -9,7 +9,7 @@ import { AbstractTextareaFieldComponent} from '@netgrif/application-engine';
 })
 export class TextareaFieldComponent extends AbstractTextareaFieldComponent {
 
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(protected _translate: TranslateService, protected _ngZone: NgZone) {
+        super(_translate, _ngZone);
     }
 }

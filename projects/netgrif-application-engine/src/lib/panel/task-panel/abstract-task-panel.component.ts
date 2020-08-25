@@ -54,7 +54,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
                 protected _callChain: CallChainService,
-                _taskOperations: SubjectTaskOperations) {
+                protected _taskOperations: SubjectTaskOperations) {
         super();
         _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskPanelData.changedFields.next(changedFields);

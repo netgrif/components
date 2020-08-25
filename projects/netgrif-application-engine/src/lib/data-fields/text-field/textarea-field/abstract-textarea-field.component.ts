@@ -1,5 +1,5 @@
-import {Input} from '@angular/core';
-import {AfterViewInit, Component, ElementRef, Input, NgZone, ViewChild} from '@angular/core';
+import {AfterViewInit, Input} from '@angular/core';
+import {ElementRef, NgZone, ViewChild} from '@angular/core';
 import {TextAreaHeight, TextField} from '../models/text-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
@@ -8,7 +8,7 @@ import {take} from 'rxjs/operators';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 
-export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsComponent {
+export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsComponent implements AfterViewInit {
 
     @Input() textAreaField: TextField;
     @Input() formControlRef: FormControl;
@@ -16,7 +16,7 @@ export abstract class AbstractTextareaFieldComponent extends AbstractTextErrorsC
     @ViewChild('dynamicTextArea') dynamicTextArea: CdkTextareaAutosize;
     @ViewChild('textArea') textArea: ElementRef<HTMLTextAreaElement>;
 
-    constructor(protected _translate: TranslateService, private _ngZone: NgZone) {
+    constructor(protected _translate: TranslateService, protected _ngZone: NgZone) {
         super(_translate);
     }
 
