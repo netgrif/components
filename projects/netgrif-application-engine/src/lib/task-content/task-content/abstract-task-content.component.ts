@@ -40,7 +40,7 @@ export abstract class AbstractTaskContentComponent {
                           public taskContentService: TaskContentService,
                           protected _paperView: PaperViewService,
                           protected _logger: LoggerService,
-                          protected _taskEventService: TaskEventService) {
+                          protected _taskEventService: TaskEventService = null) {
         this.loading = true;
         this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
@@ -51,10 +51,12 @@ export abstract class AbstractTaskContentComponent {
             }
             this.loading = false;
         });
-        this.taskEvent = new EventEmitter<TaskEventNotification>();
-        _taskEventService.taskEventNotifications$.subscribe(event => {
-            this.taskEvent.emit(event);
-        });
+        if (this._taskEventService !== null) {
+            this.taskEvent = new EventEmitter<TaskEventNotification>();
+            _taskEventService.taskEventNotifications$.subscribe(event => {
+                this.taskEvent.emit(event);
+            });
+        }
     }
 
     public get taskId(): string {

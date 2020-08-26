@@ -4,6 +4,7 @@ import {
     ConfigTaskViewServiceFactory,
     SearchService,
     SimpleFilter,
+    TaskEventNotification,
     TaskViewService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
@@ -40,5 +41,9 @@ export class TaskViewComponent extends AbstractTaskView implements AfterViewInit
 
     ngAfterViewInit(): void {
         this.initializeHeader(this.taskHeaderComponent);
+    }
+
+    logEvent(event: TaskEventNotification) {
+        console.log(event);
     }
 }
