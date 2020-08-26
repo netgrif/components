@@ -25,7 +25,7 @@ module.exports = function(config) {
         },
 
         coverageIstanbulReporter: {
-            dir: require("path").join(__dirname, "../../coverage/netgrif-application-engine-components"),
+            dir: require("path").join(__dirname, "../../coverage/netgrif-components"),
             reports: ["html", "text-summary", "json-summary", "lcov"],
             fixWebpackSourcePaths: true,
         },
@@ -36,7 +36,7 @@ module.exports = function(config) {
             renderOnRunCompleteOnly: true, // default is false
         },
         junitReporter: {
-            outputDir: "../../coverage/netgrif-application-engine-components/", // results will be saved as $outputDir/$browserName.xml
+            outputDir: "../../coverage/netgrif-components/", // results will be saved as $outputDir/$browserName.xml
             outputFile: "JUNITX-test-report.xml", // if included, results will be saved as $outputDir/$browserName/$outputFile
             suite: "", // suite will become the package name attribute in xml testsuite element
             useBrowserName: false, // add browser name to report and classes names

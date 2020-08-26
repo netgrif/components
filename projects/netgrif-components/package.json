@@ -1,7 +1,7 @@
 {
     "name": "@netgrif/components",
     "version": "4.2.0-alpha.1",
-    "description": "Netgrif Application engine Angular Components",
+    "description": "Netgrif Application Engine Angular components",
     "homepage": "https://netgrif.com",
     "repository": {
         "type": "git",
@@ -13,7 +13,9 @@
     "keywords": [
         "netgrif components",
         "application engine components",
-        "nae components"
+        "nae components",
+        "angular",
+        "nae"
     ],
     "contributors": [
         "Milan Mladoniczky <mladoniczky@netgrif.com>",
@@ -22,7 +24,8 @@
         "Jakub Kovář <kovar@netgrif.com>",
         "Martin Miklovič <miklovic@netgrif.com>",
         "Daniel Vaník <vanik@netgrif.com>",
-        "Lukáš Rezák <rezak@netgrif.com>"
+        "Lukáš Rezák <rezak@netgrif.com>",
+        "Jozef Daxner <daxner@netgrif.com>"
     ],
     "peerDependencies": {
         "@angular-material-components/datetime-picker": "^2.0.2",
