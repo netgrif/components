@@ -149,10 +149,10 @@ function processEmbeddedView(embeddedView: EmbeddedView,
         tabTemplate.canBeDeleted = false;
     }
     if (embeddedView.label !== undefined) {
-        tabTemplate.icon = embeddedView.label.icon as string;
-        tabTemplate.text = embeddedView.label.text as string;
+        tabTemplate.icon = embeddedView.label.icon;
+        tabTemplate.text = embeddedView.label.text;
     }
-    tabTemplate.order = embeddedView.order as number;
+    tabTemplate.order = embeddedView.order;
 
     result.tabTemplates.push(tabTemplate);
 }
