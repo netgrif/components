@@ -321,8 +321,8 @@ pipeline {
         }
         sh '''
             mkdir dist/netgrif
-            cp dist/netgrif-application-engine dist/netgrif/netgrif-application-engine
-            cp dist/netgrif-components dist/netgrif/netgrif-components
+            cp -r dist/netgrif-application-engine dist/netgrif/
+            cp -r dist/netgrif-components dist/netgrif/
         '''
         zip zipFile: "NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", archive: false, dir: 'dist/netgrif'
         archiveArtifacts artifacts:"NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", fingerprint: true
