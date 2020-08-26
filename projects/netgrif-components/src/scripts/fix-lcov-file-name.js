@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const filePath = './coverage/netgrif-application-engine/lcov.info';
+const filePath = './coverage/netgrif-components/lcov.info';
 let content = fs.readFileSync(filePath).toString().trim();
 if (!content || content.length === 0)
     return;
