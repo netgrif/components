@@ -14,13 +14,36 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../models/subject-task-operations';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
+import {MessageResource} from '../../resources/interface/message-resource';
+import {Observable, of, throwError} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
+import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
+import {CallChainService} from '../../utility/call-chain/call-chain.service';
+import {Task} from '../../resources/interface/task';
+import {UserService} from '../../user/services/user.service';
+import {TaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
+    let testTask: Task;
+    let resourceService: TestTaskResourceService;
+    let callChainService: CallChainService;
+    let taskEventService: TaskEventService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, TranslateLibModule, HttpClientTestingModule, NoopAnimationsModule],
+            imports: [
+                MaterialModule,
+                TranslateLibModule,
+                HttpClientTestingModule,
+                NoopAnimationsModule,
+                SnackBarModule
+            ],
             providers: [
                 CancelTaskService,
                 TaskEventService,
@@ -28,13 +51,155 @@ describe('CancelTaskService', () => {
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: NullAuthenticationService}
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
+                {provide: TaskResourceService, useClass: TestTaskResourceService},
+                {provide: UserService, useClass: TestUserService}
             ]
-        });
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [
+                    ErrorSnackBarComponent,
+                ]
+            }
+        }).compileComponents();
         service = TestBed.inject(CancelTaskService);
+        testTask = {
+            caseId: '',
+            transitionId: '',
+            title: '',
+            caseColor: '',
+            caseTitle: '',
+            user: {
+                id: '',
+                email: 'mail',
+                name: '',
+                surname: '',
+                state: '',
+                authorities: [],
+                userProcessRoles: [],
+                processRoles: [],
+                groups: [],
+                fullName: '',
+                registered: true
+            },
+            roles: {
+                role: 'perform'
+            },
+            startDate: [1],
+            finishDate: [1],
+            assignPolicy: AssignPolicy.manual,
+            dataFocusPolicy: DataFocusPolicy.manual,
+            finishPolicy: FinishPolicy.manual,
+            stringId: 'taskId',
+            layout: {rows: 1, cols: 1, offset: 0},
+            dataGroups: [],
+            _links: {}
+        };
+        TestBed.inject(TaskContentService).task = testTask;
+        resourceService = TestBed.inject(TaskResourceService) as unknown as TestTaskResourceService;
+        callChainService = TestBed.inject(CallChainService);
+        taskEventService = TestBed.inject(TaskEventService);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
+
+    it('should cancel successfully', done => {
+        expect(testTask.startDate).toBeTruthy();
+        expect(testTask.user).toBeTruthy();
+        resourceService.response = {success: 'success'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
+        service.cancel(callChainService.create((result) => {
+            expect(result).toBeTrue();
+            expect(testTask.startDate).toBeFalsy();
+            expect(testTask.user).toBeFalsy();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeTrue();
+            expect(taskEvent.event).toEqual(TaskEvent.CANCEL);
+
+            done();
+        }));
+    });
+
+    it('should cancel unsuccessful', done => {
+        expect(testTask.startDate).toBeTruthy();
+        expect(testTask.user).toBeTruthy();
+        resourceService.response = {error: 'error'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
+        service.cancel(callChainService.create((result) => {
+            expect(result).toBeFalse();
+            expect(testTask.startDate).toBeTruthy();
+            expect(testTask.user).toBeFalsy();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeFalse();
+            expect(taskEvent.event).toEqual(TaskEvent.CANCEL);
+
+            done();
+        }));
+    });
+
+    it('should cancel error', done => {
+        expect(testTask.startDate).toBeTruthy();
+        expect(testTask.user).toBeTruthy();
+        resourceService.response = {error: 'throw'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
+        service.cancel(callChainService.create((result) => {
+            expect(result).toBeFalse();
+            expect(testTask.startDate).toBeTruthy();
+            expect(testTask.user).toBeFalsy();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeFalse();
+            expect(taskEvent.event).toEqual(TaskEvent.ASSIGN);
+
+            done();
+        }));
+    });
 });
+
+class TestTaskResourceService {
+
+    public response: MessageResource;
+
+    public cancelTask(): Observable<MessageResource> {
+        if (this.response.error === 'throw') {
+            return of(this.response).pipe(map(r => {
+                throw throwError(r);
+            }));
+        }
+        return of(this.response);
+    }
+}
+
+class TestUserService {
+    public get user() {
+        return {
+            email: 'mail'
+        };
+    }
+
+    public hasRoleById(): boolean {
+        return true;
+    }
+}
