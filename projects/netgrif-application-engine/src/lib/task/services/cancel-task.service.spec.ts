@@ -142,7 +142,7 @@ describe('CancelTaskService', () => {
         service.cancel(callChainService.create((result) => {
             expect(result).toBeFalse();
             expect(testTask.startDate).toBeTruthy();
-            expect(testTask.user).toBeFalsy();
+            expect(testTask.user).toBeTruthy();
 
             expect(taskEvent).toBeTruthy();
             expect(taskEvent.taskId).toEqual('taskId');
@@ -166,12 +166,12 @@ describe('CancelTaskService', () => {
         service.cancel(callChainService.create((result) => {
             expect(result).toBeFalse();
             expect(testTask.startDate).toBeTruthy();
-            expect(testTask.user).toBeFalsy();
+            expect(testTask.user).toBeTruthy();
 
             expect(taskEvent).toBeTruthy();
             expect(taskEvent.taskId).toEqual('taskId');
             expect(taskEvent.success).toBeFalse();
-            expect(taskEvent.event).toEqual(TaskEvent.ASSIGN);
+            expect(taskEvent.event).toEqual(TaskEvent.CANCEL);
 
             done();
         }));

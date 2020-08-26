@@ -13,6 +13,9 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
+import {TaskEventService} from '../../task-content/services/task-event.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -30,9 +33,11 @@ describe('TaskDataService', () => {
                 TaskDataService,
                 TaskRequestStateService,
                 DataFocusPolicyService,
+                TaskEventService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations}
+                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
             ]
         });
         service = TestBed.inject(TaskDataService);

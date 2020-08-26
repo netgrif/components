@@ -58,11 +58,11 @@ describe('TabView', () => {
             tabContentComponent: TabTestComponent
         }, true);
 
-        expect(tabs.selectedIndex.value).toEqual(1);
+        expect(tabs.selectedIndex).toEqual(1);
         tabs.switchToTabIndex(0);
-        expect(tabs.selectedIndex.value).toEqual(0);
+        expect(tabs.selectedIndex).toEqual(0);
         tabs.switchToTabUniqueId('1');
-        expect(tabs.selectedIndex.value).toEqual(1);
+        expect(tabs.selectedIndex).toEqual(1);
 
         tabs.openTab({
             label: {
@@ -74,7 +74,7 @@ describe('TabView', () => {
         }, false);
         tabs.initializeTab(2);
         tabs.switchToTabIndex(2);
-        expect(tabs.selectedIndex.value).toEqual(2);
+        expect(tabs.selectedIndex).toEqual(2);
 
         tabs.closeTabIndex(2);
         expect(tabs.openedTabs.length).toEqual(2);

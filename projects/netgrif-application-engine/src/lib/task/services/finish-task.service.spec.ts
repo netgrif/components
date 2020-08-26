@@ -28,6 +28,9 @@ import {UnlimitedTaskContentService} from '../../task-content/services/unlimited
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
@@ -55,7 +58,8 @@ describe('FinishTaskService', () => {
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
-                {provide: TaskResourceService, useClass: TestTaskResourceService}
+                {provide: TaskResourceService, useClass: TestTaskResourceService},
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
