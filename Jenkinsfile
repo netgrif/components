@@ -110,40 +110,37 @@ pipeline {
         }
     }
 
-    stage('Publish to Nexus NPM') {
-        parallel {
-            stage('Publish NAE') {
-                steps {
-                    sh '''
-                        echo "npm publishing"
-                        mv .npmrc .npmrc_renamed
-                        echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
-                        echo "email=jenkins@netgrif.com" >> .npmrc
-                        echo -n "_auth=" >> .npmrc
-                        echo -n $NEXUS_CRED | openssl base64 >> .npmrc
-                        cat .npmrc
-                        npm publish dist/netgrif-application-engine
-                        rm .npmrc
-                        mv .npmrc_renamed .npmrc
-                    '''
-                }
-            }
-            stage('Publish NC') {
-                steps {
-                    sh '''
-                        echo "npm publishing"
-                        mv .npmrc .npmrc_renamed
-                        echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
-                        echo "email=jenkins@netgrif.com" >> .npmrc
-                        echo -n "_auth=" >> .npmrc
-                        echo -n $NEXUS_CRED | openssl base64 >> .npmrc
-                        cat .npmrc
-                        npm publish dist/netgrif-components
-                        rm .npmrc
-                        mv .npmrc_renamed .npmrc
-                    '''
-                }
-            }
+    stage('Publish NAE') {
+        steps {
+            sh '''
+                echo "npm publishing"
+                mv .npmrc .npmrc_renamed
+                echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
+                echo "email=jenkins@netgrif.com" >> .npmrc
+                echo -n "_auth=" >> .npmrc
+                echo -n $NEXUS_CRED | openssl base64 >> .npmrc
+                cat .npmrc
+                npm publish dist/netgrif-application-engine
+                rm .npmrc
+                mv .npmrc_renamed .npmrc
+            '''
+        }
+    }
+
+    stage('Publish NC') {
+        steps {
+            sh '''
+                echo "npm publishing"
+                mv .npmrc .npmrc_renamed
+                echo "registry=https://nexus.netgrif.com/repository/npm-private/" > .npmrc
+                echo "email=jenkins@netgrif.com" >> .npmrc
+                echo -n "_auth=" >> .npmrc
+                echo -n $NEXUS_CRED | openssl base64 >> .npmrc
+                cat .npmrc
+                npm publish dist/netgrif-components
+                rm .npmrc
+                mv .npmrc_renamed .npmrc
+            '''
         }
     }
 
@@ -324,8 +321,8 @@ pipeline {
         }
         sh '''
             mkdir dist/netgrif
-            cp dist/netgrif-application-engine dist/netgrif/netgrif-application-engine
-            cp dist/netgrif-components dist/netgrif/netgrif-components
+            cp -r dist/netgrif-application-engine dist/netgrif/
+            cp -r dist/netgrif-components dist/netgrif/
         '''
         zip zipFile: "NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", archive: false, dir: 'dist/netgrif'
         archiveArtifacts artifacts:"NETGRIF-Application_Engine-${packageJson['version']}-Frontend-${DATETIME_TAG}.zip", fingerprint: true
