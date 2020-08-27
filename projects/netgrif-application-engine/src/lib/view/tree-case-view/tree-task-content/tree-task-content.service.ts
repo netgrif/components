@@ -6,7 +6,6 @@ import {TaskEventService} from '../../../task-content/services/task-event.servic
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {Case} from '../../../resources/interface/case';
-import {TaskGetRequestBody} from '../../../resources/interface/task-get-request-body';
 import {Task} from '../../../resources/interface/task';
 import {AssignPolicyService} from '../../../task/services/assign-policy.service';
 import {AssignPolicy} from '../../../task-content/model/policy';

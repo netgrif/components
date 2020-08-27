@@ -13,12 +13,14 @@ import {ChangedFieldContainer} from '../interface/changed-field-container';
 import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
-import {TaskGetRequestBody} from '../interface/task-get-request-body';
 import {HttpEventType} from '@angular/common/http';
 import {Page} from '../interface/page';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
+import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
+import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
+import {LoggerService} from '../../logger/services/logger.service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +30,8 @@ export class TaskResourceService implements CountService {
 
     protected constructor(protected provider: ResourceProvider,
                           protected _configService: ConfigurationService,
-                          protected _fieldConverter: FieldConverterService) {
+                          protected _fieldConverter: FieldConverterService,
+                          protected _logger: LoggerService) {
         this.SERVER_URL = getResourceAddress('task', this._configService.get().providers.resources);
     }
 
@@ -114,13 +117,47 @@ export class TaskResourceService implements CountService {
     /**
      * Searches tasks trough the Mongo endpoint.
      * POST
-     * @param body search request body
+     * @param filterParam filter used to search the tasks. Must be of type `TASK`.
+     * Note that the `query` attribute of the filter cannot be used with this endpoint.
+     * Attempting to use it will display a warning and remove the attribute from the request.
      * @param params Additional request parameters
      */
     // {{baseUrl}}/api/task/search
-    public getTasks(body: TaskGetRequestBody, params?: Params): Observable<Page<Task>> {
+    public getTasks(filterParam: Filter, params?: Params): Observable<Page<Task>> {
+        if (filterParam.type !== FilterType.TASK) {
+            throw new Error('Provided filter doesn\'t have type TASK');
+        }
+
+        const cleansedFilter = filterParam.clone();
+        const body = cleansedFilter.getRequestBody();
+        let containsQuery = false;
+        if (Array.isArray(body)) {
+            body.forEach(fb => {
+                containsQuery = containsQuery || this.removeElasticQuery(fb);
+            });
+        } else {
+            containsQuery = this.removeElasticQuery(body);
+        }
+        if (containsQuery) {
+            this._logger.warn('QUERY attribute is not evaluated by getTasks endpoint and was removed from the provided filter');
+        }
+
+        params = ResourceProvider.combineParams(filterParam.getRequestParams(), params);
         return this.provider.post$('task/search', this.SERVER_URL, body, params)
             .pipe(map(r => getResourcePage<Task>(r, 'tasks')));
+    }
+
+    /**
+     * Removes the 'query' attribute from the provided filter body
+     * @param filterBody the filter body that should have its `query` attribute removed
+     * @returns `true` if the `query` attribute was removed. `false` otherwise
+     */
+    private removeElasticQuery(filterBody: TaskSearchRequestBody | CaseSearchRequestBody): boolean {
+        if (filterBody.query) {
+            delete filterBody.query;
+            return true;
+        }
+        return false;
     }
 
     // ----------- CASE ----------
