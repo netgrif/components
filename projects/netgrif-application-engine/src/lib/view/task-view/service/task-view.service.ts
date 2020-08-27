@@ -167,7 +167,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         this._loading$.on();
         return timer(200).pipe(
             mergeMap(_ => !this._searchService.additionalFiltersApplied && !!this._parentCaseId ?
-                this._taskService.getTasks({case: this._parentCaseId}, params) :
+                this._taskService.getTasks(SimpleFilter.fromTaskQuery({case: this._parentCaseId}), params) :
                 this._taskService.searchTask(this._searchService.activeFilter, params)),
             catchError(err => {
                 this._log.error('Loading tasks has failed!', err);
