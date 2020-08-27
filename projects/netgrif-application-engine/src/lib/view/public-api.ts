@@ -6,6 +6,7 @@ export * from './tree-case-view/tree-component/model/CaseTreeNode';
 
 /* ENUMS */
 export * from './tree-case-view/model/tree-petriflow-identifiers';
+export * from './task-view/models/task-endpoint';
 
 /* CLASSES */
 export * from './case-view/abstract-case-view';
@@ -17,6 +18,9 @@ export * from './task-view/tabbed-task-view';
 export * from './abstract/view-with-headers';
 export * from './abstract/sortable-view';
 export * from './abstract/sortable-view-with-allowed-nets';
+
+/* INJECTION TOKENS */
+export * from './task-view/models/injection-token-task-endpoint';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';

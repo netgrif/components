@@ -18,6 +18,7 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
 import {UserComparatorService} from '../../../user/services/user-comparator.service';
+import {TaskEndpoint} from '../models/task-endpoint';
 
 
 @Injectable()
@@ -52,6 +53,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 protected _searchService: SearchService,
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
+                protected readonly _preferredEndpoint: TaskEndpoint = TaskEndpoint.MONGO,
                 allowedNets: Observable<Array<Net>> = of([]),
                 initiallyOpenOneTask: Observable<boolean> = of(true),
                 closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {

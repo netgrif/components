@@ -96,6 +96,13 @@ export class SimpleFilter extends Filter {
     }
 
     /**
+     * See [Filter.bodyContainsQuery()]{@link Filter#bodyContainsQuery}
+     */
+    bodyContainsQuery(): boolean {
+        return !!this._filter.query;
+    }
+
+    /**
      * See [Filter.getRequestBody()]{@link Filter#getRequestBody}
      */
     getRequestBody(): TaskSearchRequestBody | CaseSearchRequestBody {

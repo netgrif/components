@@ -115,6 +115,13 @@ export class MergedFilter extends Filter {
     }
 
     /**
+     * See [Filter.bodyContainsQuery()]{@link Filter#bodyContainsQuery}
+     */
+    bodyContainsQuery(): boolean {
+        return this._filters.some(f => !!f.query);
+    }
+
+    /**
      * Returns the necessary request params for the filter.
      * @returns params with `operation` set to either `AND` or `OR` based on this object's `_operator` property.
      *
