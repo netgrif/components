@@ -199,15 +199,16 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                     };
                 }, {});
             }),
-            tap(_ => this._loading$.off()),
             map(tasks => {
                 if (this._searchService.additionalFiltersApplied && this._searchService.activeFilter !== filter) {
-                    this._pagination = tasks.pagination;
+                    this._loading$.off();
                     return this.loadPage(page);
                 } else {
+                    this._pagination = tasks.pagination;
                     return tasks;
                 }
-            })
+            }),
+            tap(_ => this._loading$.off())
         );
     }
 
