@@ -20,7 +20,6 @@ import {
     NAE_USER_ASSIGN_COMPONENT
 } from '../../../side-menu/content-components/injection-tokens';
 
-
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets {
 
@@ -84,6 +83,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         if (page === null || page === undefined || this._clear) {
             return of({});
         }
+        const filter = this._searchService.activeFilter;
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
         params = this.addPageParams(params, page);
@@ -98,10 +98,17 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                 c.pagination.number === c.pagination.totalPages),
             map(cases => Array.isArray(cases.content) ? cases : {...cases, content: []}),
             map(cases => {
-                this._pagination = cases.pagination;
                 return cases.content.reduce((acc, cur) => {
                     return {...acc, [cur.stringId]: cur};
                 }, {});
+            }),
+            map(stream => {
+                if (this._searchService.activeFilter !== filter) {
+                    return this.loadPage(page);
+                } else {
+                    this._pagination = stream.pagination;
+                    return stream;
+                }
             }),
             tap(_ => this._loading$.off())
         );

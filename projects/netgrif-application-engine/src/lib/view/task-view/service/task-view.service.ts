@@ -18,7 +18,7 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
 import {UserComparatorService} from '../../../user/services/user-comparator.service';
-
+import {Filter} from '../../../filter/models/filter';
 
 @Injectable()
 export class TaskViewService extends SortableViewWithAllowedNets {
@@ -161,14 +161,18 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         if (this._loading$.isActive || page === null || page === undefined || page < 0 || this._clear) {
             return of({});
         }
+        let filter: Filter;
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
         params = this.addPageParams(params, page);
         this._loading$.on();
         return timer(200).pipe(
-            mergeMap(_ => !this._searchService.additionalFiltersApplied && !!this._parentCaseId ?
+            mergeMap(_ => {
+                filter = this._searchService.activeFilter;
+                return !this._searchService.additionalFiltersApplied && !!this._parentCaseId ?
                 this._taskService.getTasks({case: this._parentCaseId}, params) :
-                this._taskService.searchTask(this._searchService.activeFilter, params)),
+                this._taskService.searchTask(this._searchService.activeFilter, params)
+            }),
             catchError(err => {
                 this._log.error('Loading tasks has failed!', err);
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
@@ -195,6 +199,13 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                         }
                     };
                 }, {});
+            }),
+            map(tasks => {
+                if (this._searchService.additionalFiltersApplied && this._searchService.activeFilter !== filter) {
+                    return this.loadPage(page);
+                } else {
+                    return tasks;
+                }
             }),
             tap(_ => this._loading$.off())
         );
