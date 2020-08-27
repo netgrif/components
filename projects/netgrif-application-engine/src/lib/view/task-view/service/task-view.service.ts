@@ -188,7 +188,6 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 t.pagination.number === t.pagination.totalPages),
             map(tasks => Array.isArray(tasks.content) ? tasks : {...tasks, content: []}),
             map(tasks => {
-                this._pagination = tasks.pagination;
                 return tasks.content.reduce((acc, curr) => {
                     this.blockTaskFields(curr, !(curr.user && this._userComparator.compareUsers(curr.user)));
                     return {
@@ -200,14 +199,15 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                     };
                 }, {});
             }),
+            tap(_ => this._loading$.off()),
             map(tasks => {
                 if (this._searchService.additionalFiltersApplied && this._searchService.activeFilter !== filter) {
+                    this._pagination = tasks.pagination;
                     return this.loadPage(page);
                 } else {
                     return tasks;
                 }
-            }),
-            tap(_ => this._loading$.off())
+            })
         );
     }
 
