@@ -161,6 +161,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         if (this._loading$.isActive || page === null || page === undefined || page < 0 || this._clear) {
             return of({});
         }
+        let oldPagination;
         let filter: Filter;
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
@@ -171,7 +172,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 filter = this._searchService.activeFilter;
                 return !this._searchService.additionalFiltersApplied && !!this._parentCaseId ?
                 this._taskService.getTasks({case: this._parentCaseId}, params) :
-                this._taskService.searchTask(this._searchService.activeFilter, params)
+                this._taskService.searchTask(this._searchService.activeFilter, params);
             }),
             catchError(err => {
                 this._log.error('Loading tasks has failed!', err);
@@ -188,6 +189,8 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 t.pagination.number === t.pagination.totalPages),
             map(tasks => Array.isArray(tasks.content) ? tasks : {...tasks, content: []}),
             map(tasks => {
+                oldPagination = this._pagination;
+                this._pagination = tasks.pagination;
                 return tasks.content.reduce((acc, curr) => {
                     this.blockTaskFields(curr, !(curr.user && this._userComparator.compareUsers(curr.user)));
                     return {
@@ -202,9 +205,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             map(tasks => {
                 if (this._searchService.additionalFiltersApplied && this._searchService.activeFilter !== filter) {
                     this._loading$.off();
+                    this._pagination = oldPagination;
                     return this.loadPage(page);
                 } else {
-                    this._pagination = tasks.pagination;
                     return tasks;
                 }
             }),
