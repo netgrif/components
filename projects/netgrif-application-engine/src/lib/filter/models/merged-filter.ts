@@ -18,6 +18,38 @@ export class MergedFilter extends Filter {
     private readonly _filters: Array<CaseSearchRequestBody> | Array<TaskSearchRequestBody>;
 
     /**
+     * Creates a filter with the provided body and the provided type
+     * @param filterBody the body of the new filter
+     * @param operator the merge operator that is used to combine the filters
+     * @param type the type of the new filter. Type must match the type of the body.
+     * @returns a filter with the given body, operator and type. `id` of the new filter is set to an empty string.
+     */
+    public static fromQuery(filterBody: Array<CaseSearchRequestBody> | Array<TaskSearchRequestBody>, operator: MergeOperator,
+                            type: FilterType): Filter {
+        return new MergedFilter('', type, filterBody, operator);
+    }
+
+    /**
+     * Creates a case filter with the provided body
+     * @param filterBody the body of the new filter
+     * @param operator the merge operator that is used to combine the filters
+     * @returns a case filter with the given body and operator. `id` of the new filter is set to an empty string.
+     */
+    public static fromCaseQuery(filterBody: Array<CaseSearchRequestBody>, operator: MergeOperator): Filter {
+        return MergedFilter.fromQuery(filterBody, operator, FilterType.CASE);
+    }
+
+    /**
+     * Creates a task filter with the provided body
+     * @param filterBody the body of the new filter
+     * @param operator the merge operator that is used to combine the filters
+     * @returns a task filter with the given body and operator. `id` of the new filter is set to an empty string.
+     */
+    public static fromTaskQuery(filterBody: Array<TaskSearchRequestBody>, operator: MergeOperator): Filter {
+        return MergedFilter.fromQuery(filterBody, operator, FilterType.TASK);
+    }
+
+    /**
      * @param id identifier of the filter
      * @param type type of resources that the filter can query
      * @param filterBodies `Array` of search requests matching this filter's type
