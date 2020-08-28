@@ -167,7 +167,7 @@ export class TreeTaskContentService implements OnDestroy {
         const transitionId = this.getTransitionId(this._selectedCaseService.selectedCase);
         if (transitionId) {
             return SimpleFilter.fromTaskQuery({
-                case: this._selectedCaseService.selectedCase.stringId,
+                case: {id: this._selectedCaseService.selectedCase.stringId},
                 transitionId
             });
         }

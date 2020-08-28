@@ -511,7 +511,7 @@ export class CaseTreeService implements OnDestroy {
         const result$ = new Subject<Array<string>>();
 
         this._taskResourceService.getTasks(SimpleFilter.fromTaskQuery({
-            case: caseId,
+            case: {id: caseId},
             transitionId: TreePetriflowIdentifiers.CASE_REF_TRANSITION
         })).subscribe(page => {
             if (!hasContent(page)) {
