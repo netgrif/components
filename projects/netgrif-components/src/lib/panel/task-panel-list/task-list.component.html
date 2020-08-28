@@ -20,6 +20,7 @@
                                     templateCacheSize: 0"
                     [taskPanelData]="task" [selectedHeaders$]="selectedHeaders$" [first]="first" [last]="last"
                     [responsiveBody]="responsiveBody"
+                    (taskEvent)="emitTaskEvent($event)"
                     class="panel-expanded-spacing">
                 </nc-task-panel>
 

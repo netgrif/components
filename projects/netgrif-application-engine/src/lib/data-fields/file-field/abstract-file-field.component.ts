@@ -1,6 +1,5 @@
 import {AfterViewInit, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FileField} from './models/file-field';
-import {FileFieldService} from './services/file-field.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
