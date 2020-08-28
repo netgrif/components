@@ -128,22 +128,12 @@ export class TaskResourceService implements CountService {
             throw new Error('Provided filter doesn\'t have type TASK');
         }
 
-        const cleansedFilter = filterParam.clone();
-        const body = cleansedFilter.getRequestBody();
-        let containsQuery = false;
-        if (Array.isArray(body)) {
-            body.forEach(fb => {
-                containsQuery = containsQuery || this.removeElasticQuery(fb);
-            });
-        } else {
-            containsQuery = this.removeElasticQuery(body);
-        }
-        if (containsQuery) {
-            this._logger.warn('QUERY attribute is not evaluated by getTasks endpoint and was removed from the provided filter');
+        if (filterParam.bodyContainsQuery()) {
+            throw new Error('getTasks endpoint cannot be queried with filters that contain the \'query\' attribute');
         }
 
         params = ResourceProvider.combineParams(filterParam.getRequestParams(), params);
-        return this.provider.post$('task/search', this.SERVER_URL, body, params)
+        return this.provider.post$('task/search', this.SERVER_URL, filterParam.getRequestBody(), params)
             .pipe(map(r => getResourcePage<Task>(r, 'tasks')));
     }
 
