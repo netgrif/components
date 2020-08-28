@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "4.2.0-alpha.1",
+    "version": "4.2.0-alpha.2",
     "scripts": {
         "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
         "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/netgrif-components/ && cp --parents schematics/*/*/schema.json ../../dist/netgrif-components/",
