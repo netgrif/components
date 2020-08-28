@@ -1,0 +1,41 @@
+{
+    "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+        "ng-add": {
+            "description": "Adds NAE library to the project and creates all the necessary files.",
+            "factory": "./add/add/index#ngAdd"
+        },
+        "ng-update": {
+            "migrations": "migrations.json"
+        },
+        "create-nc-files": {
+            "description": "Creates all the necessary files for a NAE project",
+            "factory": "./add/create-nc-files/index#createNcFiles",
+            "schema": "./add/create-nc-files/schema.json",
+            "private": true
+        },
+        "custom-themes": {
+            "description": "Generate a project custom themes from nae.json.",
+            "factory": "./add/custom-themes/index#customThemes",
+            "schema": "./add/custom-themes/schema.json",
+            "hidden": true
+        },
+        "create-view": {
+            "description": "If nae.json contains views that were not created yet, creates one of them. Otherwise opens a prompt to input the settings.",
+            "factory": "./view/create-view/schematic-create-view#schematicEntryPoint",
+            "schema": "./view/create-view/schema.json"
+        },
+        "create-view-prompt": {
+            "description": "Creates a view based on provided settings. Opens a prompt if no settings are provided.",
+            "factory": "./view/create-view-prompt/schematic-create-view-prompt#schematicEntryPoint",
+            "schema": "./view/create-view-prompt/schema-create-view-prompt.json",
+            "hidden": true
+        },
+        "create-sidenav-prompt": {
+            "description": "Adds extension to sidenav based on user inputs.",
+            "factory": "./view/create-view-prompt/schematic-create-sidenav-prompt#schematicEntryPoint",
+            "schema": "./view/create-view-prompt/schema-create-sidenav-prompt.json",
+            "hidden": true
+        }
+    }
+}

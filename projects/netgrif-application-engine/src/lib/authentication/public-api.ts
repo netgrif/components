@@ -8,9 +8,9 @@ export * from './sign-up/public-api';
 export * from './authentication.module';
 
 /* CLASSES */
-
+export * from './authentication.factory';
 
 /* SERVICES */
 
 /* COMPONENTS */
-export * from './components/authentication-overlay/authentication-overlay.component';
+export * from './components/abstract-authentication-overlay';

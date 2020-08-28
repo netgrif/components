@@ -1,0 +1,19 @@
+<mat-form-field [appearance]="textAreaField.materialAppearance"
+                floatLabel="always"
+                class="full-width"
+                color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{textAreaField.title}}</mat-label>
+    <textarea matInput
+              #textArea
+              [placeholder]="textAreaField.placeholder"
+              [required]="textAreaField.behavior.required"
+              [formControl]="formControlRef"
+              [ngStyle]="{'min-height': getHeight()+'px', 'height': getHeight()+'px'}"
+              #dynamicTextArea="cdkTextareaAutosize"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"></textarea>
+    <mat-hint>{{textAreaField.description}}</mat-hint>
+    <mat-error *ngIf="!formControlRef.valid">{{getErrorMessage()}}</mat-error>
+</mat-form-field>
+
+

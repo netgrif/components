@@ -276,7 +276,7 @@ export abstract class DataField<T> {
     }
 
     public resolveAppearance(config: ConfigurationService): void {
-        let appearance = 'legacy';
+        let appearance = 'outline';
         if (config.get().services && config.get().services.dataFields && config.get().services.dataFields.appearance) {
             appearance = config.get().services.dataFields.appearance;
         }

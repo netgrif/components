@@ -4,6 +4,11 @@ import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angul
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 
+export enum BooleanFieldValidation {
+    REQUIRED_TRUE = 'requiredTrue',
+    REQUIRED = 'required'
+}
+
 export class BooleanField extends DataField<boolean> {
 
     private _validators: Array<ValidatorFn>;
@@ -36,7 +41,7 @@ export class BooleanField extends DataField<boolean> {
         const result = [];
 
         this.validations.forEach(item => {
-            if (item.validationRule.includes('requiredTrue')) {
+            if (item.validationRule.includes(BooleanFieldValidation.REQUIRED_TRUE)) {
                 result.push(this.requiredTrue);
             }
         });

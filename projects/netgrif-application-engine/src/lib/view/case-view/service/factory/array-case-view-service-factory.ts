@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {SideMenuService} from '../../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
@@ -7,6 +7,7 @@ import {LoggerService} from '../../../../logger/services/logger.service';
 import {TranslateService} from '@ngx-translate/core';
 import {CaseViewService} from '../case-view-service';
 import {ProcessService} from '../../../../process/process.service';
+import {NAE_NEW_CASE_COMPONENT} from '../../../../side-menu/content-components/injection-tokens';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link CaseViewService} dependencies.
@@ -29,7 +30,8 @@ export class ArrayCaseViewServiceFactory {
                 protected _searchService: SearchService,
                 protected _processService: ProcessService,
                 protected _log: LoggerService,
-                protected _translate: TranslateService) {
+                protected _translate: TranslateService,
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
     }
 
     /**
@@ -46,7 +48,8 @@ export class ArrayCaseViewServiceFactory {
             this._log,
             this._snackBarService,
             this._searchService,
-            this._translate
+            this._translate,
+            this._newCaseComponent
         );
     }
 }

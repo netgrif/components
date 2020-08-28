@@ -175,7 +175,7 @@ export class TreeTaskContentService implements OnDestroy {
 
     /**
      * @param examinedCase the {@link Case} object from which we want to extract the transition ID
-     * @returns the ID of the transition that should be displayed in the {@link TaskContentComponent},
+     * @returns the ID of the transition that should be displayed in the {@link AbstractTaskContentComponent},
      * or `undefined` if the currently selected case doesn't define it
      */
     protected getTransitionId(examinedCase: Case): string | undefined {

@@ -1,0 +1,25 @@
+<nc-data-field-template *ngIf="!dataField.behavior.hidden"
+                         [dataField]="dataField"
+                         [dataFieldTemplate]="enumFieldTemplate"
+                         [offset]="taskOffset">
+</nc-data-field-template>
+
+<ng-template #enumFieldTemplate let-showLargeLayout="showLargeLayout">
+    <div [ngSwitch]="dataField.view">
+        <nc-enumeration-autocomplete-select-field *ngSwitchCase="'autocomplete'"
+                                                   [showLargeLayout]="showLargeLayout"
+                                                   [enumerationField]="dataField"
+                                                   [formControlRef]="formControl">
+        </nc-enumeration-autocomplete-select-field>
+        <nc-enumeration-list-field *ngSwitchCase="'list'"
+                                    [showLargeLayout]="showLargeLayout"
+                                    [enumerationField]="dataField"
+                                    [formControlRef]="formControl">
+        </nc-enumeration-list-field>
+        <nc-enumeration-select-field *ngSwitchDefault
+                                      [showLargeLayout]="showLargeLayout"
+                                      [enumerationField]="dataField"
+                                      [formControlRef]="formControl">
+        </nc-enumeration-select-field>
+    </div>
+</ng-template>

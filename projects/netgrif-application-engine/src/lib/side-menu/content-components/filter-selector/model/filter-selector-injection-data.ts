@@ -2,7 +2,7 @@ import {SideMenuInjectionData} from '../../../models/side-menu-injection-data';
 import {FilterType} from '../../../../filter/models/filter-type';
 
 /**
- * Objects of this type can be used to constrain filters listed in {@link FilterSelectorComponent}.
+ * Objects of this type can be used to constrain filters listed in {@link AbstractFilterSelectorComponent}.
  *
  * If no constraints are provided, all filters from {@link FilterRepository} will be displayed.
  *
@@ -11,11 +11,11 @@ import {FilterType} from '../../../../filter/models/filter-type';
  */
 export interface FilterSelectorInjectionData extends SideMenuInjectionData {
     /**
-     * Constrains filters shown in {@link FilterSelectorComponent} to a single type.
+     * Constrains filters shown in {@link AbstractFilterSelectorComponent} to a single type.
      */
     filterTypeConstraint?: FilterType;
     /**
-     * Constrains filters shown in {@link FilterSelectorComponent} to specific filters, by their IDs.
+     * Constrains filters shown in {@link AbstractFilterSelectorComponent} to specific filters, by their IDs.
      */
     filterIdsConstraint?: Array<string>;
 }

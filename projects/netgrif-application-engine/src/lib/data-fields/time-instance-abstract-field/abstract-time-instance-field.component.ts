@@ -1,6 +1,7 @@
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
-import {AbstractTimeInstanceField} from './models/abstract-time-instance-field';
+import {AbstractTimeInstanceField, AbstractTimeInstanceFieldValidation} from './models/abstract-time-instance-field';
 import {TranslateService} from '@ngx-translate/core';
+import moment, {Moment} from 'moment';
 
 export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFieldComponent {
 
@@ -9,19 +10,30 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
     }
 
     public buildErrorMessage(dataField: AbstractTimeInstanceField) {
-        if (this.formControl.hasError('required')) {
+        if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.REQUIRED)) {
             return this._translate.instant('dataField.validations.required');
         }
-        if (this.formControl.hasError('validBetween')) {
-            const tmp = dataField.validations.find(value => value.validationRule.includes('between')).validationRule.split(' ');
-            return this.resolveErrorMessage(dataField, 'between',
-                this._translate.instant('dataField.validations.dateRange', {range: tmp[1]}));
+        if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.VALID_BETWEEN)) {
+            const tmp = dataField.validations.find(value =>
+                value.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)
+            ).validationRule.split(' ');
+            const parts = tmp[1].split(',');
+            let left = AbstractTimeInstanceField.parseDate(parts[0]);
+            let right = AbstractTimeInstanceField.parseDate(parts[1]);
+            left = moment.isMoment(left) ? (left as Moment).format('DD.MM.YYYY HH:mm:ss') : left;
+            right = moment.isMoment(right) ? (right as Moment).format('DD.MM.YYYY HH:mm:ss') : right;
+            return this.resolveErrorMessage(dataField, AbstractTimeInstanceFieldValidation.BETWEEN,
+                this._translate.instant('dataField.validations.dateRange', {left, right}));
         }
-        if (this.formControl.hasError('validWorkday')) {
-            return this.resolveErrorMessage(dataField, 'workday', this._translate.instant('dataField.validations.workday'));
+        if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.VALID_WORKDAY)) {
+            return this.resolveErrorMessage(
+                dataField, AbstractTimeInstanceFieldValidation.WORKDAY, this._translate.instant('dataField.validations.workday')
+            );
         }
-        if (this.formControl.hasError('validWeekend')) {
-            return this.resolveErrorMessage(dataField, 'weekend', this._translate.instant('dataField.validations.weekend'));
+        if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.VALID_WEEKEND)) {
+            return this.resolveErrorMessage(
+                dataField, AbstractTimeInstanceFieldValidation.WEEKEND, this._translate.instant('dataField.validations.weekend')
+            );
         }
         return '';
     }

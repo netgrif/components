@@ -1,7 +1,7 @@
 /**
  * Stores the data for chips in the simple search GUI.
  *
- * See {@link SearchComponent} for more information.
+ * See {@link AbstractSearchComponent} for more information.
  */
 export interface SimpleSearchChip {
     /**

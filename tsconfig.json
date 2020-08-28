@@ -22,6 +22,9 @@
             "netgrif-application-engine": [
                 "dist/netgrif-application-engine"
             ],
+            "netgrif-components": [
+                "dist/netgrif-components"
+            ],
             "jszip": [
                 "./node_modules/jszip/dist/jszip.min.js"
             ]

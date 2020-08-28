@@ -25,12 +25,19 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
+import {TaskEventService} from '../../task-content/services/task-event.service';
+import {TaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
     let testTask: Task;
     let resourceService: TestTaskResourceService;
     let callChainService: CallChainService;
+    let taskEventService: TaskEventService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -47,10 +54,12 @@ describe('FinishTaskService', () => {
                 TaskRequestStateService,
                 TaskDataService,
                 DataFocusPolicyService,
+                TaskEventService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
-                {provide: TaskResourceService, useClass: TestTaskResourceService}
+                {provide: TaskResourceService, useClass: TestTaskResourceService},
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -73,7 +82,7 @@ describe('FinishTaskService', () => {
             assignPolicy: AssignPolicy.manual,
             dataFocusPolicy: DataFocusPolicy.manual,
             finishPolicy: FinishPolicy.manual,
-            stringId: '',
+            stringId: 'taskId',
             layout: {rows: 1, cols: 1, offset: 0},
             dataGroups: [],
             dataSize: 0,
@@ -82,6 +91,7 @@ describe('FinishTaskService', () => {
         TestBed.inject(TaskContentService).task = testTask;
         resourceService = TestBed.inject(TaskResourceService) as unknown as TestTaskResourceService;
         callChainService = TestBed.inject(CallChainService);
+        taskEventService = TestBed.inject(TaskEventService);
     });
 
     it('should be created', () => {
@@ -92,10 +102,22 @@ describe('FinishTaskService', () => {
     it('should finish successfully', done => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {success: 'success'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
         service.validateDataAndFinish(callChainService.create((result) => {
             expect(result).toBeTrue();
             expect(testTask.startDate).toBeFalsy();
             expect(testTask.finishDate).toBeFalsy();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeTrue();
+            expect(taskEvent.event).toEqual(TaskEvent.FINISH);
+
             done();
         }));
     });
@@ -103,9 +125,21 @@ describe('FinishTaskService', () => {
     it('should finish unsuccessful', done => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {error: 'error'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
         service.validateDataAndFinish(callChainService.create((result) => {
             expect(testTask.startDate).toBeTruthy();
             expect(result).toBeFalse();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeFalse();
+            expect(taskEvent.event).toEqual(TaskEvent.FINISH);
+
             done();
         }));
     });
@@ -113,9 +147,21 @@ describe('FinishTaskService', () => {
     it('should finish error', done => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {error: 'throw'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
         service.validateDataAndFinish(callChainService.create((result) => {
             expect(testTask.startDate).toBeTruthy();
             expect(result).toBeFalse();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeFalse();
+            expect(taskEvent.event).toEqual(TaskEvent.FINISH);
+
             done();
         }));
     });

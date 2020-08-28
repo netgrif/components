@@ -14,9 +14,9 @@ import {FieldConverterService} from './field-converter.service';
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
  * Also provides some general functionality that is needed when working with task content.
  *
- * Notable example of a parent Component is the {@link TaskPanelComponent}.
+ * Notable example of a parent Component is the {@link AbstractTaskPanelComponent}.
  *
- * Notable example of a task content renderer is the {@link TaskContentComponent}.
+ * Notable example of a task content renderer is the {@link AbstractTaskContentComponent}.
  */
 @Injectable()
 export abstract class TaskContentService {
@@ -107,7 +107,7 @@ export abstract class TaskContentService {
                     const updatedField = chFields[field.stringId];
                     Object.keys(updatedField).forEach(key => {
                         if (key === 'value') {
-                            field.value = this._fieldConverterService.formatValue(field, updatedField[key]);
+                            field.value = this._fieldConverterService.formatValueFromBackend(field, updatedField[key]);
                             field.changed = false;
                         } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
                             field.behavior = updatedField.behavior[this._task.transitionId];
@@ -129,7 +129,7 @@ export abstract class TaskContentService {
                                 newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                             });
                             (field as EnumerationField | MultichoiceField).choices = newOptions;
-                        } else {
+                        } else if (key !== 'type') {
                             field[key] = updatedField[key];
                         }
                         field.update();

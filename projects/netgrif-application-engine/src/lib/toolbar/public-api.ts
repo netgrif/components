@@ -1,3 +1,3 @@
 export * from './toolbar.module';
 
-export * from './toolbar.component';
+export * from './abstract-toolbar.component';

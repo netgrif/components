@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NewCaseComponent} from './new-case.component';
 import {MaterialModule} from '../../../material/material.module';
 import {CovalentModule} from '../../../covalent/covalent.module';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -12,7 +11,6 @@ import {HotkeyModule} from 'angular2-hotkeys';
 
 @NgModule({
     declarations: [
-        NewCaseComponent
     ],
     imports: [
         CommonModule,
@@ -24,9 +22,7 @@ import {HotkeyModule} from 'angular2-hotkeys';
         SnackBarModule,
         TranslateLibModule,
         HotkeyModule.forRoot()
-    ],
-    exports: [NewCaseComponent],
-    entryComponents: [NewCaseComponent]
+    ]
 })
 export class SideMenuNewCaseModule {
 }

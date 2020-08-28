@@ -15,6 +15,11 @@ export enum EnumerationFieldView {
     AUTOCOMPLETE = 'autocomplete'
 }
 
+export enum EnumerationFieldValidation {
+    WRONG_VALUE = 'wrongValue',
+    REQUIRED = 'required'
+}
+
 export class EnumerationField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string,
