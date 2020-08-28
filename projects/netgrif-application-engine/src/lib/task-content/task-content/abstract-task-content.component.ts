@@ -1,10 +1,12 @@
-import {Input} from '@angular/core';
+import {EventEmitter, Input, Output} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {GridFiller} from '../../utility/grid-layout/model/grid-filler';
 import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
+import {TaskEventNotification} from '../model/task-event-notification';
+import {TaskEventService} from '../services/task-event.service';
 
 export abstract class AbstractTaskContentComponent {
     dataSource: any[];
@@ -29,11 +31,16 @@ export abstract class AbstractTaskContentComponent {
      * An icon is displayed by default
      */
     @Input() displayNoDataIcon = true;
+    /**
+     * Emits notifications about task events
+     */
+    @Output() taskEvent: EventEmitter<TaskEventNotification>;
 
-    constructor(protected _fieldConverter: FieldConverterService,
-                public taskContentService: TaskContentService,
-                protected _paperView: PaperViewService,
-                protected _logger: LoggerService) {
+    protected constructor(protected _fieldConverter: FieldConverterService,
+                          public taskContentService: TaskContentService,
+                          protected _paperView: PaperViewService,
+                          protected _logger: LoggerService,
+                          protected _taskEventService: TaskEventService = null) {
         this.loading = true;
         this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
@@ -44,6 +51,12 @@ export abstract class AbstractTaskContentComponent {
             }
             this.loading = false;
         });
+        if (this._taskEventService !== null) {
+            this.taskEvent = new EventEmitter<TaskEventNotification>();
+            _taskEventService.taskEventNotifications$.subscribe(event => {
+                this.taskEvent.emit(event);
+            });
+        }
     }
 
     public get taskId(): string {
