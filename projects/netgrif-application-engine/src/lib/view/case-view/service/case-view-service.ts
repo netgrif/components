@@ -15,10 +15,7 @@ import {Pagination} from '../../../resources/interface/pagination';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
-import {
-    NAE_NEW_CASE_COMPONENT, NAE_OPTION_SELECTOR_COMPONENT,
-    NAE_USER_ASSIGN_COMPONENT
-} from '../../../side-menu/content-components/injection-tokens';
+import {NAE_NEW_CASE_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets {

@@ -1,7 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {
     AbstractFilterSelectorComponent,
-    FilterSelectorInjectionData,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
     FilterRepository

@@ -15,6 +15,9 @@ import {UserListInjectedData} from '../../side-menu/content-components/user-assi
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {SelectedCaseService} from './selected-case.service';
 import {NAE_USER_ASSIGN_COMPONENT} from '../../side-menu/content-components/injection-tokens';
+import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
+import {TaskEventService} from '../../task-content/services/task-event.service';
 
 
 /**
@@ -29,6 +32,7 @@ export class DelegateTaskService extends TaskHandlingService {
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
+                protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() @Inject(NAE_USER_ASSIGN_COMPONENT) protected _userAssignComponent: any,
                 @Optional() _selectedCaseService: SelectedCaseService,
@@ -83,6 +87,7 @@ export class DelegateTaskService extends TaskHandlingService {
                         this.completeSuccess(afterAction);
                     } else if (response.error) {
                         this._snackBar.openErrorSnackBar(response.error);
+                        this.sendNotification(false);
                         afterAction.next(false);
                     }
                 }, error => {
@@ -96,6 +101,7 @@ export class DelegateTaskService extends TaskHandlingService {
 
                     this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
                      ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
+                    this.sendNotification(false);
                     afterAction.next(false);
                 });
             }
@@ -108,6 +114,15 @@ export class DelegateTaskService extends TaskHandlingService {
      */
     private completeSuccess(afterAction: Subject<boolean>): void {
         this._taskOperations.reload();
+        this.sendNotification(true);
         afterAction.next(true);
+    }
+
+    /**
+     * Publishes a delegate notification to the {@link TaskEventService}
+     * @param success whether the delegate operation was successful or not
+     */
+    private sendNotification(success: boolean): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.DELEGATE, success));
     }
 }
