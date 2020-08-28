@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractDateTimeFieldComponent, DATE_TIME_FORMAT} from '@netgrif/application-engine';

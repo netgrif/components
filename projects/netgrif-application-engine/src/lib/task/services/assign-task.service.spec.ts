@@ -24,12 +24,19 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {map} from 'rxjs/operators';
+import {TaskEventService} from '../../task-content/services/task-event.service';
+import {TaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 
 describe('AssignTaskService', () => {
     let service: AssignTaskService;
     let testTask: Task;
     let resourceService: TestTaskResourceService;
     let callChainService: CallChainService;
+    let taskEventService: TaskEventService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -46,10 +53,12 @@ describe('AssignTaskService', () => {
                 TaskRequestStateService,
                 TaskDataService,
                 DataFocusPolicyService,
+                TaskEventService,
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
-                {provide: TaskResourceService, useClass: TestTaskResourceService}
+                {provide: TaskResourceService, useClass: TestTaskResourceService},
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -72,7 +81,7 @@ describe('AssignTaskService', () => {
             assignPolicy: AssignPolicy.manual,
             dataFocusPolicy: DataFocusPolicy.manual,
             finishPolicy: FinishPolicy.manual,
-            stringId: '',
+            stringId: 'taskId',
             layout: {rows: 1, cols: 1, offset: 0},
             dataGroups: [],
             _links: {}
@@ -80,6 +89,7 @@ describe('AssignTaskService', () => {
         TestBed.inject(TaskContentService).task = testTask;
         resourceService = TestBed.inject(TaskResourceService) as unknown as TestTaskResourceService;
         callChainService = TestBed.inject(CallChainService);
+        taskEventService = TestBed.inject(TaskEventService);
     });
 
     it('should be created', () => {
@@ -89,9 +99,21 @@ describe('AssignTaskService', () => {
     it('should assign successfully', done => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {success: 'success'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
         service.assign(callChainService.create((result) => {
-            expect(testTask.startDate).toBeFalsy();
             expect(result).toBeTrue();
+            expect(testTask.startDate).toBeFalsy();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeTrue();
+            expect(taskEvent.event).toEqual(TaskEvent.ASSIGN);
+
             done();
         }));
     });
@@ -99,9 +121,21 @@ describe('AssignTaskService', () => {
     it('should assign unsuccessful', done => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {error: 'error'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
         service.assign(callChainService.create((result) => {
-            expect(testTask.startDate).toBeTruthy();
             expect(result).toBeFalse();
+            expect(testTask.startDate).toBeTruthy();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeFalse();
+            expect(taskEvent.event).toEqual(TaskEvent.ASSIGN);
+
             done();
         }));
     });
@@ -109,9 +143,21 @@ describe('AssignTaskService', () => {
     it('should assign error', done => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {error: 'throw'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
         service.assign(callChainService.create((result) => {
-            expect(testTask.startDate).toBeTruthy();
             expect(result).toBeFalse();
+            expect(testTask.startDate).toBeTruthy();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeFalse();
+            expect(taskEvent.event).toEqual(TaskEvent.ASSIGN);
+
             done();
         }));
     });

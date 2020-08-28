@@ -3,7 +3,7 @@ const {exec} = require("child_process");
 const ncp = require('ncp').ncp;
 const path = require('path');
 
-console.log("Building schematics ...");
+console.log("Building NC schematics ...");
 
 // run the compiler
 exec(path.join('node_modules', '.bin', 'tsc -p projects', 'netgrif-components', 'tsconfig.schematics.json'), (error, stdout, stderr) => {

@@ -7,6 +7,8 @@ export * from './services/unlimited-task-content.service';
 
 /* MODELS */
 export * from './model/policy';
+export * from './model/task-event-notification';
+export * from './model/task-event';
 
 /* MODULES */
 export * from './task-content.module';

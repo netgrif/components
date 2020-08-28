@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CaseViewService} from '../../service/case-view-service';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {Observable} from 'rxjs';
