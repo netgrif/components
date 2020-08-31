@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {of} from 'rxjs';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
@@ -11,6 +11,8 @@ import {TaskViewService} from '../task-view.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {TaskViewParams} from '../../models/task-view-params';
 import {UserComparatorService} from '../../../../user/services/user-comparator.service';
+import {NAE_PREFERRED_TASK_ENDPOINT} from '../../models/injection-token-task-endpoint';
+import {TaskEndpoint} from '../../models/task-endpoint';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link TaskViewService} dependencies.
@@ -35,7 +37,8 @@ export class ConfigTaskViewServiceFactory {
                 protected _configService: ConfigurationService,
                 protected _processService: ProcessService,
                 protected _userComparator: UserComparatorService,
-                protected _log: LoggerService) {
+                protected _log: LoggerService,
+                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected _preferredEndpoint: TaskEndpoint) {
     }
 
     /**
@@ -64,6 +67,7 @@ export class ConfigTaskViewServiceFactory {
                 this._searchService,
                 this._log,
                 this._userComparator,
+                this._preferredEndpoint !== null ? this._preferredEndpoint : undefined,
                 nets,
                 initiallyOpenOneTask,
                 closeTaskTabOnNoTasks

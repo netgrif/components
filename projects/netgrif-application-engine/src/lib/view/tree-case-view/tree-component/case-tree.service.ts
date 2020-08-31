@@ -23,6 +23,7 @@ import {ofVoid} from '../../../utility/of-void';
 import {CaseGetRequestBody} from '../../../resources/interface/case-get-request-body';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {NAE_OPTION_SELECTOR_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
+import {SimpleFilter} from '../../../filter/models/simple-filter';
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
@@ -509,10 +510,10 @@ export class CaseTreeService implements OnDestroy {
     private performCaseRefCall(caseId: string, newCaseRefValue: Array<string>): Observable<Array<string> | undefined> {
         const result$ = new Subject<Array<string>>();
 
-        this._taskResourceService.getTasks({
-            case: caseId,
-            transition: TreePetriflowIdentifiers.CASE_REF_TRANSITION
-        }).subscribe(page => {
+        this._taskResourceService.getTasks(SimpleFilter.fromTaskQuery({
+            case: {id: caseId},
+            transitionId: TreePetriflowIdentifiers.CASE_REF_TRANSITION
+        })).subscribe(page => {
             if (!hasContent(page)) {
                 this._logger.error('Case ref accessor task doesn\'t exist!');
                 result$.complete();
