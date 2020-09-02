@@ -8,6 +8,7 @@ import {ViewClassInfo} from '../../../commons/view-class-info';
 import {classify} from '../../../commons/angular-cli-devkit-core-strings';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
+import {RoleGuardService} from '../../authorization/role/role-guard.service';
 
 
 /**
@@ -60,7 +61,7 @@ export class RoutingBuilderService {
             if (!route['canActivate'].includes(AuthenticationGuardService)) {
                 route['canActivate'].push(AuthenticationGuardService);
             }
-            route['canActivate'].push();
+            route['canActivate'].push(RoleGuardService);
         }
         if (view.access.hasOwnProperty('group')) {
             if (!route['canActivate']) {
