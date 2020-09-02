@@ -1,6 +1,6 @@
 import {Observable, ReplaySubject} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
-import {HeaderComponent} from '../../header/header.component';
+import {AbstractHeaderComponent} from '../../header/abstract-header.component';
 import {SortableView} from './sortable-view';
 
 
@@ -15,7 +15,7 @@ export abstract class ViewWithHeaders {
         return this._selectedHeaders$.asObservable();
     }
 
-    protected initializeHeader(headerComponent: HeaderComponent): void {
+    protected initializeHeader(headerComponent: AbstractHeaderComponent): void {
         headerComponent.headerService.selectedHeaders$.subscribe(selectedHeaders => this._selectedHeaders$.next(selectedHeaders));
         if (!!this._sortableView) {
             this._sortableView.registerHeaderChange(headerComponent.headerService.headerChange$);

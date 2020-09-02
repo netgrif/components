@@ -46,9 +46,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
-
 @NgModule({
-    declarations: [],
     imports: [
         CommonModule,
         FlexLayoutModule
@@ -99,11 +97,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         ScrollingModule,
         MatOptionModule,
         MatFormFieldModule,
-        MatSelectModule,
         FormsModule,
-        MatListModule,
         ReactiveFormsModule,
-        MatRadioModule
     ]
 })
 export class MaterialModule {

@@ -13,4 +13,6 @@ export * from './cards/model/iframe-card';
 export * from './cards/model/dashboard-card-types';
 
 /* COMPONENT */
-export * from './dashboard-content/dashboard-content.component';
+export * from './cards/count-card/abstract-count-card';
+export * from './cards/iframe-card/abstract-iframe-card';
+export * from './dashboard-content/abstract-dashboard-content';

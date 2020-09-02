@@ -1,0 +1,28 @@
+<mat-tab-group [selectedIndex]="tabView.selectedIndex"
+               [class.center-tabs]="align === 'center'"
+               [class.end-tabs]="align === 'end'"
+               (selectedTabChange)="tabView.tabChange($event)" class="tab-group"
+               [class.nae-tab-fill-height]="stretch" fxFlex>
+    <mat-tab *ngFor="let tab of tabView.openedTabs; let i=index">
+        <ng-template mat-tab-label>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon class="icon-margin-right"
+                              *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
+                    <span class="custom-badge" [matBadge]="(badgeCount(tab) | async)" [matBadgeHidden]="(badgeHidden(tab) | async)">{{tab.label.text + ((badgeHidden(tab) | async) ? '' : offset)}}</span>
+                </div>
+                <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </div>
+        </ng-template>
+        <!--        TODO 16.4.2020 - lazy loading of tab contents is disabled for now -->
+        <!--        <ng-template matTabContent>-->
+        <nc-tab-creation-detector [initializeTabFunction]="initializeTabLambda"
+                                   [tabIndex]="i"></nc-tab-creation-detector>
+        <ng-template [ngIf]="tab.isTabInitialized" class="full-height">
+            <ng-template [cdkPortalOutlet]="tab.portal" class="full-height"></ng-template>
+        </ng-template>
+        <!--        </ng-template>-->
+    </mat-tab>
+</mat-tab-group>

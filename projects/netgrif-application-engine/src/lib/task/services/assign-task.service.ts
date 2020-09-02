@@ -10,6 +10,9 @@ import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {SelectedCaseService} from './selected-case.service';
+import {TaskEventService} from '../../task-content/services/task-event.service';
+import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
 
 
 /**
@@ -23,6 +26,7 @@ export class AssignTaskService extends TaskHandlingService {
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
+                protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -66,6 +70,7 @@ export class AssignTaskService extends TaskHandlingService {
                 this.completeSuccess(afterAction);
             } else if (response.error) {
                 this._snackBar.openErrorSnackBar(response.error);
+                this.sendNotification(false);
                 afterAction.next(false);
             }
         }, error => {
@@ -79,6 +84,7 @@ export class AssignTaskService extends TaskHandlingService {
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
              ${this._taskContentService.task} ${this._translate.instant('tasks.snackbar.failed')}`);
+            this.sendNotification(false);
             afterAction.next(false);
         });
     }
@@ -89,6 +95,15 @@ export class AssignTaskService extends TaskHandlingService {
      */
     private completeSuccess(afterAction: Subject<boolean>): void {
         this._taskOperations.reload();
+        this.sendNotification(true);
         afterAction.next(true);
+    }
+
+    /**
+     * Publishes an assign notification to the {@link TaskEventService}
+     * @param success whether the assign operation was successful or not
+     */
+    private sendNotification(success: boolean): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.ASSIGN, success));
     }
 }

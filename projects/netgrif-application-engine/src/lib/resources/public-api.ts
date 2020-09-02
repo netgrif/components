@@ -33,3 +33,4 @@ export * from './types/nae-date-type';
 
 /* Utility */
 export * from './resource-utility-functions';
+export * from './abstract-endpoint/count-service';

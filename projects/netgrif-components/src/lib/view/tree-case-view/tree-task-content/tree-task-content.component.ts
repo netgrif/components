@@ -1,0 +1,51 @@
+import {Component} from '@angular/core';
+import {
+    SelectedCaseService,
+    TaskContentService,
+    UnlimitedTaskContentService,
+    TreeTaskContentService,
+    AssignTaskService,
+    TaskDataService,
+    TaskEventService,
+    CancelTaskService,
+    FinishTaskService,
+    TaskRequestStateService,
+    DataFocusPolicyService,
+    AssignPolicyService,
+    FinishPolicyService,
+    NAE_TASK_OPERATIONS,
+    SubjectTaskOperations,
+    AbstractTreeTaskContentComponent
+} from '@netgrif/application-engine';
+
+@Component({
+    selector: 'nc-tree-task-content',
+    templateUrl: './tree-task-content.component.html',
+    styleUrls: ['./tree-task-content.component.scss'],
+    providers: [
+        {provide: TaskContentService, useClass: UnlimitedTaskContentService},
+        TreeTaskContentService,
+        AssignTaskService,
+        TaskDataService,
+        TaskEventService,
+        CancelTaskService,
+        FinishTaskService,
+        TaskRequestStateService,
+        DataFocusPolicyService,
+        AssignPolicyService,
+        FinishPolicyService,
+        SelectedCaseService,
+        {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+    ]
+})
+export class TreeTaskContentComponent extends AbstractTreeTaskContentComponent {
+
+    constructor(protected _treeTaskContentService: TreeTaskContentService,
+                protected _taskEventService: TaskEventService,
+                protected _assign: AssignTaskService,
+                protected _cancel: CancelTaskService,
+                protected _finish: FinishTaskService,
+                protected _taskContentService: TaskContentService) {
+        super(_treeTaskContentService, _taskEventService, _assign, _cancel, _finish, _taskContentService);
+    }
+}

@@ -1,0 +1,16 @@
+import {Component} from '@angular/core';
+import {RoleAssignmentService, AbstractRoleAssignment, UserService} from '@netgrif/application-engine';
+
+@Component({
+    selector: 'nc-role-assignment',
+    templateUrl: './role-assignment.component.html',
+    styleUrls: ['./role-assignment.component.scss'],
+    providers: [
+        RoleAssignmentService
+    ]
+})
+export class RoleAssignmentComponent extends AbstractRoleAssignment {
+    constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
+        super(_service, _userService);
+    }
+}

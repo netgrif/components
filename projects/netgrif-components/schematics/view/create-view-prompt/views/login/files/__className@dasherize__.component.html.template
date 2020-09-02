@@ -1,0 +1,3 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="fill-all-space">
+     <nc-login-form></nc-login-form>
+</div>

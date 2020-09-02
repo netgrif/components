@@ -14,9 +14,9 @@ import {FieldConverterService} from './field-converter.service';
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
  * Also provides some general functionality that is needed when working with task content.
  *
- * Notable example of a parent Component is the {@link TaskPanelComponent}.
+ * Notable example of a parent Component is the {@link AbstractTaskPanelComponent}.
  *
- * Notable example of a task content renderer is the {@link TaskContentComponent}.
+ * Notable example of a task content renderer is the {@link AbstractTaskContentComponent}.
  */
 @Injectable()
 export abstract class TaskContentService {
