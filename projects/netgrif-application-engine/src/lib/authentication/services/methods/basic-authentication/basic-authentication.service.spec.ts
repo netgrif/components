@@ -31,11 +31,10 @@ describe('BasicAuthenticationService', () => {
     });
 
     it('should login', inject([HttpClient, HttpTestingController],
-        (http: HttpClient, httpMock: HttpTestingController, done) => {
+        (http: HttpClient, httpMock: HttpTestingController) => {
 
             service.login({username: 'name', password: 'pass'}).subscribe(res => {
                 expect(res.id).toEqual('id');
-                done();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/login');
@@ -46,11 +45,10 @@ describe('BasicAuthenticationService', () => {
     ));
 
     it('should logout', inject([HttpClient, HttpTestingController],
-       (http: HttpClient, httpMock: HttpTestingController, done) => {
+       (http: HttpClient, httpMock: HttpTestingController) => {
 
             service.logout().subscribe(res => {
                 expect(res['success']).toEqual('success');
-                done();
             });
 
             const req = httpMock.expectOne('http://localhost:8080/api/auth/logout');

@@ -26,10 +26,9 @@ describe('SignUpService', () => {
     });
 
     it('should signup', inject([HttpTestingController],
-        (httpMock: HttpTestingController, done) => {
+        (httpMock: HttpTestingController) => {
             service.signup({ token: 'string', email: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
                 expect(res.success).toEqual('Done');
-                done();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/signup');
@@ -40,10 +39,9 @@ describe('SignUpService', () => {
     );
 
     it('should verify token', inject([HttpTestingController],
-        (httpMock: HttpTestingController, done) => {
+        (httpMock: HttpTestingController) => {
             service.verify('string').subscribe(res => {
                 expect(res.success).toEqual('username');
-                done();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/token/verify');
@@ -54,18 +52,17 @@ describe('SignUpService', () => {
     );
 
     it('should invite', inject([HttpTestingController],
-        (httpMock: HttpTestingController, done) => {
-            service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
-                expect(res.success).toEqual('Done');
-                done();
-            });
+                (httpMock: HttpTestingController) => {
+                    service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
+                        expect(res.success).toEqual('Done');
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({success: 'Done'});
-        })
-    );
+                    reqLog.flush({success: 'Done'});
+                })
+        );
 
     afterEach(() => {
         TestBed.resetTestingModule();

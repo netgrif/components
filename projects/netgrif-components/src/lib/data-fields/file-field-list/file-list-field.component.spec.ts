@@ -5,7 +5,6 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {FileFieldComponent} from '../file-field/file-field.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {
     SideMenuService,
@@ -21,7 +20,9 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     ErrorSnackBarComponent,
-    SuccessSnackBarComponent
+    SuccessSnackBarComponent,
+    SnackBarModule,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('FileListFieldComponent', () => {
@@ -35,19 +36,20 @@ describe('FileListFieldComponent', () => {
                 AngularResizedEventModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
-                TranslateLibModule
+                TranslateLibModule,
+                SnackBarModule
             ],
             providers: [
                 FileFieldService,
                 SideMenuService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             declarations: [
-                FileFieldComponent,
+                FileListFieldComponent,
                 TestWrapperComponent,
                 ErrorSnackBarComponent,
                 SuccessSnackBarComponent

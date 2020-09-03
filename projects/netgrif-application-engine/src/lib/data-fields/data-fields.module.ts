@@ -14,10 +14,6 @@ import {TranslateLibModule} from '../translate/translate-lib.module';
 import {DateAdapter} from '@angular/material/core';
 
 @NgModule({
-    declarations: [
-    ],
-    exports: [
-    ],
     imports: [
         CommonModule,
         FlexLayoutModule,

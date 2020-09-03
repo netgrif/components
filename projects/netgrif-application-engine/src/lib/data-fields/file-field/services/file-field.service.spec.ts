@@ -13,6 +13,7 @@ import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authe
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('FileFieldService', () => {
     let service: FileFieldService;
@@ -30,7 +31,7 @@ describe('FileFieldService', () => {
                 SideMenuService,
                 SnackBarService,
                 FileFieldService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -41,6 +42,10 @@ describe('FileFieldService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
 
