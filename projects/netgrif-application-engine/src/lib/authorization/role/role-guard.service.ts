@@ -14,14 +14,12 @@ import {Observable, of} from 'rxjs';
 })
 export class RoleGuardService implements CanActivate {
 
-    private readonly _loginUrl: string;
 
     constructor(protected _redirectService: RedirectService,
                 protected _userService: UserService,
                 protected _processService: ProcessService,
                 protected _configService: ConfigurationService,
                 protected _router: Router) {
-        this._loginUrl = this._redirectService.resolveLoginPath();
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
