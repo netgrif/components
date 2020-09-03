@@ -22,7 +22,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {WarningSnackBarComponent} from '../../../snack-bar/components/warning-snack-bar/warning-snack-bar.component';
 import {Task} from '../../../resources/interface/task';
 import {delay, tap} from 'rxjs/operators';
-import {createMockTask} from '../../../utility/tests/utility/createMockTask';
+import {createMockTask} from '../../../utility/tests/utility/create-mock-task';
 import {ElementaryPredicate} from '../../../search/models/predicate/elementary-predicate';
 import {Query} from '../../../search/models/query/query';
 import {Page} from '../../../resources/interface/page';
@@ -147,8 +147,7 @@ class MyResources {
     private result: Array<Task> = [];
     private callback: () => void = () => {};
 
-    setResponse(_delay: number, tasks: Array<Task>, callback: () => void = () => {
-    }) {
+    setResponse(_delay: number, tasks: Array<Task>, callback: () => void = () => {}) {
         this.delay = _delay;
         this.result = tasks;
         this.callback = callback;
@@ -166,7 +165,7 @@ class MyResources {
                 number: 0
             }
         }).pipe(delay(this.delay),
-            tap(arr => {
+            tap(() => {
                 callback();
             })
         );

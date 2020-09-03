@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../../material/material.module';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {ConfigCaseViewServiceFactory} from './factory/config-case-view-service-factory';
 import {SearchService} from '../../../search/search-service/search.service';
@@ -12,6 +12,10 @@ import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Task} from '../../../resources/interface/task';
+import {Page} from '../../../resources/interface/page';
+import {tap, delay} from 'rxjs/operators';
+import {Case} from '../../../resources/interface/case';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
@@ -72,14 +76,31 @@ describe('CaseViewService', () => {
 });
 
 class MyResources {
-    searchCases(filter, params) {
+    private delay = 0;
+    private result: Array<Case> = [];
+    private callback: () => void = () => {};
+
+    setResponse(_delay: number, cases: Array<Case>, callback: () => void = () => {}) {
+        this.delay = _delay;
+        this.result = cases;
+        this.callback = callback;
+    }
+
+    searchCases(): Observable<Page<Case>> {
+        const callback = this.callback;
+        const content = [...this.result];
         return of({
-            content: [], pagination: {
-                number: -1,
-                size: 0,
-                totalPages: 0,
-                totalElements: 0
+            content,
+            pagination: {
+                size: content.length,
+                totalElements: content.length,
+                totalPages: 1,
+                number: 0
             }
-        });
+        }).pipe(delay(this.delay),
+            tap(() => {
+                callback();
+            })
+        );
     }
 }
