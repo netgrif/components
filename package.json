@@ -28,7 +28,7 @@
     ],
     "scripts": {
         "ng": "ng",
-        "prepare": "node prepare-release.js",
+        "prepare": "node scripts/prepare-release.js",
         "nae:build": "ng build netgrif-application-engine --prod && npm run nae:build-schematics",
         "nae:build-schematics": "node projects/netgrif-application-engine/src/scripts/build-schematics.js",
         "nae:lint": "ng lint netgrif-application-engine",
