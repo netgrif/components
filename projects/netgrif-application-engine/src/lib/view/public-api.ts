@@ -2,6 +2,7 @@
 export * from './case-view/models/case-view-params';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
+export * from './task-view/models/task-page-load-request-result';
 export * from './tree-case-view/tree-component/model/CaseTreeNode';
 
 /* ENUMS */
@@ -14,6 +15,7 @@ export * from './case-view/tabbed-case-view';
 
 export * from './task-view/abstract-task-view';
 export * from './task-view/tabbed-task-view';
+export * from './task-view/models/task-page-load-request-context';
 
 export * from './abstract/view-with-headers';
 export * from './abstract/sortable-view';

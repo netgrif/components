@@ -79,19 +79,13 @@ describe('TaskViewService', () => {
     });
 
     it('should load tasks', done => {
-        taskService.setResponse(100, [createMockTask('task')]);
-        let callbackCount = 0;
+        taskService.setResponse(1000, [createMockTask('task')]);
         service.tasks$.subscribe(receivedTasks => {
             expect(receivedTasks).toBeTruthy();
             expect(Array.isArray(receivedTasks)).toBeTrue();
-            if (callbackCount === 0) {
-                expect(receivedTasks.length).toEqual(0);
-                callbackCount++;
-            } else if (callbackCount === 1) {
-                expect(receivedTasks.length).toEqual(1);
-                expect(receivedTasks[0].task.title).toEqual('task');
-                done();
-            }
+            expect(receivedTasks.length).toEqual(1);
+            expect(receivedTasks[0].task.title).toEqual('task');
+            done();
         });
     });
 
@@ -128,7 +122,7 @@ describe('TaskViewService', () => {
         searchService.addPredicate(new ElementaryPredicate(new Query('q2')));
         expect(oldActiveFilter !== searchService.activeFilter).toBeTrue();
 
-        tick(400);
+        tick(1000);
         expect(reloadSpy).toHaveBeenCalled();
         expect(nextPageSpy).toHaveBeenCalled();
         expect(service.loading).toBeTrue();
@@ -164,16 +158,17 @@ class MyResources {
 
     private returnResponse(): Observable<Page<Task>> {
         const callback = this.callback;
+        const content = [...this.result];
         return of({
-            content: [...this.result],
+            content,
             pagination: {
-                size: this.result.length,
-                totalElements: this.result.length,
+                size: content.length,
+                totalElements: content.length,
                 totalPages: 1,
                 number: 0
             }
         }).pipe(delay(this.delay),
-            tap(() => {
+            tap(arr => {
                 callback();
             })
         );
