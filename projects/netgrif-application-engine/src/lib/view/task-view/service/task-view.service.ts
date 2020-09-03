@@ -161,7 +161,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         }
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
-        params = this.addPageParams(params, requestContext.pageNumber);
+        params = this.addPageParams(params, requestContext.pagination);
         this._loading$.on(requestContext.filter);
 
         let request: Observable<Page<Task>>;
@@ -293,10 +293,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         return 'priority,desc';
     }
 
-    protected addPageParams(params: HttpParams, page?: number): HttpParams {
-        params = params.set('size', this._pagination.size + '');
-        page = page !== null ? page : this._pagination.number;
-        params = params.set('page', page + '');
+    protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
+        params = params.set('size', pagination.size + '');
+        params = params.set('page', pagination.number + '');
         return params;
     }
 }
