@@ -5,13 +5,14 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('SignUpService', () => {
     let service: SignUpService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
             providers: [
                 SignUpService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -25,9 +26,10 @@ describe('SignUpService', () => {
     });
 
     it('should signup', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
+        (httpMock: HttpTestingController, done) => {
             service.signup({ token: 'string', email: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
                 expect(res.success).toEqual('Done');
+                done();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/signup');
@@ -38,9 +40,10 @@ describe('SignUpService', () => {
     );
 
     it('should verify token', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
+        (httpMock: HttpTestingController, done) => {
             service.verify('string').subscribe(res => {
                 expect(res.success).toEqual('username');
+                done();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/token/verify');
@@ -51,11 +54,10 @@ describe('SignUpService', () => {
     );
 
     it('should invite', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
+        (httpMock: HttpTestingController, done) => {
             service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
-                console.log(res);
-            }, (error) => {
-                expect(error).toEqual('Done');
+                expect(res.success).toEqual('Done');
+                done();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
@@ -65,7 +67,7 @@ describe('SignUpService', () => {
         })
     );
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

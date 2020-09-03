@@ -30,32 +30,37 @@ describe('BasicAuthenticationService', () => {
         expect(service).toBeTruthy();
     });
 
-    // it('should login and logout', inject([HttpClient, HttpTestingController],
-    //     fakeAsync((http: HttpClient, httpMock: HttpTestingController) => {
-    //
-    //         service.login({username: 'name', password: 'pass'}).subscribe(res => {
-    //             expect(res.id).toEqual('id');
-    //         });
-    //
-    //         tick(100);
-    //
-    //         const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/login');
-    //         expect(reqLog.request.method).toEqual('GET');
-    //
-    //         reqLog.flush({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
-    //
-    //         service.logout().subscribe(res => {
-    //             expect(res['success']).toEqual('success');
-    //         });
-    //
-    //         const req = httpMock.expectOne('http://localhost:8080/api/auth/logout');
-    //         expect(req.request.method).toEqual('POST');
-    //
-    //         req.flush({success: 'success'});
-    //     })
-    // ));
+    it('should login', inject([HttpClient, HttpTestingController],
+        (http: HttpClient, httpMock: HttpTestingController, done) => {
 
-    afterAll(() => {
+            service.login({username: 'name', password: 'pass'}).subscribe(res => {
+                expect(res.id).toEqual('id');
+                done();
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/login');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
+        }
+    ));
+
+    it('should logout', inject([HttpClient, HttpTestingController],
+       (http: HttpClient, httpMock: HttpTestingController, done) => {
+
+            service.logout().subscribe(res => {
+                expect(res['success']).toEqual('success');
+                done();
+            });
+
+            const req = httpMock.expectOne('http://localhost:8080/api/auth/logout');
+            expect(req.request.method).toEqual('POST');
+
+            req.flush({success: 'success'});
+        }
+    ));
+
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

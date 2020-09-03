@@ -8,6 +8,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {SessionService} from '../session/services/session.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('AuthenticationInterceptor', () => {
     let service: SessionService;
@@ -18,7 +19,7 @@ describe('AuthenticationInterceptor', () => {
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SessionService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: HTTP_INTERCEPTORS,
                     useClass: AuthenticationInterceptor,
@@ -46,9 +47,6 @@ describe('AuthenticationInterceptor', () => {
 
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
         mock.verify();
-    }));
-
-    afterAll(() => {
         TestBed.resetTestingModule();
-    });
+    }));
 });

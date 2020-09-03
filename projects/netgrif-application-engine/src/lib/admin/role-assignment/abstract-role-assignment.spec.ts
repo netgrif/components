@@ -59,13 +59,17 @@ describe('AbstractRoleAssignment', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
-    selector: 'nae-role-assignment',
+    selector: 'nae-test-role-assignment',
     template: '',
 })
-export class TestRoleAssignmentComponent extends AbstractRoleAssignment {
+class TestRoleAssignmentComponent extends AbstractRoleAssignment {
     constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
         super(_service, _userService);
     }
