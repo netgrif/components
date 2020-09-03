@@ -11,7 +11,11 @@ export class LoadingWithFilterEmitter extends BehaviorSubject<boolean> {
         this._loadingStates = new Map<Filter, boolean>();
     }
 
-    public isActive(withFilter: Filter): boolean {
+    public get isActive(): boolean {
+        return this.getValue();
+    }
+
+    public isActiveWithFilter(withFilter: Filter): boolean {
         return !!this._loadingStates.get(withFilter);
     }
 
@@ -24,7 +28,7 @@ export class LoadingWithFilterEmitter extends BehaviorSubject<boolean> {
     }
 
     public toggle(withFilter: Filter) {
-        this.nextValue(withFilter, !this.isActive(withFilter));
+        this.nextValue(withFilter, !this.isActiveWithFilter(withFilter));
     }
 
     private nextValue(withFilter: Filter, loading: boolean): void {

@@ -145,9 +145,9 @@ describe('TaskViewService', () => {
 
 class MyResources {
 
-    private delay: number;
-    private result: Array<Task>;
-    private callback: () => void;
+    private delay = 0;
+    private result: Array<Task> = [];
+    private callback: () => void = () => {};
 
     setResponse(_delay: number, tasks: Array<Task>, callback: () => void = () => {
     }) {

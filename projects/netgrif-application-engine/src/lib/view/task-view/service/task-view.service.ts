@@ -10,7 +10,6 @@ import {catchError, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/oper
 import {HttpParams} from '@angular/common/http';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {Net} from '../../../process/net';
-import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Pagination} from '../../../resources/interface/pagination';
 import {Task} from '../../../resources/interface/task';
 import {SearchService} from '../../../search/search-service/search.service';
@@ -23,6 +22,7 @@ import {NAE_PREFERRED_TASK_ENDPOINT} from '../models/injection-token-task-endpoi
 import {TaskPageLoadRequestContext} from '../models/task-page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
+import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 
 
 @Injectable()
@@ -30,8 +30,8 @@ export class TaskViewService extends SortableViewWithAllowedNets {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFields>;
-    protected _requestedPage$: ReplaySubject<TaskPageLoadRequestContext>;
-    protected _loading$: LoadingEmitter;
+    protected _requestedPage$: BehaviorSubject<TaskPageLoadRequestContext>;
+    protected _loading$: LoadingWithFilterEmitter;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _initiallyOpenOneTask: boolean;
@@ -56,9 +56,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
         super(allowedNets);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
-        this._loading$ = new LoadingEmitter();
+        this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
-        this._requestedPage$ = new ReplaySubject<TaskPageLoadRequestContext>(1);
+        this._requestedPage$ = new BehaviorSubject<TaskPageLoadRequestContext>(null);
         this._endOfData = false;
         this._pagination = {
             size: 50,
@@ -155,16 +155,14 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     }
 
     public loadPage(requestContext: TaskPageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
-        if (this.isLoadingRelevantFilter(requestContext)
-            || requestContext.pageNumber === null
-            || requestContext.pageNumber === undefined
+        if (requestContext === null
             || requestContext.pageNumber < 0) {
             return of({tasks: {}, requestContext});
         }
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
         params = this.addPageParams(params, requestContext.pageNumber);
-        this._loading$.on();
+        this._loading$.on(requestContext.filter);
 
         let request: Observable<Page<Task>>;
         if (requestContext.filter.bodyContainsQuery() || this._preferredEndpoint === TaskEndpoint.ELASTIC) {
@@ -177,11 +175,13 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         return request.pipe(
             catchError(err => {
                 this._log.error('Loading tasks has failed!', err);
+                this._loading$.off(requestContext.filter);
                 return of({content: [], pagination: {...this._pagination}});
             }),
             filter(() => {
                 const r = requestContext.filter === this._searchService.activeFilter;
                 if (!r) {
+                    this._loading$.off(requestContext.filter);
                     this._log.debug('Received tasks page is no longer relevant since the active filter has changed before it could arrive.'
                         + ' Discarding...');
                 }
@@ -215,7 +215,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 }, {});
             }),
             map(tasks => ({tasks, requestContext})),
-            tap(_ => this._loading$.off())
+            tap(_ => this._loading$.off(requestContext.filter))
         );
     }
 
@@ -250,7 +250,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     }
 
     private isLoadingRelevantFilter(requestContext?: TaskPageLoadRequestContext): boolean {
-        return this._loading$.isActive && (requestContext === undefined || requestContext.filter === this._searchService.activeFilter);
+        return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
 
     public reload(): void {
