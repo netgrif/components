@@ -25,6 +25,7 @@ export class RoleGuardService implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
         this._redirectService.intendedRoute = route;
         const view = this._configService.getViewByUrl(state.url.toString());
+        let access = false;
         if (typeof view.access !== 'string' && view.access.hasOwnProperty('role')) {
             const netRoleMap: Array<{ net, role }> = [];
             let accessRole;
@@ -47,12 +48,14 @@ export class RoleGuardService implements CanActivate {
                         if (netRoleMap.filter(({net}) => {
                             return net === netId.identifier;
                         }).map(({role}) => role).includes(roles.name)) {
-                            return true;
+                            if (this._userService.hasRoleById(roles.stringId)) {
+                                access = true;
+                            }
                         }
                     });
                 });
             });
         }
-        return false;
+        return access;
     }
 }

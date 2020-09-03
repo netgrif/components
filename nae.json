@@ -299,7 +299,7 @@
                 "from": "./doc/profile/profile.component"
             },
             "access": {
-                "role": ["DevLink.User", "DevLink.Admin"],
+                "role": ["DevLink.Admin"],
                 "group": [],
                 "authority": ["ROLE_ADMIN"]
             },
