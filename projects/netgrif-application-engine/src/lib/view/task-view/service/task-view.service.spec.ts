@@ -97,10 +97,8 @@ describe('TaskViewService', () => {
             tasks = receivedTasks;
         });
 
-        expect(service.loading).toBeFalse();
-
         let received1 = false;
-        taskService.setResponse(3000, [createMockTask('mock')], () => {
+        taskService.setResponse(3000, [createMockTask('mock', 'task')], () => {
             received1 = true;
         });
 
@@ -114,7 +112,7 @@ describe('TaskViewService', () => {
         expect(service.loading).toBeTrue();
 
         let received2 = false;
-        taskService.setResponse(600, [createMockTask('mock1'), createMockTask('mock2')], () => {
+        taskService.setResponse(600, [createMockTask('mock1', 'task 1'), createMockTask('mock2', 'task 2')], () => {
             received2 = true;
         });
 
