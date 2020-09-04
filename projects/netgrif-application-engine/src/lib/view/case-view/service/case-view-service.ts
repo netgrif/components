@@ -55,6 +55,9 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
             scan((acc, pageLoadResult) => {
+                if (pageLoadResult.requestContext === null) {
+                    return pageLoadResult.cases;
+                }
                 Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
                 return pageLoadResult.requestContext.clearLoaded ? {...pageLoadResult.cases} : {...acc, ...pageLoadResult.cases};
             }, {})
