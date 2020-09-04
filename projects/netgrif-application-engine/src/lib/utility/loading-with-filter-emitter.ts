@@ -1,4 +1,4 @@
-import {BehaviorSubject, from, of} from 'rxjs';
+import {BehaviorSubject, from} from 'rxjs';
 import {Filter} from '../filter/models/filter';
 import {reduce} from 'rxjs/operators';
 
