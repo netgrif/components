@@ -71,7 +71,7 @@ describe('LoggerService', () => {
         expect(localStorage.getItem(LocalStorageLogPublisher.DEFAULT_KEY)).toContain(testString);
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

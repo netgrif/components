@@ -25,7 +25,7 @@ describe('LanguageSelectorComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
-                RouterTestingModule,
+                RouterTestingModule.withRoutes([]),
                 MaterialModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
@@ -38,8 +38,7 @@ describe('LanguageSelectorComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
             ],
             declarations: [LanguageSelectorComponent, TestWrapperComponent],
-        })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -50,7 +49,7 @@ describe('LanguageSelectorComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

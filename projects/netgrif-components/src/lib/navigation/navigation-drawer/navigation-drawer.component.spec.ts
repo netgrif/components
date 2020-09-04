@@ -14,6 +14,7 @@ import {
     MaterialModule
 } from '@netgrif/application-engine';
 import {UserComponentModule} from '../../user/user.module';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('NavigationDrawerComponent', () => {
     let component: NavigationDrawerComponent;
@@ -24,7 +25,7 @@ describe('NavigationDrawerComponent', () => {
             declarations: [NavigationDrawerComponent, NavigationTreeComponent],
             imports: [
                 CommonModule,
-                RouterModule,
+                RouterTestingModule.withRoutes([]),
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
@@ -51,21 +52,7 @@ describe('NavigationDrawerComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should open, close and toggle', async () => {
-        await component.open().then(res  => {
-            expect(res).toEqual('open');
-        });
-
-        await component.close().then(res  => {
-            expect(res).toEqual('open');
-        });
-
-        await component.toggle().then(res  => {
-            expect(res).toEqual('open');
-        });
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

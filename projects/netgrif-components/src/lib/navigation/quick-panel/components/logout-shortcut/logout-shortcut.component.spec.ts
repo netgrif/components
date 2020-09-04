@@ -57,7 +57,7 @@ describe('LogoutShortcutComponent', () => {
         expect(logSpy).toHaveBeenCalledWith('User is logged out');
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
