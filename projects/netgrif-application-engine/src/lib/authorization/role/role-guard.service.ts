@@ -6,7 +6,6 @@ import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ProcessService} from '../../process/process.service';
 import {map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
 
 
 @Injectable({
@@ -22,10 +21,9 @@ export class RoleGuardService implements CanActivate {
                 protected _router: Router) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
         this._redirectService.intendedRoute = route;
         const view = this._configService.getViewByUrl(state.url.toString());
-        let access;
         if (typeof view.access !== 'string' && view.access.hasOwnProperty('role')) {
             const netRoleMap: Array<{ net, role }> = [];
             let accessRole;
@@ -42,6 +40,14 @@ export class RoleGuardService implements CanActivate {
                     throw new Error('Please enter the correct format NET.ROLE');
                 }
             });
+            return await this.promiseRole(netRoleMap);
+        }
+    }
+
+
+    async promiseRole(netRoleMap: Array<{ net; role }>): Promise<boolean | UrlTree> {
+        return new Promise<boolean | UrlTree>((resolve, reject) => {
+            let access = false;
             this._processService.getNets(netRoleMap.map(({net}) => net)).pipe(map(nets => {
                 nets.forEach(netId => {
                     netId.roles.forEach(roles => {
@@ -54,11 +60,9 @@ export class RoleGuardService implements CanActivate {
                         }
                     });
                 });
-                if (access === undefined) {
-                    access = false;
-                }
             }));
-        }
-        return of(access);
+            resolve(access);
+        });
     }
+
 }
