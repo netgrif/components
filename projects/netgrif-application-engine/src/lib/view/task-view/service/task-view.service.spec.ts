@@ -84,7 +84,7 @@ describe('TaskViewService', () => {
             expect(receivedTasks).toBeTruthy();
             expect(Array.isArray(receivedTasks)).toBeTrue();
             expect(receivedTasks.length).toEqual(1);
-            expect(receivedTasks[0].task.title).toEqual('task');
+            expect(receivedTasks[0].task.stringId).toEqual('task');
             done();
         });
     });
@@ -98,7 +98,7 @@ describe('TaskViewService', () => {
         });
 
         let received1 = false;
-        taskService.setResponse(3000, [createMockTask('mock', 'task')], () => {
+        taskService.setResponse(3000, [createMockTask('mock')], () => {
             received1 = true;
         });
 
@@ -112,7 +112,7 @@ describe('TaskViewService', () => {
         expect(service.loading).toBeTrue();
 
         let received2 = false;
-        taskService.setResponse(600, [createMockTask('mock1', 'task 1'), createMockTask('mock2', 'task 2')], () => {
+        taskService.setResponse(600, [createMockTask('mock1'), createMockTask('mock2')], () => {
             received2 = true;
         });
 
@@ -132,8 +132,8 @@ describe('TaskViewService', () => {
         expect(tasks).toBeTruthy();
         expect(Array.isArray(tasks)).toBeTrue();
         expect(tasks.length).toEqual(2);
-        expect(tasks[0].task.title).toEqual('mock1');
-        expect(tasks[1].task.title).toEqual('mock2');
+        expect(tasks[0].task.stringId).toEqual('mock1');
+        expect(tasks[1].task.stringId).toEqual('mock2');
     }));
 
     afterAll(() => {

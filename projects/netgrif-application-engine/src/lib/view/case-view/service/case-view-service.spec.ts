@@ -12,10 +12,10 @@ import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Task} from '../../../resources/interface/task';
 import {Page} from '../../../resources/interface/page';
 import {tap, delay} from 'rxjs/operators';
 import {Case} from '../../../resources/interface/case';
+import {createMockCase} from '../../../utility/tests/utility/create-mock-case';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
@@ -27,6 +27,7 @@ const searchServiceFactory = () => {
 
 describe('CaseViewService', () => {
     let service: CaseViewService;
+    let caseService: MyResources;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -48,25 +49,25 @@ describe('CaseViewService', () => {
             ]
         });
         service = TestBed.inject(CaseViewService);
+        caseService = TestBed.inject(CaseResourceService) as unknown as MyResources;
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should load cases', () => {
-        service.reload();
-        service.cases$.subscribe(res => {
-            expect(res.length).toEqual(0);
-        });
-
-        service.reload();
-        service.cases$.subscribe(res => {
-            expect(res.length).toEqual(0);
-        });
-
-        service.loading$.subscribe(res => {
-            expect(res).toBeFalse();
+    it('should load cases', done => {
+        caseService.setResponse(1000, [createMockCase('case')]);
+        let c = 0;
+        service.cases$.subscribe(receivedCases => {
+            expect(receivedCases).toBeTruthy();
+            expect(Array.isArray(receivedCases)).toBeTrue();
+            if (c === 1) {
+                expect(receivedCases.length).toEqual(1);
+                expect(receivedCases[0].stringId).toEqual('case');
+            }
+            c++;
+            done();
         });
     });
 
