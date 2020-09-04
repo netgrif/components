@@ -38,7 +38,7 @@ describe('DialogService', () => {
         expect(dialogSpy).toHaveBeenCalled();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

@@ -53,11 +53,7 @@ describe('RichTextareaFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
@@ -73,7 +69,7 @@ class TestWrapperComponent {
     label = new WrappedBoolean();
     dataField = new TextField('', '', 'text', {
         editable: true
-    }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]);
+    }, undefined, undefined, undefined, []);
     formControl = new FormControl();
 
     constructor() {

@@ -59,11 +59,7 @@ describe('DatetimeFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
@@ -79,11 +75,7 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, [
-        {validationRule: 'between today,future', validationMessage: 'This is custom message!'},
-        {validationRule: 'between past,today', validationMessage: 'This is custom message!'},
-        {validationRule: 'between 2020-03-03,today', validationMessage: 'This is custom message!'},
-        ]);
+    }, undefined, undefined, undefined, []);
     changedFields = new BehaviorSubject<ChangedFields>({behavior: {editable: true}});
 }
 

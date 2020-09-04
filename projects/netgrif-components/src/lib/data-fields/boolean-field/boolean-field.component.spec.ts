@@ -44,8 +44,7 @@ describe('BooleanFieldComponent', () => {
                 TestWrapperComponent
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -56,11 +55,7 @@ describe('BooleanFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('this is custom message');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
@@ -75,5 +70,5 @@ class TestWrapperComponent {
     }, undefined,
         undefined,
         undefined,
-        [{validationRule: 'requiredTrue', validationMessage: 'this is custom message'}]);
+        []);
 }

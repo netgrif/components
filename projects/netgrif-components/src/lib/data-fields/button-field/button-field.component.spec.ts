@@ -15,8 +15,7 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    ButtonField,
-    LanguageService
+    ButtonField
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -49,7 +48,6 @@ describe('ButtonFieldComponent', () => {
             .compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
-        const initializeLanguage = TestBed.inject(LanguageService);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
     }));
@@ -58,12 +56,7 @@ describe('ButtonFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        component.dataField.value = undefined;
-        expect(component.getErrorMessage()).toEqual('This field is required!');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

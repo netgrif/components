@@ -22,16 +22,13 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    TestViewService,
-    HeaderColumn,
-    HeaderColumnType,
-    CaseMetaField
+    TestViewService
 } from '@netgrif/application-engine';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
-    let headerSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -43,7 +40,7 @@ describe('EditModeComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                RouterModule.forRoot([]),
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 CaseHeaderService,
@@ -71,19 +68,13 @@ describe('EditModeComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
-        headerSpy = spyOn(TestBed.inject(CaseHeaderService), 'headerColumnSelected');
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call headerColumnSelected', () => {
-        component.headerColumnSelected(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
-        expect(headerSpy).toHaveBeenCalledWith(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

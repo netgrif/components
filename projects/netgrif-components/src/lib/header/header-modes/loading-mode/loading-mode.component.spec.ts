@@ -25,6 +25,7 @@ import {
     TestConfigurationService,
     TestViewService,
 } from '@netgrif/application-engine';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('LoadingModeComponent', () => {
     let component: LoadingModeComponent;
@@ -40,7 +41,7 @@ describe('LoadingModeComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                RouterModule.forRoot([]),
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 CaseHeaderService,
@@ -73,7 +74,7 @@ describe('LoadingModeComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

@@ -16,8 +16,7 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    NumberField,
-    LanguageService
+    NumberField
 } from '@netgrif/application-engine';
 
 describe('NumberFieldComponent', () => {
@@ -50,7 +49,6 @@ describe('NumberFieldComponent', () => {
             .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
-        const initializeLang = TestBed.inject(LanguageService);
         fixture.detectChanges();
     }));
 
@@ -58,14 +56,7 @@ describe('NumberFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom odd message!');
-
-        component.dataField.value = 5;
-        expect(component.getErrorMessage()).toEqual('Entered number must be even');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
@@ -80,14 +71,5 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, [
-        {validationRule: 'odd', validationMessage: 'This is custom odd message!'},
-        {validationRule: 'even', validationMessage: ''},
-        {validationRule: 'positive', validationMessage: 'This is custom message!'},
-        {validationRule: 'negative', validationMessage: 'This is custom message!'},
-        {validationRule: 'decimal', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange inf,0', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange 0,inf', validationMessage: 'This is custom message!'},
-        {validationRule: 'inrange -5,0', validationMessage: 'This is custom message!'},
-    ]);
+    }, []);
 }

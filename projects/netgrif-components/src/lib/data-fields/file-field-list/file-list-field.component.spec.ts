@@ -50,9 +50,7 @@ describe('FileListFieldComponent', () => {
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             declarations: [
                 FileListFieldComponent,
-                TestWrapperComponent,
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
+                TestWrapperComponent
             ],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -71,7 +69,7 @@ describe('FileListFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
