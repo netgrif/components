@@ -19,7 +19,7 @@ import {UserComparatorService} from '../../../user/services/user-comparator.serv
 import {TaskEndpoint} from '../models/task-endpoint';
 import {Page} from '../../../resources/interface/page';
 import {NAE_PREFERRED_TASK_ENDPOINT} from '../models/injection-token-task-endpoint';
-import {TaskPageLoadRequestContext} from '../models/task-page-load-request-context';
+import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
@@ -30,7 +30,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFields>;
-    protected _requestedPage$: BehaviorSubject<TaskPageLoadRequestContext>;
+    protected _requestedPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _loading$: LoadingWithFilterEmitter;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
@@ -58,7 +58,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
-        this._requestedPage$ = new BehaviorSubject<TaskPageLoadRequestContext>(null);
+        this._requestedPage$ = new BehaviorSubject<PageLoadRequestContext>(null);
         this._endOfData = false;
         this._pagination = {
             size: 50,
@@ -154,7 +154,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         return this._searchService.activeFilter;
     }
 
-    public loadPage(requestContext: TaskPageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
+    public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
         if (requestContext === null
             || requestContext.pageNumber < 0) {
             return of({tasks: {}, requestContext});
@@ -235,21 +235,21 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         task.dataGroups.forEach(g => g.fields.forEach(f => f.block = block));
     }
 
-    public nextPage(renderedRange: ListRange, totalLoaded: number, requestContext?: TaskPageLoadRequestContext): void {
+    public nextPage(renderedRange: ListRange, totalLoaded: number, requestContext?: PageLoadRequestContext): void {
         if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
 
         if (renderedRange.end === totalLoaded) {
             if (requestContext === undefined) {
-                requestContext = new TaskPageLoadRequestContext(this.activeFilter, this._pagination);
+                requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
                 requestContext.pagination.number += 1;
             }
             this._requestedPage$.next(requestContext);
         }
     }
 
-    private isLoadingRelevantFilter(requestContext?: TaskPageLoadRequestContext): boolean {
+    private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
         return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
 
@@ -259,7 +259,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         }
 
         this._endOfData = false;
-        const requestContext = new TaskPageLoadRequestContext(this.activeFilter, this._pagination, true);
+        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, true);
         requestContext.pagination.number = 0;
         const range = {
             start: -1,
@@ -275,7 +275,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         }
 
         this._endOfData = false;
-        const requestContext = new TaskPageLoadRequestContext(this.activeFilter, this._pagination, false, true);
+        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, false, true);
         requestContext.pagination.number = 0; // TODO [BUG] - Reloading only first page
         const range = {
             start: -1,

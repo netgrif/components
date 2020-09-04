@@ -1,9 +1,0 @@
-import {TaskPageLoadRequestContext} from './task-page-load-request-context';
-import {SimpleFilter} from '../../../filter/models/simple-filter';
-
-describe('TaskPageLoadRequestContext', () => {
-    it('should create an instance', () => {
-        expect(new TaskPageLoadRequestContext(SimpleFilter.emptyTaskFilter(),
-            {size: 1, totalElements: 1, totalPages: 1, number: 0})).toBeTruthy();
-    });
-});

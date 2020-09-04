@@ -15,11 +15,11 @@ export * from './case-view/tabbed-case-view';
 
 export * from './task-view/abstract-task-view';
 export * from './task-view/tabbed-task-view';
-export * from './task-view/models/task-page-load-request-context';
 
 export * from './abstract/view-with-headers';
 export * from './abstract/sortable-view';
 export * from './abstract/sortable-view-with-allowed-nets';
+export * from './abstract/page-load-request-context';
 
 /* INJECTION TOKENS */
 export * from './task-view/models/injection-token-task-endpoint';
