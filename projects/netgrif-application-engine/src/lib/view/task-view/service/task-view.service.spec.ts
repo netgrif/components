@@ -32,8 +32,6 @@ describe('TaskViewService', () => {
     let service: TaskViewService;
     let taskService: MyResources;
     let searchService: SearchService;
-    let reloadSpy: jasmine.Spy;
-    let nextPageSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -70,8 +68,6 @@ describe('TaskViewService', () => {
         service = TestBed.inject(TaskViewService);
         searchService = TestBed.inject(SearchService);
         taskService = TestBed.inject(TaskResourceService) as unknown as MyResources;
-        reloadSpy = spyOn(service, 'reload').and.callThrough();
-        nextPageSpy = spyOn(service, 'loadPage').and.callThrough();
     });
 
     it('should be created', () => {
@@ -107,8 +103,6 @@ describe('TaskViewService', () => {
         expect(oldActiveFilter !== searchService.activeFilter).toBeTrue();
 
         tick(400);
-        expect(reloadSpy).toHaveBeenCalled();
-        expect(nextPageSpy).toHaveBeenCalled();
         expect(service.loading).toBeTrue();
 
         let received2 = false;
@@ -121,8 +115,6 @@ describe('TaskViewService', () => {
         expect(oldActiveFilter !== searchService.activeFilter).toBeTrue();
 
         tick(1000);
-        expect(reloadSpy).toHaveBeenCalled();
-        expect(nextPageSpy).toHaveBeenCalled();
         expect(service.loading).toBeTrue();
 
         tick(5000);
