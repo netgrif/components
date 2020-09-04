@@ -30,13 +30,14 @@ export class PageLoadRequestContext {
      * @param requestPagination the {@link Pagination} that is used by the request.
      * Context creates a local copy of the passed objects content.
      * @param clearLoaded whether the existing tasks or cases should be cleared and replaced by the result of this request.
-     * @param reloadCurrentPage whether the current page of tasks should be updated with the result of the current request.
+     * @param reloadCurrentTaskPage whether the current page of tasks should be updated with the result of the current request.
+     * Does not affect case requests.
      */
-    constructor(requestFilter: Filter, requestPagination: Pagination, clearLoaded = false, reloadCurrentPage = false) {
+    constructor(requestFilter: Filter, requestPagination: Pagination, clearLoaded = false, reloadCurrentTaskPage = false) {
         this.filter = requestFilter;
         this.pagination = Object.assign({}, requestPagination);
         this.clearLoaded = clearLoaded;
-        this.reloadCurrentTaskPage = reloadCurrentPage;
+        this.reloadCurrentTaskPage = reloadCurrentTaskPage;
     }
 
     public get pageNumber(): number {

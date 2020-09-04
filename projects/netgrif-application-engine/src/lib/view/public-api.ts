@@ -1,5 +1,6 @@
 /* INTERFACES */
 export * from './case-view/models/case-view-params';
+export * from './case-view/models/case-page-load-request-result';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
 export * from './task-view/models/task-page-load-request-result';

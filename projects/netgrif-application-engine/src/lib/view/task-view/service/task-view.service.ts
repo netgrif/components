@@ -82,9 +82,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             mergeMap(p => this.loadPage(p)),
             scan((acc, pageLoadResult) => {
                 let result: { [k: string]: TaskPanelData };
-                if (pageLoadResult.requestContext.clearLoadedTasks) {
+                if (pageLoadResult.requestContext.clearLoaded) {
                     result = {...pageLoadResult.tasks};
-                } else if (pageLoadResult.requestContext.reloadCurrentPage) {
+                } else if (pageLoadResult.requestContext.reloadCurrentTaskPage) {
                     Object.keys(acc).forEach(taskId => {
                         if (!pageLoadResult.tasks[taskId]) {
                             delete acc[taskId];
