@@ -58,7 +58,6 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
-        this._requestedPage$ = new BehaviorSubject<PageLoadRequestContext>(null);
         this._endOfData = false;
         this._pagination = {
             size: 50,
@@ -66,6 +65,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             totalPages: undefined,
             number: -1
         };
+        this._requestedPage$ = new BehaviorSubject<PageLoadRequestContext>(
+            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
+        );
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
         if (this._preferredEndpoint === undefined || this._preferredEndpoint === null) {

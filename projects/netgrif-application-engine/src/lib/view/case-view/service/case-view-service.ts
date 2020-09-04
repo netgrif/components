@@ -44,13 +44,15 @@ export class CaseViewService extends SortableViewWithAllowedNets {
             this.reload();
         });
         this._endOfData = false;
-        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(null);
         this._pagination = {
             size: 25,
             totalElements: undefined,
             totalPages: undefined,
             number: -1
         };
+        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(
+            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
+        );
 
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
