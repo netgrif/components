@@ -1,13 +1,13 @@
 import {Input, OnInit} from '@angular/core';
-import {TextField} from '../models/text-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
+import {TextAreaField} from '../models/text-area-field';
 
 export abstract class AbstractRichTextareaFieldComponent extends AbstractTextErrorsComponent implements OnInit {
 
-    @Input() textAreaField: TextField;
+    @Input() textAreaField: TextAreaField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
     options: any;
