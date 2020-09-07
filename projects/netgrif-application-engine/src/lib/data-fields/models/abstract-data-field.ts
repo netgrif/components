@@ -15,7 +15,7 @@ export abstract class DataField<T> {
      * @ignore
      * Current value of the data field
      */
-    private _value: BehaviorSubject<T>;
+    protected _value: BehaviorSubject<T>;
     /**
      * @ignore
      * Whether the data field Model object was initialized.
