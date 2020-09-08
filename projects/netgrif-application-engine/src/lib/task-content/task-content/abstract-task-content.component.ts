@@ -68,6 +68,10 @@ export abstract class AbstractTaskContentComponent {
         return [new GridFiller(0, cols - 1)];
     }
 
+    public getGridColumns(): string {
+        return 'repeat(' + this.formCols + ', 1fr)';
+    }
+
     public getNumberOfFormColumns(): number {
         if (!this.taskContentService.task
             || !this.taskContentService.task.layout

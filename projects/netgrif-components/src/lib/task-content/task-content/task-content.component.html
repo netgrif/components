@@ -1,5 +1,5 @@
 <div *ngIf="!loading && dataSource.length !== 0" [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView()}">
-    <div [gdAreas]="gridAreas">
+    <div [gdAreas]="gridAreas" [gdColumns]="getGridColumns()">
         <div *ngFor="let item of dataSource"
              [gdArea]="item.gridAreaId"
              class="border">
