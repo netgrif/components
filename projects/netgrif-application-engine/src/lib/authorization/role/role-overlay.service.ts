@@ -4,7 +4,7 @@ import {SpinnerOverlayService} from '../../utility/service/spinner-overlay.servi
 import {ProcessService} from '../../process/process.service';
 import {Router} from '@angular/router';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
-import {LoggerService} from 'netgrif-application-engine';
+import {LoggerService} from '../../logger/services/logger.service';
 
 @Injectable({
     providedIn: 'root'
