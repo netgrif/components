@@ -5,7 +5,7 @@ import {AuthenticationModule} from '../../authentication/authentication.module';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ProcessService} from '../../process/process.service';
-import {map} from 'rxjs/operators';
+import {RoleOverlayService} from './role-overlay.service';
 
 
 @Injectable({
@@ -13,12 +13,15 @@ import {map} from 'rxjs/operators';
 })
 export class RoleGuardService implements CanActivate {
 
+    private readonly _loginUrl: string;
 
     constructor(protected _redirectService: RedirectService,
                 protected _userService: UserService,
                 protected _processService: ProcessService,
+                protected _roleOverlayService: RoleOverlayService,
                 protected _configService: ConfigurationService,
                 protected _router: Router) {
+        this._loginUrl = this._redirectService.resolveLoginPath();
     }
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
@@ -40,29 +43,27 @@ export class RoleGuardService implements CanActivate {
                     throw new Error('Please enter the correct format NET.ROLE');
                 }
             });
-            return await this.promiseRole(netRoleMap);
+            return this._processService.hasLoadNets(netRoleMap.map(({net}) => net)) ?
+                this.hasRole(netRoleMap) : this._roleOverlayService.setLoadNet(netRoleMap.map(({net}) => net), state.url.toString());
         }
     }
 
-
-    async promiseRole(netRoleMap: Array<{ net; role }>): Promise<boolean | UrlTree> {
-        return new Promise<boolean | UrlTree>((resolve, reject) => {
-            let access = false;
-            this._processService.getNets(netRoleMap.map(({net}) => net)).pipe(map(nets => {
-                nets.forEach(netId => {
-                    netId.roles.forEach(roles => {
-                        if (netRoleMap.filter(({net}) => {
-                            return net === netId.identifier;
-                        }).map(({role}) => role).includes(roles.name)) {
-                            if (this._userService.hasRoleById(roles.stringId)) {
-                                access = true;
-                            }
+    protected hasRole(netRoleMap: Array<{ net; role }>): boolean | UrlTree {
+        let access = false;
+        this._processService.getNets(netRoleMap.map(({net}) => net)).subscribe(nets => {
+            nets.forEach(netId => {
+                netId.roles.forEach(roles => {
+                    if (netRoleMap.filter(({net}) => {
+                        return net === netId.identifier;
+                    }).map(({role}) => role).includes(roles.name)) {
+                        if (this._userService.hasRoleById(roles.stringId)) {
+                            access = true;
                         }
-                    });
+                    }
                 });
-            }));
-            resolve(access);
+            });
         });
+        return access;
     }
 
 }
