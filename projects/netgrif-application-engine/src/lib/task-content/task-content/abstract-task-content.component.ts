@@ -64,10 +64,6 @@ export abstract class AbstractTaskContentComponent {
         }
     }
 
-    public get taskId(): string {
-        return this.taskContentService.task.stringId;
-    }
-
     protected static newGridRow(cols: number): Array<GridFiller> {
         return [new GridFiller(0, cols - 1)];
     }
@@ -262,10 +258,6 @@ export abstract class AbstractTaskContentComponent {
             }
         }
         return returnResource;
-    }
-
-    isOffsetPresent() {
-        return !!this.taskContentService.task && !!this.taskContentService.task.layout && !!this.taskContentService.task.layout.offset;
     }
 
     protected addGridRows(grid: Array<Array<GridFiller>>, newRowCount: number, columnCount: number): void {
