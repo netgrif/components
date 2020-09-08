@@ -1,10 +1,11 @@
 import {Behavior} from '../../data-fields/models/behavior';
 import {Layout} from '../../data-fields/models/layout';
 import {Validation} from '../../data-fields/models/validation';
+import {DataFieldType} from './data-field-type';
 
 export interface DataFieldResource {
     stringId: string;
-    type: string;
+    type: DataFieldType;
     name: string;
     description?: string;
     placeholder?: string;
