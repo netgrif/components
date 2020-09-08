@@ -1,9 +1,8 @@
 <div *ngIf="!loading && dataSource.length !== 0" [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView()}">
-    <mat-grid-list [cols]="formCols" rowHeight="105px">
-        <mat-grid-tile *ngFor="let item of dataSource"
-                       class="border"
-                       [colspan]="item.layout.cols"
-                       [rowspan]="item.layout.rows"
+    <div [gdAreas]="gridAreas">
+        <div *ngFor="let item of dataSource"
+                       class="border min-row-height"
+                       [gdArea]="item.gridAreaId"
                        [ngSwitch]="item.type">
 
             <nc-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item"
@@ -57,8 +56,8 @@
             </div>
 
             <div *ngSwitchCase="'blank'"></div>
-        </mat-grid-tile>
-    </mat-grid-list>
+        </div>
+    </div>
 </div>
 
 <div *ngIf="!loading && dataSource.length === 0" fxLayout="column" fxLayoutAlign="center center">

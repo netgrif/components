@@ -9,7 +9,7 @@ import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
 
 export abstract class AbstractTaskContentComponent {
-    dataSource: any[];
+    dataSource: Array<DatafieldGridLayoutElement>;
     loading: boolean;
     formCols = 4;
 
@@ -35,6 +35,10 @@ export abstract class AbstractTaskContentComponent {
      * Emits notifications about task events
      */
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
+    /**
+     * Describes the layout of the elements
+     */
+    gridAreas: string;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
@@ -46,6 +50,7 @@ export abstract class AbstractTaskContentComponent {
             if (data.length !== 0) {
                 this.formCols = this.getNumberOfFormColumns();
                 this.dataSource = this.fillBlankSpace(data, this.formCols);
+                this.gridAreas = this.computeGridAreas();
             } else {
                 this.dataSource = [];
             }
@@ -267,5 +272,37 @@ export abstract class AbstractTaskContentComponent {
         while (grid.length < newRowCount) {
             grid.push(AbstractTaskContentComponent.newGridRow(columnCount));
         }
+    }
+
+    protected computeGridAreas(): string {
+        const areas: Array<Array<string>> = [];
+        let blanks = 0;
+        let titles = 0;
+        this.dataSource.forEach(element => {
+            while (areas.length < (element.layout.y + element.layout.rows)) {
+                areas.push(Array(this.formCols).fill(''));
+            }
+
+            let uniqueIdentifier: string;
+            if (element.type !== 'blank' && element.type !== 'title') {
+                uniqueIdentifier = element.item.stringId;
+            } else if (element.type === 'blank') {
+                uniqueIdentifier = 'blank' + blanks;
+                blanks++;
+            } else {
+                uniqueIdentifier = 'title' + titles;
+                titles++;
+            }
+
+            element.gridAreaId = uniqueIdentifier;
+
+            for (let i = element.layout.x; i < element.layout.x + element.layout.cols; i++) {
+                for (let j = element.layout.y; j < element.layout.y + element.layout.rows; j++) {
+                    areas[j][i] = uniqueIdentifier;
+                }
+            }
+        });
+
+        return areas.map(row => row.join(' ')).join(' | ');
     }
 }

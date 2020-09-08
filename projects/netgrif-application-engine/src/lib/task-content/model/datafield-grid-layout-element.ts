@@ -3,4 +3,5 @@ import {GridElementWithItem} from '../../utility/grid-layout/model/grid-element-
 
 export interface DatafieldGridLayoutElement extends GridElementWithItem<DataField<any>> {
     title?: string;
+    gridAreaId: string;
 }
