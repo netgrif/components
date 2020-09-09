@@ -4,6 +4,7 @@ export * from './get-immediate-data';
 export * from './call-chain/call-chain.service';
 export * from './pagination/page-has-content';
 export * from './service/spinner-overlay.service';
+export * from './incrementing-counter';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';

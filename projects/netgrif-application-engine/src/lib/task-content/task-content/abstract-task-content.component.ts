@@ -7,8 +7,11 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
-import {DataGroup} from '../../resources/interface/data-groups';
+import {DataGroup, DataGroupAlignment} from '../../resources/interface/data-groups';
 import {TaskLayoutType} from '../../resources/interface/task-layout';
+import {IncrementingCounter} from '../../utility/incrementing-counter';
+import {TaskElementType} from '../model/task-content-element-type';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 export abstract class AbstractTaskContentComponent {
     dataSource: Array<DatafieldGridLayoutElement>;
@@ -93,16 +96,17 @@ export abstract class AbstractTaskContentComponent {
             this.gridAreas = '';
         }
 
+        let grid;
         switch (this.taskContentService.task.layout.type) {
             case TaskLayoutType.GRID:
-                this.computeGridLayout(dataGroups);
-                return;
+                grid = this.computeGridLayout(dataGroups);
+                break;
             case TaskLayoutType.FLOW:
-                this.computeFlowLayout(dataGroups);
-                return;
+                grid = this.computeFlowLayout(dataGroups);
+                break;
             case TaskLayoutType.LEGACY:
-                this.computeLegacyLayout(dataGroups);
-                return;
+                grid = this.computeLegacyLayout(dataGroups);
+                break;
             default:
                 throw new Error(`Unknown task layout type '${this.taskContentService.task.layout.type}'`);
         }
@@ -117,7 +121,95 @@ export abstract class AbstractTaskContentComponent {
     }
 
     computeLegacyLayout(dataGroups: Array<DataGroup>) {
+        if (this.formCols !== 4) {
+            this.formCols = 4;
+            this._logger.warn(`Task with id '${this.taskContentService.task.stringId}' has legacy layout with a non-default number` +
+                ` of columns. If you want to use a layout with different number of columns than 2 use a different layout type instead.`);
+        }
 
+        const grid: Array<Array<string>> = [];
+        const gridElements: Array<DatafieldGridLayoutElement> = [];
+        const runningTitleCount = new IncrementingCounter();
+
+        dataGroups.forEach(dataGroup => {
+            const isGroupVisible = dataGroup.fields.some(dataField => !dataField.behavior.hidden);
+            if (!isGroupVisible) {
+                return; // continue
+            }
+
+            if (dataGroup.title && dataGroup.title !== '') {
+                const title = this.groupTitleElement(dataGroup, runningTitleCount);
+                gridElements.push(title);
+                grid.push(this.gridRow(title.gridAreaId));
+            }
+
+            let firstInRow = true;
+            dataGroup.fields.forEach((dataField, dataFieldCount) => {
+                gridElements.push(this.fieldElement(dataField));
+                if (dataGroup.stretch) {
+                    grid.push(this.gridRow(dataField.stringId));
+                } else {
+                    if (firstInRow) {
+                        grid.push(this.gridRow());
+                        if (this.isLastInDataGroup(dataFieldCount, dataGroup) && dataGroup.alignment === DataGroupAlignment.CENTER) {
+                            this.occupySpace(grid, grid.length - 1, 1, 2, dataField.stringId);
+                        } else if (this.isLastInDataGroup(dataFieldCount, dataGroup) && dataGroup.alignment === DataGroupAlignment.END) {
+                            this.occupySpace(grid, grid.length - 1, 2, 2, dataField.stringId);
+                        } else {
+                            this.occupySpace(grid, grid.length - 1, 0, 2, dataField.stringId);
+                        }
+
+                    } else {
+                        this.occupySpace(grid, grid.length - 1, 2, 2, dataField.stringId);
+                    }
+                    firstInRow = !firstInRow;
+                }
+            });
+        });
+    }
+
+    protected gridRow(content = ''): Array<string> {
+        return Array(this.formCols).fill(content);
+    }
+
+    protected groupTitleElement(dataGroup: DataGroup, titleCounter: IncrementingCounter): DatafieldGridLayoutElement {
+        return {title: dataGroup.title, gridAreaId: 'group#' + titleCounter.next(), type: TaskElementType.DATA_GROUP_TITLE};
+    }
+
+    protected fieldElement(field: DataField<unknown>): DatafieldGridLayoutElement {
+        return {gridAreaId: field.stringId, type: this._fieldConverter.resolveType(field), item: field};
+    }
+
+    protected fillerElement(fillerCounter: IncrementingCounter): DatafieldGridLayoutElement {
+        return {gridAreaId: 'blank#' + fillerCounter.next(), type: TaskElementType.BLANK};
+    }
+
+    protected occupySpace(grid: Array<Array<string>>, row: number, col: number, width: number, value: string) {
+        for (let i = col; i < col + width; i++) {
+            grid[row][i] = value;
+        }
+    }
+
+    protected isLastInDataGroup(index: number, dataGroup: DataGroup): boolean {
+        return index + 1 === dataGroup.fields.length;
+    }
+
+    protected fillEmptySpace(grid: Array<Array<string>>, gridElements: Array<DatafieldGridLayoutElement>) {
+        const runningBlanksCount = new IncrementingCounter();
+        grid.forEach(row => {
+            for (let i = 0; row.length; i++) {
+                if (row[i] !== '') {
+                    continue;
+                }
+                const filler = this.fillerElement(runningBlanksCount);
+                row[i] = filler.gridAreaId;
+                gridElements.push(filler);
+            }
+        });
+    }
+
+    protected createGridAreasString(grid: Array<Array<string>>): string {
+        return grid.map(row => row.join(' ')).join(' | ');
     }
 
     fillBlankSpace(resource: any[], columnCount: number): Array<DatafieldGridLayoutElement> {
