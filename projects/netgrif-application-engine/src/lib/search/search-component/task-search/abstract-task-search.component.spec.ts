@@ -17,6 +17,7 @@ import {CategoryFactory} from '../../category-factory/category-factory';
 import {AbstractTaskSearchComponent} from './abstract-task-search.component';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
+import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('AbstractTaskSearchComponent', () => {
     let component: TestTaskSearchComponent;
@@ -32,7 +33,7 @@ describe('AbstractTaskSearchComponent', () => {
             ],
             providers: [
                 ConfigTaskViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 CategoryFactory,
                 {
                     provide: SearchService,

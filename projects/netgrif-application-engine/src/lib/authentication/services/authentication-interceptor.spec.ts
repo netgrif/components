@@ -9,9 +9,11 @@ import {SessionService} from '../session/services/session.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {LoggerService} from '../../logger/services/logger.service';
 
 describe('AuthenticationInterceptor', () => {
     let service: SessionService;
+    let warnSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -28,6 +30,7 @@ describe('AuthenticationInterceptor', () => {
             ]
         });
         service = TestBed.inject(SessionService);
+        warnSpy = spyOn(TestBed.inject(LoggerService), 'warn');
     });
 
     describe('intercept HTTP request', () => {

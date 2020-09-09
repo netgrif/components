@@ -16,6 +16,8 @@ import {UserResourceService} from '../../../resources/engine-endpoint/user-resou
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {Component} from '@angular/core';
 import {AbstractCaseSearchComponent} from './abstract-case-search.component';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 
 describe('AbstractCaseSearchComponent', () => {
     let component: TestCaseSearchComponent;
@@ -26,6 +28,8 @@ describe('AbstractCaseSearchComponent', () => {
             imports: [
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                SnackBarModule,
+                TranslateLibModule
             ],
             providers: [
                 ConfigCaseViewServiceFactory,
@@ -41,7 +45,8 @@ describe('AbstractCaseSearchComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-            ]
+            ],
+            declarations: [TestCaseSearchComponent ]
         }).compileComponents();
     }));
 

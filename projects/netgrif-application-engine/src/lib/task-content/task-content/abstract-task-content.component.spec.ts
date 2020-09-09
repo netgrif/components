@@ -1,45 +1,48 @@
-import {TaskContentComponent} from './task-content.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {PanelComponentModule} from '../../panel/panel.module';
+import {MatExpansionModule} from '@angular/material/expansion';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {
-    MaterialModule,
-    TranslateLibModule,
-    ConfigurationService,
-    TestConfigurationService,
-    BooleanField,
-    TaskViewService,
-    TaskContentService,
-    MaterialAppearance,
-    TemplateAppearance
-} from '@netgrif/application-engine';
+import {MaterialModule} from '../../material/material.module';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {TaskContentService} from '../services/task-content.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
+import {MaterialAppearance} from '../../data-fields/models/material-appearance';
+import {TemplateAppearance} from '../../data-fields/models/template-appearance';
+import {Component, Optional} from '@angular/core';
+import {AbstractTaskContentComponent} from './abstract-task-content.component';
+import {FieldConverterService} from '../services/field-converter.service';
+import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
+import {LoggerService} from '../../logger/services/logger.service';
+import {TaskEventService} from '../services/task-event.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-describe('TaskContentComponent', () => {
-    let component: TaskContentComponent;
-    let fixture: ComponentFixture<TaskContentComponent>;
+describe('AbstractTaskContentComponent', () => {
+    let component: TestTaskComponent;
+    let fixture: ComponentFixture<TestTaskComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 MatExpansionModule,
-                PanelComponentModule,
                 MaterialModule,
                 NoopAnimationsModule,
                 CommonModule,
-                TranslateLibModule
+                TranslateLibModule,
+                HttpClientTestingModule
             ],
             providers: [
                 TaskViewService,
                 TaskContentService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
-            declarations: []
+            declarations: [TestTaskComponent]
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(TaskContentComponent);
+        fixture = TestBed.createComponent(TestTaskComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));
@@ -127,3 +130,16 @@ describe('TaskContentComponent', () => {
     });
 });
 
+@Component({
+    selector: 'nae-test-panel',
+    template: ''
+})
+class TestTaskComponent extends AbstractTaskContentComponent {
+    constructor(protected _fieldConverter: FieldConverterService,
+                public taskContentService: TaskContentService,
+                protected _paperView: PaperViewService,
+                protected _logger: LoggerService,
+                @Optional() protected _taskEventService: TaskEventService) {
+        super(_fieldConverter, taskContentService, _paperView, _logger, _taskEventService);
+    }
+}

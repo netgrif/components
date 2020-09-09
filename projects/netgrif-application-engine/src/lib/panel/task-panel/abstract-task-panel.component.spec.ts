@@ -52,6 +52,7 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -71,6 +72,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 CommonModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
+                SnackBarModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

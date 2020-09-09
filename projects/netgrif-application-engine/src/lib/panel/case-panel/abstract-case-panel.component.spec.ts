@@ -42,7 +42,7 @@ describe('AbstractCasePanelComponent', () => {
         expect(component.show(new MouseEvent('type'))).toEqual(false);
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

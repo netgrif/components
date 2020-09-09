@@ -56,6 +56,7 @@ describe('AbstractImportNetComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         sideMenuCloseSpy = spyOn(TestBed.inject(NAE_SIDE_MENU_CONTROL), 'close');
+        logSpy = spyOn(TestBed.inject(LoggerService), 'info');
     });
 
     it('should create', () => {

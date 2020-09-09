@@ -20,11 +20,11 @@ describe('LoggerService', () => {
         });
         service = TestBed.inject(LoggerService);
 
-        spyOn(console, 'log').and.callThrough();
-        spyOn(console, 'info').and.callThrough();
-        spyOn(console, 'debug').and.callThrough();
-        spyOn(console, 'warn').and.callThrough();
-        spyOn(console, 'error').and.callThrough();
+        spyOn(console, 'log');
+        spyOn(console, 'info');
+        spyOn(console, 'debug');
+        spyOn(console, 'warn');
+        spyOn(console, 'error');
     });
 
     it('should be created', () => {

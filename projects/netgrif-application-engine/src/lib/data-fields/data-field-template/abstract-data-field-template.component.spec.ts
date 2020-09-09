@@ -24,8 +24,8 @@ describe('AbstractDataFieldTemplateComponent', () => {
                 {provide: ViewService, useClass: TestViewService}
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-            .compileComponents();
+        }).compileComponents();
+
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();

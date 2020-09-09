@@ -6,6 +6,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {LoggerService} from '../../logger/services/logger.service';
 
 describe('RoutingBuilderService', () => {
     let service: RoutingBuilderService;

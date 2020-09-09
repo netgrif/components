@@ -17,8 +17,7 @@ describe('AbstractDashboardContentComponent', () => {
             imports: [MatGridListModule, NoopAnimationsModule],
             declarations: [TestDashboardContentComponent, TestWrapperComponent],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {

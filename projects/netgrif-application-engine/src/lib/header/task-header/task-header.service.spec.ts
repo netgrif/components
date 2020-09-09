@@ -19,6 +19,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -35,7 +36,7 @@ describe('TaskHeaderService', () => {
             ],
             providers: [
                 TaskHeaderService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

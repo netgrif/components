@@ -37,7 +37,7 @@ describe('AbstractMultichoiceSelectFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

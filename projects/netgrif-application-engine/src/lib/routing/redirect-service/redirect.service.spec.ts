@@ -1,5 +1,4 @@
 import {TestBed} from '@angular/core/testing';
-
 import {RedirectService} from './redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';

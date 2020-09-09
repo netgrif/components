@@ -49,8 +49,7 @@ describe('AbstractSortModeComponent', () => {
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}}
             ],
             declarations: [TestSortModeComponent, TestWrapperComponent],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -69,7 +68,7 @@ describe('AbstractSortModeComponent', () => {
         expect(headerSpy).toHaveBeenCalledWith(7, 'hello', 'asc');
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

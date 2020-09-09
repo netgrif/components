@@ -16,8 +16,7 @@ describe('AbstractIframeCardComponent', () => {
         TestBed.configureTestingModule({
             imports: [MatCardModule, FlexLayoutModule, NoopAnimationsModule],
             declarations: [TestIframeCardComponent, TestWrapperComponent]
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {

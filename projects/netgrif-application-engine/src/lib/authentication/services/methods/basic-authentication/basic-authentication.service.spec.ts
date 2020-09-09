@@ -8,6 +8,7 @@ import {AuthenticationMethodService} from '../../authentication-method.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('BasicAuthenticationService', () => {
     let service: BasicAuthenticationService;
@@ -18,7 +19,7 @@ describe('BasicAuthenticationService', () => {
                 NoopAnimationsModule, RouterTestingModule.withRoutes([])],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 HttpClient,
                 BasicAuthenticationService
             ]

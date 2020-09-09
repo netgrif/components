@@ -40,16 +40,9 @@ describe('AbstractSearchModeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MatInputModule,
                 FlexModule,
                 FlexLayoutModule,
-                MatSortModule,
                 NoopAnimationsModule,
-                MatSelectModule,
-                MatFormFieldModule,
-                MatDatepickerModule,
-                MatNativeDateModule,
-                MatSnackBarModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
                 MaterialModule,
@@ -70,8 +63,7 @@ describe('AbstractSearchModeComponent', () => {
                 CaseHeaderService
             ],
             declarations: [TestSeaarchModeComponent, TestWrapperComponent],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {

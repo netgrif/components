@@ -20,6 +20,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('WorkflowHeaderService', () => {
     let service: WorkflowHeaderService;
@@ -37,7 +38,7 @@ describe('WorkflowHeaderService', () => {
             ],
             providers: [
                 WorkflowHeaderService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

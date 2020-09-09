@@ -26,8 +26,12 @@ describe('CaseViewService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule,
-                NoopAnimationsModule],
+            imports: [
+                HttpClientTestingModule,
+                MaterialModule,
+                TranslateLibModule,
+                NoopAnimationsModule
+            ],
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -66,7 +70,7 @@ describe('CaseViewService', () => {
         });
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

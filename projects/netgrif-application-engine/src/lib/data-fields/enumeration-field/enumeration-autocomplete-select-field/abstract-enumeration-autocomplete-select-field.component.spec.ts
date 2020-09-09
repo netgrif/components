@@ -27,8 +27,7 @@ describe('AbstractEnumerationAutocompleteSelectFieldComponent', () => {
             ],
             declarations: [TestEnumAutoComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-            .compileComponents();
+        }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
@@ -38,7 +37,7 @@ describe('AbstractEnumerationAutocompleteSelectFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
