@@ -97,6 +97,8 @@ export abstract class AbstractTaskContentComponent {
             this.gridAreas = '';
         }
 
+        dataGroups = this.filterHidden(dataGroups);
+
         let gridData: GridData;
         switch (this.taskContentService.task.layout.type) {
             case TaskLayoutType.GRID:
@@ -115,6 +117,13 @@ export abstract class AbstractTaskContentComponent {
         this.fillEmptySpace(gridData);
         this.dataSource = gridData.gridElements;
         this.gridAreas = this.createGridAreasString(gridData.grid);
+    }
+
+    filterHidden(dataGroups: Array<DataGroup>): Array<DataGroup> {
+        return dataGroups.filter(group => {
+            group.fields = group.fields.filter(field => !field.behavior.hidden && !field.behavior.forbidden);
+            return group.fields.length > 0;
+        });
     }
 
     computeGridLayout(dataGroups: Array<DataGroup>): GridData {
@@ -137,11 +146,6 @@ export abstract class AbstractTaskContentComponent {
         const runningTitleCount = new IncrementingCounter();
 
         dataGroups.forEach(dataGroup => {
-            const isGroupVisible = dataGroup.fields.some(dataField => !dataField.behavior.hidden);
-            if (!isGroupVisible) {
-                return; // continue
-            }
-
             if (dataGroup.title && dataGroup.title !== '') {
                 const title = this.groupTitleElement(dataGroup, runningTitleCount);
                 gridElements.push(title);
