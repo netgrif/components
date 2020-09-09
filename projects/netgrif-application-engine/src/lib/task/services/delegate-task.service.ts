@@ -61,8 +61,8 @@ export class DelegateTaskService extends TaskHandlingService {
         }
         this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
             {
-                roles: undefined,
-                value: new UserValue(
+                roles: this._safeTask.roles,
+                value: !this._safeTask.user ? undefined : new UserValue(
                     this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
                 )
             } as UserListInjectedData).onClose.subscribe(event => {
