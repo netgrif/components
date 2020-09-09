@@ -28,6 +28,7 @@ export * from './interface/task-reference';
 export * from './interface/task-set-data-request-body';
 export * from './interface/task-get-request-body';
 export * from './interface/case-get-request-body';
+export * from './interface/field-alignment';
 
 export * from './types/nae-date-type';
 

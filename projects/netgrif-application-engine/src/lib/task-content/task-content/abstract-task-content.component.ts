@@ -7,6 +7,8 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
+import {DataGroup} from '../../resources/interface/data-groups';
+import {TaskLayoutType} from '../../resources/interface/task-layout';
 
 export abstract class AbstractTaskContentComponent {
     dataSource: Array<DatafieldGridLayoutElement>;
@@ -49,8 +51,7 @@ export abstract class AbstractTaskContentComponent {
         this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
                 this.formCols = this.getNumberOfFormColumns();
-                this.dataSource = this.fillBlankSpace(data, this.formCols);
-                this.gridAreas = this.computeGridAreas();
+                this.computeLayoutData(data);
             } else {
                 this.dataSource = [];
             }
@@ -84,6 +85,39 @@ export abstract class AbstractTaskContentComponent {
 
     public isPaperView() {
         return this._paperView.paperView;
+    }
+
+    computeLayoutData(dataGroups: Array<DataGroup>) {
+        if (!this.taskContentService.task) {
+            this.dataSource = [];
+            this.gridAreas = '';
+        }
+
+        switch (this.taskContentService.task.layout.type) {
+            case TaskLayoutType.GRID:
+                this.computeGridLayout(dataGroups);
+                return;
+            case TaskLayoutType.FLOW:
+                this.computeFlowLayout(dataGroups);
+                return;
+            case TaskLayoutType.LEGACY:
+                this.computeLegacyLayout(dataGroups);
+                return;
+            default:
+                throw new Error(`Unknown task layout type '${this.taskContentService.task.layout.type}'`);
+        }
+    }
+
+    computeGridLayout(dataGroups: Array<DataGroup>) {
+
+    }
+
+    computeFlowLayout(dataGroups: Array<DataGroup>) {
+
+    }
+
+    computeLegacyLayout(dataGroups: Array<DataGroup>) {
+
     }
 
     fillBlankSpace(resource: any[], columnCount: number): Array<DatafieldGridLayoutElement> {
