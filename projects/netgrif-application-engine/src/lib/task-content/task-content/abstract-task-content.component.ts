@@ -12,6 +12,7 @@ import {TaskLayoutType} from '../../resources/interface/task-layout';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
+import {GridData} from '../model/grid-data';
 
 export abstract class AbstractTaskContentComponent {
     dataSource: Array<DatafieldGridLayoutElement>;
@@ -96,31 +97,35 @@ export abstract class AbstractTaskContentComponent {
             this.gridAreas = '';
         }
 
-        let grid;
+        let gridData: GridData;
         switch (this.taskContentService.task.layout.type) {
             case TaskLayoutType.GRID:
-                grid = this.computeGridLayout(dataGroups);
+                gridData = this.computeGridLayout(dataGroups);
                 break;
             case TaskLayoutType.FLOW:
-                grid = this.computeFlowLayout(dataGroups);
+                gridData = this.computeFlowLayout(dataGroups);
                 break;
             case TaskLayoutType.LEGACY:
-                grid = this.computeLegacyLayout(dataGroups);
+                gridData = this.computeLegacyLayout(dataGroups);
                 break;
             default:
                 throw new Error(`Unknown task layout type '${this.taskContentService.task.layout.type}'`);
         }
+
+        this.fillEmptySpace(gridData);
+        this.dataSource = gridData.gridElements;
+        this.gridAreas = this.createGridAreasString(gridData.grid);
     }
 
-    computeGridLayout(dataGroups: Array<DataGroup>) {
-
+    computeGridLayout(dataGroups: Array<DataGroup>): GridData {
+        return undefined;
     }
 
-    computeFlowLayout(dataGroups: Array<DataGroup>) {
-
+    computeFlowLayout(dataGroups: Array<DataGroup>): GridData {
+        return undefined;
     }
 
-    computeLegacyLayout(dataGroups: Array<DataGroup>) {
+    computeLegacyLayout(dataGroups: Array<DataGroup>): GridData {
         if (this.formCols !== 4) {
             this.formCols = 4;
             this._logger.warn(`Task with id '${this.taskContentService.task.stringId}' has legacy layout with a non-default number` +
@@ -166,6 +171,8 @@ export abstract class AbstractTaskContentComponent {
                 }
             });
         });
+
+        return {grid, gridElements};
     }
 
     protected gridRow(content = ''): Array<string> {
@@ -173,7 +180,7 @@ export abstract class AbstractTaskContentComponent {
     }
 
     protected groupTitleElement(dataGroup: DataGroup, titleCounter: IncrementingCounter): DatafieldGridLayoutElement {
-        return {title: dataGroup.title, gridAreaId: 'group#' + titleCounter.next(), type: TaskElementType.DATA_GROUP_TITLE};
+        return {title: dataGroup.title, gridAreaId: 'group' + titleCounter.next(), type: TaskElementType.DATA_GROUP_TITLE};
     }
 
     protected fieldElement(field: DataField<unknown>): DatafieldGridLayoutElement {
@@ -181,7 +188,7 @@ export abstract class AbstractTaskContentComponent {
     }
 
     protected fillerElement(fillerCounter: IncrementingCounter): DatafieldGridLayoutElement {
-        return {gridAreaId: 'blank#' + fillerCounter.next(), type: TaskElementType.BLANK};
+        return {gridAreaId: 'blank' + fillerCounter.next(), type: TaskElementType.BLANK};
     }
 
     protected occupySpace(grid: Array<Array<string>>, row: number, col: number, width: number, value: string) {
@@ -194,16 +201,16 @@ export abstract class AbstractTaskContentComponent {
         return index + 1 === dataGroup.fields.length;
     }
 
-    protected fillEmptySpace(grid: Array<Array<string>>, gridElements: Array<DatafieldGridLayoutElement>) {
+    protected fillEmptySpace(gridData: GridData) {
         const runningBlanksCount = new IncrementingCounter();
-        grid.forEach(row => {
-            for (let i = 0; row.length; i++) {
+        gridData.grid.forEach(row => {
+            for (let i = 0; i < row.length; i++) {
                 if (row[i] !== '') {
                     continue;
                 }
                 const filler = this.fillerElement(runningBlanksCount);
                 row[i] = filler.gridAreaId;
-                gridElements.push(filler);
+                gridData.gridElements.push(filler);
             }
         });
     }
@@ -396,35 +403,35 @@ export abstract class AbstractTaskContentComponent {
         }
     }
 
-    protected computeGridAreas(): string {
-        const areas: Array<Array<string>> = [];
-        let blanks = 0;
-        let titles = 0;
-        this.dataSource.forEach(element => {
-            while (areas.length < (element.layout.y + element.layout.rows)) {
-                areas.push(Array(this.formCols).fill(''));
-            }
-
-            let uniqueIdentifier: string;
-            if (element.type !== 'blank' && element.type !== 'title') {
-                uniqueIdentifier = element.item.stringId;
-            } else if (element.type === 'blank') {
-                uniqueIdentifier = 'blank' + blanks;
-                blanks++;
-            } else {
-                uniqueIdentifier = 'title' + titles;
-                titles++;
-            }
-
-            element.gridAreaId = uniqueIdentifier;
-
-            for (let i = element.layout.x; i < element.layout.x + element.layout.cols; i++) {
-                for (let j = element.layout.y; j < element.layout.y + element.layout.rows; j++) {
-                    areas[j][i] = uniqueIdentifier;
-                }
-            }
-        });
-
-        return areas.map(row => row.join(' ')).join(' | ');
-    }
+    // protected computeGridAreas(): string {
+    //     const areas: Array<Array<string>> = [];
+    //     let blanks = 0;
+    //     let titles = 0;
+    //     this.dataSource.forEach(element => {
+    //         while (areas.length < (element.layout.y + element.layout.rows)) {
+    //             areas.push(Array(this.formCols).fill(''));
+    //         }
+    //
+    //         let uniqueIdentifier: string;
+    //         if (element.type !== 'blank' && element.type !== 'title') {
+    //             uniqueIdentifier = element.item.stringId;
+    //         } else if (element.type === 'blank') {
+    //             uniqueIdentifier = 'blank' + blanks;
+    //             blanks++;
+    //         } else {
+    //             uniqueIdentifier = 'title' + titles;
+    //             titles++;
+    //         }
+    //
+    //         element.gridAreaId = uniqueIdentifier;
+    //
+    //         for (let i = element.layout.x; i < element.layout.x + element.layout.cols; i++) {
+    //             for (let j = element.layout.y; j < element.layout.y + element.layout.rows; j++) {
+    //                 areas[j][i] = uniqueIdentifier;
+    //             }
+    //         }
+    //     });
+    //
+    //     return areas.map(row => row.join(' ')).join(' | ');
+    // }
 }

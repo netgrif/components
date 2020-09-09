@@ -11,6 +11,7 @@ export * from './model/task-event-notification';
 export * from './model/task-event';
 export * from './model/data-field-type';
 export * from './model/task-content-element-type';
+export * from './model/grid-data';
 
 /* MODULES */
 export * from './task-content.module';
