@@ -1,9 +1,6 @@
 /* APIS */
 export * from './content-components/public-api';
 
-/* MODULES */
-export * from './side-menu.module';
-
 /* COMPONENTS */
 export * from './side-menu-container/abstract-side-menu-container.component';
 

@@ -1,0 +1,88 @@
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {CommonModule} from '@angular/common';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {SideMenuService} from '../services/side-menu.service';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {MaterialModule} from '../../material/material.module';
+import {Component, Inject} from '@angular/core';
+import {AbstractSideMenuContainerComponent} from './abstract-side-menu-container.component';
+import {AbstractImportNetComponent} from '../content-components/import-net/abstract-import-net.component';
+import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token.module';
+import {SideMenuControl} from '../models/side-menu-control';
+import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
+import {LoggerService} from '../../logger/services/logger.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+
+describe('AbstractSideMenuContainerComponent', () => {
+    let component: TestSideMenuComponent;
+    let fixture: ComponentFixture<TestSideMenuComponent>;
+    let service: SideMenuService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                MaterialModule,
+                NoopAnimationsModule,
+                TranslateLibModule,
+                HttpClientTestingModule
+            ],
+            declarations: [TestSideMenuComponent]
+        })
+            .compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TestSideMenuComponent);
+        service = TestBed.inject(SideMenuService);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should open and close', () => {
+        service.open(TestImportComponent).onClose.subscribe(event => {
+            expect(event).toBeTruthy();
+        });
+        service.close({opened: false});
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+});
+
+@Component({
+    selector: 'nae-test-sidemenu',
+    template: '<mat-sidenav-container class="side-menu-container">\n' +
+        '    <mat-sidenav #rightSideMenu mode="over" position="end" class="side-menu" ngClass.lt-sm="side-menu-size-mobile"' +
+        ' [ngClass.gt-xs]="portalWrapper.size">\n' +
+        '        <ng-template [cdkPortalOutlet]="portalWrapper.portal"></ng-template>\n' +
+        '    </mat-sidenav>\n' +
+        '    <mat-sidenav-content>\n' +
+        '        <ng-content></ng-content>\n' +
+        '    </mat-sidenav-content>\n' +
+        '</mat-sidenav-container>'
+})
+class TestSideMenuComponent extends AbstractSideMenuContainerComponent {
+    constructor(protected _sideMenuService: SideMenuService) {
+        super(_sideMenuService);
+    }
+}
+
+@Component({
+    selector: 'nae-test-import',
+    template: '<input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple" accept="text/xml"/>'
+})
+class TestImportComponent extends AbstractImportNetComponent {
+    constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
+                protected _petriNetResource: PetriNetResourceService,
+                protected _log: LoggerService,
+                protected _snackbar: SnackBarService) {
+        super(_sideMenuControl, _petriNetResource,  _log, _snackbar);
+    }
+}

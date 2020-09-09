@@ -1,10 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {PanelModule} from '../panel.module';
 import {CommonModule} from '@angular/common';
-import {Component, Inject, Injector, StaticProvider} from '@angular/core';
+import {AfterViewInit, Component, Inject, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Observable, of, Subject, throwError} from 'rxjs';
+import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -34,7 +33,6 @@ import {
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
@@ -47,6 +45,13 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/mo
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {TaskMetaField} from '../../header/task-header/task-meta-enum';
+import {FinishPolicyService} from '../../task/services/finish-policy.service';
+import {DataFocusPolicyService} from '../../task/services/data-focus-policy.service';
+import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -61,7 +66,6 @@ describe('AbtsractTaskPanelComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MatExpansionModule,
-                PanelModule,
                 MaterialModule,
                 NoopAnimationsModule,
                 CommonModule,
@@ -73,22 +77,34 @@ describe('AbtsractTaskPanelComponent', () => {
                 ArrayTaskViewServiceFactory,
                 SideMenuService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationService, useClass: NullAuthenticationService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: TaskViewService,
                     useFactory: noNetsTaskViewServiceFactory,
                     deps: [ArrayTaskViewServiceFactory]
                 },
-                {provide: TaskResourceService, useClass: MyResources},
-                {provide: UserResourceService, useClass: MyUserResources},
+                {provide: TaskResourceService, useClass: MyTaskResources},
+                {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
-                TaskContentService,
+                {provide: TaskContentService, useClass: SingleTaskContentService},
+                TaskDataService,
                 TaskEventService,
+                AssignTaskService,
+                DelegateTaskService,
+                CancelTaskService,
+                FinishTaskService,
+                TaskRequestStateService,
+                DataFocusPolicyService,
+                AssignPolicyService,
+                FinishPolicyService,
+                {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
             ],
             declarations: [
                 TestTaskPanelComponent,
                 TestWrapperComponent,
-            ]
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
                 entryComponents: [
@@ -127,16 +143,20 @@ describe('AbtsractTaskPanelComponent', () => {
         expect(component.taskPanelData.task.startDate).toBe(undefined);
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
 
 @Component({
     selector: 'nae-test-task-panel',
-    template: ''
+    template: '<mat-expansion-panel #matExpansionPanel>' +
+        '</mat-expansion-panel>'
 })
-class TestTaskPanelComponent extends AbstractTaskPanelComponent {
+class TestTaskPanelComponent extends AbstractTaskPanelComponent implements AfterViewInit {
+
+    @ViewChild('matExpansionPanel') matExpansionPanel;
+
     constructor(protected _taskContentService: TaskContentService,
                 protected _log: LoggerService,
                 protected _taskViewService: TaskViewService,
@@ -154,6 +174,11 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
             _assignPolicyService, _callChain, _taskOperations);
+    }
+
+    ngAfterViewInit() {
+        this.setPanelRef(this.matExpansionPanel);
+        super.ngAfterViewInit();
     }
 
     protected createContentPortal(): void {
@@ -199,7 +224,7 @@ class TestWrapperComponent {
     ]);
 }
 
-class MyResources {
+class MyTaskResources {
 
     getData(stringId) {
         return of([{
@@ -291,21 +316,5 @@ class MyResources {
             dataGroups: [],
             _links: {}
         }]);
-    }
-}
-
-class MyUserResources {
-    getLoggedUser(params): Observable<any> {
-        return of({
-            id: '5',
-            email: 'string',
-            name: 'string',
-            surname: 'string',
-            fullName: 'string',
-            groups: [],
-            authorities: [],
-            processRoles: [],
-            _links: {},
-        });
     }
 }

@@ -20,7 +20,7 @@ describe('ResourceProviderService', () => {
         expect(service).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

@@ -1,6 +1,3 @@
-/* MODULES */
-export * from './panel.module';
-
 /* COMPONENTS */
 export * from './abstract-panel.component';
 export * from './case-panel/abstract-case-panel.component';
