@@ -293,6 +293,21 @@
                 "path": "profile"
             }
         },
+        "demo-access": {
+            "component": {
+                "class": "ProfileComponent",
+                "from": "./doc/profile/profile.component"
+            },
+            "access": {
+                "role": [],
+                "group": [],
+                "authority": ["ROLE_ADMIN"]
+            },
+            "navigation": false,
+            "routing": {
+                "path": "access"
+            }
+        },
         "demo-view-tree": {
             "component": {
                 "class": "TreeViewExampleComponent",
