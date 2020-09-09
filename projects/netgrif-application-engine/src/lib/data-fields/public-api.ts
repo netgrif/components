@@ -25,6 +25,7 @@ export * from './user-field/abstract-user-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
+export * from './text-field/models/text-area-field';
 export * from './text-field/models/text-field';
 export * from './number-field/models/number-field';
 export * from './enumeration-field/models/enumeration-field';

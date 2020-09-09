@@ -1,13 +1,14 @@
 import {FormControl} from '@angular/forms';
 import {TextField, TextFieldValidation} from './models/text-field';
 import {TranslateService} from '@ngx-translate/core';
+import {TextAreaField} from './models/text-area-field';
 
 export abstract class AbstractTextErrorsComponent {
 
     protected constructor(protected _translate: TranslateService) {
     }
 
-    protected buildErrorMessage(textField: TextField, formControlRef: FormControl) {
+    protected buildErrorMessage(textField: TextField | TextAreaField, formControlRef: FormControl) {
         if (formControlRef.hasError(TextFieldValidation.REQUIRED)) {
             return this._translate.instant('dataField.validations.required');
         }
@@ -33,7 +34,7 @@ export abstract class AbstractTextErrorsComponent {
         return '';
     }
 
-    protected resolveErrorMessage(textField: TextField, search: string, generalMessage: string) {
+    protected resolveErrorMessage(textField: TextField | TextAreaField, search: string, generalMessage: string) {
         const validation = textField.validations.find(value => value.validationRule.includes(search));
         if (validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
