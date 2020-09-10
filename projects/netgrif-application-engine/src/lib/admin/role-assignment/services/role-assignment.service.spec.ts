@@ -14,6 +14,7 @@ import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-sn
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {TranslateService} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 
 const serviceFactory = (userResources: UserResourceService, processResources: PetriNetResourceService,
                         snackbar: SnackBarService, log: LoggerService, translate: TranslateService) => {
@@ -25,7 +26,7 @@ describe('RoleAssignmentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
+            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule, SnackBarModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 UserResourceService,
@@ -37,10 +38,6 @@ describe('RoleAssignmentService', () => {
                     useFactory: serviceFactory,
                     deps: [UserResourceService, PetriNetResourceService, SnackBarService, LoggerService, TranslateService]
                 }
-            ],
-            declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -55,5 +52,9 @@ describe('RoleAssignmentService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

@@ -204,7 +204,7 @@ describe('TaskResourceService', () => {
         })
     );
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

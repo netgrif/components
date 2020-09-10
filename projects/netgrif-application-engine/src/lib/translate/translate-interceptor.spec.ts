@@ -12,6 +12,7 @@ import {UserResourceService} from '../resources/engine-endpoint/user-resource.se
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
 
 describe('TranslateInterceptor', () => {
 
@@ -24,7 +25,7 @@ describe('TranslateInterceptor', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -53,9 +54,6 @@ describe('TranslateInterceptor', () => {
 
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
         mock.verify();
-    }));
-
-    afterAll(() => {
         TestBed.resetTestingModule();
-    });
+    }));
 });

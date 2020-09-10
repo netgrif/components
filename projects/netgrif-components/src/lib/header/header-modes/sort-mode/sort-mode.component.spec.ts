@@ -17,16 +17,16 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TestViewService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
-import {RouterModule} from '@angular/router';
 import {MatSortModule} from '@angular/material/sort';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {of} from 'rxjs';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('SortModeComponent', () => {
     let component: SortModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
-    let headerSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -38,11 +38,11 @@ describe('SortModeComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MatSnackBarModule,
-                RouterModule.forRoot([])
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 CaseHeaderService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -58,19 +58,13 @@ describe('SortModeComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
-        headerSpy = spyOn(TestBed.inject(CaseHeaderService), 'sortHeaderChanged');
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call sort header changed', () => {
-        component.sortHeaderChanged({active: '7-hello', direction: 'asc'});
-        expect(headerSpy).toHaveBeenCalledWith(7, 'hello', 'asc');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

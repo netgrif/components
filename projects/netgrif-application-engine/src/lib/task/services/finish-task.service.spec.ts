@@ -28,9 +28,8 @@ import {UnlimitedTaskContentService} from '../../task-content/services/unlimited
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
-import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
-import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
@@ -59,7 +58,7 @@ describe('FinishTaskService', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
-                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -92,6 +91,8 @@ describe('FinishTaskService', () => {
         resourceService = TestBed.inject(TaskResourceService) as unknown as TestTaskResourceService;
         callChainService = TestBed.inject(CallChainService);
         taskEventService = TestBed.inject(TaskEventService);
+        spyOn(console, 'debug');
+        spyOn(console, 'info');
     });
 
     it('should be created', () => {
@@ -164,6 +165,10 @@ describe('FinishTaskService', () => {
 
             done();
         }));
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
 

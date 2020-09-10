@@ -11,8 +11,9 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestViewService} from '../../utility/tests/test-view-service';
-import {RouterModule} from '@angular/router';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('TabView', () => {
     let viewService: ViewService;
@@ -21,11 +22,11 @@ describe('TabView', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                RouterModule.forRoot([]),
+                RouterTestingModule.withRoutes([]),
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

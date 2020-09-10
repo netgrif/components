@@ -11,7 +11,8 @@ import {
     ConfigurationService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService
+    TestConfigurationService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('ToolbarComponent', () => {
@@ -27,7 +28,7 @@ describe('ToolbarComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService}
@@ -47,7 +48,7 @@ describe('ToolbarComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

@@ -5,13 +5,14 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('SignUpService', () => {
     let service: SignUpService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
             providers: [
                 SignUpService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -51,21 +52,19 @@ describe('SignUpService', () => {
     );
 
     it('should invite', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
-                console.log(res);
-            }, (error) => {
-                expect(error).toEqual('Done');
-            });
+                (httpMock: HttpTestingController) => {
+                    service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
+                        expect(res.success).toEqual('Done');
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({success: 'Done'});
-        })
-    );
+                    reqLog.flush({success: 'Done'});
+                })
+        );
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

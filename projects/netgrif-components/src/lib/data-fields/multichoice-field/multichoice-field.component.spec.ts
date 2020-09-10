@@ -45,7 +45,7 @@ describe('MultichoiceFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

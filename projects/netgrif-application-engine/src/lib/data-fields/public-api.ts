@@ -49,6 +49,3 @@ export * from './data-field-template/models/wrapped-boolean';
 /* Enums */
 export * from './models/template-appearance';
 export * from './models/material-appearance';
-
-/* Services */
-export * from './file-field/services/file-field.service';

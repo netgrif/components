@@ -4,13 +4,14 @@ import {ConfigurationService} from './configuration.service';
 import {DashboardCardTypes} from '../dashboard/cards/model/dashboard-card-types';
 import {TestConfigurationService} from '../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('ConfigurationService', () => {
     let service: ConfigurationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule],
+            imports: [NoopAnimationsModule, RouterTestingModule.withRoutes([])],
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(ConfigurationService);
@@ -20,9 +21,10 @@ describe('ConfigurationService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should get config', () => {
+    it('should get config', (done) => {
         service.getAsync().subscribe(conf => {
             expect(conf).toEqual(service.get());
+            done();
         });
     });
 
@@ -117,7 +119,7 @@ describe('ConfigurationService', () => {
         });
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

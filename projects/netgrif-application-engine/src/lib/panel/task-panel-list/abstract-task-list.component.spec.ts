@@ -1,0 +1,117 @@
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {CommonModule} from '@angular/common';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Component} from '@angular/core';
+import {of} from 'rxjs';
+import {AbstractTaskListComponent} from './abstract-task-list.component';
+import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {MaterialModule} from '../../material/material.module';
+import {
+    ArrayTaskViewServiceFactory,
+    noNetsTaskViewServiceFactory
+} from '../../view/task-view/service/factory/array-task-view-service-factory';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {SearchService} from '../../search/search-service/search.service';
+import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {LoggerService} from '../../logger/services/logger.service';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
+
+describe('AbstractTaskListComponent', () => {
+    let component: TestTaskListComponent;
+    let fixture: ComponentFixture<TestWrapperComponent>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                MatExpansionModule,
+                MaterialModule,
+                NoopAnimationsModule,
+                CommonModule,
+                HttpClientTestingModule,
+                TranslateLibModule,
+                RouterTestingModule.withRoutes([])
+            ],
+            declarations: [TestTaskListComponent, TestWrapperComponent],
+            providers: [
+                ArrayTaskViewServiceFactory,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {
+                    provide: TaskViewService,
+                    useFactory: noNetsTaskViewServiceFactory,
+                    deps: [ArrayTaskViewServiceFactory]
+                },
+                {provide: TaskResourceService, useClass: MyResources},
+            ]
+        })
+            .compileComponents();
+
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        component = fixture.debugElement.children[0].componentInstance;
+        fixture.detectChanges();
+    }));
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+});
+
+@Component({
+    selector: 'nae-test-task-list',
+    template: ''
+})
+class TestTaskListComponent extends AbstractTaskListComponent {
+    constructor(protected _taskViewService: TaskViewService, protected _log: LoggerService) {
+        super(_taskViewService, _log);
+    }
+}
+
+@Component({
+    selector: 'nae-test-wrapper',
+    template: '<nae-test-task-list [tasks$]="taskPanels"></nae-test-task-list>'
+})
+class TestWrapperComponent {
+    taskPanels = of([]);
+}
+
+class MyResources {
+    searchTask(filter) {
+        return of([{
+            caseId: 'string',
+            transitionId: 'string',
+            title: 'string',
+            caseColor: 'string',
+            caseTitle: 'string',
+            user: undefined,
+            roles: {},
+            startDate: undefined,
+            finishDate: undefined,
+            assignPolicy: AssignPolicy.manual,
+            dataFocusPolicy: DataFocusPolicy.manual,
+            finishPolicy: FinishPolicy.manual,
+            stringId: 'string',
+            cols: undefined,
+            dataGroups: [],
+            _links: {}
+        }]);
+    }
+}
