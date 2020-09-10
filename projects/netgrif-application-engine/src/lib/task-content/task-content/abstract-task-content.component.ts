@@ -8,11 +8,11 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
 import {DataGroup, DataGroupAlignment} from '../../resources/interface/data-groups';
-import {TaskLayoutType} from '../../resources/interface/task-layout';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridData} from '../model/grid-data';
+import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 
 export abstract class AbstractTaskContentComponent {
     dataSource: Array<DatafieldGridLayoutElement>;
@@ -99,20 +99,33 @@ export abstract class AbstractTaskContentComponent {
 
         dataGroups = this.cloneAndFilterHidden(dataGroups);
 
-        let gridData: GridData;
-        switch (this.taskContentService.task.layout.type) {
-            case TaskLayoutType.GRID:
-                gridData = this.computeGridLayout(dataGroups);
-                break;
-            case TaskLayoutType.FLOW:
-                gridData = this.computeFlowLayout(dataGroups);
-                break;
-            case TaskLayoutType.LEGACY:
-                gridData = this.computeLegacyLayout(dataGroups);
-                break;
-            default:
-                throw new Error(`Unknown task layout type '${this.taskContentService.task.layout.type}'`);
-        }
+        const gridData: GridData = {grid: [], gridElements: [], runningTitleCount: new IncrementingCounter()};
+
+        dataGroups.forEach(group => {
+            if (!group.layout) {
+                group.layout = {rows: undefined, cols: undefined, type: undefined};
+            }
+
+            if (group.title && group.title !== '') {
+                const title = this.groupTitleElement(group, gridData.runningTitleCount);
+                gridData.gridElements.push(title);
+                gridData.grid.push(this.gridRow(title.gridAreaId));
+            }
+
+            switch (group.layout.type) {
+                case DataGroupLayoutType.GRID:
+                    this.computeGridLayout(group, gridData);
+                    break;
+                case DataGroupLayoutType.FLOW:
+                    this.computeFlowLayout(group, gridData);
+                    break;
+                case DataGroupLayoutType.LEGACY:
+                    this.computeLegacyLayout(group, gridData);
+                    break;
+                default:
+                    throw new Error(`Unknown task layout type '${this.taskContentService.task.layout.type}'`);
+            }
+        });
 
         this.fillEmptySpace(gridData);
         this.dataSource = gridData.gridElements;
@@ -129,69 +142,56 @@ export abstract class AbstractTaskContentComponent {
         return result.filter(group => group.fields.length > 0);
     }
 
-    protected computeGridLayout(dataGroups: Array<DataGroup>): GridData {
+    protected computeGridLayout(dataGroup: DataGroup, gridData: GridData) {
         return undefined;
     }
 
-    protected computeFlowLayout(dataGroups: Array<DataGroup>): GridData {
-        return this.flowFields(dataGroups, 1);
+    protected computeFlowLayout(dataGroup: DataGroup, gridData: GridData) {
+        this.flowFields(dataGroup, gridData, 1);
     }
 
-    protected computeLegacyLayout(dataGroups: Array<DataGroup>): GridData {
+    protected computeLegacyLayout(dataGroup: DataGroup, gridData: GridData) {
         if (this.formCols !== 4) {
             this.formCols = 4;
             this._logger.warn(`Task with id '${this.taskContentService.task.stringId}' has legacy layout with a non-default number` +
                 ` of columns. If you want to use a layout with different number of columns than 2 use a different layout type instead.`);
         }
 
-        return this.flowFields(dataGroups, 2);
+        this.flowFields(dataGroup, gridData, 2);
     }
 
-    protected flowFields(dataGroups: Array<DataGroup>, fieldWidth: number): GridData {
-        const grid: Array<Array<string>> = [];
-        const gridElements: Array<DatafieldGridLayoutElement> = [];
-        const runningTitleCount = new IncrementingCounter();
+    protected flowFields(dataGroup: DataGroup, gridData: GridData, fieldWidth: number) {
 
         const fieldsPerRow = Math.floor(this.formCols / fieldWidth);
         const maxXPosition = fieldWidth * (fieldsPerRow - 1);
 
-        dataGroups.forEach(dataGroup => {
-            if (dataGroup.title && dataGroup.title !== '') {
-                const title = this.groupTitleElement(dataGroup, runningTitleCount);
-                gridElements.push(title);
-                grid.push(this.gridRow(title.gridAreaId));
+        let xPosition = 0;
+        dataGroup.fields.forEach((dataField, dataFieldCount) => {
+            gridData.gridElements.push(this.fieldElement(dataField));
+            if (dataGroup.stretch) {
+                gridData.grid.push(this.gridRow(dataField.stringId));
+                return; // continue
             }
+            // else
+            if (xPosition === 0) {
+                gridData.grid.push(this.gridRow());
+            }
+            if (xPosition === 0 && this.isLastRow(dataFieldCount, dataGroup, fieldsPerRow)) {
+                const fieldsInLastRow = dataGroup.fields.length % fieldsPerRow;
+                const rowWidth = maxXPosition + fieldWidth;
+                if (dataGroup.alignment === DataGroupAlignment.END) {
+                    xPosition = rowWidth - fieldWidth * fieldsInLastRow;
+                } else if (dataGroup.alignment === DataGroupAlignment.CENTER) {
+                    xPosition = Math.floor((rowWidth - fieldsInLastRow * fieldWidth) / 2);
+                }
+            }
+            this.occupySpace(gridData.grid, gridData.grid.length - 1, xPosition, fieldWidth, dataField.stringId);
 
-            let xPosition = 0;
-            dataGroup.fields.forEach((dataField, dataFieldCount) => {
-                gridElements.push(this.fieldElement(dataField));
-                if (dataGroup.stretch) {
-                    grid.push(this.gridRow(dataField.stringId));
-                    return; // continue
-                }
-                // else
-                if (xPosition === 0) {
-                    grid.push(this.gridRow());
-                }
-                if (xPosition === 0 && this.isLastRow(dataFieldCount, dataGroup, fieldsPerRow)) {
-                    const fieldsInLastRow = dataGroup.fields.length % fieldsPerRow;
-                    const rowWidth = maxXPosition + fieldWidth;
-                    if (dataGroup.alignment === DataGroupAlignment.CENTER) {
-                        xPosition = rowWidth - fieldWidth * fieldsInLastRow;
-                    } else if (dataGroup.alignment === DataGroupAlignment.END) {
-                        xPosition = Math.floor((rowWidth - fieldsInLastRow * fieldWidth) / 2);
-                    }
-                }
-                this.occupySpace(grid, grid.length - 1, xPosition, fieldWidth, dataField.stringId);
-
-                xPosition += fieldWidth;
-                if (xPosition > maxXPosition) {
-                    xPosition = 0;
-                }
-            });
+            xPosition += fieldWidth;
+            if (xPosition > maxXPosition) {
+                xPosition = 0;
+            }
         });
-
-        return {grid, gridElements};
     }
 
     protected gridRow(content = ''): Array<string> {
