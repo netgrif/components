@@ -97,7 +97,7 @@ export abstract class AbstractTaskContentComponent {
             this.gridAreas = '';
         }
 
-        dataGroups = this.filterHidden(dataGroups);
+        dataGroups = this.cloneAndFilterHidden(dataGroups);
 
         let gridData: GridData;
         switch (this.taskContentService.task.layout.type) {
@@ -119,11 +119,14 @@ export abstract class AbstractTaskContentComponent {
         this.gridAreas = this.createGridAreasString(gridData.grid);
     }
 
-    filterHidden(dataGroups: Array<DataGroup>): Array<DataGroup> {
-        return dataGroups.filter(group => {
-            group.fields = group.fields.filter(field => !field.behavior.hidden && !field.behavior.forbidden);
-            return group.fields.length > 0;
+    cloneAndFilterHidden(dataGroups: Array<DataGroup>): Array<DataGroup> {
+        const result = dataGroups.map(group => {
+            const g = {...group};
+            g.fields = g.fields.filter(field => !field.behavior.hidden && !field.behavior.forbidden);
+            return g;
         });
+
+        return result.filter(group => group.fields.length > 0);
     }
 
     computeGridLayout(dataGroups: Array<DataGroup>): GridData {
