@@ -17,7 +17,7 @@ describe('SideMenuService', () => {
         expect(service).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

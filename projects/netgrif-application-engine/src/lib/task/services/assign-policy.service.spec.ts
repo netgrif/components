@@ -21,6 +21,7 @@ import {FinishPolicyService} from './finish-policy.service';
 import {FinishTaskService} from './finish-task.service';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('AssignPolicyService', () => {
     let service: AssignPolicyService;
@@ -44,7 +45,7 @@ describe('AssignPolicyService', () => {
                 AssignTaskService,
                 CancelTaskService,
                 TaskEventService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 FinishPolicyService,
                 FinishTaskService,
                 {provide: TaskContentService, useClass: SingleTaskContentService},
@@ -86,5 +87,9 @@ describe('AssignPolicyService', () => {
     it('should performAssignPolicy', () => {
         service.performAssignPolicy(true);
         expect(assignSpy).toHaveBeenCalled();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

@@ -2,22 +2,21 @@ import {TestBed} from '@angular/core/testing';
 import {AuthenticationService} from './authentication.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {AuthenticationMethodService} from '../authentication-method.service';
-import {Credentials} from '../../models/credentials';
-import {Observable, of} from 'rxjs';
-import {User} from '../../models/user';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('AuthenticationService', () => {
     let service: AuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule],
+            imports: [NoopAnimationsModule, HttpClientTestingModule, RouterTestingModule.withRoutes([])],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: MyAuth},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]});
         service = TestBed.inject(AuthenticationService);
     });
@@ -26,30 +25,22 @@ describe('AuthenticationService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should logout', () => {
+    it('should logout', (done) => {
         service.logout().subscribe(res => {
             expect(res).toEqual(undefined);
+            done();
         });
     });
 
-    it('should login', () => {
+    it('should login', (done) => {
         service.login({username: '', password: ''}).subscribe( res => {
             expect(res.id).toEqual('id');
             expect(service.isAuthenticated).toBe(true);
+            done();
         });
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
-
-class MyAuth extends AuthenticationMethodService {
-    login(credentials: Credentials): Observable<User> {
-        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
-    }
-
-    logout(): Observable<object> {
-        return of(undefined);
-    }
-}

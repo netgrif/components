@@ -4,11 +4,10 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Observable, of} from 'rxjs';
 import {
     TranslateLibModule,
     MaterialModule,
-    Credentials,
+    MockAuthenticationMethodService,
     TestConfigurationService,
     ConfigurationService,
     AuthenticationMethodService,
@@ -29,7 +28,7 @@ describe('LoginFormComponent', () => {
             ],
             declarations: [LoginFormComponent],
             providers: [
-                {provide: AuthenticationMethodService, useClass: MyAuth},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             schemas: [NO_ERRORS_SCHEMA]
@@ -47,32 +46,9 @@ describe('LoginFormComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should submit', () => {
-        component.rootFormGroup.controls['login'].setValue('login');
-        component.rootFormGroup.controls['password'].setValue('pass');
-        component.formSubmit.subscribe( event => {
-            expect(event).toEqual({username: 'login', password: 'pass'});
-        });
-        component.onSubmit();
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
 
-class MyAuth extends AuthenticationMethodService {
-
-    constructor() {
-        super();
-    }
-
-    login(credentials: Credentials): Observable<any> {
-        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
-    }
-
-    logout(): Observable<object> {
-        return of(undefined);
-    }
-}
 

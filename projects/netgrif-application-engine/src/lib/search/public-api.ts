@@ -1,6 +1,3 @@
-/* Module */
-export * from './search.module';
-
 /* Classes */
 export * from './models/query/query';
 

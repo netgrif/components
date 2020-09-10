@@ -15,7 +15,7 @@ describe('InternalLinkComponent', () => {
             declarations: [InternalLinkComponent],
             imports: [
                 CommonModule,
-                RouterTestingModule,
+                RouterTestingModule.withRoutes([]),
                 MaterialModule, NoopAnimationsModule
             ]
         })
@@ -32,7 +32,7 @@ describe('InternalLinkComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

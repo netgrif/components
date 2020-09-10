@@ -8,7 +8,6 @@ import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserService} from '../../user/services/user.service';
 import {debounceTime} from 'rxjs/operators';
 
-
 export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('userList') public userList: MatSelectionList;

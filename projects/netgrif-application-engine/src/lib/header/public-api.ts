@@ -15,9 +15,6 @@ export * from './case-header/case-menta-enum';
 export * from './task-header/task-meta-enum';
 export * from './workflow-header/workflow-meta-enum';
 
-/* MODULES */
-export * from './header.module';
-
 /* SERVICES */
 export * from './case-header/case-header.service';
 export * from './task-header/task-header.service';

@@ -20,7 +20,8 @@ import {
     HeaderColumn,
     HeaderColumnType,
     WorkflowMetaField,
-    PetriNetReference
+    PetriNetReference,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
@@ -41,7 +42,7 @@ describe('WorkflowPanelComponent', () => {
                 HttpClientTestingModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -59,11 +60,7 @@ describe('WorkflowPanelComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('show', () => {
-        expect(component.show(new MouseEvent('type'))).toEqual(false);
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

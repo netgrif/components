@@ -14,6 +14,5 @@ export * from './model/task-content-element-type';
 export * from './model/grid-data';
 
 /* MODULES */
-export * from './task-content.module';
 export * from './task-content/abstract-task-content.component';
 export * from './field-component-resolver/abstract-field-component-resolver.component';

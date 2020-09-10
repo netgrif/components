@@ -13,7 +13,8 @@ import {
     MockUserResourceService,
     TestTaskSearchServiceFactory,
     TaskViewService,
-    TestTaskViewFactory
+    TestTaskViewFactory,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -31,7 +32,7 @@ describe('TaskSearchComponent', () => {
             ],
             providers: [
                 ConfigTaskViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
                     useFactory: TestTaskSearchServiceFactory
@@ -55,5 +56,9 @@ describe('TaskSearchComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

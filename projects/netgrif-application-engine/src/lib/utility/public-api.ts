@@ -10,6 +10,7 @@ export * from './incrementing-counter';
 export * from './tests/mocks/mock-authentication.service';
 export * from './tests/mocks/mock-user-preference.service';
 export * from './tests/mocks/mock-user-resource.service';
+export * from './tests/mocks/mock-authentication-method-service';
 export * from './tests/search-category-mock-dependencies';
 export * from './tests/test-config';
 export * from './tests/test-factory-methods';

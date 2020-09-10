@@ -6,7 +6,6 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
     SideMenuService,
-    FileFieldService,
     FileField,
     MaterialModule,
     TranslateLibModule,
@@ -18,7 +17,8 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     ErrorSnackBarComponent,
-    SuccessSnackBarComponent
+    SuccessSnackBarComponent,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
@@ -37,9 +37,8 @@ describe('FileFieldComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                FileFieldService,
                 SideMenuService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -68,7 +67,7 @@ describe('FileFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

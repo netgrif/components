@@ -21,14 +21,21 @@ import {SuccessSnackBarComponent} from '../../../snack-bar/components/success-sn
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {WarningSnackBarComponent} from '../../../snack-bar/components/warning-snack-bar/warning-snack-bar.component';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
+import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule,
-                NoopAnimationsModule],
+            imports: [
+                HttpClientTestingModule,
+                MaterialModule,
+                TranslateLibModule,
+                NoopAnimationsModule,
+                SnackBarModule
+            ],
             providers: [
                 ArrayTaskViewServiceFactory,
                 {
@@ -41,12 +48,9 @@ describe('TaskViewService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
-                AuthenticationMethodService
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
             ],
             declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent,
-                WarningSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -64,7 +68,7 @@ describe('TaskViewService', () => {
         expect(service).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
