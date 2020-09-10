@@ -61,7 +61,7 @@ describe('AbstractNumberFieldComponent', () => {
         expect(component.getErrorMessage()).toEqual('Entered number must be even');
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

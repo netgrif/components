@@ -14,6 +14,8 @@ import {MockUserPreferenceService} from '../../../utility/tests/mocks/mock-user-
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {Component, Injector} from '@angular/core';
 import {AbstractUserCardComponent} from './abstract-user-card.component';
+import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 
 describe('AbstractUserCardComponent', () => {
     let component: TestUserComponent;
@@ -32,6 +34,7 @@ describe('AbstractUserCardComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: UserPreferenceService, useValue: MockUserPreferenceService}

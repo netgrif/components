@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from '../material/material.module';
-import {SideMenuModule} from '../side-menu/side-menu.module';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {CovalentModule} from '../covalent/covalent.module';
@@ -21,7 +20,6 @@ import {DateAdapter} from '@angular/material/core';
         CovalentModule,
         AngularResizedEventModule,
         HttpClientModule,
-        SideMenuModule,
         ReactiveFormsModule,
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,

@@ -14,7 +14,8 @@ import {
     ConfigurationService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService
+    TestConfigurationService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('LanguageSelectorComponent', () => {
@@ -32,7 +33,7 @@ describe('LanguageSelectorComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

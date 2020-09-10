@@ -16,7 +16,8 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    BooleanField
+    BooleanField,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('BooleanFieldComponent', () => {
@@ -32,7 +33,7 @@ describe('BooleanFieldComponent', () => {
                 HttpClientTestingModule, NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

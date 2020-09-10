@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NavigationDrawerComponent} from './navigation-drawer.component';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {NavigationTreeComponent} from '../navigation-tree/navigation-tree.component';

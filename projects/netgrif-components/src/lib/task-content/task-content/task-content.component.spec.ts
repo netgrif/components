@@ -9,11 +9,8 @@ import {
     TranslateLibModule,
     ConfigurationService,
     TestConfigurationService,
-    BooleanField,
     TaskViewService,
     TaskContentService,
-    MaterialAppearance,
-    TemplateAppearance
 } from '@netgrif/application-engine';
 
 describe('TaskContentComponent', () => {
@@ -46,80 +43,6 @@ describe('TaskContentComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it('should test algoritm', () => {
-        expect(component.fillBlankSpace([
-            {
-                fields: [
-                    new BooleanField('', '', true, {editable: true}),
-                    new BooleanField('', '', true, {editable: true}),
-                    new BooleanField('', '', true, {editable: true})
-                ],
-                title: 'string',
-                alignment: 'end',
-                stretch: false,
-                layout: {
-                    cols: 4,
-                    rows: undefined
-                }
-            }, {
-                fields: [
-                    new BooleanField('', '', true, {editable: true}),
-                    new BooleanField('', '', true, {hidden: true}),
-                    new BooleanField('', '', true, {editable: true}),
-                ],
-                title: 'string',
-                alignment: 'center',
-                stretch: true
-            }, {
-                fields: [
-                    new BooleanField('', '', true, {editable: true}),
-                    new BooleanField('', '', true, {editable: true}),
-                    new BooleanField('', '', true, {editable: true}),
-                ],
-                title: 'string',
-                alignment: 'center',
-                stretch: false
-            }, {
-                fields: [
-                    new BooleanField('', '', true, {editable: true}),
-                    new BooleanField('', '', true, {editable: true}),
-                    new BooleanField('', '', true, {hidden: true})
-                ],
-                title: 'string',
-                alignment: 'start',
-                stretch: false,
-                layout: {cols: 3, rows: undefined}
-            }, {
-                fields: [
-                    new BooleanField('', '', true, {editable: true},
-                        undefined, undefined, {
-                            x: 1,
-                            y: 12,
-                            cols: 2,
-                            rows: 1,
-                            offset: 0,
-                            appearance: MaterialAppearance.OUTLINE,
-                            template: TemplateAppearance.NETGRIF,
-                        }),
-                    new BooleanField('', '', true, {hidden: true},
-                        undefined, undefined, {
-                            x: 0,
-                            y: 13,
-                            cols: 2,
-                            rows: 1,
-                            offset: 0,
-                            appearance: MaterialAppearance.OUTLINE,
-                            template: TemplateAppearance.NETGRIF,
-                        })
-                ],
-                title: '',
-                alignment: 'start',
-                stretch: false,
-                layout: {cols: 3, rows: undefined}
-            },
-        ], 4).length).toEqual(24);
     });
 
     afterEach(() => {

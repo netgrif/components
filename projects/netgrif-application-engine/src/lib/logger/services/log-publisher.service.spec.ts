@@ -24,7 +24,7 @@ describe('LogPublisherService', () => {
 
     beforeEach(() => {
         spyOn(service, 'register').and.callThrough();
-        spyOn(console, 'debug').and.callThrough();
+        spyOn(console, 'debug');
         spyOn(console, 'clear').and.callThrough();
     });
 

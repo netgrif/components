@@ -6,6 +6,8 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 
 describe('UserComparatorService', () => {
     let service: UserComparatorService;
@@ -18,6 +20,7 @@ describe('UserComparatorService', () => {
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         });

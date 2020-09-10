@@ -77,7 +77,7 @@ describe('AbstractImportNetComponent', () => {
         expect(sideMenuCloseSpy).toHaveBeenCalled();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

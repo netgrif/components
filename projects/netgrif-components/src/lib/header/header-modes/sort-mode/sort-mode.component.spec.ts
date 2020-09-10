@@ -17,6 +17,7 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TestViewService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {MatSortModule} from '@angular/material/sort';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -41,7 +42,7 @@ describe('SortModeComponent', () => {
             ],
             providers: [
                 CaseHeaderService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -57,6 +58,10 @@ describe('SortModeComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
     });
 
     afterEach(() => {

@@ -16,7 +16,8 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TextField,
-    WrappedBoolean
+    WrappedBoolean,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('TextareaFieldComponent', () => {
@@ -33,7 +34,7 @@ describe('TextareaFieldComponent', () => {
                 HttpClientTestingModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

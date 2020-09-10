@@ -32,7 +32,6 @@ import {
     HeaderColumnType,
     TaskMetaField,
     AuthenticationService,
-    PanelModule,
     MockAuthenticationService,
     AuthenticationMethodService,
     MockAuthenticationMethodService,
@@ -49,16 +48,18 @@ import {
     TaskRequestStateService,
     FinishPolicyService,
     NAE_TASK_OPERATIONS,
-    SubjectTaskOperations
+    SubjectTaskOperations,
+    SnackBarModule
 } from '@netgrif/application-engine';
-import {PanelComponentModule} from '../panel.module';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {PanelComponent} from '../panel.component';
+import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
+import {TaskContentComponentModule} from '../../task-content/task-content.module';
 
-describe('AbstractTaskPanelComponent', () => {
+describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
-    let assignSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         const mockAssignPolicyService = {
@@ -68,13 +69,13 @@ describe('AbstractTaskPanelComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MatExpansionModule,
-                PanelModule,
                 MaterialModule,
                 NoopAnimationsModule,
                 CommonModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                PanelComponentModule,
+                SnackBarModule,
+                TaskContentComponentModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -105,15 +106,17 @@ describe('AbstractTaskPanelComponent', () => {
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
             ],
             declarations: [
+                PanelComponent,
+                TaskPanelComponent,
                 TestWrapperComponent,
-                TaskPanelComponent
             ],
             schemas: [NO_ERRORS_SCHEMA]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
                 entryComponents: [
                     ErrorSnackBarComponent,
-                    SuccessSnackBarComponent
+                    SuccessSnackBarComponent,
+                    TaskContentComponent
                 ]
             }
         }).overrideProvider(AssignPolicyService, {useValue: mockAssignPolicyService}
@@ -122,32 +125,13 @@ describe('AbstractTaskPanelComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
-
-        assignSpy = spyOn<any>(mockAssignPolicyService, 'performAssignPolicy');
     }));
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should perform assign policy on panel open', () => {
-        component.panelRef.open();
-        expect(assignSpy).toHaveBeenCalled();
-    });
-
-    it('should process tasks', () => {
-        component.taskPanelData.task.stringId = 'true';
-        component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
-        component.assign();
-        expect(component.taskPanelData.task.startDate).toBe(undefined);
-
-        component.taskPanelData.task.stringId = 'true';
-        component.taskPanelData.task.startDate = [2020, 1, 1, 1, 1];
-        component.finish();
-        expect(component.taskPanelData.task.startDate).toBe(undefined);
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

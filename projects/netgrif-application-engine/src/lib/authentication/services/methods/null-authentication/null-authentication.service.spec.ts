@@ -11,7 +11,7 @@ describe('NullAuthenticationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthenticationModule, HttpClientTestingModule, NoopAnimationsModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 NullAuthenticationService

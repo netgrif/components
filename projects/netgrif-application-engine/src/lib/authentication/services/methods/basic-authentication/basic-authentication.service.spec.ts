@@ -9,18 +9,23 @@ import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
 
 describe('BasicAuthenticationService', () => {
     let service: BasicAuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthenticationModule, HttpClientTestingModule,
-                NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+            imports: [
+                HttpClientTestingModule,
+                NoopAnimationsModule,
+                RouterTestingModule.withRoutes([])
+            ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                HttpClient,
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 BasicAuthenticationService
             ]
         });

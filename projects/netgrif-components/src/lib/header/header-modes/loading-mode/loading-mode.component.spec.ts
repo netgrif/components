@@ -5,7 +5,6 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule} from '@angular/router';
 import {
     MaterialModule,
     TranslateLibModule,
@@ -24,6 +23,7 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TestViewService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {RouterTestingModule} from '@angular/router/testing';
 
@@ -46,7 +46,7 @@ describe('LoadingModeComponent', () => {
             providers: [
                 CaseHeaderService,
                 ConfigCaseViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

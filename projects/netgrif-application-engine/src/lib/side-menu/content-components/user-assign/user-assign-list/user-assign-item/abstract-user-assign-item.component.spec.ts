@@ -31,7 +31,7 @@ describe('AbstractUserAssignItemComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

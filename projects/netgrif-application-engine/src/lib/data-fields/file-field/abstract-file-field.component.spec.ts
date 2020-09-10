@@ -15,7 +15,6 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {FileFieldService} from './services/file-field.service';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {FileField} from './models/file-field';
@@ -42,7 +41,6 @@ describe('AbstractFileFieldComponent', () => {
                 SnackBarModule
             ],
             providers: [
-                FileFieldService,
                 SideMenuService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

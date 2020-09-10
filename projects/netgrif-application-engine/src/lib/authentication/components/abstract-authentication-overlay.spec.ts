@@ -10,6 +10,10 @@ import {SessionService} from '../session/services/session.service';
 import {SpinnerOverlayService} from '../../utility/service/spinner-overlay.service';
 import {Router} from '@angular/router';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
+import {AuthenticationMethodService} from '../services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 
 describe('AbstractAuthenticationOverlay', () => {
     let component: TestAuthenticationOverlayComponent;
@@ -18,9 +22,15 @@ describe('AbstractAuthenticationOverlay', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [TestAuthenticationOverlayComponent],
-            imports: [HttpClientTestingModule, OverlayModule, RouterTestingModule.withRoutes([])],
+            imports: [
+                HttpClientTestingModule,
+                OverlayModule,
+                RouterTestingModule.withRoutes([])
+            ],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService}
                 ]
         }).compileComponents();
     }));

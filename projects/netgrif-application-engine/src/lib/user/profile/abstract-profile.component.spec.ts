@@ -10,6 +10,8 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 
 describe('AbstractProfileComponent', () => {
     let component: TestProfileComponent;
@@ -27,6 +29,7 @@ describe('AbstractProfileComponent', () => {
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
             ]
         })
             .compileComponents();

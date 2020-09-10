@@ -17,6 +17,8 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {RouterTestingModule} from '@angular/router/testing';
 import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 
 describe('AbstractRoleAssignment', () => {
     let component: TestRoleAssignmentComponent;
@@ -35,6 +37,7 @@ describe('AbstractRoleAssignment', () => {
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 RoleAssignmentService
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],

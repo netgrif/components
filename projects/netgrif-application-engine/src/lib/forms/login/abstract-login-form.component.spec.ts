@@ -13,6 +13,8 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {FormBuilder} from '@angular/forms';
 import {AbstractLoginFormComponent} from './abstract-login-form.component';
 import {UserService} from '../../user/services/user.service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 
 describe('AbstractLoginFormComponent', () => {
     let component: TestLoginFormComponent;
@@ -30,6 +32,7 @@ describe('AbstractLoginFormComponent', () => {
             ],
             declarations: [TestLoginFormComponent],
             providers: [
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],

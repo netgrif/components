@@ -8,7 +8,6 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {
     SideMenuService,
-    FileFieldService,
     FileListField,
     MaterialModule,
     TranslateLibModule,
@@ -40,7 +39,6 @@ describe('FileListFieldComponent', () => {
                 SnackBarModule
             ],
             providers: [
-                FileFieldService,
                 SideMenuService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

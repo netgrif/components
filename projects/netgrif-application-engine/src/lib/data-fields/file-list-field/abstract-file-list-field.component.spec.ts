@@ -7,7 +7,6 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
-import {FileFieldService} from '../file-field/services/file-field.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
@@ -41,7 +40,6 @@ describe('AbstractFileListFieldComponent', () => {
                 SnackBarModule
             ],
             providers: [
-                FileFieldService,
                 SideMenuService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

@@ -7,8 +7,9 @@ import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-re
 import {of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoggerService} from '../logger/services/logger.service';
-import {AuthenticationModule} from '../authentication/authentication.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
 
 describe('ProcessService', () => {
     let service: ProcessService;
@@ -19,12 +20,12 @@ describe('ProcessService', () => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                AuthenticationModule,
                 NoopAnimationsModule
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 ProcessService
             ]
         });

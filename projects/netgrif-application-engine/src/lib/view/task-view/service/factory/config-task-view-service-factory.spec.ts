@@ -18,6 +18,8 @@ import {AuthenticationMethodService} from '../../../../authentication/services/a
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {SnackBarModule} from '../../../../snack-bar/snack-bar.module';
+import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
 
 describe('ConfigTaskViewServiceFactory', () => {
     let service: ConfigTaskViewServiceFactory;
@@ -41,6 +43,7 @@ describe('ConfigTaskViewServiceFactory', () => {
                 ProcessService,
                 LoggerService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {
                     provide: SearchService,
                     useFactory: TestTaskSearchServiceFactory

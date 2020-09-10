@@ -15,6 +15,8 @@ import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
 
 describe('AbstractLogoutShortcutComponent', () => {
     let component: TestLogoutComponent;
@@ -34,6 +36,7 @@ describe('AbstractLogoutShortcutComponent', () => {
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: UserService, useClass: MyUserService}
             ]

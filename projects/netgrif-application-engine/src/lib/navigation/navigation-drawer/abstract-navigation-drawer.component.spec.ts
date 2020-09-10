@@ -34,6 +34,7 @@ describe('AbstractNavigationDrawerComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         }).compileComponents();
+        spyOn(console, 'info');
     }));
 
     beforeEach(() => {
@@ -46,9 +47,11 @@ describe('AbstractNavigationDrawerComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should open', async () => {
-        await component.open().then(res  => {
+    it('should open', (done) => {
+        component.open().then(res  => {
             expect(res).toEqual('open');
+            expect(console.info).toHaveBeenCalled();
+            done();
         });
     });
 

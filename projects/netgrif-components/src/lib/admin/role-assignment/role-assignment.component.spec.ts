@@ -13,9 +13,11 @@ import {
     ConfigurationService,
     TestConfigurationService,
     AuthenticationMethodService,
-    NullAuthenticationService,
+    AuthenticationService,
     ErrorSnackBarComponent,
-    SuccessSnackBarComponent
+    SuccessSnackBarComponent,
+    MockAuthenticationService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 
@@ -35,7 +37,8 @@ describe('RoleAssignmentComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 RoleAssignmentService
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],

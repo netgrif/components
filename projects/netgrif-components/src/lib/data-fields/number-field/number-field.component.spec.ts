@@ -16,7 +16,8 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    NumberField
+    NumberField,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('NumberFieldComponent', () => {
@@ -33,7 +34,7 @@ describe('NumberFieldComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}

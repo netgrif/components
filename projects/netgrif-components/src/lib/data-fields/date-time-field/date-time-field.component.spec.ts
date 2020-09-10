@@ -19,7 +19,8 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     DateTimeField,
-    ChangedFields
+    ChangedFields,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -36,7 +37,7 @@ describe('DatetimeFieldComponent', () => {
                 TranslateLibModule, HttpClientTestingModule, NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}

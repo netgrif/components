@@ -32,4 +32,8 @@ describe('TreeComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });

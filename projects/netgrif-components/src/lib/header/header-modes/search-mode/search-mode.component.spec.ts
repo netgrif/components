@@ -22,6 +22,7 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TestViewService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
@@ -57,7 +58,7 @@ describe('SearchModeComponent', () => {
             ],
             providers: [
                 ConfigCaseViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {   provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory},
                 {   provide: CaseViewService,
