@@ -170,6 +170,7 @@ export abstract class AbstractTaskContentComponent {
 
             this.occupySpace(gridData.grid, dataField.layout.y, dataField.layout.x,
                 dataField.layout.cols, dataField.stringId, dataField.layout.rows);
+            gridData.gridElements.push(this.fieldElement(dataField));
         });
 
         this.collapseGridEmptySpace(gridData.grid, firstGroupRow);
@@ -180,10 +181,9 @@ export abstract class AbstractTaskContentComponent {
 
         for (let rowIndex = firstRow; rowIndex < grid.length; rowIndex++) {
             const row = grid[rowIndex];
-            const availableSpace = this.getFreeRowSpace(row);
 
             for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
-                if (availableSpace[columnIndex] === 0) {
+                if (row[columnIndex] !== '') {
                     continue;
                 }
 
@@ -225,22 +225,6 @@ export abstract class AbstractTaskContentComponent {
                 i++;
             }
         }
-    }
-
-    protected getFreeRowSpace(row: Array<string>): Array<number> {
-        const result = Array(this.formCols);
-
-        let runningFreeSpace = 0;
-        for (let i = row.length - 1; i >= 0; i--) {
-            if (row[i] === '') {
-                runningFreeSpace++;
-            } else {
-                runningFreeSpace = 0;
-            }
-            result[i] = runningFreeSpace;
-        }
-
-        return result;
     }
 
     /**
