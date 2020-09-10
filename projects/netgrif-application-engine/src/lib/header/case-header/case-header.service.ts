@@ -22,9 +22,11 @@ export class CaseHeaderService extends AbstractHeaderService {
         _caseViewService.allowedNets$.subscribe(allowedNets => {
             this.setAllowedNets(allowedNets);
             if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {
-                this.initializeDefaultHeaderState(naeDefaultHeaders);
+                this.initDefaultHeaders = naeDefaultHeaders;
+                this.initializeDefaultHeaderState();
+            } else {
+                this.loadHeadersFromPreferences();
             }
-            this.loadHeadersFromPreferences();
             this.loading.off();
         });
     }
