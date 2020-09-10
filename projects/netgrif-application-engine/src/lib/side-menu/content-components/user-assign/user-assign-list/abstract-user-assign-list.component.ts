@@ -71,7 +71,11 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
         this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this._userListService.reload(searchText);
         });
-        this._userListService.rolesQuery = Object.keys(this.roles);
+        if (this.roles instanceof Array) {
+            this._userListService.rolesQuery = this.roles;
+        } else {
+            this._userListService.rolesQuery = Object.keys(this.roles);
+        }
     }
 
     ngOnDestroy(): void {
