@@ -9,7 +9,7 @@ import {
 } from '@netgrif/application-engine';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {BooleanFieldComponent} from './boolean-field/boolean-field.component';
@@ -37,7 +37,9 @@ import {SimpleTextFieldComponent} from './text-field/simple-text-field/simple-te
 import {UserFieldComponent} from './user-field/user-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
 import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
-
+import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
     declarations: [
@@ -61,7 +63,8 @@ import {SideMenuContentComponentModule} from '../side-menu/content-components/si
         RichTextareaFieldComponent,
         SimpleTextFieldComponent,
         UserFieldComponent,
-        RequiredLabelComponent
+        RequiredLabelComponent,
+        HtmlTextareaFieldComponent
     ],
     exports: [
         BooleanFieldComponent,
@@ -88,7 +91,10 @@ import {SideMenuContentComponentModule} from '../side-menu/content-components/si
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         TranslateLibModule,
-        SideMenuContentComponentModule
+        SideMenuContentComponentModule,
+        AngularEditorModule,
+        QuillModule.forRoot(),
+        FormsModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

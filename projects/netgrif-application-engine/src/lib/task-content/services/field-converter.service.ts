@@ -48,6 +48,10 @@ export class FieldConverterService {
                         item.description, item.layout, item.validations, type);
                 } else  if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
                     type = TextFieldView.TEXTAREA;
+                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'htmlEditor') {
+                    type = TextFieldView.HTMLTEXTAREA;
+                    return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
+                        item.description, item.layout, item.validations, type);
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, type);
