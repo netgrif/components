@@ -6,7 +6,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
 import {Observable, Subject} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {filter, map} from 'rxjs/operators';
+import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {toMoment} from '../../resources/types/nae-date-type';
@@ -117,8 +117,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
             }
         });
         this.panelRef.afterExpand.subscribe(() => {
-            this._taskContentService.blockFields(!this.canFinish());
-            this._taskPanelData.initiallyExpanded = true;
+            this._taskContentService.$shouldCreate.pipe(take(1)).subscribe(() => {
+                this._taskContentService.blockFields(!this.canFinish());
+                this._taskPanelData.initiallyExpanded = true;
+            });
         });
         this.panelRef.afterCollapse.subscribe(() => {
             this._taskPanelData.initiallyExpanded = false;

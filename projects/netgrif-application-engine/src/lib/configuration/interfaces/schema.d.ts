@@ -212,10 +212,13 @@ export interface View {
     };
     // layout: CaseLayout | TaskLayout;
     access:
+        | 'public' | 'private'
         | {
-        [k: string]: any;
-    }
-        | ('public' | 'private');
+            role?: Array<string> | string;
+            group?: Array<string> | string;
+            authority?: Array<string> | string;
+            [k: string]: any;
+        };
     navigation:
         | boolean
         | {
@@ -236,6 +239,7 @@ export interface CaseLayout {
     name: 'caseView';
     params: object;
 }
+
 export interface TaskLayout {
     name: 'taskView';
     params: object;
