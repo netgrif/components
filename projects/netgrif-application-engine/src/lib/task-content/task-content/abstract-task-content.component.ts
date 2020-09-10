@@ -119,7 +119,7 @@ export abstract class AbstractTaskContentComponent {
             if (group.title && group.title !== '') {
                 const title = this.groupTitleElement(group, gridData.runningTitleCount);
                 gridData.gridElements.push(title);
-                gridData.grid.push(this.gridRow(title.gridAreaId));
+                gridData.grid.push(this.newGridRow(title.gridAreaId));
             }
 
             switch (group.layout.type) {
@@ -153,7 +153,133 @@ export abstract class AbstractTaskContentComponent {
     }
 
     protected computeGridLayout(dataGroup: DataGroup, gridData: GridData) {
-        return undefined;
+        const firstGroupRow = gridData.grid.length;
+        dataGroup.fields.forEach(dataField => {
+            if (!dataField.layout
+                || dataField.layout.x === undefined
+                || dataField.layout.y === undefined
+                || !dataField.layout.rows
+                || !dataField.layout.cols) {
+                throw new Error(
+                    `You cannot use 'grid' layout without specifying the layout of the data fields (field ID: ${dataField.stringId})`);
+            }
+
+            while (gridData.grid.length <= dataField.layout.y + dataField.layout.rows) {
+                gridData.grid.push(this.newGridRow());
+            }
+
+            this.occupySpace(gridData.grid, dataField.layout.y, dataField.layout.x,
+                dataField.layout.cols, dataField.stringId, dataField.layout.rows);
+        });
+
+        this.collapseGridEmptySpace(gridData.grid, firstGroupRow);
+    }
+
+    protected collapseGridEmptySpace(grid: Array<Array<string>>, firstRow: number) {
+        this.removeEmptyRows(grid, firstRow);
+
+        for (let rowIndex = firstRow; rowIndex < grid.length; rowIndex++) {
+            const row = grid[rowIndex];
+            const availableSpace = this.getFreeRowSpace(row);
+
+            for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
+                if (availableSpace[columnIndex] === 0) {
+                    continue;
+                }
+
+                let foundElement = false;
+                let foundElementRowIndex = rowIndex + 1;
+                for (; foundElementRowIndex < grid.length; foundElementRowIndex++) {
+                    if (grid[foundElementRowIndex][columnIndex] !== '') {
+                        foundElement = true;
+                        break;
+                    }
+                }
+                if (!foundElement) {
+                    continue;
+                }
+
+                if (columnIndex > 0 && grid[foundElementRowIndex][columnIndex - 1] === grid[foundElementRowIndex][columnIndex]) {
+                    continue;
+                }
+
+                const elementDimensions = this.getElementDimensions(grid, columnIndex, foundElementRowIndex);
+
+                if (this.isAreaEmpty(grid, columnIndex, rowIndex, elementDimensions.width, foundElementRowIndex - rowIndex)) {
+                    const element = grid[foundElementRowIndex][columnIndex];
+                    this.occupySpace(grid, foundElementRowIndex, columnIndex, elementDimensions.width, '', elementDimensions.height, false);
+                    this.occupySpace(grid, rowIndex, columnIndex, elementDimensions.width, element, elementDimensions.height, false);
+                }
+            }
+        }
+
+        this.removeEmptyRows(grid, firstRow);
+    }
+
+    protected removeEmptyRows(grid: Array<Array<string>>, firstRow: number) {
+        let i = firstRow;
+        while (i < grid.length) {
+            if (grid[i].every(element => element === '')) {
+                grid.splice(i, 1);
+            } else {
+                i++;
+            }
+        }
+    }
+
+    protected getFreeRowSpace(row: Array<string>): Array<number> {
+        const result = Array(this.formCols);
+
+        let runningFreeSpace = 0;
+        for (let i = row.length - 1; i >= 0; i--) {
+            if (row[i] === '') {
+                runningFreeSpace++;
+            } else {
+                runningFreeSpace = 0;
+            }
+            result[i] = runningFreeSpace;
+        }
+
+        return result;
+    }
+
+    /**
+     * Determines the dimensions of the element in the grid with its top-left corner at the specified position
+     * @param grid the grid of elements
+     * @param x the X coordinate of the desired elements top-left corner
+     * @param y the Y coordinate of the desired elements top-left corner
+     * @returns the width and height of the specified element
+     */
+    protected getElementDimensions(grid: Array<Array<string>>, x: number, y: number): { width: number, height: number } {
+        const element = grid[y][x];
+        let width = 1;
+        while (x + width < this.formCols && grid[y][x + width] === element) {
+            width++;
+        }
+        let height = 1;
+        while (y + height < grid.length && grid[y + height][x] === element) {
+            height++;
+        }
+        return {width, height};
+    }
+
+    /**
+     * Determines whether the specified area in the grid contains no elements, or not
+     * @param grid the grid of elements
+     * @param x the X coordinate of the tested areas top-left corner
+     * @param y the Y coordinate of the tested areas top-left corner
+     * @param width the width of the tested area
+     * @param height the height of the tested area
+     */
+    protected isAreaEmpty(grid: Array<Array<string>>, x: number, y: number, width: number, height: number): boolean {
+        for (let i = y; i < y + height; i++) {
+            for (let j = x; j < x + width; j++) {
+                if (grid[i][j] !== '') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     protected computeFlowLayout(dataGroup: DataGroup, gridData: GridData) {
@@ -171,7 +297,6 @@ export abstract class AbstractTaskContentComponent {
     }
 
     protected flowFields(dataGroup: DataGroup, gridData: GridData, fieldWidth: number) {
-
         const fieldsPerRow = Math.floor(this.formCols / fieldWidth);
         const maxXPosition = fieldWidth * (fieldsPerRow - 1);
 
@@ -179,12 +304,12 @@ export abstract class AbstractTaskContentComponent {
         dataGroup.fields.forEach((dataField, dataFieldCount) => {
             gridData.gridElements.push(this.fieldElement(dataField));
             if (dataGroup.stretch) {
-                gridData.grid.push(this.gridRow(dataField.stringId));
+                gridData.grid.push(this.newGridRow(dataField.stringId));
                 return; // continue
             }
             // else
             if (xPosition === 0) {
-                gridData.grid.push(this.gridRow());
+                gridData.grid.push(this.newGridRow());
             }
             if (xPosition === 0 && this.isLastRow(dataFieldCount, dataGroup, fieldsPerRow)) {
                 const fieldsInLastRow = dataGroup.fields.length % fieldsPerRow;
@@ -204,7 +329,7 @@ export abstract class AbstractTaskContentComponent {
         });
     }
 
-    protected gridRow(content = ''): Array<string> {
+    protected newGridRow(content = ''): Array<string> {
         return Array(this.formCols).fill(content);
     }
 
@@ -220,9 +345,29 @@ export abstract class AbstractTaskContentComponent {
         return {gridAreaId: 'blank' + fillerCounter.next(), type: TaskElementType.BLANK};
     }
 
-    protected occupySpace(grid: Array<Array<string>>, row: number, col: number, width: number, value: string) {
-        for (let i = col; i < col + width; i++) {
-            grid[row][i] = value;
+    /**
+     * Fills the specified rectangular area with the specified value in the provided grid.
+     *
+     * If the specified area contains values other than the empty string an error will be thrown.
+     * @param grid the grid that should be modified
+     * @param y the 0 based row index of the top-left corner of the filled area
+     * @param x the 0 based column index of the top-left corner of the filled area
+     * @param width the width of the filled area
+     * @param value the value that is set into every cell of the grid inside the specified area
+     * @param height the height of the filled area
+     * @param checkOccupants whether the filled area should be checked for other elements.
+     * If a check is performed an error will be thrown if elements are found.
+     */
+    protected occupySpace(grid: Array<Array<string>>, y: number, x: number, width: number,
+                          value: string, height = 1, checkOccupants = true) {
+        for (let j = y; j < y + height; j++) {
+            for (let i = x; i < x + width; i++) {
+                if (checkOccupants && grid[j][i] !== '') {
+                    throw new Error(`Cannot place element ${value} into the grid layout, because it's space (x: ${i}, y: ${j})` +
+                        ` is already occupied by another element (${grid[j][i]})`);
+                }
+                grid[j][i] = value;
+            }
         }
     }
 
@@ -431,36 +576,4 @@ export abstract class AbstractTaskContentComponent {
             grid.push(AbstractTaskContentComponent.newGridRow(columnCount));
         }
     }
-
-    // protected computeGridAreas(): string {
-    //     const areas: Array<Array<string>> = [];
-    //     let blanks = 0;
-    //     let titles = 0;
-    //     this.dataSource.forEach(element => {
-    //         while (areas.length < (element.layout.y + element.layout.rows)) {
-    //             areas.push(Array(this.formCols).fill(''));
-    //         }
-    //
-    //         let uniqueIdentifier: string;
-    //         if (element.type !== 'blank' && element.type !== 'title') {
-    //             uniqueIdentifier = element.item.stringId;
-    //         } else if (element.type === 'blank') {
-    //             uniqueIdentifier = 'blank' + blanks;
-    //             blanks++;
-    //         } else {
-    //             uniqueIdentifier = 'title' + titles;
-    //             titles++;
-    //         }
-    //
-    //         element.gridAreaId = uniqueIdentifier;
-    //
-    //         for (let i = element.layout.x; i < element.layout.x + element.layout.cols; i++) {
-    //             for (let j = element.layout.y; j < element.layout.y + element.layout.rows; j++) {
-    //                 areas[j][i] = uniqueIdentifier;
-    //             }
-    //         }
-    //     });
-    //
-    //     return areas.map(row => row.join(' ')).join(' | ');
-    // }
 }
