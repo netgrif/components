@@ -73,7 +73,7 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
         });
         if (this.roles instanceof Array) {
             this._userListService.rolesQuery = this.roles;
-        } else {
+        } else if (this.roles !== undefined && this.roles !== null) {
             this._userListService.rolesQuery = Object.keys(this.roles);
         }
     }
