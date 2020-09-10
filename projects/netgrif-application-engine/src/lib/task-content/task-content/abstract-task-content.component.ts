@@ -91,7 +91,7 @@ export abstract class AbstractTaskContentComponent {
         return this._paperView.paperView;
     }
 
-    computeLayoutData(dataGroups: Array<DataGroup>) {
+    protected computeLayoutData(dataGroups: Array<DataGroup>) {
         if (!this.taskContentService.task) {
             this.dataSource = [];
             this.gridAreas = '';
@@ -119,7 +119,7 @@ export abstract class AbstractTaskContentComponent {
         this.gridAreas = this.createGridAreasString(gridData.grid);
     }
 
-    cloneAndFilterHidden(dataGroups: Array<DataGroup>): Array<DataGroup> {
+    protected cloneAndFilterHidden(dataGroups: Array<DataGroup>): Array<DataGroup> {
         const result = dataGroups.map(group => {
             const g = {...group};
             g.fields = g.fields.filter(field => !field.behavior.hidden && !field.behavior.forbidden);
@@ -129,24 +129,31 @@ export abstract class AbstractTaskContentComponent {
         return result.filter(group => group.fields.length > 0);
     }
 
-    computeGridLayout(dataGroups: Array<DataGroup>): GridData {
+    protected computeGridLayout(dataGroups: Array<DataGroup>): GridData {
         return undefined;
     }
 
-    computeFlowLayout(dataGroups: Array<DataGroup>): GridData {
-        return undefined;
+    protected computeFlowLayout(dataGroups: Array<DataGroup>): GridData {
+        return this.flowFields(dataGroups, 1);
     }
 
-    computeLegacyLayout(dataGroups: Array<DataGroup>): GridData {
+    protected computeLegacyLayout(dataGroups: Array<DataGroup>): GridData {
         if (this.formCols !== 4) {
             this.formCols = 4;
             this._logger.warn(`Task with id '${this.taskContentService.task.stringId}' has legacy layout with a non-default number` +
                 ` of columns. If you want to use a layout with different number of columns than 2 use a different layout type instead.`);
         }
 
+        return this.flowFields(dataGroups, 2);
+    }
+
+    protected flowFields(dataGroups: Array<DataGroup>, fieldWidth: number): GridData {
         const grid: Array<Array<string>> = [];
         const gridElements: Array<DatafieldGridLayoutElement> = [];
         const runningTitleCount = new IncrementingCounter();
+
+        const fieldsPerRow = Math.floor(this.formCols / fieldWidth);
+        const maxXPosition = fieldWidth * (fieldsPerRow - 1);
 
         dataGroups.forEach(dataGroup => {
             if (dataGroup.title && dataGroup.title !== '') {
@@ -155,26 +162,31 @@ export abstract class AbstractTaskContentComponent {
                 grid.push(this.gridRow(title.gridAreaId));
             }
 
-            let firstInRow = true;
+            let xPosition = 0;
             dataGroup.fields.forEach((dataField, dataFieldCount) => {
                 gridElements.push(this.fieldElement(dataField));
                 if (dataGroup.stretch) {
                     grid.push(this.gridRow(dataField.stringId));
-                } else {
-                    if (firstInRow) {
-                        grid.push(this.gridRow());
-                        if (this.isLastInDataGroup(dataFieldCount, dataGroup) && dataGroup.alignment === DataGroupAlignment.CENTER) {
-                            this.occupySpace(grid, grid.length - 1, 1, 2, dataField.stringId);
-                        } else if (this.isLastInDataGroup(dataFieldCount, dataGroup) && dataGroup.alignment === DataGroupAlignment.END) {
-                            this.occupySpace(grid, grid.length - 1, 2, 2, dataField.stringId);
-                        } else {
-                            this.occupySpace(grid, grid.length - 1, 0, 2, dataField.stringId);
-                        }
-
-                    } else {
-                        this.occupySpace(grid, grid.length - 1, 2, 2, dataField.stringId);
+                    return; // continue
+                }
+                // else
+                if (xPosition === 0) {
+                    grid.push(this.gridRow());
+                }
+                if (xPosition === 0 && this.isLastRow(dataFieldCount, dataGroup, fieldsPerRow)) {
+                    const fieldsInLastRow = dataGroup.fields.length % fieldsPerRow;
+                    const rowWidth = maxXPosition + fieldWidth;
+                    if (dataGroup.alignment === DataGroupAlignment.CENTER) {
+                        xPosition = rowWidth - fieldWidth * fieldsInLastRow;
+                    } else if (dataGroup.alignment === DataGroupAlignment.END) {
+                        xPosition = Math.floor((rowWidth - fieldsInLastRow * fieldWidth) / 2);
                     }
-                    firstInRow = !firstInRow;
+                }
+                this.occupySpace(grid, grid.length - 1, xPosition, fieldWidth, dataField.stringId);
+
+                xPosition += fieldWidth;
+                if (xPosition > maxXPosition) {
+                    xPosition = 0;
                 }
             });
         });
@@ -204,8 +216,8 @@ export abstract class AbstractTaskContentComponent {
         }
     }
 
-    protected isLastInDataGroup(index: number, dataGroup: DataGroup): boolean {
-        return index + 1 === dataGroup.fields.length;
+    protected isLastRow(index: number, dataGroup: DataGroup, fieldsPerRow: number): boolean {
+        return index + fieldsPerRow >= dataGroup.fields.length;
     }
 
     protected fillEmptySpace(gridData: GridData) {
