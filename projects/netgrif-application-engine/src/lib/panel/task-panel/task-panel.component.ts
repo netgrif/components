@@ -1,11 +1,21 @@
-import {AfterViewInit, Component, Inject, Injector, Input, OnInit, StaticProvider, Type} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    Inject,
+    Injector,
+    Input,
+    OnDestroy,
+    OnInit,
+    StaticProvider,
+    Type
+} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -49,7 +59,7 @@ import {CallChainService} from '../../utility/call-chain/call-chain.service';
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
     ]
 })
-export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
+export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit, OnDestroy {
 
     /**
      * @ignore
@@ -64,6 +74,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
 
     public portal: ComponentPortal<any>;
     public panelRef: MatExpansionPanel;
+    private _sub: Subscription;
 
     constructor(private _taskContentService: TaskContentService,
                 private _log: LoggerService,
@@ -108,7 +119,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         this.createContentPortal();
 
-        this._taskPanelData.changedFields.subscribe(chFields => {
+        this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
             this._taskContentService.updateFromChangedFields(chFields);
         });
 
@@ -288,4 +299,7 @@ export class TaskPanelComponent extends PanelWithHeaderBinding implements OnInit
         return {value: '', icon: ''};
     }
 
+    ngOnDestroy(): void {
+        this._sub.unsubscribe();
+    }
 }
