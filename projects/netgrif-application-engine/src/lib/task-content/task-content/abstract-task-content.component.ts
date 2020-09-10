@@ -15,6 +15,8 @@ import {GridData} from '../model/grid-data';
 import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 
 export abstract class AbstractTaskContentComponent {
+    readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
+
     dataSource: Array<DatafieldGridLayoutElement>;
     loading: boolean;
     formCols = 4;
@@ -95,15 +97,23 @@ export abstract class AbstractTaskContentComponent {
         if (!this.taskContentService.task) {
             this.dataSource = [];
             this.gridAreas = '';
+            return;
         }
 
         dataGroups = this.cloneAndFilterHidden(dataGroups);
 
         const gridData: GridData = {grid: [], gridElements: [], runningTitleCount: new IncrementingCounter()};
 
+        const defaultLayout = this.taskContentService.task.layout && this.taskContentService.task.layout.type
+            ? this.taskContentService.task.layout.type
+            : this.DEFAULT_LAYOUT_TYPE;
+
         dataGroups.forEach(group => {
             if (!group.layout) {
-                group.layout = {rows: undefined, cols: undefined, type: undefined};
+                group.layout = {rows: undefined, cols: undefined, type: defaultLayout};
+            }
+            if (!group.layout.type) {
+                group.layout.type = defaultLayout;
             }
 
             if (group.title && group.title !== '') {
