@@ -175,7 +175,7 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations);
+            _assignPolicyService, _callChain, _taskOperations, undefined);
     }
 
     ngAfterViewInit() {

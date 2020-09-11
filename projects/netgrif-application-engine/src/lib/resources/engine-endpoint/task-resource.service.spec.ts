@@ -115,7 +115,7 @@ describe('TaskResourceService', () => {
 
     it('should getTasks', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
-            service.getTasks({}).subscribe(res => {
+            service.getTasks(SimpleFilter.emptyTaskFilter()).subscribe(res => {
                 expect(res.content.length).toEqual(0);
             });
 

@@ -1,16 +1,18 @@
 /**
  * Contains types of renderable data fields.
  */
-export enum DataFieldType {
+export enum FieldTypeResource {
     BOOLEAN = 'boolean',
-    BUTTON = 'button',
     TEXT = 'text',
-    ENUMERATION = 'enumeration',
     NUMBER = 'number',
+    ENUMERATION = 'enumeration',
     MULTICHOICE = 'multichoice',
     DATE = 'date',
     DATE_TIME = 'dateTime',
+    USER = 'user',
+    BUTTON = 'button',
     FILE = 'file',
     FILE_LIST = 'fileList',
-    USER = 'user'
+    ENUMERATION_MAP = 'enumeration_map',
+    MULTICHOICE_MAP = 'multichoice_map',
 }

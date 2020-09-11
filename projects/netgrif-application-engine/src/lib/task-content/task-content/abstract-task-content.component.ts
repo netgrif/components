@@ -13,6 +13,7 @@ import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridData} from '../model/grid-data';
 import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
+import {FieldTypeResource} from '../model/field-type-resource';
 
 export abstract class AbstractTaskContentComponent {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
@@ -76,6 +77,15 @@ export abstract class AbstractTaskContentComponent {
                 this.taskEvent.emit(event);
             });
         }
+    }
+
+    /**
+     * Exists to allow references to the enum in the HTML
+     */
+    public fieldTypeResource = FieldTypeResource;
+
+    public get taskId(): string {
+        return this.taskContentService.task.stringId;
     }
 
     public getGridColumns(): string {

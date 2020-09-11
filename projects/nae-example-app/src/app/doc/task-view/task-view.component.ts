@@ -5,7 +5,9 @@ import {
     SearchService,
     SimpleFilter,
     TaskEventNotification,
-    TaskViewService
+    TaskViewService,
+    Task,
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -16,6 +18,23 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
 const searchServiceFactory = () => {
     // TODO load/use base filter somehow
     return new SearchService(SimpleFilter.emptyTaskFilter());
+};
+
+const disableButtonsFactory = () => {
+    return {
+        finish: (t: Task) => {
+            if (t && t.dataGroups && t.dataGroups.length) {
+                for (const dg of t.dataGroups) {
+                    const fld = dg.fields.find(field => field.title === 'Boolean');
+                    if (fld) {
+                        return fld.value;
+                    }
+                }
+            }
+            return true;
+        },
+        delegate: (t: Task) => true,
+    };
 };
 
 @Component({
@@ -29,6 +48,9 @@ const searchServiceFactory = () => {
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},
+        {provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+            useFactory: disableButtonsFactory
+        }
     ]
 })
 export class TaskViewComponent extends AbstractTaskView implements AfterViewInit {
