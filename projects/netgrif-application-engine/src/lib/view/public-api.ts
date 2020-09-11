@@ -42,8 +42,3 @@ export * from './tree-case-view/tree-component/abstract-tree.component';
 export * from './tree-case-view/tree-component/add-child-node/abstract-add-child-node.component';
 export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.component';
 export * from './tree-case-view/tree-task-content/abstract-tree-task-content.component';
-
-/* MODULES */
-export * from './workflow-view.module';
-export * from './case-view/case-view.module';
-export * from './tree-case-view/tree-case-view.module';

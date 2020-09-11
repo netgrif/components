@@ -16,7 +16,8 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TextField,
-    WrappedBoolean
+    WrappedBoolean,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('SimpleTextFieldComponent', () => {
@@ -33,7 +34,7 @@ describe('SimpleTextFieldComponent', () => {
                 HttpClientTestingModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService}
@@ -51,11 +52,7 @@ describe('SimpleTextFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
@@ -75,7 +72,7 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, [{validationRule: 'minLength 5', validationMessage: 'This is custom message!'}]);
+    }, undefined, undefined, undefined, []);
     formControl = new FormControl();
 
     constructor() {

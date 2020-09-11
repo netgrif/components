@@ -11,5 +11,4 @@ export * from './model/task-event-notification';
 export * from './model/task-event';
 
 /* MODULES */
-export * from './task-content.module';
 export * from './task-content/abstract-task-content.component';

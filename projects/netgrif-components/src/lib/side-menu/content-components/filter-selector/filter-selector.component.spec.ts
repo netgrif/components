@@ -14,7 +14,8 @@ import {
     TestConfigurationService,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
-    SimpleFilter, FilterType
+    SimpleFilter, FilterType,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {MatSelectionListChange} from '@angular/material/list';
 
@@ -33,7 +34,7 @@ describe('FilterSelectorComponent', () => {
                 HttpClientTestingModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {
@@ -42,8 +43,7 @@ describe('FilterSelectorComponent', () => {
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -58,19 +58,7 @@ describe('FilterSelectorComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should test functions', () => {
-        component.filterFilters('');
-        component.caseFilterSelected({option: {selected: undefined}} as MatSelectionListChange);
-        component.taskFilterSelected({option: {selected: undefined}} as MatSelectionListChange);
-
-        component.filterSelected(new SimpleFilter('', FilterType.TASK, {}));
-        expect(sideMenuSpy).toHaveBeenCalled();
-
-        component.filterSelectionConfirmed();
-        expect(sideMenuCloseSpy).toHaveBeenCalled();
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

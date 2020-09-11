@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchModeComponent} from './search-mode.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -22,7 +22,7 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TestViewService,
-    UserValue
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
@@ -37,7 +37,6 @@ import {RouterTestingModule} from '@angular/router/testing';
 describe('SearchModeComponent', () => {
     let component: SearchModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
-    let headerSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -59,7 +58,7 @@ describe('SearchModeComponent', () => {
             ],
             providers: [
                 ConfigCaseViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {   provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory},
                 {   provide: CaseViewService,
@@ -80,26 +79,13 @@ describe('SearchModeComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
-        headerSpy = spyOn(TestBed.inject(CaseHeaderService), 'headerSearchInputChanged');
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call search header', fakeAsync(() => {
-        component.formControls[0].setValue('hladaj');
-        tick(400);
-        expect(headerSpy).toHaveBeenCalledWith(0, 'hladaj');
-    }));
-
-    it('should transform UserValue into id', fakeAsync(() => {
-        component.formControls[0].setValue(new UserValue('7', '', '', ''));
-        tick(400);
-        expect(headerSpy).toHaveBeenCalledWith(0, '7');
-    }));
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

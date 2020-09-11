@@ -32,4 +32,8 @@ describe('SingleTaskContentService', () => {
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });

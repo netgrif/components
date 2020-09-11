@@ -40,11 +40,7 @@ describe('CasePanelComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('show', () => {
-        expect(component.show(new MouseEvent('type'))).toEqual(false);
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
