@@ -93,7 +93,7 @@ export class FieldConverterService {
         }
     }
 
-    public resolveType(item: DataField<any>): string {
+    public resolveType(item: DataField<any>): FieldTypeResource {
         if (item instanceof BooleanField) {
             return FieldTypeResource.BOOLEAN;
         } else if (item instanceof ButtonField) {
@@ -248,20 +248,20 @@ export class FieldConverterService {
     }
 
     public formatValueFromBackend(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === 'text' && value === null)
+        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
             return null;
         if (value === undefined || value === null)
             return;
-        if (this.resolveType(field) === 'date') {
+        if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
         }
-        if (this.resolveType(field) === 'user') {
+        if (this.resolveType(field) === FieldTypeResource.USER) {
             return new UserValue(value.id, value.name, value.surname, value.email);
         }
-        if (this.resolveType(field) === 'dateTime') {
+        if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));
         }
-        if (this.resolveType(field) === 'multichoice') {
+        if (this.resolveType(field) === FieldTypeResource.MULTICHOICE) {
             const array = [];
             value.forEach(v => {
                 if (v.defaultValue) {

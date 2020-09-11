@@ -17,11 +17,11 @@ export abstract class AbstractDataFieldComponent implements OnInit {
      * It should be overridden in each class that extends this one, to provide a more specific type.
      */
     @Input() dataField: DataField<any>;
+    @Input() taskOffset = 0;
     /**
      * @ignore
      * See [formControl]{@link AbstractDataFieldComponent#formControl}
      */
-    @Input() taskOffset = 0;
     protected _formControl: FormControl;
 
     protected constructor() {

@@ -1,72 +1,11 @@
 <div *ngIf="!loading && dataSource.length !== 0" [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView()}">
-    <mat-grid-list [cols]="formCols" rowHeight="105px">
-        <mat-grid-tile *ngFor="let item of dataSource"
-                       class="border"
-                       [colspan]="item.layout.cols"
-                       [rowspan]="item.layout.rows"
-                       [ngSwitch]="item.type">
-
-            <nc-boolean-field *ngSwitchCase="fieldTypeResource.BOOLEAN" class="full-width-auto" [dataField]="item.item"
-                               [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-boolean-field>
-
-            <nc-text-field *ngSwitchCase="fieldTypeResource.TEXT" class="full-width-auto" [dataField]="item.item"
-                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-text-field>
-
-            <nc-number-field *ngSwitchCase="fieldTypeResource.NUMBER" class="full-width-auto" [dataField]="item.item"
-                              [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-number-field>
-
-            <nc-enumeration-field *ngSwitchCase="fieldTypeResource.ENUMERATION" class="full-width-auto" [dataField]="item.item"
-                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-enumeration-field>
-
-            <nc-enumeration-field *ngSwitchCase="fieldTypeResource.ENUMERATION_MAP" class="full-width-auto" [dataField]="item.item"
-                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-enumeration-field>
-
-            <nc-multichoice-field *ngSwitchCase="fieldTypeResource.MULTICHOICE" class="full-width-auto" [dataField]="item.item"
-                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-multichoice-field>
-
-            <nc-multichoice-field *ngSwitchCase="fieldTypeResource.MULTICHOICE_MAP" class="full-width-auto" [dataField]="item.item"
-                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-multichoice-field>
-
-            <nc-date-field *ngSwitchCase="fieldTypeResource.DATE" class="full-width-auto" [dataField]="item.item"
-                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-date-field>
-
-            <nc-date-time-field *ngSwitchCase="fieldTypeResource.DATE_TIME" class="full-width-auto" [dataField]="item.item"
-                                 [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-date-time-field>
-
-            <nc-file-field *ngSwitchCase="fieldTypeResource.FILE" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
-                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-file-field>
-
-            <nc-file-list-field *ngSwitchCase="fieldTypeResource.FILE_LIST" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
-                                 [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-file-list-field>
-
-            <nc-user-field *ngSwitchCase="fieldTypeResource.USER" class="full-width-auto" [dataField]="item.item"
-                            [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-user-field>
-
-            <nc-button-field *ngSwitchCase="fieldTypeResource.BUTTON" class="full-width-auto" [dataField]="item.item"
-                              [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
-            </nc-button-field>
-
-            <div *ngSwitchCase="'title'" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">
-                <div fxFlex="20" class="line-datagroup"></div>
-                <span class="margin-default">{{item.title}}</span>
-                <div fxFlex class="line-datagroup"></div>
-            </div>
-
-            <div *ngSwitchCase="'blank'"></div>
-        </mat-grid-tile>
-    </mat-grid-list>
+    <div [gdAreas]="gridAreas" [gdColumns]="getGridColumns()">
+        <div *ngFor="let item of dataSource"
+             [gdArea]="item.gridAreaId"
+             class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
+            <nc-field-component-resolver [gridElement]="item" fxFlex></nc-field-component-resolver>
+        </div>
+    </div>
 </div>
 
 <div *ngIf="!loading && dataSource.length === 0" fxLayout="column" fxLayoutAlign="center center">

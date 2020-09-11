@@ -41,7 +41,7 @@ export interface DataGroup {
      * Desing alignment
      * ***Example:*** start
      */
-    alignment: string;
+    alignment: DataGroupAlignment;
     /**
      * Desing stretch
      *
@@ -49,4 +49,22 @@ export interface DataGroup {
      */
     stretch: boolean;
     layout?: DataGroupLayout;
+}
+
+/**
+ * Determines the position of the last data field when the number of data fields in a data group is odd.
+ */
+export enum DataGroupAlignment {
+    /**
+     * Positioned in the left column
+     */
+    START = 'start',
+    /**
+     * Positioned in the center of the screen
+     */
+    CENTER = 'center',
+    /**
+     * Positioned in the right column
+     */
+    END = 'end'
 }

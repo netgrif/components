@@ -21,7 +21,7 @@ export class GridLayoutHelper {
 
     public fillBlankSpace(gridElements: Array<GridElement>,
                           columnCount: number,
-                          elementVisibilityCondition: (element: any) => boolean = () => true): Array<GridElementWithItem> {
+                          elementVisibilityCondition: (element: any) => boolean = () => true): Array<GridElementWithItem<unknown>> {
         const grid: Array<Array<GridFiller>> = [];
 
         gridElements.forEach(element => {
@@ -45,7 +45,7 @@ export class GridLayoutHelper {
             }
         });
 
-        const result: Array<GridElementWithItem> = gridElements.filter(element => elementVisibilityCondition(element))
+        const result: Array<GridElementWithItem<unknown>> = gridElements.filter(element => elementVisibilityCondition(element))
             .map(element => ({
                 item: element,
                 type: element.type,
