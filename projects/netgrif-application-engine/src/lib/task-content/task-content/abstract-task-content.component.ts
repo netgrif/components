@@ -71,10 +71,6 @@ export abstract class AbstractTaskContentComponent {
         }
     }
 
-    protected static newGridRow(cols: number): Array<GridFiller> {
-        return [new GridFiller(0, cols - 1)];
-    }
-
     public getGridColumns(): string {
         return 'repeat(' + this.formCols + ', 1fr)';
     }
@@ -313,18 +309,35 @@ export abstract class AbstractTaskContentComponent {
         });
     }
 
+    /**
+     * Creates a new grid row of length equivalent to the [formCols]{@link AbstractTaskContentComponent#formCols} property of this class
+     * @param content the value that should be used to fill all elements in the row
+     */
     protected newGridRow(content = ''): Array<string> {
         return Array(this.formCols).fill(content);
     }
 
+    /**
+     * @param dataGroup the data group whose title element should be created
+     * @param titleCounter the counter that is used to track the number of already created filler elements
+     * @returns an object that represents a title element of the provided data group. The provided counter is incremented by one.
+     */
     protected groupTitleElement(dataGroup: DataGroup, titleCounter: IncrementingCounter): DatafieldGridLayoutElement {
         return {title: dataGroup.title, gridAreaId: 'group' + titleCounter.next(), type: TaskElementType.DATA_GROUP_TITLE};
     }
 
+    /**
+     * @param field the field whose representation should be created
+     * @returns an object that represents the provided data field in the layout
+     */
     protected fieldElement(field: DataField<unknown>): DatafieldGridLayoutElement {
         return {gridAreaId: field.stringId, type: this._fieldConverter.resolveType(field), item: field};
     }
 
+    /**
+     * @param fillerCounter the counter that is used to track the number of already created filler elements
+     * @returns a filler element object with a unique ID. The provided counter is incremented by one.
+     */
     protected fillerElement(fillerCounter: IncrementingCounter): DatafieldGridLayoutElement {
         return {gridAreaId: 'blank' + fillerCounter.next(), type: TaskElementType.BLANK};
     }
@@ -355,10 +368,21 @@ export abstract class AbstractTaskContentComponent {
         }
     }
 
+    /**
+     * @param index the index of the checked element within its data group
+     * @param dataGroup the checked data group
+     * @param fieldsPerRow the number of fields that is required to fill an entire row
+     * @returns whether the field at the given index is within the last row of elements of the provided data group.
+     * Note that if the last row contains enough elements to be completely filled this method returns `false`.
+     */
     protected isLastRow(index: number, dataGroup: DataGroup, fieldsPerRow: number): boolean {
         return index + fieldsPerRow >= dataGroup.fields.length;
     }
 
+    /**
+     * Fills empty tiles in the grid with blank elements
+     * @param gridData the grid and elements that should be filled with blank data
+     */
     protected fillEmptySpace(gridData: GridData) {
         const runningBlanksCount = new IncrementingCounter();
         gridData.grid.forEach(row => {
@@ -373,6 +397,10 @@ export abstract class AbstractTaskContentComponent {
         });
     }
 
+    /**
+     * Joins the provided grid of element into a string accepted by `[gdAreas]` input property of Angular flex layout
+     * @param grid the grid of elements
+     */
     protected createGridAreasString(grid: Array<Array<string>>): string {
         return grid.map(row => row.join(' ')).join(' | ');
     }
