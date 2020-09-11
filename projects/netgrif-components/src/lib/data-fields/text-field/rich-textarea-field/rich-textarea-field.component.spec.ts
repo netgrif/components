@@ -15,10 +15,10 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    TextField,
     CovalentModule,
     WrappedBoolean,
-    MockAuthenticationMethodService
+    MockAuthenticationMethodService,
+    TextAreaField
 } from '@netgrif/application-engine';
 
 describe('RichTextareaFieldComponent', () => {
@@ -43,8 +43,7 @@ describe('RichTextareaFieldComponent', () => {
             ],
             declarations: [RichTextareaFieldComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-            .compileComponents();
+        }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
@@ -68,7 +67,7 @@ describe('RichTextareaFieldComponent', () => {
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
-    dataField = new TextField('', '', 'text', {
+    dataField = new TextAreaField('', '', 'text', {
         editable: true
     }, undefined, undefined, undefined, []);
     formControl = new FormControl();
