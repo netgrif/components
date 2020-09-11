@@ -4,7 +4,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormsModule} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
@@ -20,6 +20,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {AbstractHtmlTextareaFieldComponent} from './abstract-html-textarea-field.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import {TextAreaField} from '../models/text-area-field';
+import {QuillModule} from 'ngx-quill';
 
 describe('AbstractHtmlTextareaFieldComponent', () => {
     let component: TestTextComponent;
@@ -33,7 +34,8 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
                 CovalentModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                QuillModule.forRoot()
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

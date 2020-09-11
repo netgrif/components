@@ -9,7 +9,7 @@ import {
 } from '@netgrif/application-engine';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {BooleanFieldComponent} from './boolean-field/boolean-field.component';
@@ -38,7 +38,7 @@ import {UserFieldComponent} from './user-field/user-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
 import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
 import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
-import { QuillModule } from 'ngx-quill';
+import {QuillModule} from 'ngx-quill';
 
 @NgModule({
     declarations: [
@@ -91,8 +91,7 @@ import { QuillModule } from 'ngx-quill';
         NgxMatMomentModule,
         TranslateLibModule,
         SideMenuContentComponentModule,
-        QuillModule.forRoot(),
-        FormsModule
+        QuillModule.forRoot()
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
