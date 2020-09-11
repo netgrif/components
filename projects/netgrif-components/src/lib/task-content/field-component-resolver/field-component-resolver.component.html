@@ -1,46 +1,46 @@
 <ng-container [ngSwitch]="getElementType()">
-    <nc-boolean-field *ngSwitchCase="fieldTypeEnum.BOOLEAN" class="full-width-auto" [dataField]="getDataField()"
-                      [taskOffset]="getFieldOffset()" class="min-row-height">
+    <nc-boolean-field *ngSwitchCase="fieldTypeEnum.BOOLEAN" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                      class="full-width-auto min-row-height">
     </nc-boolean-field>
 
-    <nc-text-field *ngSwitchCase="fieldTypeEnum.TEXT" class="full-width-auto" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
-                   class="min-row-height">
+    <nc-text-field *ngSwitchCase="fieldTypeEnum.TEXT" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                   class="full-width-auto min-row-height">
     </nc-text-field>
 
-    <nc-number-field *ngSwitchCase="fieldTypeEnum.NUMBER" class="full-width-auto" [dataField]="getDataField()"
-                     [taskOffset]="getFieldOffset()" class="min-row-height">
+    <nc-number-field *ngSwitchCase="fieldTypeEnum.NUMBER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                     class="full-width-auto min-row-height">
     </nc-number-field>
 
-    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION" class="full-width-auto" [dataField]="getDataField()"
-                          [taskOffset]="getFieldOffset()" class="min-row-height">
+    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                          class="full-width-auto min-row-height">
     </nc-enumeration-field>
 
-    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE" class="full-width-auto" [dataField]="getDataField()"
-                          [taskOffset]="getFieldOffset()" class="min-row-height">
+    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                          class="full-width-auto min-row-height">
     </nc-multichoice-field>
 
-    <nc-date-field *ngSwitchCase="fieldTypeEnum.DATE" class="full-width-auto" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
-                   class="min-row-height">
+    <nc-date-field *ngSwitchCase="fieldTypeEnum.DATE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                   class="full-width-auto min-row-height">
     </nc-date-field>
 
-    <nc-date-time-field *ngSwitchCase="fieldTypeEnum.DATE_TIME" class="full-width-auto" [dataField]="getDataField()"
-                        [taskOffset]="getFieldOffset()" class="min-row-height">
+    <nc-date-time-field *ngSwitchCase="fieldTypeEnum.DATE_TIME" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                        class="full-width-auto min-row-height">
     </nc-date-time-field>
 
-    <nc-file-field *ngSwitchCase="fieldTypeEnum.FILE" class="full-width-auto" [dataField]="getDataField()" [taskId]="getTaskId()"
-                   [taskOffset]="getFieldOffset()" class="min-row-height">
+    <nc-file-field *ngSwitchCase="fieldTypeEnum.FILE" [dataField]="getDataField()" [taskId]="getTaskId()" [taskOffset]="getFieldOffset()"
+                   class="full-width-auto min-row-height">
     </nc-file-field>
 
-    <nc-file-list-field *ngSwitchCase="fieldTypeEnum.FILE_LIST" class="full-width-auto" [dataField]="getDataField()" [taskId]="getTaskId()"
-                        [taskOffset]="getFieldOffset()" class="min-row-height">
+    <nc-file-list-field *ngSwitchCase="fieldTypeEnum.FILE_LIST" [dataField]="getDataField()" [taskId]="getTaskId()"
+                        [taskOffset]="getFieldOffset()" class="full-width-auto min-row-height">
     </nc-file-list-field>
 
-    <nc-user-field *ngSwitchCase="fieldTypeEnum.USER" class="full-width-auto" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
-                   class="min-row-height">
+    <nc-user-field *ngSwitchCase="fieldTypeEnum.USER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                   class="full-width-auto min-row-height">
     </nc-user-field>
 
-    <nc-button-field *ngSwitchCase="fieldTypeEnum.BUTTON" class="full-width-auto" [dataField]="getDataField()"
-                     [taskOffset]="getFieldOffset()" class="min-row-height">
+    <nc-button-field *ngSwitchCase="fieldTypeEnum.BUTTON" [dataField]="getDataField()" [taskOffset]="getFieldOffset()"
+                     class="full-width-auto min-row-height">
     </nc-button-field>
 
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxLayout="row" fxLayoutAlign="center center" class="full-width-auto">
