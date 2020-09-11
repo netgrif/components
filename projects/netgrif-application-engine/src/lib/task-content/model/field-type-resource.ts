@@ -1,3 +1,6 @@
+/**
+ * Contains types of renderable data fields.
+ */
 export enum FieldTypeResource {
     BOOLEAN = 'boolean',
     TEXT = 'text',

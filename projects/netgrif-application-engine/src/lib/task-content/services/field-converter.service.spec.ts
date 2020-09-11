@@ -5,8 +5,8 @@ import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import moment from 'moment';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldResource} from '../model/resource-interface';
-import {DataFieldType} from '../model/data-field-type';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
+import {FieldTypeResource} from '../model/field-type-resource';
 
 describe('FieldConvertorService', () => {
     let service: FieldConverterService;
@@ -27,7 +27,7 @@ describe('FieldConvertorService', () => {
     it('should test format value', () => {
         const dataField: DataFieldResource = {
             stringId: 'string',
-            type: DataFieldType.TEXT,
+            type: FieldTypeResource.TEXT,
             name: 'string',
             description: 'string',
             placeholder: 'string',

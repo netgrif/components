@@ -16,7 +16,6 @@ import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
-import {DataFieldType} from '../model/data-field-type';
 
 @Injectable({
     providedIn: 'root'
@@ -94,7 +93,7 @@ export class FieldConverterService {
         }
     }
 
-    public resolveType(item: DataField<any>): DataFieldType {
+    public resolveType(item: DataField<any>): FieldTypeResource {
         if (item instanceof BooleanField) {
             return FieldTypeResource.BOOLEAN;
         } else if (item instanceof ButtonField) {
@@ -249,20 +248,20 @@ export class FieldConverterService {
     }
 
     public formatValueFromBackend(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === DataFieldType.TEXT && value === null)
+        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
             return null;
         if (value === undefined || value === null)
             return;
-        if (this.resolveType(field) === DataFieldType.DATE) {
+        if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
         }
-        if (this.resolveType(field) === DataFieldType.USER) {
+        if (this.resolveType(field) === FieldTypeResource.USER) {
             return new UserValue(value.id, value.name, value.surname, value.email);
         }
-        if (this.resolveType(field) === DataFieldType.DATE_TIME) {
+        if (this.resolveType(field) === FieldTypeResource.DATE_TIME) {
             return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));
         }
-        if (this.resolveType(field) === DataFieldType.MULTICHOICE) {
+        if (this.resolveType(field) === FieldTypeResource.MULTICHOICE) {
             const array = [];
             value.forEach(v => {
                 if (v.defaultValue) {

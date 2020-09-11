@@ -3,7 +3,7 @@ import {TaskContentService} from '../services/task-content.service';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {TaskContentElementType, TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
-import {DataFieldType} from '../model/data-field-type';
+import {FieldTypeResource} from '../model/field-type-resource';
 
 /**
  * Resolves the correct {@link AbstractDataFieldComponent} implementation for the provided data field object.
@@ -11,7 +11,7 @@ import {DataFieldType} from '../model/data-field-type';
 export abstract class AbstractFieldComponentResolverComponent {
     @Input() gridElement: DatafieldGridLayoutElement;
 
-    public fieldTypeEnum = DataFieldType;
+    public fieldTypeEnum = FieldTypeResource;
     public taskElementEnum = TaskElementType;
 
     protected constructor(protected taskContentService: TaskContentService) {

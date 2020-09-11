@@ -1,6 +1,6 @@
-import {DataFieldType} from './data-field-type';
+import {FieldTypeResource} from './field-type-resource';
 
-export type TaskContentElementType = DataFieldType | TaskElementType;
+export type TaskContentElementType = FieldTypeResource | TaskElementType;
 
 /**
  * Contains types of elements that are used to construct task content, but are not data fields themselves.
