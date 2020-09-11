@@ -5,9 +5,11 @@
 
     .user-assign-item-selected {
         background-color: mat-color($primary, 300);
+        color: mat-contrast($primary, 300) !important;
     }
 
     .user-assign-item-selected:hover {
         background-color: mat-color($primary, 500) !important;
+        color: mat-contrast($primary, 500) !important;
     }
 }

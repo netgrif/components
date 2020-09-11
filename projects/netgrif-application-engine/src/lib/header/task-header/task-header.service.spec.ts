@@ -9,7 +9,6 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {RouterModule} from '@angular/router';
 import {ViewService} from '../../routing/view-service/view.service';
 import {TestViewService} from '../../utility/tests/test-view-service';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
@@ -18,6 +17,9 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
+import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -29,19 +31,16 @@ describe('TaskHeaderService', () => {
                 HttpClientTestingModule,
                 MatSnackBarModule,
                 MatIconModule, NoopAnimationsModule,
-                RouterModule.forRoot([])
+                RouterTestingModule.withRoutes([]),
+                SnackBarModule
             ],
             providers: [
                 TaskHeaderService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-            ],
-            declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -58,7 +57,7 @@ describe('TaskHeaderService', () => {
         expect(service).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

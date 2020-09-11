@@ -16,7 +16,8 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    DateField
+    DateField,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -33,7 +34,7 @@ describe('DateFieldComponent', () => {
                 HttpClientTestingModule, NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -45,8 +46,7 @@ describe('DateFieldComponent', () => {
                 TestWrapperComponent
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -57,11 +57,7 @@ describe('DateFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

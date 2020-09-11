@@ -10,7 +10,8 @@ import {
     ConfigurationService,
     TestConfigurationService,
     UserPreferenceService,
-    MockUserPreferenceService
+    MockUserPreferenceService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -33,7 +34,7 @@ describe('UserCardComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: UserPreferenceService, useValue: MockUserPreferenceService}
             ]
@@ -49,10 +50,6 @@ describe('UserCardComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it('should return user banner', () => {
-        expect(component.userBanner).toEqual('assets/default-user-background.jpg');
     });
 
     afterEach(() => {

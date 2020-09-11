@@ -7,11 +7,9 @@ import {
     CovalentModule,
     DialogModule,
     MaterialModule,
-    QuickPanelModule,
     ResourceProvider,
     SignUpModule,
     SnackBarModule,
-    UserModule,
     ViewService,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
     NAE_SNACKBAR_VERTICAL_POSITION,
@@ -130,8 +128,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         SignUpModule,
         HttpClientModule,
         MatIconModule,
-        UserModule,
-        QuickPanelModule,
         DialogModule,
         TranslateModule.forRoot({
             loader: {

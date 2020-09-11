@@ -16,7 +16,8 @@ import {
     TestViewService,
     TabView,
     TabContent,
-    LoggerService
+    LoggerService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('TabCreationDetectorComponent', () => {
@@ -32,7 +33,7 @@ describe('TabCreationDetectorComponent', () => {
                 RouterModule.forRoot([])
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -54,7 +55,7 @@ describe('TabCreationDetectorComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

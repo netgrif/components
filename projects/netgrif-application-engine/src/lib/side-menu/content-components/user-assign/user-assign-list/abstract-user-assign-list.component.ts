@@ -3,7 +3,7 @@ import {Observable, ReplaySubject} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {debounceTime} from 'rxjs/operators';
-import {UserListItem, UserListService} from '../../../../user/services/user-list.service';
+import {RolesObject, UserListItem, UserListService} from '../../../../user/services/user-list.service';
 import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 
 /**
@@ -25,6 +25,11 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
      * Search user form control from parent component.
      */
     @Input() searchUserControl: FormControl;
+
+    /**
+     * Roles for user search
+     */
+    @Input() roles: RolesObject;
 
     /**
      * Emit selected user to parent component.
@@ -66,6 +71,11 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
         this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this._userListService.reload(searchText);
         });
+        if (this.roles instanceof Array) {
+            this._userListService.rolesQuery = this.roles;
+        } else if (this.roles !== undefined && this.roles !== null) {
+            this._userListService.rolesQuery = Object.keys(this.roles);
+        }
     }
 
     ngOnDestroy(): void {

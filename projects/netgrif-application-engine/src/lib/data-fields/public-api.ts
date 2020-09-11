@@ -25,6 +25,7 @@ export * from './user-field/abstract-user-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
+export * from './text-field/models/text-area-field';
 export * from './text-field/models/text-field';
 export * from './number-field/models/number-field';
 export * from './enumeration-field/models/enumeration-field';
@@ -48,6 +49,3 @@ export * from './data-field-template/models/wrapped-boolean';
 /* Enums */
 export * from './models/template-appearance';
 export * from './models/material-appearance';
-
-/* Services */
-export * from './file-field/services/file-field.service';

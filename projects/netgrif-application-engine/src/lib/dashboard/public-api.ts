@@ -1,6 +1,3 @@
-/* MODULES */
-export * from './dashboard.module';
-
 /* INTERFACES */
 export * from './dashboard-content/dashboard-params';
 
