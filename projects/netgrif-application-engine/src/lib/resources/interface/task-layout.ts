@@ -5,7 +5,7 @@ import {DataGroupLayoutType} from './data-group-layout';
 
 export interface TaskLayout extends BasicLayout {
     offset: number;
-    type: DataGroupLayoutType;
-    fieldAlignment: FieldAlignment;
+    type?: DataGroupLayoutType;
+    fieldAlignment?: FieldAlignment;
     [k: string]: any;
 }

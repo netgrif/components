@@ -12,6 +12,7 @@ export * from './model/task-event';
 export * from './model/data-field-type';
 export * from './model/task-content-element-type';
 export * from './model/grid-data';
+export * from './model/datafield-grid-layout-element';
 
 /* MODULES */
 export * from './task-content/abstract-task-content.component';

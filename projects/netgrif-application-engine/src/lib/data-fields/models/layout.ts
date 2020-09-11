@@ -19,5 +19,5 @@ export interface Layout extends GridLayout {
     /**
      * Determines the vertical alignment of the field within its designated space
      */
-    alignment: FieldAlignment;
+    alignment?: FieldAlignment;
 }
