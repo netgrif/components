@@ -280,5 +280,8 @@
     "caseTree": {
         "newNodeDefaultName": "New Node",
         "noTaskSelected": "No case is currently selected. Click on a node in the tree to select a case."
+    },
+    "dashboard": {
+        "cases" : "cases"
     }
 }

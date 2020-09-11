@@ -22,7 +22,7 @@
     "exclude": [
         "src/test.ts",
         "**/*.spec.ts",
-        "../netgrif-components/schematics/**"
+        "schematics/**"
     ],
     "typedocOptions": {
         "mode": "modules",
