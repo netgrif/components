@@ -68,10 +68,16 @@ export abstract class ConfigurationService {
     private getChildren(views: Views, map: Map<string, View>, prefix: string): Map<string, View> {
         Object.keys(views).forEach(view => {
             if (!!views[view].routing.path) {
+                prefix = prefix.charAt(prefix.length - 1) === '/' ?
+                    prefix.length > 1 ? prefix.substring(0, prefix.length - 2) : '' :
+                    prefix;
+                const viewPath = views[view].routing.path.charAt(0) === '/' ?
+                    views[view].routing.path.length > 1 ? views[view].routing.path.substring(1) : '' :
+                        views[view].routing.path;
                 map.set(
                     views[view].routing.match ?
-                        prefix + '/' + views[view].routing.path + '/**' :
-                        prefix + '/' + views[view].routing.path,
+                        prefix + '/' + viewPath + '/**' :
+                        prefix + '/' + viewPath,
                     views[view]);
             }
             if (views[view].children) {

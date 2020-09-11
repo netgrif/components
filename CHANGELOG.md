@@ -1,3 +1,14 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10813/tab/release-report-all-issues"></a>
+## 4.1.2 - Purple Mercury (10.9.2020)
+### Bug fixes
+ * [NAE-984](https://netgrif.atlassian.net/browse/NAE-984) - Destroy subscription on changedFields
+ 
+### Improvements
+ None
+ 
+### Features
+ None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10807/tab/release-report-all-issues"></a>
 ## 4.1.1 - Navy Brass (20.8.2020)
 ### Bug fixes
