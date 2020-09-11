@@ -40,4 +40,8 @@ export abstract class AbstractFieldComponentResolverComponent {
     getTaskId(): string {
         return this.taskContentService.task.stringId;
     }
+
+    isField(): boolean {
+        return this.gridElement.type !== TaskElementType.BLANK && this.gridElement.type !== TaskElementType.DATA_GROUP_TITLE;
+    }
 }
