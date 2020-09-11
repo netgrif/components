@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SideMenuImportNetComponentModule} from './side-menu-import-net-component.module';
@@ -13,6 +13,7 @@ import {
     PetriNetResourceService,
     ErrorSnackBarComponent,
     SuccessSnackBarComponent,
+    SnackBarModule
 } from '@netgrif/application-engine';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatIconModule} from '@angular/material/icon';
@@ -30,6 +31,7 @@ describe('ImportNetComponent', () => {
                 NoopAnimationsModule,
                 TranslateLibModule,
                 MatIconModule,
+                SnackBarModule
             ],
             providers: [{
                     provide: NAE_SIDE_MENU_CONTROL,
@@ -37,10 +39,6 @@ describe('ImportNetComponent', () => {
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource}
-            ],
-            declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
             ],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -63,21 +61,7 @@ describe('ImportNetComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should test functions', () => {
-        component.onProcessFileChosen();
-        component.retryFile({
-            data: new File([], 'name'),  stringId: '', downloading: false,
-            inProgress: false, progress: 0, completed: true,
-        });
-        component.cancelFile({
-            data: new File([], 'name'), stringId: '', downloading: false,
-            inProgress: false, progress: 0, completed: true, sub: new Subject().subscribe()
-        });
-        component.close();
-        expect(sideMenuCloseSpy).toHaveBeenCalled();
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

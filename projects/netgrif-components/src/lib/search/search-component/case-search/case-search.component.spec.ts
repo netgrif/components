@@ -16,6 +16,7 @@ import {
     CategoryFactory,
     CaseViewService,
     TestCaseViewFactory,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {SearchComponentModule} from '../../search.module';
 
@@ -41,7 +42,7 @@ describe('CaseSearchComponent', () => {
                     useFactory: TestCaseViewFactory,
                     deps: [ConfigCaseViewServiceFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
             ]
@@ -57,5 +58,9 @@ describe('CaseSearchComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

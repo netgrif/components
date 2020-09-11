@@ -9,6 +9,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilterRepository', () => {
     let service: FilterRepository;
+    let loggerService: LoggerService;
     let logSpy: jasmine.Spy;
 
     beforeEach(() => {
@@ -17,8 +18,9 @@ describe('FilterRepository', () => {
             providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(FilterRepository);
+        loggerService = TestBed.inject(LoggerService);
 
-        logSpy = spyOn(TestBed.inject(LoggerService), 'warn');
+        logSpy = spyOn(loggerService, 'warn');
     });
 
     it('should be created', () => {
@@ -32,7 +34,7 @@ describe('FilterRepository', () => {
         expect(service.getFilter('id')).toEqual(new SimpleFilter('id', FilterType.TASK, {}));
     });
 
-    afterAll(() => {
+    afterEach(() => {
          TestBed.resetTestingModule();
     });
 });

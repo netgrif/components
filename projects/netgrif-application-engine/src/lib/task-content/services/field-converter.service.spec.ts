@@ -139,7 +139,7 @@ describe('FieldConvertorService', () => {
         expect(service.resolveType(service.toClass(dataField))).toEqual('file');
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

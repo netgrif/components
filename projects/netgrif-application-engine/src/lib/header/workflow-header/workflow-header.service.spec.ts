@@ -18,6 +18,9 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('WorkflowHeaderService', () => {
     let service: WorkflowHeaderService;
@@ -29,20 +32,17 @@ describe('WorkflowHeaderService', () => {
                 HttpClientTestingModule,
                 MatSnackBarModule,
                 MatIconModule,
-                RouterModule.forRoot([]),
-                NoopAnimationsModule
+                RouterTestingModule.withRoutes([]),
+                NoopAnimationsModule,
+                SnackBarModule
             ],
             providers: [
                 WorkflowHeaderService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-            ],
-            declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -59,7 +59,7 @@ describe('WorkflowHeaderService', () => {
         expect(service).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

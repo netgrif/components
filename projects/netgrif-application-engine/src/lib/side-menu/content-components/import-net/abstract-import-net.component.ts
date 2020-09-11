@@ -1,5 +1,4 @@
 import {AfterViewInit, OnInit} from '@angular/core';
-import {FileUploadModel} from '../files-upload/models/file-upload-model';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
@@ -7,6 +6,20 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {PetriNetMessageResource} from '../../../resources/interface/message-resource';
 import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
+import {FileUploadDataModel} from '../../../data-fields/file-field/models/file-field';
+import {Subscription} from 'rxjs';
+
+export class FileUploadModel {
+    stringId: string;
+    data: File | FileUploadDataModel;
+    inProgress: boolean;
+    progress: number;
+    completed: boolean;
+    error?: boolean;
+    uploaded?: boolean;
+    downloading: boolean;
+    sub?: Subscription;
+}
 
 interface FileList {
     [key: string]: FileUploadModel;

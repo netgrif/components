@@ -7,6 +7,8 @@ import {AuthenticationGuardService} from '../../authentication/services/guard/au
 import {ViewClassInfo} from '../../../commons/view-class-info';
 import {classify} from '../../../commons/angular-cli-devkit-core-strings';
 import {LoggerService} from '../../logger/services/logger.service';
+import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
+import {RoleGuardService} from '../../authorization/role/role-guard.service';
 
 
 /**
@@ -52,12 +54,40 @@ export class RoutingBuilderService {
         if (view.access === 'private') {
             route['canActivate'] = [AuthenticationGuardService];
         }
+        if (view.access.hasOwnProperty('role')) {
+            if (!route['canActivate']) {
+                route['canActivate'] = [AuthenticationGuardService];
+            }
+            if (!route['canActivate'].includes(AuthenticationGuardService)) {
+                route['canActivate'].push(AuthenticationGuardService);
+            }
+            route['canActivate'].push(RoleGuardService);
+        }
+        if (view.access.hasOwnProperty('group')) {
+            if (!route['canActivate']) {
+                route['canActivate'] = [AuthenticationGuardService];
+            }
+            if (!route['canActivate'].includes(AuthenticationGuardService)) {
+                route['canActivate'].push(AuthenticationGuardService);
+            }
+            route['canActivate'].push();
+        }
+        if (view.access.hasOwnProperty('authority')) {
+            if (!route['canActivate']) {
+                route['canActivate'] = [AuthenticationGuardService];
+            }
+            if (!route['canActivate'].includes(AuthenticationGuardService)) {
+                route['canActivate'].push(AuthenticationGuardService);
+            }
+            route['canActivate'].push(AuthorityGuardService);
+        }
         if (!!view.children) {
             route['children'] = [];
             Object.entries(view.children).forEach(([configPathSegment, childView]) => {
                 const childRoute = this.constructRouteObject(childView, `${configPath}/${configPathSegment}`);
                 if (childRoute !== undefined) {
-                    route['children'].push(childRoute);                }
+                    route['children'].push(childRoute);
+                }
             });
         }
         if (!!view.layout && !!view.layout.name && view.layout.name === 'tabView') {

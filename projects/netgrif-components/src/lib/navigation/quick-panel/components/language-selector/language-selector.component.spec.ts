@@ -14,7 +14,8 @@ import {
     ConfigurationService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService
+    TestConfigurationService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('LanguageSelectorComponent', () => {
@@ -25,21 +26,20 @@ describe('LanguageSelectorComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
-                RouterTestingModule,
+                RouterTestingModule.withRoutes([]),
                 MaterialModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
             ],
             declarations: [LanguageSelectorComponent, TestWrapperComponent],
-        })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
@@ -50,7 +50,7 @@ describe('LanguageSelectorComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

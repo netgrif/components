@@ -2,6 +2,7 @@ import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {UserListInjectedData} from './model/user-list-injected-data';
+import {Role} from '../../../user/models/role';
 
 /**
  * Is the main - parent component of the entire user assignment in the side menu.
@@ -40,6 +41,10 @@ export abstract class AbstractUserAssignComponent {
      */
     public get initiallySelectedUser(): UserValue | undefined {
         return this.injectedData ? this.injectedData.value : undefined;
+    }
+
+    public get roles(): Array<Role> {
+        return this.injectedData ? this.injectedData.roles : [];
     }
 
     /**

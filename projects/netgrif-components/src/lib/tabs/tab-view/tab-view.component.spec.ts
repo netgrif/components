@@ -15,7 +15,8 @@ import {
     ViewService,
     TestViewService,
     TabView,
-    TabContent
+    TabContent,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {RouterModule} from '@angular/router';
 
@@ -32,7 +33,7 @@ describe('TabViewComponent', () => {
                 RouterModule.forRoot([])
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -55,7 +56,7 @@ describe('TabViewComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

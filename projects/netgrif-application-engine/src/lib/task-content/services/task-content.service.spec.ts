@@ -26,7 +26,7 @@ describe('TaskPanelContentService', () => {
         expect(service).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

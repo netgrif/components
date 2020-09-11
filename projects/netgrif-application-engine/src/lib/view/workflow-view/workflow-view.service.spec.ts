@@ -11,8 +11,10 @@ describe('WorkflowsViewService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule,
-                NoopAnimationsModule],
+            imports: [
+                HttpClientTestingModule,
+                NoopAnimationsModule
+            ],
             providers: [
                 WorkflowViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -25,7 +27,7 @@ describe('WorkflowsViewService', () => {
         expect(service).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DataGroup} from '../../resources/interface/data-groups';
-import {Observable, Subject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -20,14 +20,14 @@ import {FieldConverterService} from './field-converter.service';
  */
 @Injectable()
 export abstract class TaskContentService {
-    $shouldCreate: Subject<DataGroup[]>;
+    $shouldCreate: ReplaySubject<DataGroup[]>;
     protected _task: Task;
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
                           protected _translate: TranslateService,
                           protected _logger: LoggerService) {
-        this.$shouldCreate = new Subject<DataGroup[]>();
+        this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
         this._task = undefined;
     }
 
@@ -76,7 +76,9 @@ export abstract class TaskContentService {
         if (this._task && this._task.dataGroups) {
             this._task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
-                    field.block = blockingState;
+                    field.initialized$.subscribe(() => {
+                        field.block = blockingState;
+                    });
                 });
             });
         }

@@ -23,6 +23,7 @@ import {TaskContentService} from '../../../task-content/services/task-content.se
 import {SubjectTaskOperations} from '../../../task/models/subject-task-operations';
 import {UnlimitedTaskContentService} from '../../../task-content/services/unlimited-task-content.service';
 import {SelectedCaseService} from '../../../task/services/selected-case.service';
+import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('TreeTaskContentService', () => {
     let service: TreeTaskContentService;
@@ -48,7 +49,7 @@ describe('TreeTaskContentService', () => {
                 FinishTaskService,
                 CancelTaskService,
                 TaskEventService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 SelectedCaseService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

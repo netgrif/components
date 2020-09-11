@@ -15,6 +15,7 @@ import moment from 'moment';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
+import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,9 @@ export class FieldConverterService {
                 }
                 if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'editor') {
                     type = TextFieldView.RICHTEXTAREA;
-                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
+                    return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
+                        item.description, item.layout, item.validations, type);
+                } else  if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
                     type = TextFieldView.TEXTAREA;
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,

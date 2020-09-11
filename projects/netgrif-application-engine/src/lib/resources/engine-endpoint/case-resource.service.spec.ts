@@ -155,7 +155,7 @@ describe('CaseResourceService', () => {
         })
     );
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
