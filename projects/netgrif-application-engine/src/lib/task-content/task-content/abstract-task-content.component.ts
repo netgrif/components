@@ -49,6 +49,10 @@ export abstract class AbstractTaskContentComponent {
      * Describes the layout of the elements
      */
     gridAreas: string;
+    /**
+     * Grid area identifiers that are already in use
+     */
+    protected _existingIdentifiers: Set<string>;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
@@ -132,6 +136,7 @@ export abstract class AbstractTaskContentComponent {
             this.gridAreas = '';
             return;
         }
+        this._existingIdentifiers = new Set<string>();
 
         dataGroups = this.cloneAndFilterHidden(dataGroups);
 
@@ -201,9 +206,10 @@ export abstract class AbstractTaskContentComponent {
                 gridData.grid.push(this.newGridRow());
             }
 
+            const fieldElement = this.fieldElement(dataField);
+            gridData.gridElements.push(fieldElement);
             this.occupySpace(gridData.grid, dataField.layout.y, dataField.layout.x,
-                dataField.layout.cols, dataField.stringId, dataField.layout.rows);
-            gridData.gridElements.push(this.fieldElement(dataField));
+                dataField.layout.cols, fieldElement.gridAreaId, dataField.layout.rows);
         });
 
         this.collapseGridEmptySpace(gridData.grid, firstGroupRow);
@@ -319,9 +325,10 @@ export abstract class AbstractTaskContentComponent {
 
         let xPosition = 0;
         dataGroup.fields.forEach((dataField, dataFieldCount) => {
-            gridData.gridElements.push(this.fieldElement(dataField));
+            const fieldElement = this.fieldElement(dataField);
+            gridData.gridElements.push(fieldElement);
             if (dataGroup.stretch) {
-                gridData.grid.push(this.newGridRow(dataField.stringId));
+                gridData.grid.push(this.newGridRow(fieldElement.gridAreaId));
                 return; // continue
             }
             // else
@@ -337,7 +344,7 @@ export abstract class AbstractTaskContentComponent {
                     xPosition = Math.floor((rowWidth - fieldsInLastRow * fieldWidth) / 2);
                 }
             }
-            this.occupySpace(gridData.grid, gridData.grid.length - 1, xPosition, fieldWidth, dataField.stringId);
+            this.occupySpace(gridData.grid, gridData.grid.length - 1, xPosition, fieldWidth, fieldElement.gridAreaId);
 
             xPosition += fieldWidth;
             if (xPosition > maxXPosition) {
@@ -360,7 +367,9 @@ export abstract class AbstractTaskContentComponent {
      * @returns an object that represents a title element of the provided data group. The provided counter is incremented by one.
      */
     protected groupTitleElement(dataGroup: DataGroup, titleCounter: IncrementingCounter): DatafieldGridLayoutElement {
-        return {title: dataGroup.title, gridAreaId: 'group' + titleCounter.next(), type: TaskElementType.DATA_GROUP_TITLE};
+        return {title: dataGroup.title,
+            gridAreaId: this.assureUniqueness('group' + titleCounter.next()),
+            type: TaskElementType.DATA_GROUP_TITLE};
     }
 
     /**
@@ -368,7 +377,7 @@ export abstract class AbstractTaskContentComponent {
      * @returns an object that represents the provided data field in the layout
      */
     protected fieldElement(field: DataField<unknown>): DatafieldGridLayoutElement {
-        return {gridAreaId: field.stringId, type: this._fieldConverter.resolveType(field), item: field};
+        return {gridAreaId: this.assureUniqueness(field.stringId), type: this._fieldConverter.resolveType(field), item: field};
     }
 
     /**
@@ -376,7 +385,26 @@ export abstract class AbstractTaskContentComponent {
      * @returns a filler element object with a unique ID. The provided counter is incremented by one.
      */
     protected fillerElement(fillerCounter: IncrementingCounter): DatafieldGridLayoutElement {
-        return {gridAreaId: 'blank' + fillerCounter.next(), type: TaskElementType.BLANK};
+        return {gridAreaId: this.assureUniqueness('blank' + fillerCounter.next()), type: TaskElementType.BLANK};
+    }
+
+    /**
+     * Assures that the provided identifier will be unique.
+     * @param identifier the base for the identifier
+     * @returns the base identifier, if it already is unique. A unique variation on the base identifier if it is already in use.
+     */
+    protected assureUniqueness(identifier: string): string {
+        if (!this._existingIdentifiers.has(identifier)) {
+            this._existingIdentifiers.add(identifier);
+            return identifier;
+        }
+        let variation;
+        const counter = new IncrementingCounter();
+        do {
+            variation = `x${counter.next()}x${identifier}`;
+        } while (this._existingIdentifiers.has(variation));
+        this._existingIdentifiers.add(variation);
+        return variation;
     }
 
     /**
