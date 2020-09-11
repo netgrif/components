@@ -18,7 +18,7 @@ export abstract class AbstractCaseListComponent implements OnInit, AfterViewInit
     public cases$: Observable<Array<Case>>;
     public loading$: Observable<boolean>;
 
-    constructor(protected _caseViewService: CaseViewService, protected _log: LoggerService) {
+    protected constructor(protected _caseViewService: CaseViewService, protected _log: LoggerService) {
         this.cases$ = this._caseViewService.cases$;
         this.loading$ = this._caseViewService.loading$;
         this.caseClick = new EventEmitter<Case>();
@@ -42,27 +42,11 @@ export abstract class AbstractCaseListComponent implements OnInit, AfterViewInit
         if (!this.viewport) {
             return;
         }
-        this._caseViewService.nextPage(this.viewport.getRenderedRange().end, this.viewport.getDataLength());
+        this._caseViewService.nextPage(this.viewport.getRenderedRange(), this.viewport.getDataLength());
     }
 
     public onCaseClick(case_: Case) {
         this.caseClick.emit(case_);
     }
-
-    // private calculateHeight(preciseHeight?: number): void {
-    //     if (!this.viewport) {
-    //         return;
-    //     }
-    //     const element = this.viewport.getElementRef().nativeElement;
-    //     if (preciseHeight !== null && preciseHeight !== undefined) {
-    //         element.style.height = preciseHeight + 'px';
-    //     } else {
-    //         const viewportHeight = window.innerHeight - element.offsetTop - this.footerSize;
-    //         if (element.style.height !== viewportHeight + 'px') {
-    //             this._log.info('Virtual scroll height change to: ' + viewportHeight);
-    //             element.style.height = viewportHeight + 'px';
-    //         }
-    //     }
-    // }
 
 }

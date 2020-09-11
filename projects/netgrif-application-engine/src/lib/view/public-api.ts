@@ -1,7 +1,9 @@
 /* INTERFACES */
 export * from './case-view/models/case-view-params';
+export * from './case-view/models/case-page-load-request-result';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
+export * from './task-view/models/task-page-load-request-result';
 export * from './tree-case-view/tree-component/model/CaseTreeNode';
 
 /* ENUMS */
@@ -18,6 +20,7 @@ export * from './task-view/tabbed-task-view';
 export * from './abstract/view-with-headers';
 export * from './abstract/sortable-view';
 export * from './abstract/sortable-view-with-allowed-nets';
+export * from './abstract/page-load-request-context';
 
 /* INJECTION TOKENS */
 export * from './task-view/models/injection-token-task-endpoint';
