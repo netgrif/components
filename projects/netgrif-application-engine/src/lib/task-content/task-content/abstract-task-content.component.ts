@@ -12,13 +12,16 @@ import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridData} from '../model/grid-data';
 import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
+import {FieldAlignment} from '../../resources/interface/field-alignment';
 
 export abstract class AbstractTaskContentComponent {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
+    readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;
 
     dataSource: Array<DatafieldGridLayoutElement>;
     loading: boolean;
     formCols = 4;
+    defaultAlignment: FieldAlignment;
 
     /**
      * The translate text that should be displayed when the task contains no data.
@@ -55,6 +58,7 @@ export abstract class AbstractTaskContentComponent {
         this.loading = true;
         this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
+                this.computeDefaultAlignment();
                 this.formCols = this.getNumberOfFormColumns();
                 this.computeLayoutData(data);
             } else {
@@ -86,6 +90,40 @@ export abstract class AbstractTaskContentComponent {
 
     public isPaperView() {
         return this._paperView.paperView;
+    }
+
+    public getItemAlignment(item: DatafieldGridLayoutElement): string {
+        if (item.alignment) {
+            return item.alignment;
+        }
+
+        const fieldAlignment = item.item && item.item.layout && item.item.layout.alignment
+            ? item.item.layout.alignment
+            : this.defaultAlignment;
+
+        let alignment;
+        switch (fieldAlignment) {
+            case FieldAlignment.TOP:
+                alignment = 'start';
+                break;
+            case FieldAlignment.CENTER:
+                alignment = 'center';
+                break;
+            case FieldAlignment.BOTTOM:
+                alignment = 'end';
+                break;
+        }
+
+        item.alignment = 'space-between ' + alignment;
+        return item.alignment;
+    }
+
+    protected computeDefaultAlignment() {
+        this.defaultAlignment = this.taskContentService.task
+        && this.taskContentService.task.layout
+        && this.taskContentService.task.layout.fieldAlignment
+            ? this.taskContentService.task.layout.fieldAlignment
+            : this.DEFAULT_FIELD_ALIGNMENT;
     }
 
     protected computeLayoutData(dataGroups: Array<DataGroup>) {

@@ -6,4 +6,5 @@ export interface DatafieldGridLayoutElement {
     gridAreaId: string;
     type: TaskContentElementType;
     item?: DataField<unknown>;
+    alignment?: string;
 }

@@ -2,8 +2,8 @@
     <div [gdAreas]="gridAreas" [gdColumns]="getGridColumns()">
         <div *ngFor="let item of dataSource"
              [gdArea]="item.gridAreaId"
-             class="border">
-            <nc-field-component-resolver [gridElement]="item"></nc-field-component-resolver>
+             class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
+            <nc-field-component-resolver [gridElement]="item" fxFlex></nc-field-component-resolver>
         </div>
     </div>
 </div>
