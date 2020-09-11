@@ -1,11 +1,11 @@
 import {
     AfterViewInit,
-    EventEmitter,
+    Output,
     Input,
     OnDestroy,
     OnInit,
-    Output,
-    Type
+    EventEmitter,
+    Type,
 } from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -30,11 +30,12 @@ import {TaskRequestStateService} from '../../task/services/task-request-state.se
 import {TaskDataService} from '../../task/services/task-data.service';
 import {AssignPolicyService} from '../../task/services/assign-policy.service';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
-import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
+import {DisableButtonFuntions} from './models/disable-functions';
+import {Task} from '../../resources/interface/task';
 
-export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
+export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit, OnDestroy {
 
     /**
      * @ignore
@@ -53,7 +54,8 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
 
     public portal: ComponentPortal<any>;
     public panelRef: MatExpansionPanel;
-    private _sub: Subscription;
+    protected _sub: Subscription;
+    protected _taskDisableButtonFuntions: DisableButtonFuntions;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -68,7 +70,8 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
                           protected _taskDataService: TaskDataService,
                           protected _assignPolicyService: AssignPolicyService,
                           protected _callChain: CallChainService,
-                          protected _taskOperations: SubjectTaskOperations) {
+                          protected _taskOperations: SubjectTaskOperations,
+                          protected _disableFunctions: DisableButtonFuntions) {
         super();
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         _taskEventService.taskEventNotifications$.subscribe(event => {
@@ -93,6 +96,16 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
         _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
         });
+        this._taskDisableButtonFuntions = {
+            finish: (t: Task) => false,
+            assign: (t: Task) => false,
+            delegate: (t: Task) => false,
+            reassign: (t: Task) => false,
+            cancel: (t: Task) => false,
+        };
+        if (_disableFunctions) {
+             Object.assign(this._taskDisableButtonFuntions, _disableFunctions);
+        }
     }
 
     ngOnInit() {
@@ -240,6 +253,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
 
     public getFinishTitle(): string {
         return this.taskPanelData.task.finishTitle ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
+    }
+
+    public canDisable(type: string): boolean {
+        return this._taskDisableButtonFuntions[type]({...this._taskContentService.task});
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {

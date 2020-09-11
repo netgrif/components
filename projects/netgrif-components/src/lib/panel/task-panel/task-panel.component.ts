@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, StaticProvider} from '@angular/core';
+import {Component, Inject, Injector, Optional, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {
     TaskContentService,
@@ -19,7 +19,9 @@ import {
     SubjectTaskOperations,
     SingleTaskContentService,
     AbstractTaskPanelComponent,
-    CallChainService
+    CallChainService,
+    DisableButtonFuntions,
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS
 } from '@netgrif/application-engine';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 
@@ -57,10 +59,11 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
                 protected _callChain: CallChainService,
-                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations) {
+                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
+                @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations);
+            _assignPolicyService, _callChain, _taskOperations, _disableFunctions);
     }
 
     protected createContentPortal(): void {
