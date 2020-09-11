@@ -7,3 +7,4 @@ export * from './workflow-panel/abstract-workflow-panel.component';
 
 /* DATA */
 export * from './task-panel-list/task-panel-data/task-panel-data';
+export * from './task-panel/models/disable-functions';
