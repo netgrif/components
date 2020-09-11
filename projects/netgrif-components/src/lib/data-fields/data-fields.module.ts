@@ -38,7 +38,6 @@ import {UserFieldComponent} from './user-field/user-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
 import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
 import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
-import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuillModule } from 'ngx-quill';
 
 @NgModule({
@@ -92,7 +91,6 @@ import { QuillModule } from 'ngx-quill';
         NgxMatMomentModule,
         TranslateLibModule,
         SideMenuContentComponentModule,
-        AngularEditorModule,
         QuillModule.forRoot(),
         FormsModule
     ],
