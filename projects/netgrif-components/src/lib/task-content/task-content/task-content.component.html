@@ -6,47 +6,55 @@
                        [rowspan]="item.layout.rows"
                        [ngSwitch]="item.type">
 
-            <nc-boolean-field *ngSwitchCase="'boolean'" class="full-width-auto" [dataField]="item.item"
+            <nc-boolean-field *ngSwitchCase="fieldTypeResource.BOOLEAN" class="full-width-auto" [dataField]="item.item"
                                [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-boolean-field>
 
-            <nc-text-field *ngSwitchCase="'text'" class="full-width-auto" [dataField]="item.item"
+            <nc-text-field *ngSwitchCase="fieldTypeResource.TEXT" class="full-width-auto" [dataField]="item.item"
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-text-field>
 
-            <nc-number-field *ngSwitchCase="'number'" class="full-width-auto" [dataField]="item.item"
+            <nc-number-field *ngSwitchCase="fieldTypeResource.NUMBER" class="full-width-auto" [dataField]="item.item"
                               [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-number-field>
 
-            <nc-enumeration-field *ngSwitchCase="'enumeration'" class="full-width-auto" [dataField]="item.item"
+            <nc-enumeration-field *ngSwitchCase="fieldTypeResource.ENUMERATION" class="full-width-auto" [dataField]="item.item"
                                    [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-enumeration-field>
 
-            <nc-multichoice-field *ngSwitchCase="'multichoice'" class="full-width-auto" [dataField]="item.item"
+            <nc-enumeration-field *ngSwitchCase="fieldTypeResource.ENUMERATION_MAP" class="full-width-auto" [dataField]="item.item"
+                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
+            </nc-enumeration-field>
+
+            <nc-multichoice-field *ngSwitchCase="fieldTypeResource.MULTICHOICE" class="full-width-auto" [dataField]="item.item"
                                    [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-multichoice-field>
 
-            <nc-date-field *ngSwitchCase="'date'" class="full-width-auto" [dataField]="item.item"
+            <nc-multichoice-field *ngSwitchCase="fieldTypeResource.MULTICHOICE_MAP" class="full-width-auto" [dataField]="item.item"
+                                   [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
+            </nc-multichoice-field>
+
+            <nc-date-field *ngSwitchCase="fieldTypeResource.DATE" class="full-width-auto" [dataField]="item.item"
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-date-field>
 
-            <nc-date-time-field *ngSwitchCase="'dateTime'" class="full-width-auto" [dataField]="item.item"
+            <nc-date-time-field *ngSwitchCase="fieldTypeResource.DATE_TIME" class="full-width-auto" [dataField]="item.item"
                                  [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-date-time-field>
 
-            <nc-file-field *ngSwitchCase="'file'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
+            <nc-file-field *ngSwitchCase="fieldTypeResource.FILE" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-file-field>
 
-            <nc-file-list-field *ngSwitchCase="'fileList'" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
+            <nc-file-list-field *ngSwitchCase="fieldTypeResource.FILE_LIST" class="full-width-auto" [dataField]="item.item" [taskId]="taskId"
                                  [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-file-list-field>
 
-            <nc-user-field *ngSwitchCase="'user'" class="full-width-auto" [dataField]="item.item"
+            <nc-user-field *ngSwitchCase="fieldTypeResource.USER" class="full-width-auto" [dataField]="item.item"
                             [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-user-field>
 
-            <nc-button-field *ngSwitchCase="'button'" class="full-width-auto" [dataField]="item.item"
+            <nc-button-field *ngSwitchCase="fieldTypeResource.BUTTON" class="full-width-auto" [dataField]="item.item"
                               [taskOffset]="isOffsetPresent() ? taskContentService.task.layout.offset : 0">
             </nc-button-field>
 

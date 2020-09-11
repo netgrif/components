@@ -120,11 +120,17 @@ export abstract class TaskContentService {
                                     newChoices.push({key: it, value: it} as EnumerationFieldValue);
                                 });
                             } else {
-                                Object.keys(updatedField.choices).forEach(choice => {
-                                    newChoices.push({key: choice, value: updatedField.choices[key]} as EnumerationFieldValue);
+                                Object.keys(updatedField.choices).forEach(choiceKey => {
+                                    newChoices.push({key: choiceKey, value: updatedField.choices[choiceKey]} as EnumerationFieldValue);
                                 });
                             }
                             (field as EnumerationField | MultichoiceField).choices = newChoices;
+                        } else if (key === 'options') {
+                            const newOptions = [];
+                            Object.keys(updatedField.options).forEach(optionKey => {
+                                newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
+                            });
+                            (field as EnumerationField | MultichoiceField).choices = newOptions;
                         } else if (key !== 'type') {
                             field[key] = updatedField[key];
                         }
