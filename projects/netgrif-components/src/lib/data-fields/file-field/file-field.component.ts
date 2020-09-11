@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
-    FileFieldService,
     AbstractFileFieldComponent,
     TaskResourceService,
     LoggerService,
@@ -12,7 +11,6 @@ import {
     selector: 'nc-file-field',
     templateUrl: './file-field.component.html',
     styleUrls: ['./file-field.component.scss'],
-    providers: [FileFieldService]
 })
 export class FileFieldComponent extends AbstractFileFieldComponent {
 

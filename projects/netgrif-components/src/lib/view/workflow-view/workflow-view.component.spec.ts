@@ -18,7 +18,8 @@ import {
     TestConfigurationService,
     ViewService,
     TestViewService,
-    WorkflowHeaderService
+    WorkflowHeaderService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {PanelComponentModule} from '../../panel/panel.module';
 import {HeaderComponentModule} from '../../header/header.module';
@@ -45,7 +46,7 @@ describe('WorkflowViewComponent', () => {
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -66,7 +67,7 @@ describe('WorkflowViewComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

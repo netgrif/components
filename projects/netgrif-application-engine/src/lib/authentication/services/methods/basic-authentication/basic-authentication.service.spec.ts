@@ -8,18 +8,24 @@ import {AuthenticationMethodService} from '../../authentication-method.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
 
 describe('BasicAuthenticationService', () => {
     let service: BasicAuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthenticationModule, HttpClientTestingModule,
-                NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+            imports: [
+                HttpClientTestingModule,
+                NoopAnimationsModule,
+                RouterTestingModule.withRoutes([])
+            ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                AuthenticationMethodService,
-                HttpClient,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 BasicAuthenticationService
             ]
         });
@@ -30,32 +36,35 @@ describe('BasicAuthenticationService', () => {
         expect(service).toBeTruthy();
     });
 
-    // it('should login and logout', inject([HttpClient, HttpTestingController],
-    //     fakeAsync((http: HttpClient, httpMock: HttpTestingController) => {
-    //
-    //         service.login({username: 'name', password: 'pass'}).subscribe(res => {
-    //             expect(res.id).toEqual('id');
-    //         });
-    //
-    //         tick(100);
-    //
-    //         const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/login');
-    //         expect(reqLog.request.method).toEqual('GET');
-    //
-    //         reqLog.flush({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
-    //
-    //         service.logout().subscribe(res => {
-    //             expect(res['success']).toEqual('success');
-    //         });
-    //
-    //         const req = httpMock.expectOne('http://localhost:8080/api/auth/logout');
-    //         expect(req.request.method).toEqual('POST');
-    //
-    //         req.flush({success: 'success'});
-    //     })
-    // ));
+    it('should login', inject([HttpClient, HttpTestingController],
+        (http: HttpClient, httpMock: HttpTestingController) => {
 
-    afterAll(() => {
+            service.login({username: 'name', password: 'pass'}).subscribe(res => {
+                expect(res.id).toEqual('id');
+            });
+
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/login');
+            expect(reqLog.request.method).toEqual('GET');
+
+            reqLog.flush({email: 'mail', id: 'id', name: 'name', surname: 'surname'});
+        }
+    ));
+
+    it('should logout', inject([HttpClient, HttpTestingController],
+       (http: HttpClient, httpMock: HttpTestingController) => {
+
+            service.logout().subscribe(res => {
+                expect(res['success']).toEqual('success');
+            });
+
+            const req = httpMock.expectOne('http://localhost:8080/api/auth/logout');
+            expect(req.request.method).toEqual('POST');
+
+            req.flush({success: 'success'});
+        }
+    ));
+
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

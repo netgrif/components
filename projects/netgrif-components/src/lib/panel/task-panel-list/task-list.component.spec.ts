@@ -23,7 +23,8 @@ import {
     AuthenticationMethodService,
     AuthenticationService,
     MockAuthenticationService,
-    MockUserResourceService
+    MockUserResourceService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {RouterTestingModule} from '@angular/router/testing';
 import {PanelComponentModule} from '../panel.module';
@@ -48,7 +49,7 @@ describe('TaskListComponent', () => {
             declarations: [TestWrapperComponent],
             providers: [
                 ArrayTaskViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {
@@ -78,7 +79,7 @@ describe('TaskListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

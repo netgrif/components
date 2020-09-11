@@ -1,7 +1,3 @@
-/* MODULES */
-export * from './user.module';
-export * from './profile/profile.module';
-
 /* MODELS */
 export * from './models/public-api';
 

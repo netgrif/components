@@ -199,7 +199,7 @@ describe('UserResourceService', () => {
         })
     );
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

@@ -2,13 +2,13 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NavigationRailComponent} from './navigation-rail.component';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule, MaterialModule} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('NavigationRailComponent', () => {
     let component: NavigationRailComponent;
@@ -19,7 +19,7 @@ describe('NavigationRailComponent', () => {
             declarations: [NavigationRailComponent],
             imports: [
                 CommonModule,
-                RouterModule,
+                RouterTestingModule.withRoutes([]),
                 MaterialModule,
                 FlexModule,
                 FlexLayoutModule,
@@ -43,23 +43,7 @@ describe('NavigationRailComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should open, close and toggle', () => {
-        let count = 0;
-        component.expandChange.subscribe(res  => {
-            if (count % 2 === 0) {
-                expect(res).toEqual(true);
-            } else {
-                expect(res).toEqual(false);
-            }
-            count++;
-        });
-
-        component.open();
-        component.close();
-        component.toggle();
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
