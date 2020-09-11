@@ -11,7 +11,13 @@
     <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-enumeration-field>
 
+    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
+    </nc-enumeration-field>
+
     <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
+    </nc-multichoice-field>
+
+    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-multichoice-field>
 
     <nc-date-field *ngSwitchCase="fieldTypeEnum.DATE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
