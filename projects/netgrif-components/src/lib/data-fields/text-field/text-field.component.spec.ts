@@ -27,8 +27,7 @@ describe('TextFieldComponent', () => {
                 TestWrapperComponent
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-        })
-            .compileComponents();
+        }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
@@ -38,7 +37,7 @@ describe('TextFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
@@ -54,5 +53,5 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, [{validationRule: 'email', validationMessage: 'custom message'}]);
+    }, undefined, undefined, undefined, []);
 }

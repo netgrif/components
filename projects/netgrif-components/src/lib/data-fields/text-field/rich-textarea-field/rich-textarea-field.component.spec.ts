@@ -17,7 +17,8 @@ import {
     TestConfigurationService,
     TextField,
     CovalentModule,
-    WrappedBoolean
+    WrappedBoolean,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('RichTextareaFieldComponent', () => {
@@ -35,7 +36,7 @@ describe('RichTextareaFieldComponent', () => {
                 HttpClientTestingModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -53,11 +54,7 @@ describe('RichTextareaFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom message!');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
@@ -73,7 +70,7 @@ class TestWrapperComponent {
     label = new WrappedBoolean();
     dataField = new TextField('', '', 'text', {
         editable: true
-    }, undefined, undefined, undefined, [{validationRule: 'regex 5', validationMessage: 'This is custom message!'}]);
+    }, undefined, undefined, undefined, []);
     formControl = new FormControl();
 
     constructor() {

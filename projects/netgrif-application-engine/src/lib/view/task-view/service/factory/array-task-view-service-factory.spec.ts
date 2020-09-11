@@ -15,6 +15,9 @@ import {AuthenticationMethodService} from '../../../../authentication/services/a
 import {MaterialModule} from '../../../../material/material.module';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
 
 describe('ArrayTaskViewServiceFactory', () => {
     let service: ArrayTaskViewServiceFactory;
@@ -29,7 +32,8 @@ describe('ArrayTaskViewServiceFactory', () => {
             ],
             providers: [
                 ArrayTaskViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
                 TaskResourceService,
                 UserService,
                 SnackBarService,
@@ -51,5 +55,9 @@ describe('ArrayTaskViewServiceFactory', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

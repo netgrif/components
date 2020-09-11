@@ -34,8 +34,12 @@ describe('CaseViewService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule,
-                NoopAnimationsModule],
+            imports: [
+                HttpClientTestingModule,
+                MaterialModule,
+                TranslateLibModule,
+                NoopAnimationsModule
+            ],
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -118,7 +122,7 @@ describe('CaseViewService', () => {
         expect(cases[1].stringId).toEqual('mock2');
     }));
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

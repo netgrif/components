@@ -7,7 +7,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskEventService} from '../../task-content/services/task-event.service';
-import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskRequestStateService} from './task-request-state.service';
@@ -27,6 +26,7 @@ import {Task} from '../../resources/interface/task';
 import {UserService} from '../../user/services/user.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -51,7 +51,7 @@ describe('CancelTaskService', () => {
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: TaskResourceService, useClass: TestTaskResourceService},
                 {provide: UserService, useClass: TestUserService}
             ]
@@ -99,6 +99,7 @@ describe('CancelTaskService', () => {
         resourceService = TestBed.inject(TaskResourceService) as unknown as TestTaskResourceService;
         callChainService = TestBed.inject(CallChainService);
         taskEventService = TestBed.inject(TaskEventService);
+        spyOn(console, 'debug');
     });
 
     it('should be created', () => {
@@ -175,6 +176,10 @@ describe('CancelTaskService', () => {
 
             done();
         }));
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
 

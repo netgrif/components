@@ -27,6 +27,8 @@ import {ElementaryPredicate} from '../../../search/models/predicate/elementary-p
 import {Query} from '../../../search/models/query/query';
 import {Page} from '../../../resources/interface/page';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
+import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
+import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -35,8 +37,13 @@ describe('TaskViewService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule,
-                NoopAnimationsModule],
+            imports: [
+                HttpClientTestingModule,
+                MaterialModule,
+                TranslateLibModule,
+                NoopAnimationsModule,
+                SnackBarModule
+            ],
             providers: [
                 ArrayTaskViewServiceFactory,
                 {
@@ -49,12 +56,9 @@ describe('TaskViewService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
-                AuthenticationMethodService
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
             ],
             declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent,
-                WarningSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -128,7 +132,7 @@ describe('TaskViewService', () => {
         expect(tasks[1].task.stringId).toEqual('mock2');
     }));
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

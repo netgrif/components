@@ -44,7 +44,7 @@ describe('SideMenuContainerComponent', () => {
         service.close({opened: false});
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
