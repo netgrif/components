@@ -67,6 +67,11 @@ export abstract class Filter {
         TaskSearchRequestBody | CaseSearchRequestBody | Array<TaskSearchRequestBody> | Array<CaseSearchRequestBody>;
 
     /**
+     * @returns `true` if at least one of the filter bodies contains the `query` attribute. Returns `false` otherwise.
+     */
+    public abstract bodyContainsQuery(): boolean;
+
+    /**
      * Returns the necessary request params for the filter. Default implementation returns an empty object.
      * The params are added on top of the request when sending it to the backend by the respective service methods.
      * @returns an empty object `{}`

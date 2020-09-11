@@ -6,7 +6,6 @@ import {TaskEventService} from '../../../task-content/services/task-event.servic
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {Case} from '../../../resources/interface/case';
-import {TaskGetRequestBody} from '../../../resources/interface/task-get-request-body';
 import {Task} from '../../../resources/interface/task';
 import {AssignPolicyService} from '../../../task/services/assign-policy.service';
 import {AssignPolicy} from '../../../task-content/model/policy';
@@ -22,6 +21,8 @@ import {getImmediateData} from '../../../utility/get-immediate-data';
 import {filter} from 'rxjs/operators';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SelectedCaseService} from '../../../task/services/selected-case.service';
+import {Filter} from '../../../filter/models/filter';
+import {SimpleFilter} from '../../../filter/models/simple-filter';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -115,7 +116,7 @@ export class TreeTaskContentService implements OnDestroy {
     protected loadFeaturedTask(selectedCase: Case | undefined): void {
         this._selectedCaseService.selectedCase = selectedCase;
 
-        const requestBody = this.getTaskRequestBody();
+        const requestBody = this.getTaskFilter();
         if (requestBody === undefined) {
             this.clearCurrentTask();
             return;
@@ -158,17 +159,17 @@ export class TreeTaskContentService implements OnDestroy {
     }
 
     /**
-     * Creates a {@link TaskGetRequestBody} object that finds the specified Task for the currently selected Case in a Tree Case View
+     * Creates a {@link Filter} object that finds the specified Task for the currently selected Case in a Tree Case View
      * @returns a request body that finds tasks of the given case with task id that corresponds to the value in the `treeTaskTransitionId`
      * immediate data field. Returns `undefined` if the request body cannot be created.
      */
-    protected getTaskRequestBody(): TaskGetRequestBody | undefined {
+    protected getTaskFilter(): Filter | undefined {
         const transitionId = this.getTransitionId(this._selectedCaseService.selectedCase);
         if (transitionId) {
-            return {
-                case: this._selectedCaseService.selectedCase.stringId,
-                transition: transitionId
-            };
+            return SimpleFilter.fromTaskQuery({
+                case: {id: this._selectedCaseService.selectedCase.stringId},
+                transitionId
+            });
         }
         return undefined;
     }
@@ -223,7 +224,7 @@ export class TreeTaskContentService implements OnDestroy {
             return;
         }
         this._reloadedTaskUniqueIdentifier = uniqueTaskIdentifier;
-        this._taskResourceService.getTasks(this.getTaskRequestBody()).subscribe(page => {
+        this._taskResourceService.getTasks(this.getTaskFilter()).subscribe(page => {
             if (hasContent(page)) {
                 if (this._taskContentService.task && this._taskContentService.task.stringId === page.content[0].stringId) {
                     this._reloadedTaskUniqueIdentifier = undefined;
