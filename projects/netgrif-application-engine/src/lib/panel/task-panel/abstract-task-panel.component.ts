@@ -1,10 +1,18 @@
-import {AfterViewInit, EventEmitter, Input, OnInit, Output, Type} from '@angular/core';
+import {
+    AfterViewInit,
+    Output,
+    Input,
+    OnDestroy,
+    OnInit,
+    EventEmitter,
+    Type
+} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -26,7 +34,7 @@ import {SingleTaskContentService} from '../../task-content/services/single-task-
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 
-export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit {
+export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit, OnDestroy {
 
     /**
      * @ignore
@@ -45,6 +53,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
 
     public portal: ComponentPortal<any>;
     public panelRef: MatExpansionPanel;
+    private _sub: Subscription;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -93,7 +102,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
         // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         this.createContentPortal();
 
-        this._taskPanelData.changedFields.subscribe(chFields => {
+        this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
             this._taskContentService.updateFromChangedFields(chFields);
         });
 
@@ -264,4 +273,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
         return {value: '', icon: ''};
     }
 
+    ngOnDestroy(): void {
+        this._sub.unsubscribe();
+    }
 }
