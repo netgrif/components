@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {BehaviorSubject, Observable, of, ReplaySubject, Subject, timer} from 'rxjs';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../../data-fields/models/changed-fields';
@@ -6,9 +6,8 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
+import {catchError, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
-import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {Net} from '../../../process/net';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
@@ -18,6 +17,9 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
 import {UserComparatorService} from '../../../user/services/user-comparator.service';
+import {TaskEndpoint} from '../models/task-endpoint';
+import {Page} from '../../../resources/interface/page';
+import {NAE_PREFERRED_TASK_ENDPOINT} from '../models/injection-token-task-endpoint';
 
 
 @Injectable()
@@ -36,11 +38,6 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
     protected _closeTab$: ReplaySubject<void>;
 
-    /**
-     * @ignore
-     * Used to decide if the mongo endpoint should be used instead
-     */
-    private readonly _parentCaseId: string = undefined;
     private readonly _initializing: boolean = true;
     private _clear = false;
     private _reloadPage = false;
@@ -52,6 +49,7 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 protected _searchService: SearchService,
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
+                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint,
                 allowedNets: Observable<Array<Net>> = of([]),
                 initiallyOpenOneTask: Observable<boolean> = of(true),
                 closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
@@ -69,14 +67,10 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         };
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
-
-        const baseFilter = this._searchService.baseFilter;
-        if (baseFilter instanceof SimpleFilter) {
-            const keys = Object.keys(baseFilter.getRequestBody());
-            if (keys.length === 1 && keys[0] === 'case' && typeof baseFilter.getRequestBody()[keys[0]] === 'string') {
-                this._parentCaseId = baseFilter.getRequestBody()[keys[0]];
-            }
+        if (this._preferredEndpoint === undefined || this._preferredEndpoint === null) {
+            this._preferredEndpoint = TaskEndpoint.MONGO;
         }
+
         this._initializing = false;
 
         this._searchService.activeFilter$.subscribe(() => {
@@ -165,10 +159,15 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         params = this.addSortParams(params);
         params = this.addPageParams(params, page);
         this._loading$.on();
-        return timer(200).pipe(
-            mergeMap(_ => !this._searchService.additionalFiltersApplied && !!this._parentCaseId ?
-                this._taskService.getTasks({case: this._parentCaseId}, params) :
-                this._taskService.searchTask(this._searchService.activeFilter, params)),
+        let request: Observable<Page<Task>>;
+        if (this._searchService.activeFilter.bodyContainsQuery() || this._preferredEndpoint === TaskEndpoint.ELASTIC) {
+            request = timer(200).pipe(
+                switchMap( () => this._taskService.searchTask(this._searchService.activeFilter, params))
+            );
+        } else {
+            request = this._taskService.getTasks(this._searchService.activeFilter, params);
+        }
+        return request.pipe(
             catchError(err => {
                 this._log.error('Loading tasks has failed!', err);
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
