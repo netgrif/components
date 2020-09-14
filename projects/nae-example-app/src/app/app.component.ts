@@ -16,7 +16,7 @@ export class AppComponent {
 
     constructor(private _languageService: LanguageService, private _naeRouting: RoutingBuilderService,
                 public routes: Router, private translate: TranslateService) {
-        translate.setTranslation('en', en, true);
-        translate.setTranslation('sk', sk, true);
+        translate.setTranslation('en-US', en, true);
+        translate.setTranslation('sk-SK', sk, true);
     }
 }
