@@ -11,6 +11,7 @@ import {PetriNetResourceService} from '../../../../resources/engine-endpoint/pet
 import {of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {NAE_NEW_CASE_COMPONENT} from '../../../../side-menu/content-components/injection-tokens';
+import {UserService} from '../../../../user/services/user.service';
 
 @Injectable()
 export class AllNetsCaseViewServiceFactory {
@@ -22,6 +23,7 @@ export class AllNetsCaseViewServiceFactory {
                 protected _processService: ProcessService,
                 protected _log: LoggerService,
                 protected _translate: TranslateService,
+                protected _user: UserService,
                 protected _petriNetResource: PetriNetResourceService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
     }
@@ -48,6 +50,7 @@ export class AllNetsCaseViewServiceFactory {
             this._snackBarService,
             this._searchService,
             this._translate,
+            this._user,
             this._newCaseComponent
         );
     }
