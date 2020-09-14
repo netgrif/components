@@ -1,4 +1,4 @@
-import {Inject, ViewChild} from '@angular/core';
+import {Inject, OnDestroy, ViewChild} from '@angular/core';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {FilterRepository} from '../../../filter/filter.repository';
@@ -8,6 +8,7 @@ import {FilteredArray} from './model/filtered-array';
 import {FilterType} from '../../../filter/models/filter-type';
 import {FormControl} from '@angular/forms';
 import {MatSelectionList, MatSelectionListChange} from '@angular/material/list';
+import {Subscription} from 'rxjs';
 
 /**
  * Allows user to choose a {@link Filter} from the {@link FilterRepository}.
@@ -21,7 +22,7 @@ import {MatSelectionList, MatSelectionListChange} from '@angular/material/list';
  * select any filter this event will not be published.
  *
  */
-export abstract class AbstractFilterSelectorComponent {
+export abstract class AbstractFilterSelectorComponent implements OnDestroy {
 
     /**
      * @ignore
@@ -33,7 +34,11 @@ export abstract class AbstractFilterSelectorComponent {
      * Task filters bound to html
      */
     public taskFilters: FilteredArray<Filter>;
-
+    /**
+     * @ignore
+     * Task filters bound to html
+     */
+    protected subValue: Subscription;
     /**
      * @ignore
      * `FormControl` for the search input
@@ -111,7 +116,11 @@ export abstract class AbstractFilterSelectorComponent {
         this.taskFilters = new FilteredArray<Filter>(taskFilters, this._filterPredicate);
 
         this.searchFormControl = new FormControl();
-        this.searchFormControl.valueChanges.subscribe(newValue => this.filterFilters(newValue));
+        this.subValue = this.searchFormControl.valueChanges.subscribe(newValue => this.filterFilters(newValue));
+    }
+
+    ngOnDestroy(): void {
+        this.subValue.unsubscribe();
     }
 
     /**

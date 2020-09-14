@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, ViewChild} from '@angular/core';
 import {PortalWrapper} from '../models/portal-wrapper';
 import {SideMenuService} from '../services/side-menu.service';
 import {Observable} from 'rxjs';

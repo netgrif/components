@@ -1,4 +1,4 @@
-import {ElementRef, Input, OnInit, Optional, ViewChild} from '@angular/core';
+import {ElementRef, Input, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../models/category/category';
 import {BehaviorSubject, Observable, of} from 'rxjs';
@@ -21,7 +21,7 @@ import {LoggerService} from '../../logger/services/logger.service';
  * Categories must be provided externally.
  */
 
-export abstract class AbstractSearchComponent implements OnInit {
+export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
 
     /**
      * @ignore
@@ -109,6 +109,11 @@ export abstract class AbstractSearchComponent implements OnInit {
      */
     public ngOnInit(): void {
         this.selectDefaultOperators();
+    }
+
+    ngOnDestroy(): void {
+        this._inputPlaceholder$.complete();
+        this._shownInput$.complete();
     }
 
     public get shownInput$(): Observable<string> {

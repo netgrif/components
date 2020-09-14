@@ -6,7 +6,7 @@
                 <nc-case-search class="search-width"></nc-case-search>
             </div>
             <div fxLayoutAlign="end center">
-                <button mat-mini-fab color="primary" (click)="createNewCase()">
+                <button mat-mini-fab color="primary" *ngIf="hasAuthority()" (click)="createNewCase()">
                     <mat-icon class="net-upload" aria-hidden="false">add</mat-icon>
                 </button>
             </div>

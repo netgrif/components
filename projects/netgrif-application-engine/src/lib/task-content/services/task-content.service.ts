@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Task} from '../../resources/interface/task';
@@ -19,7 +19,7 @@ import {FieldConverterService} from './field-converter.service';
  * Notable example of a task content renderer is the {@link AbstractTaskContentComponent}.
  */
 @Injectable()
-export abstract class TaskContentService {
+export abstract class TaskContentService implements OnDestroy {
     $shouldCreate: ReplaySubject<DataGroup[]>;
     protected _task: Task;
 
@@ -29,6 +29,12 @@ export abstract class TaskContentService {
                           protected _logger: LoggerService) {
         this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
         this._task = undefined;
+    }
+
+    ngOnDestroy(): void {
+        if (!this.$shouldCreate.closed) {
+            this.$shouldCreate.complete();
+        }
     }
 
     /**

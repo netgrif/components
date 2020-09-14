@@ -1,4 +1,4 @@
-import {Injector, Input, OnInit} from '@angular/core';
+import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {CountCard} from '../model/count-card';
 import {CountService} from '../../../resources/abstract-endpoint/count-service';
 import {Filter} from '../../../filter/models/filter';
@@ -6,14 +6,16 @@ import {FilterType} from '../../../filter/models/filter-type';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {Subscription} from 'rxjs';
 
-export abstract class AbstractCountCard implements OnInit {
+export abstract class AbstractCountCard implements OnInit, OnDestroy {
 
     @Input() public card: CountCard;
     protected _countService: CountService;
     protected _filter: Filter;
     public loading: boolean;
     public count: number;
+    protected subCount: Subscription;
 
     constructor(protected _injector: Injector) {
         this.loading = true;
@@ -22,7 +24,7 @@ export abstract class AbstractCountCard implements OnInit {
     ngOnInit(): void {
         this.resolveFilter();
         this.resolveResourceService();
-        this._countService.count(this._filter).subscribe(result => {
+        this.subCount = this._countService.count(this._filter).subscribe(result => {
             this.count = result.count;
             this.loading = false;
         });
@@ -41,5 +43,9 @@ export abstract class AbstractCountCard implements OnInit {
 
     private resolveFilter(): void {
         this._filter = new SimpleFilter('', this.card.resourceType, this.card.filter);
+    }
+
+    ngOnDestroy(): void {
+        this.subCount.unsubscribe();
     }
 }
