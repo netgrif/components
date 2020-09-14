@@ -8,7 +8,7 @@ import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
 import {InjectedTabbedTaskViewData} from '../../view/task-view/models/injected-tabbed-task-view-data';
-import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
+import {TaskSearchCaseQuery, TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 
 /**
@@ -95,15 +95,38 @@ export class TabView implements TabViewInterface {
     }
 
     protected findIndexExistingTab(newTab: OpenedTab) {
+        if (!this.searchesForOneCaseId(newTab)) {
+            return -1;
+        }
         return this.openedTabs.findIndex(existingTab =>
-            existingTab.injectedObject &&
-            (existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter &&
-            ((existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case &&
-            newTab.injectedObject &&
-            (newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter &&
-            ((newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case &&
-            (((existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case ===
-                ((newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case));
+            this.searchesForOneCaseId(existingTab) && this.getSearchedCaseId(existingTab) === this.getSearchedCaseId(newTab));
+    }
+
+    private searchesForOneCaseId(tab: OpenedTab): boolean {
+        return this.hasCaseFilterParamSet(tab)
+            && !Array.isArray(this.getSearchedCase(tab))
+            && !!this.getSearchedCaseId(tab);
+    }
+
+    private getSearchedCaseId(tab: OpenedTab): string {
+        return (this.getSearchedCase(tab) as TaskSearchCaseQuery).id;
+    }
+
+    private getSearchedCase(tab: OpenedTab): TaskSearchCaseQuery | Array<TaskSearchCaseQuery> {
+        return ((tab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case;
+    }
+
+    private hasCaseFilterParamSet(tab: OpenedTab): boolean {
+        return this.hasBaseFilter(tab)
+            && !!(((tab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case);
+    }
+
+    private hasBaseFilter(tab: OpenedTab): boolean {
+        return this.hasInjectedObject(tab) && !!((tab.injectedObject as InjectedTabbedTaskViewData).baseFilter);
+    }
+
+    private hasInjectedObject(tab: OpenedTab): boolean {
+        return !!tab.injectedObject;
     }
 
     protected openNewTab(newTab: OpenedTab, autoswitch: boolean) {
