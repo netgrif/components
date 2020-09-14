@@ -9,7 +9,11 @@ export * from './services/unlimited-task-content.service';
 export * from './model/policy';
 export * from './model/task-event-notification';
 export * from './model/task-event';
+export * from './model/field-type-resource';
+export * from './model/task-content-element-type';
+export * from './model/grid-data';
+export * from './model/datafield-grid-layout-element';
 
 /* MODULES */
-export * from './task-content.module';
 export * from './task-content/abstract-task-content.component';
+export * from './field-component-resolver/abstract-field-component-resolver.component';

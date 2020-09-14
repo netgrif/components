@@ -3,8 +3,6 @@
  *
  * This object is used as part of a {@link Filter} object for [searchTask()]{@link TaskResourceService#searchTask}
  * method in {@link TaskResourceService}.
- *
- * Not to be confused with {@link TaskGetRequestBody}.
  */
 export interface TaskSearchRequestBody {
     /**
@@ -14,11 +12,11 @@ export interface TaskSearchRequestBody {
      */
     role?: string | Array<string>;
     /**
-     * Returned tasks must be of case with the specified case ID.
+     * Returned tasks must fulfill the query defined by the object. See {@link TaskSearchCaseQuery} for information about query generation.
      *
-     * If more than one case ID is specified, the returned tasks must be of one of them.
+     * If more than one object is specified, the returned tasks must fulfill one of the queries.
      */
-    case?: string | Array<string>;
+    case?: TaskSearchCaseQuery | Array<TaskSearchCaseQuery>;
     /**
      * Returned tasks must have the specified title (default value).
      *
@@ -49,6 +47,9 @@ export interface TaskSearchRequestBody {
      * See Elasticsearch's
      * [documentation]{@link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html}
      * for more information.
+     *
+     * Filters with this field set cannot be used with the [getTasks]{@link TaskResourceService#getTasks} method
+     * of the {@link TaskResourceService}. Doing so will result in an error.
      */
     query?: string;
     /**
@@ -57,4 +58,20 @@ export interface TaskSearchRequestBody {
      * If more than one transition ID is specified, the returned tasks must have one of them.
      */
     transitionId?: string | Array<string>;
+}
+
+/**
+ * Defines the way tasks case is queried.
+ *
+ * [id]{@link TaskSearchCaseQuery#id} takes precedence over [title]{@link TaskSearchCaseQuery#title} in case both attributes are defined.
+ */
+export interface TaskSearchCaseQuery {
+    /**
+     * Returned tasks must be of case with the specified case ID.
+     */
+    id?: string;
+    /**
+     * Returned tasks must be of case that contains the specified string in its title.
+     */
+    title?: string;
 }

@@ -14,6 +14,7 @@ import {
     MultichoiceField,
     MultichoiceFieldView,
     NumberField,
+    TextAreaField,
     TextField,
     TextFieldView,
     UserField,
@@ -61,7 +62,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
 
     // RICH TEXT FIELD
     @ViewChild('textFieldComponent') naeTextRichField: TextFieldComponent;
-    textRichField = new TextField('textRichFieldId', 'Reactive text rich field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
+    textRichField = new TextAreaField('textRichFieldId', 'Reactive text rich field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
         undefined, undefined, TextFieldView.RICHTEXTAREA );
 
     // BOOLEAN FIELD

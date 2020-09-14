@@ -13,7 +13,8 @@ import {
     ConfigurationService,
     UserService,
     TestConfigurationService,
-    LoggerService
+    LoggerService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('LogoutShortcutComponent', () => {
@@ -33,7 +34,7 @@ describe('LogoutShortcutComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: UserService, useClass: MyUserService}
             ]
@@ -52,12 +53,7 @@ describe('LogoutShortcutComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should logout', () => {
-        component.logout();
-        expect(logSpy).toHaveBeenCalledWith('User is logged out');
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

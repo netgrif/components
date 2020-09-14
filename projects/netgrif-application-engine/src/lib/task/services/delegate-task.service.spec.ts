@@ -13,7 +13,7 @@ import {TaskContentService} from '../../task-content/services/task-content.servi
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
-import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('DelegateTaskService', () => {
     let service: DelegateTaskService;
@@ -28,7 +28,7 @@ describe('DelegateTaskService', () => {
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: NullAuthenticationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
         });
         service = TestBed.inject(DelegateTaskService);

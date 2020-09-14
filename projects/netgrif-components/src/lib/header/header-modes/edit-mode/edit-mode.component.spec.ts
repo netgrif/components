@@ -4,7 +4,6 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule} from '@angular/router';
 import {
     MaterialModule,
     TranslateLibModule,
@@ -23,15 +22,13 @@ import {
     MockUserResourceService,
     TestConfigurationService,
     TestViewService,
-    HeaderColumn,
-    HeaderColumnType,
-    CaseMetaField
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('EditModeComponent', () => {
     let component: EditModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
-    let headerSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -43,12 +40,12 @@ describe('EditModeComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                RouterModule.forRoot([]),
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 CaseHeaderService,
                 ConfigCaseViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory
@@ -71,19 +68,13 @@ describe('EditModeComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
-        headerSpy = spyOn(TestBed.inject(CaseHeaderService), 'headerColumnSelected');
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call headerColumnSelected', () => {
-        component.headerColumnSelected(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
-        expect(headerSpy).toHaveBeenCalledWith(0, new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'Title', 'text'));
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

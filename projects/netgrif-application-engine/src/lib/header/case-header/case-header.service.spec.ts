@@ -20,7 +20,6 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ViewService} from '../../routing/view-service/view.service';
 import {TestViewService} from '../../utility/tests/test-view-service';
-import {RouterModule} from '@angular/router';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -30,6 +29,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {HeaderChangeType} from '../models/user-changes/header-change-type';
 import {EditChangeDescription} from '../models/user-changes/edit-change-description';
 import {ModeChangeDescription} from '../models/user-changes/mode-change-description';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -42,12 +44,13 @@ describe('CaseHeaderService', () => {
                 NoopAnimationsModule,
                 TranslateLibModule,
                 MatIconModule,
-                RouterModule.forRoot([])
+                RouterTestingModule.withRoutes([]),
+                SnackBarModule
             ],
             providers: [
                 CaseHeaderService,
                 ConfigCaseViewServiceFactory,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory
@@ -61,10 +64,6 @@ describe('CaseHeaderService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-            ],
-            declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
