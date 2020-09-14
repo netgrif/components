@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {SortableView} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {BehaviorSubject, Observable, of, timer} from 'rxjs';
@@ -10,7 +10,7 @@ import {HttpParams} from '@angular/common/http';
 
 
 @Injectable()
-export class WorkflowViewService extends SortableView {
+export class WorkflowViewService extends SortableView implements OnDestroy {
 
     private _loading$: BehaviorSubject<boolean>;
     private _workflows$: Observable<Array<Net>>;
@@ -27,6 +27,11 @@ export class WorkflowViewService extends SortableView {
             concatMap(n => this.loadNets()),
             tap(_ => this._clear = false),
         );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._loadBatch$.complete();
     }
 
     public get loading(): boolean {

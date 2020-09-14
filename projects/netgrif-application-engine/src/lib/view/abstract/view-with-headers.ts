@@ -2,9 +2,10 @@ import {Observable, ReplaySubject} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
 import {SortableView} from './sortable-view';
+import {OnDestroy} from '@angular/core';
 
 
-export abstract class ViewWithHeaders {
+export abstract class ViewWithHeaders implements OnDestroy {
     protected _selectedHeaders$: ReplaySubject<Array<HeaderColumn>>;
 
     protected constructor(private _sortableView?: SortableView) {
@@ -20,5 +21,9 @@ export abstract class ViewWithHeaders {
         if (!!this._sortableView) {
             this._sortableView.registerHeaderChange(headerComponent.headerService.headerChange$);
         }
+    }
+
+    ngOnDestroy(): void {
+        this._selectedHeaders$.complete();
     }
 }

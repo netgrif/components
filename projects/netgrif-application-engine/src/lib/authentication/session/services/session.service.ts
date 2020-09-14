@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {NullStorage} from '../null-storage';
@@ -11,7 +11,7 @@ import {LoadingEmitter} from '../../../utility/loading-emitter';
 @Injectable({
     providedIn: 'root'
 })
-export class SessionService {
+export class SessionService implements OnDestroy {
 
     public static readonly SESSION_TOKEN_STORAGE_KEY = 'naet';
     public static readonly SESSION_BEARER_HEADER_DEFAULT = 'X-Auth-Token';
@@ -33,6 +33,11 @@ export class SessionService {
         setTimeout(() => {
             this.load();
         });
+    }
+
+    ngOnDestroy(): void {
+        this._session$.complete();
+        this._verifying.complete();
     }
 
     get session$(): Observable<string> {
