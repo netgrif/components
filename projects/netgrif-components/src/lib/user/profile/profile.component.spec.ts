@@ -8,7 +8,7 @@ import {
     AuthenticationMethodService,
     ConfigurationService,
     TestConfigurationService,
-    authenticationServiceFactory
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('ProfileComponent', () => {
@@ -26,11 +26,7 @@ describe('ProfileComponent', () => {
             declarations: [ProfileComponent],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {
-                    provide: AuthenticationMethodService,
-                    useFactory: authenticationServiceFactory,
-                    deps: [ConfigurationService, HttpClientTestingModule]
-                },
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
         })
             .compileComponents();
@@ -44,5 +40,9 @@ describe('ProfileComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

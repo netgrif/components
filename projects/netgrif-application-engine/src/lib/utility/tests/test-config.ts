@@ -286,7 +286,8 @@ export class TestConfigurationService extends ConfigurationService {
                     title: 'All Cases',
                     type: 'Case',
                     access: 'public',
-                    body: []
+                    body: [],
+                    mergeOperator: 'AND'
                 },
                 'all-tasks': {
                     title: 'All Tasks',

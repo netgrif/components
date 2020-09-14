@@ -1,20 +1,23 @@
-import { TestBed } from '@angular/core/testing';
-
-import { SpinnerOverlayService } from './spinner-overlay.service';
+import {TestBed} from '@angular/core/testing';
+import {SpinnerOverlayService} from './spinner-overlay.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {OverlayModule} from '@angular/cdk/overlay';
 
 describe('SpinnerOverlayService', () => {
-  let service: SpinnerOverlayService;
+    let service: SpinnerOverlayService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-        imports: [RouterTestingModule.withRoutes([]), OverlayModule]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [RouterTestingModule.withRoutes([]), OverlayModule]
+        });
+        service = TestBed.inject(SpinnerOverlayService);
     });
-    service = TestBed.inject(SpinnerOverlayService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });

@@ -41,28 +41,7 @@ describe('RegistrationPanelComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should submit', () => {
-        component.rootFormGroup.controls['email'].setValue('mail@mail.sk');
-        component.rootFormGroup.controls['name'].setValue('name');
-        component.rootFormGroup.controls['surname'].setValue('surname');
-        component.rootFormGroup.controls['password'].setValue('passwd');
-        component.rootFormGroup.controls['confirmPassword'].setValue('passwd');
-        component.formSubmit.subscribe( event => {
-            expect(event).toEqual({
-                token: undefined,
-                email: 'mail@mail.sk',
-                name: 'name',
-                surname: 'surname',
-                password: 'passwd'
-            });
-        });
-        component.register.subscribe(event => {
-            expect(event).toEqual({error: 'Provided token undefined is not valid'});
-        });
-        component.onSubmit();
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

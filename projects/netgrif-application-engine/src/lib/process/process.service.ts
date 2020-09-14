@@ -141,6 +141,14 @@ export class ProcessService {
         return this._netUpdate.asObservable();
     }
 
+    public hasLoadNets(identifiers: Array<string>): boolean {
+        return identifiers.every(identifier => this.hasLoadNet(identifier));
+    }
+
+    public hasLoadNet(identifier: string): boolean {
+        return !!this._nets[identifier];
+    }
+
     protected loadNet(id: string): Observable<Net> {
         const returnNet = new Subject<Net>();
         this._petriNetResource.getOne(id, '^').subscribe(net => {

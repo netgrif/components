@@ -11,12 +11,12 @@ export abstract class AbstractDashboardContent implements OnInit {
     public readonly cardTypes = DashboardCardTypes;
     public gridElements: Array<CardGridElement>;
 
-    constructor(protected _log: LoggerService) {
+    protected constructor(protected _log: LoggerService) {
         this.gridElements = [];
     }
 
     ngOnInit(): void {
         const gridLayoutHelper = new GridLayoutHelper(this._log);
-        this.gridElements = gridLayoutHelper.fillBlankSpace(this.params.cards, this.params.columns);
+        this.gridElements = gridLayoutHelper.fillBlankSpace(this.params.cards, this.params.columns) as Array<CardGridElement>;
     }
 }

@@ -1,11 +1,14 @@
 /* INTERFACES */
 export * from './case-view/models/case-view-params';
+export * from './case-view/models/case-page-load-request-result';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
+export * from './task-view/models/task-page-load-request-result';
 export * from './tree-case-view/tree-component/model/CaseTreeNode';
 
 /* ENUMS */
 export * from './tree-case-view/model/tree-petriflow-identifiers';
+export * from './task-view/models/task-endpoint';
 
 /* CLASSES */
 export * from './case-view/abstract-case-view';
@@ -17,6 +20,10 @@ export * from './task-view/tabbed-task-view';
 export * from './abstract/view-with-headers';
 export * from './abstract/sortable-view';
 export * from './abstract/sortable-view-with-allowed-nets';
+export * from './abstract/page-load-request-context';
+
+/* INJECTION TOKENS */
+export * from './task-view/models/injection-token-task-endpoint';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';
@@ -42,8 +49,3 @@ export * from './tree-case-view/tree-component/abstract-tree.component';
 export * from './tree-case-view/tree-component/add-child-node/abstract-add-child-node.component';
 export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.component';
 export * from './tree-case-view/tree-task-content/abstract-tree-task-content.component';
-
-/* MODULES */
-export * from './workflow-view.module';
-export * from './case-view/case-view.module';
-export * from './tree-case-view/tree-case-view.module';

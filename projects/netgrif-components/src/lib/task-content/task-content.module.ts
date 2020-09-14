@@ -4,11 +4,13 @@ import {TaskContentComponent} from './task-content/task-content.component';
 import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
 import {FlexModule} from '@angular/flex-layout';
 import {SnackBarModule, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {FieldComponentResolverComponent} from './field-component-resolver/field-component-resolver.component';
 
 
 @NgModule({
     declarations: [
-        TaskContentComponent
+        TaskContentComponent,
+        FieldComponentResolverComponent
     ],
     imports: [
         CommonModule,

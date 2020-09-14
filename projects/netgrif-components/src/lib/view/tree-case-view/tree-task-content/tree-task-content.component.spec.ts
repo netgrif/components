@@ -9,9 +9,8 @@ import {
     TestConfigurationService,
     TreeCaseViewService,
     TranslateLibModule,
-    CaseTreeNode,
     AuthenticationMethodService,
-    NullAuthenticationService
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('TreeTaskContentComponent', () => {
@@ -24,7 +23,7 @@ describe('TreeTaskContentComponent', () => {
             providers: [
                 TreeCaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: NullAuthenticationService}
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
                 ],
             declarations: [TreeTaskContentComponent]
         }).compileComponents();
@@ -38,5 +37,9 @@ describe('TreeTaskContentComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

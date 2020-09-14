@@ -7,6 +7,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('UserService', () => {
     let service: UserService;
@@ -18,7 +19,7 @@ describe('UserService', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
             ]
@@ -50,7 +51,7 @@ describe('UserService', () => {
         expect(service.hasRoleById('ids')).toBeFalse();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

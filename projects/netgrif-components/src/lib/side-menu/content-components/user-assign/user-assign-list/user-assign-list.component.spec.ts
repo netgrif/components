@@ -61,14 +61,14 @@ describe('UserAssignListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-user-assign-list [searchUserControl]="formControl"></nc-user-assign-list>'
+    template: '<nc-user-assign-list [searchUserControl]="formControl" [roles]="injectedData.roles"></nc-user-assign-list>'
 })
 class TestWrapperComponent {
     injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;

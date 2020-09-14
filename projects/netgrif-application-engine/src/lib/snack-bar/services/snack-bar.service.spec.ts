@@ -89,7 +89,7 @@ describe('SnackBarService', () => {
         });
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

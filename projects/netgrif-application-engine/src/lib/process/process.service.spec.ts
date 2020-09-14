@@ -1,6 +1,4 @@
 import {TestBed} from '@angular/core/testing';
-
-import {HttpClient} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ProcessService} from './process.service';
 import {ConfigurationService} from '../configuration/configuration.service';
@@ -9,42 +7,52 @@ import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-re
 import {of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoggerService} from '../logger/services/logger.service';
-import {AuthenticationModule} from '../authentication/authentication.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
 
 describe('ProcessService', () => {
     let service: ProcessService;
     let logSpy: jasmine.Spy;
+    let logInfoSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                AuthenticationModule,
                 NoopAnimationsModule
             ],
             providers: [
-                HttpClient,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 ProcessService
             ]
         });
         service = TestBed.inject(ProcessService);
         logSpy = spyOn(TestBed.inject(LoggerService), 'error');
+        logInfoSpy = spyOn(TestBed.inject(LoggerService), 'info');
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
 
-    it('get petri net', () => {
-        service.getNet('true').subscribe(res => {
-            expect(res.stringId).toEqual('true');
-        });
-        service.getNet('false').subscribe(res => {
-            expect(res.stringId).toEqual('false');
-        });
+    it('should call one net', () => {
+        const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
+        service.getNet('true').subscribe();
+        expect(getOneSpy).toHaveBeenCalled();
+    });
+
+    it('should call more nets', () => {
+        const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
+        service.getNets(['true', 'false']).subscribe();
+        expect(getOneSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('get petri net errors', () => {
+        service.getNet('false').subscribe();
+        expect(logInfoSpy).toHaveBeenCalled();
 
         service.getNet('error1').subscribe();
         expect(logSpy).toHaveBeenCalled();
@@ -59,34 +67,18 @@ describe('ProcessService', () => {
         expect(logSpy).toHaveBeenCalled();
     });
 
-    it('should return array', () => {
-        service.getNets(['true', 'false']).subscribe(nets => {
-            expect(nets.length).toEqual(2);
-            expect(nets[0].stringId).toEqual('true');
-            expect(nets[1].stringId).toEqual('false');
-        });
-    });
-
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
 
 class MyPetriNetResource {
     getOne(identifier, version) {
-        if (identifier === 'true') {
-            return of({
-                stringId: 'true',
-                title: 'string',
-                identifier: 'string',
-                version: 'string',
-                initials: 'string',
-                defaultCaseName: 'string',
-                createdDate: [2020, 1, 1, 1, 1],
-                author: {email: 'mail', fullName: 'name'},
-                immediateData: [],
-            });
-        } else if (identifier === 'false' || identifier === 'error1' || identifier === 'error2' || identifier === 'error3') {
+        if (identifier === 'true' ||
+            identifier === 'false' ||
+            identifier === 'error1' ||
+            identifier === 'error2' ||
+            identifier === 'error3') {
             return of({
                 stringId: identifier,
                 title: 'string',

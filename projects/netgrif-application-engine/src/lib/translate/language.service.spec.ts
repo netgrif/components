@@ -14,6 +14,8 @@ import {ErrorSnackBarComponent} from '../snack-bar/components/error-snack-bar/er
 import {SuccessSnackBarComponent} from '../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
+import {SnackBarModule} from '../snack-bar/snack-bar.module';
 
 describe('LanguageService', () => {
     let service: LanguageService;
@@ -24,17 +26,14 @@ describe('LanguageService', () => {
                 MaterialModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                SnackBarModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
-            ],
-            declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -56,7 +55,7 @@ describe('LanguageService', () => {
         expect(localStorage.getItem('Language')).toEqual('en-US');
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

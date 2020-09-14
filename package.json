@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine-project",
-    "version": "4.2.0-alpha.2",
+    "version": "4.2.0-beta.1",
     "description": "Netgrif Application Engine Frontend project. Project includes angular library as base for NAE applications.",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -28,7 +28,6 @@
     ],
     "scripts": {
         "ng": "ng",
-        "prepare": "node scripts/prepare-release.js",
         "nae:build": "ng build netgrif-application-engine --prod && npm run nae:build-schematics",
         "nae:build-schematics": "node projects/netgrif-application-engine/src/scripts/build-schematics.js",
         "nae:lint": "ng lint netgrif-application-engine",
@@ -50,12 +49,15 @@
         "nc:sonar": "node projects/netgrif-components/src/scripts/sonar-scanner-analysis.js",
         "nc:normalize-coverage-summary": "node scripts/normalize-file-paths.js coverage/netgrif-components/coverage-summary.json",
         "nc:doc": "npm run nc:normalize-coverage-summary && compodoc -c projects/netgrif-components/.compodocrc.json",
-        "project:start": "npm run nae:local-build && npm run nc:local-build && ng serve",
+        "project:local-build": "npm run nae:local-build && npm run nc:local-build",
+        "project:full-test": "npm run nae:full-test && npm run nae:local-build && npm run nc:full-test",
+        "project:start": "npm run project:local-build && ng serve",
         "example:start": "ng serve",
         "example:build": "ng build --prod",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "postversion": "node scripts/copy-version.js"
     },
     "private": true,
     "dependencies": {

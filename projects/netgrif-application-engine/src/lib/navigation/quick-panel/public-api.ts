@@ -1,6 +1,3 @@
-/* MODULES */
-export * from './quick-panel.module';
-
 /* COMPONENTS */
 export * from './components/abstract-quick-panel.component';
 export * from './components/internal-link/abstract-internal-link.component';

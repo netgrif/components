@@ -20,7 +20,8 @@ import {
     TestConfigurationService,
     TestViewService,
     ErrorSnackBarComponent,
-    SuccessSnackBarComponent
+    SuccessSnackBarComponent,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 
 describe('HeaderComponent', () => {
@@ -38,7 +39,7 @@ describe('HeaderComponent', () => {
                 RouterModule.forRoot([])
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -69,7 +70,7 @@ describe('HeaderComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
