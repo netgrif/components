@@ -10,7 +10,9 @@ import {
     SimpleFilter,
     FilterType,
     CaseResourceService,
-    CaseViewService
+    CaseViewService,
+    AuthenticationMethodService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
@@ -41,6 +43,7 @@ describe('CaseListComponent', () => {
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 ConfigCaseViewServiceFactory,
                 {
                     provide: CaseViewService,

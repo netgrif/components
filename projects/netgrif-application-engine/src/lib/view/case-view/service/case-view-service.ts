@@ -20,6 +20,7 @@ import {Filter} from '../../../filter/models/filter';
 import {ListRange} from '@angular/cdk/collections';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
+import {UserService} from '../../../user/services/user.service';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets {
@@ -37,6 +38,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
                 protected _translate: TranslateService,
+                protected _user: UserService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
         super(allowedNets);
         this._loading$ = new LoadingWithFilterEmitter();
@@ -198,4 +200,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         this.nextPage(range, 0, requestContext);
     }
 
+    public hasAuthority(authority: Array<string> | string): boolean {
+        return this._user.hasAuthority(authority);
+    }
 }
