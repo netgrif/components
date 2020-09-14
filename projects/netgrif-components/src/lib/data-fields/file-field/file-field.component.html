@@ -6,9 +6,6 @@
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
     <div>
-        <!--        <div class="file-field-image-wrapper">-->
-        <!--            <img #imageEl src="" alt="" class="file-field-image">-->
-        <!--        </div>-->
         <mat-label *ngIf="!showLargeLayout.value">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>

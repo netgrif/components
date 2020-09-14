@@ -187,7 +187,11 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     }
 
     assign() {
-        this._assignTaskService.assign();
+        this._assignTaskService.assign(this._callChain.create((afterAction => {
+            if (afterAction) {
+                this._taskDataService.initializeTaskDataFields();
+            }
+        })));
     }
 
     delegate() {
