@@ -122,6 +122,7 @@ describe('AbtsractTaskPanelComponent', () => {
         fixture.detectChanges();
 
         assignSpy = spyOn<any>(mockAssignPolicyService, 'performAssignPolicy');
+        spyOn(console, 'info');
     }));
 
     it('should create', () => {
@@ -229,43 +230,7 @@ class TestWrapperComponent {
 class MyTaskResources {
 
     getData(stringId) {
-        return of([{
-            fields: {
-                _embedded: {
-                    localisedNumberFields: [{
-                        stringId: 'number',
-                        type: 'number',
-                        name: 'Number',
-                        description: 'Number field description',
-                        placeholder: 'Number field placeholder',
-                        behavior: {
-                            editable: true
-                        },
-                        value: 10.0,
-                        order: 0,
-                        validations: [{
-                            validationRule: 'inrange 0,inf'
-                        }, {
-                            validationRule: 'inrange 0,inf',
-                            validationMessage: 'Number field validation message'
-                        }],
-                        defaultValue: 10.0,
-                        layout: {
-                            x: 1,
-                            y: 1,
-                            cols: 1,
-                            rows: 1
-                        }
-                    }]
-                }
-            },
-            alignment: 'start',
-            stretch: true,
-            layout: {
-                row: 2,
-                cols: 2
-            }
-        }]);
+        return of([]);
     }
 
     setData(stringId) {
