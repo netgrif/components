@@ -49,7 +49,6 @@ export abstract class AbstractCustomCard implements OnInit {
         this.card.query = JSON.parse(this.card.query);
         this.single = [];
         this.multi = [];
-        console.log(this.card.query["aggs"]);
         this.resourceService.getResource(this.getResourceTypeAsString(), this.card.query).subscribe(json => {
             this.convertData(json);
         });
@@ -74,6 +73,7 @@ export abstract class AbstractCustomCard implements OnInit {
                 break;
             }
             default:{
+                this.card.type = DashboardCardTypes.DEFAULT;
                 break;
             }
         }

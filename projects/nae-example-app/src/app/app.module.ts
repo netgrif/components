@@ -81,6 +81,8 @@ import {
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule,
 } from '@netgrif/components';
+import {ExamplePortalCardComponent} from "./doc/dashboard-example/piechart-card/example-portal-card.component";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -117,7 +119,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
-        TreeViewExampleComponent
+        TreeViewExampleComponent,
+        ExamplePortalCardComponent
     ],
     imports: [
         BrowserModule,
@@ -165,6 +168,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ToolbarComponentModule,
         TreeCaseViewComponentModule,
         WorkflowViewComponentModule,
+        NgxChartsModule,
     ],
     entryComponents: [
         ContentComponent,
@@ -194,7 +198,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
-        TreeViewExampleComponent
+        TreeViewExampleComponent,
+        ExamplePortalCardComponent
     ],
     providers: [{
         provide: ConfigurationService,

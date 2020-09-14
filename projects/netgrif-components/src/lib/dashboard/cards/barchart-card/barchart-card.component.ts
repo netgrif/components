@@ -1,5 +1,4 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {single} from "../data";
 import {AbstractCustomCard} from '@netgrif/application-engine';
 import {AbstractCustomCardResourceService} from "@netgrif/application-engine";
 import {TranslateService} from "@ngx-translate/core";

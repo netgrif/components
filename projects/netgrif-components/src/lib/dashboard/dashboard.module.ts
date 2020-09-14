@@ -8,11 +8,11 @@ import {PiechartCardComponent} from "./cards/piechart-card/piechart-card.compone
 import { LinechartCardComponent } from './cards/linechart-card/linechart-card.component';
 import { BarchartCardComponent } from './cards/barchart-card/barchart-card.component';
 import { LineargaugeCardComponent } from './cards/lineargauge-card/lineargauge-card.component';
-import {BarChartModule, GaugeModule, LineChartModule, NgxChartsModule, PieChartModule} from "@swimlane/ngx-charts";
-import {MatCardModule} from "@angular/material/card";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { PortalCardCompoment } from './cards/custom-card/portal-card-compoment.component';
 
 @NgModule({
-    declarations: [CountCardComponent, IframeCardComponent, DashboardContentComponent, PiechartCardComponent, LinechartCardComponent, BarchartCardComponent, LineargaugeCardComponent],
+    declarations: [CountCardComponent, IframeCardComponent, DashboardContentComponent, PiechartCardComponent, LinechartCardComponent, BarchartCardComponent, LineargaugeCardComponent, PortalCardCompoment],
     exports: [CountCardComponent, IframeCardComponent, DashboardContentComponent, PiechartCardComponent, LinechartCardComponent, BarchartCardComponent, LineargaugeCardComponent],
     imports: [
         CommonModule,

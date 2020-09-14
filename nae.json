@@ -506,6 +506,14 @@
                                 "rows": 1,
                                 "cols": 1
                             }
+                        }, {
+                            "type": "default",
+                            "layout": {
+                                "x": 2,
+                                "y": 2,
+                                "rows": 1,
+                                "cols": 1
+                            }
                         }
                     ]
                 },

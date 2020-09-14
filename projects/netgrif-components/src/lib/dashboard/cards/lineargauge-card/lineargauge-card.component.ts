@@ -25,6 +25,5 @@ export class LineargaugeCardComponent extends AbstractCustomCard implements OnIn
 
     convertData(json: any): void {
         this.value = json['aggregations'].result.value;
-        console.log(this.value);
     }
 }

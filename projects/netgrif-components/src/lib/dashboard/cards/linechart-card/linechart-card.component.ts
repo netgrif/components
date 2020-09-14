@@ -1,5 +1,4 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {multi} from "../data";
 import {AbstractCustomCard} from '@netgrif/application-engine';
 import {AbstractCustomCardResourceService} from "@netgrif/application-engine";
 import {TranslateService} from "@ngx-translate/core";
@@ -20,15 +19,6 @@ export class LinechartCardComponent extends AbstractCustomCard implements OnInit
     ngOnInit(): void {
         this.setCardType("line");
         super.ngOnInit();
-    }
-
-    onSelect(data): void {
-    }
-
-    onActivate(data): void {
-    }
-
-    onDeactivate(data): void {
     }
 
     convertData(json: any): void {
