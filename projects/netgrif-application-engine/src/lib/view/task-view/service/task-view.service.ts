@@ -6,7 +6,7 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {Net} from '../../../process/net';
@@ -82,15 +82,23 @@ export class TaskViewService extends SortableViewWithAllowedNets {
 
         const tasksMap$ = this._requestedPage$.pipe(
             mergeMap(p => this.loadPage(p)),
+            map(pageLoadResult => {
+                if (pageLoadResult.requestContext && pageLoadResult.requestContext.clearLoaded) {
+                    // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
+                    const results = [{tasks: {}, requestContext: null}, pageLoadResult];
+                    return timer(0, 1).pipe(take(2), map(i => results[i]));
+                } else {
+                    return of(pageLoadResult);
+                }
+            }),
+            concatMap(o => o),
             scan((acc, pageLoadResult) => {
                 let result: { [k: string]: TaskPanelData };
                 if (pageLoadResult.requestContext === null) {
                     return pageLoadResult.tasks;
                 }
 
-                if (pageLoadResult.requestContext.clearLoaded) {
-                    result = {...pageLoadResult.tasks};
-                } else if (pageLoadResult.requestContext.reloadCurrentTaskPage) {
+                if (pageLoadResult.requestContext.reloadCurrentTaskPage) {
                     Object.keys(acc).forEach(taskId => {
                         if (!pageLoadResult.tasks[taskId]) {
                             delete acc[taskId];
