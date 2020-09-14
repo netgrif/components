@@ -55,6 +55,12 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     public portal: ComponentPortal<any>;
     public panelRef: MatExpansionPanel;
     protected _sub: Subscription;
+    protected _subTaskEvent: Subscription;
+    protected _subTaskData: Subscription;
+    protected _subOperationOpen: Subscription;
+    protected _subOperationClose: Subscription;
+    protected _subOperationReload: Subscription;
+    protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFuntions: DisableButtonFuntions;
 
     protected constructor(protected _taskContentService: TaskContentService,
@@ -74,10 +80,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
                           protected _disableFunctions: DisableButtonFuntions) {
         super();
         this.taskEvent = new EventEmitter<TaskEventNotification>();
-        _taskEventService.taskEventNotifications$.subscribe(event => {
+        this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
-        _taskDataService.changedFields$.subscribe(changedFields => {
+        this._subTaskData = _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
             if (this._taskContentService.task) {
                 Object.keys(changedFields).forEach(value => {
@@ -87,13 +93,13 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
                 });
             }
         });
-        _taskOperations.open$.subscribe(() => {
+        this._subOperationOpen = _taskOperations.open$.subscribe(() => {
             this.expand();
         });
-        _taskOperations.close$.subscribe(() => {
+        this._subOperationClose = _taskOperations.close$.subscribe(() => {
             this.collapse();
         });
-        _taskOperations.reload$.subscribe(() => {
+        this._subOperationReload = _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
         });
         this._taskDisableButtonFuntions = {
@@ -119,7 +125,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
             this._taskContentService.updateFromChangedFields(chFields);
         });
 
-        this._taskViewService.panelUpdate.pipe(
+        this._subPanelUpdate = this._taskViewService.panelUpdate.pipe(
             map(a => a.find(p => p.task.stringId === this.taskPanelData.task.stringId)),
             filter(p => !!p)
         ).subscribe(value => {
@@ -296,5 +302,11 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
 
     ngOnDestroy(): void {
         this._sub.unsubscribe();
+        this._subTaskEvent.unsubscribe();
+        this._subTaskData.unsubscribe();
+        this._subOperationOpen.unsubscribe();
+        this._subOperationClose.unsubscribe();
+        this._subOperationReload.unsubscribe();
+        this._subPanelUpdate.unsubscribe();
     }
 }

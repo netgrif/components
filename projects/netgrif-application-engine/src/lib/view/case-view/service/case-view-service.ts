@@ -1,4 +1,4 @@
-import {Inject, Injectable, Optional} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
@@ -23,7 +23,7 @@ import {CasePageLoadRequestResult} from '../models/case-page-load-request-result
 import {UserService} from '../../../user/services/user.service';
 
 @Injectable()
-export class CaseViewService extends SortableViewWithAllowedNets {
+export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
 
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
@@ -69,6 +69,11 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         this._cases$ = casesMap.pipe(
             map(v => Object.values(v))
         );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._nextPage$.complete();
     }
 
     public get loading(): boolean {

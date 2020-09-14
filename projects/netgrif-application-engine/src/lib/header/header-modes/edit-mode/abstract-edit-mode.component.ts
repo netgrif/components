@@ -1,4 +1,4 @@
-import {Input, OnInit} from '@angular/core';
+import {Input, OnDestroy, OnInit} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {HeaderColumn} from '../../models/header-column';
 import {FormControl} from '@angular/forms';
@@ -6,16 +6,17 @@ import {map, startWith} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {FieldsGroup} from '../../models/fields-group';
 import {orderBy} from 'natural-orderby';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 export interface HeaderOption {
     groupTitle: string;
     fields: Array<HeaderColumn>;
 }
 
-export abstract class AbstractEditModeComponent implements OnInit {
+export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
     public formControls: Array<FormControl> = [];
     public filterOptions: Array<Observable<Array<HeaderOption>>> = [];
+    protected subHeader: Subscription;
 
     @Input() public headerService: AbstractHeaderService;
 
@@ -23,7 +24,11 @@ export abstract class AbstractEditModeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.headerService.headerColumnCount$.subscribe(newCount => this.updateHeaderCount(newCount));
+        this.subHeader = this.headerService.headerColumnCount$.subscribe(newCount => this.updateHeaderCount(newCount));
+    }
+
+    ngOnDestroy(): void {
+        this.subHeader.unsubscribe();
     }
 
     protected updateHeaderCount(newCount: number): void {

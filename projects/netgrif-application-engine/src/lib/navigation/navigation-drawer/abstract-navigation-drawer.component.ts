@@ -1,11 +1,12 @@
-import {AfterViewInit,  EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {User} from '../../user/models/user';
 import 'hammerjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
 import {LoggerService} from '../../logger/services/logger.service';
+import {Subscription} from 'rxjs';
 
-export abstract class AbstractNavigationDrawerComponent implements OnInit, AfterViewInit {
+export abstract class AbstractNavigationDrawerComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     @Input('user') public showUser: boolean;
@@ -20,6 +21,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
     public opened: boolean;
     protected _fixed: boolean;
+    protected subBreakpoint: Subscription;
 
     protected _config = {
         mode: 'over',
@@ -36,7 +38,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
     ngOnInit(): void {
         this.resolveLayout(this._fixed);
-        this.breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe( result => {
+        this.subBreakpoint = this.breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe( result => {
             this._log.info('BreakpointObserver matches width of window: ' + this.breakpoint.isMatched('(max-width: 959.99px)'));
             if (this.breakpoint.isMatched('(max-width: 959.99px)')) {
                 this.resolveLayout(false);
@@ -51,6 +53,10 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
     ngAfterViewInit(): void {
         this.openedChange = this._sideNav.openedChange;
+    }
+
+    ngOnDestroy(): void {
+        this.subBreakpoint.unsubscribe();
     }
 
     get config() {
