@@ -58,8 +58,7 @@ describe('TaskViewService', () => {
                 {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
             ],
-            declarations: [
-            ]
+            declarations: []
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
                 entryComponents: [
@@ -80,11 +79,15 @@ describe('TaskViewService', () => {
 
     it('should load tasks', done => {
         taskService.setResponse(1000, [createMockTask('task')]);
+        let c = 0;
         service.tasks$.subscribe(receivedTasks => {
             expect(receivedTasks).toBeTruthy();
             expect(Array.isArray(receivedTasks)).toBeTrue();
-            expect(receivedTasks.length).toEqual(1);
-            expect(receivedTasks[0].task.stringId).toEqual('task');
+            if (c === 1) {
+                expect(receivedTasks.length).toEqual(1);
+                expect(receivedTasks[0].task.stringId).toEqual('task');
+            }
+            c++;
             done();
         });
     });
