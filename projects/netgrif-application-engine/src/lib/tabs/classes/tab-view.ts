@@ -60,7 +60,9 @@ export class TabView implements TabViewInterface {
         // Native javascript implementation has undefined stability and it depends on it's implementation (browser)
         this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData =>
             new OpenedTab(tabData, `${this.uniqueIdCounter.next()}`));
-        this.openedTabs[0].tabSelected$.next(true);
+        if (this.openedTabs.length > 0) {
+            this.openedTabs[0].tabSelected$.next(true);
+        }
     }
 
     /**
@@ -84,12 +86,13 @@ export class TabView implements TabViewInterface {
         }
 
         const newTab = new OpenedTab(tabContent, `${this.uniqueIdCounter.next()}`);
-        newTab.tabSelected$.next(true);
         const indexExisting = this.findIndexExistingTab(newTab);
         if (indexExisting === -1 || !openExising) {
             return this.openNewTab(newTab, autoswitch);
         } else {
+            this.openedTabs[this.selectedIndex].tabSelected$.next(false);
             this.selectedIndex = indexExisting;
+            this.openedTabs[this.selectedIndex].tabSelected$.next(true);
             return this.openedTabs[indexExisting].uniqueId;
         }
     }
@@ -143,7 +146,9 @@ export class TabView implements TabViewInterface {
         this.openedTabs.splice(index, 0, newTab);
 
         if (autoswitch) {
+            this.openedTabs[this.selectedIndex].tabSelected$.next(false);
             this.selectedIndex = index;
+            this.openedTabs[this.selectedIndex].tabSelected$.next(true);
         }
         return newTab.uniqueId;
     }
@@ -156,7 +161,9 @@ export class TabView implements TabViewInterface {
      */
     public switchToTabIndex(index: number): void {
         this.checkIndexRange(index);
+        this.openedTabs[this.selectedIndex].tabSelected$.next(false);
         this.selectedIndex = index;
+        this.openedTabs[this.selectedIndex].tabSelected$.next(true);
     }
 
     /**
@@ -166,8 +173,9 @@ export class TabView implements TabViewInterface {
      * @param uniqueId - id of the tab that should be switched to
      */
     public switchToTabUniqueId(uniqueId: string): void {
+        this.openedTabs[this.selectedIndex].tabSelected$.next(false);
         this.selectedIndex = this.getTabIndex(uniqueId);
-        this.openedTabs.find(tab => tab.uniqueId === uniqueId).tabSelected$.next(true);
+        this.openedTabs[this.selectedIndex].tabSelected$.next(true);
     }
 
     /**
