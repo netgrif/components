@@ -164,7 +164,7 @@ export abstract class AbstractTaskContentComponent {
      * of this class that are then bound to HTML.
      * @param dataGroups the data groups that should be laid out
      */
-    protected computeLayoutData(dataGroups: Array<DataGroup>) {
+    public computeLayoutData(dataGroups: Array<DataGroup>) {
         if (!this.taskContentService.task) {
             this.dataSource = [];
             this.gridAreas = '';
