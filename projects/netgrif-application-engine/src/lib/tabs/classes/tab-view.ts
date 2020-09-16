@@ -62,6 +62,7 @@ export class TabView implements TabViewInterface {
         // orderBy is a stable sort
         // Native javascript implementation has undefined stability and it depends on it's implementation (browser)
         this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData => new OpenedTab(tabData, `${this.getNextId()}`));
+        this.openedTabs[0].tabSelected$.next(true);
     }
 
     /**
@@ -85,6 +86,7 @@ export class TabView implements TabViewInterface {
         }
 
         const newTab = new OpenedTab(tabContent, `${this.getNextId()}`);
+        newTab.tabSelected$.next(true);
         const indexExisting = this.findIndexExistingTab(newTab);
         if (indexExisting === -1 || !openExising) {
             return this.openNewTab(newTab, autoswitch);
@@ -138,6 +140,7 @@ export class TabView implements TabViewInterface {
      */
     public switchToTabUniqueId(uniqueId: string): void {
         this.selectedIndex = this.getTabIndex(uniqueId);
+        this.openedTabs.find(tab => tab.uniqueId === uniqueId).tabSelected$.next(true);
     }
 
     /**

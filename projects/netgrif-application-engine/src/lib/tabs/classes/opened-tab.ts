@@ -2,7 +2,7 @@ import {TabContent, TabLabel} from '../interfaces';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Type} from '@angular/core';
 import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 /**
  * Holds the information of tab opened in a tab view.
@@ -57,7 +57,7 @@ export class OpenedTab implements TabContent {
     /**
      * The stream that is injected into each tab and is used to inform that tab whenever it is selected or deselected
      */
-    public tabSelected$: Subject<boolean>;
+    public tabSelected$: BehaviorSubject<boolean>;
 
     /**
      * @param tabContent - content of the tab
@@ -65,7 +65,7 @@ export class OpenedTab implements TabContent {
      */
     constructor(tabContent: TabContent, public uniqueId: string) {
         Object.assign(this, tabContent);
-        this.tabSelected$ = new Subject<boolean>();
+        this.tabSelected$ = new BehaviorSubject<boolean>(false);
     }
 
     /**
