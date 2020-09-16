@@ -14,6 +14,7 @@ import {TestViewService} from '../../utility/tests/test-view-service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {RouterTestingModule} from '@angular/router/testing';
+import {SimpleFilter} from '../../filter/models/simple-filter';
 
 describe('TabView', () => {
     let viewService: ViewService;
@@ -90,5 +91,68 @@ describe('TabView', () => {
 
         tabs.closeTabUniqueId('0');
         expect(tabs.openedTabs.length).toEqual(1);
+    });
+
+    // NAE-990
+    it('should open existing tab', () => {
+        const tabView = new TabView(viewService, logger, []);
+        expect(tabView.openedTabs.length).toEqual(0);
+        tabView.openTab({
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            injectedObject: {
+                baseFilter: SimpleFilter.fromTaskQuery({case: {id: 'caseId'}})
+            }
+        }, true);
+        expect(tabView.openedTabs.length).toEqual(1);
+        expect(tabView.selectedIndex).toEqual(0);
+        tabView.openTab({
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            injectedObject: {
+                baseFilter: SimpleFilter.fromTaskQuery({case: {id: 'differentCaseId'}})
+            }
+        }, true);
+        expect(tabView.openedTabs.length).toEqual(2);
+        expect(tabView.selectedIndex).toEqual(1);
+        tabView.openTab({
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            injectedObject: {
+                baseFilter: SimpleFilter.fromTaskQuery({case: {id: 'caseId'}})
+            }
+        }, true);
+        expect(tabView.openedTabs.length).toEqual(2);
+        expect(tabView.selectedIndex).toEqual(0);
+    });
+
+    it('should return correct tab uniqueId', () => {
+        const tabView = new TabView(viewService, logger, []);
+        const firstTabId = tabView.openTab({
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            injectedObject: {
+                baseFilter: SimpleFilter.fromTaskQuery({case: {id: 'caseId'}})
+            }
+        }, true);
+        expect(firstTabId).toBeTruthy();
+        const secondTabId = tabView.openTab({
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            injectedObject: {
+                baseFilter: SimpleFilter.fromTaskQuery({case: {id: 'differentCaseId'}})
+            }
+        }, true);
+        expect(secondTabId).toBeTruthy();
+        expect(firstTabId === secondTabId).toBeFalse();
+        const thirdTabId = tabView.openTab({
+            canBeClosed: false,
+            tabContentComponent: TabTestComponent,
+            injectedObject: {
+                baseFilter: SimpleFilter.fromTaskQuery({case: {id: 'caseId'}})
+            }
+        }, true);
+        expect(thirdTabId).toBeTruthy();
+        expect(thirdTabId === firstTabId).toBeTrue();
     });
 });

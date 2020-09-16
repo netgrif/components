@@ -7,6 +7,7 @@ import {FormControl} from '@angular/forms';
 import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserService} from '../../user/services/user.service';
 import {debounceTime} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, OnDestroy {
 
@@ -17,7 +18,9 @@ export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, O
     public nets: ProcessList;
     public userMultiSelect: boolean;
     public searchUserControl = new FormControl();
-    private SEARCH_DEBOUNCE_TIME = 200;
+    protected SEARCH_DEBOUNCE_TIME = 200;
+    protected subValueChanges: Subscription;
+    protected subUsers: Subscription;
 
     constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
         this.users = this._service.userList;
@@ -27,13 +30,13 @@ export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, O
 
     ngOnInit(): void {
         this.nets.loadProcesses();
-        this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
+        this.subValueChanges = this.searchUserControl.valueChanges.pipe(debounceTime(this.SEARCH_DEBOUNCE_TIME)).subscribe(searchText => {
             this.users.reload(searchText);
         });
     }
 
     ngAfterViewInit(): void {
-        this.users.usersReload$.subscribe(() => {
+        this.subUsers = this.users.usersReload$.subscribe(() => {
             this.userList.deselectAll();
             this.userList.selectedOptions.clear();
             this.autoSelectRoles();
@@ -42,6 +45,8 @@ export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, O
 
     ngOnDestroy(): void {
         this._userService.reload();
+        this.subValueChanges.unsubscribe();
+        this.subUsers.unsubscribe();
     }
 
     public loadNextUserPage(): void {

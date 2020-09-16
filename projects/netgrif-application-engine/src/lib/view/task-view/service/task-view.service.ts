@@ -1,5 +1,5 @@
-import {Inject, Injectable, Optional} from '@angular/core';
-import {BehaviorSubject, Observable, of, ReplaySubject, Subject, timer} from 'rxjs';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
+import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription, timer} from 'rxjs';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
@@ -26,7 +26,7 @@ import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emi
 
 
 @Injectable()
-export class TaskViewService extends SortableViewWithAllowedNets {
+export class TaskViewService extends SortableViewWithAllowedNets implements OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFields>;
@@ -40,6 +40,8 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     // Kovy fix
     protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
     protected _closeTab$: ReplaySubject<void>;
+    protected _subInitiallyOpen: Subscription;
+    protected _subCloseTask: Subscription;
 
     private readonly _initializing: boolean = true;
 
@@ -123,13 +125,22 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             }),
             tap(v => this._panelUpdate$.next(v)));
 
-        initiallyOpenOneTask.subscribe(bool => {
+        this._subInitiallyOpen = initiallyOpenOneTask.subscribe(bool => {
             this._initiallyOpenOneTask = bool;
         });
 
-        closeTaskTabOnNoTasks.subscribe(bool => {
+        this._subCloseTask = closeTaskTabOnNoTasks.subscribe(bool => {
             this._closeTaskTabOnNoTasks = bool;
         });
+    }
+
+    ngOnDestroy(): void {
+        this._changedFields$.complete();
+        this._requestedPage$.complete();
+        this._panelUpdate$.complete();
+        this._closeTab$.complete();
+        this._subInitiallyOpen.unsubscribe();
+        this._subCloseTask.unsubscribe();
     }
 
     public get tasks$(): Observable<Array<TaskPanelData>> {

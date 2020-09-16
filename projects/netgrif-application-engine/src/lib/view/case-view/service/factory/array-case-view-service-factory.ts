@@ -8,6 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {CaseViewService} from '../case-view-service';
 import {ProcessService} from '../../../../process/process.service';
 import {NAE_NEW_CASE_COMPONENT} from '../../../../side-menu/content-components/injection-tokens';
+import {UserService} from '../../../../user/services/user.service';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link CaseViewService} dependencies.
@@ -31,6 +32,7 @@ export class ArrayCaseViewServiceFactory {
                 protected _processService: ProcessService,
                 protected _log: LoggerService,
                 protected _translate: TranslateService,
+                protected _user: UserService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
     }
 
@@ -49,6 +51,7 @@ export class ArrayCaseViewServiceFactory {
             this._snackBarService,
             this._searchService,
             this._translate,
+            this._user,
             this._newCaseComponent
         );
     }
