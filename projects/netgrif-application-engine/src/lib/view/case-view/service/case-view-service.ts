@@ -1,7 +1,7 @@
-import {Inject, Injectable, Optional} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -10,7 +10,7 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {Net} from '../../../process/net';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, filter, map, mergeMap, scan, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, take, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
@@ -20,9 +20,10 @@ import {Filter} from '../../../filter/models/filter';
 import {ListRange} from '@angular/cdk/collections';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
+import {UserService} from '../../../user/services/user.service';
 
 @Injectable()
-export class CaseViewService extends SortableViewWithAllowedNets {
+export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
 
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
@@ -37,6 +38,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
                 protected _translate: TranslateService,
+                protected _user: UserService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
         super(allowedNets);
         this._loading$ = new LoadingWithFilterEmitter();
@@ -56,17 +58,32 @@ export class CaseViewService extends SortableViewWithAllowedNets {
 
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
+            map(pageLoadResult => {
+                if (pageLoadResult.requestContext && pageLoadResult.requestContext.clearLoaded) {
+                    // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
+                    const results = [{cases: {}, requestContext: null}, pageLoadResult];
+                    return timer(0, 1).pipe(take(2), map(i => results[i]));
+                } else {
+                    return of(pageLoadResult);
+                }
+            }),
+            concatMap(o => o),
             scan((acc, pageLoadResult) => {
                 if (pageLoadResult.requestContext === null) {
                     return pageLoadResult.cases;
                 }
                 Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
-                return pageLoadResult.requestContext.clearLoaded ? {...pageLoadResult.cases} : {...acc, ...pageLoadResult.cases};
+                return {...acc, ...pageLoadResult.cases};
             }, {})
         );
         this._cases$ = casesMap.pipe(
             map(v => Object.values(v))
         );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._nextPage$.complete();
     }
 
     public get loading(): boolean {
@@ -198,4 +215,7 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         this.nextPage(range, 0, requestContext);
     }
 
+    public hasAuthority(authority: Array<string> | string): boolean {
+        return this._user.hasAuthority(authority);
+    }
 }

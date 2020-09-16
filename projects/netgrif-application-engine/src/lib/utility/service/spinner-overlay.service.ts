@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
-import {Subject} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {map, scan} from 'rxjs/operators';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {MatSpinner} from '@angular/material/progress-spinner';
@@ -8,7 +8,7 @@ import {MatSpinner} from '@angular/material/progress-spinner';
 @Injectable({
     providedIn: 'root'
 })
-export class SpinnerOverlayService {
+export class SpinnerOverlayService implements OnDestroy {
 
     private readonly _spinner: OverlayRef;
     public spin$: Subject<boolean>;
@@ -22,6 +22,10 @@ export class SpinnerOverlayService {
             map(v => v ? 1 : -1),
             scan((acc, curr) => (acc + curr) >= 0 ? (acc + curr) : 0, 0)
         ).subscribe(result => result === 1 ? this._show() : (this._spinner.hasAttached() ? this._hide() : null));
+    }
+
+    ngOnDestroy(): void {
+        this.spin$.complete();
     }
 
     private _createSpinner() {

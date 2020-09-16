@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {LogPublisher} from '../publishers/log-publisher';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {LogEntry} from '../models/log-entry';
@@ -15,7 +15,7 @@ export const PUBLISHERS = {
 @Injectable({
     providedIn: 'root'
 })
-export class LogPublisherService {
+export class LogPublisherService implements OnDestroy {
 
     // public static instance: LogPublisherService;
 
@@ -31,6 +31,10 @@ export class LogPublisherService {
             Object.keys(PUBLISHERS).filter(p => serviceConfig.log.publishers.includes(p) && PUBLISHERS[p])
                 .forEach(key => new PUBLISHERS[key](this));
         }
+    }
+
+    ngOnDestroy(): void {
+        this._log.complete();
     }
 
     get publishers(): LogPublisher[] {

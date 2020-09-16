@@ -15,6 +15,8 @@ import {FilterType} from '../../../../filter/models/filter-type';
 import {Component} from '@angular/core';
 import {AbstractCaseListComponent} from './abstract-case-list.component';
 import {LoggerService} from '../../../../logger/services/logger.service';
+import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
@@ -39,6 +41,7 @@ describe('AbstractCaseListComponent', () => {
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 ConfigCaseViewServiceFactory,
                 {
                     provide: CaseViewService,

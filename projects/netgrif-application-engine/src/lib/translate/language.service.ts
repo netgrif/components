@@ -1,21 +1,23 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import en from '../../assets/i18n/en.json';
 import sk from '../../assets/i18n/sk.json';
 import de from '../../assets/i18n/de.json';
 import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {UserPreferenceService} from '../user/services/user-preference.service';
 import {LoggerService} from '../logger/services/logger.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class LanguageService {
+export class LanguageService implements OnDestroy {
 
     private _langChange$: Subject<string>;
 
     private readonly _LANG_MATCHER = /en-US|sk-SK|de-DE/;
     private readonly _DEFAULT_LANG = 'en-US';
+    protected subPreference: Subscription;
+    protected subTranslate: Subscription;
 
     constructor(private _translate: TranslateService,
                 private _preferenceService: UserPreferenceService,
@@ -37,7 +39,7 @@ export class LanguageService {
 
         setTimeout(() => {
             if (this._preferenceService) {
-                this._preferenceService.preferencesChanged$.subscribe(() => {
+                this.subPreference = this._preferenceService.preferencesChanged$.subscribe(() => {
                     const preferredLang = this._preferenceService.getLocale();
                     if (preferredLang !== undefined && preferredLang !== this._translate.currentLang) {
                         this.setLanguage(preferredLang);
@@ -46,9 +48,16 @@ export class LanguageService {
             }
         });
 
-        _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
+        this.subTranslate = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
             this._logger.debug('Language changed to ' + event.lang);
         });
+    }
+
+    ngOnDestroy(): void {
+        this.subTranslate.unsubscribe();
+        if (this.subPreference) {
+            this.subPreference.unsubscribe();
+        }
     }
 
     setLanguage(lang: string, saveToPreferences = false) {

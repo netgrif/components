@@ -9,6 +9,8 @@ import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
 import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 
 
 describe('ConfigCaseViewServiceFactoryService', () => {
@@ -24,6 +26,7 @@ describe('ConfigCaseViewServiceFactoryService', () => {
             providers: [
                 {provide: SearchService, useFactory: () => new SearchService(SimpleFilter.empty(FilterType.CASE))},
                 ConfigCaseViewServiceFactory,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
             ]
         });

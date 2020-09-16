@@ -1,15 +1,19 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {ChipRequest} from '../models/chips/chip-request';
 import {Predicate} from '../models/predicate/predicate';
 
 @Injectable()
-export class SearchChipService {
+export class SearchChipService implements OnDestroy {
 
     private _addChipRequests$: Subject<ChipRequest>;
 
     constructor() {
         this._addChipRequests$ = new Subject<ChipRequest>();
+    }
+
+    ngOnDestroy(): void {
+        this._addChipRequests$.complete();
     }
 
     /**

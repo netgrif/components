@@ -11,6 +11,7 @@ import {PetriNetResourceService} from '../../../../resources/engine-endpoint/pet
 import {Observable} from 'rxjs';
 import {Net} from '../../../../process/net';
 import {NAE_NEW_CASE_COMPONENT} from '../../../../side-menu/content-components/injection-tokens';
+import {UserService} from '../../../../user/services/user.service';
 
 @Injectable()
 export class ObservableCaseViewServiceFactory {
@@ -22,6 +23,7 @@ export class ObservableCaseViewServiceFactory {
                 protected _processService: ProcessService,
                 protected _log: LoggerService,
                 protected _translate: TranslateService,
+                protected _user: UserService,
                 protected _petriNetResource: PetriNetResourceService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
     }
@@ -41,6 +43,7 @@ export class ObservableCaseViewServiceFactory {
             this._snackBarService,
             this._searchService,
             this._translate,
+            this._user,
             this._newCaseComponent
         );
     }
