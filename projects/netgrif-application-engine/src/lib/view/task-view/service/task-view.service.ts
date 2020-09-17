@@ -271,10 +271,6 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         }
 
         if (renderedRange.end === totalLoaded) {
-            if (requestContext === undefined) {
-                requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
-                requestContext.pagination.number += 1;
-            }
             this._requestedPage$.next(requestContext);
         }
     }
