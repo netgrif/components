@@ -103,8 +103,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     public loadPage(requestContext: PageLoadRequestContext): Observable<CasePageLoadRequestResult> {
-        if (requestContext === null
-            || requestContext.pageNumber < 0) {
+        if (requestContext === null || requestContext.pageNumber < 0) {
             return of({cases: {}, requestContext});
         }
         let params: HttpParams = new HttpParams();

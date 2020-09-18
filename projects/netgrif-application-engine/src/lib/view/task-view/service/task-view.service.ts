@@ -180,8 +180,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
-        if (requestContext === null
-            || requestContext.pageNumber < 0) {
+        if (requestContext === null || requestContext.pageNumber < 0) {
             return of({tasks: {}, requestContext});
         }
         let params: HttpParams = new HttpParams();
