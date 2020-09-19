@@ -5,6 +5,7 @@ import {FormSubmitEvent, HasForm} from '../has-form';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {MessageResource} from '../../resources/interface/message-resource';
+import {LoadingEmitter} from '../../utility/loading-emitter';
 
 export abstract class AbstractRegistrationFormComponent implements OnInit, HasForm {
 
@@ -17,6 +18,7 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
 
     private _token: string;
     private _tokenVerified: boolean;
+    public loadingToken: LoadingEmitter;
 
     constructor(formBuilder: FormBuilder, protected _signupService: SignUpService, protected _log: LoggerService) {
         this.rootFormGroup = formBuilder.group({
@@ -31,9 +33,14 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
         this.register = new EventEmitter<MessageResource>();
         this._tokenVerified = false;
+        this.loadingToken = new LoadingEmitter(true);
     }
 
     public ngOnInit(): void {
+    }
+
+    get tokenVerified(): boolean {
+        return this._tokenVerified;
     }
 
     get token(): string {
@@ -47,12 +54,18 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
             this._tokenVerified = false;
             return;
         }
+        this.loadingToken.on();
         this._signupService.verify(this._token).subscribe(message => {
             this._log.info('Token ' + this._token + ' has been successfully verified');
+            if (message.success) {
+                this.rootFormGroup.controls.email.setValue(message.success);
+            }
             this._tokenVerified = true;
+            this.loadingToken.off();
         }, (error: Error) => {
             this._log.error(error.message);
             this._tokenVerified = false;
+            this.loadingToken.off();
         });
     }
 

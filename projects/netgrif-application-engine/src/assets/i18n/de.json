@@ -198,7 +198,8 @@
             "name": "Vorname",
             "surname": "Nachname",
             "repeatPass": "Kennwort viederhollen",
-            "register": "Registrieren"
+            "register": "Registrieren",
+            "notVerified": "Token kann nicht verifiziert werden!"
         }
     },
     "headers": {
@@ -269,6 +270,17 @@
             "listTitle": "Prozesse",
             "noRoles": "Dieser Prozess enthält keine Rollen",
             "noProcessesWereFound": "Derzeit befinden sich keine Prozesse im System"
+        },
+        "user-invite": {
+            "newUser": "New User",
+            "orgs": "Organizations",
+            "selectedOrgs": "Selected Organizations",
+            "selectedRoless": "Selected Roles",
+            "mail": "Enter Email",
+            "noSelectedOrgs": "There is no organisation assigned to this user yet!",
+            "noSelectedRoles": "There is no role assigned to this user yet!",
+            "noOrgs": "There is no available groups for now!",
+            "version": "Version"
         }
     },
     "preferences": {

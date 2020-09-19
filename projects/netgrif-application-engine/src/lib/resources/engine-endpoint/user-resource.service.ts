@@ -9,6 +9,7 @@ import {User} from '../interface/user';
 import {Authority} from '../interface/authority';
 import {Preferences} from '../../user/models/preferences';
 import {Page} from '../interface/page';
+import {GroupsInterface} from '../interface/group';
 
 @Injectable({
     providedIn: 'root'
@@ -155,6 +156,18 @@ export class UserResourceService {
      */
     public updateUser(userId: string, body: object, params?: Params): Observable<User> {
         return this.provider.post$('user/' + userId, this.SERVER_URL, body, params)
+            .pipe(map(r => changeType(r, undefined)));
+    }
+
+    /**
+     * get all groups
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/group/all
+     */
+    public getAllGroups(params?: Params): Observable<GroupsInterface> {
+        return this.provider.get$('group/all', this.SERVER_URL, params)
             .pipe(map(r => changeType(r, undefined)));
     }
 

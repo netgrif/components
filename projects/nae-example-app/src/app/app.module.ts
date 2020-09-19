@@ -79,6 +79,7 @@ import {
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule,
 } from '@netgrif/components';
+import { UserInviteComponent } from './doc/user-invite/user-invite.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -115,7 +116,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
-        TreeViewExampleComponent
+        TreeViewExampleComponent,
+        UserInviteComponent
     ],
     imports: [
         BrowserModule,
@@ -164,6 +166,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
     entryComponents: [
         ContentComponent,
+        UserInviteComponent,
         TabbedCaseViewComponent,
         TabbedTaskViewComponent,
         AuthenticationComponent,

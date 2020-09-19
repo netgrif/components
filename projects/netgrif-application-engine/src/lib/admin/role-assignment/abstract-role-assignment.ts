@@ -2,7 +2,7 @@ import {AfterViewInit, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {UserListItem, UserListService} from '../../user/services/user-list.service';
-import {ProcessList, ProcessRole, ProcessVersion} from './services/ProcessList';
+import {ProcessList, ExtendedProcessRole, ProcessVersion} from './services/ProcessList';
 import {FormControl} from '@angular/forms';
 import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserService} from '../../user/services/user.service';
@@ -65,7 +65,7 @@ export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, O
         this.nets.selectRoles(intersection);
     }
 
-    public update(role: ProcessRole): void {
+    public update(role: ExtendedProcessRole): void {
         this.nets.updateSelectedRoles(role);
         const selected = this.userList.selectedOptions.selected.map(option => (option.value as UserListItem));
         this.users.updateRoles(selected, this.nets.selectedRoles).subscribe(_ => {

@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="24px">
+<div fxLayout="column" fxLayoutGap="24px" *ngIf="tokenVerified && (loadingToken | async) === false">
     <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">email</mat-icon>
@@ -55,9 +55,18 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center">
             <button fxFlexOffset="8px" fxFlexOffset.xs="0" mat-raised-button class="register-button"
-                    fxFlex="35" fxFlex.xs="70" color="primary">
+                    fxFlex.xs="70" color="primary">
                 {{ 'forms.register.register' | translate }}
             </button>
         </div>
     </form>
+</div>
+
+<div *ngIf="!tokenVerified && (loadingToken | async) === false" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+        <mat-icon color="accent">unpublished</mat-icon>
+        <span class="font-size-20">{{ 'forms.register.notVerified' | translate}}</span>
+</div>
+
+<div *ngIf="loadingToken | async">
+    <mat-progress-spinner></mat-progress-spinner>
 </div>

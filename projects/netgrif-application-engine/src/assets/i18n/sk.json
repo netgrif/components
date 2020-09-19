@@ -198,7 +198,8 @@
             "name": "Meno",
             "surname": "Priezvisko",
             "repeatPass": "Zopakujte heslo",
-            "register": "Registrovať"
+            "register": "Registrovať",
+            "notVerified": "Nie je možné verifikovať token!"
         }
     },
     "headers": {
@@ -269,6 +270,17 @@
             "listTitle": "Procesy",
             "noRoles": "Tento proces neobsahuje žiadne roly",
             "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
+        },
+        "user-invite": {
+            "newUser": "New User",
+            "orgs": "Organizations",
+            "selectedOrgs": "Selected Organizations",
+            "selectedRoless": "Selected Roles",
+            "mail": "Enter Email",
+            "noSelectedOrgs": "There is no organisation assigned to this user yet!",
+            "noSelectedRoles": "There is no role assigned to this user yet!",
+            "noOrgs": "There is no available groups for now!",
+            "version": "Version"
         }
     },
     "preferences": {
