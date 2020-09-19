@@ -21,6 +21,9 @@ export abstract class AbstractTaskContentComponent {
 
     dataSource: Array<DatafieldGridLayoutElement>;
     loading: boolean;
+    /**
+     * The number of columns used by the tasks layout
+     */
     formCols = 4;
     defaultAlignment: FieldAlignment;
 
@@ -88,10 +91,16 @@ export abstract class AbstractTaskContentComponent {
         return this.taskContentService.task.stringId;
     }
 
+    /**
+     * @returns the columns configuration for the grid layout
+     */
     public getGridColumns(): string {
         return 'repeat(' + this.formCols + ', 1fr)';
     }
 
+    /**
+     * @returns the number of columns as specified by the tasks layout property, or 4 if no value is specified.
+     */
     public getNumberOfFormColumns(): number {
         if (!this.taskContentService.task
             || !this.taskContentService.task.layout
@@ -106,6 +115,11 @@ export abstract class AbstractTaskContentComponent {
         return this._paperView.paperView;
     }
 
+    /**
+     * @param item an object containing grid element information
+     * @returns the Angular flex layouts alignment property for individual data fields based on
+     * the layout configuration specified by the process
+     */
     public getItemAlignment(item: DatafieldGridLayoutElement): string {
         if (item.alignment) {
             return item.alignment;
@@ -132,6 +146,11 @@ export abstract class AbstractTaskContentComponent {
         return item.alignment;
     }
 
+    /**
+     * @returns the default alignment for the displayed task that can be overridden by fields individual property.
+     * If te task specifies no default value the [global default]{@link AbstractTaskContentComponent#DEFAULT_FIELD_ALIGNMENT}
+     * value is returned.
+     */
     protected computeDefaultAlignment() {
         this.defaultAlignment = this.taskContentService.task
         && this.taskContentService.task.layout
@@ -140,7 +159,12 @@ export abstract class AbstractTaskContentComponent {
             : this.DEFAULT_FIELD_ALIGNMENT;
     }
 
-    protected computeLayoutData(dataGroups: Array<DataGroup>) {
+    /**
+     * Computes the layout data for the tasks grid layout and sets the result to the public properties
+     * of this class that are then bound to HTML.
+     * @param dataGroups the data groups that should be laid out
+     */
+    public computeLayoutData(dataGroups: Array<DataGroup>) {
         if (!this.taskContentService.task) {
             this.dataSource = [];
             this.gridAreas = '';
@@ -190,6 +214,12 @@ export abstract class AbstractTaskContentComponent {
         this.gridAreas = this.createGridAreasString(gridData.grid);
     }
 
+    /**
+     * Creates a duplicate of the provided data group array and filters away any fields and data groups that are marked as hidden.
+     * Because of the duplication the filtering doesn't affect the original instances and they remain unchanged.
+     * @param dataGroups the data groups that should be filtered
+     * @returns the filtered duplicated data groups
+     */
     protected cloneAndFilterHidden(dataGroups: Array<DataGroup>): Array<DataGroup> {
         const result = dataGroups.map(group => {
             const g = {...group};
@@ -200,6 +230,11 @@ export abstract class AbstractTaskContentComponent {
         return result.filter(group => group.fields.length > 0);
     }
 
+    /**
+     * Computes the layout data for a single data group with grid layout. The resulting layout is saved into the input objects.
+     * @param dataGroup the data group that should be laid out into a grid
+     * @param gridData the I/O object that holds the information about the layout that was computed so far
+     */
     protected computeGridLayout(dataGroup: DataGroup, gridData: GridData) {
         const firstGroupRow = gridData.grid.length;
         dataGroup.fields.forEach(dataField => {
@@ -225,6 +260,13 @@ export abstract class AbstractTaskContentComponent {
         this.collapseGridEmptySpace(gridData.grid, firstGroupRow);
     }
 
+    /**
+     * Removes empty rows and shifts all grid elements up if they have enough space above them.
+     *
+     * The input grid is modified in place.
+     * @param grid the state of the grid that should be modified
+     * @param firstRow the index of the first row, from which the collapse should occur
+     */
     protected collapseGridEmptySpace(grid: Array<Array<string>>, firstRow: number) {
         this.removeEmptyRows(grid, firstRow);
 
@@ -258,16 +300,27 @@ export abstract class AbstractTaskContentComponent {
                     const element = grid[foundElementRowIndex][columnIndex];
                     this.occupySpace(grid, foundElementRowIndex, columnIndex, elementDimensions.width, '', elementDimensions.height, false);
                     this.occupySpace(grid, rowIndex, columnIndex, elementDimensions.width, element, elementDimensions.height, false);
+
+                    // the only rows that can be totally empty are the ones we cleared by moving the grid element up
+                    this.removeEmptyRows(grid, foundElementRowIndex, foundElementRowIndex + elementDimensions.height);
                 }
             }
         }
-
-        this.removeEmptyRows(grid, firstRow);
     }
 
-    protected removeEmptyRows(grid: Array<Array<string>>, firstRow: number) {
+    /**
+     * Removes rows from the grid that only contain empty elements (are empty). The grid is modified in place.
+     * @param grid the grid that should have it's empty rows removed
+     * @param firstRow the 0 based index of the first row that should be checked. Use 0 to start from the beginning of the grid.
+     * @param lastRow the 0 based index of the row where the checking should end. The row with this index is not checked.
+     *
+     * If no value is provided the entire grid from the `firstRow` will be checked.
+     *
+     * If a value that is smaller or equal to the `firstRow` is provided no checks will be preformed.
+     */
+    protected removeEmptyRows(grid: Array<Array<string>>, firstRow: number, lastRow = Number.POSITIVE_INFINITY) {
         let i = firstRow;
-        while (i < grid.length) {
+        while (i < grid.length && i < lastRow) {
             if (grid[i].every(element => element === '')) {
                 grid.splice(i, 1);
             } else {
@@ -315,10 +368,22 @@ export abstract class AbstractTaskContentComponent {
         return true;
     }
 
+    /**
+     * Computes the layout data for a single data group with flow layout. The resulting layout is saved into the input objects.
+     * @param dataGroup the data group that should be laid out into a grid using the flow algorithm
+     * @param gridData the I/O object that holds the information about the layout that was computed so far
+     */
     protected computeFlowLayout(dataGroup: DataGroup, gridData: GridData) {
         this.flowFields(dataGroup, gridData, 1);
     }
 
+    /**
+     * Computes the layout data for a single data group with legacy layout. The resulting layout is saved into the input objects.
+     *
+     * The legacy layout forces the number of columns to be 4 and logs a warning if this was not the case.
+     * @param dataGroup the data group that should be laid out into a grid using the legacy algorithm used in NAE versions < 4.0.0
+     * @param gridData the I/O object that holds the information about the layout that was computed so far
+     */
     protected computeLegacyLayout(dataGroup: DataGroup, gridData: GridData) {
         if (this.formCols !== 4) {
             this.formCols = 4;
@@ -329,6 +394,15 @@ export abstract class AbstractTaskContentComponent {
         this.flowFields(dataGroup, gridData, 2);
     }
 
+    /**
+     * Lays out the fields from left to right, from top to bottom. If the width is greater than 1 and the block of flowed fields doesn't fit
+     * neatly into the columns (if the width of a single field is not a divisor of column count), then the entire block of fields is
+     * left aligned. The last row of fields is aligned to the left, center or right based on the data groups property.
+     * If the last row cannot be aligned to the exact center it is offset one grid tile to the left.
+     * @param dataGroup the data group that should be laid out into a grid
+     * @param gridData the I/O object that holds the information about the layout that was computed so far
+     * @param fieldWidth the number of grid tiles, that should be occupied by each field
+     */
     protected flowFields(dataGroup: DataGroup, gridData: GridData, fieldWidth: number) {
         const fieldsPerRow = Math.floor(this.formCols / fieldWidth);
         const maxXPosition = fieldWidth * (fieldsPerRow - 1);
@@ -377,9 +451,11 @@ export abstract class AbstractTaskContentComponent {
      * @returns an object that represents a title element of the provided data group. The provided counter is incremented by one.
      */
     protected groupTitleElement(dataGroup: DataGroup, titleCounter: IncrementingCounter): DatafieldGridLayoutElement {
-        return {title: dataGroup.title,
+        return {
+            title: dataGroup.title,
             gridAreaId: this.assureUniqueness('group' + titleCounter.next()),
-            type: TaskElementType.DATA_GROUP_TITLE};
+            type: TaskElementType.DATA_GROUP_TITLE
+        };
     }
 
     /**

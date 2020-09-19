@@ -9,7 +9,8 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../task-content
  */
 export function createMockTask(stringId: string = 'stringId',
                                title: string = 'taskTitle',
-                               transitionId: string = 'transitionId'): Task {
+                               transitionId: string = 'transitionId',
+                               cols = 4): Task {
     return {
         caseId: 'string',
         transitionId,
@@ -27,7 +28,7 @@ export function createMockTask(stringId: string = 'stringId',
         layout: {
             offset: 0,
             rows: 0,
-            cols: 4
+            cols
         },
         dataGroups: [],
         _links: {}
