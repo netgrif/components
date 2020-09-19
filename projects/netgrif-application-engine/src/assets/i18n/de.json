@@ -272,15 +272,20 @@
             "noProcessesWereFound": "Derzeit befinden sich keine Prozesse im System"
         },
         "user-invite": {
-            "newUser": "New User",
-            "orgs": "Organizations",
-            "selectedOrgs": "Selected Organizations",
-            "selectedRoless": "Selected Roles",
-            "mail": "Enter Email",
-            "noSelectedOrgs": "There is no organisation assigned to this user yet!",
-            "noSelectedRoles": "There is no role assigned to this user yet!",
-            "noOrgs": "There is no available groups for now!",
-            "version": "Version"
+            "newUser": "Neuer Benutzer",
+            "orgs": "Organisationen",
+            "selectedOrgs": "Ausgewählte Organisationen",
+            "selectedRoles": "Ausgewählte Rollen",
+            "mail": "E-Mail eingeben",
+            "noSelectedOrgs": "Diesem Benutzer ist noch keine Organisation zugewiesen!",
+            "noSelectedRoles": "Diesem Benutzer ist noch keine Rolle zugewiesen!",
+            "noOrgs": "Derzeit sind keine Gruppen verfügbar!",
+            "version": "Version",
+            "emailFieldMandatory": "E-Mail-Feld ist obligatorisch",
+            "oneOrMoreOrganization": "Neuer Benutzer muss zu einer oder mehreren Gruppen gehören",
+            "inviteSent": "Einladung gesendet",
+            "inviteFailed": "Einladung fehlgeschlagen",
+            "invite-user": "BENUTZER EINLADEN"
         }
     },
     "preferences": {
