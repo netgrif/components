@@ -40,7 +40,7 @@ export interface User extends IUser {
      */
     authorities: Array<Authority>;
     /**
-     * Array [ProcessRole]{@link ProcessRole}
+     * Array [ExtendedProcessRole]{@link ProcessRole}
      */
     processRoles: Array<ProcessRole>;
     /**
@@ -59,4 +59,5 @@ export interface Group {
     members: Array<any>;
     childGroups: Array<any>;
 }
+
 

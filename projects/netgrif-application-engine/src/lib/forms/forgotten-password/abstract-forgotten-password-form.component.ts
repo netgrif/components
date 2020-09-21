@@ -7,15 +7,21 @@ export abstract class AbstractForgottenPasswordFormComponent implements OnInit, 
     public rootFormGroup: FormGroup;
 
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
+    @Output() public goBackButton: EventEmitter<void>;
 
     constructor(formBuilder: FormBuilder) {
         this.rootFormGroup = formBuilder.group({
             email: ['', Validators.email]
         });
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
+        this.goBackButton = new EventEmitter<void>();
     }
 
     public ngOnInit() {
+    }
+
+    public emitGoBack() {
+        this.goBackButton.emit();
     }
 
     public onSubmit() {

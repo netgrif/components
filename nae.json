@@ -9,7 +9,11 @@
                 "login": "auth/login",
                 "logout": "auth/logout",
                 "signup": "auth/signup",
-                "verification": "auth/verify"
+                "verification": "auth/verify",
+                "verify": "auth/token/verify",
+                "invite": "auth/invite",
+                "reset": "auth/reset",
+                "recover": "/auth/recover"
             },
             "sessionBearer": "X-Auth-Token"
         },
@@ -54,6 +58,17 @@
                 "path": "authentication"
             }
         },
+        "demo-user-invite": {
+            "component": {
+                "class": "UserInviteComponent",
+                "from": "./doc/user-invite/user-invite.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "user-invite"
+            }
+        },
         "demo-roles": {
             "component": {
                 "class": "RolesAssignComponent",
@@ -95,7 +110,7 @@
             "access": "public",
             "navigation": false,
             "routing": {
-                "path": "registration"
+                "path": "registration/:token"
             }
         },
         "demo-drawer": {

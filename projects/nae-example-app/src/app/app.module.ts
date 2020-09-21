@@ -79,6 +79,7 @@ import {
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule,
 } from '@netgrif/components';
+import { UserInviteComponent } from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from "./doc/dashboard-example/piechart-card/example-portal-card.component";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 
@@ -118,6 +119,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ButtonsNavComponent,
         RolesAssignComponent,
         TreeViewExampleComponent,
+        UserInviteComponent,
         ExamplePortalCardComponent
     ],
     imports: [
@@ -168,6 +170,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
     entryComponents: [
         ContentComponent,
+        UserInviteComponent,
         TabbedCaseViewComponent,
         TabbedTaskViewComponent,
         AuthenticationComponent,

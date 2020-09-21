@@ -58,7 +58,7 @@
         "natural-orderby": "^2.0.3",
         "rxjs": "^6.6.0",
         "zone.js": "~0.10.2",
-        "@netgrif/application-engine": "^4.1.0.alpha-17"
+        "@netgrif/application-engine": "^4.2.0-beta.1"
     },
     "publishConfig": {
         "registry": "https://nexus.netgrif.com/repository/npm-private/"

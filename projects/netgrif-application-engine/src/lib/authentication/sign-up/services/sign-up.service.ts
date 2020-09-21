@@ -14,11 +14,13 @@ import {SignUpModule} from '../sign-up.module';
 })
 export class SignUpService {
 
-    private readonly _signUpUrl: string;
-    private readonly _verifyUrl: string;
-    private readonly _inviteUrl: string;
+    protected readonly _signUpUrl: string;
+    protected readonly _verifyUrl: string;
+    protected readonly _inviteUrl: string;
+    protected readonly _resetUrl: string;
+    protected readonly _recoverUrl: string;
 
-    constructor(private _config: ConfigurationService, private _http: HttpClient, private _log: LoggerService) {
+    constructor(protected _config: ConfigurationService, protected _http: HttpClient, protected _log: LoggerService) {
         const authAddress = _config.get().providers.auth.address;
         if (!authAddress) {
             throw new Error('Authentication provider address is not set!');
@@ -26,6 +28,8 @@ export class SignUpService {
         this._signUpUrl = authAddress + _config.get().providers.auth.endpoints['signup'];
         this._verifyUrl = authAddress + _config.get().providers.auth.endpoints['verify'];
         this._inviteUrl = authAddress + _config.get().providers.auth.endpoints['invite'];
+        this._resetUrl = authAddress + _config.get().providers.auth.endpoints['reset'];
+        this._recoverUrl = authAddress + _config.get().providers.auth.endpoints['recover'];
     }
 
     public signup(newUser: UserRegistrationRequest): Observable<MessageResource> {
@@ -49,6 +53,31 @@ export class SignUpService {
             invitation.processRoles = [];
         }
         return this._http.post<MessageResource>(this._inviteUrl, invitation).pipe(
+            switchMap(this.processMessageResponse)
+        );
+    }
+
+    public resetPassword(email: string): Observable<MessageResource> {
+        if (!this._resetUrl) {
+            throw new Error('Reset URL is not set in authentication provider endpoints!');
+        }
+        return this._http.post<MessageResource>(this._resetUrl, email).pipe(
+            switchMap(this.processMessageResponse)
+        );
+    }
+
+    public recoverPassword(token, password): Observable<MessageResource> {
+        if (!this._recoverUrl) {
+            throw new Error('Recover URL is not set in authentication provider endpoints!');
+        }
+        const request = {
+            token,
+            password: btoa(password),
+            email: '',
+            name: '',
+            surname: ''
+        };
+        return this._http.post<MessageResource>(this._recoverUrl, request).pipe(
             switchMap(this.processMessageResponse)
         );
     }

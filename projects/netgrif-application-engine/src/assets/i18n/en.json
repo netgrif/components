@@ -198,7 +198,8 @@
             "name": "Name",
             "surname": "Surname",
             "repeatPass": "Repeat your password",
-            "register": "Register"
+            "register": "Register",
+            "notVerified": "It is not possible to verify token!"
         }
     },
     "headers": {
@@ -269,6 +270,22 @@
             "listTitle": "Processes",
             "noRoles": "There are no roles in the process",
             "noProcessesWereFound": "There are no processes in the system at the moment"
+        },
+        "user-invite": {
+            "newUser": "New User",
+            "orgs": "Organizations",
+            "selectedOrgs": "Selected Organizations",
+            "selectedRoles": "Selected Roles",
+            "mail": "Enter Email",
+            "noSelectedOrgs": "There is no organisation assigned to this user yet!",
+            "noSelectedRoles": "There is no role assigned to this user yet!",
+            "noOrgs": "There is no available groups for now!",
+            "version": "Version",
+            "emailFieldMandatory": "Email field is mandatory",
+            "oneOrMoreOrganization": "New user must belong to one or more groups",
+            "inviteSent": "Invite sent",
+            "inviteFailed": "Invite failed",
+            "invite-user": "INVITE USER"
         }
     },
     "preferences": {
