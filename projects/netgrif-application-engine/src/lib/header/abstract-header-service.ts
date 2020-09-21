@@ -337,6 +337,9 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     ngOnDestroy(): void {
         this._headerChange$.complete();
+        this._clearHeaderSearch$.complete();
+        this._headerColumnCount$.complete();
+        this._responsiveHeaders$.complete();
     }
 
     /**

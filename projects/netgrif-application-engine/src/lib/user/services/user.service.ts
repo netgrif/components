@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {Injectable, OnDestroy} from '@angular/core';
+import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {Role} from '../models/role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
@@ -16,11 +16,12 @@ import {SessionService} from '../../authentication/session/services/session.serv
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnDestroy {
 
     private _user: User;
     private _userChange$: ReplaySubject<User>;
     private _loginCalled: boolean;
+    private _subAuth: Subscription;
 
     constructor(private _authService: AuthenticationService,
                 private _userResource: UserResourceService,
@@ -31,7 +32,7 @@ export class UserService {
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
         setTimeout(() => {
-            this._authService.authenticated$.subscribe(auth => {
+            this._subAuth = this._authService.authenticated$.subscribe(auth => {
                 if (auth && !this._loginCalled) {
                     this.loadUser();
                 } else if (!auth) {
@@ -48,6 +49,11 @@ export class UserService {
 
     get user$(): Observable<User> {
         return this._userChange$.asObservable();
+    }
+
+    ngOnDestroy(): void {
+        this._userChange$.complete();
+        this._subAuth.unsubscribe();
     }
 
     /**

@@ -7,7 +7,8 @@ import {Validation} from '../../models/validation';
 export enum TextFieldView {
     DEFAULT = 'default',
     TEXTAREA = 'textarea',
-    RICHTEXTAREA = 'richtextarea'
+    RICHTEXTAREA = 'richtextarea',
+    HTMLTEXTAREA = 'htmltextarea'
 }
 
 export enum TextAreaHeight {

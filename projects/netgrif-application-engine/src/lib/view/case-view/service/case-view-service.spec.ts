@@ -18,6 +18,8 @@ import {Case} from '../../../resources/interface/case';
 import {createMockCase} from '../../../utility/tests/utility/create-mock-case';
 import {ElementaryPredicate} from '../../../search/models/predicate/elementary-predicate';
 import {Query} from '../../../search/models/query/query';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
@@ -44,6 +46,7 @@ describe('CaseViewService', () => {
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 ConfigCaseViewServiceFactory,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: CaseViewService,
                     useFactory: localCaseViewServiceFactory,

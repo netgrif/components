@@ -1,28 +1,30 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {RichTextareaFieldComponent} from './rich-textarea-field.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {AngularResizedEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+
+import {HtmlTextareaFieldComponent} from './html-textarea-field.component';
+import {QuillModule} from 'ngx-quill';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    CovalentModule,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    CovalentModule,
-    WrappedBoolean,
-    MockAuthenticationMethodService,
-    TextAreaField
+    TextAreaField,
+    TranslateLibModule,
+    UserResourceService,
+    WrappedBoolean
 } from '@netgrif/application-engine';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FormControl} from '@angular/forms';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {AngularResizedEventModule} from 'angular-resize-event';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('RichTextareaFieldComponent', () => {
-    let component: RichTextareaFieldComponent;
+describe('HtmlTextareaFieldComponent', () => {
+    let component: HtmlTextareaFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(async(() => {
@@ -33,7 +35,8 @@ describe('RichTextareaFieldComponent', () => {
                 CovalentModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                QuillModule.forRoot()
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -41,7 +44,7 @@ describe('RichTextareaFieldComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
-            declarations: [RichTextareaFieldComponent, TestWrapperComponent],
+            declarations: [HtmlTextareaFieldComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
@@ -61,9 +64,9 @@ describe('RichTextareaFieldComponent', () => {
 @Component({
     selector: 'nc-test-wrapper',
     template: `
-        <nc-rich-textarea-field [showLargeLayout]="label"
-                                 [formControlRef]="formControl"
-                                 [textAreaField]="dataField"></nc-rich-textarea-field>`
+        <nc-html-textarea-field [showLargeLayout]="label"
+                                [formControlRef]="formControl"
+                                [textAreaField]="dataField"></nc-html-textarea-field>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
@@ -77,3 +80,4 @@ class TestWrapperComponent {
         this.dataField.registerFormControl(this.formControl);
     }
 }
+

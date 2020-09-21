@@ -1,16 +1,19 @@
-import {Input, OnInit, Type} from '@angular/core';
+import {Input, OnDestroy, OnInit, Type} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {FormControl} from '@angular/forms';
 import {debounceTime, map} from 'rxjs/operators';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
+import {Subscription} from 'rxjs';
 
-export abstract class AbstractSearchModeComponent implements OnInit {
+export abstract class AbstractSearchModeComponent implements OnInit, OnDestroy {
 
     /**
      * The time that must elapse since last keypress in search input before a search request is sent
      */
     protected SEARCH_DEBOUNCE_TIME = 350;
+    protected subHeaderColumn: Subscription;
+    protected subClearHeader: Subscription;
 
     public formControls: Array<FormControl> = [];
 
@@ -21,8 +24,13 @@ export abstract class AbstractSearchModeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.headerService.headerColumnCount$.subscribe(newCount => this.updateHeaderCount(newCount));
-        this.headerService.clearHeaderSearch$.subscribe(columnNumber => this.clearInput(columnNumber));
+        this.subHeaderColumn = this.headerService.headerColumnCount$.subscribe(newCount => this.updateHeaderCount(newCount));
+        this.subClearHeader = this.headerService.clearHeaderSearch$.subscribe(columnNumber => this.clearInput(columnNumber));
+    }
+
+    ngOnDestroy(): void {
+        this.subClearHeader.unsubscribe();
+        this.subHeaderColumn.unsubscribe();
     }
 
     /**

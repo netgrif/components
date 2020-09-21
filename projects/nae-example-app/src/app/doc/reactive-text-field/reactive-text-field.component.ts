@@ -61,9 +61,14 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
 
     // RICH TEXT FIELD
-    @ViewChild('textFieldComponent') naeTextRichField: TextFieldComponent;
+    @ViewChild('textRichFieldComponent') naeTextRichField: TextFieldComponent;
     textRichField = new TextAreaField('textRichFieldId', 'Reactive text rich field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
         undefined, undefined, TextFieldView.RICHTEXTAREA );
+
+    // HTML TEXT FIELD
+    @ViewChild('textHtmlFieldComponent') naeTextHtmlField: TextFieldComponent;
+    textHtmlField = new TextField('textHtmlFieldId', 'Reactive text html field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
+        undefined, undefined, TextFieldView.HTMLTEXTAREA );
 
     // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
@@ -137,6 +142,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         ...this.constructFormBuilderObject('text', this.textField),
         ...this.constructFormBuilderObject('textArea', this.textAreaField),
         ...this.constructFormBuilderObject('textRich', this.textRichField),
+        ...this.constructFormBuilderObject('textHtml', this.textRichField),
         ...this.constructFormBuilderObject('boolean', this.booleanField),
         ...this.constructFormBuilderObject('button', this.buttonField),
         ...this.constructFormBuilderObject('number', this.numberField),
@@ -160,6 +166,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             {stringId: this.textField.stringId, component: this.naeTextField},
             {stringId: this.textAreaField.stringId, component: this.naeTextAreaField},
             {stringId: this.textRichField.stringId, component: this.naeTextRichField},
+            {stringId: this.textHtmlField.stringId, component: this.naeTextHtmlField},
             {stringId: this.booleanField.stringId, component: this.naeBooleanField},
             {stringId: this.buttonField.stringId, component: this.naeButtonField},
             {stringId: this.numberField.stringId, component: this.naeNumberField},
@@ -187,6 +194,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
             textFieldId: this.constructChangeObject('text'),
             textAreaFieldId: this.constructChangeObject('textArea'),
             textRichFieldId: this.constructChangeObject('textRich'),
+            textHtmlFieldId: this.constructChangeObject('textHtml'),
             booleanFieldId: this.constructChangeObject('boolean'),
             buttonFieldId: this.constructChangeObject('button'),
             numberFieldId: this.constructChangeObject('number'),

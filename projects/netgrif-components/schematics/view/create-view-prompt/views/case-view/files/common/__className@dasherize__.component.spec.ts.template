@@ -4,7 +4,9 @@ import {
     CaseHeaderService,
     ConfigurationService,
     MaterialModule,
-    NAE_TAB_DATA
+    NAE_TAB_DATA,
+    AuthenticationMethodService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {
     HeaderComponentModule
@@ -27,6 +29,7 @@ describe('<%= classify(className) %>Component', () => {
                 BrowserAnimationsModule
             ],
             providers: [
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: NAE_TAB_DATA, useValue: {tabViewComponent: undefined, tabViewOrder: 1}},
                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService},
                 CaseHeaderService

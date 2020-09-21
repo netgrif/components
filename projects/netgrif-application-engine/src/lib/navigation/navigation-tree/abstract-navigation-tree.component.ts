@@ -1,9 +1,10 @@
-import {Input, OnInit} from '@angular/core';
+import {Input, OnDestroy, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {View, Views} from '../../configuration/interfaces/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
+import {Subscription} from 'rxjs';
 
 export interface NavigationNode {
     name: string;
@@ -13,11 +14,12 @@ export interface NavigationNode {
     level?: number;
 }
 
-export abstract class AbstractNavigationTreeComponent implements OnInit {
+export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestroy {
 
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
+    protected subRouter: Subscription;
 
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
@@ -31,7 +33,7 @@ export abstract class AbstractNavigationTreeComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
-            this._router.events.subscribe((event) => {
+            this.subRouter = this._router.events.subscribe((event) => {
                 if (event instanceof NavigationEnd && this.routerChange) {
                     const viewRoute = this._config.getViewByPath(this.viewPath);
                     if (viewRoute && viewRoute.children) {
@@ -45,6 +47,12 @@ export abstract class AbstractNavigationTreeComponent implements OnInit {
                 this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
             }
             this.resolveLevels(this.dataSource.data);
+        }
+    }
+
+    ngOnDestroy(): void {
+        if (this.subRouter) {
+            this.subRouter.unsubscribe();
         }
     }
 

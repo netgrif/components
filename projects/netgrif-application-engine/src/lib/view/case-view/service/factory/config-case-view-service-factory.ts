@@ -11,6 +11,7 @@ import {CaseViewParams} from '../../models/case-view-params';
 import {TranslateService} from '@ngx-translate/core';
 import {of} from 'rxjs';
 import {NAE_NEW_CASE_COMPONENT} from '../../../../side-menu/content-components/injection-tokens';
+import {UserService} from '../../../../user/services/user.service';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link CaseViewService} dependencies.
@@ -36,6 +37,7 @@ export class ConfigCaseViewServiceFactory {
                 protected _configService: ConfigurationService,
                 protected _log: LoggerService,
                 protected _translate: TranslateService,
+                protected _user: UserService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
     }
 
@@ -63,6 +65,7 @@ export class ConfigCaseViewServiceFactory {
                 this._snackBarService,
                 this._searchService,
                 this._translate,
+                this._user,
                 this._newCaseComponent);
         } else {
             throw new Error(`Can't load configuration for view with webPath: '${webViewPath}'`);
