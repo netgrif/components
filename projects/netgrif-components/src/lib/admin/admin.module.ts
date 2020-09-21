@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RoleAssignmentComponent} from './role-assignment/role-assignment.component';
 import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
-import { UserInviteComponent } from './user-invite/user-invite.component';
+import {UserInviteComponent} from './user-invite/user-invite.component';
 
 
 @NgModule({

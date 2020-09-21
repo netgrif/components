@@ -5,8 +5,13 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TranslateLibModule, TestConfigurationService, ConfigurationService,
-    SignUpService, MaterialModule} from '@netgrif/application-engine';
+import {
+    ConfigurationService,
+    MaterialModule,
+    SignUpService,
+    TestConfigurationService,
+    TranslateLibModule
+} from '@netgrif/application-engine';
 
 describe('RegistrationPanelComponent', () => {
     let component: RegistrationFormComponent;

@@ -1,5 +1,6 @@
 <div fxLayout="row" fxFlex="100" fxLayoutAlign="start center">
-    <mat-form-field *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index" fxLayout="row" fxLayoutAlign=" center" fxFlex
+    <mat-form-field *ngFor="let header of this.headerService.selectedHeaders$ | async; let i = index" fxLayout="row"
+                    fxLayoutAlign=" center" fxFlex
                     [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders"
                     [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders"
                     [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders"
@@ -10,7 +11,8 @@
                matInput
                [formControl]="formControls[i]"
                [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="renderSelection" (optionSelected)="headerColumnSelected(i, $event.option.value)" fxFlex>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="renderSelection"
+                          (optionSelected)="headerColumnSelected(i, $event.option.value)" fxFlex>
             <mat-optgroup *ngFor="let group of this.filterOptions[i] | async" [label]="group.groupTitle">
                 <mat-option *ngFor="let field of group.fields" [value]="field">
                     {{field.title | translate}}

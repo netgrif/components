@@ -6,15 +6,15 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {HotkeyModule, HotkeysService} from 'angular2-hotkeys';
 import {
-    MaterialModule,
-    SnackBarModule,
-    TranslateLibModule,
     ConfigurationService,
-    TestConfigurationService,
+    ErrorSnackBarComponent,
+    MaterialModule,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
-    ErrorSnackBarComponent,
+    SnackBarModule,
     SuccessSnackBarComponent,
+    TestConfigurationService,
+    TranslateLibModule,
 } from '@netgrif/application-engine';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 

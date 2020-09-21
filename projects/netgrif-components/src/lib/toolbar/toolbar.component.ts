@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {LanguageService, AbstractToolbarComponent} from '@netgrif/application-engine';
+import {AbstractToolbarComponent, LanguageService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-toolbar',

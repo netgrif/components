@@ -8,20 +8,20 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {of} from 'rxjs';
 import {
-    MaterialModule,
-    UserResourceService,
-    ConfigurationService,
-    TestConfigurationService,
     AuthenticationMethodService,
     AuthenticationService,
-    MockAuthenticationService,
-    MockUserResourceService,
-    TranslateLibModule,
+    ConfigurationService,
     HeaderColumn,
     HeaderColumnType,
-    WorkflowMetaField,
+    MaterialModule,
+    MockAuthenticationMethodService,
+    MockAuthenticationService,
+    MockUserResourceService,
     PetriNetReference,
-    MockAuthenticationMethodService
+    TestConfigurationService,
+    TranslateLibModule,
+    UserResourceService,
+    WorkflowMetaField
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 

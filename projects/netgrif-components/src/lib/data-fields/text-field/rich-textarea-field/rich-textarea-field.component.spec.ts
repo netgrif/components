@@ -6,19 +6,19 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    CovalentModule,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    CovalentModule,
-    WrappedBoolean,
-    MockAuthenticationMethodService,
-    TextAreaField
+    TextAreaField,
+    TranslateLibModule,
+    UserResourceService,
+    WrappedBoolean
 } from '@netgrif/application-engine';
 
 describe('RichTextareaFieldComponent', () => {

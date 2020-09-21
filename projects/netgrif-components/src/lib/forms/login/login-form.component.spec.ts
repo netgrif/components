@@ -5,12 +5,12 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    TranslateLibModule,
+    AuthenticationMethodService,
+    ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
     TestConfigurationService,
-    ConfigurationService,
-    AuthenticationMethodService,
+    TranslateLibModule,
 } from '@netgrif/application-engine';
 
 describe('LoginFormComponent', () => {

@@ -4,19 +4,18 @@ import {TabCreationDetectorComponent} from '../tab-creation-detector/tab-creatio
 import {Component, NgModule} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-    MaterialModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService,
-    ViewService,
-    TestViewService,
-    TabView,
     TabContent,
-    MockAuthenticationMethodService
+    TestConfigurationService,
+    TestViewService,
+    UserResourceService,
+    ViewService
 } from '@netgrif/application-engine';
 import {RouterModule} from '@angular/router';
 

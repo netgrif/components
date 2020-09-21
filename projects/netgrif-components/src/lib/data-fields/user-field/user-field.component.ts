@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {SnackBarService, SideMenuService, AbstractUserFieldComponent} from '@netgrif/application-engine';
+import {AbstractUserFieldComponent, SideMenuService, SnackBarService} from '@netgrif/application-engine';
 import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 
 @Component({

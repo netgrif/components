@@ -1,13 +1,13 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {
+    ConfigurationService,
     MaterialModule,
-    TranslateLibModule,
-    SnackBarModule,
-    UserListService,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
-    ConfigurationService,
-    TestConfigurationService
+    SnackBarModule,
+    TestConfigurationService,
+    TranslateLibModule,
+    UserListService
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -31,8 +31,10 @@ describe('UserAssignComponent', () => {
             ],
             providers: [
                 UserListService,
-                {provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
-                    }, new Observable<boolean>(), null)},
+                {
+                    provide: NAE_SIDE_MENU_CONTROL, useValue: new SideMenuControl(() => {
+                    }, new Observable<boolean>(), null)
+                },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [

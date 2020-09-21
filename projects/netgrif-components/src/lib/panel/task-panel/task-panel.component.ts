@@ -1,27 +1,27 @@
 import {Component, Inject, Injector, Optional, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {
-    TaskContentService,
-    LoggerService,
-    TaskViewService,
-    PaperViewService,
-    TaskEventService,
-    AssignTaskService,
-    DelegateTaskService,
-    CancelTaskService,
-    FinishTaskService,
-    TaskRequestStateService,
-    DataFocusPolicyService,
-    TaskDataService,
-    AssignPolicyService,
-    FinishPolicyService,
-    NAE_TASK_OPERATIONS,
-    SubjectTaskOperations,
-    SingleTaskContentService,
     AbstractTaskPanelComponent,
+    AssignPolicyService,
+    AssignTaskService,
     CallChainService,
+    CancelTaskService,
+    DataFocusPolicyService,
+    DelegateTaskService,
     DisableButtonFuntions,
-    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS
+    FinishPolicyService,
+    FinishTaskService,
+    LoggerService,
+    NAE_TASK_OPERATIONS,
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+    PaperViewService,
+    SingleTaskContentService,
+    SubjectTaskOperations,
+    TaskContentService,
+    TaskDataService,
+    TaskEventService,
+    TaskRequestStateService,
+    TaskViewService
 } from '@netgrif/application-engine';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 

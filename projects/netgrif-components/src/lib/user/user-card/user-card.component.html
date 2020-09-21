@@ -4,7 +4,8 @@
          [routerLink]="link">
         <div [style.backgroundImage]="'url('+userBanner+')'" class="full-width user-banner mat-elevation-z6" matRipple
              [matRippleTrigger]="fullShowcase"></div>
-        <div class="user-avatar-large margin-bottom-default mat-elevation-z6" matRipple [matRippleTrigger]="fullShowcase">
+        <div class="user-avatar-large margin-bottom-default mat-elevation-z6" matRipple
+             [matRippleTrigger]="fullShowcase">
             <img [src]="userAvatar" alt="user avatar" class="full-width full-height">
         </div>
         <div fxLayout="column" fxLayoutAlign="center center" class="full-width full-showcase-text padding-default">
@@ -22,7 +23,8 @@
             <span>{{user.email}}</span>
         </div>
     </div>
-    <div *ngSwitchCase="'vertical'" fxLayout="column" fxLayoutAlign="start center" class="vertical-showcase-container no-outline padding-default"
+    <div *ngSwitchCase="'vertical'" fxLayout="column" fxLayoutAlign="start center"
+         class="vertical-showcase-container no-outline padding-default"
          [routerLink]="link" matRipple>
         <div class="user-avatar-large mat-elevation-z6">
             <img [src]="userAvatar" alt="user avatar" class="full-width full-height">

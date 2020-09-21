@@ -1,11 +1,6 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    AbstractFileFieldComponent,
-    TaskResourceService,
-    LoggerService,
-    SnackBarService
-} from '@netgrif/application-engine';
+import {AbstractFileFieldComponent, LoggerService, SnackBarService, TaskResourceService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-file-field',

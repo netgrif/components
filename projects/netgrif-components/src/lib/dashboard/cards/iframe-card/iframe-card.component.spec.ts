@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IframeCardComponent} from './iframe-card.component';
 import {Component} from '@angular/core';
-import {IframeCard, DashboardCardTypes} from '@netgrif/application-engine';
+import {DashboardCardTypes, IframeCard} from '@netgrif/application-engine';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatCardModule} from '@angular/material/card';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -46,6 +46,7 @@ class TestWrapperComponent {
             cols: 1,
             rows: 1,
         },
-        type: DashboardCardTypes.IFRAME
+        type: DashboardCardTypes.IFRAME,
+        portalComponent: null
     };
 }

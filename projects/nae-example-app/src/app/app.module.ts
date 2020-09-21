@@ -3,19 +3,19 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
+    AuthenticationModule,
     ConfigurationService,
     CovalentModule,
     DialogModule,
     MaterialModule,
-    ResourceProvider,
-    SignUpModule,
-    SnackBarModule,
-    ViewService,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
     NAE_SNACKBAR_VERTICAL_POSITION,
+    ResourceProvider,
+    SignUpModule,
     SnackBarHorizontalPosition,
+    SnackBarModule,
     SnackBarVerticalPosition,
-    AuthenticationModule
+    ViewService
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -61,27 +61,27 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {
     AdminComponentModule,
     AuthenticationComponentModule,
+    CaseViewComponentModule,
     DashboardComponentModule,
     DataFieldsComponentModule,
-    LoginFormComponentModule,
     ForgottenPasswordFormComponentModule,
-    RegistrationFormComponentModule,
-    SideMenuContentComponentModule,
-    SideMenuComponentModule,
-    TabsComponentModule,
-    CaseViewComponentModule,
     HeaderComponentModule,
-    SearchComponentModule,
+    LoginFormComponentModule,
     NavigationComponentModule,
     PanelComponentModule,
     ProfileComponentModule,
+    RegistrationFormComponentModule,
+    SearchComponentModule,
+    SideMenuComponentModule,
+    SideMenuContentComponentModule,
+    TabsComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
     WorkflowViewComponentModule,
 } from '@netgrif/components';
-import { UserInviteComponent } from './doc/user-invite/user-invite.component';
-import {ExamplePortalCardComponent} from "./doc/dashboard-example/piechart-card/example-portal-card.component";
-import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {UserInviteComponent} from './doc/user-invite/user-invite.component';
+import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -204,8 +204,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: ConfigurationService,
         useClass: NaeExampleAppConfigurationService
     },
-        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP },
-        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT },
+        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
+        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
         ResourceProvider,
         TranslateService,
         TranslatePipe,

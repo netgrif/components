@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ConfigurationService, DashboardParams} from '@netgrif/application-engine';
-import {ComponentPortal} from "@angular/cdk/portal";
-import {ExamplePortalCardComponent} from "./piechart-card/example-portal-card.component";
+import {ComponentPortal} from '@angular/cdk/portal';
+import {ExamplePortalCardComponent} from './piechart-card/example-portal-card.component';
 
 @Component({
     selector: 'nae-app-dashboard-example',

@@ -2,19 +2,19 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskSearchComponent} from './task-search.component';
 import {SearchComponentModule} from '../../search.module';
 import {
-    ConfigTaskViewServiceFactory,
-    UserResourceService,
-    ConfigurationService,
-    TestConfigurationService,
-    SearchService,
     AuthenticationMethodService,
     AuthenticationService,
+    ConfigTaskViewServiceFactory,
+    ConfigurationService,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestTaskSearchServiceFactory,
+    SearchService,
     TaskViewService,
+    TestConfigurationService,
+    TestTaskSearchServiceFactory,
     TestTaskViewFactory,
-    MockAuthenticationMethodService
+    UserResourceService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -37,9 +37,11 @@ describe('TaskSearchComponent', () => {
                     provide: SearchService,
                     useFactory: TestTaskSearchServiceFactory
                 },
-                {   provide: TaskViewService,
+                {
+                    provide: TaskViewService,
                     useFactory: TestTaskViewFactory,
-                    deps: [ConfigTaskViewServiceFactory]},
+                    deps: [ConfigTaskViewServiceFactory]
+                },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

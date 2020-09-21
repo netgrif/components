@@ -45,7 +45,8 @@
                         <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">
                             <mat-form-field appearance="outline" class="user-chip-list">
                                 <mat-chip-list disabled>
-                                    <mat-chip color="primary" *ngFor="let authority of user.authorities">{{authority}}</mat-chip>
+                                    <mat-chip color="primary"
+                                              *ngFor="let authority of user.authorities">{{authority}}</mat-chip>
                                 </mat-chip-list>
                             </mat-form-field>
                         </div>

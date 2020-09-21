@@ -1,4 +1,4 @@
-<div fxFlex="100" fxLayout="row" fxLayoutAlign=" center" >
+<div fxFlex="100" fxLayout="row" fxLayoutAlign=" center">
     <div *ngFor="let header of headerService.headerState.selectedHeaders$ | async; let i = index" fxFlex
          [fxHide.lt-xl]="i >= 4"
          [fxHide.lt-lg]="i >= 3"

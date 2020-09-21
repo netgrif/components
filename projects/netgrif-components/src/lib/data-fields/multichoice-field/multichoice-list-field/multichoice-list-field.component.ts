@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 import {AbstractMultichoiceListFieldComponent} from '@netgrif/application-engine';
 
 @Component({
-  selector: 'nc-multichoice-list-field',
-  templateUrl: './multichoice-list-field.component.html',
-  styleUrls: ['./multichoice-list-field.component.scss']
+    selector: 'nc-multichoice-list-field',
+    templateUrl: './multichoice-list-field.component.html',
+    styleUrls: ['./multichoice-list-field.component.scss']
 })
 export class MultichoiceListFieldComponent extends AbstractMultichoiceListFieldComponent {
 

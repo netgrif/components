@@ -6,17 +6,17 @@ import {DataFieldTemplateComponent} from '../data-field-template/data-field-temp
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
+    ButtonField,
     ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    ButtonField,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

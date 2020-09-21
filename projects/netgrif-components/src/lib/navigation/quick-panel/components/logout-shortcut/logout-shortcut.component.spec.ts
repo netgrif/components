@@ -7,14 +7,14 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     ConfigurationService,
-    UserService,
-    TestConfigurationService,
     LoggerService,
-    MockAuthenticationMethodService
+    MaterialModule,
+    MockAuthenticationMethodService,
+    TestConfigurationService,
+    TranslateLibModule,
+    UserService
 } from '@netgrif/application-engine';
 
 describe('LogoutShortcutComponent', () => {

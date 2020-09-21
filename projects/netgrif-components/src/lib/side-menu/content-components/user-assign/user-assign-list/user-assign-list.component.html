@@ -6,7 +6,8 @@
         </div>
 
         <div class="full-height full-width" fxFlex="100">
-            <cdk-virtual-scroll-viewport itemSize="60" (scrolledIndexChange)="loadNextPage()" class="full-height full-width">
+            <cdk-virtual-scroll-viewport itemSize="60" (scrolledIndexChange)="loadNextPage()"
+                                         class="full-height full-width">
                 <nc-user-assign-item
                     *cdkVirtualFor="let user of users;
                                     trackBy: trackBy;

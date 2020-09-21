@@ -6,7 +6,7 @@ import {HeaderComponentModule} from '../header/header.module';
 import {PanelComponentModule} from '../panel/panel.module';
 import {ImportNetComponent} from '../side-menu/content-components/import-net/import-net.component';
 import {WorkflowViewComponent} from './workflow-view/workflow-view.component';
-import {TranslateLibModule, MaterialModule} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
 import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
 
 
@@ -32,4 +32,5 @@ import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
     ]
 
 })
-export class WorkflowViewComponentModule { }
+export class WorkflowViewComponentModule {
+}

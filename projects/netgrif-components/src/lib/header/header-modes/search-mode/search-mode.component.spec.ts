@@ -5,24 +5,24 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
-    CaseHeaderService,
-    ConfigCaseViewServiceFactory,
     AuthenticationMethodService,
-    SearchService,
-    TestCaseSearchServiceFactory,
-    CaseViewService,
-    TestCaseViewFactory,
     AuthenticationService,
-    UserResourceService,
+    CaseHeaderService,
+    CaseViewService,
+    ConfigCaseViewServiceFactory,
     ConfigurationService,
-    ViewService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
+    SearchService,
+    TestCaseSearchServiceFactory,
+    TestCaseViewFactory,
     TestConfigurationService,
     TestViewService,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService,
+    ViewService
 } from '@netgrif/application-engine';
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
@@ -59,11 +59,15 @@ describe('SearchModeComponent', () => {
             providers: [
                 ConfigCaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {   provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory},
-                {   provide: CaseViewService,
+                {
+                    provide: SearchService,
+                    useFactory: TestCaseSearchServiceFactory
+                },
+                {
+                    provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]},
+                    deps: [ConfigCaseViewServiceFactory]
+                },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

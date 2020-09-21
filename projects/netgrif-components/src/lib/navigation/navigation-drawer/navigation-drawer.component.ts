@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import 'hammerjs';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {LoggerService, AbstractNavigationDrawerComponent} from '@netgrif/application-engine';
+import {AbstractNavigationDrawerComponent, LoggerService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-navigation-drawer',

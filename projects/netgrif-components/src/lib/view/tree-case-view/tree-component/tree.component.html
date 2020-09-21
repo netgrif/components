@@ -1,8 +1,10 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-        <div class="min-node-height width-100" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}" (click)="caseNodeClicked(node)">
-            <span class="padding-12px" [ngClass]="{'selected-tree-node': selectedCaseNode(node)}">{{node.case.title}}</span>
+        <div class="min-node-height width-100" fxLayout="row" fxLayoutAlign="start center"
+             [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}" (click)="caseNodeClicked(node)">
+            <span class="padding-12px"
+                  [ngClass]="{'selected-tree-node': selectedCaseNode(node)}">{{node.case.title}}</span>
             <div fxFlex></div>
             <nc-add-child-node [node]="node" *ngIf="node.canAddChildren()"></nc-add-child-node>
             <nc-remove-node [node]="node" *ngIf="node.canBeRemoved()"></nc-remove-node>
@@ -11,14 +13,17 @@
 
     <!-- This is the tree node template for expandable nodes -->
     <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-        <div class="min-node-height" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}">
+        <div class="min-node-height" fxLayout="row" fxLayoutAlign="start center"
+             [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}">
             <div class="mat-tree-node" (click)="caseNodeClicked(node)">
-                <span class="padding-12px" [ngClass]="{'selected-tree-node': selectedCaseNode(node)}">{{node.case.title}}</span>
+                <span class="padding-12px"
+                      [ngClass]="{'selected-tree-node': selectedCaseNode(node)}">{{node.case.title}}</span>
                 <div fxFlex></div>
                 <nc-add-child-node [node]="node" *ngIf="node.canAddChildren()"></nc-add-child-node>
                 <nc-remove-node [node]="node" *ngIf="node.canBeRemoved()"></nc-remove-node>
 
-                <button *ngIf="!node.isLoadingChildren()" (click)="toggleCaseNode($event, node)" mat-icon-button [attr.aria-label]="'toggle ' + node.case.title">
+                <button *ngIf="!node.isLoadingChildren()" (click)="toggleCaseNode($event, node)" mat-icon-button
+                        [attr.aria-label]="'toggle ' + node.case.title">
                     <mat-icon class="mat-icon-rtl-mirror">
                         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CategoryFactory, AbstractCaseSearchComponent } from '@netgrif/application-engine';
+import {AbstractCaseSearchComponent, CategoryFactory} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-case-search',

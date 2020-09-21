@@ -5,19 +5,19 @@ import {Component} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    TranslateLibModule,
-    CaseHeaderService,
     AuthenticationMethodService,
-    CaseViewService,
     AuthenticationService,
-    UserResourceService,
+    CaseHeaderService,
+    CaseViewService,
     ConfigurationService,
-    ViewService,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
     TestViewService,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService,
+    ViewService
 } from '@netgrif/application-engine';
 import {MatSortModule} from '@angular/material/sort';
 import {MatSnackBarModule} from '@angular/material/snack-bar';

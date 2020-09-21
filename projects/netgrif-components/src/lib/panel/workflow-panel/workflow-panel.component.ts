@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoggerService, AbstractWorkflowPanelComponent} from '@netgrif/application-engine';
+import {AbstractWorkflowPanelComponent, LoggerService} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

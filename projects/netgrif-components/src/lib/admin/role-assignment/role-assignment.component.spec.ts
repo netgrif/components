@@ -6,18 +6,18 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {
-    RoleAssignmentService,
-    MaterialModule,
-    TranslateLibModule,
-    SnackBarModule,
-    ConfigurationService,
-    TestConfigurationService,
     AuthenticationMethodService,
     AuthenticationService,
+    ConfigurationService,
     ErrorSnackBarComponent,
-    SuccessSnackBarComponent,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
-    MockAuthenticationMethodService
+    RoleAssignmentService,
+    SnackBarModule,
+    SuccessSnackBarComponent,
+    TestConfigurationService,
+    TranslateLibModule
 } from '@netgrif/application-engine';
 
 

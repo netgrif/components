@@ -6,7 +6,7 @@ import {Observable, of} from 'rxjs';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {CaseResourceService, CountService, CountCard, FilterType, DashboardCardTypes, Count} from '@netgrif/application-engine';
+import {CaseResourceService, Count, CountCard, CountService, DashboardCardTypes, FilterType} from '@netgrif/application-engine';
 
 describe('CountCardComponent', () => {
     let component: CountCardComponent;
@@ -54,7 +54,8 @@ class TestWrapperComponent {
         },
         resourceType: FilterType.CASE,
         title: '',
-        type: DashboardCardTypes.COUNT
+        type: DashboardCardTypes.COUNT,
+        portalComponent: null
     };
 }
 

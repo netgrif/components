@@ -1,18 +1,18 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case-list.component';
 import {
-    MaterialModule,
-    TranslateLibModule,
-    ConfigurationService,
-    TestConfigurationService,
-    ConfigCaseViewServiceFactory,
-    SearchService,
-    SimpleFilter,
-    FilterType,
+    AuthenticationMethodService,
     CaseResourceService,
     CaseViewService,
-    AuthenticationMethodService,
-    MockAuthenticationMethodService
+    ConfigCaseViewServiceFactory,
+    ConfigurationService,
+    FilterType,
+    MaterialModule,
+    MockAuthenticationMethodService,
+    SearchService,
+    SimpleFilter,
+    TestConfigurationService,
+    TranslateLibModule
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';

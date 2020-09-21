@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AbstractFilterSelectorListItemComponent} from '@netgrif/application-engine';
+
 /**
  * @ignore
  * Renders a single filter in the selection list.

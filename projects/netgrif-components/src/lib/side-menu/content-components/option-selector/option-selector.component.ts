@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {NAE_SIDE_MENU_CONTROL, SideMenuControl, AbstractOptionSelectorComponent} from '@netgrif/application-engine';
+import {AbstractOptionSelectorComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-option-selector',

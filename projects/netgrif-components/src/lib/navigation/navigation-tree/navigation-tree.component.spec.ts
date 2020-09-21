@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NavigationTreeComponent} from './navigation-tree.component';
 import {CommonModule} from '@angular/common';
-import {MaterialModule, ConfigurationService, TestConfigurationService, TranslateLibModule} from '@netgrif/application-engine';
+import {ConfigurationService, MaterialModule, TestConfigurationService, TranslateLibModule} from '@netgrif/application-engine';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';

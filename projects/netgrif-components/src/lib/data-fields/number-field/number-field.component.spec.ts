@@ -7,17 +7,17 @@ import {RequiredLabelComponent} from '../required-label/required-label.component
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService,
     NumberField,
-    MockAuthenticationMethodService
+    TestConfigurationService,
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 
 describe('NumberFieldComponent', () => {

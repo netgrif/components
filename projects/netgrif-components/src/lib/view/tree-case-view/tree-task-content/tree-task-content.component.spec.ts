@@ -4,13 +4,13 @@ import {TreeTaskContentComponent} from './tree-task-content.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TaskContentComponentModule} from '../../../task-content/task-content.module';
 import {
-    MaterialModule,
-    ConfigurationService,
-    TestConfigurationService,
-    TreeCaseViewService,
-    TranslateLibModule,
     AuthenticationMethodService,
-    MockAuthenticationMethodService
+    ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
+    TestConfigurationService,
+    TranslateLibModule,
+    TreeCaseViewService
 } from '@netgrif/application-engine';
 
 describe('TreeTaskContentComponent', () => {
@@ -24,7 +24,7 @@ describe('TreeTaskContentComponent', () => {
                 TreeCaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
-                ],
+            ],
             declarations: [TreeTaskContentComponent]
         }).compileComponents();
     }));

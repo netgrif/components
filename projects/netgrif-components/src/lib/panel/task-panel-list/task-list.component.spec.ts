@@ -7,24 +7,24 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {
-    MaterialModule,
-    UserResourceService,
-    ConfigurationService,
-    TestConfigurationService,
     ArrayTaskViewServiceFactory,
-    TaskViewService,
-    noNetsTaskViewServiceFactory,
-    TaskResourceService,
-    SearchService,
-    TestTaskSearchServiceFactory,
     AssignPolicy,
-    DataFocusPolicy,
-    FinishPolicy,
     AuthenticationMethodService,
     AuthenticationService,
+    ConfigurationService,
+    DataFocusPolicy,
+    FinishPolicy,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    MockAuthenticationMethodService
+    noNetsTaskViewServiceFactory,
+    SearchService,
+    TaskResourceService,
+    TaskViewService,
+    TestConfigurationService,
+    TestTaskSearchServiceFactory,
+    UserResourceService
 } from '@netgrif/application-engine';
 import {RouterTestingModule} from '@angular/router/testing';
 import {PanelComponentModule} from '../panel.module';

@@ -1,6 +1,6 @@
 import {Component, Optional} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {DATE_FORMAT, AbstractSearchComponent, SearchService, LoggerService, SearchChipService} from '@netgrif/application-engine';
+import {AbstractSearchComponent, DATE_FORMAT, LoggerService, SearchChipService, SearchService} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

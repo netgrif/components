@@ -8,20 +8,20 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {MatIconModule} from '@angular/material/icon';
 import {HeaderComponentModule} from './header.module';
 import {
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
-    ConfigurationService,
     CaseViewService,
-    ViewService,
+    ConfigurationService,
+    ErrorSnackBarComponent,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
+    SuccessSnackBarComponent,
     TestConfigurationService,
     TestViewService,
-    ErrorSnackBarComponent,
-    SuccessSnackBarComponent,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService,
+    ViewService
 } from '@netgrif/application-engine';
 
 describe('HeaderComponent', () => {

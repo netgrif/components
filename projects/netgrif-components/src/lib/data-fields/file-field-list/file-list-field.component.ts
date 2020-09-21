@@ -1,16 +1,11 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {
-    TaskResourceService,
-    LoggerService,
-    AbstractFileListFieldComponent,
-    SnackBarService
-} from '@netgrif/application-engine';
+import {AbstractFileListFieldComponent, LoggerService, SnackBarService, TaskResourceService} from '@netgrif/application-engine';
 
 @Component({
-  selector: 'nc-file-list-field',
-  templateUrl: './file-list-field.component.html',
-  styleUrls: ['./file-list-field.component.scss']
+    selector: 'nc-file-list-field',
+    templateUrl: './file-list-field.component.html',
+    styleUrls: ['./file-list-field.component.scss']
 })
 export class FileListFieldComponent extends AbstractFileListFieldComponent {
 

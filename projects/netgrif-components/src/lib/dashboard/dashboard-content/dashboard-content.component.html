@@ -5,10 +5,12 @@
                    [ngSwitch]="card.type">
         <nc-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card.item" class="full-size"></nc-count-card>
         <nc-iframe-card *ngSwitchCase="cardTypes.IFRAME" [card]="card.item" class="full-size"></nc-iframe-card>
-        <nc-linechart-card *ngSwitchCase="cardTypes.LINE" [card]="card.item" class="full-size"></nc-linechart-card>
-        <nc-lineargauge-card *ngSwitchCase="cardTypes.LINEARGAUGE" [card]="card.item" class="full-size"></nc-lineargauge-card>
+        <nc-line-chart-card *ngSwitchCase="cardTypes.LINE" [card]="card.item" class="full-size"></nc-line-chart-card>
+        <nc-linear-gauge-card *ngSwitchCase="cardTypes.LINEARGAUGE" [card]="card.item"
+                             class="full-size"></nc-linear-gauge-card>
         <nc-barchart-card *ngSwitchCase="cardTypes.BAR" [card]="card.item" class="full-size"></nc-barchart-card>
-        <nc-portal-card *ngSwitchCase="cardTypes.DEFAULT" [card]="card.item" [componentPortal]="card.item.portalComponent" class="full-size"></nc-portal-card>
+        <nc-portal-card *ngSwitchCase="cardTypes.DEFAULT" [card]="card.item"
+                        [componentPortal]="card.item.portalComponent" class="full-size"></nc-portal-card>
         <div *ngSwitchCase="cardTypes.BLANK"></div>
     </mat-grid-tile>
 </mat-grid-list>

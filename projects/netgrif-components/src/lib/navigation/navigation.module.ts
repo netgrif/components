@@ -4,10 +4,7 @@ import {NavigationDrawerComponent} from './navigation-drawer/navigation-drawer.c
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
 import 'hammerjs';
-import {
-    MaterialModule,
-    TranslateLibModule
-} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
 import {NavigationRailComponent} from './navigation-rail/navigation-rail.component';
 import {NavigationTreeComponent} from './navigation-tree/navigation-tree.component';
 import {UserComponentModule} from '../user/user.module';

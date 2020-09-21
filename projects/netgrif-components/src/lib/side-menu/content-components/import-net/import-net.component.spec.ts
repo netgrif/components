@@ -5,15 +5,15 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {SideMenuImportNetComponentModule} from './side-menu-import-net-component.module';
 import {ImportNetComponent} from './import-net.component';
 import {
-    TranslateLibModule,
     ConfigurationService,
-    TestConfigurationService,
-    NAE_SIDE_MENU_CONTROL,
-    SideMenuControl,
-    PetriNetResourceService,
     ErrorSnackBarComponent,
+    NAE_SIDE_MENU_CONTROL,
+    PetriNetResourceService,
+    SideMenuControl,
+    SnackBarModule,
     SuccessSnackBarComponent,
-    SnackBarModule
+    TestConfigurationService,
+    TranslateLibModule
 } from '@netgrif/application-engine';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatIconModule} from '@angular/material/icon';
@@ -34,9 +34,10 @@ describe('ImportNetComponent', () => {
                 SnackBarModule
             ],
             providers: [{
-                    provide: NAE_SIDE_MENU_CONTROL,
-                    useValue: new SideMenuControl(() => {}, new Observable<boolean>(), null)
-                },
+                provide: NAE_SIDE_MENU_CONTROL,
+                useValue: new SideMenuControl(() => {
+                }, new Observable<boolean>(), null)
+            },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: PetriNetResourceService, useClass: MyPetriNetResource}
             ],
@@ -68,7 +69,7 @@ describe('ImportNetComponent', () => {
 
 class MyPetriNetResource {
     importPetriNet(file) {
-       return of({success: 'success'});
+        return of({success: 'success'});
     }
 }
 

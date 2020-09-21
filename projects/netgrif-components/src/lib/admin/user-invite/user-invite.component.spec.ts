@@ -2,15 +2,15 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {UserInviteComponent} from './user-invite.component';
 import {
-    MaterialModule,
-    TranslateLibModule,
-    ConfigurationService,
-    TestConfigurationService,
-    SignUpService,
-    AuthenticationService,
-    MockAuthenticationService,
     AuthenticationMethodService,
-    MockAuthenticationMethodService
+    AuthenticationService,
+    ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
+    MockAuthenticationService,
+    SignUpService,
+    TestConfigurationService,
+    TranslateLibModule
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';

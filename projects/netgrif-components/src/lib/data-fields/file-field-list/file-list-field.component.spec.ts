@@ -1,27 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FileListFieldComponent } from './file-list-field.component';
+import {FileListFieldComponent} from './file-list-field.component';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {
-    SideMenuService,
-    FileListField,
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    ErrorSnackBarComponent,
+    FileListField,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService,
-    ErrorSnackBarComponent,
-    SuccessSnackBarComponent,
+    SideMenuService,
     SnackBarModule,
-    MockAuthenticationMethodService
+    SuccessSnackBarComponent,
+    TestConfigurationService,
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 
 describe('FileListFieldComponent', () => {

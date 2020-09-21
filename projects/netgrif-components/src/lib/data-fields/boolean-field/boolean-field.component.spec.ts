@@ -7,17 +7,17 @@ import {RequiredLabelComponent} from '../required-label/required-label.component
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
+    BooleanField,
     ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    BooleanField,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 
 describe('BooleanFieldComponent', () => {
@@ -67,8 +67,8 @@ describe('BooleanFieldComponent', () => {
 })
 class TestWrapperComponent {
     field = new BooleanField('', '', false, {
-        editable: true
-    }, undefined,
+            editable: true
+        }, undefined,
         undefined,
         undefined,
         []);

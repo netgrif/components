@@ -3,16 +3,16 @@ import {ToolbarComponent} from './toolbar.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 
 describe('ToolbarComponent', () => {

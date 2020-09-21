@@ -1,7 +1,7 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
-                         [dataField]="dataField"
-                         [dataFieldTemplate]="dataFieldTemplate"
-                         [offset]="taskOffset">
+                        [dataField]="dataField"
+                        [dataFieldTemplate]="dataFieldTemplate"
+                        [offset]="taskOffset">
 </nc-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
@@ -21,12 +21,15 @@
                 </div>
                 <div fxFlex="5"></div>
                 <div fxFlex="75">
-                    <button mat-button class="file-button"  color="{{dataField.downloaded ? 'primary' : 'accent'}}" (click)="download()" matTooltip="Click to download {{name}}" fxFlex="95">
+                    <button mat-button class="file-button" color="{{dataField.downloaded ? 'primary' : 'accent'}}"
+                            (click)="download()" matTooltip="Click to download {{name}}" fxFlex="95">
                         <mat-icon *ngIf="state.completed && !state.error" color="accent">done</mat-icon>
                         <mat-icon *ngIf="state.completed && state.error" color="warn">error</mat-icon>
                         {{name}}
                     </button>
-                    <button mat-button *ngIf="dataField.value && (dataField.value.name || dataField.value.file) && !formControl.disabled" fxFlex="5">
+                    <button mat-button
+                            *ngIf="dataField.value && (dataField.value.name || dataField.value.file) && !formControl.disabled"
+                            fxFlex="5">
                         <mat-icon color="warn" (click)="deleteFile()" matTooltip="Click to delete">close</mat-icon>
                     </button>
                 </div>

@@ -7,17 +7,15 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
-    SimpleFilter, FilterType,
-    MockAuthenticationMethodService
+    TestConfigurationService,
+    UserResourceService
 } from '@netgrif/application-engine';
-import {MatSelectionListChange} from '@angular/material/list';
 
 describe('FilterSelectorComponent', () => {
     let component: FilterSelectorComponent;
@@ -39,7 +37,8 @@ describe('FilterSelectorComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {
                     provide: NAE_SIDE_MENU_CONTROL,
-                    useValue: new SideMenuControl(() => {}, new Observable<boolean>(), null)
+                    useValue: new SideMenuControl(() => {
+                    }, new Observable<boolean>(), null)
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]

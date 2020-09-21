@@ -18,7 +18,8 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle_outline</mat-icon>
             <mat-form-field fxFlex="96">
-                <input matInput placeholder="{{ 'forms.register.surname' | translate }}" formControlName="surname" required>
+                <input matInput placeholder="{{ 'forms.register.surname' | translate }}" formControlName="surname"
+                       required>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
@@ -63,8 +64,8 @@
 </div>
 
 <div *ngIf="!tokenVerified && (loadingToken | async) === false" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-        <mat-icon color="accent">unpublished</mat-icon>
-        <span class="font-size-20">{{ 'forms.register.notVerified' | translate}}</span>
+    <mat-icon color="accent">unpublished</mat-icon>
+    <span class="font-size-20">{{ 'forms.register.notVerified' | translate}}</span>
 </div>
 
 <div *ngIf="loadingToken | async">

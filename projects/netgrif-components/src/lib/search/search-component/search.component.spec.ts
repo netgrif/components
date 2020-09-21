@@ -4,17 +4,17 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component} from '@angular/core';
 import {SearchComponentModule} from '../search.module';
 import {
-    MaterialModule,
-    UserResourceService,
-    ConfigurationService,
-    TestConfigurationService,
-    SearchService,
     AuthenticationMethodService,
     AuthenticationService,
+    ConfigurationService,
+    MaterialModule,
     MockAuthenticationService,
     MockUserResourceService,
+    SearchService,
     TestCaseSearchServiceFactory,
+    TestConfigurationService,
     TranslateLibModule,
+    UserResourceService,
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

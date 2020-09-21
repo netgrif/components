@@ -8,8 +8,10 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="40" class="padding-right-16px">
                 <mat-icon fxFlex class="mail-icon">email</mat-icon>
                 <mat-form-field fxFlex="100" class="user-assign-search" color="primary">
-                    <input matInput placeholder="{{ 'admin.user-invite.mail' | translate }}" [formControl]="invitedEmailControl">
-                    <button mat-button *ngIf="invitedEmailControl.value" matSuffix mat-icon-button (click)="invitedEmailControl.setValue('')">
+                    <input matInput placeholder="{{ 'admin.user-invite.mail' | translate }}"
+                           [formControl]="invitedEmailControl">
+                    <button mat-button *ngIf="invitedEmailControl.value" matSuffix mat-icon-button
+                            (click)="invitedEmailControl.setValue('')">
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-form-field>
@@ -24,18 +26,19 @@
             <mat-divider class="inherited-divider"></mat-divider>
 
             <div class="padding-16px" fxLayout="column" *ngIf="invitedGroups.length !== 0">
-                <div *ngFor="let org of invitedGroups" fxFlex fxLayout="row"  fxLayoutAlign="start center" >
+                <div *ngFor="let org of invitedGroups" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <span>{{org.name}}</span>
 
                     <div fxFlex></div>
 
-                    <button mat-icon-button color="primary" (click)="removeGroup(org)" >
+                    <button mat-icon-button color="primary" (click)="removeGroup(org)">
                         <mat-icon>close</mat-icon>
                     </button>
                 </div>
             </div>
 
-            <span class="padding-16px" *ngIf="invitedGroups.length === 0">{{'admin.user-invite.noSelectedOrgs' | translate}}</span>
+            <span class="padding-16px"
+                  *ngIf="invitedGroups.length === 0">{{'admin.user-invite.noSelectedOrgs' | translate}}</span>
         </div>
 
 
@@ -57,7 +60,8 @@
                 </div>
             </div>
 
-            <span class="padding-16px" *ngIf="invitedRoles.length === 0">{{'admin.user-invite.noSelectedRoles' | translate}}</span>
+            <span class="padding-16px"
+                  *ngIf="invitedRoles.length === 0">{{'admin.user-invite.noSelectedRoles' | translate}}</span>
         </div>
 
         <div fxLayout="column" fxLayoutAlign="start stretch">
@@ -80,7 +84,8 @@
 
         <div fxLayout="column" class="invited-card " *ngIf="groups.length !== 0">
             <div fxLayout="column">
-                <div *ngFor="let group of groups" class="padding-16px-0" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                <div *ngFor="let group of groups" class="padding-16px-0" fxFlex fxLayout="row"
+                     fxLayoutAlign="start center">
                     <span>{{group.name}}</span>
 
                     <div fxFlex></div>
@@ -142,7 +147,7 @@
                         <span>{{'admin.user-invite.version' | translate }} - {{net.version}}</span>
 
                         <div fxLayout="column" class="full-width padding-16px">
-                            <div *ngFor="let role of net.roles"  fxFlex fxLayout="row wrap" fxLayoutAlign="start center">
+                            <div *ngFor="let role of net.roles" fxFlex fxLayout="row wrap" fxLayoutAlign="start center">
                                 <span>{{role.name}}</span>
 
                                 <div fxFlex></div>

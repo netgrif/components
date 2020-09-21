@@ -3,20 +3,20 @@ import {CaseSearchComponent} from './case-search.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-    ConfigCaseViewServiceFactory,
-    UserResourceService,
-    ConfigurationService,
-    TestConfigurationService,
-    SearchService,
     AuthenticationMethodService,
     AuthenticationService,
+    CaseViewService,
+    CategoryFactory,
+    ConfigCaseViewServiceFactory,
+    ConfigurationService,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
+    SearchService,
     TestCaseSearchServiceFactory,
-    CategoryFactory,
-    CaseViewService,
     TestCaseViewFactory,
-    MockAuthenticationMethodService
+    TestConfigurationService,
+    UserResourceService
 } from '@netgrif/application-engine';
 import {SearchComponentModule} from '../../search.module';
 
@@ -38,9 +38,11 @@ describe('CaseSearchComponent', () => {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory
                 },
-                {   provide: CaseViewService,
+                {
+                    provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]},
+                    deps: [ConfigCaseViewServiceFactory]
+                },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

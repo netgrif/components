@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoggerService, AbstractCaseListComponent, CaseViewService} from '@netgrif/application-engine';
+import {AbstractCaseListComponent, CaseViewService, LoggerService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-case-list',

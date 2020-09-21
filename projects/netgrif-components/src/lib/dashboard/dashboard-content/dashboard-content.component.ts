@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {AbstractDashboardContent, LoggerService} from '@netgrif/application-engine';
-import {ComponentPortal} from "@angular/cdk/portal";
 
 @Component({
     selector: 'nc-dashboard-content',

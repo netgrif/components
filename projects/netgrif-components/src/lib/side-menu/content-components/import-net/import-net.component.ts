@@ -1,12 +1,12 @@
 import {Component, Inject} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {
-    SideMenuControl,
+    AbstractImportNetComponent,
+    LoggerService,
     NAE_SIDE_MENU_CONTROL,
     PetriNetResourceService,
-    LoggerService,
-    SnackBarService,
-    AbstractImportNetComponent
+    SideMenuControl,
+    SnackBarService
 } from '@netgrif/application-engine';
 
 @Component({
@@ -28,6 +28,6 @@ export class ImportNetComponent extends AbstractImportNetComponent {
                 protected _petriNetResource: PetriNetResourceService,
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService) {
-        super(_sideMenuControl, _petriNetResource,  _log, _snackbar);
+        super(_sideMenuControl, _petriNetResource, _log, _snackbar);
     }
 }

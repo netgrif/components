@@ -5,7 +5,7 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TranslateLibModule, SideMenuService, MaterialModule, UserField} from '@netgrif/application-engine';
+import {MaterialModule, SideMenuService, TranslateLibModule, UserField} from '@netgrif/application-engine';
 
 describe('UserFieldComponent', () => {
     let component: UserFieldComponent;

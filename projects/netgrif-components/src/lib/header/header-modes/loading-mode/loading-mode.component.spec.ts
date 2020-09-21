@@ -6,24 +6,24 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
-    CaseHeaderService,
-    ConfigCaseViewServiceFactory,
     AuthenticationMethodService,
-    SearchService,
-    TestCaseSearchServiceFactory,
-    CaseViewService,
-    TestCaseViewFactory,
     AuthenticationService,
-    UserResourceService,
+    CaseHeaderService,
+    CaseViewService,
+    ConfigCaseViewServiceFactory,
     ConfigurationService,
-    ViewService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
+    SearchService,
+    TestCaseSearchServiceFactory,
+    TestCaseViewFactory,
     TestConfigurationService,
     TestViewService,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService,
+    ViewService
 } from '@netgrif/application-engine';
 import {RouterTestingModule} from '@angular/router/testing';
 

@@ -7,11 +7,10 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {EnumerationSelectFieldComponent} from './enumeration-select-field/enumeration-select-field.component';
 import {EnumerationListFieldComponent} from './enumeration-list-field/enumeration-list-field.component';
-import {
-    EnumerationAutocompleteSelectFieldComponent
-} from './enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
+// tslint:disable-next-line:max-line-length
+import {EnumerationAutocompleteSelectFieldComponent} from './enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateLibModule, EnumerationField, MaterialModule} from '@netgrif/application-engine';
+import {EnumerationField, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('EnumerationFieldComponent', () => {

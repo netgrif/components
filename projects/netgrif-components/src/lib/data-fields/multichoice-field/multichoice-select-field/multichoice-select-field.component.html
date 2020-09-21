@@ -9,5 +9,6 @@
         </mat-option>
     </mat-select>
     <mat-hint>{{multichoiceField.description}}</mat-hint>
-    <mat-error *ngIf="!formControlRef.valid && formControlRef.touched">{{'dataField.validations.required' | translate}}</mat-error>
+    <mat-error
+        *ngIf="!formControlRef.valid && formControlRef.touched">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-form-field>

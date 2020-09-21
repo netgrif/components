@@ -4,14 +4,14 @@ import {UserCardComponent} from './user-card.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     ConfigurationService,
-    TestConfigurationService,
-    UserPreferenceService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockUserPreferenceService,
-    MockAuthenticationMethodService
+    TestConfigurationService,
+    TranslateLibModule,
+    UserPreferenceService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';

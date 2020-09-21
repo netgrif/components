@@ -3,7 +3,8 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle</mat-icon>
             <mat-form-field fxFlex="96">
-                <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4" required>
+                <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4"
+                       required>
                 <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
                     {{ 'forms.login.length' | translate}}
                 </mat-error>
@@ -43,6 +44,7 @@
 
     <div *ngIf="registerResetButtons" fxLayout="row" class="width-100" fxLayoutAlign="end" fxLayoutGap="16px">
         <button mat-stroked-button (click)="resetEmit()" fxFlex="60">{{ 'forms.login.reset' | translate}}</button>
-        <button mat-stroked-button (click)="signUpEmit()" color="accent" fxFlex="40">{{ 'forms.login.sign' | translate}}</button>
+        <button mat-stroked-button (click)="signUpEmit()" color="accent"
+                fxFlex="40">{{ 'forms.login.sign' | translate}}</button>
     </div>
 </div>

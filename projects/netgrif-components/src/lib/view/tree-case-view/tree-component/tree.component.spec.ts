@@ -1,12 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TreeComponent} from './tree.component';
 import {TreeCaseViewComponentModule} from '../tree-case-view.module';
-import {
-    MaterialModule,
-    ConfigurationService,
-    TestConfigurationService,
-    TreeCaseViewService
-} from '@netgrif/application-engine';
+import {ConfigurationService, MaterialModule, TestConfigurationService, TreeCaseViewService} from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('TreeComponent', () => {
@@ -19,7 +14,7 @@ describe('TreeComponent', () => {
             providers: [
                 TreeCaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
-                ]
+            ]
         }).compileComponents();
     }));
 

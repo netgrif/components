@@ -8,48 +8,48 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
-    UserResourceService,
-    ConfigurationService,
-    TestConfigurationService,
     ArrayTaskViewServiceFactory,
-    SideMenuService,
-    TaskViewService,
-    noNetsTaskViewServiceFactory,
-    TaskResourceService,
-    SearchService,
-    TestTaskSearchServiceFactory,
-    AssignPolicyService,
-    ErrorSnackBarComponent,
-    SuccessSnackBarComponent,
-    TaskPanelData,
     AssignPolicy,
-    DataFocusPolicy,
-    FinishPolicy,
+    AssignPolicyService,
+    AssignTaskService,
+    AuthenticationMethodService,
+    AuthenticationService,
+    CancelTaskService,
     ChangedFields,
+    ConfigurationService,
+    DataFocusPolicy,
+    DataFocusPolicyService,
+    DelegateTaskService,
+    ErrorSnackBarComponent,
+    FinishPolicy,
+    FinishPolicyService,
+    FinishTaskService,
     HeaderColumn,
     HeaderColumnType,
-    TaskMetaField,
-    AuthenticationService,
-    MockAuthenticationService,
-    AuthenticationMethodService,
+    MaterialModule,
     MockAuthenticationMethodService,
+    MockAuthenticationService,
     MockUserResourceService,
-    TaskContentService,
+    NAE_TASK_OPERATIONS,
+    noNetsTaskViewServiceFactory,
+    SearchService,
+    SideMenuService,
     SingleTaskContentService,
+    SnackBarModule,
+    SubjectTaskOperations,
+    SuccessSnackBarComponent,
+    TaskContentService,
     TaskDataService,
     TaskEventService,
-    AssignTaskService,
-    DelegateTaskService,
-    CancelTaskService,
-    FinishTaskService,
-    DataFocusPolicyService,
+    TaskMetaField,
+    TaskPanelData,
     TaskRequestStateService,
-    FinishPolicyService,
-    NAE_TASK_OPERATIONS,
-    SubjectTaskOperations,
-    SnackBarModule
+    TaskResourceService,
+    TaskViewService,
+    TestConfigurationService,
+    TestTaskSearchServiceFactory,
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -63,7 +63,8 @@ describe('TaskPanelComponent', () => {
 
     beforeEach(async(() => {
         const mockAssignPolicyService = {
-            performAssignPolicy: () => {}
+            performAssignPolicy: () => {
+            }
         };
 
         TestBed.configureTestingModule({

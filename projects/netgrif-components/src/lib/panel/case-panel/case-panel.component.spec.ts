@@ -9,8 +9,7 @@ import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CaseMetaField, MaterialModule,
-    TranslateLibModule, HeaderColumn, HeaderColumnType} from '@netgrif/application-engine';
+import {CaseMetaField, HeaderColumn, HeaderColumnType, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -50,7 +49,7 @@ describe('CasePanelComponent', () => {
     template: '<nc-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nc-case-panel>'
 })
 class TestWrapperComponent {
-    selectedHeaders =  of([
+    selectedHeaders = of([
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
@@ -72,7 +71,7 @@ class TestWrapperComponent {
             {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
             {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
             {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
-            {stringId: 'enum', title: 'string', type: 'enumeration', value: { defaultValue: 'dasd'}},
+            {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd'}},
         ]
     };
 }

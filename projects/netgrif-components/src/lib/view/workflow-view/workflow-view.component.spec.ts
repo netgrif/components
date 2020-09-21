@@ -7,19 +7,19 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SideMenuContentComponentModule} from '../../side-menu/content-components/side-menu-content-component.module';
 import {RouterModule} from '@angular/router';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    ViewService,
     TestViewService,
-    WorkflowHeaderService,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService,
+    ViewService,
+    WorkflowHeaderService
 } from '@netgrif/application-engine';
 import {PanelComponentModule} from '../../panel/panel.module';
 import {HeaderComponentModule} from '../../header/header.module';

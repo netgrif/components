@@ -1,5 +1,5 @@
 <nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
-               (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
+              (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <span fxLayoutAlign="start center" fxFlex>
@@ -12,7 +12,8 @@
                   [fxHide.lt-lg]="i >= 2 && responsiveBody"
                   [fxHide.lt-md]="i >= 1 && responsiveBody"
                   [fxHide.lt-sm]="i >= 0 && responsiveBody">
-                <mat-icon class="task-panel-icon panel-primary-icon" *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
+                <mat-icon class="task-panel-icon panel-primary-icon"
+                          *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
                 {{field.value}}
             </span>
         </div>
@@ -25,7 +26,8 @@
                     <mat-icon>person</mat-icon>
                     <span>{{ getAssignTitle() | translate}}</span>
                 </button>
-                <button mat-menu-item *ngIf="canDo('delegate')" (click)="delegate()" [disabled]="canDisable('delegate')">
+                <button mat-menu-item *ngIf="canDo('delegate')" (click)="delegate()"
+                        [disabled]="canDisable('delegate')">
                     <mat-icon>person_outline</mat-icon>
                     <span>{{ getDelegateTitle() | translate}}</span>
                 </button>
@@ -54,7 +56,8 @@
                 <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100">
                     <button *ngIf="canAssign()" (click)="assign()" mat-button [disabled]="canDisable('assign')">
                         {{ getAssignTitle() | translate | uppercase }}</button>
-                    <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button [disabled]="canDisable('delegate')">
+                    <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button
+                            [disabled]="canDisable('delegate')">
                         {{ getDelegateTitle() | translate | uppercase }}</button>
                     <button *ngIf="canReassign()" (click)="delegate()" mat-button [disabled]="canDisable('reassign')">
                         {{ 'tasks.view.reassign' | translate | uppercase }}</button>

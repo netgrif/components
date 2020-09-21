@@ -8,14 +8,14 @@ import {FormControl} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
     ConfigurationService,
-    TestConfigurationService,
     ErrorSnackBarComponent,
+    MaterialModule,
+    TestConfigurationService,
+    TranslateLibModule,
+    UserListInjectedData,
     UserListService,
-    UserValue,
-    UserListInjectedData
+    UserValue
 } from '@netgrif/application-engine';
 
 describe('UserAssignListComponent', () => {

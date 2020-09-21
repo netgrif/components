@@ -4,16 +4,33 @@ import {CountCardComponent} from './cards/count-card/count-card.component';
 import {IframeCardComponent} from './cards/iframe-card/iframe-card.component';
 import {DashboardContentComponent} from './dashboard-content/dashboard-content.component';
 import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
-import {PiechartCardComponent} from "./cards/piechart-card/piechart-card.component";
-import { LinechartCardComponent } from './cards/linechart-card/linechart-card.component';
-import { BarchartCardComponent } from './cards/barchart-card/barchart-card.component';
-import { LineargaugeCardComponent } from './cards/lineargauge-card/lineargauge-card.component';
-import { NgxChartsModule } from "@swimlane/ngx-charts";
-import { PortalCardCompoment } from './cards/custom-card/portal-card-compoment.component';
+import {PieChartCardComponent} from './cards/piechart-card/pie-chart-card.component';
+import {LineChartCardComponent} from './cards/linechart-card/line-chart-card.component';
+import {BarchartCardComponent} from './cards/barchart-card/barchart-card.component';
+import {LinearGaugeCardComponent} from './cards/lineargauge-card/linear-gauge-card.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {PortalCardComponent} from './cards/custom-card/portal-card.component';
 
 @NgModule({
-    declarations: [CountCardComponent, IframeCardComponent, DashboardContentComponent, PiechartCardComponent, LinechartCardComponent, BarchartCardComponent, LineargaugeCardComponent, PortalCardCompoment],
-    exports: [CountCardComponent, IframeCardComponent, DashboardContentComponent, PiechartCardComponent, LinechartCardComponent, BarchartCardComponent, LineargaugeCardComponent],
+    declarations: [
+        CountCardComponent,
+        IframeCardComponent,
+        DashboardContentComponent,
+        PieChartCardComponent,
+        LineChartCardComponent,
+        BarchartCardComponent,
+        LinearGaugeCardComponent,
+        PortalCardComponent
+    ],
+    exports: [
+        CountCardComponent,
+        IframeCardComponent,
+        DashboardContentComponent,
+        PieChartCardComponent,
+        LineChartCardComponent,
+        BarchartCardComponent,
+        LinearGaugeCardComponent
+    ],
     imports: [
         CommonModule,
         MaterialModule,

@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {
-    UserInviteService,
-    OrganizationListService,
     AbstractUserInviteComponent,
+    OrganizationListService,
     SignUpService,
-    SnackBarService
+    SnackBarService,
+    UserInviteService
 } from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 

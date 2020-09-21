@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UserAssignItemComponent} from './user-assign-item.component';
 import {Component} from '@angular/core';
-import {TranslateLibModule, MaterialModule, UserValue} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule, UserValue} from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('UserAssignItemComponent', () => {
@@ -18,7 +18,7 @@ describe('UserAssignItemComponent', () => {
                 TestWrapperComponent
             ]
         })
-        .compileComponents();
+            .compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();

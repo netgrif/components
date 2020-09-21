@@ -6,11 +6,14 @@
         <li *ngFor="let file of fileList" [@fadeInOut]="'in'">
             <mat-progress-bar color="accent" [value]="file.progress"></mat-progress-bar>
             <span class="file-list-label">
-                <mat-progress-spinner *ngIf="file.inProgress && file.uploaded" class="margin-right-default" color="accent" mode="indeterminate" diameter="20"></mat-progress-spinner>
-                <mat-icon *ngIf="!file.inProgress && file.uploaded && file.completed" class="done-icon margin-right-default">
+                <mat-progress-spinner *ngIf="file.inProgress && file.uploaded" class="margin-right-default"
+                                      color="accent" mode="indeterminate" diameter="20"></mat-progress-spinner>
+                <mat-icon *ngIf="!file.inProgress && file.uploaded && file.completed"
+                          class="done-icon margin-right-default">
                     done
                 </mat-icon>
-                <mat-icon *ngIf="!file.inProgress && !file.completed &&  file.error" class="done-icon margin-right-default">
+                <mat-icon *ngIf="!file.inProgress && !file.completed &&  file.error"
+                          class="done-icon margin-right-default">
                     error
                 </mat-icon>
                 {{file.data.name}}

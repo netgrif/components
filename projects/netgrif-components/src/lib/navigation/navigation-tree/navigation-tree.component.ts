@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {ConfigurationService, AbstractNavigationTreeComponent} from '@netgrif/application-engine';
+import {AbstractNavigationTreeComponent, ConfigurationService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-navigation-tree',

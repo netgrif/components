@@ -4,11 +4,11 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {TranslateService} from '@ngx-translate/core';
 import {HotkeysService} from 'angular2-hotkeys';
 import {
+    AbstractNewCaseComponent,
+    CaseResourceService,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
-    AbstractNewCaseComponent,
-    SnackBarService,
-    CaseResourceService
+    SnackBarService
 } from '@netgrif/application-engine';
 
 @Component({

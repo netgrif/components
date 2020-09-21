@@ -142,7 +142,7 @@ describe('FieldConvertorService', () => {
         dataField.value = undefined;
         expect(service.resolveType(service.toClass(dataField))).toEqual('file');
 
-        dataField.type = 'fileList';
+        dataField.type = FieldTypeResource.FILE_LIST;
         dataField.value = undefined;
         expect(service.resolveType(service.toClass(dataField))).toEqual('fileList');
     });

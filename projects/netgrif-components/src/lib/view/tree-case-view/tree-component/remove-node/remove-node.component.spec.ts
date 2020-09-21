@@ -4,13 +4,13 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component} from '@angular/core';
 import {
-    MaterialModule,
-    ConfigurationService,
-    TestConfigurationService,
-    TreeCaseViewService,
-    TranslateLibModule,
+    CaseTreeNode,
     CaseTreeService,
-    CaseTreeNode
+    ConfigurationService,
+    MaterialModule,
+    TestConfigurationService,
+    TranslateLibModule,
+    TreeCaseViewService
 } from '@netgrif/application-engine';
 
 describe('RemoveNodeComponent', () => {

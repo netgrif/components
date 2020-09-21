@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CategoryFactory, AbstractTaskSearchComponent} from '@netgrif/application-engine';
+import {AbstractTaskSearchComponent, CategoryFactory} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-task-search',

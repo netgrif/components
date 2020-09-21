@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {SignUpService, AbstractRegistrationFormComponent, LoggerService} from '@netgrif/application-engine';
+import {AbstractRegistrationFormComponent, LoggerService, SignUpService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-registration-form',

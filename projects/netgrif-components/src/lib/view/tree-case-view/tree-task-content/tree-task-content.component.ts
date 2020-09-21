@@ -1,21 +1,21 @@
 import {Component} from '@angular/core';
 import {
-    SelectedCaseService,
-    TaskContentService,
-    UnlimitedTaskContentService,
-    TreeTaskContentService,
+    AbstractTreeTaskContentComponent,
+    AssignPolicyService,
     AssignTaskService,
+    CancelTaskService,
+    DataFocusPolicyService,
+    FinishPolicyService,
+    FinishTaskService,
+    NAE_TASK_OPERATIONS,
+    SelectedCaseService,
+    SubjectTaskOperations,
+    TaskContentService,
     TaskDataService,
     TaskEventService,
-    CancelTaskService,
-    FinishTaskService,
     TaskRequestStateService,
-    DataFocusPolicyService,
-    AssignPolicyService,
-    FinishPolicyService,
-    NAE_TASK_OPERATIONS,
-    SubjectTaskOperations,
-    AbstractTreeTaskContentComponent
+    TreeTaskContentService,
+    UnlimitedTaskContentService
 } from '@netgrif/application-engine';
 
 @Component({

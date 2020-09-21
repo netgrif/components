@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {UserService, AbstractProfileComponent} from '@netgrif/application-engine';
+import {AbstractProfileComponent, UserService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-user-profile',

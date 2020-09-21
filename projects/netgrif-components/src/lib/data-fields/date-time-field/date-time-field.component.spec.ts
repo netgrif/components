@@ -9,18 +9,18 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
 import {BehaviorSubject} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
+    ChangedFields,
     ConfigurationService,
+    DateTimeField,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    DateTimeField,
-    ChangedFields,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

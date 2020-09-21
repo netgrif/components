@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {
-    WorkflowViewService,
+    AbstractWorkflowViewComponent,
     LoggerService,
     ProcessService,
     SideMenuService,
-    AbstractWorkflowViewComponent
+    WorkflowViewService
 } from '@netgrif/application-engine';
 import {ImportNetComponent} from '../../side-menu/content-components/import-net/import-net.component';
 

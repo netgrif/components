@@ -57,6 +57,7 @@ class TestWrapperComponent {
             cols: 1,
             rows: 1,
         },
-        type: DashboardCardTypes.IFRAME
+        type: DashboardCardTypes.IFRAME,
+        portalComponent: null
     };
 }

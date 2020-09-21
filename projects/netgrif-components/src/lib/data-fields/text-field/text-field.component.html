@@ -1,14 +1,20 @@
 <nc-data-field-template *ngIf="!dataField.behavior.hidden"
-                         [dataField]="dataField"
-                         [dataFieldTemplate]="textFieldTemplate"
-                         [offset]="taskOffset">
+                        [dataField]="dataField"
+                        [dataFieldTemplate]="textFieldTemplate"
+                        [offset]="taskOffset">
 </nc-data-field-template>
 
 <ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
     <div [ngSwitch]="dataField.view">
-        <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl" [showLargeLayout]="showLargeLayout"></nc-textarea-field>
-        <nc-rich-textarea-field *ngSwitchCase="'richtextarea'" [textAreaField]="dataField" [formControlRef]="formControl" [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
-        <nc-html-textarea-field *ngSwitchCase="'htmltextarea'" [textAreaField]="dataField" [formControlRef]="formControl" [showLargeLayout]="showLargeLayout"></nc-html-textarea-field>
-        <nc-simple-text-field *ngSwitchDefault [textField]="dataField" [formControlRef]="formControl" [showLargeLayout]="showLargeLayout"></nc-simple-text-field>
+        <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
+                           [showLargeLayout]="showLargeLayout"></nc-textarea-field>
+        <nc-rich-textarea-field *ngSwitchCase="'richtextarea'" [textAreaField]="dataField"
+                                [formControlRef]="formControl"
+                                [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
+        <nc-html-textarea-field *ngSwitchCase="'htmltextarea'" [textAreaField]="dataField"
+                                [formControlRef]="formControl"
+                                [showLargeLayout]="showLargeLayout"></nc-html-textarea-field>
+        <nc-simple-text-field *ngSwitchDefault [textField]="dataField" [formControlRef]="formControl"
+                              [showLargeLayout]="showLargeLayout"></nc-simple-text-field>
     </div>
 </ng-template>

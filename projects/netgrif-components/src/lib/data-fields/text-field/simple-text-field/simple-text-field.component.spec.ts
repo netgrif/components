@@ -6,18 +6,18 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormControl} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
     TextField,
-    WrappedBoolean,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService,
+    WrappedBoolean
 } from '@netgrif/application-engine';
 
 describe('SimpleTextFieldComponent', () => {

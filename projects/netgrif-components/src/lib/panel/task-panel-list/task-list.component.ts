@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractTaskListComponent, TaskViewService, LoggerService} from '@netgrif/application-engine';
+import {AbstractTaskListComponent, LoggerService, TaskViewService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-task-list',

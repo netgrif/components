@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LanguageService, AbstractLanguageSelectorComponent} from '@netgrif/application-engine';
+import {AbstractLanguageSelectorComponent, LanguageService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-language-selector',

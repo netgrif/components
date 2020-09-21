@@ -6,12 +6,7 @@ import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {NavigationTreeComponent} from '../navigation-tree/navigation-tree.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {
-    TestConfigurationService,
-    ConfigurationService,
-    TranslateLibModule,
-    MaterialModule
-} from '@netgrif/application-engine';
+import {ConfigurationService, MaterialModule, TestConfigurationService, TranslateLibModule} from '@netgrif/application-engine';
 import {UserComponentModule} from '../../user/user.module';
 import {RouterTestingModule} from '@angular/router/testing';
 

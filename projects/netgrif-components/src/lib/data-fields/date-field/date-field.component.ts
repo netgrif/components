@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {DATE_FORMAT, AbstractDateFieldComponent} from '@netgrif/application-engine';
+import {AbstractDateFieldComponent, DATE_FORMAT} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
 

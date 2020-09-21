@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CaseTreeService, AbstractAddChildNodeComponent} from '@netgrif/application-engine';
+import {AbstractAddChildNodeComponent, CaseTreeService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-add-child-node',

@@ -4,7 +4,7 @@ import {DashboardComponentModule} from '../dashboard.module';
 import {Component} from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {ConfigurationService, TestConfigurationService, DashboardParams} from '@netgrif/application-engine';
+import {ConfigurationService, DashboardParams, TestConfigurationService} from '@netgrif/application-engine';
 
 describe('DashboardContentComponent', () => {
     let component: DashboardContentComponent;

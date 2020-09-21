@@ -1,5 +1,6 @@
 <div class="height-100">
-    <quill-editor theme="snow" *ngIf="!formControlRef.disabled" [(ngModel)]="textAreaField.value" [modules]="quillModules"></quill-editor>
+    <quill-editor theme="snow" *ngIf="!formControlRef.disabled" [(ngModel)]="textAreaField.value"
+                  [modules]="quillModules"></quill-editor>
     <mat-error *ngIf="!formControlRef.valid && !formControlRef.disabled">{{getErrorMessage()}}</mat-error>
     <input type="hidden" [formControl]="formControlRef">
     <div *ngIf="formControlRef.disabled" class="border ql-snow">

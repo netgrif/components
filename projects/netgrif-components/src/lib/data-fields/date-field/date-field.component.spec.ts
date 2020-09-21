@@ -7,17 +7,17 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import moment from 'moment';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    DateField,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     TestConfigurationService,
-    DateField,
-    MockAuthenticationMethodService
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -76,6 +76,6 @@ class TestWrapperComponent {
     }, undefined, undefined, undefined, [
         {validationRule: 'weekend', validationMessage: 'This is custom message!'},
         {validationRule: 'workday', validationMessage: 'This is custom message!'}
-        ]);
+    ]);
 }
 

@@ -1,11 +1,11 @@
 import {Component, Injector} from '@angular/core';
 import {
-    HeaderSearchService,
-    CategoryFactory,
-    WorkflowHeaderService,
-    TaskHeaderService,
+    AbstractHeaderComponent,
     CaseHeaderService,
-    AbstractHeaderComponent
+    CategoryFactory,
+    HeaderSearchService,
+    TaskHeaderService,
+    WorkflowHeaderService
 } from '@netgrif/application-engine';
 
 @Component({

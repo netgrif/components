@@ -3,12 +3,12 @@ import {ProfileComponent} from './profile.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
     TestConfigurationService,
-    MockAuthenticationMethodService
+    TranslateLibModule
 } from '@netgrif/application-engine';
 
 describe('ProfileComponent', () => {

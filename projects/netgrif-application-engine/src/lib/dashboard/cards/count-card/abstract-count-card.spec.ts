@@ -65,7 +65,8 @@ class TestWrapperComponent {
         },
         resourceType: FilterType.CASE,
         title: '',
-        type: DashboardCardTypes.COUNT
+        type: DashboardCardTypes.COUNT,
+        portalComponent: null
     };
 }
 

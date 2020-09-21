@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CaseTreeService, AbstractTreeComponent} from '@netgrif/application-engine';
+import {AbstractTreeComponent, CaseTreeService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-tree-component',

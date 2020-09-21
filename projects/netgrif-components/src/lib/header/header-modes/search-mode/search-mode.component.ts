@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {DATE_FORMAT, AbstractSearchModeComponent, SideMenuService} from '@netgrif/application-engine';
+import {AbstractSearchModeComponent, DATE_FORMAT, SideMenuService} from '@netgrif/application-engine';
 import {UserAssignComponent} from '../../../side-menu/content-components/user-assign/user-assign.component';
 
 @Component({

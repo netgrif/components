@@ -1,6 +1,6 @@
 import {Component, NgZone} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import { AbstractTextareaFieldComponent} from '@netgrif/application-engine';
+import {AbstractTextareaFieldComponent} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-textarea-field',

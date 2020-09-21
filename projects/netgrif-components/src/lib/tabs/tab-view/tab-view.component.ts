@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractTabViewComponent, ViewService, LoggerService} from '@netgrif/application-engine';
+import {AbstractTabViewComponent, LoggerService, ViewService} from '@netgrif/application-engine';
 
 /**
  * Component that renders a tab view.

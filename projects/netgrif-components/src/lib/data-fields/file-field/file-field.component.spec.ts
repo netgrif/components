@@ -5,20 +5,20 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
-    SideMenuService,
-    FileField,
-    MaterialModule,
-    TranslateLibModule,
     AuthenticationMethodService,
     AuthenticationService,
-    UserResourceService,
     ConfigurationService,
+    ErrorSnackBarComponent,
+    FileField,
+    MaterialModule,
+    MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService,
-    ErrorSnackBarComponent,
+    SideMenuService,
     SuccessSnackBarComponent,
-    MockAuthenticationMethodService
+    TestConfigurationService,
+    TranslateLibModule,
+    UserResourceService
 } from '@netgrif/application-engine';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
