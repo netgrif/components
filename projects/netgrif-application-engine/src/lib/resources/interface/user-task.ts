@@ -33,7 +33,7 @@ export interface UserTask extends IUser {
      */
     userProcessRoles: Array<UserProcessRole>;
     /**
-     * Array [ProcessRole]{@link ProcessRole}
+     * Array [ExtendedProcessRole]{@link ProcessRole}
      */
     processRoles: Array<ProcessRole>;
     /**

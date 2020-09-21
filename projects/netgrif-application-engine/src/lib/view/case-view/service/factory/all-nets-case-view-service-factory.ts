@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {SideMenuService} from '../../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
@@ -10,6 +10,8 @@ import {CaseViewService} from '../case-view-service';
 import {PetriNetResourceService} from '../../../../resources/engine-endpoint/petri-net-resource.service';
 import {of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
+import {NAE_NEW_CASE_COMPONENT} from '../../../../side-menu/content-components/injection-tokens';
+import {UserService} from '../../../../user/services/user.service';
 
 @Injectable()
 export class AllNetsCaseViewServiceFactory {
@@ -21,7 +23,9 @@ export class AllNetsCaseViewServiceFactory {
                 protected _processService: ProcessService,
                 protected _log: LoggerService,
                 protected _translate: TranslateService,
-                protected _petriNetResource: PetriNetResourceService) {
+                protected _user: UserService,
+                protected _petriNetResource: PetriNetResourceService,
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
     }
 
     /**
@@ -45,7 +49,9 @@ export class AllNetsCaseViewServiceFactory {
             this._log,
             this._snackBarService,
             this._searchService,
-            this._translate
+            this._translate,
+            this._user,
+            this._newCaseComponent
         );
     }
 }

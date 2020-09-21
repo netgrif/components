@@ -1,32 +1,37 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of, ReplaySubject, Subject, timer} from 'rxjs';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
+import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription, timer} from 'rxjs';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
-import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {Net} from '../../../process/net';
-import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Pagination} from '../../../resources/interface/pagination';
 import {Task} from '../../../resources/interface/task';
 import {SearchService} from '../../../search/search-service/search.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ListRange} from '@angular/cdk/collections';
 import {UserComparatorService} from '../../../user/services/user-comparator.service';
+import {TaskEndpoint} from '../models/task-endpoint';
+import {Page} from '../../../resources/interface/page';
+import {NAE_PREFERRED_TASK_ENDPOINT} from '../models/injection-token-task-endpoint';
+import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
+import {Filter} from '../../../filter/models/filter';
+import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
+import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 
 
 @Injectable()
-export class TaskViewService extends SortableViewWithAllowedNets {
+export class TaskViewService extends SortableViewWithAllowedNets implements OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFields>;
-    protected _requestedPage$: BehaviorSubject<number>;
-    protected _loading$: LoadingEmitter;
+    protected _requestedPage$: BehaviorSubject<PageLoadRequestContext>;
+    protected _loading$: LoadingWithFilterEmitter;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _initiallyOpenOneTask: boolean;
@@ -35,15 +40,10 @@ export class TaskViewService extends SortableViewWithAllowedNets {
     // Kovy fix
     protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
     protected _closeTab$: ReplaySubject<void>;
+    protected _subInitiallyOpen: Subscription;
+    protected _subCloseTask: Subscription;
 
-    /**
-     * @ignore
-     * Used to decide if the mongo endpoint should be used instead
-     */
-    private readonly _parentCaseId: string = undefined;
     private readonly _initializing: boolean = true;
-    private _clear = false;
-    private _reloadPage = false;
 
     constructor(protected _taskService: TaskResourceService,
                 private _userService: UserService,
@@ -52,14 +52,14 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                 protected _searchService: SearchService,
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
+                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint,
                 allowedNets: Observable<Array<Net>> = of([]),
                 initiallyOpenOneTask: Observable<boolean> = of(true),
                 closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
         super(allowedNets);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
-        this._loading$ = new LoadingEmitter();
+        this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
-        this._requestedPage$ = new BehaviorSubject<number>(null);
         this._endOfData = false;
         this._pagination = {
             size: 50,
@@ -67,16 +67,15 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             totalPages: undefined,
             number: -1
         };
+        this._requestedPage$ = new BehaviorSubject<PageLoadRequestContext>(
+            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
+        );
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
-
-        const baseFilter = this._searchService.baseFilter;
-        if (baseFilter instanceof SimpleFilter) {
-            const keys = Object.keys(baseFilter.getRequestBody());
-            if (keys.length === 1 && keys[0] === 'case' && typeof baseFilter.getRequestBody()[keys[0]] === 'string') {
-                this._parentCaseId = baseFilter.getRequestBody()[keys[0]];
-            }
+        if (this._preferredEndpoint === undefined || this._preferredEndpoint === null) {
+            this._preferredEndpoint = TaskEndpoint.MONGO;
         }
+
         this._initializing = false;
 
         this._searchService.activeFilter$.subscribe(() => {
@@ -85,30 +84,40 @@ export class TaskViewService extends SortableViewWithAllowedNets {
 
         const tasksMap$ = this._requestedPage$.pipe(
             mergeMap(p => this.loadPage(p)),
-            scan((acc, value) => {
-                let result: { [k: string]: TaskPanelData } = {};
-                if (this._clear) {
-                    this._clear = false;
+            map(pageLoadResult => {
+                if (pageLoadResult.requestContext && pageLoadResult.requestContext.clearLoaded) {
+                    // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
+                    const results = [{tasks: {}, requestContext: null}, pageLoadResult];
+                    return timer(0, 1).pipe(take(2), map(i => results[i]));
+                } else {
+                    return of(pageLoadResult);
+                }
+            }),
+            concatMap(o => o),
+            scan((acc, pageLoadResult) => {
+                let result: { [k: string]: TaskPanelData };
+                if (pageLoadResult.requestContext === null) {
+                    return pageLoadResult.tasks;
+                }
 
-                } else if (this._reloadPage) {
-                    this._reloadPage = false;
+                if (pageLoadResult.requestContext.reloadCurrentTaskPage) {
                     Object.keys(acc).forEach(taskId => {
-                        if (!value[taskId]) {
+                        if (!pageLoadResult.tasks[taskId]) {
                             delete acc[taskId];
                         } else {
-                            this.updateTask(acc[taskId].task, value[taskId].task);
-                            value[taskId].task.dataGroups = acc[taskId].task.dataGroups;
-                            value[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
-                            // acc[taskId] = value[taskId];
-                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user &&
-                                this._userComparator.compareUsers(acc[taskId].task.user)));
-                            delete value[taskId];
+                            this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
+                            pageLoadResult.tasks[taskId].task.dataGroups = acc[taskId].task.dataGroups;
+                            pageLoadResult.tasks[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
+                            this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user
+                                && this._userComparator.compareUsers(acc[taskId].task.user)));
+                            delete pageLoadResult.tasks[taskId];
                         }
                     });
-                    result = Object.assign(acc, value);
+                    result = Object.assign(acc, pageLoadResult.tasks);
                 } else {
-                    result = {...acc, ...value};
+                    result = {...acc, ...pageLoadResult.tasks};
                 }
+                Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
                 return result;
             }, {})
         );
@@ -124,13 +133,22 @@ export class TaskViewService extends SortableViewWithAllowedNets {
             }),
             tap(v => this._panelUpdate$.next(v)));
 
-        initiallyOpenOneTask.subscribe(bool => {
+        this._subInitiallyOpen = initiallyOpenOneTask.subscribe(bool => {
             this._initiallyOpenOneTask = bool;
         });
 
-        closeTaskTabOnNoTasks.subscribe(bool => {
+        this._subCloseTask = closeTaskTabOnNoTasks.subscribe(bool => {
             this._closeTaskTabOnNoTasks = bool;
         });
+    }
+
+    ngOnDestroy(): void {
+        this._changedFields$.complete();
+        this._requestedPage$.complete();
+        this._panelUpdate$.complete();
+        this._closeTab$.complete();
+        this._subInitiallyOpen.unsubscribe();
+        this._subCloseTask.unsubscribe();
     }
 
     public get tasks$(): Observable<Array<TaskPanelData>> {
@@ -157,34 +175,58 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         return this._closeTab$.asObservable();
     }
 
-    public loadPage(page: number): Observable<{ [k: string]: TaskPanelData }> {
-        if (this._loading$.isActive || page === null || page === undefined || page < 0 || this._clear) {
-            return of({});
+    protected get activeFilter(): Filter {
+        return this._searchService.activeFilter;
+    }
+
+    public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
+        if (requestContext === null || requestContext.pageNumber < 0) {
+            return of({tasks: {}, requestContext});
         }
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
-        params = this.addPageParams(params, page);
-        this._loading$.on();
-        return timer(200).pipe(
-            mergeMap(_ => !this._searchService.additionalFiltersApplied && !!this._parentCaseId ?
-                this._taskService.getTasks({case: this._parentCaseId}, params) :
-                this._taskService.searchTask(this._searchService.activeFilter, params)),
+        params = this.addPageParams(params, requestContext.pagination);
+        this._loading$.on(requestContext.filter);
+
+        let request: Observable<Page<Task>>;
+        if (requestContext.filter.bodyContainsQuery() || this._preferredEndpoint === TaskEndpoint.ELASTIC) {
+            request = timer(200).pipe(
+                switchMap(() => this._taskService.searchTask(requestContext.filter, params))
+            );
+        } else {
+            request = this._taskService.getTasks(requestContext.filter, params);
+        }
+        return request.pipe(
             catchError(err => {
                 this._log.error('Loading tasks has failed!', err);
-                return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
+                this._loading$.off(requestContext.filter);
+                return of({content: [], pagination: {...this._pagination}});
+            }),
+            filter(() => {
+                const r = requestContext.filter === this._searchService.activeFilter;
+                if (!r) {
+                    this._loading$.off(requestContext.filter);
+                    this._log.debug('Received tasks page is no longer relevant since the active filter has changed before it could arrive.'
+                        + ' Discarding...');
+                }
+                return r;
             }),
             tap(t => {
-                if (this._pagination.totalElements && this._pagination.totalElements > 0 &&
-                    t.pagination.totalElements === 0 && !Array.isArray(t.content)) {
+                Object.assign(requestContext.pagination, t.pagination);
+            }),
+            tap(t => {
+                if (this._pagination.totalElements && this._pagination.totalElements > 0
+                    && t.pagination.totalElements === 0 && !Array.isArray(t.content)) {
                     this._closeTab$.next();
                 }
             }),
-            tap(t => this._endOfData = !Array.isArray(t.content) ||
-                (Array.isArray(t.content) && t.content.length === 0) ||
-                t.pagination.number === t.pagination.totalPages),
+            tap(t => {
+                this._endOfData = !Array.isArray(t.content)
+                    || t.content.length === 0
+                    || t.pagination.number === t.pagination.totalPages;
+            }),
             map(tasks => Array.isArray(tasks.content) ? tasks : {...tasks, content: []}),
             map(tasks => {
-                this._pagination = tasks.pagination;
                 return tasks.content.reduce((acc, curr) => {
                     this.blockTaskFields(curr, !(curr.user && this._userComparator.compareUsers(curr.user)));
                     return {
@@ -196,7 +238,8 @@ export class TaskViewService extends SortableViewWithAllowedNets {
                     };
                 }, {});
             }),
-            tap(_ => this._loading$.off())
+            map(tasks => ({tasks, requestContext})),
+            tap(_ => this._loading$.off(requestContext.filter))
         );
     }
 
@@ -216,49 +259,54 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         task.dataGroups.forEach(g => g.fields.forEach(f => f.block = block));
     }
 
-    public nextPage(renderedRange: ListRange, totalLoaded: number): void {
-        if (this._loading$.isActive || this._endOfData) {
+    public nextPage(renderedRange: ListRange, totalLoaded: number, requestContext?: PageLoadRequestContext): void {
+        if (requestContext === undefined) {
+            requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
+            requestContext.pagination.number += 1;
+        }
+
+        if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
 
-        // if (renderedRange.start === 0) {
-        //     this._requestedPage$.next(this._pagination.number - 1);
-        // } else
         if (renderedRange.end === totalLoaded) {
-            this._requestedPage$.next(this._pagination.number + 1);
+            this._requestedPage$.next(requestContext);
         }
+    }
+
+    private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
+        return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
 
     public reload(): void {
         if (!this._tasks$ || !this._pagination) {
             return;
         }
-        this._clear = true;
-        this._pagination.number = -1;
+
         this._endOfData = false;
+        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, true);
+        requestContext.pagination.number = 0;
         const range = {
             start: -1,
             end: 0
         };
-        this.nextPage(range, 0);
-        timer(100).subscribe(_ => {
-            this._pagination.number = -1;
-            this.nextPage(range, 0);
-        });
+
+        this.nextPage(range, 0, requestContext);
     }
 
     public reloadCurrentPage(): void {
         if (!this._tasks$ || !this._pagination) {
             return;
         }
-        this._reloadPage = true;
-        this._pagination.number = -1; // TODO [BUG] - Reloading only first page
+
         this._endOfData = false;
+        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, false, true);
+        requestContext.pagination.number = 0; // TODO [BUG] - Reloading only first page
         const range = {
             start: -1,
             end: 0
         };
-        this.nextPage(range, 0);
+        this.nextPage(range, 0, requestContext);
     }
 
     protected getMetaFieldSortId(): string {
@@ -270,10 +318,9 @@ export class TaskViewService extends SortableViewWithAllowedNets {
         return 'priority,desc';
     }
 
-    protected addPageParams(params: HttpParams, page?: number): HttpParams {
-        params = params.set('size', this._pagination.size + '');
-        page = page !== null ? page : this._pagination.number;
-        params = params.set('page', page + '');
+    protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
+        params = params.set('size', pagination.size + '');
+        params = params.set('page', pagination.number + '');
         return params;
     }
 }

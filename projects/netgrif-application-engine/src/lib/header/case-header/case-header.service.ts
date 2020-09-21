@@ -1,4 +1,4 @@
-import {Inject, Injectable, Optional} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
@@ -8,23 +8,27 @@ import {UserPreferenceService} from '../../user/services/user-preference.service
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
-
+import {Subscription} from 'rxjs';
 
 
 @Injectable()
-export class CaseHeaderService extends AbstractHeaderService {
+export class CaseHeaderService extends AbstractHeaderService implements OnDestroy {
+    protected subAllowedNets: Subscription;
+
     constructor(protected _caseViewService: CaseViewService,
                 preferences: UserPreferenceService,
                 viewService: ViewService,
                 logger: LoggerService,
                 @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
         super(HeaderType.CASE, preferences, viewService, logger);
-        _caseViewService.allowedNets$.subscribe(allowedNets => {
+        this.subAllowedNets = _caseViewService.allowedNets$.subscribe(allowedNets => {
             this.setAllowedNets(allowedNets);
             if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {
-                this.initializeDefaultHeaderState(naeDefaultHeaders);
+                this.initDefaultHeaders = naeDefaultHeaders;
+                this.initializeDefaultHeaderState();
+            } else {
+                this.loadHeadersFromPreferences();
             }
-            this.loadHeadersFromPreferences();
             this.loading.off();
         });
     }
@@ -36,5 +40,10 @@ export class CaseHeaderService extends AbstractHeaderService {
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'headers.caseMeta.author', 'text'),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.CREATION_DATE, 'headers.caseMeta.creationDate', 'date'),
         ];
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.subAllowedNets.unsubscribe();
     }
 }

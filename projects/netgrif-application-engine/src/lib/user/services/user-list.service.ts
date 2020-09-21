@@ -19,8 +19,18 @@ export interface UserListItem extends User {
     toggle(): void;
 }
 
+export interface RolesObject {
+    [k: string]: RoleObject;
+}
+
+interface RoleObject {
+    perform?: boolean;
+    delegate?: boolean;
+    view?: boolean;
+}
+
 /**
- * Performs paged loading users from backend for [UserAssignComponent]{@link UserAssignComponent}.
+ * Performs paged loading users from backend for [UserAssignComponent]{@link AbstractUserAssignComponent}.
  */
 @Injectable()
 export class UserListService {
@@ -53,6 +63,10 @@ export class UserListService {
      * The search content that should be applied to the request
      */
     private _searchQuery: string;
+    /**
+     * Roles that should be applied to the request
+     */
+    public rolesQuery: Array<string>;
     private _updateProgress$: LoadingEmitter;
     private _usersReload$: Subject<void>;
 
@@ -83,6 +97,7 @@ export class UserListService {
         };
         this._clear = false;
         this._searchQuery = '';
+        this.rolesQuery = new Array<string>();
 
         const usersMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -135,7 +150,7 @@ export class UserListService {
         let params: HttpParams = new HttpParams();
         params = this.addPageParams(params, page);
         this._loading$.on();
-        return this._resources.search({fulltext: this._searchQuery}, params).pipe(
+        return this._resources.search({fulltext: this._searchQuery, roles: this.rolesQuery}, params).pipe(
             catchError(err => {
                 this._log.error('Loading users has failed on page ' + this._pagination.number, err);
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});

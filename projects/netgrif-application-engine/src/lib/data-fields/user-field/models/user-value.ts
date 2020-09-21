@@ -1,11 +1,11 @@
 /**
- * Used by [UserField]{@link UserField} and [UserAssignComponent]{@link UserAssignComponent}.
+ * Used by [UserField]{@link UserField} and [UserAssignComponent]{@link AbstractUserAssignComponent}.
  *
  * Represents the value of the user.
  */
 export class UserValue {
     /**
-     * An object that represents the selected user in {@link UserField} and [UserAssignComponent]{@link UserAssignComponent}.
+     * An object that represents the selected user in {@link UserField} and [UserAssignComponent]{@link AbstractUserAssignComponent}.
      * @param _id the id of the selected user
      * @param _name the first name of the selected user
      * @param _surname the surname of the selected user

@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {DataGroup} from '../../resources/interface/data-groups';
-import {Observable, Subject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -9,26 +9,33 @@ import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumera
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {FieldConverterService} from './field-converter.service';
+import {EventOutcome} from '../../resources/interface/event-outcome';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
  * Also provides some general functionality that is needed when working with task content.
  *
- * Notable example of a parent Component is the {@link TaskPanelComponent}.
+ * Notable example of a parent Component is the {@link AbstractTaskPanelComponent}.
  *
- * Notable example of a task content renderer is the {@link TaskContentComponent}.
+ * Notable example of a task content renderer is the {@link AbstractTaskContentComponent}.
  */
 @Injectable()
-export abstract class TaskContentService {
-    $shouldCreate: Subject<DataGroup[]>;
+export abstract class TaskContentService implements OnDestroy {
+    $shouldCreate: ReplaySubject<DataGroup[]>;
     protected _task: Task;
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
                           protected _translate: TranslateService,
                           protected _logger: LoggerService) {
-        this.$shouldCreate = new Subject<DataGroup[]>();
+        this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
         this._task = undefined;
+    }
+
+    ngOnDestroy(): void {
+        if (!this.$shouldCreate.closed) {
+            this.$shouldCreate.complete();
+        }
     }
 
     /**
@@ -76,7 +83,9 @@ export abstract class TaskContentService {
         if (this._task && this._task.dataGroups) {
             this._task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
-                    field.block = blockingState;
+                    field.initialized$.subscribe(() => {
+                        field.block = blockingState;
+                    });
                 });
             });
         }
@@ -85,11 +94,11 @@ export abstract class TaskContentService {
     /**
      * Clears the assignee, start date and finish date from the managed Task.
      */
-    public removeStateData(): void {
+    public updateStateData(eventOutcome: EventOutcome): void {
         if (this._task) {
-            this._task.user = undefined;
-            this._task.startDate = undefined;
-            this._task.finishDate = undefined;
+            this._task.user = eventOutcome.assignee;
+            this._task.startDate = eventOutcome.startDate;
+            this._task.finishDate = eventOutcome.finishDate;
         }
     }
 
@@ -118,11 +127,17 @@ export abstract class TaskContentService {
                                     newChoices.push({key: it, value: it} as EnumerationFieldValue);
                                 });
                             } else {
-                                Object.keys(updatedField.choices).forEach(choice => {
-                                    newChoices.push({key: choice, value: updatedField.choices[key]} as EnumerationFieldValue);
+                                Object.keys(updatedField.choices).forEach(choiceKey => {
+                                    newChoices.push({key: choiceKey, value: updatedField.choices[choiceKey]} as EnumerationFieldValue);
                                 });
                             }
                             (field as EnumerationField | MultichoiceField).choices = newChoices;
+                        } else if (key === 'options') {
+                            const newOptions = [];
+                            Object.keys(updatedField.options).forEach(optionKey => {
+                                newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
+                            });
+                            (field as EnumerationField | MultichoiceField).choices = newOptions;
                         } else if (key !== 'type') {
                             field[key] = updatedField[key];
                         }

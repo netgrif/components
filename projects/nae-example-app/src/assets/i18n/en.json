@@ -1,5 +1,10 @@
 {
     "toolbar-example": {
         "text": "This text is in English"
+    },
+    "headers": {
+        "caseMeta": {
+            "title": "Title (overridden by app)"
+        }
     }
 }

@@ -1,33 +1,35 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
-import {NewCaseComponent} from '../../../side-menu/content-components/new-case/new-case.component';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {Net} from '../../../process/net';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, take, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
-import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
-
+import {NAE_NEW_CASE_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
+import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
+import {Filter} from '../../../filter/models/filter';
+import {ListRange} from '@angular/cdk/collections';
+import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
+import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
+import {UserService} from '../../../user/services/user.service';
 
 @Injectable()
-export class CaseViewService extends SortableViewWithAllowedNets {
+export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
 
-    protected _loading$: LoadingEmitter;
+    protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
-    protected _nextPage$: BehaviorSubject<number>;
+    protected _nextPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
-
-    private _clear: boolean;
 
     constructor(allowedNets: Observable<Array<Net>>,
                 protected _sideMenuService: SideMenuService,
@@ -35,33 +37,53 @@ export class CaseViewService extends SortableViewWithAllowedNets {
                 protected _log: LoggerService,
                 protected _snackBarService: SnackBarService,
                 protected _searchService: SearchService,
-                protected _translate: TranslateService) {
+                protected _translate: TranslateService,
+                protected _user: UserService,
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
         super(allowedNets);
-        this._loading$ = new LoadingEmitter();
+        this._loading$ = new LoadingWithFilterEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
         this._endOfData = false;
-        this._nextPage$ = new BehaviorSubject<number>(null);
         this._pagination = {
             size: 25,
             totalElements: undefined,
             totalPages: undefined,
             number: -1
         };
-        this._clear = false;
+        this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(
+            new PageLoadRequestContext(this.activeFilter, Object.assign({}, this._pagination, {number: 0}))
+        );
 
         const casesMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
-            scan((acc, value) => {
-                const result = this._clear ? {} : {...acc, ...value};
-                this._clear = false;
-                return result;
+            map(pageLoadResult => {
+                if (pageLoadResult.requestContext && pageLoadResult.requestContext.clearLoaded) {
+                    // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
+                    const results = [{cases: {}, requestContext: null}, pageLoadResult];
+                    return timer(0, 1).pipe(take(2), map(i => results[i]));
+                } else {
+                    return of(pageLoadResult);
+                }
+            }),
+            concatMap(o => o),
+            scan((acc, pageLoadResult) => {
+                if (pageLoadResult.requestContext === null) {
+                    return pageLoadResult.cases;
+                }
+                Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
+                return {...acc, ...pageLoadResult.cases};
             }, {})
         );
         this._cases$ = casesMap.pipe(
             map(v => Object.values(v))
         );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._nextPage$.complete();
     }
 
     public get loading(): boolean {
@@ -76,46 +98,76 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         return this._cases$;
     }
 
-    public loadPage(page: number): Observable<{ [k: string]: Case }> {
-        if (page === null || page === undefined || this._clear) {
-            return of({});
+    protected get activeFilter(): Filter {
+        return this._searchService.activeFilter;
+    }
+
+    public loadPage(requestContext: PageLoadRequestContext): Observable<CasePageLoadRequestResult> {
+        if (requestContext === null || requestContext.pageNumber < 0) {
+            return of({cases: {}, requestContext});
         }
         let params: HttpParams = new HttpParams();
         params = this.addSortParams(params);
-        params = this.addPageParams(params, page);
-        this._loading$.on();
-        return this._caseResourceService.searchCases(this._searchService.activeFilter, params).pipe(
+        params = this.addPageParams(params, requestContext.pagination);
+        this._loading$.on(requestContext.filter);
+
+        return this._caseResourceService.searchCases(requestContext.filter, params).pipe(
             catchError(err => {
                 this._log.error('Loading cases has failed!', err);
-                return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
+                this._loading$.off(requestContext.filter);
+                return of({content: [], pagination: {...this._pagination}});
             }),
-            tap(c => this._endOfData = !Array.isArray(c.content) ||
-                (Array.isArray(c.content) && c.content.length === 0) ||
-                c.pagination.number === c.pagination.totalPages),
+            filter(() => {
+                const r = requestContext.filter === this._searchService.activeFilter;
+                if (!r) {
+                    this._loading$.off(requestContext.filter);
+                    this._log.debug('Received cases page is no longer relevant since the active filter has changed before it could arrive.'
+                        + ' Discarding...');
+                }
+                return r;
+            }),
+            tap(c => {
+                Object.assign(requestContext.pagination, c.pagination);
+            }),
+            tap(c => {
+                this._endOfData = !Array.isArray(c.content)
+                    || c.content.length === 0
+                    || c.pagination.number === c.pagination.totalPages;
+            }),
             map(cases => Array.isArray(cases.content) ? cases : {...cases, content: []}),
             map(cases => {
-                this._pagination = cases.pagination;
                 return cases.content.reduce((acc, cur) => {
                     return {...acc, [cur.stringId]: cur};
                 }, {});
             }),
-            tap(_ => this._loading$.off())
+            map(cases => ({cases, requestContext})),
+            tap(_ => this._loading$.off(requestContext.filter))
         );
     }
 
-    public nextPage(lastRendered, totalLoaded) {
-        if (this.loading || this._endOfData) {
+    public nextPage(renderedRange: ListRange, totalLoaded: number, requestContext?: PageLoadRequestContext) {
+        if (requestContext === undefined) {
+            requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
+            requestContext.pagination.number += 1;
+        }
+
+        if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
             return;
         }
 
-        if (lastRendered === totalLoaded) {
-            this._nextPage$.next(this._pagination.number + 1);
+        if (renderedRange.end === totalLoaded) {
+            this._nextPage$.next(requestContext);
         }
+    }
+
+    private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
+        return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
 
     public createNewCase(): Observable<Case> {
         const myCase = new Subject<Case>();
-        this._sideMenuService.open(NewCaseComponent, SideMenuSize.MEDIUM, {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
+        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
+            {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.reload();
@@ -126,10 +178,9 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         return myCase.asObservable();
     }
 
-    protected addPageParams(params: HttpParams, page?: number): HttpParams {
-        params = params.set('size', this._pagination.size + '');
-        page = page !== null ? page : this._pagination.number;
-        params = params.set('page', page + '');
+    protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
+        params = params.set('size', pagination.size + '');
+        params = params.set('page', pagination.number + '');
         return params;
     }
 
@@ -152,14 +203,19 @@ export class CaseViewService extends SortableViewWithAllowedNets {
         if (!this._cases$ || !this._pagination) {
             return;
         }
-        this._clear = true;
-        this._pagination.number = -1;
+
         this._endOfData = false;
-        this.nextPage(0, 0);
-        timer(100).subscribe(_ => {
-            this._pagination.number = -1;
-            this.nextPage(0, 0);
-        });
+        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, true);
+        requestContext.pagination.number = 0;
+        const range = {
+            start: -1,
+            end: 0
+        };
+
+        this.nextPage(range, 0, requestContext);
     }
 
+    public hasAuthority(authority: Array<string> | string): boolean {
+        return this._user.hasAuthority(authority);
+    }
 }

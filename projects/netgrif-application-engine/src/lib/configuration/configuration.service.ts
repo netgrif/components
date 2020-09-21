@@ -1,4 +1,4 @@
-import {NetgrifApplicationEngine, View} from './interfaces/schema';
+import {NetgrifApplicationEngine, View, Views} from './interfaces/schema';
 import {Observable, of} from 'rxjs';
 
 export abstract class ConfigurationService {
@@ -41,6 +41,50 @@ export abstract class ConfigurationService {
             }
             views = view.children;
         }
+    }
+
+    /**
+     * Get view configuration from nae.json for view at given url.
+     * @param url to the requested view. Necessary backslash.
+     * @return requested configuration if it exists. `undefined` otherwise.
+     */
+    public getViewByUrl(url: string): View | undefined {
+        const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
+        const views = config.views;
+        if (!views) {
+            return undefined;
+        }
+        let map: Map<string, View> = new Map();
+        map = this.getChildren(views, map, '');
+        if (map.get(url) === undefined) {
+            map.forEach((value, key) => {
+                if (key.includes('/**') && url.includes(key.split('/**')[0]))
+                    return value;
+            });
+        }
+        return map.get(url);
+    }
+
+    private getChildren(views: Views, map: Map<string, View>, prefix: string): Map<string, View> {
+        Object.keys(views).forEach(view => {
+            if (!!views[view].routing.path) {
+                prefix = prefix.charAt(prefix.length - 1) === '/' ?
+                    prefix.length > 1 ? prefix.substring(0, prefix.length - 2) : '' :
+                    prefix;
+                const viewPath = views[view].routing.path.charAt(0) === '/' ?
+                    views[view].routing.path.length > 1 ? views[view].routing.path.substring(1) : '' :
+                        views[view].routing.path;
+                map.set(
+                    views[view].routing.match ?
+                        prefix + '/' + viewPath + '/**' :
+                        prefix + '/' + viewPath,
+                    views[view]);
+            }
+            if (views[view].children) {
+                this.getChildren(views[view].children, map, prefix + '/' + views[view].routing.path);
+            }
+        });
+        return map;
     }
 
     /**

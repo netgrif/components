@@ -15,6 +15,9 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {TaskDataService} from './task-data.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
+import {TaskEventService} from '../../task-content/services/task-event.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('FinishPolicyService', () => {
     let service: FinishPolicyService;
@@ -34,9 +37,11 @@ describe('FinishPolicyService', () => {
                 FinishTaskService,
                 TaskRequestStateService,
                 TaskDataService,
+                TaskEventService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations}
+                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
         });
         service = TestBed.inject(FinishPolicyService);
@@ -44,5 +49,9 @@ describe('FinishPolicyService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

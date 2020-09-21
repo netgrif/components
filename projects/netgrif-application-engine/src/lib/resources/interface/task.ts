@@ -2,6 +2,7 @@ import {UserTask} from './user-task';
 import {DataGroup} from './data-groups';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskLayout} from './task-layout';
+import {NaeDate} from '../types/nae-date-type';
 
 /**
  * Object from Backend
@@ -34,8 +35,8 @@ export interface Task {
      *    }
      */
     roles: object;
-    startDate: Array<number>;
-    finishDate: Array<number>;
+    startDate: NaeDate;
+    finishDate: NaeDate;
     /**
      * See [AssignPolicy]{@link AssignPolicy#}
      */

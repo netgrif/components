@@ -1,5 +1,5 @@
 import {GridElement} from './grid-element';
 
-export interface GridElementWithItem extends GridElement {
-    item?: any;
+export interface GridElementWithItem<T> extends GridElement {
+    item?: T;
 }

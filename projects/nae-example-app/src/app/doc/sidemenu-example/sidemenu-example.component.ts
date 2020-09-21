@@ -1,13 +1,11 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
-    FilterSelectorComponent,
     Net,
-    NewCaseComponent,
     SideMenuService,
     SideMenuSize,
-    UserAssignComponent
 } from '@netgrif/application-engine';
 import {of} from 'rxjs';
+import {NewCaseComponent, UserAssignComponent, FilterSelectorComponent} from '@netgrif/components';
 
 @Component({
     selector: 'nae-app-sidemenu-example',

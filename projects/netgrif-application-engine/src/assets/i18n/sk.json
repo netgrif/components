@@ -198,7 +198,8 @@
             "name": "Meno",
             "surname": "Priezvisko",
             "repeatPass": "Zopakujte heslo",
-            "register": "Registrovať"
+            "register": "Registrovať",
+            "notVerified": "Nie je možné verifikovať token!"
         }
     },
     "headers": {
@@ -269,6 +270,22 @@
             "listTitle": "Procesy",
             "noRoles": "Tento proces neobsahuje žiadne roly",
             "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
+        },
+        "user-invite": {
+            "newUser": "Nový používateľ",
+            "orgs": "Organizácie",
+            "selectedOrgs": "Vybrané Organizácie",
+            "selectedRoless": "Vybrané Role",
+            "mail": "Zadajte Email",
+            "noSelectedOrgs": "Nie su zvolené žiadne organizácie!",
+            "noSelectedRoles": "Nie su zvolené žiadne role!",
+            "noOrgs": "Nie sú žiadne dostupné organizácie!",
+            "version": "Verzia",
+            "emailFieldMandatory": "Email je povinný",
+            "oneOrMoreOrganization": "Nový používateľ musí patriť aspoň do jenej organizácie",
+            "inviteSent": "Pozvánka bola odoslaná",
+            "inviteFailed": "Poslanie pozvánky zlyhalo",
+            "invite-user": "POZVAŤ POUŽÍVATEĽA"
         }
     },
     "preferences": {
@@ -280,5 +297,8 @@
     "caseTree": {
         "newNodeDefaultName": "Nový Vrchol",
         "noTaskSelected": "Momentálne nie je zvolený žiaden prípad. Pre vybranie prípadu zvoľte vrchol v strome."
+    },
+    "dashboard": {
+        "cases" : "prípady"
     }
 }

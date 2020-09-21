@@ -47,6 +47,7 @@ export class SearchService implements OnDestroy {
 
     ngOnDestroy(): void {
         this._predicateRemoved$.complete();
+        this._activeFilter.complete();
     }
 
     /**

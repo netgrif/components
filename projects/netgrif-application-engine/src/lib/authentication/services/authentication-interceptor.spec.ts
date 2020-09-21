@@ -8,9 +8,12 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {SessionService} from '../session/services/session.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {LoggerService} from '../../logger/services/logger.service';
 
 describe('AuthenticationInterceptor', () => {
     let service: SessionService;
+    let warnSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -18,7 +21,7 @@ describe('AuthenticationInterceptor', () => {
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SessionService,
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: HTTP_INTERCEPTORS,
                     useClass: AuthenticationInterceptor,
@@ -27,6 +30,7 @@ describe('AuthenticationInterceptor', () => {
             ]
         });
         service = TestBed.inject(SessionService);
+        warnSpy = spyOn(TestBed.inject(LoggerService), 'warn');
     });
 
     describe('intercept HTTP request', () => {
@@ -46,9 +50,6 @@ describe('AuthenticationInterceptor', () => {
 
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
         mock.verify();
-    }));
-
-    afterAll(() => {
         TestBed.resetTestingModule();
-    });
+    }));
 });

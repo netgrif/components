@@ -1,6 +1,5 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {Subject} from 'rxjs';
-import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
@@ -15,6 +14,11 @@ import {TaskOperations} from '../interfaces/task-operations';
 import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
 import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {SelectedCaseService} from './selected-case.service';
+import {NAE_USER_ASSIGN_COMPONENT} from '../../side-menu/content-components/injection-tokens';
+import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
+import {TaskEventService} from '../../task-content/services/task-event.service';
+import {TaskDataService} from './task-data.service';
 
 
 /**
@@ -29,7 +33,10 @@ export class DelegateTaskService extends TaskHandlingService {
                 protected _snackBar: SnackBarService,
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
+                protected _taskEvent: TaskEventService,
+                protected _taskDataService: TaskDataService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() @Inject(NAE_USER_ASSIGN_COMPONENT) protected _userAssignComponent: any,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
         super(_taskContentService, _selectedCaseService);
@@ -54,10 +61,10 @@ export class DelegateTaskService extends TaskHandlingService {
         if (this._taskState.isLoading(delegatedTaskId)) {
             return;
         }
-        this._sideMenuService.open(UserAssignComponent, SideMenuSize.MEDIUM,
+        this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
             {
-                roles: undefined,
-                value: new UserValue(
+                roles: this._safeTask.roles,
+                value: !this._safeTask.user ? undefined : new UserValue(
                     this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
                 )
             } as UserListInjectedData).onClose.subscribe(event => {
@@ -70,18 +77,20 @@ export class DelegateTaskService extends TaskHandlingService {
 
                 this._taskState.startLoading(delegatedTaskId);
 
-                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(response => {
+                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(eventOutcome => {
                     this._taskState.stopLoading(delegatedTaskId);
                     if (!this.isTaskRelevant(delegatedTaskId)) {
                         this._log.debug('current task changed before the delegate response could be received, discarding...');
                         return;
                     }
 
-                    if (response.success) {
-                        this._taskContentService.removeStateData();
+                    if (eventOutcome.success) {
+                        this._taskContentService.updateStateData(eventOutcome);
+                        this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                         this.completeSuccess(afterAction);
-                    } else if (response.error) {
-                        this._snackBar.openErrorSnackBar(response.error);
+                    } else if (eventOutcome.error) {
+                        this._snackBar.openErrorSnackBar(eventOutcome.error);
+                        this.sendNotification(false);
                         afterAction.next(false);
                     }
                 }, error => {
@@ -95,6 +104,7 @@ export class DelegateTaskService extends TaskHandlingService {
 
                     this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
                      ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
+                    this.sendNotification(false);
                     afterAction.next(false);
                 });
             }
@@ -107,6 +117,15 @@ export class DelegateTaskService extends TaskHandlingService {
      */
     private completeSuccess(afterAction: Subject<boolean>): void {
         this._taskOperations.reload();
+        this.sendNotification(true);
         afterAction.next(true);
+    }
+
+    /**
+     * Publishes a delegate notification to the {@link TaskEventService}
+     * @param success whether the delegate operation was successful or not
+     */
+    private sendNotification(success: boolean): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.DELEGATE, success));
     }
 }

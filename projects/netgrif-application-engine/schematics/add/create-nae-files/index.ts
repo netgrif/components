@@ -30,7 +30,6 @@ export function createNaeFiles(): Rule {
         rules.push(createRoutesModule());
         rules.push(schematic('create-configuration-service', {}));
         rules.push(schematic('create-view-service', {}));
-        rules.push(schematic('custom-themes', {}));
         rules.push(updateAppComponentHTML());
         rules.push(addInitialsImportsToAppModule());
         rules.push(updateAppComponentTS());
@@ -60,10 +59,7 @@ function createRoutesModule(): Rule {
 function addInitialsImportsToAppModule(): Rule {
     return (tree: Tree) => {
         addImportsToAppModule(tree, [
-            new ImportToAdd('BrowserAnimationsModule', '@angular/platform-browser/animations'),
-            new ImportToAdd('NavigationModule', '@netgrif/application-engine'),
-            new ImportToAdd('SideMenuModule', '@netgrif/application-engine'),
-            new ImportToAdd('SideMenuContentModule', '@netgrif/application-engine')
+            new ImportToAdd('BrowserAnimationsModule', '@angular/platform-browser/animations')
         ]);
     };
 }
@@ -118,9 +114,7 @@ function updateAppComponentHTML(): Rule {
     return (tree: Tree) => {
         const pathToComponent = getProjectInfo(tree).path + '/app.component.html';
         const content =
-            `<nae-side-menu-container>
-    <router-outlet></router-outlet>
-</nae-side-menu-container>`;
+            `<router-outlet></router-outlet>`;
         tree.overwrite(pathToComponent, content);
     };
 }

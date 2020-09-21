@@ -1,8 +1,0 @@
-@import '~@angular/material/theming';
-
-@mixin header-component($theme) {
-    $primary: map-get($theme, primary);
-    .active-header-item {
-        background: rgba(mat-color($primary),0.3);
-    }
-}

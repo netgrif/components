@@ -13,6 +13,9 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {SelectedCaseService} from './selected-case.service';
+import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TaskEvent} from '../../task-content/model/task-event';
+import {TaskEventService} from '../../task-content/services/task-event.service';
 
 
 /**
@@ -28,6 +31,7 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _taskState: TaskRequestStateService,
                 protected _taskDataService: TaskDataService,
                 protected _callChain: CallChainService,
+                protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -92,20 +96,23 @@ export class FinishTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(finishedTaskId);
 
-        this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(response => {
+        this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(eventOutcome => {
             this._taskState.stopLoading(finishedTaskId);
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
                 return;
             }
 
-            if (response.success) {
-                this._taskContentService.removeStateData();
+            if (eventOutcome.success) {
+                this._taskContentService.updateStateData(eventOutcome);
+                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this._taskOperations.reload();
+                this.sendNotification(true);
                 afterAction.next(true);
                 this._taskOperations.close();
-            } else if (response.error) {
-                this._snackBar.openErrorSnackBar(response.error);
+            } else if (eventOutcome.error) {
+                this._snackBar.openErrorSnackBar(eventOutcome.error);
+                this.sendNotification(false);
                 afterAction.next(false);
             }
         }, error => {
@@ -119,7 +126,16 @@ export class FinishTaskService extends TaskHandlingService {
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
+            this.sendNotification(false);
             afterAction.next(false);
         });
+    }
+
+    /**
+     * Publishes a finish notification to the {@link TaskEventService}
+     * @param success whether the finish operation was successful or not
+     */
+    private sendNotification(success: boolean): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.FINISH, success));
     }
 }

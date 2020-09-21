@@ -1,0 +1,172 @@
+<div fxLayout="row" fxLayoutAlign="start start" class="full-height full-width padding-default">
+
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="40" class="full-height margin-right-16px">
+
+        <mat-toolbar color="primary" class="height-96 margin-bottom-16px">
+            <span>{{'admin.user-invite.newUser' | translate}}</span>
+            <div fxFlex></div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="40" class="padding-right-16px">
+                <mat-icon fxFlex class="mail-icon">email</mat-icon>
+                <mat-form-field fxFlex="100" class="user-assign-search" color="primary">
+                    <input matInput placeholder="{{ 'admin.user-invite.mail' | translate }}"
+                           [formControl]="invitedEmailControl">
+                    <button mat-button *ngIf="invitedEmailControl.value" matSuffix mat-icon-button
+                            (click)="invitedEmailControl.setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+        </mat-toolbar>
+
+
+        <div fxLayout="column" class="invited-card margin-bottom-16px" fxLayoutAlign="start stretch">
+
+            <span class="invited-card-font padding-16px">{{'admin.user-invite.selectedOrgs' | translate}}</span>
+
+            <mat-divider class="inherited-divider"></mat-divider>
+
+            <div class="padding-16px" fxLayout="column" *ngIf="invitedGroups.length !== 0">
+                <div *ngFor="let org of invitedGroups" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <span>{{org.name}}</span>
+
+                    <div fxFlex></div>
+
+                    <button mat-icon-button color="primary" (click)="removeGroup(org)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <span class="padding-16px"
+                  *ngIf="invitedGroups.length === 0">{{'admin.user-invite.noSelectedOrgs' | translate}}</span>
+        </div>
+
+
+        <div fxLayout="column" class="invited-card margin-bottom-16px" fxLayoutAlign="start stretch">
+
+            <span class="invited-card-font padding-16px">{{'admin.user-invite.selectedRoles' | translate}}</span>
+
+            <mat-divider class="inherited-divider"></mat-divider>
+
+            <div class="padding-16px" fxLayout="column" *ngIf="invitedRoles.length !== 0">
+                <div *ngFor="let role of invitedRoles" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <span>{{role.name}}</span>
+
+                    <div fxFlex></div>
+
+                    <button mat-icon-button color="primary" (click)="removeRole(role)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <span class="padding-16px"
+                  *ngIf="invitedRoles.length === 0">{{'admin.user-invite.noSelectedRoles' | translate}}</span>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+            <button mat-raised-button color="primary" (click)="invite()">
+                <span>{{'admin.user-invite.invite-user' | translate}}</span>
+            </button>
+        </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="30" class="full-height margin-right-16px">
+
+        <mat-toolbar color="primary" class="height-96 margin-bottom-16px">
+            <span>{{'admin.user-invite.orgs' | translate}}</span>
+        </mat-toolbar>
+
+        <div *ngIf="groups.length === 0" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+            <mat-icon color="accent" class="margin-bottom-default no-user-icon">groups</mat-icon>
+            <span class="font-size-20">{{'admin.user-invite.noGroups' | translate}}</span>
+        </div>
+
+        <div fxLayout="column" class="invited-card " *ngIf="groups.length !== 0">
+            <div fxLayout="column">
+                <div *ngFor="let group of groups" class="padding-16px-0" fxFlex fxLayout="row"
+                     fxLayoutAlign="start center">
+                    <span>{{group.name}}</span>
+
+                    <div fxFlex></div>
+
+                    <button mat-icon-button color="primary" (click)="addGroup(group)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="30" class="full-height">
+
+        <mat-toolbar color="primary" class="height-96 margin-bottom-16px">
+            <span>{{'admin.process-list.listTitle' | translate}}</span>
+        </mat-toolbar>
+
+        <div *ngIf="nets.processes.length === 0" fxLayout="column"
+             fxLayoutAlign="center center" fxFlex class="margin-top-x2">
+            <mat-icon color="accent" class="margin-bottom-default no-user-icon">timeline</mat-icon>
+            <span class="font-size-20">{{ 'admin.process-list.noProcessesWereFound' | translate}}</span>
+        </div>
+
+        <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>
+
+            <mat-expansion-panel *ngFor="let item of nets.processes" (afterExpand)="nets.loadProcessItemRoles(item)"
+                                 (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)">
+
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon *ngIf="item.someRolesSelected" color="accent" class="margin-right-x2">tour</mat-icon>
+                        <span>{{item.initials}} - {{item.title}}</span>
+                    </mat-panel-title>
+                    <mat-panel-description class="process-item-description">
+                        <span
+                            class="process-item-description full-width">{{'admin.process-list.newestVersion' | translate}}
+                            : {{item.newestVersion}}</span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div *ngIf="item.loading" fxFlex="100" class="full-width">
+                    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+                </div>
+
+                <div *ngIf="!item.loading && item.emptyRoles" fxLayout="column"
+                     fxLayoutAlign="center center" fxFlex class="full-width full-height net-panel-content">
+                    <mat-icon color="accent" class="margin-bottom-default">account_circle</mat-icon>
+                    <span class="font-size-15">{{ 'admin.process-list.noRoles' | translate}}</span>
+                </div>
+
+                <div *ngIf="!item.loading && !item.emptyRoles" fxLayout="column" fxLayoutAlign="start center"
+                     class="full-height full-width net-panel-content padding-0-16px">
+                    <h3>Roles</h3>
+                    <div *ngFor="let net of item.processes; let first = first" fxLayout="column"
+                         fxLayoutAlign="start center" class="full-width">
+                        <mat-divider *ngIf="!first" style="position: relative"></mat-divider>
+
+                        <span>{{'admin.user-invite.version' | translate }} - {{net.version}}</span>
+
+                        <div fxLayout="column" class="full-width padding-16px">
+                            <div *ngFor="let role of net.roles" fxFlex fxLayout="row wrap" fxLayoutAlign="start center">
+                                <span>{{role.name}}</span>
+
+                                <div fxFlex></div>
+
+                                <button mat-icon-button color="primary" (click)="addRole(role)">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+
+        </mat-accordion>
+
+        <div *ngIf="nets.loading$ | async" fxLayout="column" fxLayoutAlign="center center" fxFlex="100">
+            <mat-spinner color="primary" diameter="65"></mat-spinner>
+        </div>
+    </div>
+</div>
+

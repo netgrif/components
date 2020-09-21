@@ -1,5 +1,10 @@
 {
     "toolbar-example": {
         "text": "Tento text je po Slovensky"
+    },
+    "headers": {
+        "caseMeta": {
+            "title": "Názov (prepísaný appkou)"
+        }
     }
 }

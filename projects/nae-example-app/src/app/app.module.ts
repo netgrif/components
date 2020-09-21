@@ -3,39 +3,19 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {
-    AdministrationModule,
     AuthenticationModule,
-    CaseViewModule,
     ConfigurationService,
     CovalentModule,
-    DashboardModule,
-    DataFieldsModule,
     DialogModule,
-    ForgottenPasswordFormModule,
-    HeaderModule,
-    LoginFormModule,
     MaterialModule,
-    NavigationModule,
-    PanelModule,
-    ProfileModule,
-    QuickPanelModule,
-    RegistrationFormModule,
-    ResourceProvider,
-    SearchModule,
-    SideMenuContentModule,
-    SideMenuModule,
-    SignUpModule,
-    SnackBarModule,
-    TabsModule,
-    ToolbarModule,
-    UserModule,
-    WorkflowViewModule,
-    ViewService,
-    TreeCaseViewModule,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
     NAE_SNACKBAR_VERTICAL_POSITION,
+    ResourceProvider,
+    SignUpModule,
     SnackBarHorizontalPosition,
-    SnackBarVerticalPosition
+    SnackBarModule,
+    SnackBarVerticalPosition,
+    ViewService
 } from '@netgrif/application-engine';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -78,6 +58,30 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {
+    AdminComponentModule,
+    AuthenticationComponentModule,
+    CaseViewComponentModule,
+    DashboardComponentModule,
+    DataFieldsComponentModule,
+    ForgottenPasswordFormComponentModule,
+    HeaderComponentModule,
+    LoginFormComponentModule,
+    NavigationComponentModule,
+    PanelComponentModule,
+    ProfileComponentModule,
+    RegistrationFormComponentModule,
+    SearchComponentModule,
+    SideMenuComponentModule,
+    SideMenuContentComponentModule,
+    TabsComponentModule,
+    ToolbarComponentModule,
+    TreeCaseViewComponentModule,
+    WorkflowViewComponentModule,
+} from '@netgrif/components';
+import {UserInviteComponent} from './doc/user-invite/user-invite.component';
+import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -114,7 +118,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
-        TreeViewExampleComponent
+        TreeViewExampleComponent,
+        UserInviteComponent,
+        ExamplePortalCardComponent
     ],
     imports: [
         BrowserModule,
@@ -124,21 +130,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         FlexLayoutModule,
         MaterialModule,
         CovalentModule,
-        AuthenticationModule,
         SignUpModule,
         HttpClientModule,
         MatIconModule,
-        UserModule,
-        QuickPanelModule,
-        NavigationModule,
-        SideMenuModule,
-        PanelModule,
         DialogModule,
-        TabsModule,
-        DataFieldsModule,
-        HeaderModule,
-        DataFieldsModule,
-        ToolbarModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -147,28 +142,35 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         }),
         MatCardModule,
-        WorkflowViewModule,
-        DashboardModule,
-        LoginFormModule,
-        ForgottenPasswordFormModule,
-        RegistrationFormModule,
-        SearchModule,
-        SideMenuContentModule,
-        ProfileModule,
+        LoginFormComponentModule,
+        ForgottenPasswordFormComponentModule,
+        RegistrationFormComponentModule,
         SnackBarModule,
-        CaseViewModule,
         MatButtonModule,
         MatSidenavModule,
-        AdministrationModule,
-        HeaderModule,
-        CaseViewModule,
-        PanelModule,
-        TreeCaseViewModule,
         MatProgressSpinnerModule,
-        DashboardModule,
+        AdminComponentModule,
+        DashboardComponentModule,
+        AuthenticationModule,
+        AuthenticationComponentModule,
+        DataFieldsComponentModule,
+        SideMenuContentComponentModule,
+        SideMenuComponentModule,
+        TabsComponentModule,
+        CaseViewComponentModule,
+        HeaderComponentModule,
+        SearchComponentModule,
+        NavigationComponentModule,
+        PanelComponentModule,
+        ProfileComponentModule,
+        ToolbarComponentModule,
+        TreeCaseViewComponentModule,
+        WorkflowViewComponentModule,
+        NgxChartsModule,
     ],
     entryComponents: [
         ContentComponent,
+        UserInviteComponent,
         TabbedCaseViewComponent,
         TabbedTaskViewComponent,
         AuthenticationComponent,
@@ -195,14 +197,15 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
-        TreeViewExampleComponent
+        TreeViewExampleComponent,
+        ExamplePortalCardComponent
     ],
     providers: [{
         provide: ConfigurationService,
         useClass: NaeExampleAppConfigurationService
     },
-        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP },
-        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT },
+        {provide: NAE_SNACKBAR_VERTICAL_POSITION, useValue: SnackBarVerticalPosition.TOP},
+        {provide: NAE_SNACKBAR_HORIZONTAL_POSITION, useValue: SnackBarHorizontalPosition.LEFT},
         ResourceProvider,
         TranslateService,
         TranslatePipe,

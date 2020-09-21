@@ -6,7 +6,7 @@
 <ng-template #liveExample>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-boolean-field #booleanFieldComponent [dataField]="booleanField" [changedFields]="changeStream"></nae-boolean-field>
+            <nc-boolean-field #booleanFieldComponent [dataField]="booleanField" [changedFields]="changeStream"></nc-boolean-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -23,7 +23,7 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-button-field #buttonFieldComponent [dataField]="buttonField" [changedFields]="changeStream"></nae-button-field>
+            <nc-button-field #buttonFieldComponent [dataField]="buttonField" [changedFields]="changeStream"></nc-button-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -45,7 +45,7 @@
 
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-date-field #dateFieldComponent [dataField]="dateField" [changedFields]="changeStream"></nae-date-field>
+            <nc-date-field #dateFieldComponent [dataField]="dateField" [changedFields]="changeStream"></nc-date-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -66,8 +66,8 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-date-time-field #dateTimeFieldComponent [dataField]="dateTimeField"
-                                 [changedFields]="changeStream"></nae-date-time-field>
+            <nc-date-time-field #dateTimeFieldComponent [dataField]="dateTimeField"
+                                 [changedFields]="changeStream"></nc-date-time-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -83,8 +83,8 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-enumeration-field #enumSelectFieldComponent [dataField]="enumSelectField"
-                                   [changedFields]="changeStream"></nae-enumeration-field>
+            <nc-enumeration-field #enumSelectFieldComponent [dataField]="enumSelectField"
+                                   [changedFields]="changeStream"></nc-enumeration-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -107,8 +107,8 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-enumeration-field #enumListFieldComponent [dataField]="enumListField"
-                                   [changedFields]="changeStream"></nae-enumeration-field>
+            <nc-enumeration-field #enumListFieldComponent [dataField]="enumListField"
+                                   [changedFields]="changeStream"></nc-enumeration-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -131,8 +131,8 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-enumeration-field #enumAutoFieldComponent [dataField]="enumAutoField"
-                                   [changedFields]="changeStream"></nae-enumeration-field>
+            <nc-enumeration-field #enumAutoFieldComponent [dataField]="enumAutoField"
+                                   [changedFields]="changeStream"></nc-enumeration-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -155,7 +155,7 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-text-field #textFieldComponent [dataField]="textField" [changedFields]="changeStream"></nae-text-field>
+            <nc-text-field #textFieldComponent [dataField]="textField" [changedFields]="changeStream"></nc-text-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -172,7 +172,7 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-text-field #textAreaFieldComponent [dataField]="textAreaField" [changedFields]="changeStream"></nae-text-field>
+            <nc-text-field #textAreaFieldComponent [dataField]="textAreaField" [changedFields]="changeStream"></nc-text-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -189,7 +189,7 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-text-field #textRichFieldComponent [dataField]="textRichField" [changedFields]="changeStream"></nae-text-field>
+            <nc-text-field #textRichFieldComponent [dataField]="textRichField" [changedFields]="changeStream"></nc-text-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -206,7 +206,24 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-number-field #numberFieldComponent [dataField]="numberField" [changedFields]="changeStream"></nae-number-field>
+            <nc-text-field #textHtmlFieldComponent [dataField]="textHtmlField" [changedFields]="changeStream"></nc-text-field>
+        </div>
+        <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
+            <h3>Change</h3>
+            <input type="text" formControlName="textHtmlFieldValue">
+            <mat-checkbox formControlName="textHtmlFieldRequired">required</mat-checkbox>
+            <mat-checkbox formControlName="textHtmlFieldDisabled">disabled</mat-checkbox>
+            <mat-checkbox formControlName="textHtmlFieldHidden">hidden</mat-checkbox>
+            <button mat-stroked-button (click)="change()">change</button>
+        </div>
+    </div>
+    field value: {{textHtmlField.value}}<br>
+    field errors: {{textHtmlFieldComponent.formControl.errors | json}}<br>
+
+    <mat-divider></mat-divider>
+    <div fxLayout="row" fxLayoutAlign="start start">
+        <div fxFlex="50">
+            <nc-number-field #numberFieldComponent [dataField]="numberField" [changedFields]="changeStream"></nc-number-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -223,8 +240,8 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-multichoice-field #multichoiceListFieldComponent [dataField]="multichoiceListField"
-                                   [changedFields]="changeStream"></nae-multichoice-field>
+            <nc-multichoice-field #multichoiceListFieldComponent [dataField]="multichoiceListField"
+                                   [changedFields]="changeStream"></nc-multichoice-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -245,8 +262,8 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-multichoice-field #multichoiceSelectFieldComponent [dataField]="multichoiceSelectField"
-                                   [changedFields]="changeStream"></nae-multichoice-field>
+            <nc-multichoice-field #multichoiceSelectFieldComponent [dataField]="multichoiceSelectField"
+                                   [changedFields]="changeStream"></nc-multichoice-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -267,7 +284,7 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-file-field #fileFieldComponent [dataField]="fileField" [changedFields]="changeStream"></nae-file-field>
+            <nc-file-field #fileFieldComponent [dataField]="fileField" [changedFields]="changeStream"></nc-file-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -283,7 +300,7 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-file-list-field #fileListFieldComponent [dataField]="fileListField" [changedFields]="changeStream"></nae-file-list-field>
+            <nc-file-list-field #fileListFieldComponent [dataField]="fileListField" [changedFields]="changeStream"></nc-file-list-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>
@@ -299,7 +316,7 @@
     <mat-divider></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start start">
         <div fxFlex="50">
-            <nae-user-field #userFieldComponent [dataField]="userField" [changedFields]="changeStream"></nae-user-field>
+            <nc-user-field #userFieldComponent [dataField]="userField" [changedFields]="changeStream"></nc-user-field>
         </div>
         <div fxFlex="50" fxLayout="column" [formGroup]="changeGroupControl">
             <h3>Change</h3>

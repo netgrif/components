@@ -1,11 +1,8 @@
 /* APIS */
 export * from './content-components/public-api';
 
-/* MODULES */
-export * from './side-menu.module';
-
 /* COMPONENTS */
-export * from './side-menu-container/side-menu-container.component';
+export * from './side-menu-container/abstract-side-menu-container.component';
 
 /* SERVICES */
 export * from './services/side-menu.service';

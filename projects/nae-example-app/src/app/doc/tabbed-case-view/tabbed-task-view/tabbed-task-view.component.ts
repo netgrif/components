@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     ArrayTaskViewServiceFactory,
-    HeaderComponent,
     InjectedTabbedTaskViewData,
     NAE_TAB_DATA,
     SearchService,
@@ -9,6 +8,7 @@ import {
     tabbedTaskViewServiceFactory,
     TaskViewService
 } from '@netgrif/application-engine';
+import {HeaderComponent} from '@netgrif/components';
 
 const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     return new SearchService(injectedTabData.baseFilter);

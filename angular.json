@@ -54,6 +54,57 @@
                 }
             }
         },
+        "netgrif-components": {
+            "projectType": "library",
+            "root": "projects/netgrif-components",
+            "sourceRoot": "projects/netgrif-components/src",
+            "prefix": "nc",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "projects/netgrif-components/tsconfig.lib.json",
+                        "project": "projects/netgrif-components/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/netgrif-components/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/netgrif-components/src/test.ts",
+                        "tsConfig": "projects/netgrif-components/tsconfig.spec.json",
+                        "karmaConfig": "projects/netgrif-components/karma.conf.js",
+                        "sourceMap": true,
+                        "codeCoverage": true,
+                        "codeCoverageExclude": [
+                            "projects/netgrif-components/src/test.ts",
+                            "projects/netgrif-components/src/commons/**"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/netgrif-components/tsconfig.lib.json",
+                            "projects/netgrif-components/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
         "nae-example-app": {
             "projectType": "application",
             "schematics": {
