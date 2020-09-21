@@ -2,7 +2,7 @@ import {TabContent, TabLabel} from '../interfaces';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Type} from '@angular/core';
 import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 /**
  * Holds the information of tab opened in a tab view.
