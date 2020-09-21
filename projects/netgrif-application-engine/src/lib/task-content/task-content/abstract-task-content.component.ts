@@ -480,14 +480,15 @@ export abstract class AbstractTaskContentComponent {
      * @returns the base identifier, if it already is unique. A unique variation on the base identifier if it is already in use.
      */
     protected assureUniqueness(identifier: string): string {
-        if (!this._existingIdentifiers.has(identifier)) {
-            this._existingIdentifiers.add(identifier);
-            return identifier;
+        const alphaNumIdentifier = identifier.replace(/[^0-9a-zA-Z]/gi, '');
+        if (!this._existingIdentifiers.has(alphaNumIdentifier)) {
+            this._existingIdentifiers.add(alphaNumIdentifier);
+            return alphaNumIdentifier;
         }
         let variation;
         const counter = new IncrementingCounter();
         do {
-            variation = `x${counter.next()}x${identifier}`;
+            variation = `x${counter.next()}x${alphaNumIdentifier}`;
         } while (this._existingIdentifiers.has(variation));
         this._existingIdentifiers.add(variation);
         return variation;

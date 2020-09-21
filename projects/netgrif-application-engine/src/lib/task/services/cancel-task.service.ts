@@ -14,6 +14,7 @@ import {UserComparatorService} from '../../user/services/user-comparator.service
 import {SelectedCaseService} from './selected-case.service';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
+import {TaskDataService} from './task-data.service';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -29,6 +30,7 @@ export class CancelTaskService extends TaskHandlingService {
                 protected _taskState: TaskRequestStateService,
                 protected _userComparator: UserComparatorService,
                 protected _taskEvent: TaskEventService,
+                protected _taskDataService: TaskDataService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -65,7 +67,7 @@ export class CancelTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(canceledTaskId);
 
-        this._taskResourceService.cancelTask(this._safeTask.stringId).subscribe(response => {
+        this._taskResourceService.cancelTask(this._safeTask.stringId).subscribe(eventOutcome => {
             this._taskState.stopLoading(canceledTaskId);
 
             if (!this.isTaskRelevant(canceledTaskId)) {
@@ -73,13 +75,14 @@ export class CancelTaskService extends TaskHandlingService {
                 return;
             }
 
-            if (response.success) {
-                this._taskContentService.removeStateData();
+            if (eventOutcome.success) {
+                this._taskContentService.updateStateData(eventOutcome);
+                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this._taskOperations.reload();
                 this.sendNotification(true);
                 afterAction.next(true);
-            } else if (response.error) {
-                this._snackBar.openErrorSnackBar(response.error);
+            } else if (eventOutcome.error) {
+                this._snackBar.openErrorSnackBar(eventOutcome.error);
                 this.sendNotification(false);
                 afterAction.next(false);
             }

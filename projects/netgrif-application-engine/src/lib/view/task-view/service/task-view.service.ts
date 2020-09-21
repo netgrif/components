@@ -180,8 +180,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
-        if (requestContext === null
-            || requestContext.pageNumber < 0) {
+        if (requestContext === null || requestContext.pageNumber < 0) {
             return of({tasks: {}, requestContext});
         }
         let params: HttpParams = new HttpParams();
@@ -271,10 +270,6 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         }
 
         if (renderedRange.end === totalLoaded) {
-            if (requestContext === undefined) {
-                requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
-                requestContext.pagination.number += 1;
-            }
             this._requestedPage$.next(requestContext);
         }
     }

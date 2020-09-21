@@ -21,6 +21,7 @@ import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
 import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
 import {LoggerService} from '../../logger/services/logger.service';
+import {EventOutcome} from '../interface/event-outcome';
 
 @Injectable({
     providedIn: 'root'
@@ -63,7 +64,7 @@ export class TaskResourceService implements CountService {
      * GET
      */
     // {{baseUrl}}/api/task/assign/:id
-    public assignTask(taskId: string): Observable<MessageResource> {
+    public assignTask(taskId: string): Observable<EventOutcome> {
         return this.provider.get$('task/assign/' + taskId, this.SERVER_URL)
             .pipe(map(r => changeType(r, undefined)));
     }
@@ -73,7 +74,7 @@ export class TaskResourceService implements CountService {
      * GET
      */
     // {{baseUrl}}/api/task/cancel/:id
-    public cancelTask(taskId: string): Observable<MessageResource> {
+    public cancelTask(taskId: string): Observable<EventOutcome> {
         return this.provider.get$('task/cancel/' + taskId, this.SERVER_URL)
             .pipe(map(r => changeType(r, undefined)));
     }
@@ -83,7 +84,7 @@ export class TaskResourceService implements CountService {
      * POST
      */
     // {{baseUrl}}/api/task/delegate/:id
-    public delegateTask(taskId: string, body: object): Observable<MessageResource> {
+    public delegateTask(taskId: string, body: object): Observable<EventOutcome> {
         return this.provider.post$('task/delegate/' + taskId, this.SERVER_URL, body)
             .pipe(map(r => changeType(r, undefined)));
     }
@@ -93,7 +94,7 @@ export class TaskResourceService implements CountService {
      * GET
      */
     // {{baseUrl}}/api/task/finish/:id
-    public finishTask(taskId: string): Observable<MessageResource> {
+    public finishTask(taskId: string): Observable<EventOutcome> {
         return this.provider.get$('task/finish/' + taskId, this.SERVER_URL)
             .pipe(map(r => changeType(r, undefined)));
     }

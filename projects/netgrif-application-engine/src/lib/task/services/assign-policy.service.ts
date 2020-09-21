@@ -77,7 +77,6 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     protected afterAssignOpenPolicy(assignSuccess: boolean, afterAction: Subject<boolean>): void {
-        this._taskOperations.reload();
         if (!assignSuccess) {
             afterAction.next(false);
             return;
@@ -102,7 +101,6 @@ export class AssignPolicyService extends TaskHandlingService {
     protected autoAssignClosedPolicy(afterAction: Subject<boolean>): void {
         this._cancelTaskService.cancel(
             this._callchain.create((requestSuccess) => {
-                this._taskOperations.reload();
                 this._taskOperations.close();
                 afterAction.next(requestSuccess);
             })

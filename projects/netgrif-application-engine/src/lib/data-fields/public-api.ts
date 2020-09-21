@@ -20,6 +20,7 @@ export * from './text-field/abstract-text-field.component';
 export * from './text-field/abstract-text-errors.component';
 export * from './text-field/simple-text-field/abstract-simple-text-field.component';
 export * from './text-field/rich-textarea-field/abstract-rich-textarea-field.component';
+export * from './text-field/html-textarea-field/abstract-html-textarea-field.component';
 export * from './text-field/textarea-field/abstract-textarea-field.component';
 export * from './user-field/abstract-user-field.component';
 
