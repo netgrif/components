@@ -37,7 +37,8 @@ import {SimpleTextFieldComponent} from './text-field/simple-text-field/simple-te
 import {UserFieldComponent} from './user-field/user-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
 import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
-
+import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
+import {QuillModule} from 'ngx-quill';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import {SideMenuContentComponentModule} from '../side-menu/content-components/si
         RichTextareaFieldComponent,
         SimpleTextFieldComponent,
         UserFieldComponent,
-        RequiredLabelComponent
+        RequiredLabelComponent,
+        HtmlTextareaFieldComponent
     ],
     exports: [
         BooleanFieldComponent,
@@ -88,7 +90,8 @@ import {SideMenuContentComponentModule} from '../side-menu/content-components/si
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         TranslateLibModule,
-        SideMenuContentComponentModule
+        SideMenuContentComponentModule,
+        QuillModule.forRoot()
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
