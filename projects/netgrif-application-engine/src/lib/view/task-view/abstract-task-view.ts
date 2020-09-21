@@ -1,12 +1,12 @@
 import {Observable, Subject} from 'rxjs';
-import {OnInit} from '@angular/core';
+import {OnDestroy, OnInit} from '@angular/core';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskViewService} from './service/task-view.service';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
 
 
-export abstract class AbstractTaskView extends ViewWithHeaders implements OnInit {
+export abstract class AbstractTaskView extends ViewWithHeaders implements OnDestroy {
 
     public tasks$: Observable<Array<TaskPanelData>>;
     public changedFields$: Subject<ChangedFields>;
@@ -19,7 +19,7 @@ export abstract class AbstractTaskView extends ViewWithHeaders implements OnInit
         this.loading$ = this.taskViewService.loading$;
     }
 
-    ngOnInit() {
-
+    ngOnDestroy() {
+        this.changedFields$.complete();
     }
 }

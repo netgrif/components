@@ -1,0 +1,59 @@
+@import "projects/netgrif-components/src/styles/core";
+
+.flex-class {
+    flex: 1 1 auto;
+}
+
+.height-96 {
+    min-height: 96px;
+}
+
+.mail-icon {
+    margin-right: 10px;
+}
+
+.invited-card {
+    padding: 0 16px;
+    width: 100%;
+    white-space: nowrap;
+    border: 1px solid #eeeeee;
+}
+
+.invited-card-font, .invited-card-font h1, .invited-card-font h2, .invited-card-font h3, .invited-card-font h4, .invited-card-font h5, .invited-card-font h6 {
+    font: 500 20px/32px Roboto, monospace;
+    letter-spacing: normal;
+    margin: 0;
+}
+
+.inherited-divider {
+    position: inherit;
+}
+
+.padding-16px {
+    padding: 16px;
+}
+
+.padding-0-16px {
+    padding: 0 16px;
+}
+
+.padding-16px-0 {
+    padding: 16px 0;
+}
+
+.padding-right-16px {
+    padding-right: 16px;
+}
+
+.margin-right-16px {
+    margin-right: 16px;
+}
+
+.margin-bottom-16px {
+    margin-bottom: 16px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+

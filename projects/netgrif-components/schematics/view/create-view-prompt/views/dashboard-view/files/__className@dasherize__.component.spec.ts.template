@@ -1,0 +1,31 @@
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {<%= classify(className) %>Component} from './<%= dasherize(className) %>.component';
+import {MaterialModule, ConfigurationService} from '@netgrif/application-engine';
+import {DashboardComponentModule} from '@netgrif/components';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
+
+describe('<%= classify(className) %>Component', () => {
+     let component: <%= classify(className) %>Component;
+     let fixture: ComponentFixture<<%= classify(className) %>Component>;
+
+     beforeEach(async(() => {
+         TestBed.configureTestingModule({
+             imports: [DashboardComponentModule, MaterialModule, HttpClientTestingModule],
+             declarations: [<%= classify(className) %>Component],
+             providers: [
+                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService}
+             ]
+         }).compileComponents();
+     }));
+
+     beforeEach(() => {
+         fixture = TestBed.createComponent(<%= classify(className) %>Component);
+         component = fixture.componentInstance;
+         fixture.detectChanges();
+     });
+
+     it('should create', () => {
+         expect(component).toBeTruthy();
+     });
+});

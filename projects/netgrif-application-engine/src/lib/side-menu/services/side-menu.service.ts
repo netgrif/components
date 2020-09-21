@@ -3,7 +3,6 @@ import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/porta
 import {Observable} from 'rxjs';
 import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token.module';
 import {SideMenuSize} from '../models/side-menu-size';
-import {SideMenuContainerComponent} from '../side-menu-container/side-menu-container.component';
 import {PortalWrapper} from '../models/portal-wrapper';
 import {SideMenuRef} from '../models/side-menu-ref';
 import {SideMenuInjectionData} from '../models/side-menu-injection-data';
@@ -16,13 +15,18 @@ import {MatDrawerToggleResult} from '@angular/material/sidenav';
 })
 export class SideMenuService {
 
-    private _sideMenuComponent: SideMenuContainerComponent;
+    private _sideMenuComponent: any; // SideMenuContainerComponent
     private _controlObject: SideMenuControl;
 
     constructor() {
     }
 
-    public registerSideMenu(menu: SideMenuContainerComponent): void {
+    /**
+     * register SideMenuContainerComponent
+     *
+     * params menu is SideMenuContainerComponent
+     */
+    public registerSideMenu(menu: any): void {
         if (this._sideMenuComponent) {
             throw new Error('SideMenuContainerComponent has been already registered!');
         }

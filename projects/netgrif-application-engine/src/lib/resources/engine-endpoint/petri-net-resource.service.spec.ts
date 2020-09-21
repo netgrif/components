@@ -137,7 +137,7 @@ describe('PetriNetResourceService', () => {
         })
     );
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

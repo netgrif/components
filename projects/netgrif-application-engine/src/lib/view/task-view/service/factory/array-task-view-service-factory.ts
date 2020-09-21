@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {TaskResourceService} from '../../../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../../../user/services/user.service';
 import {SnackBarService} from '../../../../snack-bar/services/snack-bar.service';
@@ -10,6 +10,8 @@ import {InjectedTabbedTaskViewData} from '../../models/injected-tabbed-task-view
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {UserComparatorService} from '../../../../user/services/user-comparator.service';
 import {of} from 'rxjs';
+import {NAE_PREFERRED_TASK_ENDPOINT} from '../../models/injection-token-task-endpoint';
+import {TaskEndpoint} from '../../models/task-endpoint';
 
 /**
  * Convenience method that can be used as a factory if no `allowedNets` are necessary.
@@ -41,7 +43,8 @@ export function tabbedTaskViewServiceFactory(factory: ArrayTaskViewServiceFactor
  * This is one of available `TaskViewServiceFactory` implementations, see {@link ArrayTaskViewServiceFactory} for another one.
  *
  * This implementation is useful if you need to provide {@link TaskViewService}  without having to
- * define the view in the configuration file. Most notably if the view is created dynamically, for example in a {@link TabViewComponent}.
+ * define the view in the configuration file.
+ * Most notably if the view is created dynamically, for example in a {@link AbstractTabViewComponent}.
  *
  * This class also provides a convenience method to create task views, that don't have `allowedNets`, without the
  * need for local factory methods.
@@ -56,7 +59,8 @@ export class ArrayTaskViewServiceFactory {
                 protected _searchService: SearchService,
                 protected _processService: ProcessService,
                 protected _loggerService: LoggerService,
-                protected _userComparator: UserComparatorService) {
+                protected _userComparator: UserComparatorService,
+                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected _preferredEndpoint: TaskEndpoint) {
     }
 
     /**
@@ -75,6 +79,7 @@ export class ArrayTaskViewServiceFactory {
             this._searchService,
             this._loggerService,
             this._userComparator,
+            this._preferredEndpoint !== null ? this._preferredEndpoint : undefined,
             this._processService.getNets(allowedNetsIds),
             initiallyOpenOneTask,
             closeTaskTabOnNoTasks

@@ -3,7 +3,6 @@ import {GridElementWithItem} from './model/grid-element-with-item';
 import {GridElement} from './model/grid-element';
 import {LoggerService} from '../../logger/services/logger.service';
 
-// TODO REFACTOR 14.4. - refactor task panel content to use this generic algorithm implementation instead of a custom one
 export class GridLayoutHelper {
 
     constructor(private _log: LoggerService) {
@@ -21,7 +20,7 @@ export class GridLayoutHelper {
 
     public fillBlankSpace(gridElements: Array<GridElement>,
                           columnCount: number,
-                          elementVisibilityCondition: (element: any) => boolean = () => true): Array<GridElementWithItem> {
+                          elementVisibilityCondition: (element: any) => boolean = () => true): Array<GridElementWithItem<unknown>> {
         const grid: Array<Array<GridFiller>> = [];
 
         gridElements.forEach(element => {
@@ -45,7 +44,7 @@ export class GridLayoutHelper {
             }
         });
 
-        const result: Array<GridElementWithItem> = gridElements.filter(element => elementVisibilityCondition(element))
+        const result: Array<GridElementWithItem<unknown>> = gridElements.filter(element => elementVisibilityCondition(element))
             .map(element => ({
                 item: element,
                 type: element.type,

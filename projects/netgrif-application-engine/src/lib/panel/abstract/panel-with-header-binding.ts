@@ -1,22 +1,27 @@
-import {OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {OnDestroy, OnInit} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 
 
-export abstract class PanelWithHeaderBinding implements OnInit {
+export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
     public featuredFieldsValues: Array<{ value: string, icon: string }> = [];
     protected _lastSelectedHeaders: Array<HeaderColumn>;
+    protected sub: Subscription;
 
     protected constructor() {
     }
 
     ngOnInit(): void {
-        this.selectedHeaders$.subscribe(newSelectedHeaders => {
+        this.sub = this.selectedHeaders$.subscribe(newSelectedHeaders => {
             this._lastSelectedHeaders = newSelectedHeaders;
             this.resolveFeaturedFieldsValues();
         });
+    }
+
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
     protected resolveFeaturedFieldsValues(): void {

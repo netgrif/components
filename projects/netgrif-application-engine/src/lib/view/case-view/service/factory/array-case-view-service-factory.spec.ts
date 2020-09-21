@@ -14,6 +14,8 @@ import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('ArrayCaseViewServiceFactory', () => {
     let service: ArrayCaseViewServiceFactory;
@@ -34,6 +36,7 @@ describe('ArrayCaseViewServiceFactory', () => {
                 ProcessService,
                 LoggerService,
                 TranslateService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

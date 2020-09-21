@@ -6,7 +6,7 @@ import {forkJoin, Observable, of, timer} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
 import NetRole from '../../../process/netRole';
 
-export interface ProcessRole extends NetRole {
+export interface ExtendedProcessRole extends NetRole {
     selected: boolean;
     processIdentifier: string;
 
@@ -14,7 +14,7 @@ export interface ProcessRole extends NetRole {
 }
 
 export interface ProcessVersion extends PetriNetReference {
-    roles: Array<ProcessRole>;
+    roles: Array<ExtendedProcessRole>;
 }
 
 export interface ProcessListItem {
@@ -31,7 +31,7 @@ export interface ProcessListItem {
 export class ProcessList {
     private _loading$: LoadingEmitter;
     private _processes: Array<ProcessListItem>;
-    private readonly _rolesIndex: { [k: string]: Array<ProcessRole> };
+    private readonly _rolesIndex: { [k: string]: Array<ExtendedProcessRole> };
     private _selectedRoles: Set<string>;
 
     constructor(private _resources: PetriNetResourceService, private _log: LoggerService) {
@@ -135,7 +135,7 @@ export class ProcessList {
             .map(r => this._rolesIndex[r].length !== 0 ? this._rolesIndex[r][0].processIdentifier : null));
     }
 
-    public updateSelectedRoles(role: ProcessRole): void {
+    public updateSelectedRoles(role: ExtendedProcessRole): void {
         role.selected ? this._selectedRoles.add(role.stringId) : this._selectedRoles.delete(role.stringId);
         this._rolesIndex[role.stringId].forEach(r => r.selected = role.selected);
     }
@@ -156,14 +156,14 @@ export class ProcessList {
         });
     }
 
-    private loadNetRoles(net: ProcessVersion): Observable<Array<ProcessRole>> {
+    private loadNetRoles(net: ProcessVersion): Observable<Array<ExtendedProcessRole>> {
         if (net.roles && net.roles.length !== 0) {
             return of(net.roles);
         }
         return this._resources.getPetriNetRoles(net.stringId).pipe(
             catchError(err => {
                 this._log.error('Failed to load roles for Petri net [' + net.stringId + '] ' + net.title, err);
-                return of([] as ProcessRole[]);
+                return of([] as ExtendedProcessRole[]);
             }),
             map(roles => Array.isArray(roles) ? roles : [] as NetRole[]),
             map(roles => roles.map(role => ({
@@ -173,7 +173,7 @@ export class ProcessList {
                 toggle() {
                     this.selected = !this.selected;
                 }
-            }) as ProcessRole)),
+            }) as ExtendedProcessRole)),
             tap(roles => roles.forEach(role => {
                 if (!this._rolesIndex[role.stringId]) {
                     this._rolesIndex[role.stringId] = [role];

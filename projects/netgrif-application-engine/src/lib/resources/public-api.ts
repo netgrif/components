@@ -26,10 +26,13 @@ export * from './interface/changed-field-container';
 export * from './interface/file-resource';
 export * from './interface/task-reference';
 export * from './interface/task-set-data-request-body';
-export * from './interface/task-get-request-body';
 export * from './interface/case-get-request-body';
+export * from './interface/field-alignment';
+export * from './interface/event-outcome';
+export * from './interface/group';
 
 export * from './types/nae-date-type';
 
 /* Utility */
 export * from './resource-utility-functions';
+export * from './abstract-endpoint/count-service';

@@ -1,3 +1,40 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10785/tab/release-report-all-issues"></a>
+## 4.2.0 - Maroon Bronze (21.9.2020)
+### Bug fixes
+ * [NAE-996](https://netgrif.atlassian.net/browse/NAE-996) - Some data field ids break grid layout
+ * [NAE-995](https://netgrif.atlassian.net/browse/NAE-995) - Auto-assign tasks don't auto-cancel
+ * [NAE-993](https://netgrif.atlassian.net/browse/NAE-993) - nextPage in virtual scroll views broken
+ * [NAE-991](https://netgrif.atlassian.net/browse/NAE-991) - Create new case copy existing panel
+ * [NAE-990](https://netgrif.atlassian.net/browse/NAE-990) - Tabs view open already opened tab
+ * [NAE-985](https://netgrif.atlassian.net/browse/NAE-985) - Notify initially opened tab
+ * [NAE-983](https://netgrif.atlassian.net/browse/NAE-983) - Get view by URL duplicates '/' in the url string
+ * [NAE-982](https://netgrif.atlassian.net/browse/NAE-982) - Headers columns disappear
+ * [NAE-976](https://netgrif.atlassian.net/browse/NAE-976) - Logout broken
+ * [NAE-975](https://netgrif.atlassian.net/browse/NAE-975) - Reassign should filter by role
+ * [NAE-968](https://netgrif.atlassian.net/browse/NAE-968) - Filter changes ignored
+ * [NAE-967](https://netgrif.atlassian.net/browse/NAE-967) - Block fields after initializing DataFields
+ * [NAE-950](https://netgrif.atlassian.net/browse/NAE-950) - Remove timer from task view
+ * [NAE-923](https://netgrif.atlassian.net/browse/NAE-923) - Tab selection notifications broken
+ * [NAE-978](https://netgrif.atlassian.net/browse/NAE-978) - Broken method getViewByPath()
+
+### Improvements
+ * [NAE-989](https://netgrif.atlassian.net/browse/NAE-989) - Unsubscribe in ngOnDestroy
+ * [NAE-988](https://netgrif.atlassian.net/browse/NAE-988) - Authority to create in nae.json
+ * [NAE-981](https://netgrif.atlassian.net/browse/NAE-981) - Disabling buttons in panel
+ * [NAE-957](https://netgrif.atlassian.net/browse/NAE-957) - Create NAE Components Library
+ * [NAE-898](https://netgrif.atlassian.net/browse/NAE-898) - Repair unit tests
+ * [NAE-966](https://netgrif.atlassian.net/browse/NAE-966) - Task search on MongoDB refactor
+ * [NAE-301](https://netgrif.atlassian.net/browse/NAE-301) - Add key param to data-fields of type enumeration and multi-choice
+ * [NAE-267](https://netgrif.atlassian.net/browse/NAE-267) - Action result propagation
+
+### Features
+ * [NAE-992](https://netgrif.atlassian.net/browse/NAE-992) - User Invite component
+ * [NAE-973](https://netgrif.atlassian.net/browse/NAE-973) - Authority Guard
+ * [NAE-972](https://netgrif.atlassian.net/browse/NAE-972) - Roles Guard
+ * [NAE-969](https://netgrif.atlassian.net/browse/NAE-969) - Task event notifications
+ * [NAE-965](https://netgrif.atlassian.net/browse/NAE-965) - Grid layout container
+ * [NAE-980](https://netgrif.atlassian.net/browse/NAE-980) - Create HTML textarea field
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10813/tab/release-report-all-issues"></a>
 ## 4.1.2 - Purple Mercury (10.9.2020)
 ### Bug fixes

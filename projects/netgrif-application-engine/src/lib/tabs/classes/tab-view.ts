@@ -2,17 +2,18 @@ import {TabContent, TabViewInterface} from '../interfaces';
 import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {FormControl} from '@angular/forms';
 import {orderBy} from 'natural-orderby';
 import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token.module';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
 import {InjectedTabbedTaskViewData} from '../../view/task-view/models/injected-tabbed-task-view-data';
-import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
+import {TaskSearchCaseQuery, TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
+import {MatTabChangeEvent} from '@angular/material/tabs';
+import {IncrementingCounter} from '../../utility/incrementing-counter';
 
 /**
- * Holds the logic for tab management in {@link TabViewComponent}.
+ * Holds the logic for tab management in {@link AbstractTabViewComponent}.
  * If you want to implement your own TabViewComponent, you might want to extend this class to hold your logic.
  */
 export class TabView implements TabViewInterface {
@@ -22,17 +23,13 @@ export class TabView implements TabViewInterface {
      */
     public openedTabs: Array<OpenedTab>;
     /**
-     * Holds the index of the currently selected tab in a {@link FormControl} object.
+     * Holds the index of the currently selected tab.
      *
      * Selected index initializes to `0`.
      */
-    public selectedIndex = new FormControl(0);
+    public selectedIndex = 0;
 
-    /**
-     * @ignore
-     * Is incremented to generate new unique IDs for tabs.
-     */
-    private nextId = 0;
+    private uniqueIdCounter = new IncrementingCounter();
     /**
      * @ignore
      * Holds a reference to an object that hides some public attributes and methods from tabs.
@@ -45,11 +42,6 @@ export class TabView implements TabViewInterface {
         closeTabIndex: (index: number, force: boolean = false) => this.closeTabIndex(index, force),
         closeTabUniqueId: (uniqueId: string, force: boolean = false) => this.closeTabUniqueId(uniqueId, force)
     };
-    /**
-     * Holds the index of the tab that is selected right now, so that when the currently
-     * selected index changes this information can be used to deduce the previously selected index.
-     */
-    protected _lastSelectedTabIndex = 0;
 
     /**
      * @param _viewService [ViewService]{@link ViewService} reference
@@ -66,28 +58,18 @@ export class TabView implements TabViewInterface {
 
         // orderBy is a stable sort
         // Native javascript implementation has undefined stability and it depends on it's implementation (browser)
-        this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData => new OpenedTab(tabData, `${this.getNextId()}`));
-
-        this.selectedIndex.valueChanges.subscribe(newSelectedIndex => {
-            if (newSelectedIndex !== this._lastSelectedTabIndex) {
-                let tab = this.openedTabs[this._lastSelectedTabIndex];
-                if (tab) {
-                    tab.tabSelected$.next(false);
-                }
-                tab = this.openedTabs[newSelectedIndex];
-                if (tab) {
-                    tab.tabSelected$.next(true);
-                }
-                this._lastSelectedTabIndex = newSelectedIndex;
-            }
-        });
+        this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData =>
+            new OpenedTab(tabData, `${this.uniqueIdCounter.next()}`));
+        if (this.openedTabs.length > 0) {
+            this.openedTabs[0].tabSelected$.next(true);
+        }
     }
 
     /**
      * @returns the index of the currently selected tab
      */
     public currentlySelectedTab(): number {
-        return this.selectedIndex.value;
+        return this.selectedIndex;
     }
 
     /**
@@ -103,29 +85,60 @@ export class TabView implements TabViewInterface {
             delete tabContent.initial;
         }
 
-        const newTab = new OpenedTab(tabContent, `${this.getNextId()}`);
+        const newTab = new OpenedTab(tabContent, `${this.uniqueIdCounter.next()}`);
         const indexExisting = this.findIndexExistingTab(newTab);
         if (indexExisting === -1 || !openExising) {
             return this.openNewTab(newTab, autoswitch);
         } else {
-            this.selectedIndex.setValue(indexExisting);
-            return `${this.nextId - 1}`;
+            this.openedTabs[this.selectedIndex].tabSelected$.next(false);
+            this.selectedIndex = indexExisting;
+            this.openedTabs[this.selectedIndex].tabSelected$.next(true);
+            return this.openedTabs[indexExisting].uniqueId;
         }
     }
 
     protected findIndexExistingTab(newTab: OpenedTab) {
+        if (!this.searchesForOneCaseId(newTab)) {
+            return -1;
+        }
         return this.openedTabs.findIndex(existingTab =>
-            existingTab.injectedObject &&
-            (existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter &&
-            ((existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case &&
-            newTab.injectedObject &&
-            (newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter &&
-            ((newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case &&
-            (((existingTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case ===
-                ((newTab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case));
+            this.searchesForOneCaseId(existingTab) && this.getSearchedCaseId(existingTab) === this.getSearchedCaseId(newTab));
     }
 
-    protected openNewTab(newTab: OpenedTab, autoswitch: boolean) {
+    private searchesForOneCaseId(tab: OpenedTab): boolean {
+        return this.hasCaseFilterParamSet(tab)
+            && !Array.isArray(this.getSearchedCase(tab))
+            && !!this.getSearchedCaseId(tab);
+    }
+
+    private getSearchedCaseId(tab: OpenedTab): string {
+        return (this.getSearchedCase(tab) as TaskSearchCaseQuery).id;
+    }
+
+    private getSearchedCase(tab: OpenedTab): TaskSearchCaseQuery | Array<TaskSearchCaseQuery> {
+        return ((tab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case;
+    }
+
+    private hasCaseFilterParamSet(tab: OpenedTab): boolean {
+        return this.hasBaseFilter(tab)
+            && !!(((tab.injectedObject as InjectedTabbedTaskViewData).baseFilter.getRequestBody() as TaskSearchRequestBody).case);
+    }
+
+    private hasBaseFilter(tab: OpenedTab): boolean {
+        return this.hasInjectedObject(tab) && !!((tab.injectedObject as InjectedTabbedTaskViewData).baseFilter);
+    }
+
+    private hasInjectedObject(tab: OpenedTab): boolean {
+        return !!tab.injectedObject;
+    }
+
+    /**
+     * Adds a new tab into the correct position based on its `order` property.
+     * @param newTab the tab that should be opened
+     * @param autoswitch whether the new tab should be switched to after it is created
+     * @returns the `uniqueId` of the opened tab
+     */
+    protected openNewTab(newTab: OpenedTab, autoswitch: boolean): string {
         let index = this.openedTabs.findIndex(existingTab => existingTab.order > newTab.order);
         if (index === -1) {
             index = this.openedTabs.length;
@@ -133,9 +146,11 @@ export class TabView implements TabViewInterface {
         this.openedTabs.splice(index, 0, newTab);
 
         if (autoswitch) {
-            this.selectedIndex.setValue(index);
+            this.openedTabs[this.selectedIndex].tabSelected$.next(false);
+            this.selectedIndex = index;
+            this.openedTabs[this.selectedIndex].tabSelected$.next(true);
         }
-        return `${this.nextId - 1}`;
+        return newTab.uniqueId;
     }
 
     /**
@@ -146,7 +161,9 @@ export class TabView implements TabViewInterface {
      */
     public switchToTabIndex(index: number): void {
         this.checkIndexRange(index);
-        this.selectedIndex.setValue(index);
+        this.openedTabs[this.selectedIndex].tabSelected$.next(false);
+        this.selectedIndex = index;
+        this.openedTabs[this.selectedIndex].tabSelected$.next(true);
     }
 
     /**
@@ -156,8 +173,9 @@ export class TabView implements TabViewInterface {
      * @param uniqueId - id of the tab that should be switched to
      */
     public switchToTabUniqueId(uniqueId: string): void {
-        const index = this.getTabIndex(uniqueId);
-        this.selectedIndex.setValue(index);
+        this.openedTabs[this.selectedIndex].tabSelected$.next(false);
+        this.selectedIndex = this.getTabIndex(uniqueId);
+        this.openedTabs[this.selectedIndex].tabSelected$.next(true);
     }
 
     /**
@@ -197,14 +215,17 @@ export class TabView implements TabViewInterface {
         if (!force && !this.openedTabs[index].canBeClosed) {
             throw new Error(error);
         }
-        if (index === this.selectedIndex.value && this.openedTabs[index].parentUniqueId) {
+        if (index === this.selectedIndex && this.openedTabs[index].parentUniqueId) {
             this.switchToTabUniqueId(this.openedTabs[index].parentUniqueId);
         }
-        if (index === this.selectedIndex.value && this.selectedIndex.value + 1 < this.openedTabs.length) {
+        if (index === this.selectedIndex && this.selectedIndex + 1 < this.openedTabs.length) {
             this.openedTabs[index + 1].tabSelected$.next(true);
         }
         const deleted = this.openedTabs.splice(index, 1);
         deleted[0].destroy();
+        if (index < this.selectedIndex) {
+            this.selectedIndex = this.selectedIndex - 1;
+        }
     }
 
     /**
@@ -239,6 +260,20 @@ export class TabView implements TabViewInterface {
         }
     }
 
+    public tabChange(event: MatTabChangeEvent) {
+        if (event.index !== this.selectedIndex) {
+            let tab = this.openedTabs[this.selectedIndex];
+            if (tab) {
+                tab.tabSelected$.next(false);
+            }
+            tab = this.openedTabs[event.index];
+            if (tab) {
+                tab.tabSelected$.next(true);
+            }
+            this.selectedIndex = event.index;
+        }
+    }
+
     /**
      * Transforms a tab `uniqueId` into it's index.
      *
@@ -252,10 +287,6 @@ export class TabView implements TabViewInterface {
             throw new Error(`No tab with ID ${uniqueId} exists`);
         }
         return index;
-    }
-
-    private getNextId(): number {
-        return this.nextId++;
     }
 
     private checkIndexRange(index: number): void {

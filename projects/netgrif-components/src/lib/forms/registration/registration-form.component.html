@@ -1,0 +1,73 @@
+<div fxLayout="column" fxLayoutGap="24px" *ngIf="tokenVerified && (loadingToken | async) === false">
+    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+            <mat-icon color="primary">email</mat-icon>
+            <mat-form-field fxFlex="96">
+                <input matInput placeholder="{{ 'forms.pass.enterEmail' | translate}}" formControlName="email" required>
+                <mat-error *ngIf="rootFormGroup.controls['email'].hasError('email')">
+                    {{ 'dataField.validations.email' | translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+            <mat-icon color="primary">account_circle</mat-icon>
+            <mat-form-field fxFlex="96">
+                <input matInput placeholder="{{ 'forms.register.name' | translate }}" formControlName="name" required>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+            <mat-icon color="primary">account_circle_outline</mat-icon>
+            <mat-form-field fxFlex="96">
+                <input matInput placeholder="{{ 'forms.register.surname' | translate }}" formControlName="surname"
+                       required>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+            <mat-icon color="primary">vpn_key</mat-icon>
+            <mat-form-field fxFlex="96">
+                <input matInput placeholder="{{ 'forms.login.enterPass' | translate }}"
+                       [type]="hidePassword ? 'password' : 'text'"
+                       formControlName="password" required>
+                <button mat-icon-button matSuffix type="button"
+                        (click)="hidePassword = !hidePassword"
+                        (keypress)="false"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hidePassword">
+                    <mat-icon
+                        [color]="hidePassword ? undefined : 'accent'">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+            <mat-icon color="primary">vpn_key</mat-icon>
+            <mat-form-field fxFlex="96">
+                <input matInput placeholder="{{ 'forms.register.repeatPass' | translate }}"
+                       [type]="hideRepeatPassword ? 'password' : 'text'"
+                       formControlName="confirmPassword" required>
+                <button mat-icon-button matSuffix type="button"
+                        (click)="hideRepeatPassword = !hideRepeatPassword"
+                        (keypress)="false"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hideRepeatPassword">
+                    <mat-icon
+                        [color]="hideRepeatPassword ? undefined : 'accent'">{{hideRepeatPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center">
+            <button fxFlexOffset="8px" fxFlexOffset.xs="0" mat-raised-button class="register-button"
+                    fxFlex.xs="70" color="primary">
+                {{ 'forms.register.register' | translate }}
+            </button>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="!tokenVerified && (loadingToken | async) === false" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+    <mat-icon color="accent">unpublished</mat-icon>
+    <span class="font-size-20">{{ 'forms.register.notVerified' | translate}}</span>
+</div>
+
+<div *ngIf="loadingToken | async">
+    <mat-progress-spinner></mat-progress-spinner>
+</div>

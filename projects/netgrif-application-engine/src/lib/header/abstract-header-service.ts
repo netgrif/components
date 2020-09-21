@@ -26,6 +26,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
     protected _headerState: HeaderState;
     protected _headerChange$: Subject<HeaderChange>;
     protected _clearHeaderSearch$: Subject<number>;
+    private _initDefaultHeaders: Array<string>;
 
     public loading: LoadingEmitter;
     public fieldsGroup: Array<FieldsGroup>;
@@ -70,6 +71,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         if (maxColumns !== this.headerColumnCount) {
             this._headerColumnCount$.next(maxColumns);
             this.updateHeaderColumnCount();
+            this.initializeDefaultHeaderState();
         }
     }
 
@@ -93,6 +95,14 @@ export abstract class AbstractHeaderService implements OnDestroy {
         return this._clearHeaderSearch$.asObservable();
     }
 
+    set initDefaultHeaders(defaultHeaders: Array<string>) {
+        this._initDefaultHeaders = defaultHeaders;
+    }
+
+    get initDefaultHeaders(): Array<string> {
+        return this._initDefaultHeaders;
+    }
+
     private static uniqueNetFieldID(netId: string, fieldId: string): string {
         return `${netId}-${fieldId}`;
     }
@@ -108,19 +118,19 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerState = new HeaderState(defaultHeaders);
     }
 
-    protected initializeDefaultHeaderState(naeDefaultHeaders: Array<string>): void {
-        if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders)) {
+    protected initializeDefaultHeaderState(): void {
+        if (this.initDefaultHeaders && Array.isArray(this.initDefaultHeaders)) {
             const defaultHeaders = [];
             for (let i = 0; i < this.headerColumnCount; i++) {
                 defaultHeaders.push(null);
             }
-            for (let i = 0; i < naeDefaultHeaders.length; i++) {
+            for (let i = 0; i < this.initDefaultHeaders.length; i++) {
                 if (i >= this.headerColumnCount) {
                     this._logger.warn('there are more NAE_DEFAULT_HEADERS than header columns. Skipping the rest...');
                     break;
                 }
                 for (const h of this.fieldsGroup) {
-                    const head = h.fields.find(header => header.uniqueId === naeDefaultHeaders[i]);
+                    const head = h.fields.find(header => header.uniqueId === this.initDefaultHeaders[i]);
                     if (head) {
                         defaultHeaders[i] = head;
                         break;
@@ -129,6 +139,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
             }
             this._headerState.updateSelectedHeaders(defaultHeaders);
         }
+        this.loadHeadersFromPreferences();
     }
 
     /**
@@ -326,6 +337,9 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     ngOnDestroy(): void {
         this._headerChange$.complete();
+        this._clearHeaderSearch$.complete();
+        this._headerColumnCount$.complete();
+        this._responsiveHeaders$.complete();
     }
 
     /**

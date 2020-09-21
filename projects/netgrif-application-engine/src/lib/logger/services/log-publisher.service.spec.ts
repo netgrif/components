@@ -7,13 +7,14 @@ import {LogLevel} from './log-level';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('LogPublisherService', () => {
     let service: LogPublisherService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule],
+            imports: [NoopAnimationsModule, RouterTestingModule.withRoutes([])],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
@@ -23,7 +24,7 @@ describe('LogPublisherService', () => {
 
     beforeEach(() => {
         spyOn(service, 'register').and.callThrough();
-        spyOn(console, 'debug').and.callThrough();
+        spyOn(console, 'debug');
         spyOn(console, 'clear').and.callThrough();
     });
 
@@ -58,7 +59,7 @@ describe('LogPublisherService', () => {
         expect(localStorage.getItem(LocalStorageLogPublisher.DEFAULT_KEY)).toBeFalsy();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

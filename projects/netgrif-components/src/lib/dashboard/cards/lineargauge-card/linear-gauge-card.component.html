@@ -1,0 +1,8 @@
+<mat-card class="dashboard-card custom-mat-card" fxLayout="row" fxLayoutAlign="start start">
+    <ngx-charts-linear-gauge class="custom-chart"
+                             [scheme]="colorScheme"
+                             [value]="value"
+                             (select)="onSelect($event)"
+                             [units]="card.units">
+    </ngx-charts-linear-gauge>
+</mat-card>

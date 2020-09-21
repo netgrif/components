@@ -1,7 +1,7 @@
 import {Credentials} from '../../models/credentials';
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {AuthenticationMethodService} from '../authentication-method.service';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {User as AuthUser} from '../../models/user';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {catchError, map, tap} from 'rxjs/operators';
@@ -12,18 +12,19 @@ import {SessionService} from '../../session/services/session.service';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements OnDestroy {
 
     private static readonly IDENTIFICATION_ATTRIBUTE = 'id';
 
     private _authenticated$: BehaviorSubject<boolean>;
+    protected subSession: Subscription;
 
     constructor(private _auth: AuthenticationMethodService,
                 private _config: ConfigurationService,
                 private _sessionService: SessionService,
                 private _userTransformer: UserTransformer) {
         this._authenticated$ = new BehaviorSubject<boolean>(false);
-        this._sessionService.session$.subscribe(token => {
+        this.subSession = this._sessionService.session$.subscribe(token => {
             this._authenticated$.next(!!token && token.length !== 0 && this._sessionService.verified);
         });
     }
@@ -60,5 +61,10 @@ export class AuthenticationService {
 
     get authenticated$(): Observable<boolean> {
         return this._authenticated$.asObservable();
+    }
+
+    ngOnDestroy(): void {
+        this.subSession.unsubscribe();
+        this._authenticated$.complete();
     }
 }

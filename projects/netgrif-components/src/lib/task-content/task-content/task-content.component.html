@@ -1,0 +1,19 @@
+<div *ngIf="!loading && dataSource.length !== 0" [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView()}">
+    <div [gdAreas]="gridAreas" [gdColumns]="getGridColumns()">
+        <div *ngFor="let item of dataSource"
+             [gdArea]="item.gridAreaId"
+             class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
+            <nc-field-component-resolver [gridElement]="item" fxFlex></nc-field-component-resolver>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!loading && dataSource.length === 0" fxLayout="column" fxLayoutAlign="center center">
+    <mat-icon *ngIf="displayNoDataIcon">{{noDataIcon ? noDataIcon : 'block'}}</mat-icon>
+    <span>{{(noDataText ? noDataText : 'tasks.view.noData') | translate}}</span>
+</div>
+
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner color="primary"></mat-spinner>
+</div>
+

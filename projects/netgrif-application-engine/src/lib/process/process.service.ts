@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {forkJoin, Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {Net} from './net';
 import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource.service';
@@ -18,7 +18,7 @@ export interface NetCache {
 @Injectable({
     providedIn: 'root'
 })
-export class ProcessService {
+export class ProcessService implements OnDestroy {
 
     protected readonly _nets: NetCache;
     protected _netsSubject: Subject<NetCache>;
@@ -30,6 +30,11 @@ export class ProcessService {
         this._netsSubject = new Subject<NetCache>();
         this._netUpdate = new Subject<Net>();
         this._requestCache = new Map<string, ReplaySubject<Net>>();
+    }
+
+    ngOnDestroy(): void {
+        this._netsSubject.complete();
+        this._netUpdate.complete();
     }
 
     /**
@@ -139,6 +144,14 @@ export class ProcessService {
      */
     public get netUpdate$(): Observable<Net> {
         return this._netUpdate.asObservable();
+    }
+
+    public hasLoadNets(identifiers: Array<string>): boolean {
+        return identifiers.every(identifier => this.hasLoadNet(identifier));
+    }
+
+    public hasLoadNet(identifier: string): boolean {
+        return !!this._nets[identifier];
     }
 
     protected loadNet(id: string): Observable<Net> {

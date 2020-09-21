@@ -1,0 +1,12 @@
+<mat-card class="dashboard-card custom-mat-card" fxLayout="row" fxLayoutAlign="start start">
+    <ngx-charts-pie-chart class="custom-chart"
+                          [scheme]="colorScheme"
+                          [results]="single"
+                          [gradient]="gradient"
+                          [legend]="showLegend"
+                          [legendPosition]="legendPosition"
+                          [labels]="showLabels"
+                          [doughnut]="isDoughnut"
+    >
+    </ngx-charts-pie-chart>
+</mat-card>

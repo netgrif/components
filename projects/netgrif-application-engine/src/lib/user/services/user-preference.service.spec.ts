@@ -13,8 +13,9 @@ import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatIconModule} from '@angular/material/icon';
+import {MaterialModule} from '../../material/material.module';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 
 describe('UserPreferenceService', () => {
     let service: UserPreferenceService;
@@ -22,21 +23,19 @@ describe('UserPreferenceService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                MatSnackBarModule,
+                MaterialModule,
                 NoopAnimationsModule,
-                MatIconModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                SnackBarModule
             ],
             providers: [
-                AuthenticationMethodService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService}
             ],
             declarations: [
-                ErrorSnackBarComponent,
-                SuccessSnackBarComponent
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -53,27 +52,33 @@ describe('UserPreferenceService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should test user preferences', () => {
+    it('should test task filter preference', () => {
         service.setTaskFilters('viewId', ['filterId']);
         const taskFilters = service.getTaskFilters('viewId');
         expect(taskFilters.length).toEqual(1);
         expect(taskFilters[0]).toEqual('filterId');
+    });
 
+    it('should test case filter preference', () => {
         service.setCaseFilters('viewId', ['filterId']);
         const caseFilters = service.getCaseFilters('viewId');
         expect(caseFilters.length).toEqual(1);
         expect(caseFilters[0]).toEqual('filterId');
+    });
 
+    it('should test headers preference', () => {
         service.setHeaders('viewId', ['header0']);
         const headers = service.getHeaders('viewId');
         expect(headers.length).toEqual(1);
         expect(headers[0]).toEqual('header0');
+    });
 
+    it('should test lang preference', () => {
         service.setLocale('sk-SK');
         expect(service.getLocale()).toEqual('sk-SK');
     });
 
-    afterAll(() => {
+    afterEach(() => {
         TestBed.resetTestingModule();
     });
 });

@@ -11,6 +11,8 @@ import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../search-service/search.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('HeaderSearchService', () => {
     let service: HeaderSearchService;
@@ -28,6 +30,7 @@ describe('HeaderSearchService', () => {
                 CategoryFactory,
                 ConfigCaseViewServiceFactory,
                 {provide: SearchService, useFactory: TestCaseSearchServiceFactory},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [ConfigCaseViewServiceFactory]}
             ]
@@ -37,5 +40,9 @@ describe('HeaderSearchService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

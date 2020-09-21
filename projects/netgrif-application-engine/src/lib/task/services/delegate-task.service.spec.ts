@@ -11,6 +11,11 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../models/subject-task-operations';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
+import {TaskEventService} from '../../task-content/services/task-event.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {TaskDataService} from './task-data.service';
+import {DataFocusPolicyService} from './data-focus-policy.service';
 
 describe('DelegateTaskService', () => {
     let service: DelegateTaskService;
@@ -21,9 +26,13 @@ describe('DelegateTaskService', () => {
             providers: [
                 DelegateTaskService,
                 TaskRequestStateService,
+                TaskEventService,
+                TaskDataService,
+                DataFocusPolicyService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
         });
         service = TestBed.inject(DelegateTaskService);

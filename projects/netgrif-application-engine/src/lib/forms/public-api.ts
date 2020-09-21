@@ -1,5 +1,5 @@
-export * from './forgotten-password/public-api';
-export * from './login/public-api';
-export * from './registration/public-api';
+export * from './forgotten-password/abstract-forgotten-password-form.component';
+export * from './login/abstract-login-form.component';
+export * from './registration/abstract-registration-form.component';
 
 export * from './has-form';

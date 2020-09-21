@@ -13,6 +13,8 @@ import {SearchService} from '../../../../search/search-service/search.service';
 import {TestCaseSearchServiceFactory} from '../../../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('ObservableCaseViewService', () => {
     let service: ObservableCaseViewServiceFactory;
@@ -32,6 +34,7 @@ describe('ObservableCaseViewService', () => {
                 ProcessService,
                 LoggerService,
                 TranslateService,
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

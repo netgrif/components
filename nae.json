@@ -9,7 +9,11 @@
                 "login": "auth/login",
                 "logout": "auth/logout",
                 "signup": "auth/signup",
-                "verification": "auth/verify"
+                "verification": "auth/verify",
+                "verify": "auth/token/verify",
+                "invite": "auth/invite",
+                "reset": "auth/reset",
+                "recover": "/auth/recover"
             },
             "sessionBearer": "X-Auth-Token"
         },
@@ -34,6 +38,11 @@
                 "name": "user",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
+            },
+            {
+                "name": "dashboard",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
             }
         ]
     },
@@ -47,6 +56,17 @@
             "navigation": false,
             "routing": {
                 "path": "authentication"
+            }
+        },
+        "demo-user-invite": {
+            "component": {
+                "class": "UserInviteComponent",
+                "from": "./doc/user-invite/user-invite.component"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "user-invite"
             }
         },
         "demo-roles": {
@@ -90,7 +110,7 @@
             "access": "public",
             "navigation": false,
             "routing": {
-                "path": "registration"
+                "path": "registration/:token"
             }
         },
         "demo-drawer": {
@@ -293,6 +313,21 @@
                 "path": "profile"
             }
         },
+        "demo-access": {
+            "component": {
+                "class": "ProfileComponent",
+                "from": "./doc/profile/profile.component"
+            },
+            "access": {
+                "role": ["DevLink.Admin"],
+                "group": [],
+                "authority": ["ROLE_ADMIN"]
+            },
+            "navigation": false,
+            "routing": {
+                "path": "access"
+            }
+        },
         "demo-view-tree": {
             "component": {
                 "class": "TreeViewExampleComponent",
@@ -443,6 +478,69 @@
                             "layout": {
                                 "x": 1,
                                 "y": 1,
+                                "rows": 1,
+                                "cols": 1
+                            }
+                        }, {
+                            "type": "pie",
+                            "title": "Custom",
+                            "resourceType": "case",
+                            "query": "{\"aggs\": {\"result\": {\"terms\": {\"field\": \"dataSet.number.value.keyword\"}}}}",
+                            "filter": {},
+                            "layout": {
+                                "x": 0,
+                                "y": 1,
+                                "rows": 1,
+                                "cols": 1
+                            }
+                        }, {
+                            "type": "bar",
+                            "title": "Custom",
+                            "resourceType": "case",
+                            "query": "{\"aggs\": {\"result\": {\"terms\": {\"field\": \"dataSet.number.value.keyword\"}}}}",
+                            "xAxisLabel": "Country",
+                            "yAxisLabel": "Population",
+                            "filter": {},
+                            "layout": {
+                                "x": 2,
+                                "y": 1,
+                                "rows": 1,
+                                "cols": 1
+                            }
+                        }, {
+                            "type": "line",
+                            "title": "Custom",
+                            "resourceType": "case",
+                            "query": "{\"aggs\":{\"result1\":{\"terms\":{\"field\":\"dataSet.number.value.keyword\"}},\"result2\":{\"terms\":{\"field\":\"dataSet.number.value.keyword\"}}}}",
+                            "xAxisLabel": "Country",
+                            "yAxisLabel": "Population",
+                            "filter": {},
+                            "layout": {
+                                "x": 0,
+                                "y": 2,
+                                "rows": 1,
+                                "cols": 1
+                            }
+                        }, {
+                            "type": "lineargauge",
+                            "title": "Custom",
+                            "resourceType": "case",
+                            "query": "{\"aggs\": {\"result\": {\"value_count\": {\"field\": \"dataSet.text.value.keyword\"}}}}",
+                            "xAxisLabel": "Country",
+                            "yAxisLabel": "Population",
+                            "units": "cases",
+                            "filter": {},
+                            "layout": {
+                                "x": 1,
+                                "y": 2,
+                                "rows": 1,
+                                "cols": 1
+                            }
+                        }, {
+                            "type": "default",
+                            "layout": {
+                                "x": 2,
+                                "y": 2,
                                 "rows": 1,
                                 "cols": 1
                             }

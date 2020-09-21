@@ -13,6 +13,9 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
+import {TaskEventService} from '../../task-content/services/task-event.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -20,7 +23,6 @@ describe('TaskDataService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TranslateModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MaterialModule,
@@ -30,9 +32,11 @@ describe('TaskDataService', () => {
                 TaskDataService,
                 TaskRequestStateService,
                 DataFocusPolicyService,
+                TaskEventService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations}
+                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
         });
         service = TestBed.inject(TaskDataService);
@@ -40,5 +44,9 @@ describe('TaskDataService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

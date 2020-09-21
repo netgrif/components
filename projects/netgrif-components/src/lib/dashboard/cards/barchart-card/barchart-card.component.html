@@ -1,0 +1,15 @@
+<mat-card class="dashboard-card custom-mat-card" fxLayout="row" fxLayoutAlign="start start">
+    <ngx-charts-bar-vertical class="custom-chart"
+                             [scheme]="colorScheme"
+                             [results]="single"
+                             [gradient]="gradient"
+                             [xAxis]="xAxis"
+                             [yAxis]="yAxis"
+                             [legend]="showLegend"
+                             [showXAxisLabel]="showXAxisLabel"
+                             [showYAxisLabel]="showYAxisLabel"
+                             [xAxisLabel]="card.xAxisLabel"
+                             [yAxisLabel]="card.yAxisLabel"
+                             (select)="onSelect($event)">
+    </ngx-charts-bar-vertical>
+</mat-card>

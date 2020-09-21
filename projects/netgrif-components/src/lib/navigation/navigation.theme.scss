@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@mixin navigation-theme($theme) {
+    $accent: map-get($theme, accent);
+
+    .active-navigation-route {
+        background-color: rgba(mat-color($accent), 0.3);
+    }
+}

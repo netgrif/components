@@ -7,7 +7,8 @@ import {Validation} from '../../models/validation';
 export enum TextFieldView {
     DEFAULT = 'default',
     TEXTAREA = 'textarea',
-    RICHTEXTAREA = 'richtextarea'
+    RICHTEXTAREA = 'richtextarea',
+    HTMLTEXTAREA = 'htmltextarea'
 }
 
 export enum TextAreaHeight {
@@ -34,7 +35,7 @@ export class TextField extends DataField<string> {
     private _validators: Array<ValidatorFn>;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, public validations?: Validation[], private _view = TextFieldView.DEFAULT) {
+                description?: string, layout?: Layout, public validations?: Validation[], protected _view = TextFieldView.DEFAULT) {
         super(stringId, title, value, behavior, placeholder, description, layout);
     }
 

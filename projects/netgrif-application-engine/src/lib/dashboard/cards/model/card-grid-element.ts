@@ -2,6 +2,4 @@ import {GridElementWithItem} from '../../../utility/grid-layout/model/grid-eleme
 import {DashboardCard} from './dashboard-card';
 
 
-export interface CardGridElement extends GridElementWithItem {
-    item?: DashboardCard;
-}
+export interface CardGridElement extends GridElementWithItem<DashboardCard> {}

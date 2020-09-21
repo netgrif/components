@@ -1,5 +1,5 @@
 import {Behavior} from './behavior';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
@@ -15,7 +15,7 @@ export abstract class DataField<T> {
      * @ignore
      * Current value of the data field
      */
-    private _value: BehaviorSubject<T>;
+    protected _value: BehaviorSubject<T>;
     /**
      * @ignore
      * Whether the data field Model object was initialized.
@@ -23,6 +23,13 @@ export abstract class DataField<T> {
      * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
      */
     private _initialized: boolean;
+    /**
+     * @ignore
+     * Whether the data field Model object was initialized, we push that info into stream
+     *
+     * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
+     */
+    private _initialized$: ReplaySubject<true>;
     /**
      * @ignore
      * Whether the field fulfills all of it's validators.
@@ -70,6 +77,7 @@ export abstract class DataField<T> {
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout) {
         this._value = new BehaviorSubject<T>(initialValue);
+        this._initialized$ = new ReplaySubject<true>(1);
         this._initialized = false;
         this._valid = true;
         this._changed = false;
@@ -141,6 +149,10 @@ export abstract class DataField<T> {
         return this._initialized;
     }
 
+    get initialized$(): Observable<true> {
+        return this._initialized$.asObservable();
+    }
+
     get valid(): boolean {
         return this._valid;
     }
@@ -184,6 +196,8 @@ export abstract class DataField<T> {
         });
         this.updateFormControlState(formControl);
         this._initialized = true;
+        this._initialized$.next(true);
+        this._initialized$.complete();
         this._changed = false;
     }
 

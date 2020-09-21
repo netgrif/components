@@ -44,7 +44,7 @@ export abstract class TaskHandlingService {
     }
 
     /**
-     * Checks whether the current state of the {@link TaskContentService} and optionally of the {@link SelectedCaseService}, is still
+     * Checks whether the current state of the {@link TaskContentService} and optionally if the {@link SelectedCaseService}, is still
      * relevant to the task that was requested.
      *
      * This method is useful if you use {@link UnlimitedTaskContentService}, or a similar implementation. It is possible for the currently
