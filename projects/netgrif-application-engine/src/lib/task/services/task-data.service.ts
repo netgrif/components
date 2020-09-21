@@ -71,6 +71,17 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     /**
+     * Pushes the provided value into the [changedFields$]{@link TaskDataService#changedFields$} stream.
+     * @param changedFields the change object. If the provided object is empty, no value is pushed into the stream.
+     */
+    public emitChangedFields(changedFields: ChangedFields) {
+        if (changedFields === undefined || Object.keys(changedFields).length === 0) {
+            return;
+        }
+        this._changedFields$.next(changedFields);
+    }
+
+    /**
      * Loads the Data Fields of an uninitialized Task from backend
      * and populates the Task managed by {@link TaskContentService} with the appropriate objects.
      *

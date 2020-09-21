@@ -9,6 +9,7 @@ import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumera
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {FieldConverterService} from './field-converter.service';
+import {EventOutcome} from '../../resources/interface/event-outcome';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -93,11 +94,11 @@ export abstract class TaskContentService implements OnDestroy {
     /**
      * Clears the assignee, start date and finish date from the managed Task.
      */
-    public removeStateData(): void {
+    public updateStateData(eventOutcome: EventOutcome): void {
         if (this._task) {
-            this._task.user = undefined;
-            this._task.startDate = undefined;
-            this._task.finishDate = undefined;
+            this._task.user = eventOutcome.assignee;
+            this._task.startDate = eventOutcome.startDate;
+            this._task.finishDate = eventOutcome.finishDate;
         }
     }
 

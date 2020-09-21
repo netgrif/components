@@ -27,6 +27,8 @@ import {UserService} from '../../user/services/user.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {TaskDataService} from './task-data.service';
+import {DataFocusPolicyService} from './data-focus-policy.service';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -48,6 +50,8 @@ describe('CancelTaskService', () => {
                 CancelTaskService,
                 TaskEventService,
                 TaskRequestStateService,
+                TaskDataService,
+                DataFocusPolicyService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

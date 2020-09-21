@@ -13,6 +13,7 @@ import {SelectedCaseService} from './selected-case.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
+import {TaskDataService} from './task-data.service';
 
 
 /**
@@ -27,6 +28,7 @@ export class AssignTaskService extends TaskHandlingService {
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
                 protected _taskEvent: TaskEventService,
+                protected _taskDataService: TaskDataService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -58,18 +60,19 @@ export class AssignTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(assignedTaskId);
 
-        this._taskResourceService.assignTask(this._safeTask.stringId).subscribe(response => {
+        this._taskResourceService.assignTask(this._safeTask.stringId).subscribe(eventOutcome => {
             this._taskState.stopLoading(assignedTaskId);
             if (!this.isTaskRelevant(assignedTaskId)) {
                 this._log.debug('current task changed before the assign response could be received, discarding...');
                 return;
             }
 
-            if (response.success) {
-                this._taskContentService.removeStateData();
+            if (eventOutcome.success) {
+                this._taskContentService.updateStateData(eventOutcome);
+                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this.completeSuccess(afterAction);
-            } else if (response.error) {
-                this._snackBar.openErrorSnackBar(response.error);
+            } else if (eventOutcome.error) {
+                this._snackBar.openErrorSnackBar(eventOutcome.error);
                 this.sendNotification(false);
                 afterAction.next(false);
             }

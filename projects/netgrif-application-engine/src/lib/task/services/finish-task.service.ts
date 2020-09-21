@@ -96,21 +96,22 @@ export class FinishTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(finishedTaskId);
 
-        this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(response => {
+        this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(eventOutcome => {
             this._taskState.stopLoading(finishedTaskId);
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
                 return;
             }
 
-            if (response.success) {
-                this._taskContentService.removeStateData();
+            if (eventOutcome.success) {
+                this._taskContentService.updateStateData(eventOutcome);
+                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this._taskOperations.reload();
                 this.sendNotification(true);
                 afterAction.next(true);
                 this._taskOperations.close();
-            } else if (response.error) {
-                this._snackBar.openErrorSnackBar(response.error);
+            } else if (eventOutcome.error) {
+                this._snackBar.openErrorSnackBar(eventOutcome.error);
                 this.sendNotification(false);
                 afterAction.next(false);
             }
