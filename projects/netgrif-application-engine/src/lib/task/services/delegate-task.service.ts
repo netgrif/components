@@ -18,6 +18,7 @@ import {NAE_USER_ASSIGN_COMPONENT} from '../../side-menu/content-components/inje
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
+import {TaskDataService} from './task-data.service';
 
 
 /**
@@ -33,6 +34,7 @@ export class DelegateTaskService extends TaskHandlingService {
                 protected _translate: TranslateService,
                 protected _taskState: TaskRequestStateService,
                 protected _taskEvent: TaskEventService,
+                protected _taskDataService: TaskDataService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() @Inject(NAE_USER_ASSIGN_COMPONENT) protected _userAssignComponent: any,
                 @Optional() _selectedCaseService: SelectedCaseService,
@@ -75,18 +77,19 @@ export class DelegateTaskService extends TaskHandlingService {
 
                 this._taskState.startLoading(delegatedTaskId);
 
-                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(response => {
+                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(eventOutcome => {
                     this._taskState.stopLoading(delegatedTaskId);
                     if (!this.isTaskRelevant(delegatedTaskId)) {
                         this._log.debug('current task changed before the delegate response could be received, discarding...');
                         return;
                     }
 
-                    if (response.success) {
-                        this._taskContentService.removeStateData();
+                    if (eventOutcome.success) {
+                        this._taskContentService.updateStateData(eventOutcome);
+                        this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                         this.completeSuccess(afterAction);
-                    } else if (response.error) {
-                        this._snackBar.openErrorSnackBar(response.error);
+                    } else if (eventOutcome.error) {
+                        this._snackBar.openErrorSnackBar(eventOutcome.error);
                         this.sendNotification(false);
                         afterAction.next(false);
                     }
