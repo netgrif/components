@@ -19,10 +19,7 @@ export abstract class AbstractCustomCard implements OnInit {
     public count: number;
     public value: number;
 
-    /* Data holder for graphs with 1D data array, eg.: Pie Chart*/
     @Input() public single: Array<DashboardSingleData>;
-
-    /* Data holder for graphs with multiple 2D data array, eg.: BarChart, LineChart*/
     public multi: Array<DashboardMultiData>;
 
     public showLegend = true;
@@ -53,31 +50,6 @@ export abstract class AbstractCustomCard implements OnInit {
         }, error => {
             this.loggerService.error('Error occurred when calling dashboard resource service');
         });
-    }
-
-    public setCardType(type: string): void {
-        switch (type) {
-            case 'pie': {
-                this.card.type = DashboardCardTypes.PIE;
-                break;
-            }
-            case 'bar': {
-                this.card.type = DashboardCardTypes.BAR;
-                break;
-            }
-            case 'line': {
-                this.card.type = DashboardCardTypes.LINE;
-                break;
-            }
-            case 'lineargauge': {
-                this.card.type = DashboardCardTypes.LINEARGAUGE;
-                break;
-            }
-            default: {
-                this.card.type = DashboardCardTypes.DEFAULT;
-                break;
-            }
-        }
     }
 
     public getResourceTypeAsString(): string {

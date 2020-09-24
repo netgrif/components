@@ -529,7 +529,7 @@
                             "type": "lineargauge",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": {"aggs": {"result": {"terms": {"field": "dataSet.text.value.keyword"}}}},
+                            "query": {"aggs": {"types_count": {"value_count": {"field": "dataSet.text.value.keyword"}}}},
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "units": "cases",
