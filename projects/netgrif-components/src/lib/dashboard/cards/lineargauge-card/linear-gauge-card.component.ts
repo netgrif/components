@@ -13,8 +13,6 @@ import {AggregationResult, LoggerService} from '@netgrif/application-engine';
 })
 export class LinearGaugeCardComponent extends AbstractCustomCard implements OnInit {
 
-    value: number;
-
     constructor(protected _injector: Injector,
                 protected resourceService: DashboardResourceService,
                 protected translateService: TranslateService,

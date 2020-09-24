@@ -8,6 +8,7 @@ import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {DashboardSingleData} from '../model/custom-dashboard-model/dashboard-single-data';
 import {DashboardMultiData} from '../model/custom-dashboard-model/dashboard-multi-data';
 import {LoggerService} from '../../../logger/services/logger.service';
+import {AggregationResult} from '../model/custom-dashboard-model/aggregation-result';
 
 export abstract class AbstractCustomCard implements OnInit {
 
@@ -16,9 +17,10 @@ export abstract class AbstractCustomCard implements OnInit {
     public loading: LoadingEmitter;
 
     public count: number;
+    public value: number;
 
     /* Data holder for graphs with 1D data array, eg.: Pie Chart*/
-    public single: Array<DashboardSingleData>;
+    @Input() public single: Array<DashboardSingleData>;
 
     /* Data holder for graphs with multiple 2D data array, eg.: BarChart, LineChart*/
     public multi: Array<DashboardMultiData>;
@@ -82,6 +84,6 @@ export abstract class AbstractCustomCard implements OnInit {
         return this.card.resourceType.toLowerCase();
     }
 
-    public abstract convertData(json): void;
+    public abstract convertData(json: AggregationResult): void;
 
 }

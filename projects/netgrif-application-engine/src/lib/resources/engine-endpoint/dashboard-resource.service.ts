@@ -3,9 +3,8 @@ import {ResourceProvider} from '../resource-provider.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {getResourceAddress} from '../resource-utility-functions';
 import {HttpParams} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {AggregationQuery} from '../../dashboard/cards/model/custom-dashboard-model/aggregation-query';
-import {map} from 'rxjs/operators';
 import {AggregationResult} from '../../dashboard/cards/model/custom-dashboard-model/aggregation-result';
 
 @Injectable()

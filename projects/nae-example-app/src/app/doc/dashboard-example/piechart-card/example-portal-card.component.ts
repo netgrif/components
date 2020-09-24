@@ -26,8 +26,7 @@ export class ExamplePortalCardComponent extends AbstractCustomCard implements On
         });
     }
 
-    public convertData(json: any) {
-        this.single = [];
+    public convertData(json: AggregationResult) {
         json['aggregations'].result.buckets.forEach(element => {
             /*this.single.push({
                 name: element['key'],
