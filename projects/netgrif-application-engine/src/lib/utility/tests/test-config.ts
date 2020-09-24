@@ -39,6 +39,11 @@ export class TestConfigurationService extends ConfigurationService {
                         name: 'user',
                         address: 'http://localhost:8080/api/',
                         format: 'json'
+                    },
+                    {
+                        name: 'dashboard',
+                        address: 'http://localhost:8080/api/',
+                        format: 'json'
                     }
                 ]
             },
@@ -79,7 +84,80 @@ export class TestConfigurationService extends ConfigurationService {
                                     rows: 1,
                                     cols: 1
                                 }
-                            }]
+                            }, {
+                                type: 'pie',
+                                title: 'Custom',
+                                resourceType: 'case',
+                                query: {
+                                    aggs: {
+                                        result: {
+                                            terms: {
+                                                field: 'dataSet.text.value.keyword'}}}},
+                                filter: {},
+                                layout: {
+                                    x: 0,
+                                    y: 1,
+                                    rows: 1,
+                                    cols: 1
+                                }
+                            }, {
+                                type: 'bar',
+                                title: 'Custom',
+                                resourceType: 'case',
+                                query: {aggs: {result: {terms: {field: 'dataSet.text.value.keyword'}}}},
+                                xAxisLabel: 'Country',
+                                yAxisLabel: 'Population',
+                                filter: {},
+                                layout: {
+                                    x: 2,
+                                    y: 1,
+                                    rows: 1,
+                                    cols: 1
+                                }
+                            }, {
+                                type: 'line',
+                                title: 'Custom',
+                                resourceType: 'case',
+                                query: {
+                                    aggs: {
+                                        result1: {
+                                            terms: {field: 'dataSet.text.value.keyword'}},
+                                        result2: {
+                                            terms: {field: 'dataSet.text.value.keyword'}}}
+                                },
+                                xAxisLabel: 'Country',
+                                yAxisLabel: 'Population',
+                                filter: {},
+                                layout: {
+                                    x: 0,
+                                    y: 2,
+                                    rows: 1,
+                                    cols: 1
+                                }
+                            }, {
+                                type: 'lineargauge',
+                                title: 'Custom',
+                                resourceType: 'case',
+                                query: {aggs: {result: {terms: {field: 'dataSet.text.value.keyword'}}}},
+                                xAxisLabel: 'Country',
+                                yAxisLabel: 'Population',
+                                units: 'cases',
+                                filter: {},
+                                layout: {
+                                    x: 1,
+                                    y: 2,
+                                    rows: 1,
+                                    cols: 1
+                                }
+                            }, {
+                                type: 'default',
+                                layout: {
+                                    x: 2,
+                                    y: 2,
+                                    rows: 1,
+                                    cols: 1
+                                }}
+                                ]
                         }
                     },
                     access: 'private',

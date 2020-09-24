@@ -1,18 +1,23 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {AbstractCustomCard, AbstractCustomCardResourceService} from '@netgrif/application-engine';
+import {AbstractCustomCard, AggregationResult, DashboardResourceService, DashboardSingleData, LoggerService} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
+
 
 @Component({
     selector: 'nc-barchart-card',
     templateUrl: './barchart-card.component.html',
-    styleUrls: ['./barchart-card.component.scss']
+    styleUrls: ['./barchart-card.component.scss'],
+    providers: [
+        DashboardResourceService
+    ]
 })
 export class BarchartCardComponent extends AbstractCustomCard implements OnInit {
 
     constructor(protected _injector: Injector,
-                protected resourceService: AbstractCustomCardResourceService,
-                protected translateService: TranslateService) {
-        super(_injector, resourceService, translateService);
+                protected resourceService: DashboardResourceService,
+                protected translateService: TranslateService,
+                protected loggerService: LoggerService) {
+        super(_injector, resourceService, translateService, loggerService);
     }
 
     ngOnInit(): void {
@@ -24,12 +29,13 @@ export class BarchartCardComponent extends AbstractCustomCard implements OnInit 
         console.log(event);
     }
 
-    convertData(json: any): void {
+    convertData(json: AggregationResult): void {
         json['aggregations'].result.buckets.forEach(element => {
-            this.single.push({
+            /*this.single.push({
                 name: element['key'],
                 value: element['doc_count']
-            });
+            });*/
+            this.single.push(new DashboardSingleData(element['key'], element['doc_count']));
         });
         this.single = [...this.single];
         console.log(this.single);

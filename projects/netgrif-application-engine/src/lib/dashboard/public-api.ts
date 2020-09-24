@@ -1,11 +1,16 @@
 /* INTERFACES */
 export * from './dashboard-content/dashboard-params';
+export * from './cards/model/custom-dashboard-model/aggregation-query';
+export * from './cards/model/custom-dashboard-model/aggregation-result';
 
 export * from './cards/model/dashboard-card';
 export * from './cards/model/count-card';
 export * from './cards/model/graph-card';
 export * from './cards/model/iframe-card';
-export * from './cards/model/custom-card';
+export * from './cards/model/custom-dashboard-model/custom-card';
+
+export * from './cards/model/custom-dashboard-model/dashboard-multi-data';
+export * from './cards/model/custom-dashboard-model/dashboard-single-data';
 
 /* ENUMS */
 export * from './cards/model/dashboard-card-types';
@@ -17,5 +22,5 @@ export * from './cards/custom-card/abstract-custom-card';
 export * from './dashboard-content/abstract-dashboard-content';
 
 /* SERVICES */
-export * from './cards/custom-card/abstract-custom-card-resource-service';
+export * from '../resources/engine-endpoint/dashboard-resource.service';
 
