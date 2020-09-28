@@ -177,6 +177,12 @@
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: "
         },
+        "values": {
+            "boolean": {
+                "true": "áno",
+                "false": "nie"
+            }
+        },
         "noFile": "Žiadny súbor"
     },
     "dialog": {

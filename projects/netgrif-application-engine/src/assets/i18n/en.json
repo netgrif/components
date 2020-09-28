@@ -177,6 +177,12 @@
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: "
         },
+        "values": {
+            "boolean": {
+                "true": "true",
+                "false": "false"
+            }
+        },
         "noFile": "No file"
     },
     "dialog": {
