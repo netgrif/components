@@ -247,7 +247,7 @@ export abstract class AbstractTaskContentComponent {
                     `You cannot use 'grid' layout without specifying the layout of the data fields (field ID: ${dataField.stringId})`);
             }
 
-            while (gridData.grid.length <= dataField.layout.y + dataField.layout.rows) {
+            while (gridData.grid.length < dataField.layout.y + dataField.layout.rows) {
                 gridData.grid.push(this.newGridRow());
             }
 
@@ -480,7 +480,7 @@ export abstract class AbstractTaskContentComponent {
      * @returns the base identifier, if it already is unique. A unique variation on the base identifier if it is already in use.
      */
     protected assureUniqueness(identifier: string): string {
-        const alphaNumIdentifier = identifier.replace(/[^0-9a-zA-Z]/gi, '');
+        const alphaNumIdentifier = 'x' + identifier.replace(/[^0-9a-zA-Z]/gi, '');
         if (!this._existingIdentifiers.has(alphaNumIdentifier)) {
             this._existingIdentifiers.add(alphaNumIdentifier);
             return alphaNumIdentifier;
@@ -488,7 +488,7 @@ export abstract class AbstractTaskContentComponent {
         let variation;
         const counter = new IncrementingCounter();
         do {
-            variation = `x${counter.next()}x${alphaNumIdentifier}`;
+            variation = `x${counter.next()}${alphaNumIdentifier}`;
         } while (this._existingIdentifiers.has(variation));
         this._existingIdentifiers.add(variation);
         return variation;
