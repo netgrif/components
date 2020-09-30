@@ -7,6 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {FieldsGroup} from '../../models/fields-group';
 import {orderBy} from 'natural-orderby';
 import {Observable, Subscription} from 'rxjs';
+import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 
 export interface HeaderOption {
     groupTitle: string;
@@ -20,7 +21,8 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
     @Input() public headerService: AbstractHeaderService;
 
-    constructor(protected _translate: TranslateService) {
+    constructor(protected _translate: TranslateService,
+                protected _snackbar: SnackBarService) {
     }
 
     ngOnInit(): void {
@@ -68,7 +70,8 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
         return meta.map(group => ({
             groupTitle: group.groupTitle,
-            fields: group.fields.filter(option => this._translate.instant(option.title).toLowerCase().normalize('NFD')
+            fields: group.fields.filter(option => this.hasTitle(option) &&
+                this._translate.instant(option.title).toLowerCase().normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0)
         })).filter(group => group.fields.length > 0);
     }
@@ -79,5 +82,13 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
     public renderSelection = (header) => {
         return header ? this._translate.instant(header.title) : '';
+    }
+
+    private hasTitle(option: HeaderColumn): boolean {
+        if (option.title === undefined) {
+            this._snackbar.openWarningSnackBar('Immediate field does not have title');
+            return false;
+        }
+        return true;
     }
 }
