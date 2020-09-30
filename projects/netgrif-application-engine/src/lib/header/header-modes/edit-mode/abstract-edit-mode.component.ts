@@ -70,7 +70,7 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
         return meta.map(group => ({
             groupTitle: group.groupTitle,
-            fields: group.fields.filter(option => this.hasTitle(option) &&
+            fields: group.fields.filter(option => this.checkImmediateTitle(option) &&
                 this._translate.instant(option.title).toLowerCase().normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0)
         })).filter(group => group.fields.length > 0);
@@ -84,7 +84,7 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
         return header ? this._translate.instant(header.title) : '';
     }
 
-    private hasTitle(option: HeaderColumn): boolean {
+    private checkImmediateTitle(option: HeaderColumn): boolean {
         if (option.title === undefined) {
             this._snackbar.openWarningSnackBar('Immediate field does not have title');
             return false;
