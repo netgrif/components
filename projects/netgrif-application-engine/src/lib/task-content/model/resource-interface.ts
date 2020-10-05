@@ -2,6 +2,7 @@ import {Behavior} from '../../data-fields/models/behavior';
 import {Layout} from '../../data-fields/models/layout';
 import {Validation} from '../../data-fields/models/validation';
 import {FieldTypeResource} from './field-type-resource';
+import {FormatFilter} from '../../data-fields/models/format-filter';
 
 export interface DataFieldResource {
     stringId: string;
@@ -23,6 +24,7 @@ export interface DataFieldResource {
     validations?: Validation[];
     subType?: string;
     formatting?: string;
+    formatFilter?: FormatFilter;
     roles?: any[];
     options?: {
         [k: string]: string

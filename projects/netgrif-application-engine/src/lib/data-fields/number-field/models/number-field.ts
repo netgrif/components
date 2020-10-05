@@ -3,6 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
+import {FormatFilter} from '../../models/format-filter';
 
 export enum NumberFieldValidation {
     ODD = 'odd',
@@ -23,10 +24,12 @@ export enum NumberFieldValidation {
 
 export class NumberField extends DataField<number> {
     private _validators: Array<ValidatorFn>;
+    private _format: FormatFilter;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[],
-                placeholder?: string, description?: string, layout?: Layout) {
+                placeholder?: string, description?: string, layout?: Layout, format?: FormatFilter) {
         super(stringId, title, value, behavior, placeholder, description, layout);
+        this._format = format;
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

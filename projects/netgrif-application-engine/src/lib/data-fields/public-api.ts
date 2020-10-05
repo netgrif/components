@@ -45,6 +45,7 @@ export * from './date-field/models/custom-date-adapter';
 export * from './models/changed-fields';
 export * from './models/validation';
 export * from './models/layout';
+export * from './models/format-filter';
 export * from './data-field-template/models/wrapped-boolean';
 
 /* Enums */
