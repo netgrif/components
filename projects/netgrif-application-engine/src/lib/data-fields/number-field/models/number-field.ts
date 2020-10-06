@@ -22,14 +22,20 @@ export enum NumberFieldValidation {
     VALID_IN_RANGE = 'validInRange'
 }
 
+export enum NumberFieldView {
+    DEFAULT = 'default',
+    CURRENCY = 'currency'
+}
+
 export class NumberField extends DataField<number> {
     private _validators: Array<ValidatorFn>;
-    private _format: FormatFilter;
+    public _formatType: NumberFieldView;
+    public _formatFilter: FormatFilter;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[],
                 placeholder?: string, description?: string, layout?: Layout, format?: FormatFilter) {
         super(stringId, title, value, behavior, placeholder, description, layout);
-        this._format = format;
+        this._formatFilter = format;
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
@@ -120,5 +126,13 @@ export class NumberField extends DataField<number> {
         return (fc: FormControl): {[key: string]: any} | null => {
             if (fc.value < first || fc.value > second) { return ({validInRange: true}); } else { return (null); }
         };
+    }
+
+    private setFormatType() {
+        if (this._formatFilter === undefined) {
+            this._formatType = NumberFieldView.DEFAULT;
+        } else if (this._formatFilter) {
+            this._formatType = NumberFieldView.CURRENCY;;
+        }
     }
 }

@@ -39,6 +39,7 @@ import {RequiredLabelComponent} from './required-label/required-label.component'
 import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
 import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
 import {QuillModule} from 'ngx-quill';
+import { NumberCurrencyFieldComponent } from './number-field/number-currency-field/number-currency-field.component';
 
 @NgModule({
     declarations: [
@@ -63,7 +64,8 @@ import {QuillModule} from 'ngx-quill';
         SimpleTextFieldComponent,
         UserFieldComponent,
         RequiredLabelComponent,
-        HtmlTextareaFieldComponent
+        HtmlTextareaFieldComponent,
+        NumberCurrencyFieldComponent
     ],
     exports: [
         BooleanFieldComponent,

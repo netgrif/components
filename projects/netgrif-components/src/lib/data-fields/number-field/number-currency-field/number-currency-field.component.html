@@ -1,0 +1,8 @@
+<input matInput
+       type="number"
+       #inp
+       [formControl]="formControl"
+       [placeholder]="dataField.placeholder"
+       [required]="dataField.behavior.required"
+       (focusout)="onFocusOut($event)"
+       (focusin)="onFocusIn(inp)">

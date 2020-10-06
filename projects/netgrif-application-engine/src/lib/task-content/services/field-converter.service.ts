@@ -50,7 +50,7 @@ export class FieldConverterService {
                     item.description, item.layout, item.validations, type);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validations, item.placeholder, item.description, item.layout);
+                    item.validations, item.placeholder, item.description, item.layout, item.formatFilter);
             case FieldTypeResource.ENUMERATION:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item), item.type);
