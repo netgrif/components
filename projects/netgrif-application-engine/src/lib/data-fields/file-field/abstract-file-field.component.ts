@@ -216,6 +216,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         });
     }
 
+    isEmpty() {
+        return !this.dataField || !this.dataField.value || JSON.stringify(this.dataField.value) === '{}';
+    }
+
     protected get defaultState(): FileState {
         return {
             progress: 0,

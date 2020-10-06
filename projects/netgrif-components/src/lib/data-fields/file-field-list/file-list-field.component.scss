@@ -23,3 +23,51 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.union-input-name-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.union-input-placeholder {
+    color: rgba(0, 0, 0, .42);
+}
+
+.union-button-icon-input {
+    padding: 2px !important;
+}
+
+.full-width {
+    width: 100%;
+    min-width: 100%;
+}
+
+.union-input-margin {
+    margin-top: 7px !important;
+}
+
+.union-input {
+    background: transparent;
+    color: #333333;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    text-align: left;
+    font-size: 14px;
+    line-height: 15.75px;
+    border-radius: 6px;
+    min-width: 5px;
+    padding: 10px 15px 10px 15px;
+    box-sizing: border-box;
+    min-height: 54.81px;
+}
+
+.union-input:hover {
+    border-color: black;
+}
+
+.file-hint-error {
+    padding: 0 1em;
+    font-size: 75%;
+}
