@@ -6,6 +6,11 @@ import {HeaderColumn} from '../../header/models/header-column';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
+import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {CaseViewService} from '../../view/case-view/service/case-view-service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
+
 
 export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding {
 
@@ -17,7 +22,8 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
 
-    constructor() {
+    constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
+                protected _snackBarService: SnackBarService, protected _translateService: TranslateService) {
         super();
     }
 
@@ -68,4 +74,19 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
         }
     }
 
+    public deleteCase() {
+        this._caseResourceService.deleteCase(this.case_.stringId).subscribe(data => {
+            if (data.success) {
+                this._caseViewService.reload();
+            } else if (data.error) {
+                this.throwError();
+            }
+        }, error => {
+            this.throwError();
+        });
+    }
+
+    public throwError() {
+        this._snackBarService.openErrorSnackBar(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
+    }
 }
