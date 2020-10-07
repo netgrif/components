@@ -7,7 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {FieldsGroup} from '../../models/fields-group';
 import {orderBy} from 'natural-orderby';
 import {Observable, Subscription} from 'rxjs';
-import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
+import {LoggerService} from '../../../logger/services/logger.service';
 
 export interface HeaderOption {
     groupTitle: string;
@@ -22,7 +22,7 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
     @Input() public headerService: AbstractHeaderService;
 
     constructor(protected _translate: TranslateService,
-                protected _snackbar: SnackBarService) {
+                protected log: LoggerService) {
     }
 
     ngOnInit(): void {
@@ -86,7 +86,7 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
     private checkImmediateTitle(option: HeaderColumn): boolean {
         if (option.title === undefined) {
-            this._snackbar.openWarningSnackBar('Immediate field does not have title');
+            this.log.warn('Immediate field in column [' + option.title + '] does not have a title');
             return false;
         }
         return true;
