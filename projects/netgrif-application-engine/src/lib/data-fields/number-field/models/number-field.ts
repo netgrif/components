@@ -29,13 +29,20 @@ export enum NumberFieldView {
 
 export class NumberField extends DataField<number> {
     private _validators: Array<ValidatorFn>;
-    public _formatType: NumberFieldView;
     public _formatFilter: FormatFilter;
 
-    constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[],
-                placeholder?: string, description?: string, layout?: Layout, format?: FormatFilter) {
+    constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[], placeholder?: string,
+                description?: string, layout?: Layout, format?: FormatFilter, private _view = NumberFieldView.DEFAULT) {
         super(stringId, title, value, behavior, placeholder, description, layout);
         this._formatFilter = format;
+    }
+
+    set view(view: NumberFieldView) {
+        this._view = view;
+    }
+
+    get view(): NumberFieldView {
+        return this._view;
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {
@@ -126,13 +133,5 @@ export class NumberField extends DataField<number> {
         return (fc: FormControl): {[key: string]: any} | null => {
             if (fc.value < first || fc.value > second) { return ({validInRange: true}); } else { return (null); }
         };
-    }
-
-    private setFormatType() {
-        if (this._formatFilter === undefined) {
-            this._formatType = NumberFieldView.DEFAULT;
-        } else if (this._formatFilter) {
-            this._formatType = NumberFieldView.CURRENCY;;
-        }
     }
 }
