@@ -1,14 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {CurrencyPipe, registerLocaleData} from '@angular/common';
+import {CurrencyPipe, registerLocaleData, getCurrencySymbol} from '@angular/common';
 import en from '@angular/common/locales/en';
 import sk from '@angular/common/locales/sk';
 import de from '@angular/common/locales/de';
-import {AbstractNumberFieldComponent} from '@netgrif/application-engine';
-
-registerLocaleData(en);
-registerLocaleData(sk);
-registerLocaleData(de);
+import {AbstractCurrencyNumberFieldComponent} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-number-currency-field',
@@ -16,31 +12,46 @@ registerLocaleData(de);
     styleUrls: ['./number-currency-field.component.scss'],
     providers: [CurrencyPipe]
 })
-export class NumberCurrencyFieldComponent extends AbstractNumberFieldComponent implements OnInit {
+export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent implements OnInit {
 
-    constructor(protected _translate: TranslateService,
-                protected _currencyPipe: CurrencyPipe) {
+    private numberValue: number;
+    @Input() transformedValue: string;
+    fieldType: string;
+
+    constructor(protected _currencyPipe: CurrencyPipe, protected _translate: TranslateService) {
         super(_translate);
+        registerLocaleData(en);
+        registerLocaleData(sk);
+        registerLocaleData(de);
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
+        super.ngOnInit();
+        this.transformedValue = this.transformCurrency(this.dataField.value.toString());
+        this.numberValue = parseFloat(this.dataField.value.toString());
     }
 
     onFocusOut(event: Event) {
-            const target = (event.target as HTMLInputElement);
-            target.type = 'text';
-            target.value = this.transformCurrency(target.value);
+        const target = (event.target as HTMLInputElement);
+        this.numberValue = parseFloat(target.value);
+        this.fieldType = 'text';
+        this.transformedValue = this.transformCurrency(target.value);
     }
 
-    onFocusIn(input: HTMLInputElement) {
-        input.type = 'number';
+    onFocusIn() {
+        this.fieldType = 'number';
+        this.transformedValue = this.numberValue.toString();
+    }
+
+    getCurrencySymbol(): string {
+        return getCurrencySymbol(this.dataField._formatFilter.code, 'wide', this.dataField._formatFilter.locale);
     }
 
     private transformCurrency(value: string): string {
         return this._currencyPipe.transform(
             parseFloat(value),
             this.dataField._formatFilter.code,
-            'code',
+            'symbol',
             '1.' + this.dataField._formatFilter.fractionSize + '-' + this.dataField._formatFilter.fractionSize,
             this.dataField._formatFilter.locale);
     }
