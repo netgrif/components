@@ -7,7 +7,7 @@
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
     <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary"
-                    [ngSwitch]="this.dataField._formatType">
+                    [ngSwitch]="this.dataField.view">
         <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
         <nc-number-currency-field *ngSwitchCase="'currency'"
                                   [taskOffset]="taskOffset"

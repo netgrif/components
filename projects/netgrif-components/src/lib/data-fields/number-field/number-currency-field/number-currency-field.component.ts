@@ -4,7 +4,7 @@ import {CurrencyPipe, registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
 import sk from '@angular/common/locales/sk';
 import de from '@angular/common/locales/de';
-import {AbstractNumberFieldComponent} from 'netgrif-application-engine';
+import {AbstractNumberFieldComponent} from '@netgrif/application-engine';
 
 registerLocaleData(en);
 registerLocaleData(sk);
