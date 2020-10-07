@@ -3,7 +3,7 @@ import {DataFieldResource} from '../model/resource-interface';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
 import {TextField, TextFieldView} from '../../data-fields/text-field/models/text-field';
-import {NumberField} from '../../data-fields/number-field/models/number-field';
+import {NumberField, NumberFieldView} from '../../data-fields/number-field/models/number-field';
 import {EnumerationField, EnumerationFieldValue, EnumerationFieldView} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {MultichoiceField, MultichoiceFieldValue, MultichoiceFieldView} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {DateField} from '../../data-fields/date-field/models/date-field';
@@ -50,7 +50,7 @@ export class FieldConverterService {
                     item.description, item.layout, item.validations, type);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validations, item.placeholder, item.description, item.layout, item.formatFilter);
+                    item.validations, item.placeholder, item.description, item.layout, item.formatFilter, this.resolveNumberViewType(item));
             case FieldTypeResource.ENUMERATION:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item), item.type);
@@ -163,6 +163,14 @@ export class FieldConverterService {
             }
         }
         return value;
+    }
+
+    protected resolveNumberViewType(numberField: DataFieldResource): NumberFieldView {
+        let typeNumber = NumberFieldView.DEFAULT;
+        if (numberField.formatFilter !== undefined) {
+            typeNumber = NumberFieldView.CURRENCY;
+        }
+        return typeNumber;
     }
 
     /**
