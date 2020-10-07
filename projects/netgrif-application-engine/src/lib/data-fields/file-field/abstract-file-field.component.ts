@@ -49,10 +49,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
      */
-    constructor(protected _taskResourceService: TaskResourceService,
-                protected _log: LoggerService,
-                protected _snackbar: SnackBarService,
-                protected _translate: TranslateService) {
+    protected constructor(protected _taskResourceService: TaskResourceService,
+                          protected _log: LoggerService,
+                          protected _snackbar: SnackBarService,
+                          protected _translate: TranslateService) {
         super();
         this.state = this.defaultState;
     }
