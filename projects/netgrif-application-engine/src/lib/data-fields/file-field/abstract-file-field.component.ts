@@ -202,8 +202,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
         this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).subscribe(response => {
             if (response.success) {
-                this.dataField.value.name = null;
-                this.dataField.value.file = null;
+                this.dataField.value = {};
                 this.name = this.constructDisplayName();
                 this.dataField.downloaded = false;
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
