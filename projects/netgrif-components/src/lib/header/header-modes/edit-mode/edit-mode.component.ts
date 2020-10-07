@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractEditModeComponent, SnackBarService} from '@netgrif/application-engine';
+import {AbstractEditModeComponent, LoggerService, SnackBarService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-edit-mode',
@@ -9,7 +9,7 @@ import {AbstractEditModeComponent, SnackBarService} from '@netgrif/application-e
 })
 export class EditModeComponent extends AbstractEditModeComponent {
     constructor(protected _translate: TranslateService,
-                protected _snackbar: SnackBarService) {
-        super(_translate, _snackbar);
+                protected loggerService: LoggerService) {
+        super(_translate, loggerService);
     }
 }
