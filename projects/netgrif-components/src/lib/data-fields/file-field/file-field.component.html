@@ -17,8 +17,7 @@
                 <mat-icon>file_upload</mat-icon>
             </button>
             <span (click)="download()" fxFlex [matTooltip]="!dataField.value ? '' : 'Klikni pre stiahnutie súboru ' + name"
-                  class="input-name-ellipsis" [ngClass]="{'union-input-placeholder': isEmpty()}">
-            {{name}}</span>
+                  class="input-name-ellipsis" [ngClass]="{'input-placeholder': isEmpty()}">{{name}}</span>
             <button (click)="deleteFile()" matTooltip="Klikni pre vymazanie súboru" mat-icon-button *ngIf="dataField.value && (dataField.value.name || dataField.value.file) && !formControl.disabled">
                 <mat-icon color="warn">close</mat-icon>
             </button>
