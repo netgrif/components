@@ -16,7 +16,7 @@
                     [class.do-not-click]="state.uploading">
                 <mat-icon>file_upload</mat-icon>
             </button>
-            <span *ngIf="uploadedFiles.length === 0" class="union-input-placeholder union-input-name-ellipsis">{{constructDisplayName()}}</span>
+            <span *ngIf="uploadedFiles.length === 0" class="input-placeholder union-input-name-ellipsis">{{constructDisplayName()}}</span>
             <div *ngIf="uploadedFiles.length !== 0" class="union-input-name-ellipsis" fxFlex>
                 <div *ngFor="let name of uploadedFiles" fxLayoutAlign="start center">
                     <span (click)="download(name)" fxFlex [matTooltip]="'Klikni pre stiahnutie súboru ' + name"

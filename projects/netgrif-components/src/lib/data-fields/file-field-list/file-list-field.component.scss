@@ -24,18 +24,18 @@
     text-overflow: ellipsis;
 }
 
-.union-input-name-ellipsis {
+.input-name-ellipsis {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
 }
 
-.union-input-placeholder {
+.input-placeholder {
     color: rgba(0, 0, 0, .42);
 }
 
-.union-button-icon-input {
+.button-icon-input {
     padding: 2px !important;
 }
 
@@ -44,11 +44,11 @@
     min-width: 100%;
 }
 
-.union-input-margin {
+.input-margin {
     margin-top: 7px !important;
 }
 
-.union-input {
+.form-input {
     background: transparent;
     color: #333333;
     outline: none;
@@ -63,7 +63,7 @@
     min-height: 54.81px;
 }
 
-.union-input:hover {
+.form-input:hover {
     border-color: black;
 }
 
