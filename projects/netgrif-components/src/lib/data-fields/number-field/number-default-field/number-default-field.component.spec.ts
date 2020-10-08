@@ -1,9 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NumberFieldComponent} from './number-field.component';
+import {NumberFieldComponent} from '../number-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
-import {RequiredLabelComponent} from '../required-label/required-label.component';
+import {DataFieldTemplateComponent} from '../../data-field-template/data-field-template.component';
+import {RequiredLabelComponent} from '../../required-label/required-label.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
