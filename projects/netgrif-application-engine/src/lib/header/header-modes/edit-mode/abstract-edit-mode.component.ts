@@ -22,7 +22,7 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
     @Input() public headerService: AbstractHeaderService;
 
     constructor(protected _translate: TranslateService,
-                protected log: LoggerService) {
+                protected _log: LoggerService) {
     }
 
     ngOnInit(): void {
@@ -86,7 +86,7 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
     private checkImmediateTitle(option: HeaderColumn): boolean {
         if (option.title === undefined) {
-            this.log.warn('Immediate field in column [' + option.title + '] does not have a title');
+            this._log.warn('Immediate field in column [' + option.title + '] does not have a title');
             return false;
         }
         return true;
