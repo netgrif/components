@@ -7,6 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {FieldsGroup} from '../../models/fields-group';
 import {orderBy} from 'natural-orderby';
 import {Observable, Subscription} from 'rxjs';
+import {LoggerService} from '../../../logger/services/logger.service';
 
 export interface HeaderOption {
     groupTitle: string;
@@ -20,7 +21,8 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
     @Input() public headerService: AbstractHeaderService;
 
-    constructor(protected _translate: TranslateService) {
+    constructor(protected _translate: TranslateService,
+                protected log: LoggerService) {
     }
 
     ngOnInit(): void {
@@ -68,7 +70,8 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
         return meta.map(group => ({
             groupTitle: group.groupTitle,
-            fields: group.fields.filter(option => this._translate.instant(option.title).toLowerCase().normalize('NFD')
+            fields: group.fields.filter(option => this.checkImmediateTitle(option) &&
+                this._translate.instant(option.title).toLowerCase().normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0)
         })).filter(group => group.fields.length > 0);
     }
@@ -79,5 +82,13 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
     public renderSelection = (header) => {
         return header ? this._translate.instant(header.title) : '';
+    }
+
+    private checkImmediateTitle(option: HeaderColumn): boolean {
+        if (option.title === undefined) {
+            this.log.warn('Immediate field in column [' + option.title + '] does not have a title');
+            return false;
+        }
+        return true;
     }
 }

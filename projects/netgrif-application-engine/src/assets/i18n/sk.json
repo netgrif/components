@@ -177,7 +177,12 @@
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: "
         },
-        "noFile": "Žiadny súbor"
+        "file": {
+            "noFile": "Žiadny súbor",
+            "clickToUpload": "Kliknutím nahrajte súbor",
+            "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
+            "clickToDelete": "Kliknutím vymažte súbor"
+        }
     },
     "dialog": {
         "close": "Zatvoriť",
