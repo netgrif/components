@@ -6,6 +6,8 @@
 
 <ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
     <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.component.name">
+        <nc-password-text-field *ngSwitchCase="'password'" [passwordTextField]="dataField" [formControlRef]="formControl"
+                                [showLargeLayout]="showLargeLayout"></nc-password-text-field>
         <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
                            [showLargeLayout]="showLargeLayout"></nc-textarea-field>
         <nc-rich-textarea-field *ngSwitchCase="'richtextarea'" [textAreaField]="dataField"
