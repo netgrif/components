@@ -2,6 +2,7 @@ import {Behavior} from '../../data-fields/models/behavior';
 import {Layout} from '../../data-fields/models/layout';
 import {Validation} from '../../data-fields/models/validation';
 import {FieldTypeResource} from './field-type-resource';
+import {Component} from '../../data-fields/models/component';
 
 export interface DataFieldResource {
     stringId: string;
@@ -21,6 +22,7 @@ export interface DataFieldResource {
     minValue?: number;
     minDate?: string;
     validations?: Validation[];
+    component?: Component;
     subType?: string;
     formatting?: string;
     roles?: any[];

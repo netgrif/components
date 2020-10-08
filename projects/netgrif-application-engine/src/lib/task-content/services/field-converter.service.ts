@@ -16,6 +16,7 @@ import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
+import {Component} from '../../data-fields/models/component';
 
 @Injectable({
     providedIn: 'root'
@@ -47,7 +48,7 @@ export class FieldConverterService {
                         item.description, item.layout, item.validations, type);
                 }
                 return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, type);
+                    item.description, item.layout, item.validations, type, item.component);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
                     item.validations, item.placeholder, item.description, item.layout);

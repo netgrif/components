@@ -3,6 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
+import {Component} from '../../models/component';
 
 export enum TextFieldView {
     DEFAULT = 'default',
@@ -35,8 +36,9 @@ export class TextField extends DataField<string> {
     private _validators: Array<ValidatorFn>;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, public validations?: Validation[], protected _view = TextFieldView.DEFAULT) {
-        super(stringId, title, value, behavior, placeholder, description, layout);
+                description?: string, layout?: Layout, public validations?: Validation[], protected _view = TextFieldView.DEFAULT,
+                _component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, _component);
     }
 
     get view(): TextFieldView {
