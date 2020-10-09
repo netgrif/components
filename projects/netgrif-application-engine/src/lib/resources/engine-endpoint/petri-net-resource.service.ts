@@ -11,6 +11,7 @@ import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {MessageResource, PetriNetMessageResource} from '../interface/message-resource';
 import {PetriNetReference} from '../interface/petri-net-reference';
+import {PetriNetRequestBody} from '../interface/petri-net-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -156,7 +157,7 @@ export class PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/search
      */
-    public searchPetriNets(body: object, params?: Params): Observable<Array<PetriNetReference>> {
+    public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Array<PetriNetReference>> {
         return this.provider.post$('petrinet/search', this.SERVER_URL, body, params)
             .pipe(map(r => changeType(r, 'petriNetReferences')));
     }
