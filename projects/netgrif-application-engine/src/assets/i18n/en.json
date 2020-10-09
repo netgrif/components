@@ -178,7 +178,12 @@
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: "
         },
-        "noFile": "No file"
+        "file": {
+            "noFile": "No File",
+            "clickToUpload": "Click to upload file",
+            "clickToDownload": "Click to download {{fileName}}",
+            "clickToDelete": "Click to delete file"
+        }
     },
     "dialog": {
         "close": "Close",
