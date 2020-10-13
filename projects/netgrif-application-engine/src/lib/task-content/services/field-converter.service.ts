@@ -47,7 +47,7 @@ export class FieldConverterService {
                     return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                         item.description, item.layout, item.validations, type);
                 }
-                return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
+                return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, type, item.component);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
@@ -148,6 +148,8 @@ export class FieldConverterService {
     public formatValueForBackend(field: DataField<any>, value: any): any {
         if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
             return null;
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password')
+            return btoa(value);
         if (value === undefined || value === null)
             return;
         if (this.resolveType(field) === FieldTypeResource.DATE) {
@@ -255,6 +257,8 @@ export class FieldConverterService {
     public formatValueFromBackend(field: DataField<any>, value: any): any {
         if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
             return null;
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password')
+            return atob(value);
         if (value === undefined || value === null)
             return;
         if (this.resolveType(field) === FieldTypeResource.DATE) {
@@ -276,6 +280,13 @@ export class FieldConverterService {
                 }
             });
             return array;
+        }
+        return value;
+    }
+
+    private resolveTextValue(field: DataFieldResource, value: string): string {
+        if (field.component !== undefined && field.component.name === 'password' && value !== '' && value !== undefined) {
+            return atob(value);
         }
         return value;
     }
