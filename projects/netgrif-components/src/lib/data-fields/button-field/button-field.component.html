@@ -11,7 +11,25 @@
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>
         </mat-label>
-        <button mat-button
+        <button *ngIf="dataField.component !== undefined" mat-button
+                [ngClass]="{
+                'mat-raised-button': dataField.component.name === 'raised',
+                'mat-stroked-button': dataField.component.name === 'stroked',
+                'mat-flat-button': dataField.component.name === 'flat',
+                'mat-icon-button': dataField.component.name === 'icon',
+                'mat-fab': dataField.component.name === 'fab',
+                'mat-mini-fab': dataField.component.name === 'minifab'}"
+                color="primary"
+                [matTooltip]="dataField.description"
+                [disabled]="formControl.disabled"
+                (click)="formControl.setValue(formControl.value + 1)">
+            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : ((dataField.view === 'fab' || dataField.view === 'minifab') ? '' : dataField.placeholder) }}
+            <mat-icon
+                *ngIf="dataField.view === 'fab' || dataField.view === 'minifab'">{{dataField.placeholder}}</mat-icon>
+        </button>
+
+        <!--@deprecated in 4.2.1-->
+        <button *ngIf="dataField.component === undefined" mat-button
                 [ngClass]="{
                 'mat-raised-button': dataField.view === 'raised',
                 'mat-stroked-button': dataField.view === 'stroked',

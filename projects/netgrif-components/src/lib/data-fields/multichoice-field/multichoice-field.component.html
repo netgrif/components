@@ -5,7 +5,21 @@
 </nc-data-field-template>
 
 <ng-template #multiFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="dataField.view">
+    <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.component.name">
+        <nc-multichoice-list-field *ngSwitchCase="'list'"
+                                   [showLargeLayout]="showLargeLayout"
+                                   [multichoiceField]="dataField"
+                                   [formControlRef]="formControl">
+        </nc-multichoice-list-field>
+        <nc-multichoice-select-field *ngSwitchDefault
+                                     [showLargeLayout]="showLargeLayout"
+                                     [multichoiceField]="dataField"
+                                     [formControlRef]="formControl">
+        </nc-multichoice-select-field>
+    </div>
+
+    <!-- @deprecated in 4.2.1-->
+    <div *ngIf="dataField.component === undefined" [ngSwitch]="dataField.view">
         <nc-multichoice-list-field *ngSwitchCase="'list'"
                                     [showLargeLayout]="showLargeLayout"
                                     [multichoiceField]="dataField"

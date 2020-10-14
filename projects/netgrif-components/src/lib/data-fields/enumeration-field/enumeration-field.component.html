@@ -5,7 +5,26 @@
 </nc-data-field-template>
 
 <ng-template #enumFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="dataField.view">
+    <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.component.name">
+        <nc-enumeration-autocomplete-select-field *ngSwitchCase="'autocomplete'"
+                                                  [showLargeLayout]="showLargeLayout"
+                                                  [enumerationField]="dataField"
+                                                  [formControlRef]="formControl">
+        </nc-enumeration-autocomplete-select-field>
+        <nc-enumeration-list-field *ngSwitchCase="'list'"
+                                   [showLargeLayout]="showLargeLayout"
+                                   [enumerationField]="dataField"
+                                   [formControlRef]="formControl">
+        </nc-enumeration-list-field>
+        <nc-enumeration-select-field *ngSwitchDefault
+                                     [showLargeLayout]="showLargeLayout"
+                                     [enumerationField]="dataField"
+                                     [formControlRef]="formControl">
+        </nc-enumeration-select-field>
+    </div>
+
+    <!-- @deprecated in 4.2.1 -->
+    <div *ngIf="dataField.component === undefined"  [ngSwitch]="dataField.view">
         <nc-enumeration-autocomplete-select-field *ngSwitchCase="'autocomplete'"
                                                   [showLargeLayout]="showLargeLayout"
                                                   [enumerationField]="dataField"
