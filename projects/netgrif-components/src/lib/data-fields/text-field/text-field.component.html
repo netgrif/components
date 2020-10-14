@@ -5,20 +5,6 @@
 </nc-data-field-template>
 
 <ng-template #textFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.component.name">
-        <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
-                           [showLargeLayout]="showLargeLayout"></nc-textarea-field>
-        <nc-rich-textarea-field *ngSwitchCase="'richtextarea'" [textAreaField]="dataField"
-                                [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-rich-textarea-field>
-        <nc-html-textarea-field *ngSwitchCase="'htmltextarea'" [textAreaField]="dataField"
-                                [formControlRef]="formControl"
-                                [showLargeLayout]="showLargeLayout"></nc-html-textarea-field>
-        <nc-simple-text-field *ngSwitchDefault [textField]="dataField" [formControlRef]="formControl"
-                              [showLargeLayout]="showLargeLayout"></nc-simple-text-field>
-    </div>
-
-    <!--@deprecated in 4.2.1-->
     <div *ngIf="dataField.component == undefined" [ngSwitch]="dataField.view">
         <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
                            [showLargeLayout]="showLargeLayout"></nc-textarea-field>
