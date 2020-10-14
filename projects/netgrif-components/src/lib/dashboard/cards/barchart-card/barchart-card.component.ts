@@ -1,9 +1,11 @@
 import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
-import {AbstractCustomCard,
-    AggregationResult,
+import {
+    AbstractCustomCard,
+    AggregationResult, DashboardEventContent,
     DashboardResourceService,
     DashboardSingleData,
-    LoggerService} from '@netgrif/application-engine';
+    LoggerService
+} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
 
@@ -17,28 +19,28 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class BarchartCardComponent extends AbstractCustomCard implements OnInit {
 
-    @Output() eventEmitter: EventEmitter<any>;
+    @Output() selectEvent: EventEmitter<DashboardEventContent>;
 
     constructor(protected _injector: Injector,
                 protected resourceService: DashboardResourceService,
                 protected translateService: TranslateService,
                 protected loggerService: LoggerService) {
         super(_injector, resourceService, translateService, loggerService);
-        this.eventEmitter = new EventEmitter();
+        this.selectEvent = new EventEmitter();
     }
 
     ngOnInit(): void {
         super.ngOnInit();
     }
 
-    onSelect(event) {
-        this.loggerService.info(event);
-        this.eventEmitter.emit(event);
+    onSelect(data: DashboardEventContent) {
+        this.loggerService.info('BarChart was selected');
+        this.selectEvent.emit(data);
     }
 
     convertData(json: AggregationResult): void {
-        json.aggregations.result.buckets.forEach(element => {
-            this.single.push(new DashboardSingleData(element['key'], element['doc_count']));
+        json.aggregations.result.buckets.forEach(bucket => {
+            this.single.push(new DashboardSingleData(bucket.key, bucket.doc_count));
         });
         this.single = [...this.single];
         console.log(this.single);

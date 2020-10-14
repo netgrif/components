@@ -11,6 +11,7 @@ export * from './cards/model/custom-dashboard-model/custom-card';
 
 export * from './cards/model/custom-dashboard-model/dashboard-multi-data';
 export * from './cards/model/custom-dashboard-model/dashboard-single-data';
+export * from './cards/model/custom-dashboard-model/dashboard-event-content';
 
 /* ENUMS */
 export * from './cards/model/dashboard-card-types';

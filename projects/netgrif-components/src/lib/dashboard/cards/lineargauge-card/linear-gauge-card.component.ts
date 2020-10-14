@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
-import {AbstractCustomCard, DashboardResourceService} from '@netgrif/application-engine';
+import {AbstractCustomCard, DashboardEventContent, DashboardResourceService} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 import {AggregationResult, LoggerService} from '@netgrif/application-engine';
 
@@ -13,23 +13,23 @@ import {AggregationResult, LoggerService} from '@netgrif/application-engine';
 })
 export class LinearGaugeCardComponent extends AbstractCustomCard implements OnInit {
 
-    @Output() eventEmitter: EventEmitter<any>;
+    @Output() selectEvent: EventEmitter<DashboardEventContent>;
 
     constructor(protected _injector: Injector,
                 protected resourceService: DashboardResourceService,
                 protected translateService: TranslateService,
                 protected loggerService: LoggerService) {
         super(_injector, resourceService, translateService, loggerService);
-        this.eventEmitter = new EventEmitter();
+        this.selectEvent = new EventEmitter();
     }
 
     ngOnInit(): void {
         super.ngOnInit();
     }
 
-    onSelect(event) {
-        this.loggerService.info(event);
-        this.eventEmitter.emit(event);
+    onSelect(data: DashboardEventContent) {
+        this.loggerService.info('Linear gauge selected.');
+        this.selectEvent.emit(data);
     }
 
     convertData(json: AggregationResult): void {

@@ -31,7 +31,11 @@ export abstract class AbstractCustomCard implements OnInit {
     public showXAxisLabel = true;
     public gradient = true;
     public colorScheme = {
-        domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+        domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5',
+            '#a8385d', '#aae3f5', '#cfeacd', '#25e491',
+            '#a10ed6', '#b9c9e3', '#a8385d', '#aae3f5',
+            '#bbbfbf', '#e7a897', '#854618', '#7aa3e5',
+            '#a8385d', '#0db8ee']
     };
 
     protected constructor(protected _injector: Injector,

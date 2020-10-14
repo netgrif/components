@@ -4,6 +4,16 @@
  */
 export interface AggregationResult {
     aggregations: {
-        [k: string]: any
+        result?: {
+            buckets?: Array<BucketContent>;
+        }
+        types_count?: {
+            value: number;
+        };
     };
+}
+
+export interface BucketContent {
+    key?: string;
+    doc_count?: number;
 }
