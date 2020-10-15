@@ -85,8 +85,9 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
     }
 
     private checkImmediateTitle(option: HeaderColumn): boolean {
-        if (option.title === undefined) {
-            this._log.warn('Immediate field in column [' + option.title + '] does not have a title');
+        if (option.title === undefined || option.title === '') {
+            this._log.warn('Immediate field in column [' + option.uniqueId +
+                '] does not have a title');
             return false;
         }
         return true;
