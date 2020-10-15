@@ -61,6 +61,28 @@ export class CaseTreeNode {
         return this.addingNode.isActive;
     }
 
+    /**
+     * @returns return node value, if immediate date of [immediate data field]{@link TreePetriflowIdentifiers#BEFORE_TEXT_ICON} type exists
+     */
+    public beforeTextIcon(): string {
+        const immediate = this.searchImmediateData(TreePetriflowIdentifiers.BEFORE_TEXT_ICON);
+        if (immediate === undefined) {
+            return undefined;
+        }
+        return immediate.value;
+    }
+
+    /**
+     * @returns return node value, if immediate date of [immediate data field]{@link TreePetriflowIdentifiers#TREE_ADD_ICON} type exists
+     */
+    public treeAddTextIcon(): string {
+        const immediate = this.searchImmediateData(TreePetriflowIdentifiers.TREE_ADD_ICON);
+        if (immediate === undefined) {
+            return undefined;
+        }
+        return immediate.value;
+    }
+
     private searchImmediateData(dataId: string): ImmediateData | undefined {
         return this.case.immediateData.find(data => data.stringId === dataId);
     }
