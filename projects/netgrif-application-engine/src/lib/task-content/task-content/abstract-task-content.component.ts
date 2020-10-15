@@ -236,7 +236,8 @@ export abstract class AbstractTaskContentComponent {
      * @param gridData the I/O object that holds the information about the layout that was computed so far
      */
     protected computeGridLayout(dataGroup: DataGroup, gridData: GridData) {
-        const firstGroupRow = gridData.grid.length;
+        const localGrid: Array<Array<string>> = [];
+
         dataGroup.fields.forEach(dataField => {
             if (!dataField.layout
                 || dataField.layout.x === undefined
@@ -247,17 +248,19 @@ export abstract class AbstractTaskContentComponent {
                     `You cannot use 'grid' layout without specifying the layout of the data fields (field ID: ${dataField.stringId})`);
             }
 
-            while (gridData.grid.length < dataField.layout.y + dataField.layout.rows) {
-                gridData.grid.push(this.newGridRow());
+            while (localGrid.length < dataField.layout.y + dataField.layout.rows) {
+                localGrid.push(this.newGridRow());
             }
 
             const fieldElement = this.fieldElement(dataField);
             gridData.gridElements.push(fieldElement);
-            this.occupySpace(gridData.grid, dataField.layout.y, dataField.layout.x,
+            this.occupySpace(localGrid, dataField.layout.y, dataField.layout.x,
                 dataField.layout.cols, fieldElement.gridAreaId, dataField.layout.rows);
         });
 
-        this.collapseGridEmptySpace(gridData.grid, firstGroupRow);
+        this.collapseGridEmptySpace(localGrid);
+
+        localGrid.forEach(localGridRow => gridData.grid.push(localGridRow));
     }
 
     /**
@@ -265,12 +268,11 @@ export abstract class AbstractTaskContentComponent {
      *
      * The input grid is modified in place.
      * @param grid the state of the grid that should be modified
-     * @param firstRow the index of the first row, from which the collapse should occur
      */
-    protected collapseGridEmptySpace(grid: Array<Array<string>>, firstRow: number) {
-        this.removeEmptyRows(grid, firstRow);
+    protected collapseGridEmptySpace(grid: Array<Array<string>>) {
+        this.removeEmptyRows(grid);
 
-        for (let rowIndex = firstRow; rowIndex < grid.length; rowIndex++) {
+        for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
             const row = grid[rowIndex];
 
             for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
@@ -312,13 +314,16 @@ export abstract class AbstractTaskContentComponent {
      * Removes rows from the grid that only contain empty elements (are empty). The grid is modified in place.
      * @param grid the grid that should have it's empty rows removed
      * @param firstRow the 0 based index of the first row that should be checked. Use 0 to start from the beginning of the grid.
+     *
+     * If no value is provided, the grid will be checked from the first row.
+     *
      * @param lastRow the 0 based index of the row where the checking should end. The row with this index is not checked.
      *
      * If no value is provided the entire grid from the `firstRow` will be checked.
      *
      * If a value that is smaller or equal to the `firstRow` is provided no checks will be preformed.
      */
-    protected removeEmptyRows(grid: Array<Array<string>>, firstRow: number, lastRow = Number.POSITIVE_INFINITY) {
+    protected removeEmptyRows(grid: Array<Array<string>>, firstRow = 0, lastRow = Number.POSITIVE_INFINITY) {
         let i = firstRow;
         while (i < grid.length && i < lastRow) {
             if (grid[i].every(element => element === '')) {
