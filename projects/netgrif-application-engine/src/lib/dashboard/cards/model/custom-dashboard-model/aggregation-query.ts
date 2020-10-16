@@ -3,5 +3,7 @@
  * See the documentation: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html
  */
 export interface AggregationQuery {
-    aggs: {};
+    aggs: {
+        [k: string]: any;
+    };
 }
