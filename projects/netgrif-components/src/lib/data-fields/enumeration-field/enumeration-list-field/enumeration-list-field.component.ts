@@ -10,4 +10,8 @@ export class EnumerationListFieldComponent extends AbstractEnumerationListFieldC
     constructor() {
         super();
     }
+
+    validate(): boolean {
+        return !this.formControlRef.valid && this.formControlRef.touched;
+    }
 }
