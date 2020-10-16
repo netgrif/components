@@ -31,6 +31,7 @@ export * from './interface/field-alignment';
 export * from './interface/event-outcome';
 export * from './interface/group';
 export * from './interface/petri-net-request-body';
+export * from './interface/page';
 
 export * from './types/nae-date-type';
 
