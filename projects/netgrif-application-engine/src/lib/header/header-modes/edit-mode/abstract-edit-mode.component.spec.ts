@@ -2,7 +2,6 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule} from '@angular/router';
 import {Component} from '@angular/core';
 import {AbstractEditModeComponent} from './abstract-edit-mode.component';
 import {TranslateService} from '@ngx-translate/core';
@@ -26,6 +25,7 @@ import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-re
 import {TestViewService} from '../../../utility/tests/test-view-service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {RouterTestingModule} from '@angular/router/testing';
+import {LoggerService} from '../../../logger/services/logger.service';
 
 describe('AbstractEditModeComponent', () => {
     let component: TestEditModeComponent;
@@ -91,8 +91,8 @@ describe('AbstractEditModeComponent', () => {
     template: ''
 })
 class TestEditModeComponent extends AbstractEditModeComponent {
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(protected _translate: TranslateService, protected _log: LoggerService) {
+        super(_translate, _log);
     }
 }
 
