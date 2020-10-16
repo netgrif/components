@@ -3,7 +3,7 @@
 <% if (darkExists) { %>
 @import 'custom-dark-theme.scss';
 <% } %>
-@import '~@netgrif/application-engine/nae-theme';
+@import '~@netgrif/components/nae-theme';
 
 $typography: mat-typography-config(
     $font-family: 'Roboto, monospace',
