@@ -9,7 +9,7 @@ import {AggregationResult} from '../../dashboard/cards/model/custom-dashboard-mo
 
 @Injectable()
 export class DashboardResourceService {
-    private SERVER_URL: string;
+    private readonly SERVER_URL: string;
 
     public constructor(protected provider: ResourceProvider,
                        protected _configService: ConfigurationService) {

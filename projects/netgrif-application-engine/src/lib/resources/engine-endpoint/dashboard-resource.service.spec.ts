@@ -11,7 +11,10 @@ describe('DashboardResourceService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, NoopAnimationsModule],
-            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                DashboardResourceService
+            ]
         });
         service = TestBed.inject(DashboardResourceService);
     });
@@ -26,7 +29,7 @@ describe('DashboardResourceService', () => {
                 // expect(res.content.length).toEqual(0);
             });
 
-            const reqLog = httpMock.expectOne('http://http://localhost:8080/api/dashboard/search');
+            const reqLog = httpMock.expectOne('http://localhost:8080/api/dashboard/search?type=case');
             expect(reqLog.request.method).toEqual('POST');
 
             reqLog.flush([]);
