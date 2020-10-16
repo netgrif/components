@@ -49,7 +49,8 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
         new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
         new ImportToAdd('HeaderComponentModule', '@netgrif/components'),
         new ImportToAdd('PanelComponentModule', '@netgrif/components'),
-        new ImportToAdd('CaseViewComponentModule', '@netgrif/components')
+        new ImportToAdd('CaseViewComponentModule', '@netgrif/components'),
+        new ImportToAdd('SearchComponentModule', '@netgrif/components')
     ]);
 
     const appModule = getAppModule(tree, projectInfo.path);
