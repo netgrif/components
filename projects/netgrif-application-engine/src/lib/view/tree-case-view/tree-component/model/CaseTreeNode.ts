@@ -88,10 +88,10 @@ export class CaseTreeNode {
      */
     public beforeTextIconTitle(): string {
         const immediate = this.searchImmediateData(TreePetriflowIdentifiers.BEFORE_TEXT_ICON);
-        if (immediate === undefined) {
+        if (immediate === undefined || !(immediate.name && immediate.name.defaultValue)) {
             return undefined;
         }
-        return immediate.title;
+        return immediate.name.defaultValue;
     }
 
     /**
@@ -99,10 +99,10 @@ export class CaseTreeNode {
      */
     public treeAddTextIconTitle(): string {
         const immediate = this.searchImmediateData(TreePetriflowIdentifiers.TREE_ADD_ICON);
-        if (immediate === undefined) {
+        if (immediate === undefined || !(immediate.name && immediate.name.defaultValue)) {
             return undefined;
         }
-        return immediate.title;
+        return immediate.name.defaultValue;
     }
 
     private searchImmediateData(dataId: string): ImmediateData | undefined {

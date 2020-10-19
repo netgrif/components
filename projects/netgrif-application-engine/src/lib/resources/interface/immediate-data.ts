@@ -9,7 +9,7 @@ export interface ImmediateData {
     /**
      * @ignore
      */
-    // TODO Doesn't actually exist
+    // TODO Exist only in Net Immediate datas
     title: any;
     /**
      * @ignore
@@ -23,6 +23,11 @@ export interface ImmediateData {
      * Only for Fields of type CaseRef
      */
     allowedNets?: Array<string>;
+    /**
+     * @ignore
+     */
+    // TODO Eists only in case immediate datas
+    name: any;
 }
 
 /*
