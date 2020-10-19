@@ -3,7 +3,7 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
         <div class="min-node-height width-100" fxLayout="row" fxLayoutAlign="start center"
              [ngClass]="{'selected-tree-node border-radius': selectedCaseNode(node)}" (click)="caseNodeClicked(node)">
-            <mat-icon *ngIf="node.beforeTextIcon()" [svgIcon]="node.beforeTextIcon()"></mat-icon>
+            <mat-icon *ngIf="node.beforeTextIcon()" [matTooltip]="node.beforeTextIconTitle()" [svgIcon]="node.beforeTextIcon()"></mat-icon>
             <span class="padding-12px"
                   [ngClass]="{'selected-tree-node': selectedCaseNode(node)}">{{node.case.title}}</span>
             <div fxFlex></div>
