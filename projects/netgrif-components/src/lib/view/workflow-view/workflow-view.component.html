@@ -19,7 +19,7 @@
 
         <mat-accordion [multi]="true" fxFlex="100" class="width-100">
 
-            <cdk-virtual-scroll-viewport #scrollViewport itemSize="50" class="width-100 fix-content-wrapper">
+            <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()" class="width-100 fix-content-wrapper">
 
                 <nc-workflow-panel
                     *cdkVirtualFor="let workflow of workflows; let i = index; templateCacheSize: 0; trackBy: trackBy"

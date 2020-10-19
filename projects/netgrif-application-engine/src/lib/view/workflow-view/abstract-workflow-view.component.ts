@@ -22,10 +22,10 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
 
     protected _viewport: CdkVirtualScrollViewport;
 
-    constructor(protected _sideMenuService: SideMenuService,
-                protected _workflowViewService: WorkflowViewService,
-                protected _log: LoggerService,
-                protected _processService: ProcessService) {
+    protected constructor(protected _sideMenuService: SideMenuService,
+                          protected _workflowViewService: WorkflowViewService,
+                          protected _log: LoggerService,
+                          protected _processService: ProcessService) {
         super(_workflowViewService);
         this.workflows$ = this._workflowViewService.workflows$.pipe(
             tap(nets => {
@@ -41,7 +41,7 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
         this.calculateListHeight();
     }
 
-    @ViewChild('scrollViewport')
+    @ViewChild(CdkVirtualScrollViewport)
     public set viewport(viewport: CdkVirtualScrollViewport) {
         this._viewport = viewport;
         this.calculateListHeight();
@@ -58,8 +58,15 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
         });
     }
 
-    public trackBy(i, item): any {
-        return i + '_' + item;
+    public trackBy(i/*, item*/): any {
+        return i /*+ '_' + item*/;
+    }
+
+    public loadNextPage(): void {
+        if (!this.viewport) {
+            return;
+        }
+        this._workflowViewService.nextPage(this.viewport.getRenderedRange(), this.viewport.getDataLength());
     }
 
     protected calculateListHeight(preciseHeight?: number): void {
