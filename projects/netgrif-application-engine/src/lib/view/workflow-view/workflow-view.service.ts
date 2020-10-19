@@ -9,9 +9,9 @@ import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {HttpParams} from '@angular/common/http';
 import {Pagination} from '../../resources/interface/pagination';
 import {LoadingEmitter} from '../../utility/loading-emitter';
-import {hasContent} from 'netgrif-application-engine';
 import {Page} from '../../resources/interface/page';
 import {ListRange} from '@angular/cdk/collections';
+import {hasContent} from '../../utility/pagination/page-has-content';
 
 
 @Injectable()
