@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine-project",
-    "version": "4.2.1-alpha.1",
+    "version": "4.2.1-alpha.2",
     "description": "Netgrif Application Engine Frontend project. Project includes angular library as base for NAE applications.",
     "homepage": "https://netgrif.com",
     "repository": {

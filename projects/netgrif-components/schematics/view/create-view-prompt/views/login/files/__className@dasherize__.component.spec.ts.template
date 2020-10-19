@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { <%= classify(className) %>Component } from './<%= dasherize(className) %>.component';
 import {AuthenticationMethodService, ConfigurationService} from '@netgrif/application-engine';
-import {LoginFormComponentModule} from '@netgrif/application-engine';
+import {LoginFormComponentModule} from '@netgrif/components';
 import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
