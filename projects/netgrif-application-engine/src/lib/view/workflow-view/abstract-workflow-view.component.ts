@@ -20,32 +20,32 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
     public workflows$: Observable<Array<Net>>;
     public loading$: Observable<boolean>;
 
-    protected _viewport: CdkVirtualScrollViewport;
+    @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
     protected constructor(protected _sideMenuService: SideMenuService,
                           protected _workflowViewService: WorkflowViewService,
                           protected _log: LoggerService,
                           protected _processService: ProcessService) {
         super(_workflowViewService);
-        this.workflows$ = this._workflowViewService.workflows$.pipe(
-            tap(nets => {
-                nets.length === 0 ? this.calculateListHeight(0) : this.calculateListHeight();
-            })
-        );
+        this.workflows$ = this._workflowViewService.workflows$;
+        // .pipe(
+        //     tap(nets => {
+        //         nets.length === 0 ? this.calculateListHeight(0) : this.calculateListHeight();
+        //     })
+        // );
         this.loading$ = this._workflowViewService.loading$;
         this.footerSize = 0;
     }
 
     ngAfterViewInit(): void {
         this.initializeHeader(this.workflowHeader);
-        this.calculateListHeight();
+        // this.calculateListHeight();
     }
 
-    @ViewChild(CdkVirtualScrollViewport)
-    public set viewport(viewport: CdkVirtualScrollViewport) {
-        this._viewport = viewport;
-        this.calculateListHeight();
-    }
+    // public set viewport(viewport: CdkVirtualScrollViewport) {
+    //     this._viewport = viewport;
+    //     // this.calculateListHeight();
+    // }
 
     public importSidemenuNet(component) {
         this._sideMenuService.open(component).onClose.subscribe(event => {
@@ -70,10 +70,10 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
     }
 
     protected calculateListHeight(preciseHeight?: number): void {
-        if (!this._viewport) {
+        if (!this.viewport) {
             return;
         }
-        const element = this._viewport.getElementRef().nativeElement;
+        const element = this.viewport.getElementRef().nativeElement;
         if (preciseHeight !== null && preciseHeight !== undefined) {
             element.style.height = preciseHeight + 'px';
         } else {
