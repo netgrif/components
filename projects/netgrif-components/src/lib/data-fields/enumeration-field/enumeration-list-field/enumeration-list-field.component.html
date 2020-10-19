@@ -11,6 +11,5 @@
         {{option.value}}
     </mat-radio-button>
     <mat-error
-        *ngIf="!formControlRef.valid && formControlRef.touched"
-        (click)="validate()">{{'dataField.validations.required' | translate}}</mat-error>
+        *ngIf="formControlRef.status != 'DISABLED' && !formControlRef.valid && formControlRef.touched">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-radio-group>
