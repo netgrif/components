@@ -9,8 +9,8 @@ export interface ImmediateData {
     /**
      * @ignore
      */
-    // TODO Exist only in Net Immediate datas
-    title: any;
+    // TODO Exist only in Net Immediate data
+    title?: any;
     /**
      * @ignore
      */
@@ -26,8 +26,8 @@ export interface ImmediateData {
     /**
      * @ignore
      */
-    // TODO Eists only in case immediate datas
-    name: any;
+    // TODO Exists only in case immediate data
+    name?: any;
 }
 
 /*
