@@ -46,10 +46,15 @@ export class TabView implements TabViewInterface {
     /**
      * @param _viewService [ViewService]{@link ViewService} reference
      * @param _logger [Logger]{@link LoggerService} reference
-     * @param initialTabs - Tabs that should be initially opened in the tab view
+     * @param _initialTabs Tabs that should be initially opened in the tab view
+     * @param _parentInjector `Injector` instance of the [TabViewComponent]{@link AbstractTabViewComponent},
+     * to be passed onto each tab, so that the dependency injection tree is not broken
      */
-    constructor(private _viewService: ViewService, private _logger: LoggerService, private initialTabs: Array<TabContent>) {
-        this.initialTabs.forEach(tab => {
+    constructor(private _viewService: ViewService,
+                private _logger: LoggerService,
+                private _initialTabs: Array<TabContent>,
+                private _parentInjector: Injector) {
+        this._initialTabs.forEach(tab => {
             if (tab.order === undefined) {
                 tab.order = 0;
             }
@@ -58,7 +63,7 @@ export class TabView implements TabViewInterface {
 
         // orderBy is a stable sort
         // Native javascript implementation has undefined stability and it depends on it's implementation (browser)
-        this.openedTabs = orderBy(this.initialTabs, v => v.order, 'asc').map(tabData =>
+        this.openedTabs = orderBy(this._initialTabs, v => v.order, 'asc').map(tabData =>
             new OpenedTab(tabData, `${this.uniqueIdCounter.next()}`));
         if (this.openedTabs.length > 0) {
             this.openedTabs[0].tabSelected$.next(true);
@@ -253,7 +258,7 @@ export class TabView implements TabViewInterface {
                 providers.push({provide: ViewService, useValue: tab.tabViewService});
             }
 
-            const injector = Injector.create({providers});
+            const injector = Injector.create({providers, parent: this._parentInjector});
 
             tab.portal = new ComponentPortal(tab.tabContentComponent, null, injector);
             tab.isTabInitialized = true;
