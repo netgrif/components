@@ -1,45 +1,39 @@
 import {Component, Injector, NgModule, OnInit} from '@angular/core';
-import {AbstractCustomCardResourceService} from "@netgrif/application-engine";
-import {TranslateService} from "@ngx-translate/core";
+import {AbstractCustomCard, DashboardResourceService, DashboardSingleData} from '@netgrif/application-engine';
+import {TranslateService} from '@ngx-translate/core';
+import {AggregationResult, LoggerService} from '@netgrif/application-engine';
+
 @Component({
-    selector: 'nc-example-portal-card',
+    selector: 'nae-app-example-portal-card',
     templateUrl: './example-portal-card.component.html',
     styleUrls: ['./example-portal-card.component.scss']
 })
-export class ExamplePortalCardComponent implements OnInit{
+export class ExamplePortalCardComponent extends AbstractCustomCard implements OnInit {
 
-    single: any[];
-    view: any[] = [700, 400];
+    isDoughnut = false;
+    legendPosition = 'right';
 
-    // options
-    gradient: boolean = true;
-    showLegend: boolean = true;
-    showLabels: boolean = true;
-    isDoughnut: boolean = false;
-    legendPosition: string = 'right';
-
-    colorScheme = {
-        domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-    };
-
-    constructor(protected _injector: Injector, protected resourceService: AbstractCustomCardResourceService, protected translateService: TranslateService) {
+    constructor(protected _injector: Injector,
+                protected translateService: TranslateService,
+                protected resourceService: DashboardResourceService,
+                protected loggerService: LoggerService) {
+        super(_injector, resourceService, translateService, loggerService);
     }
 
     ngOnInit() {
-        this.resourceService.getResource("case", "{\"aggs\": {\"result\": {\"terms\": {\"field\": \"dataSet.number.value.keyword\"}}}}").subscribe(json => {
+        this.resourceService.getDashboardData('case', {aggs: {result: {terms: {field: 'dataSet.text.value.keyword'}}}}).subscribe(json => {
             this.convertData(json);
         });
     }
 
-    public convertData(json: any) {
-        this.single = [];
-        json['aggregations'].result.buckets.forEach(element =>{
-            this.single.push({
-                "name": element['key'],
-                "value": element['doc_count']
-            })
+    public convertData(json: AggregationResult) {
+        json['aggregations'].result.buckets.forEach(element => {
+            /*this.single.push({
+                name: element['key'],
+                value: element['doc_count']
+            });*/
+            this.single.push(new DashboardSingleData(element['key'], element['doc_count']));
         });
         this.single = [...this.single];
-        console.log(this.single);
     }
 }

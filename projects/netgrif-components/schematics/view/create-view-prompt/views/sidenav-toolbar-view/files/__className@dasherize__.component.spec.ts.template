@@ -3,9 +3,7 @@ import { <%= classify(className) %>Component } from './<%= dasherize(className) 
 import {
     AuthenticationMethodService,
     ConfigurationService,
-    MaterialModule,
-    NavigationModule,
-    ToolbarModule
+    MaterialModule
 } from '@netgrif/application-engine';
 import {
     NavigationComponentModule,
@@ -19,35 +17,35 @@ import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
 
 describe('<%= classify(className) %>Component', () => {
   let component: <%= classify(className) %>Component;
-      let fixture: ComponentFixture<<%= classify(className) %>Component>;
+  let fixture: ComponentFixture<<%= classify(className) %>Component>;
 
-      beforeEach(async(() => {
-          TestBed.configureTestingModule({
-              imports: [
-                  MaterialModule,
-                  ToolbarComponentModule,
-                  NavigationComponentModule,
-                  HttpClientTestingModule,
-                  BrowserAnimationsModule,
-                  RouterTestingModule.withRoutes([])
-              ],
-              providers: [
-                  AuthenticationMethodService,
-                  {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService}
-              ],
-              declarations: [<%= classify(className) %>Component],
-              schemas: [CUSTOM_ELEMENTS_SCHEMA]
-      })
-      .compileComponents();
-      }));
+  beforeEach(async(() => {
+      TestBed.configureTestingModule({
+          imports: [
+              MaterialModule,
+              ToolbarComponentModule,
+              NavigationComponentModule,
+              HttpClientTestingModule,
+              BrowserAnimationsModule,
+              RouterTestingModule.withRoutes([])
+          ],
+          providers: [
+              AuthenticationMethodService,
+              {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService}
+          ],
+          declarations: [<%= classify(className) %>Component],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  })
+  .compileComponents();
+  }));
 
-      beforeEach(() => {
-          fixture = TestBed.createComponent(<%= classify(className) %>Component);
-          component = fixture.componentInstance;
-          fixture.detectChanges();
-      });
+  beforeEach(() => {
+      fixture = TestBed.createComponent(<%= classify(className) %>Component);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+  });
 
-      it('should create', () => {
-          expect(component).toBeTruthy();
-      });
+  it('should create', () => {
+      expect(component).toBeTruthy();
+  });
 });
