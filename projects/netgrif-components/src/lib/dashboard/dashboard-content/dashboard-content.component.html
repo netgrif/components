@@ -5,6 +5,7 @@
                    [ngSwitch]="card.type">
         <nc-count-card *ngSwitchCase="cardTypes.COUNT" [card]="card.item" class="full-size"></nc-count-card>
         <nc-iframe-card *ngSwitchCase="cardTypes.IFRAME" [card]="card.item" class="full-size"></nc-iframe-card>
+        <nc-pie-chart-card *ngSwitchCase="cardTypes.PIE" [card]="card.item" class="full-size"></nc-pie-chart-card>
         <nc-line-chart-card *ngSwitchCase="cardTypes.LINE" [card]="card.item" class="full-size"></nc-line-chart-card>
         <nc-linear-gauge-card *ngSwitchCase="cardTypes.LINEARGAUGE" [card]="card.item"
                              class="full-size"></nc-linear-gauge-card>
