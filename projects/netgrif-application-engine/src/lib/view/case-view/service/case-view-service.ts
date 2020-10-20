@@ -10,7 +10,7 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {Net} from '../../../process/net';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, take, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';

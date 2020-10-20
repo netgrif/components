@@ -6,7 +6,6 @@ import {ViewWithHeaders} from '../abstract/view-with-headers';
 import {HeaderType} from '../../header/models/header-type';
 import {Observable} from 'rxjs';
 import {Net} from '../../process/net';
-import {tap} from 'rxjs/operators';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ProcessService} from '../../process/process.service';
