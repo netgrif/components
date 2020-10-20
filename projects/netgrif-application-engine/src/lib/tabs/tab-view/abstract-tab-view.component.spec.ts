@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {RouterModule} from '@angular/router';
-import {Component} from '@angular/core';
+import {Component, Injector} from '@angular/core';
 import {AbstractTabViewComponent} from './abstract-tab-view.component';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -70,8 +69,8 @@ describe('AbstractTabViewComponent', () => {
     template: ''
 })
 class TestTabComponent extends AbstractTabViewComponent {
-    constructor(protected _viewService: ViewService, protected _logger: LoggerService) {
-        super(_viewService, _logger);
+    constructor(protected _viewService: ViewService, protected _logger: LoggerService, parentInjector: Injector) {
+        super(_viewService, _logger, parentInjector);
     }
 }
 
