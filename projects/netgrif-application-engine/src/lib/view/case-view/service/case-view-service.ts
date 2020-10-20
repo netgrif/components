@@ -1,7 +1,7 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {BehaviorSubject, Observable, of, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -21,6 +21,7 @@ import {ListRange} from '@angular/cdk/collections';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
 import {UserService} from '../../../user/services/user.service';
+import {arrayToObservable} from '../../../utility/array-to-observable';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
@@ -62,7 +63,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
                 if (pageLoadResult.requestContext && pageLoadResult.requestContext.clearLoaded) {
                     // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
                     const results = [{cases: {}, requestContext: null}, pageLoadResult];
-                    return timer(0, 1).pipe(take(2), map(i => results[i]));
+                    return arrayToObservable(results);
                 } else {
                     return of(pageLoadResult);
                 }

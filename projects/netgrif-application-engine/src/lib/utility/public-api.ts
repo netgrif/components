@@ -4,8 +4,10 @@ export * from './loading-with-filter-emitter';
 export * from './get-immediate-data';
 export * from './call-chain/call-chain.service';
 export * from './pagination/page-has-content';
+export * from './pagination/load-all-pages';
 export * from './service/spinner-overlay.service';
 export * from './incrementing-counter';
+export * from './array-to-observable';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';
