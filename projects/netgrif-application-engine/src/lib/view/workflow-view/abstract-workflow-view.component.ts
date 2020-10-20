@@ -27,24 +27,13 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
                           protected _processService: ProcessService) {
         super(_workflowViewService);
         this.workflows$ = this._workflowViewService.workflows$;
-        // .pipe(
-        //     tap(nets => {
-        //         nets.length === 0 ? this.calculateListHeight(0) : this.calculateListHeight();
-        //     })
-        // );
         this.loading$ = this._workflowViewService.loading$;
         this.footerSize = 0;
     }
 
     ngAfterViewInit(): void {
         this.initializeHeader(this.workflowHeader);
-        // this.calculateListHeight();
     }
-
-    // public set viewport(viewport: CdkVirtualScrollViewport) {
-    //     this._viewport = viewport;
-    //     // this.calculateListHeight();
-    // }
 
     public importSidemenuNet(component) {
         this._sideMenuService.open(component).onClose.subscribe(event => {
@@ -57,8 +46,8 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
         });
     }
 
-    public trackBy(i/*, item*/): any {
-        return i /*+ '_' + item*/;
+    public trackBy(i): any {
+        return i;
     }
 
     public loadNextPage(): void {
