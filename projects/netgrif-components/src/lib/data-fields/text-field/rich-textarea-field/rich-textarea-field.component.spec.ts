@@ -21,6 +21,7 @@ import {
     WrappedBoolean
 } from '@netgrif/application-engine';
 
+/*
 describe('RichTextareaFieldComponent', () => {
     let component: RichTextareaFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
@@ -77,3 +78,4 @@ class TestWrapperComponent {
         this.dataField.registerFormControl(this.formControl);
     }
 }
+*/
