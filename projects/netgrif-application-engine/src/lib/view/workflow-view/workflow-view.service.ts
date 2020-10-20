@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {SortableView} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {BehaviorSubject, Observable, of, timer} from 'rxjs';
@@ -12,6 +12,8 @@ import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Page} from '../../resources/interface/page';
 import {ListRange} from '@angular/cdk/collections';
 import {hasContent} from '../../utility/pagination/page-has-content';
+import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
+import {NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
 
 
 @Injectable()
@@ -24,8 +26,11 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
     protected _nextPage$: BehaviorSubject<Pagination>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
+    protected _baseFilter: PetriNetRequestBody;
 
-    constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
+    constructor(private _petriNetResource: PetriNetResourceService,
+                private _log: LoggerService,
+                @Optional() @Inject(NAE_WORKFLOW_SERVICE_FILTER) injectedBaseFilter: PetriNetRequestBody) {
         super();
         this._loading$ = new LoadingEmitter();
         this._clear = false;
@@ -39,6 +44,8 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
         this._nextPage$ = new BehaviorSubject<Pagination>(
             Object.assign({}, this._pagination, {number: 0})
         );
+
+        this._baseFilter = injectedBaseFilter !== null ? injectedBaseFilter : {};
 
         const workflowsMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -94,7 +101,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
         params = this.addPageParams(params, pageRequest);
         this._loading$.on();
 
-        return this._petriNetResource.searchPetriNets({}, params).pipe(
+        return this._petriNetResource.searchPetriNets(this._baseFilter, params).pipe(
             catchError(err => {
                 this._log.error('Loading Petri nets has failed!', err);
                 return of({content: [], pagination: {...this._pagination}});
