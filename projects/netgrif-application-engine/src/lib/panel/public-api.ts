@@ -4,6 +4,7 @@ export * from './case-panel/abstract-case-panel.component';
 export * from './task-panel/abstract-task-panel.component';
 export * from './task-panel-list/abstract-task-list.component';
 export * from './workflow-panel/abstract-workflow-panel.component';
+export * from './abstract/tabbed-virtual-scroll.component';
 
 /* DATA */
 export * from './task-panel-list/task-panel-data/task-panel-data';
