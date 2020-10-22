@@ -183,7 +183,13 @@
                 "false": "false"
             }
         },
-        "noFile": "No file"
+        "noFile": "No file",
+        "file": {
+            "noFile": "No File",
+            "clickToUpload": "Click to upload file",
+            "clickToDownload": "Click to download {{fileName}}",
+            "clickToDelete": "Click to delete file"
+        }
     },
     "dialog": {
         "close": "Close",

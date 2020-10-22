@@ -87,17 +87,17 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
      */
     public renderSelection = (object: Category<any> | SearchAutocompleteOption) => this._renderSelection(object);
 
-    constructor(protected _translate: TranslateService,
-                protected _searchService: SearchService,
-                protected _logger: LoggerService,
-                @Optional() protected _searchChipService: SearchChipService) {
+    protected constructor(protected _translate: TranslateService,
+                          protected _searchService: SearchService,
+                          protected _logger: LoggerService,
+                          @Optional() protected _searchChipService: SearchChipService) {
         this.filteredOptions = this.formControl.valueChanges.pipe(
             startWith(''),
             map(value => typeof value === 'string' ? value : this.objectName(value)),
             map(inputText => this._filterOptions(inputText)),
             mergeAll()
         );
-        this._searchService.predicateRemoved$.subscribe(index => this.processChipRemoval(index));
+        this._searchService.predicateRemoved$.subscribe(event => this.processChipRemoval(event.index));
         if (this._searchChipService) {
             this._searchChipService.addChipRequests$.subscribe(request => this.addExternalChip(request));
         }

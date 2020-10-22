@@ -183,7 +183,13 @@
                 "false": "nein"
             }
         },
-        "noFile": "No file"
+        "noFile": "No file",
+        "file": {
+            "noFile": "keine Datei",
+            "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
+            "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
+            "clickToDelete": "Klicken Sie, um die Datei zu löschen"
+        }
     },
     "dialog": {
         "close": "Schließen",

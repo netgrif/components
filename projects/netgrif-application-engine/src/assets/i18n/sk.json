@@ -183,7 +183,13 @@
                 "false": "nie"
             }
         },
-        "noFile": "Žiadny súbor"
+        "noFile": "Žiadny súbor",
+        "file": {
+            "noFile": "Žiadny súbor",
+            "clickToUpload": "Kliknutím nahrajte súbor",
+            "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
+            "clickToDelete": "Kliknutím vymažte súbor"
+        }
     },
     "dialog": {
         "close": "Zatvoriť",

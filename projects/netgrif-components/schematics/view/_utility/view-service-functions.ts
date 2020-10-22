@@ -17,9 +17,9 @@ export function addViewToViewService(tree: Tree, view: ImportToAdd): void {
     const arrayContent = getArrayNodeContent(fileData.sourceFile);
     const recorder = tree.beginUpdate(fileData.fileEntry.path);
     if (arrayContent.getChildren().length === 0) {
-        recorder.insertRight(arrayContent.pos, `${view.className}`);
+        recorder.insertRight(arrayContent.pos, `\n\t\t\t${view.className}`);
     } else {
-        recorder.insertRight(arrayContent.pos, `${view.className},\n\t\t\t`);
+        recorder.insertRight(arrayContent.pos, `\n\t\t\t${view.className},`);
     }
     tree.commitUpdate(recorder);
 
