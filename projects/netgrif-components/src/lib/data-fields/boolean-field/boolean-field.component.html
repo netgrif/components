@@ -10,11 +10,8 @@
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label>
             <br></mat-label>
         <mat-slide-toggle color="primary" [formControl]="formControl">
-            {{dataField.placeholder}}
-        </mat-slide-toggle>
-        <mat-label class="booleanLabel" *ngIf="this.valueLabelEnabled">
             {{createValueLabel()}}
-        </mat-label>
+        </mat-slide-toggle>
         <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>
