@@ -16,6 +16,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
     @Input() last: boolean;
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
+    @Input() textEllipsis = false;
 
     constructor() {
         super();

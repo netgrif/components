@@ -13,8 +13,8 @@
         </div>
     </mat-card>
 
-    <nc-header #header [type]="headerType" class="case-header-padding"></nc-header>
+    <nc-header #header [type]="headerType" class="case-header-padding" [maxHeaderColumns]="9"></nc-header>
 
-    <nc-case-list [selectedHeaders$]="selectedHeaders$"
+    <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true"
                    (caseClick)="handleCaseClick($event)" fxFlex></nc-case-list>
 </div>

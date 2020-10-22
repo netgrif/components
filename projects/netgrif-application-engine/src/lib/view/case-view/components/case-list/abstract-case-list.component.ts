@@ -13,6 +13,7 @@ export abstract class AbstractCaseListComponent implements OnInit, AfterViewInit
     @Output() caseClick: EventEmitter<Case>;
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
+    @Input() textEllipsis = false;
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
     public cases$: Observable<Array<Case>>;
