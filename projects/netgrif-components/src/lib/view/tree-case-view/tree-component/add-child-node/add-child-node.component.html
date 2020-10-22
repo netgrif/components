@@ -1,5 +1,6 @@
 <button *ngIf="!node.isAddingNode()" mat-icon-button (click)="addChild($event)">
-    <mat-icon>add</mat-icon>
+    <mat-icon *ngIf="!node.treeAddTextIcon()">add</mat-icon>
+    <mat-icon *ngIf="node.treeAddTextIcon()" [matTooltip]="node.treeAddTextIconTitle()" [svgIcon]="node.treeAddTextIcon()"></mat-icon>
 </button>
 
 <div *ngIf="node.isAddingNode()" class="spinner-margin">

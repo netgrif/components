@@ -1,41 +1,52 @@
-import {Component, Injector, OnInit} from '@angular/core';
-import {AbstractCustomCard, AbstractCustomCardResourceService} from '@netgrif/application-engine';
+import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
+import {
+    AbstractCustomCard,
+    DashboardEventContent,
+    DashboardMultiData,
+    DashboardResourceService,
+    DashboardSingleData
+} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
+import {AggregationResult, LoggerService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-line-chart-card',
     templateUrl: './line-chart-card.component.html',
-    styleUrls: ['./line-chart-card.component.scss']
+    styleUrls: ['./line-chart-card.component.scss'],
+    providers: [
+        DashboardResourceService
+    ]
 })
 export class LineChartCardComponent extends AbstractCustomCard implements OnInit {
 
     timeline = true;
+    @Output() selectEvent: EventEmitter<DashboardEventContent>;
 
     constructor(protected _injector: Injector,
-                protected resourceService: AbstractCustomCardResourceService,
-                protected translateService: TranslateService) {
-        super(_injector, resourceService, translateService);
+                protected resourceService: DashboardResourceService,
+                protected translateService: TranslateService,
+                protected loggerService: LoggerService) {
+        super(_injector, resourceService, translateService, loggerService);
+        this.selectEvent = new EventEmitter();
     }
 
     ngOnInit(): void {
-        this.setCardType('line');
         super.ngOnInit();
     }
 
-    convertData(json: any): void {
+    onSelect(data: DashboardEventContent) {
+        this.loggerService.info('Line chart selected.');
+        this.selectEvent.emit(data);
+    }
+
+    convertData(json: AggregationResult): void {
         let index = 0;
         let result: any;
         for (result in json.aggregations) {
             if (json.aggregations.hasOwnProperty(result)) {
-                this.multi.push({
-                    name: result,
-                    series: []
-                });
-                json.aggregations[result].buckets.forEach(element => {
-                    this.multi[index]['series'].push({
-                        name: element['key'],
-                        value: element['doc_count']
-                    });
+                this.multi.push(new DashboardMultiData(result, new Array<DashboardSingleData>()));
+                json.aggregations[result].buckets.forEach(bucket => {
+                    this.multi[index].series.push(new DashboardSingleData(bucket.key, bucket.doc_count));
                 });
                 index++;
             }

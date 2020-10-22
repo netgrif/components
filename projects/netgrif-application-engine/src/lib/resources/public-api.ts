@@ -4,6 +4,7 @@ export * from './engine-endpoint/case-resource.service';
 export * from './engine-endpoint/task-resource.service';
 export * from './engine-endpoint/petri-net-resource.service';
 export * from './engine-endpoint/user-resource.service';
+export * from './engine-endpoint/dashboard-resource.service';
 
 export * from './interface/author';
 export * from './interface/immediate-data';
@@ -31,6 +32,7 @@ export * from './interface/field-alignment';
 export * from './interface/event-outcome';
 export * from './interface/group';
 export * from './interface/petri-net-request-body';
+export * from './interface/page';
 
 export * from './types/nae-date-type';
 

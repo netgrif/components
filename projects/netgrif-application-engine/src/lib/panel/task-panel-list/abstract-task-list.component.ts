@@ -13,6 +13,7 @@ export abstract class AbstractTaskListComponent implements OnInit {
     @Input() loading$: Observable<boolean>;
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
+    @Input() allowMultiOpen = true;
     /**
      * Emits notifications about task events
      */

@@ -5,8 +5,8 @@
         <mat-panel-description *ngTemplateOutlet="panelHeader">
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <div *ngTemplateOutlet="panelContent">
-
-    </div>
+    <ng-template matExpansionPanelContent>
+        <div *ngTemplateOutlet="panelContent"></div>
+    </ng-template>
 </mat-expansion-panel>
 
