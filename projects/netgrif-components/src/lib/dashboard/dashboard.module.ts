@@ -9,7 +9,7 @@ import {LineChartCardComponent} from './cards/linechart-card/line-chart-card.com
 import {BarchartCardComponent} from './cards/barchart-card/barchart-card.component';
 import {LinearGaugeCardComponent} from './cards/lineargauge-card/linear-gauge-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import {PortalCardComponent} from './cards/custom-card/portal-card.component';
+import {PortalCardComponent} from './cards/portal-card/portal-card.component';
 
 @NgModule({
     declarations: [

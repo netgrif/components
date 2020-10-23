@@ -1,18 +1,21 @@
-import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Injector, Input, OnInit, Output} from '@angular/core';
 import {AbstractCustomCard, DashboardEventContent, DashboardResourceService} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
+import {ComponentPortal, Portal} from '@angular/cdk/portal';
 import {AggregationResult, LoggerService} from '@netgrif/application-engine';
 
 @Component({
-    selector: 'nc-linear-gauge-card',
-    templateUrl: './linear-gauge-card.component.html',
-    styleUrls: ['./linear-gauge-card.component.scss'],
+    selector: 'nc-portal-card',
+    templateUrl: './portal-card.component.html',
+    styleUrls: ['./portal-card.component.scss'],
     providers: [
         DashboardResourceService
     ]
 })
-export class LinearGaugeCardComponent extends AbstractCustomCard implements OnInit {
+export class PortalCardComponent extends AbstractCustomCard implements OnInit {
 
+    public injectedDashboard: Portal<any>;
+    @Input() public componentPortal: ComponentPortal<AbstractCustomCard>;
     @Output() selectEvent: EventEmitter<DashboardEventContent>;
 
     constructor(protected _injector: Injector,
@@ -24,15 +27,14 @@ export class LinearGaugeCardComponent extends AbstractCustomCard implements OnIn
     }
 
     ngOnInit(): void {
-        super.ngOnInit();
+        this.injectedDashboard = this.componentPortal;
     }
 
     onSelect(data: DashboardEventContent) {
-        this.loggerService.info('Linear gauge selected.');
+        this.loggerService.info('Custom dashboard selected.');
         this.selectEvent.emit(data);
     }
 
     convertData(json: AggregationResult): void {
-        this.value = json.aggregations.types_count.value;
     }
 }
