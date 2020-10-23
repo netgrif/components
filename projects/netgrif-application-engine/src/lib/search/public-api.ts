@@ -35,6 +35,7 @@ export * from './models/wrap-result';
 export * from './models/chips/chip-request';
 export * from './models/chips/simple-search-chip';
 export * from './category-factory/optional-dependencies';
+export * from './models/predicate-removal-event';
 
 /* Enums */
 export * from './models/boolean-operator';

@@ -76,7 +76,7 @@ export interface AuthorSearchRequest {
     /**
      * Author's user ID
      */
-    id?: number;
+    id?: string;
     /**
      * Author's user name
      */

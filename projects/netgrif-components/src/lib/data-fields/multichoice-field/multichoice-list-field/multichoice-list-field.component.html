@@ -8,5 +8,5 @@
         {{option.value}}
     </mat-list-option>
     <mat-error
-        *ngIf="!formControlRef.valid && formControlRef.touched">{{'dataField.validations.required' | translate}}</mat-error>
+        *ngIf="formControlRef.status != 'DISABLED' && !formControlRef.valid && formControlRef.touched">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-selection-list>

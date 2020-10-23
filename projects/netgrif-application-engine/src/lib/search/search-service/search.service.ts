@@ -6,6 +6,7 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Predicate} from '../models/predicate/predicate';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
+import {PredicateRemovalEvent} from '../models/predicate-removal-event';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -32,7 +33,7 @@ export class SearchService implements OnDestroy {
     /**
      * The index of a removed {@link Predicate} is emmited into this stream
      */
-    protected _predicateRemoved$: Subject<number>;
+    protected _predicateRemoved$: Subject<PredicateRemovalEvent>;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
@@ -42,7 +43,7 @@ export class SearchService implements OnDestroy {
         this._baseFilter = baseFilter.clone();
         this._rootPredicate = new ClausePredicate([], BooleanOperator.AND);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
-        this._predicateRemoved$ = new Subject<number>();
+        this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
     }
 
     ngOnDestroy(): void {
@@ -82,7 +83,7 @@ export class SearchService implements OnDestroy {
     /**
      * @returns an Observable that emits the index of the removed predicate whenever a predicate is removed
      */
-    public get predicateRemoved$(): Observable<number> {
+    public get predicateRemoved$(): Observable<PredicateRemovalEvent> {
         return this._predicateRemoved$.asObservable();
     }
 
@@ -101,10 +102,11 @@ export class SearchService implements OnDestroy {
      * Removes the {@link Predicate} object from the provided index. If the index is invalid does nothing.
      * Updates the the active Filter if the Predicate tree was affected.
      * @param index index of the Predicate that should be removed
+     * @param clearInput whether the input, that corresponds to the predicate should be cleared
      */
-    public removePredicate(index: number): void {
+    public removePredicate(index: number, clearInput = true): void {
         if (this._rootPredicate.removePredicate(index)) {
-            this._predicateRemoved$.next(index);
+            this._predicateRemoved$.next({index, clearInput});
             this.updateActiveFilter();
         }
     }
