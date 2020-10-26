@@ -27,7 +27,9 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {InjectedTabData, NAE_TAB_DATA} from 'netgrif-application-engine';
+import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../tabs/interfaces';
+
 
 describe('AbstractTaskListComponent', () => {
     let component: TestTaskListComponent;

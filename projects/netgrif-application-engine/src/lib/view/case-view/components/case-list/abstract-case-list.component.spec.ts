@@ -17,7 +17,8 @@ import {AbstractCaseListComponent} from './abstract-case-list.component';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
-import {InjectedTabData, NAE_TAB_DATA} from 'netgrif-application-engine';
+import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../../../tabs/interfaces';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
