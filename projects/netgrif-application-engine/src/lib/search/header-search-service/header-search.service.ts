@@ -94,7 +94,7 @@ export class HeaderSearchService {
                 }
             });
 
-        this._searchService.predicateRemoved$.subscribe(index => this.handlePredicateRemoval(index));
+        this._searchService.predicateRemoved$.subscribe(event => this.handlePredicateRemoval(event.index, event.clearInput));
     }
 
     /**
@@ -205,7 +205,7 @@ export class HeaderSearchService {
      * @param chipText the text that should be displayed by a chip representing the predicate
      */
     protected addPredicate(column: number, predicate: Predicate, chipText: string): void {
-        this.removePredicate(column);
+        this.removePredicate(column, !this._columnToPredicate.has(column));
         const predicateIndex = this._searchService.addPredicate(predicate);
         this._columnToPredicate.set(column, {predicateIndex, chipText});
     }
@@ -213,11 +213,12 @@ export class HeaderSearchService {
     /**
      * Removes a predicate that corresponds to the provided column
      * @param column the index of the column that cleared it's search
+     * @param clearInput whether the corresponding header search input should be cleared
      */
-    protected removePredicate(column: number): void {
+    protected removePredicate(column: number, clearInput = true): void {
         const predicateInfo = this._columnToPredicate.get(column);
         if (predicateInfo !== undefined) {
-            this._searchService.removePredicate(predicateInfo.predicateIndex);
+            this._searchService.removePredicate(predicateInfo.predicateIndex, clearInput);
             this._columnToPredicate.delete(column);
         }
     }
@@ -226,13 +227,14 @@ export class HeaderSearchService {
      * Handles the removal of a {@link Predicate} from the {@link SearchService} by shifting
      * any affected indices referenced by the header search
      * @param removedIndex the index of the removed {@link Predicate}
+     * @param clearInput whether the corresponding header search input should be cleared
      */
-    protected handlePredicateRemoval(removedIndex: number): void {
+    protected handlePredicateRemoval(removedIndex: number, clearInput = true): void {
         let columnToRemove;
         this._columnToPredicate.forEach((info, columnNumber) => {
             if (info.predicateIndex === removedIndex) {
                 columnToRemove = columnNumber;
-                if (this._headerService) {
+                if (this._headerService && clearInput) {
                     this._headerService.clearHeaderSearch(columnNumber);
                 }
             } else if (info.predicateIndex > removedIndex) {

@@ -6,7 +6,6 @@ import {ViewWithHeaders} from '../abstract/view-with-headers';
 import {HeaderType} from '../../header/models/header-type';
 import {Observable} from 'rxjs';
 import {Net} from '../../process/net';
-import {tap} from 'rxjs/operators';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ProcessService} from '../../process/process.service';
@@ -20,31 +19,20 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
     public workflows$: Observable<Array<Net>>;
     public loading$: Observable<boolean>;
 
-    protected _viewport: CdkVirtualScrollViewport;
+    @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
-    constructor(protected _sideMenuService: SideMenuService,
-                protected _workflowViewService: WorkflowViewService,
-                protected _log: LoggerService,
-                protected _processService: ProcessService) {
+    protected constructor(protected _sideMenuService: SideMenuService,
+                          protected _workflowViewService: WorkflowViewService,
+                          protected _log: LoggerService,
+                          protected _processService: ProcessService) {
         super(_workflowViewService);
-        this.workflows$ = this._workflowViewService.workflows$.pipe(
-            tap(nets => {
-                nets.length === 0 ? this.calculateListHeight(0) : this.calculateListHeight();
-            })
-        );
+        this.workflows$ = this._workflowViewService.workflows$;
         this.loading$ = this._workflowViewService.loading$;
         this.footerSize = 0;
     }
 
     ngAfterViewInit(): void {
         this.initializeHeader(this.workflowHeader);
-        this.calculateListHeight();
-    }
-
-    @ViewChild('scrollViewport')
-    public set viewport(viewport: CdkVirtualScrollViewport) {
-        this._viewport = viewport;
-        this.calculateListHeight();
     }
 
     public importSidemenuNet(component) {
@@ -58,15 +46,22 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
         });
     }
 
-    public trackBy(i, item): any {
-        return i + '_' + item;
+    public trackBy(i): any {
+        return i;
+    }
+
+    public loadNextPage(): void {
+        if (!this.viewport) {
+            return;
+        }
+        this._workflowViewService.nextPage(this.viewport.getRenderedRange(), this.viewport.getDataLength());
     }
 
     protected calculateListHeight(preciseHeight?: number): void {
-        if (!this._viewport) {
+        if (!this.viewport) {
             return;
         }
-        const element = this._viewport.getElementRef().nativeElement;
+        const element = this.viewport.getElementRef().nativeElement;
         if (preciseHeight !== null && preciseHeight !== undefined) {
             element.style.height = preciseHeight + 'px';
         } else {

@@ -21,7 +21,7 @@ export class MockUserResourceService {
     }
 
     public getLoggedUser(): Observable<User> {
-        return of(new User('id', '', '', '', [], [], []));
+        return of(new User('id', '', '', '', [], [], [], []));
     }
 
     // methods not yet mocked by this mock

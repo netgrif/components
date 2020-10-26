@@ -49,10 +49,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
      */
-    constructor(protected _taskResourceService: TaskResourceService,
-                protected _log: LoggerService,
-                protected _snackbar: SnackBarService,
-                protected _translate: TranslateService) {
+    protected constructor(protected _taskResourceService: TaskResourceService,
+                          protected _log: LoggerService,
+                          protected _snackbar: SnackBarService,
+                          protected _translate: TranslateService) {
         super();
         this.state = this.defaultState;
     }
@@ -202,8 +202,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
         this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).subscribe(response => {
             if (response.success) {
-                this.dataField.value.name = null;
-                this.dataField.value.file = null;
+                this.dataField.value = {};
                 this.name = this.constructDisplayName();
                 this.dataField.downloaded = false;
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
@@ -214,6 +213,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 );
             }
         });
+    }
+
+    isEmpty() {
+        return !this.dataField || !this.dataField.value || JSON.stringify(this.dataField.value) === '{}';
     }
 
     protected get defaultState(): FileState {
@@ -231,7 +234,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     protected constructDisplayName(): string {
         return this.dataField.value && this.dataField.value.name ? this.dataField.value.name :
-            (this.dataField.placeholder ? this.dataField.placeholder : this._translate.instant('dataField.noFile'));
+            (this.dataField.placeholder ? this.dataField.placeholder : this._translate.instant('dataField.file.noFile'));
     }
 
     /**

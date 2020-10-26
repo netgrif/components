@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, OnInit} from '@angular/core';
+import {Component, Injector, OnInit} from '@angular/core';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {MaterialModule} from '../../material/material.module';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -94,11 +94,11 @@ class TestWrapperComponent implements OnInit {
         this.tabGroup.initializeTab(index);
     }
 
-    constructor(private viewService: ViewService, private logger: LoggerService) {
+    constructor(private viewService: ViewService, private logger: LoggerService, private parentInjector: Injector) {
     }
 
     ngOnInit(): void {
-        this.tabGroup = new TabView(this.viewService, this.logger, this.tabs);
+        this.tabGroup = new TabView(this.viewService, this.logger, this.tabs, this.parentInjector);
     }
 }
 
