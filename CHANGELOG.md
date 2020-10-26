@@ -1,5 +1,28 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10819/tab/release-report-all-issues"></a>
+## 4.2.1 - Gray Zinc (23.09.2020)
+### Bug fixes
+ * [NAE-1007](https://netgrif.atlassian.net/browse/NAE-1007) - Schematics of component library are broken
+ * [NAE-1033](https://netgrif.atlassian.net/browse/NAE-1033) - Tab view fails to switch tab when called programmatically
+ * [NAE-889](https://netgrif.atlassian.net/browse/NAE-889)   - Create View Schematic Inconsistencies
+ * [NAE-1004](https://netgrif.atlassian.net/browse/NAE-1004) - Task ref can break task layout
+ * [NAE-890](https://netgrif.atlassian.net/browse/NAE-890)   - SidenavView Schematic From nae.json
+ * [NAE-1003](https://netgrif.atlassian.net/browse/NAE-1003) - Multi-choice field bug with required
+ * [NAE-1005](https://netgrif.atlassian.net/browse/NAE-1005) - Immediate data with no title break header
+ * [NAE-1016](https://netgrif.atlassian.net/browse/NAE-1016) - Parameter id z AuthorSearchRequest
+ * [NAE-1030](https://netgrif.atlassian.net/browse/NAE-1030) - FileField have horizontal scrollbar
+ * [NAE-1050](https://netgrif.atlassian.net/browse/NAE-1050) - Search in headers are broken
+ * [NAE-1032](https://netgrif.atlassian.net/browse/NAE-1032) - Navigation drawer images appear empty
+ * [NAE-1012](https://netgrif.atlassian.net/browse/NAE-1012) - Chybné parsovanie dataFieldov
+
+### Improvements
+ * [NAE-1000](https://netgrif.atlassian.net/browse/NAE-1000) - Repair dashboard cards
+ * [NAE-1051](https://netgrif.atlassian.net/browse/NAE-1051) - Add icon to tree
+
+### Features
+ None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10785/tab/release-report-all-issues"></a>
-## 4.2.0 - Maroon Bronze (21.9.2020)
+## 4.2.0 - Maroon Bronze (21.09.2020)
 ### Bug fixes
  * [NAE-996](https://netgrif.atlassian.net/browse/NAE-996) - Some data field ids break grid layout
  * [NAE-995](https://netgrif.atlassian.net/browse/NAE-995) - Auto-assign tasks don't auto-cancel
@@ -36,7 +59,7 @@
  * [NAE-980](https://netgrif.atlassian.net/browse/NAE-980) - Create HTML textarea field
 
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10813/tab/release-report-all-issues"></a>
-## 4.1.2 - Purple Mercury (10.9.2020)
+## 4.1.2 - Purple Mercury (10.09.2020)
 ### Bug fixes
  * [NAE-984](https://netgrif.atlassian.net/browse/NAE-984) - Destroy subscription on changedFields
  
@@ -47,7 +70,7 @@
  None
 
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10807/tab/release-report-all-issues"></a>
-## 4.1.1 - Navy Brass (20.8.2020)
+## 4.1.1 - Navy Brass (20.08.2020)
 ### Bug fixes
  * [NAE-956](https://netgrif.atlassian.net/browse/NAE-956) - Counters in tab
  * [NAE-960](https://netgrif.atlassian.net/browse/NAE-960) - Tree does not reload cases
