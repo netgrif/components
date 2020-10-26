@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {PetriNet} from '../interface/petri-net';
 import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
-import {changeType, getResourceAddress} from '../resource-utility-functions';
+import {changeType, getResourceAddress, getResourcePage} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
 import {HttpEventType, HttpParams} from '@angular/common/http';
@@ -11,6 +11,8 @@ import Transaction from '../../process/transaction';
 import NetRole from '../../process/netRole';
 import {MessageResource, PetriNetMessageResource} from '../interface/message-resource';
 import {PetriNetReference} from '../interface/petri-net-reference';
+import {PetriNetRequestBody} from '../interface/petri-net-request-body';
+import {Page} from '../interface/page';
 
 @Injectable({
     providedIn: 'root'
@@ -156,8 +158,8 @@ export class PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/search
      */
-    public searchPetriNets(body: object, params?: Params): Observable<Array<PetriNetReference>> {
+    public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
         return this.provider.post$('petrinet/search', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, 'petriNetReferences')));
+            .pipe(map(r => getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
     }
 }

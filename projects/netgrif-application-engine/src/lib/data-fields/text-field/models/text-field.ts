@@ -41,6 +41,7 @@ export class TextField extends DataField<string> {
         super(stringId, title, value, behavior, placeholder, description, layout, _component);
     }
 
+    /*@deprecated in 4.3.0*/
     get view(): TextFieldView {
         return this._view;
     }

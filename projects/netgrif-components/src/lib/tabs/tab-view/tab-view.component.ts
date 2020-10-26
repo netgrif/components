@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Injector} from '@angular/core';
 import {AbstractTabViewComponent, LoggerService, ViewService} from '@netgrif/application-engine';
 
 /**
@@ -13,7 +13,7 @@ import {AbstractTabViewComponent, LoggerService, ViewService} from '@netgrif/app
 })
 export class TabViewComponent extends AbstractTabViewComponent {
 
-    constructor(protected _viewService: ViewService, protected _logger: LoggerService) {
-        super(_viewService, _logger);
+    constructor(protected _viewService: ViewService, protected _logger: LoggerService, injector: Injector) {
+        super(_viewService, _logger, injector);
     }
 }

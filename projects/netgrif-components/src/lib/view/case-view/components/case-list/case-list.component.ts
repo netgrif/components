@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AbstractCaseListComponent, CaseViewService, LoggerService} from '@netgrif/application-engine';
+import {Component, Inject, Optional} from '@angular/core';
+import {AbstractCaseListComponent, CaseViewService, InjectedTabData, LoggerService, NAE_TAB_DATA} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-case-list',
@@ -8,7 +8,9 @@ import {AbstractCaseListComponent, CaseViewService, LoggerService} from '@netgri
 })
 export class CaseListComponent extends AbstractCaseListComponent {
 
-    constructor(protected _caseViewService: CaseViewService, protected _log: LoggerService) {
-        super(_caseViewService, _log);
+    constructor(protected _caseViewService: CaseViewService,
+                protected _log: LoggerService,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
+        super(_caseViewService, _log, injectedTabData);
     }
 }

@@ -1,6 +1,6 @@
 import {AbstractCaseView} from './abstract-case-view';
 import {Inject, Type} from '@angular/core';
-import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token.module';
+import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 import {Case} from '../../resources/interface/case';
 import {LoggerService} from '../../logger/services/logger.service';

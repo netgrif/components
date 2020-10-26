@@ -1,3 +1,3 @@
-export interface Component {
+export class Component {
     name: string;
 }

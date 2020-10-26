@@ -1,4 +1,4 @@
-import {Input, OnInit} from '@angular/core';
+import {Injector, Input, OnInit} from '@angular/core';
 import {TabContent} from '../interfaces';
 import {TabView} from '../classes/tab-view';
 import {ViewService} from '../../routing/view-service/view.service';
@@ -32,11 +32,11 @@ export abstract class AbstractTabViewComponent implements OnInit {
      */
     public initializeTabLambda = (index: number) => {this.tabView.initializeTab(index); };
 
-    constructor(protected _viewService: ViewService, protected _logger: LoggerService) {
+    protected constructor(protected _viewService: ViewService, protected _logger: LoggerService, protected _injector: Injector) {
     }
 
     ngOnInit(): void {
-        this.tabView = new TabView(this._viewService, this._logger, this.initialTabs);
+        this.tabView = new TabView(this._viewService, this._logger, this.initialTabs, this._injector);
     }
 
     badgeHidden(tab: TabContent) {

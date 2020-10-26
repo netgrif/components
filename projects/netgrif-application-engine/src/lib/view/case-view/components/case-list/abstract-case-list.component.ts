@@ -1,12 +1,15 @@
-import {AfterViewInit, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild} from '@angular/core';
 import {CaseViewService} from '../../service/case-view-service';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {Observable} from 'rxjs';
 import {Case} from '../../../../resources/interface/case';
 import {HeaderColumn} from '../../../../header/models/header-column';
 import {LoggerService} from '../../../../logger/services/logger.service';
+import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-virtual-scroll.component';
+import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../../../tabs/interfaces';
 
-export abstract class AbstractCaseListComponent implements OnInit, AfterViewInit {
+export abstract class AbstractCaseListComponent extends TabbedVirtualScrollComponent implements OnInit, AfterViewInit {
 
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
@@ -18,7 +21,10 @@ export abstract class AbstractCaseListComponent implements OnInit, AfterViewInit
     public cases$: Observable<Array<Case>>;
     public loading$: Observable<boolean>;
 
-    protected constructor(protected _caseViewService: CaseViewService, protected _log: LoggerService) {
+    protected constructor(protected _caseViewService: CaseViewService,
+                          protected _log: LoggerService,
+                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
+        super(injectedTabData);
         this.cases$ = this._caseViewService.cases$;
         this.loading$ = this._caseViewService.loading$;
         this.caseClick = new EventEmitter<Case>();

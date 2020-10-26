@@ -16,7 +16,9 @@ export interface DataFieldResource {
     value?: string | number | string[] | boolean | Array<number> | any;
     defaultValue?: string | number | string[] | boolean;
     choices?: string[];
+    /*@deprecated*/
     view?: {
+        /*@deprecated*/
         value: string;
     };
     minValue?: number;
@@ -24,6 +26,7 @@ export interface DataFieldResource {
     validations?: Validation[];
     component?: Component;
     subType?: string;
+    /*@deprecated*/
     formatting?: string;
     roles?: any[];
     options?: {
