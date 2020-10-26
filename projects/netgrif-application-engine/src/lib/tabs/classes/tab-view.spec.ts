@@ -39,7 +39,7 @@ describe('TabView', () => {
     });
 
     it('should create an instance', () => {
-        expect(new TabView(viewService, logger, [])).toBeTruthy();
+        expect(new TabView(viewService, logger, [], undefined)).toBeTruthy();
     });
 
     it('should play with tabs', () => {
@@ -50,7 +50,7 @@ describe('TabView', () => {
             },
             canBeClosed: true,
             tabContentComponent: TabTestComponent
-        }]);
+        }], undefined);
         tabs.openTab({
             label: {
                 text: 'tab title',
@@ -95,7 +95,7 @@ describe('TabView', () => {
 
     // NAE-990
     it('should open existing tab', () => {
-        const tabView = new TabView(viewService, logger, []);
+        const tabView = new TabView(viewService, logger, [], undefined);
         expect(tabView.openedTabs.length).toEqual(0);
         tabView.openTab({
             canBeClosed: false,
@@ -127,7 +127,7 @@ describe('TabView', () => {
     });
 
     it('should return correct tab uniqueId', () => {
-        const tabView = new TabView(viewService, logger, []);
+        const tabView = new TabView(viewService, logger, [], undefined);
         const firstTabId = tabView.openTab({
             canBeClosed: false,
             tabContentComponent: TabTestComponent,
