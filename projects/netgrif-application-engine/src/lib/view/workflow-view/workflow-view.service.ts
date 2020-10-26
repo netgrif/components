@@ -158,6 +158,14 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
         this.nextPage(range, 0, p);
     }
 
+    /**
+     * Opens a dialog (if configured) and then asks the service to delete the selected workflow.
+     * @param workflow the workflow that should be deleted
+     */
+    public deleteWorkflow(workflow: Net): void {
+
+    }
+
     protected getMetaFieldSortId(): string {
         return this._lastHeaderSearchState.fieldIdentifier;
     }
