@@ -31,7 +31,7 @@ export class FieldConverterService {
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations);
             case FieldTypeResource.TEXT:
-                /*@deprecated in 4.2.1*/
+                /*@deprecated in 4.3.0*/
                 let type = TextFieldView.DEFAULT;
                 if (item.subType !== undefined && item.subType === 'area') {
                     type = TextFieldView.TEXTAREA;
@@ -95,7 +95,7 @@ export class FieldConverterService {
                 return new UserField(item.stringId, item.name, item.behavior, user,
                     item.roles, item.placeholder, item.description, item.layout, item.component);
             case FieldTypeResource.BUTTON:
-                /*@deprecated in 4.2.1*/
+                /*@deprecated in 4.3.0*/
                 const typeBtn = this.resolveButtonView(item);
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
                     item.placeholder, item.description, item.layout, typeBtn, item.component);
@@ -132,7 +132,7 @@ export class FieldConverterService {
         }
     }
 
-    /*@deprecated in 4.2.1*/
+    /*@deprecated in 4.3.0*/
     public resolveButtonView(item: DataFieldResource): ButtonFieldView {
         if (item.view !== undefined && item.view.value !== undefined) {
             switch (item.view.value) {
@@ -182,7 +182,7 @@ export class FieldConverterService {
     /**
      * @param enumField enumeration field resource object who's view type we want to resolve
      * @returns the view type defined in the field object, or default if none, or invalid type is defined
-     * @deprecated in 4.2.1
+     * @deprecated in 4.3.0
      */
     protected resolveEnumViewType(enumField: DataFieldResource): EnumerationFieldView {
         let typeEnum = EnumerationFieldView.DEFAULT;
@@ -227,7 +227,7 @@ export class FieldConverterService {
     /**
      * @param multiField multichoice field resource object who's view type we want to resolve
      * @returns the view type defined in the field object, or default if none, or invalid type is defined
-     * @deprecated in 4.2.1
+     * @deprecated in 4.3.0
      */
     protected resolveMultichoiceViewType(multiField: DataFieldResource): MultichoiceFieldView {
         let typeMulti = MultichoiceFieldView.DEFAULT;

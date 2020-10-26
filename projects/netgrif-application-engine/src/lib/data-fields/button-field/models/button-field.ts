@@ -3,7 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
 
-/*@deprecated in 4.2.1*/
+/*@deprecated in 4.3.0*/
 export enum ButtonFieldView {
     STANDARD = 'standard',
     RAISED = 'raised',
@@ -26,7 +26,7 @@ export class ButtonField extends DataField<number> {
         super(stringId, title, (value === undefined) ? 0 : value, behavior, placeholder, description, layout, component);
     }
 
-    /*@deprecated in 4.2.1*/
+    /*@deprecated in 4.3.0*/
     get view(): ButtonFieldView {
         return this._view;
     }

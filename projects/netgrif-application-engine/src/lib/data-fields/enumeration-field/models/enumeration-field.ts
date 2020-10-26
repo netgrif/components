@@ -10,7 +10,7 @@ export interface EnumerationFieldValue {
     value: string;
 }
 
-/*@deprecated in 4.2.1*/
+/*@deprecated in 4.3.0*/
 export enum EnumerationFieldView {
     DEFAULT = 'default',
     LIST = 'list',
@@ -39,12 +39,12 @@ export class EnumerationField extends DataField<string> {
         return this._choices;
     }
 
-    /*@deprecated in 4.2.1*/
+    /*@deprecated in 4.3.0*/
     set view(view: EnumerationFieldView) {
         this._view = view;
     }
 
-    /*@deprecated in 4.2.1*/
+    /*@deprecated in 4.3.0*/
     get view(): EnumerationFieldView {
         return this._view;
     }

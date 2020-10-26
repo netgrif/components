@@ -18,7 +18,7 @@
                               [showLargeLayout]="showLargeLayout"></nc-simple-text-field>
     </div>
 
-    <!-- @deprecated in 4.2.1-->
+    <!-- @deprecated in 4.3.0-->
     <div *ngIf="dataField.component == undefined" [ngSwitch]="dataField.view">
         <nc-textarea-field *ngSwitchCase="'textarea'" [textAreaField]="dataField" [formControlRef]="formControl"
                            [showLargeLayout]="showLargeLayout"></nc-textarea-field>
