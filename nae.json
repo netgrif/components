@@ -485,7 +485,11 @@
                             "type": "pie",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": "{\"aggs\": {\"result\": {\"terms\": {\"field\": \"dataSet.number.value.keyword\"}}}}",
+                            "query": {
+                                "aggs": {
+                                    "result": {
+                                        "terms": {
+                                            "field": "dataSet.text.value.keyword"}}}},
                             "filter": {},
                             "layout": {
                                 "x": 0,
@@ -497,7 +501,7 @@
                             "type": "bar",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": "{\"aggs\": {\"result\": {\"terms\": {\"field\": \"dataSet.number.value.keyword\"}}}}",
+                            "query": {"aggs": {"result": {"terms": {"field": "dataSet.text.value.keyword"}}}},
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "filter": {},
@@ -511,7 +515,7 @@
                             "type": "line",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": "{\"aggs\":{\"result1\":{\"terms\":{\"field\":\"dataSet.number.value.keyword\"}},\"result2\":{\"terms\":{\"field\":\"dataSet.number.value.keyword\"}}}}",
+                            "query": {"aggs":{"result1":{"terms":{"field":"dataSet.text.value.keyword"}},"result2":{"terms":{"field":"dataSet.text.value.keyword"}}}},
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "filter": {},
@@ -525,7 +529,7 @@
                             "type": "lineargauge",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": "{\"aggs\": {\"result\": {\"value_count\": {\"field\": \"dataSet.text.value.keyword\"}}}}",
+                            "query": {"aggs": {"types_count": {"value_count": {"field": "dataSet.text.value.keyword"}}}},
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "units": "cases",

@@ -2,9 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { <%= classify(className) %>Component } from './<%= dasherize(className) %>.component';
 import {
     MaterialModule,
-    HeaderModule,
     ConfigurationService,
-    PanelModule,
     AuthenticationMethodService,
     NAE_TAB_DATA,
     SimpleFilter,

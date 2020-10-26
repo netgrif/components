@@ -3,7 +3,7 @@ import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {orderBy} from 'natural-orderby';
-import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token.module';
+import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
