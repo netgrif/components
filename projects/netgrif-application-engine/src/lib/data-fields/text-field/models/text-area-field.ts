@@ -4,13 +4,15 @@ import {Validation} from '../../models/validation';
 import {TextField, TextFieldView} from './text-field';
 import {Observable} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
+import {Component} from '../../models/component';
 
 export class TextAreaField extends TextField {
     private SEARCH_DEBOUNCE_TIME = 350;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, public validations?: Validation[], protected _view = TextFieldView.DEFAULT) {
-        super(stringId, title, value, behavior, placeholder, description, layout);
+                description?: string, layout?: Layout, public validations?: Validation[], protected _view = TextFieldView.DEFAULT,
+                component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, null, TextFieldView.DEFAULT, component);
     }
 
     public valueChanges(): Observable<string> {
