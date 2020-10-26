@@ -16,7 +16,6 @@ import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
-import {Component} from '../../data-fields/models/component';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +40,7 @@ export class FieldConverterService {
                     type = TextFieldView.RICHTEXTAREA;
                     return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                         item.description, item.layout, item.validations, type);
-                } else  if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
+                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
                     type = TextFieldView.TEXTAREA;
                 } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'htmlEditor') {
                     type = TextFieldView.HTMLTEXTAREA;
@@ -50,8 +49,8 @@ export class FieldConverterService {
                 }
                 if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'editor' ||
                     item.component.name === 'htmlEditor')) {
-                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                        item.description, item.layout, item.validations, type, item.component);
+                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
+                        item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, type, item.component);
@@ -158,12 +157,15 @@ export class FieldConverterService {
     }
 
     public formatValueForBackend(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
+        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password')
+        }
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password') {
             return btoa(value);
-        if (value === undefined || value === null)
+        }
+        if (value === undefined || value === null) {
             return;
+        }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             if (moment.isMoment(value)) {
                 return value.format('YYYY-MM-DD');
@@ -269,12 +271,15 @@ export class FieldConverterService {
     }
 
     public formatValueFromBackend(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
+        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password')
+        }
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password') {
             return atob(value);
-        if (value === undefined || value === null)
+        }
+        if (value === undefined || value === null) {
             return;
+        }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
         }
