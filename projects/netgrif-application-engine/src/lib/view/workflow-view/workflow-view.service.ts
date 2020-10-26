@@ -13,7 +13,9 @@ import {Page} from '../../resources/interface/page';
 import {ListRange} from '@angular/cdk/collections';
 import {hasContent} from '../../utility/pagination/page-has-content';
 import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
-import {NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
+import {NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
+import {DialogService} from '../../dialog/services/dialog.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 
 
 @Injectable()
@@ -27,10 +29,14 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _baseFilter: PetriNetRequestBody;
+    protected _showDeleteConfirmationDialog: boolean;
 
-    constructor(private _petriNetResource: PetriNetResourceService,
-                private _log: LoggerService,
-                @Optional() @Inject(NAE_WORKFLOW_SERVICE_FILTER) injectedBaseFilter: PetriNetRequestBody) {
+    constructor(protected _petriNetResource: PetriNetResourceService,
+                protected _log: LoggerService,
+                protected _dialogService: DialogService,
+                protected _snackBarService: SnackBarService,
+                @Optional() @Inject(NAE_WORKFLOW_SERVICE_FILTER) injectedBaseFilter: PetriNetRequestBody,
+                @Optional() @Inject(NAE_WORKFLOW_SERVICE_CONFIRM_DELETE) confirmDelete: boolean) {
         super();
         this._loading$ = new LoadingEmitter();
         this._clear = false;
@@ -46,6 +52,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
         );
 
         this._baseFilter = injectedBaseFilter !== null ? injectedBaseFilter : {};
+        this._showDeleteConfirmationDialog = confirmDelete === null || confirmDelete;
 
         const workflowsMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -163,7 +170,36 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
      * @param workflow the workflow that should be deleted
      */
     public deleteWorkflow(workflow: Net): void {
+        if (this._showDeleteConfirmationDialog) {
+            this._dialogService.openPromptDialog('Confirm process deletion',
+                `Are you sure you want to delete the process '${workflow.title}' with version '${workflow.version}'?\n Doing so will`
+                + ` remove all cases created from this process!\n Confirm your intent by typing 'DELETE' into the input below.`,
+                'Type DELETE to confirm').afterClosed().subscribe(result => {
+                    if (result !== undefined && result.prompt === 'DELETE') {
+                        this._deleteWorkflow(workflow);
+                    } else {
+                        this._snackBarService.openGenericSnackBar('Process delete canceled', 'info');
+                    }
+            });
+        } else {
+            this._deleteWorkflow(workflow);
+        }
+    }
 
+    /**
+     * Sends the workflow delete to backend and processes the result.
+     * @param workflow the workflow that should be deleted
+     */
+    protected _deleteWorkflow(workflow: Net): void {
+        this._petriNetResource.deletePetriNet(workflow.stringId).subscribe(response => {
+                this._snackBarService.openSuccessSnackBar('Process successfully deleted');
+                this._log.info('Process delete success. Server response: ' + response.success);
+            },
+            error => {
+                this._snackBarService.openErrorSnackBar('Process could not be deleted');
+                this._log.error('Process delete failed. Server response: ' + error);
+            }
+        );
     }
 
     protected getMetaFieldSortId(): string {
