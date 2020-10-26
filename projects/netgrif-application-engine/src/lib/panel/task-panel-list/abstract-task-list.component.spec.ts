@@ -4,7 +4,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {of} from 'rxjs';
 import {AbstractTaskListComponent} from './abstract-task-list.component';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
@@ -27,6 +27,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {InjectedTabData, NAE_TAB_DATA} from 'netgrif-application-engine';
 
 describe('AbstractTaskListComponent', () => {
     let component: TestTaskListComponent;
@@ -80,8 +81,10 @@ describe('AbstractTaskListComponent', () => {
     template: ''
 })
 class TestTaskListComponent extends AbstractTaskListComponent {
-    constructor(protected _taskViewService: TaskViewService, protected _log: LoggerService) {
-        super(_taskViewService, _log);
+    constructor(protected _taskViewService: TaskViewService,
+                protected _log: LoggerService,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
+        super(_taskViewService, _log, injectedTabData);
     }
 }
 
