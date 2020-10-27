@@ -15,6 +15,6 @@
 
     <nc-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="false" hideEditMode="true" class="case-header-padding"></nc-header>
 
-    <nc-case-list [selectedHeaders$]="selectedHeaders$" [showCasePanelIcon]="false" [showDeleteMenu]="true"
+    <nc-case-list [selectedHeaders$]="selectedHeaders$" [showCasePanelIcon]="false" [showDeleteMenu]="false"
                    (caseClick)="handleCaseClick($event)" [responsiveBody]="false" fxFlex></nc-case-list>
 </div>
