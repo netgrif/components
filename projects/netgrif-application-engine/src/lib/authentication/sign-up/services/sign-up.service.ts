@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {UserRegistrationRequest} from '../models/user-registration-request';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {switchMap} from 'rxjs/operators';
