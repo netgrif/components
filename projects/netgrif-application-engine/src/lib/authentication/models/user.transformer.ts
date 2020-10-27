@@ -60,7 +60,8 @@ export class UserTransformer implements Transformer<AuthUser, User> {
             this.mergeRoles([
                 this.transformProcessRoles(user.processRoles),
                 this.transformUserProcessRoles(user.userProcessRoles)]),
-            groups);
+            groups,
+            user.nextGroups);
 
     }
 

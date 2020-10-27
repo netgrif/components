@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
 import {Observable} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -6,8 +6,11 @@ import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
+import {TabbedVirtualScrollComponent} from '../abstract/tabbed-virtual-scroll.component';
+import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../tabs/interfaces';
 
-export abstract class AbstractTaskListComponent implements OnInit {
+export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements OnInit {
 
     @Input() tasks$: Observable<Array<TaskPanelData>>;
     @Input() loading$: Observable<boolean>;
@@ -21,7 +24,10 @@ export abstract class AbstractTaskListComponent implements OnInit {
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
-    protected constructor(protected _taskViewService: TaskViewService, protected _log: LoggerService) {
+    protected constructor(protected _taskViewService: TaskViewService,
+                          protected _log: LoggerService,
+                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
+        super(injectedTabData);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
     }
 

@@ -1,4 +1,4 @@
-<div class="workflow-container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+<div class="workflow-container full-height" fxLayout="column" fxLayoutAlign="start stretch">
     <div>
         <button mat-fab color="primary" class="upload-petri-net" (click)="importNet()">
             <mat-icon>cloud_upload</mat-icon>
@@ -7,34 +7,34 @@
     <div fxLayout="row" fxLayoutAlign="center" class="workflow-header">
         <nc-header #header fxFlex="100" [type]="headerType"></nc-header>
     </div>
-    <div *ngIf="workflows$ | async as workflows" fxLayout="column" fxLayoutAlign="start center"
-         class="workflow-panels-container">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex class="workflow-panels-container">
+        <ng-container *ngIf="workflows$ | async as workflows">
 
-        <div *ngIf="(loading$ | async) === false && workflows.length === 0" fxLayout="column"
-             fxLayoutAlign="center center">
-            <mat-icon color="accent" class="font-size-40 block-size-40 margin-bottom-default">linear_scale
-            </mat-icon>
-            <span class="font-size-20">{{ 'view-list.noProcessesSatisfyingThisFilter' | translate}}</span>
-        </div>
+            <div *ngIf="(loading$ | async) === false && workflows.length === 0" fxLayout="column"
+                 fxLayoutAlign="center center">
+                <mat-icon color="accent" class="font-size-40 block-size-40 margin-bottom-default">linear_scale
+                </mat-icon>
+                <span class="font-size-20">{{ 'view-list.noProcessesSatisfyingThisFilter' | translate}}</span>
+            </div>
 
-        <mat-accordion [multi]="true" fxFlex="100" class="width-100">
+            <mat-accordion [multi]="true" fxFlex="100" class="full-width">
 
-            <cdk-virtual-scroll-viewport #scrollViewport itemSize="50" class="width-100 fix-content-wrapper">
+                <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()" class="full-height full-width">
 
-                <nc-workflow-panel
-                    *cdkVirtualFor="let workflow of workflows; let i = index; templateCacheSize: 0; trackBy: trackBy"
-                    [workflow]="workflow"
-                    [selectedHeaders$]="selectedHeaders$">
-                </nc-workflow-panel>
+                    <nc-workflow-panel
+                        *cdkVirtualFor="let workflow of workflows; let i = index; templateCacheSize: 0; trackBy: trackBy"
+                        [workflow]="workflow"
+                        [selectedHeaders$]="selectedHeaders$">
+                    </nc-workflow-panel>
 
-                <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"
-                     class="margin-top-default">
-                    <mat-spinner color="primary" diameter="50"></mat-spinner>
-                </div>
+                    <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"
+                         class="margin-top-default">
+                        <mat-spinner color="primary" diameter="50"></mat-spinner>
+                    </div>
 
-            </cdk-virtual-scroll-viewport>
+                </cdk-virtual-scroll-viewport>
 
-        </mat-accordion>
-
+            </mat-accordion>
+        </ng-container>
     </div>
 </div>

@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
-import {AfterViewInit, Component, Inject, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -173,10 +173,11 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
                 protected _callChain: CallChainService,
-                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations) {
+                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
+                parentInjector: Injector) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined);
+            _assignPolicyService, _callChain, _taskOperations, undefined, parentInjector);
     }
 
     ngAfterViewInit() {

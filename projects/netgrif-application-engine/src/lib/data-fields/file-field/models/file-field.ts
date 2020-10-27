@@ -4,6 +4,7 @@ import {Layout} from '../../models/layout';
 import {FileFieldValue} from './file-field-value';
 import {Observable, Subject} from 'rxjs';
 import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
+import {Component} from '../../models/component';
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -53,8 +54,8 @@ export class FileField extends DataField<FileFieldValue> {
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
-        super(stringId, title, value, behavior, placeholder, description, layout);
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>, component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, component);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
     }
 

@@ -1,7 +1,7 @@
 import {AbstractTaskView} from './abstract-task-view';
 import {TaskViewService} from './service/task-view.service';
 import {Inject, OnDestroy} from '@angular/core';
-import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token.module';
+import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabbedTaskViewData} from './models/injected-tabbed-task-view-data';
 import {Subscription} from 'rxjs';
 
