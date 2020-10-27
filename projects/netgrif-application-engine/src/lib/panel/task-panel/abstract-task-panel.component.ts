@@ -5,7 +5,7 @@ import {
     OnDestroy,
     OnInit,
     EventEmitter,
-    Type,
+    Type, Injector,
 } from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -77,7 +77,8 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
                           protected _assignPolicyService: AssignPolicyService,
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
-                          protected _disableFunctions: DisableButtonFuntions) {
+                          protected _disableFunctions: DisableButtonFuntions,
+                          protected _parentInjector: Injector) {
         super();
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {

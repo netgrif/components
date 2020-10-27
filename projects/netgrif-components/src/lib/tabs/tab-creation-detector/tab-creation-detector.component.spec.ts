@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TabCreationDetectorComponent} from './tab-creation-detector.component';
-import {Component, NgModule, OnInit} from '@angular/core';
+import {Component, Injector, NgModule, OnInit} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {
@@ -80,11 +80,11 @@ class TestWrapperComponent implements OnInit {
         this.tabGroup.initializeTab(index);
     }
 
-    constructor(private viewService: ViewService, private logger: LoggerService) {
+    constructor(private viewService: ViewService, private logger: LoggerService, private parentInjector: Injector) {
     }
 
     ngOnInit(): void {
-        this.tabGroup = new TabView(this.viewService, this.logger, this.tabs);
+        this.tabGroup = new TabView(this.viewService, this.logger, this.tabs, this.parentInjector);
     }
 }
 

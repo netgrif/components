@@ -12,11 +12,13 @@ import {CaseViewService} from '../../service/case-view-service';
 import {SearchService} from '../../../../search/search-service/search.service';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {AbstractCaseListComponent} from './abstract-case-list.component';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {AuthenticationMethodService} from '../../../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
+import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
+import {InjectedTabData} from '../../../../tabs/interfaces';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
@@ -77,8 +79,10 @@ describe('AbstractCaseListComponent', () => {
     template: ''
 })
 class TestCaseComponent extends AbstractCaseListComponent {
-    constructor(protected _caseViewService: CaseViewService, protected _log: LoggerService) {
-        super(_caseViewService, _log);
+    constructor(protected _caseViewService: CaseViewService,
+                protected _log: LoggerService,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
+        super(_caseViewService, _log, injectedTabData);
     }
 }
 
