@@ -1,9 +1,9 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {SortableView} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
-import {BehaviorSubject, Observable, of, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Net} from '../../process/net';
-import {catchError, concatMap, map, mergeMap, scan, take, tap} from 'rxjs/operators';
+import {catchError, concatMap, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {HttpParams} from '@angular/common/http';
@@ -14,6 +14,7 @@ import {ListRange} from '@angular/cdk/collections';
 import {hasContent} from '../../utility/pagination/page-has-content';
 import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
 import {NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
+import {arrayToObservable} from '../../utility/array-to-observable';
 
 
 @Injectable()
@@ -53,13 +54,19 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
                 if (this._clear) {
                     this._clear = false;
                     // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
-                    const results = [[], petriNets];
-                    return timer(0, 1).pipe(take(2), map(i => results[i]));
+                    const results = [{content: [], stopLoading: false}, {content: petriNets, stopLoading: true}];
+                    return arrayToObservable(results);
                 } else {
-                    return of(petriNets);
+                    return of({content: petriNets, stopLoading: true});
                 }
             }),
             concatMap(o => o),
+            map(o => {
+                if (o.stopLoading) {
+                    this._loading$.off();
+                }
+                return o.content;
+            }),
             map(petriNets => {
                 return petriNets.reduce((acc, cur) => {
                     return {...acc, [cur.stringId]: cur};
@@ -122,8 +129,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
                     return array;
                 }
                 return [];
-            }),
-            tap(() => this._loading$.off())
+            })
         );
     }
 
