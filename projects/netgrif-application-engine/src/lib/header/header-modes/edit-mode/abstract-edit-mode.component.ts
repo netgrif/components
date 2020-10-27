@@ -21,8 +21,8 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
     @Input() public headerService: AbstractHeaderService;
 
-    constructor(protected _translate: TranslateService,
-                protected _log: LoggerService) {
+    protected constructor(protected _translate: TranslateService,
+                          protected _log: LoggerService) {
     }
 
     ngOnInit(): void {
