@@ -16,6 +16,7 @@ import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-b
 import {NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Injectable()
@@ -35,6 +36,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
                 protected _log: LoggerService,
                 protected _dialogService: DialogService,
                 protected _snackBarService: SnackBarService,
+                protected _translate: TranslateService,
                 @Optional() @Inject(NAE_WORKFLOW_SERVICE_FILTER) injectedBaseFilter: PetriNetRequestBody,
                 @Optional() @Inject(NAE_WORKFLOW_SERVICE_CONFIRM_DELETE) confirmDelete: boolean) {
         super();
@@ -174,14 +176,17 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
      */
     public deleteWorkflow(workflow: Net): void {
         if (this._showDeleteConfirmationDialog) {
+            const confirmationText = this._translate.instant('workflow.delete').toUpperCase();
+
             this._dialogService.openPromptDialog(
-                `Are you sure you want to delete the process '${workflow.title}' with version '${workflow.version}'?`,
-                'Doing so will remove all cases created from this process!',
-                'Type DELETE to confirm').afterClosed().subscribe(result => {
-                if (result !== undefined && result.prompt === 'DELETE') {
+                this._translate.instant('workflow.dialog.header', {name: workflow.title, version: workflow.version}),
+                this._translate.instant('workflow.dialog.content'),
+                this._translate.instant('workflow.dialog.typeToConfirm', {delete: confirmationText}))
+                .afterClosed().subscribe(result => {
+                if (result !== undefined && result.prompt === confirmationText) {
                     this._deleteWorkflow(workflow);
                 } else {
-                    this._snackBarService.openGenericSnackBar('Process delete canceled', 'info');
+                    this._snackBarService.openGenericSnackBar(this._translate.instant('workflow.snackBar.deleteCanceled'), 'info');
                 }
             });
         } else {
@@ -195,12 +200,12 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
      */
     protected _deleteWorkflow(workflow: Net): void {
         this._petriNetResource.deletePetriNet(workflow.stringId).subscribe(response => {
-                this._snackBarService.openSuccessSnackBar('Process successfully deleted');
+                this._snackBarService.openSuccessSnackBar(this._translate.instant('workflow.snackBar.deleteSuccess'));
                 this._log.info('Process delete success. Server response: ' + response.success);
                 this.reload();
             },
             error => {
-                this._snackBarService.openErrorSnackBar('Process could not be deleted');
+                this._snackBarService.openErrorSnackBar(this._translate.instant('workflow.snackBar.deleteError'));
                 this._log.error('Process delete failed. Server response: ' + error);
             }
         );

@@ -305,5 +305,18 @@
     },
     "dashboard": {
         "cases" : "prípady"
+    },
+    "workflow": {
+        "delete": "zmazať",
+        "dialog": {
+            "header": "Ste si istý, že chcete vymazať proces '{{name}}' verzia '{{version}}'?",
+            "content": "Spolu s procesom budú vymazané aj všetky prípady z neho vytvorené!",
+            "typeToConfirm": "Zadajte {{delete}} pre potvrdenie"
+        },
+        "snackBar": {
+            "deleteCanceled": "Zmazanie procesu zrušené",
+            "deleteSuccess": "Proces bol úspešne zmazaný",
+            "deleteError": "Proces sa nepodarilo zmazať"
+        }
     }
 }

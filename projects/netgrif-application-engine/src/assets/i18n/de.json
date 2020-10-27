@@ -305,5 +305,18 @@
     },
     "dashboard": {
         "cases" : "Fälle"
+    },
+    "workflow": {
+        "delete": "löschen",
+        "dialog": {
+            "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
+            "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",
+            "typeToConfirm": "Geben Sie zur Bestätigung {{delete}} ein"
+        },
+        "snackBar": {
+            "deleteCanceled": "Prozess löschen abgebrochen",
+            "deleteSuccess": "Prozess erfolgreich gelöscht",
+            "deleteError": "Prozess konnte nicht gelöscht werden"
+        }
     }
 }
