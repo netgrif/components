@@ -6,6 +6,7 @@ import {HeaderColumn} from '../../header/models/header-column';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
+import {TranslateService} from '@ngx-translate/core';
 
 export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding {
 
@@ -18,7 +19,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
 
-    constructor() {
+    constructor(protected _translate: TranslateService) {
         super();
     }
 
@@ -59,6 +60,8 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
                     return {value: immediate.value, icon: 'insert_drive_file'};
                 case 'user':
                     return {value: immediate.value.fullName, icon: 'account_circle'};
+                case 'boolean':
+                    return {value: this._translate.instant('dataField.values.boolean.' + immediate.value), icon: undefined};
                 default:
                     // TODO 8.4.2020 - File field value rendering once file field works
                     // TODO 8.4.2020 - User field value rendering once user field works

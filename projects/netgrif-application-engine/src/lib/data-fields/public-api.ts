@@ -49,6 +49,9 @@ export * from './models/layout';
 export * from './models/component';
 export * from './data-field-template/models/wrapped-boolean';
 
+/* Tokens */
+export * from './models/boolean-label-enabled-token';
+
 /* Enums */
 export * from './models/template-appearance';
 export * from './models/material-appearance';

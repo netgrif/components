@@ -23,6 +23,10 @@ export abstract class AbstractBooleanFieldComponent extends AbstractDataFieldCom
         return '';
     }
 
+    public createValueLabel(): string {
+        return this._translate.instant('dataField.values.boolean.' + this.dataField.value);
+    }
+
     private resolveErrorMessage(dataField: BooleanField, search: string, generalMessage: string) {
         const validation = dataField.validations.find(value => value.validationRule.includes(search));
         if (validation.validationMessage && validation.validationMessage !== '') {
