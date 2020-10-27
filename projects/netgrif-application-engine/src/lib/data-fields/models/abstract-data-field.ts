@@ -5,6 +5,7 @@ import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {Component} from './component';
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -72,10 +73,11 @@ export abstract class DataField<T> {
      * @param _placeholder - placeholder displayed in the datafield
      * @param _description - tooltip of the datafield
      * @param _layout - information regarding the component rendering
+     * @param _component - component data of datafield
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
-                          private _description?: string, private _layout?: Layout) {
+                          private _description?: string, private _layout?: Layout, private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new ReplaySubject<true>(1);
         this._initialized = false;
@@ -84,6 +86,7 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
+        this._component = this.resolveComponent(this._component);
     }
 
     get stringId(): string {
@@ -171,6 +174,10 @@ export abstract class DataField<T> {
 
     set touch(set: boolean) {
         this._touch.next(set);
+    }
+
+    get component(): Component {
+        return this._component;
     }
 
     public update(): void {
@@ -298,5 +305,14 @@ export abstract class DataField<T> {
             appearance = this.layout.appearance;
         }
         this.materialAppearance = appearance;
+    }
+
+    private resolveComponent(component: Component): Component {
+        if (component === undefined) {
+            const comp = new Component();
+            comp.name = 'default';
+            return comp;
+        }
+        return component;
     }
 }
