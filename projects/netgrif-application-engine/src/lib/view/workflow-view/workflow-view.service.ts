@@ -58,7 +58,6 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
             mergeMap(p => this.loadPage(p)),
             map(petriNets => {
                 if (this._clear) {
-                    this._clear = false;
                     // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
                     const results = [[], petriNets];
                     return timer(0, 1).pipe(take(2), map(i => results[i]));
@@ -73,6 +72,10 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
                 }, {});
             }),
             scan((acc, petriNetsMap) => {
+                if (this._clear) {
+                    this._clear = false;
+                    return {...petriNetsMap};
+                }
                 return {...acc, ...petriNetsMap};
             }, {})
         );
@@ -171,15 +174,15 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
      */
     public deleteWorkflow(workflow: Net): void {
         if (this._showDeleteConfirmationDialog) {
-            this._dialogService.openPromptDialog('Confirm process deletion',
-                `Are you sure you want to delete the process '${workflow.title}' with version '${workflow.version}'?\n Doing so will`
-                + ` remove all cases created from this process!\n Confirm your intent by typing 'DELETE' into the input below.`,
+            this._dialogService.openPromptDialog(
+                `Are you sure you want to delete the process '${workflow.title}' with version '${workflow.version}'?`,
+                'Doing so will remove all cases created from this process!',
                 'Type DELETE to confirm').afterClosed().subscribe(result => {
-                    if (result !== undefined && result.prompt === 'DELETE') {
-                        this._deleteWorkflow(workflow);
-                    } else {
-                        this._snackBarService.openGenericSnackBar('Process delete canceled', 'info');
-                    }
+                if (result !== undefined && result.prompt === 'DELETE') {
+                    this._deleteWorkflow(workflow);
+                } else {
+                    this._snackBarService.openGenericSnackBar('Process delete canceled', 'info');
+                }
             });
         } else {
             this._deleteWorkflow(workflow);
@@ -194,6 +197,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
         this._petriNetResource.deletePetriNet(workflow.stringId).subscribe(response => {
                 this._snackBarService.openSuccessSnackBar('Process successfully deleted');
                 this._log.info('Process delete success. Server response: ' + response.success);
+                this.reload();
             },
             error => {
                 this._snackBarService.openErrorSnackBar('Process could not be deleted');
