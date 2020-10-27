@@ -30,6 +30,18 @@ export class TabbedViewsExampleComponent implements OnInit {
                     tabViewComponent: TabbedTaskViewComponent,
                     tabViewOrder: 0
                 }
+            },
+            {
+                label: {
+                    text: 'cases 2: electric boogaloo',
+                    icon: 'storage'
+                },
+                canBeClosed: false,
+                tabContentComponent: TabbedCaseViewComponent,
+                injectedObject: {
+                    tabViewComponent: TabbedTaskViewComponent,
+                    tabViewOrder: 0
+                }
             }
         ];
         setTimeout(() => {

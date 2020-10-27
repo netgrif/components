@@ -3,6 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
+import {Component} from '../../models/component';
 
 export enum AbstractTimeInstanceFieldValidation {
     BETWEEN = 'between',
@@ -17,8 +18,8 @@ export enum AbstractTimeInstanceFieldValidation {
 export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                          description?: string, layout?: Layout, public validations?: any) {
-        super(stringId, title, value, behavior, placeholder, description, layout);
+                          description?: string, layout?: Layout, public validations?: any, component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, component);
     }
 
     protected _validators: Array<ValidatorFn>;

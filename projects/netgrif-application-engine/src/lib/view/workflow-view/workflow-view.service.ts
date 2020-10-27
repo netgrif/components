@@ -111,7 +111,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
             }),
             tap(res => {
                 this._endOfData = !hasContent(res)
-                    || res.pagination.number === res.pagination.totalPages;
+                    || res.pagination.number === res.pagination.totalPages - 1;
             }),
             map((netsPage: Page<PetriNetReference>) => {
                 if (hasContent(netsPage)) {

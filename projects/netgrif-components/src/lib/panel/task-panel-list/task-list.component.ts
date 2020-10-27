@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AbstractTaskListComponent, LoggerService, TaskViewService} from '@netgrif/application-engine';
+import {Component, Inject, Optional} from '@angular/core';
+import {AbstractTaskListComponent, InjectedTabData, LoggerService, NAE_TAB_DATA, TaskViewService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-task-list',
@@ -7,7 +7,9 @@ import {AbstractTaskListComponent, LoggerService, TaskViewService} from '@netgri
     styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent extends AbstractTaskListComponent {
-    constructor(protected _taskViewService: TaskViewService, protected _log: LoggerService) {
-        super(_taskViewService, _log);
+    constructor(protected _taskViewService: TaskViewService,
+                protected _log: LoggerService,
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
+        super(_taskViewService, _log, injectedTabData);
     }
 }
