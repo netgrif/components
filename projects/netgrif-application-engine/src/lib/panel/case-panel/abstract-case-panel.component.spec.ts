@@ -10,6 +10,7 @@ import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column'
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -52,8 +53,8 @@ describe('AbstractCasePanelComponent', () => {
     template: ''
 })
 class TestCasePanelComponent extends AbstractCasePanelComponent {
-    constructor() {
-        super();
+    constructor(translate: TranslateService) {
+        super(translate);
     }
 }
 
