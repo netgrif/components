@@ -14,8 +14,8 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
     return factory.create('<%= viewPath %>');
 };
 
-const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('id', FilterType.TASK, {petriNet: {identifier: "org_group"}}));
+const searchServiceFactory = (nextGroupService: NextGroupService) => {
+    return new SearchService(SimpleFilter.fromTaskQuery({case: {id: nextGroupService.groupsOfUser.stringId}}));
 };
 
 @Component({
@@ -25,7 +25,9 @@ const searchServiceFactory = () => {
     providers: [
         ConfigTaskViewServiceFactory,
         {   provide: SearchService,
-            useFactory: searchServiceFactory},
+            useFactory: searchServiceFactory,
+            deps: [NextGroupService]
+        },
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},

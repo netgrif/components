@@ -1,49 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { TaskViewComponent } from './task-view.component';
-import {
-    MaterialModule,
-    ConfigurationService,
-    AuthenticationMethodService,
-    NAE_TAB_DATA,
-    SimpleFilter,
-    FilterType
-} from '@netgrif/application-engine';
-import {
-    HeaderComponentModule,
-    PanelComponentModule,
-} from '@netgrif/components';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NaeExampleAppConfigurationService} from '../../nae-example-app-configuration.service';
 
 describe('TaskViewComponent', () => {
-    let component: TaskViewComponent;
-    let fixture: ComponentFixture<TaskViewComponent>;
+  let component: TaskViewComponent;
+  let fixture: ComponentFixture<TaskViewComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                MaterialModule,
-                HeaderComponentModule,
-                PanelComponentModule,
-                BrowserAnimationsModule
-            ],
-            providers: [
-                {provide: NAE_TAB_DATA, useValue: {baseFilter: new SimpleFilter('id', FilterType.TASK, {});})}},
-                AuthenticationMethodService,
-                {provide: ConfigurationService, useClass: NaeExampleAppConfigurationService}
-            ],
-            declarations: [TaskViewComponent]
-        })
-            .compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ TaskViewComponent ]
+    })
+    .compileComponents();
+  }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TaskViewComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TaskViewComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
