@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
-    ConfigTaskViewServiceFactory, FilterType, ProcessService,
+    ConfigTaskViewServiceFactory,
     SearchService,
     SimpleFilter,
     TaskViewService
@@ -11,17 +11,17 @@ import {
 } from '@netgrif/components';
 
 const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('');
+    return factory.create('<%= viewPath %>');
 };
 
 const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('', FilterType.TASK,  {process: searchProcess}));
+    return new SearchService(new SimpleFilter('id', FilterType.TASK, {petriNet: {identifier: "org_group"}}));
 };
 
 @Component({
-    selector: 'nae-app-task-view',
-    templateUrl: './task-view.component.html',
-    styleUrls: ['./task-view.component.scss'],
+    selector: '<%= prefix %>-<%= dasherize(className) %>',
+    templateUrl: './<%= dasherize(className) %>.component.html',
+    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         ConfigTaskViewServiceFactory,
         {   provide: SearchService,
@@ -31,11 +31,11 @@ const searchServiceFactory = () => {
             deps: [ConfigTaskViewServiceFactory]},
     ]
 })
-export class TaskViewComponent extends AbstractTaskView implements AfterViewInit {
+export class <%= classify(className) %>Component extends AbstractTaskView implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
-    constructor(processService: ProcessService, taskViewService: TaskViewService) {
+    constructor(taskViewService: TaskViewService) {
         super(taskViewService);
 
     }
