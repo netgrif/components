@@ -15,12 +15,16 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
 
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
     @Output() public register: EventEmitter<MessageResource>;
+    /**
+     * Emits whenever the provided token gets resolved as invalid
+     */
+    @Output() public invalidToken: EventEmitter<void>;
 
     private _token: string;
     private _tokenVerified: boolean;
     public loadingToken: LoadingEmitter;
 
-    constructor(formBuilder: FormBuilder, protected _signupService: SignUpService, protected _log: LoggerService) {
+    protected constructor(formBuilder: FormBuilder, protected _signupService: SignUpService, protected _log: LoggerService) {
         this.rootFormGroup = formBuilder.group({
             email: ['', Validators.email],
             name: [''],
@@ -32,6 +36,7 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
         this.hideRepeatPassword = true;
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
         this.register = new EventEmitter<MessageResource>();
+        this.invalidToken = new EventEmitter<void>();
         this._tokenVerified = false;
         this.loadingToken = new LoadingEmitter(true);
     }
@@ -65,6 +70,7 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
         }, (error: Error) => {
             this._log.error(error.message);
             this._tokenVerified = false;
+            this.invalidToken.emit();
             this.loadingToken.off();
         });
     }
