@@ -19,10 +19,10 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
     private _token: string;
     private _tokenVerified: boolean;
     public loadingToken: LoadingEmitter;
+    public userEmail: string;
 
-    constructor(formBuilder: FormBuilder, protected _signupService: SignUpService, protected _log: LoggerService) {
+    protected constructor(formBuilder: FormBuilder, protected _signupService: SignUpService, protected _log: LoggerService) {
         this.rootFormGroup = formBuilder.group({
-            email: ['', Validators.email],
             name: [''],
             surname: [''],
             password: [''],
@@ -58,7 +58,7 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
         this._signupService.verify(this._token).subscribe(message => {
             this._log.info('Token ' + this._token + ' has been successfully verified');
             if (message.success) {
-                this.rootFormGroup.controls.email.setValue(message.success);
+                this.userEmail = message.success;
             }
             this._tokenVerified = true;
             this.loadingToken.off();
@@ -75,7 +75,6 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
         }
         const request = {
             token: undefined,
-            email: this.rootFormGroup.controls['email'].value,
             name: this.rootFormGroup.controls['name'].value,
             surname: this.rootFormGroup.controls['surname'].value,
             password: this.rootFormGroup.controls['password'].value
