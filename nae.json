@@ -709,6 +709,17 @@
             "routing": {
                 "path": "comp-task"
             }
+        },
+        "group-view": {
+            "layout": {
+                "name": "groupView",
+                "params": {}
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "group-view"
+            }
         }
     },
     "theme": {

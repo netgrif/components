@@ -82,6 +82,7 @@ import {
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { GroupViewGroupViewComponent } from './views/group-view/group-view-group-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -120,7 +121,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         RolesAssignComponent,
         TreeViewExampleComponent,
         UserInviteComponent,
-        ExamplePortalCardComponent
+        ExamplePortalCardComponent,
+        GroupViewGroupViewComponent
     ],
     imports: [
         BrowserModule,
@@ -198,7 +200,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ButtonsNavComponent,
         RolesAssignComponent,
         TreeViewExampleComponent,
-        ExamplePortalCardComponent
+        ExamplePortalCardComponent,
+        GroupViewGroupViewComponent
     ],
     providers: [{
         provide: ConfigurationService,
