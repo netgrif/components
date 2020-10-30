@@ -70,8 +70,8 @@ export abstract class AbstractRegistrationFormComponent implements OnInit, HasFo
         }, (error: Error) => {
             this._log.error(error.message);
             this._tokenVerified = false;
-            this.invalidToken.emit();
             this.loadingToken.off();
+            this.invalidToken.emit();
         });
     }
 
