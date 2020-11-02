@@ -17,5 +17,5 @@ import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
         TranslateLibModule
     ]
 })
-export class ForgottenPasswordFormComponentModule {
+export class EmailSubmissionFormComponentModule {
 }
