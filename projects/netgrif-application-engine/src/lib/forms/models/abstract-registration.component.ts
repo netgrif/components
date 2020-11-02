@@ -74,12 +74,7 @@ export abstract class AbstractRegistrationComponent implements HasForm {
         if (!this.rootFormGroup.valid) {
             return;
         }
-        const request = {
-            token: undefined,
-            name: this.rootFormGroup.controls['name'].value,
-            surname: this.rootFormGroup.controls['surname'].value,
-            password: this.rootFormGroup.controls['password'].value
-        };
+        const request = this.createRequestBody();
         this.formSubmit.emit(request);
 
         if (!this._tokenVerified) {
@@ -93,6 +88,8 @@ export abstract class AbstractRegistrationComponent implements HasForm {
             this.register.emit({error});
         });
     }
+
+    protected abstract createRequestBody(): UserRegistrationRequest;
 
     protected abstract callRegistration(requestBody: UserRegistrationRequest): Observable<MessageResource>;
 }

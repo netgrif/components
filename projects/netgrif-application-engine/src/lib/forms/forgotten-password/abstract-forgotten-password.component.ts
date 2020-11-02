@@ -1,22 +1,17 @@
-import {FormBuilder} from '@angular/forms';
+import {AbstractRegistrationComponent} from '../models/abstract-registration.component';
 import {passwordValidator} from '../models/password.validator';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {AbstractRegistrationComponent} from '../models/abstract-registration.component';
+import {FormBuilder} from '@angular/forms';
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
 
-/**
- * Holds the logic of the `RegistrationFormComponent`.
- */
-export abstract class AbstractRegistrationFormComponent extends AbstractRegistrationComponent {
+export abstract class AbstractForgottenPasswordComponent extends AbstractRegistrationComponent {
 
     protected constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
         super(signupService, log);
         this.rootFormGroup = formBuilder.group({
-            name: [''],
-            surname: [''],
             password: [''],
             confirmPassword: ['']
         }, {validator: passwordValidator});
@@ -25,13 +20,13 @@ export abstract class AbstractRegistrationFormComponent extends AbstractRegistra
     protected createRequestBody(): UserRegistrationRequest {
         return {
             token: undefined,
-            name: this.rootFormGroup.controls['name'].value,
-            surname: this.rootFormGroup.controls['surname'].value,
+            name: undefined,
+            surname: undefined,
             password: this.rootFormGroup.controls['password'].value
         };
     }
 
     protected callRegistration(requestBody: UserRegistrationRequest): Observable<MessageResource> {
-        return this._signupService.signup(requestBody);
+        return this._signupService.recoverPassword(requestBody.token, requestBody.password);
     }
 }
