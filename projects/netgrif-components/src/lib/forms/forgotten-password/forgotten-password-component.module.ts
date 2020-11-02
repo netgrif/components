@@ -17,5 +17,5 @@ import {ReactiveFormsModule} from '@angular/forms';
         TranslateLibModule
     ]
 })
-export class ForgottenPasswordModule {
+export class ForgottenPasswordComponentModule {
 }

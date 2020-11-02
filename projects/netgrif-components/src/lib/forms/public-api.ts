@@ -8,4 +8,4 @@ export * from './forgotten-password/forgotten-password.component';
 export * from './email-submission/email-submission-form.module';
 export * from './login/login-form.module';
 export * from './registration/registration-form.module';
-export * from './forgotten-password/forgotten-password.module';
+export * from './forgotten-password/forgotten-password-component.module';
