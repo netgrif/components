@@ -3,7 +3,7 @@ import {AbstractForgottenPasswordComponent, LoggerService, SignUpService} from '
 import {FormBuilder} from '@angular/forms';
 
 @Component({
-    selector: 'nc-forgotten-password',
+    selector: 'nc-forgotten-password-form',
     templateUrl: './forgotten-password-form.component.html',
     styleUrls: ['./forgotten-password-form.component.scss']
 })
