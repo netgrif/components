@@ -212,6 +212,10 @@
             "repeatPass": "Repeat your password",
             "register": "Register",
             "notVerified": "It is not possible to verify token!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Enter your new password",
+            "repeatNewPass": "Repeat your new password"
         }
     },
     "headers": {

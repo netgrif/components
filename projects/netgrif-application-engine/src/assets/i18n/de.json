@@ -212,6 +212,10 @@
             "repeatPass": "Kennwort viederhollen",
             "register": "Registrieren",
             "notVerified": "Token kann nicht verifiziert werden!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Ihre neues Kennwort eingeben",
+            "repeatNewPass": "Neues Kennwort viederhollen"
         }
     },
     "headers": {

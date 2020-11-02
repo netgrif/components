@@ -8,7 +8,7 @@ import {AbstractRegistrationFormComponent, LoggerService, SignUpService} from '@
     styleUrls: ['./registration-form.component.scss']
 })
 export class RegistrationFormComponent extends AbstractRegistrationFormComponent {
-    constructor(formBuilder: FormBuilder, protected _signupService: SignUpService, protected _log: LoggerService) {
-        super(formBuilder, _signupService, _log);
+    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
+        super(formBuilder, signupService, log);
     }
 }

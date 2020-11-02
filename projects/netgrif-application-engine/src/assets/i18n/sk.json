@@ -212,6 +212,10 @@
             "repeatPass": "Zopakujte heslo",
             "register": "Registrovať",
             "notVerified": "Nie je možné verifikovať token!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo"
         }
     },
     "headers": {
