@@ -78,6 +78,10 @@ class TestRegFormComponent extends AbstractRegistrationComponent {
         super(signupService, log);
     }
 
+    protected createRequestBody(): UserRegistrationRequest {
+        return undefined;
+    }
+
     protected callRegistration(requestBody: UserRegistrationRequest): Observable<MessageResource> {
         return of({});
     }

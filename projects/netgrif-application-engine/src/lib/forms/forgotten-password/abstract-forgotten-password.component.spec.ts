@@ -57,6 +57,8 @@ describe('AbstractForgottenPasswordComponent', () => {
         component.formSubmit.subscribe( event => {
             expect(event).toEqual({
                 token: undefined,
+                name: undefined,
+                surname: undefined,
                 password: 'passwd'
             });
         });
