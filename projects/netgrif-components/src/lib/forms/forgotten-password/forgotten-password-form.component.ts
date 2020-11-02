@@ -4,10 +4,10 @@ import {FormBuilder} from '@angular/forms';
 
 @Component({
     selector: 'nc-forgotten-password',
-    templateUrl: './forgotten-password.component.html',
-    styleUrls: ['./forgotten-password.component.scss']
+    templateUrl: './forgotten-password-form.component.html',
+    styleUrls: ['./forgotten-password-form.component.scss']
 })
-export class ForgottenPasswordComponent extends AbstractForgottenPasswordComponent {
+export class ForgottenPasswordFormComponent extends AbstractForgottenPasswordComponent {
     constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
         super(formBuilder, signupService, log);
     }

@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ForgottenPasswordComponent} from './forgotten-password.component';
+import {ForgottenPasswordFormComponent} from './forgotten-password-form.component';
 import {
     ConfigurationService,
     MaterialModule,
@@ -13,9 +13,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 
-describe('ForgottenPasswordComponent', () => {
-    let component: ForgottenPasswordComponent;
-    let fixture: ComponentFixture<ForgottenPasswordComponent>;
+describe('ForgottenPasswordFormComponent', () => {
+    let component: ForgottenPasswordFormComponent;
+    let fixture: ComponentFixture<ForgottenPasswordFormComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -26,7 +26,7 @@ describe('ForgottenPasswordComponent', () => {
                 HttpClientTestingModule,
                 TranslateLibModule
             ],
-            declarations: [ForgottenPasswordComponent],
+            declarations: [ForgottenPasswordFormComponent],
             providers: [
                 SignUpService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -37,7 +37,7 @@ describe('ForgottenPasswordComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ForgottenPasswordComponent);
+        fixture = TestBed.createComponent(ForgottenPasswordFormComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
