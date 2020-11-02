@@ -196,7 +196,7 @@
         "submit": "Bestätigen"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Ihre E-Mail Adresse eingeben"
         },
         "login": {
@@ -207,6 +207,7 @@
             "enterPass": "Ihre Kennwort eingeben"
         },
         "register": {
+            "email": "Ihre E-Mail Adresse",
             "name": "Vorname",
             "surname": "Nachname",
             "repeatPass": "Kennwort viederhollen",
@@ -215,7 +216,8 @@
         },
         "forgottenPass": {
             "enterNewPass": "Ihre neues Kennwort eingeben",
-            "repeatNewPass": "Neues Kennwort viederhollen"
+            "repeatNewPass": "Neues Kennwort viederhollen",
+            "recover": "Kennwort ändern"
         }
     },
     "headers": {

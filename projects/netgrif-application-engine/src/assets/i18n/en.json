@@ -196,7 +196,7 @@
         "submit": "Submit"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Enter your email"
         },
         "login": {
@@ -207,6 +207,7 @@
             "enterPass": "Enter your password"
         },
         "register": {
+            "email": "Your email",
             "name": "Name",
             "surname": "Surname",
             "repeatPass": "Repeat your password",
@@ -215,7 +216,8 @@
         },
         "forgottenPass": {
             "enterNewPass": "Enter your new password",
-            "repeatNewPass": "Repeat your new password"
+            "repeatNewPass": "Repeat your new password",
+            "recover": "Change password"
         }
     },
     "headers": {
