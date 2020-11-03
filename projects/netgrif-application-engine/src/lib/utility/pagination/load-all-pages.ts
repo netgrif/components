@@ -35,7 +35,7 @@ export function loadAllPages<T>(source: (filter: any, params: Params) => Observa
         concatMap(o => o),
         map((joined: {[k: string]: Array<T>}) => {
             const result = [];
-            Object.values(joined).forEach(arr => result.push(...arr));
+            Object.values(joined).filter(v => v !== undefined).forEach(arr => result.push(...arr));
             return result;
         })
     );
