@@ -1,4 +1,4 @@
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {passwordValidator} from '../models/password.validator';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -15,10 +15,10 @@ export abstract class AbstractRegistrationFormComponent extends AbstractRegistra
     protected constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
         super(signupService, log);
         this.rootFormGroup = formBuilder.group({
-            name: [''],
-            surname: [''],
-            password: [''],
-            confirmPassword: ['']
+            name: ['', Validators.required],
+            surname: ['', Validators.required],
+            password: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]],
+            confirmPassword: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]]
         }, {validator: passwordValidator});
     }
 

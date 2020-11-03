@@ -13,6 +13,8 @@ import {Observable} from 'rxjs';
  */
 export abstract class AbstractRegistrationComponent implements HasForm {
 
+    protected readonly MIN_PASSWORD_LENGTH = 8;
+
     public rootFormGroup: FormGroup;
     public hidePassword: boolean;
     public hideRepeatPassword: boolean;
