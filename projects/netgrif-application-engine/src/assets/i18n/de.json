@@ -212,7 +212,8 @@
             "surname": "Nachname",
             "repeatPass": "Kennwort viederhollen",
             "register": "Registrieren",
-            "notVerified": "Token kann nicht verifiziert werden!"
+            "notVerified": "Token kann nicht verifiziert werden!",
+            "passwordsMustMatch": "Die Kennwörter müssen übereinstimmen!"
         },
         "forgottenPass": {
             "enterNewPass": "Ihre neues Kennwort eingeben",

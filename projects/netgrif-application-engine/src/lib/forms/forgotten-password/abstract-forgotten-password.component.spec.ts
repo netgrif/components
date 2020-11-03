@@ -14,6 +14,7 @@ import {NullAuthenticationService} from '../../authentication/services/methods/n
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {LoggerService} from '../../logger/services/logger.service';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractForgottenPasswordComponent', () => {
     let component: TestRegFormComponent;
@@ -78,7 +79,7 @@ describe('AbstractForgottenPasswordComponent', () => {
     template: ''
 })
 class TestRegFormComponent extends AbstractForgottenPasswordComponent {
-    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
-        super(formBuilder, signupService, log);
+    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
+        super(formBuilder, signupService, log, translate);
     }
 }

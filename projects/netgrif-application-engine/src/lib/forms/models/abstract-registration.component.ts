@@ -7,6 +7,7 @@ import {SignUpService} from '../../authentication/sign-up/services/sign-up.servi
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 /**
  * Holds the logic that is shared between `RegistrationFormComponent` and `ForgottenPasswordFormComponent`.
@@ -31,7 +32,7 @@ export abstract class AbstractRegistrationComponent implements HasForm {
     public loadingToken: LoadingEmitter;
     public userEmail: string;
 
-    protected constructor(protected _signupService: SignUpService, protected _log: LoggerService) {
+    protected constructor(protected _signupService: SignUpService, protected _log: LoggerService, protected _translate: TranslateService) {
         this.hidePassword = true;
         this.hideRepeatPassword = true;
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
@@ -89,6 +90,20 @@ export abstract class AbstractRegistrationComponent implements HasForm {
         }, error => {
             this.register.emit({error});
         });
+    }
+
+    public getErrorMessage(formControlName: string): string {
+        const errors = this.rootFormGroup.get(formControlName).errors;
+        if (errors === null)
+            return;
+        switch (Object.keys(errors)[0]) {
+            case 'required':
+                return this._translate.instant('dataField.validations.required');
+            case 'minlength':
+                return this._translate.instant('dataField.validations.minLength', this.MIN_PASSWORD_LENGTH);
+            case 'mismatchedPassword':
+                return this._translate.instant('forms.register.passwordsMustMatch');
+        }
     }
 
     protected abstract createRequestBody(): UserRegistrationRequest;

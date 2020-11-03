@@ -212,7 +212,8 @@
             "surname": "Surname",
             "repeatPass": "Repeat your password",
             "register": "Register",
-            "notVerified": "It is not possible to verify token!"
+            "notVerified": "It is not possible to verify token!",
+            "passwordsMustMatch": "The passwords must match!"
         },
         "forgottenPass": {
             "enterNewPass": "Enter your new password",

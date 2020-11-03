@@ -6,14 +6,15 @@ import {AbstractRegistrationComponent} from '../models/abstract-registration.com
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
+import {TranslateService} from '@ngx-translate/core';
 
 /**
  * Holds the logic of the `RegistrationFormComponent`.
  */
 export abstract class AbstractRegistrationFormComponent extends AbstractRegistrationComponent {
 
-    protected constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
-        super(signupService, log);
+    protected constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
+        super(signupService, log, translate);
         this.rootFormGroup = formBuilder.group({
             name: ['', Validators.required],
             surname: ['', Validators.required],
