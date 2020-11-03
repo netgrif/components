@@ -233,7 +233,9 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
-            "creationDate": "Dátum nahratia"
+            "creationDate": "Dátum nahratia",
+            "title": "Názov",
+            "author": "Autor"
         },
         "orderMode": "Mód zoraďovania",
         "searchMode": "Mód vyhľadávania",
