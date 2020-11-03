@@ -92,6 +92,10 @@ export abstract class AbstractRegistrationComponent implements HasForm {
         });
     }
 
+    public isFieldValid(formControlName: string): boolean {
+        return this.rootFormGroup.get(formControlName).valid;
+    }
+
     public getErrorMessage(formControlName: string): string {
         const errors = this.rootFormGroup.get(formControlName).errors;
         if (errors === null)
@@ -100,7 +104,7 @@ export abstract class AbstractRegistrationComponent implements HasForm {
             case 'required':
                 return this._translate.instant('dataField.validations.required');
             case 'minlength':
-                return this._translate.instant('dataField.validations.minLength', this.MIN_PASSWORD_LENGTH);
+                return this._translate.instant('dataField.validations.minLength', {length: this.MIN_PASSWORD_LENGTH});
             case 'mismatchedPassword':
                 return this._translate.instant('forms.register.passwordsMustMatch');
         }
