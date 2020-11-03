@@ -86,7 +86,6 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
-        this._component = this.resolveComponent(this._component);
     }
 
     get stringId(): string {
@@ -305,14 +304,5 @@ export abstract class DataField<T> {
             appearance = this.layout.appearance;
         }
         this.materialAppearance = appearance;
-    }
-
-    private resolveComponent(component: Component): Component {
-        if (component === undefined) {
-            const comp = new Component();
-            comp.name = 'default';
-            return comp;
-        }
-        return component;
     }
 }
