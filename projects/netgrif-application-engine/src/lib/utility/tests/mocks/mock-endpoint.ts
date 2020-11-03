@@ -24,7 +24,8 @@ export class MockEndpoint {
      *
      * The `pagination` attributes are filled according to the request and the endpoints [content]{@link MockEndpoint#content}.
      *
-     * If an empty {@link Page} should be returned the returned object has no `content` attributed (to match backend behavior).
+     * If an empty {@link Page} should be returned the returned object has its `content` attribute set to some object
+     * (to match backend and resource service behavior).
      * Otherwise the `content` attribute contains the corresponding subsection fo the [content]{@link MockEndpoint#content} array.
      */
     search(filter: unknown, params: HttpParams): Observable<Page<unknown>> {
@@ -39,9 +40,7 @@ export class MockEndpoint {
                 number: rp.pageNumber
             }
         };
-        if (result.length !== 0) {
-            Object.assign(resultPage, {content: result});
-        }
+        Object.assign(resultPage, {content: result.length !== 0 ? result : {}});
         return of(resultPage as Page<unknown>);
     }
 

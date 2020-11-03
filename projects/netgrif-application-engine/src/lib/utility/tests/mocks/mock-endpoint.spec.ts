@@ -1,5 +1,6 @@
 import {MockEndpoint} from './mock-endpoint';
 import {HttpParams} from '@angular/common/http';
+import {hasContent} from '../../pagination/page-has-content';
 
 describe('MockEndpoint', () => {
 
@@ -29,6 +30,7 @@ describe('MockEndpoint', () => {
             expect(result.pagination.totalElements).toEqual(3);
             expect(result.pagination.size).toEqual(1);
             expect(result.content).toBeTruthy();
+            expect(hasContent(result)).toBeTrue();
             expect(result.content.length).toEqual(1);
             done();
         });
@@ -43,7 +45,8 @@ describe('MockEndpoint', () => {
             expect(result.pagination.totalPages).toEqual(0);
             expect(result.pagination.totalElements).toEqual(0);
             expect(result.pagination.size).toEqual(0);
-            expect(result.content).toBeUndefined();
+            expect(result.content).toBeTruthy();
+            expect(hasContent(result)).toBeFalse();
             done();
         });
     });
@@ -57,7 +60,8 @@ describe('MockEndpoint', () => {
             expect(result.pagination.totalPages).toEqual(1);
             expect(result.pagination.totalElements).toEqual(3);
             expect(result.pagination.size).toEqual(0);
-            expect(result.content).toBeUndefined();
+            expect(result.content).toBeTruthy();
+            expect(hasContent(result)).toBeFalse();
             done();
         });
     });
