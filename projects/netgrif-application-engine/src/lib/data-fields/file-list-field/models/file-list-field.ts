@@ -62,7 +62,7 @@ export class FileListField extends DataField<FileListFieldValue> {
     }
 
     public registerFormControl(formControl: FormControl): void {
-        formControl.setValue(!this.value.namesPaths ? '' : this.value.namesPaths.map(namePath => {
+        formControl.setValue(!this.value || !this.value.namesPaths ? '' : this.value.namesPaths.map(namePath => {
             return namePath['name'];
         }).join('/'));
         this.updateFormControlState(formControl);

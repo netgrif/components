@@ -85,7 +85,7 @@ export class FileField extends DataField<FileFieldValue> {
     }
 
     public registerFormControl(formControl: FormControl): void {
-        formControl.setValue(this.value.name);
+        formControl.setValue(!this.value || !this.value.name ? '' : this.value.name);
         this.updateFormControlState(formControl);
         this.initialized = true;
         this._initialized$.next(true);
