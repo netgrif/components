@@ -5,7 +5,6 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {FileListField, FileListFieldValidation} from './models/file-list-field';
 import {FileFieldValue} from '../file-field/models/file-field-value';
 
@@ -141,7 +140,6 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 this._log.debug(
                     `Files [${this.dataField.stringId}] were successfully uploaded`
                 );
@@ -157,7 +155,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                     }).join('/'));
                 });
             }
-            this.formControl.markAsTouched();
+            this.dataField.touch = true;
+            this.dataField.update();
         }, error => {
             this.state.completed = true;
             this.state.error = true;
@@ -167,7 +166,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
             );
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
-            this.formControl.markAsTouched();
+            this.dataField.touch = true;
+            this.dataField.update();
         });
     }
 

@@ -6,7 +6,6 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 
 export interface FileState {
     progress: number;
@@ -124,7 +123,6 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 this._log.debug(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
                 );
@@ -137,7 +135,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.name = this.constructDisplayName();
                 this.formControl.setValue(this.dataField.value.name);
             }
-            this.formControl.markAsTouched();
+            this.dataField.touch = true;
+            this.dataField.update();
         }, error => {
             this.state.completed = true;
             this.state.error = true;
@@ -147,7 +146,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
             );
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
-            this.formControl.markAsTouched();
+            this.dataField.touch = true;
+            this.dataField.update();
         });
     }
 
