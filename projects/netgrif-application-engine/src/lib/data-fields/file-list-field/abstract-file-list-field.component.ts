@@ -152,8 +152,12 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 filesToUpload.forEach(fileToUpload => {
                     this.uploadedFiles.push(fileToUpload.name);
                     this.dataField.value.namesPaths.push({name: fileToUpload.name});
+                    this.formControl.setValue(this.dataField.value.namesPaths.map(namePath => {
+                        return namePath['name'];
+                    }).join('/'));
                 });
             }
+            this.formControl.markAsTouched();
         }, error => {
             this.state.completed = true;
             this.state.error = true;
@@ -163,6 +167,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
             );
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+            this.formControl.markAsTouched();
         });
     }
 
@@ -224,9 +229,14 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
                 if (this.dataField.value.namesPaths) {
                     this.dataField.value.namesPaths = this.dataField.value.namesPaths.filter(namePath => namePath.name !== fileName);
+                    this.formControl.setValue(this.dataField.value.namesPaths.map(namePath => {
+                        return namePath['name'];
+                    }).join('/'));
+                    this.dataField.update();
                 }
                 this.dataField.downloaded = this.dataField.downloaded.filter(one => one !== fileName);
                 this._log.debug(`File [${this.dataField.stringId}] ${fileName} was successfully deleted`);
+                this.formControl.markAsTouched();
             } else {
                 this._log.error(`Downloading file [${this.dataField.stringId}] ${fileName} has failed!`, response.error);
                 this._snackbar.openErrorSnackBar(

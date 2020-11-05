@@ -116,13 +116,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
             );
         }
-
         this.state = this.defaultState;
         this.state.uploading = true;
         const fileFormData = new FormData();
         fileFormData.append('file', this.fileUploadEl.nativeElement.files.item(0) as File);
-        this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
-        this.name = this.constructDisplayName();
         this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
@@ -136,7 +133,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.state.uploading = false;
                 this.state.progress = 0;
                 this.dataField.downloaded = false;
+                this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
+                this.name = this.constructDisplayName();
+                this.formControl.setValue(this.dataField.value.name);
             }
+            this.formControl.markAsTouched();
         }, error => {
             this.state.completed = true;
             this.state.error = true;
@@ -146,6 +147,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
             );
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+            this.formControl.markAsTouched();
         });
     }
 
@@ -203,9 +205,12 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).subscribe(response => {
             if (response.success) {
                 this.dataField.value = {};
+                this.formControl.setValue('');
                 this.name = this.constructDisplayName();
+                this.dataField.update();
                 this.dataField.downloaded = false;
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
+                this.formControl.markAsTouched();
             } else {
                 this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
                 this._snackbar.openErrorSnackBar(
@@ -215,8 +220,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         });
     }
 
-    isEmpty() {
-        return !this.dataField || !this.dataField.value || JSON.stringify(this.dataField.value) === '{}';
+    isEmpty(): boolean {
+        return !this.dataField.value || !this.dataField.value.name;
     }
 
     protected get defaultState(): FileState {
