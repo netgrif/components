@@ -15,6 +15,7 @@ import {MatToolbar} from '@angular/material/toolbar';
 interface Form {
     value: string;
     viewValue: string;
+    version?: string;
 }
 
 export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
@@ -59,8 +60,12 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         }
 
         this.injectedData.allowedNets$.subscribe(allowedNets => {
-            this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title}));
+            this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}));
         });
+
+        if (!this._sideMenuControl.allVersions) {
+            this.removeOldVersions();
+        }
 
         this.filteredOptions = this.processFormControl.valueChanges
             .pipe(
@@ -176,5 +181,31 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
             return tmp + '...';
         }
         return title;
+    }
+
+    private removeOldVersions() {
+        for (const currNet of this.options) {
+            for (const net of this.options) {
+                if (currNet.value === net.value) {
+                    this.options.splice(this.options.indexOf(this.checkVersion(currNet, net)), 1);
+                }
+            }
+        }
+
+    }
+
+    private checkVersion(v1: Form, v2: Form): Form {
+        const v1Array = v1.version.split('.').map(n => parseInt(n, 10));
+        const v2Array = v1.version.split('.').map(n => parseInt(n, 10));
+
+        for (let i = 0; i < v1Array.length; i++) {
+            if (v1Array[i] > v2Array[i]) {
+                return v2;
+            }
+            if (v1Array[i] < v2Array[i]) {
+                return v1;
+            }
+        }
+        return v1;
     }
 }

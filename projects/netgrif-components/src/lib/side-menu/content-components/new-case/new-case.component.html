@@ -5,7 +5,9 @@
         <mat-form-field>
             <input type="text" matInput [formControl]="processFormControl" [matAutocomplete]="auto" required
                    (keyup.enter)="nextStep()">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <span class="version-span" *ngIf="visibleVersion" matSuffix>{{netVersion}}</span>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                              (optionSelected)="netVersion=$event.option.value.version">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                     {{option.viewValue}}
                 </mat-option>
