@@ -239,7 +239,9 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
-            "creationDate": "Hochladungsdatum"
+            "creationDate": "Hochladungsdatum",
+            "title": "Prozessname",
+            "author": "Prozessautor"
         },
         "orderMode": "Anordnungsmodus",
         "searchMode": "Suchmodus",
