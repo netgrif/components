@@ -21,3 +21,4 @@ export * from './tests/search-category-mock-dependencies';
 export * from './tests/test-config';
 export * from './tests/test-factory-methods';
 export * from './tests/test-view-service';
+export * from './tests/mocks/mock-endpoint';

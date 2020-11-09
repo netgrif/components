@@ -23,8 +23,8 @@ export function loadAllPages<T>(source: (filter: any, params: Params) => Observa
         map(page => {
             basePagination.totalPages = page.pagination.totalPages;
             const pages = {};
+            pages[basePagination.number] = (of(page.content));
             if (basePagination.number < basePagination.totalPages) {
-                pages[basePagination.number] = (of(page.content));
                 for (let pn = basePagination.number + 1; pn < basePagination.totalPages; pn++) {
                     const pagin: Pagination = Object.assign({}, basePagination, {number: pn});
                     pages[pn] = mapToContent(source, filter, pagin);
@@ -35,7 +35,7 @@ export function loadAllPages<T>(source: (filter: any, params: Params) => Observa
         concatMap(o => o),
         map((joined: {[k: string]: Array<T>}) => {
             const result = [];
-            Object.values(joined).forEach(arr => result.push(...arr));
+            Object.values(joined).filter(v => Array.isArray(v)).forEach(arr => result.push(...arr));
             return result;
         })
     );
