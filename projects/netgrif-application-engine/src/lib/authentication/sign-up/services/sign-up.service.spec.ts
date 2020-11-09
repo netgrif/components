@@ -1,5 +1,4 @@
 import {inject, TestBed} from '@angular/core/testing';
-
 import {SignUpService} from './sign-up.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
@@ -27,7 +26,7 @@ describe('SignUpService', () => {
 
     it('should signup', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
-            service.signup({ token: 'string', email: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
+            service.signup({ token: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
                 expect(res.success).toEqual('Done');
             });
 

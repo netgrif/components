@@ -196,7 +196,7 @@
         "submit": "Potvrdiť"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Zadajte svoj email"
         },
         "login": {
@@ -207,11 +207,17 @@
             "enterPass": "Zadajte svoje heslo"
         },
         "register": {
+            "email": "Váš email",
             "name": "Meno",
             "surname": "Priezvisko",
             "repeatPass": "Zopakujte heslo",
             "register": "Registrovať",
             "notVerified": "Nie je možné verifikovať token!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "recover": "Zmeniť heslo"
         }
     },
     "headers": {

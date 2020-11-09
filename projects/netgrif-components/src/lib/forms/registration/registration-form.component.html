@@ -3,10 +3,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">email</mat-icon>
             <mat-form-field fxFlex="96">
-                <input matInput placeholder="{{ 'forms.pass.enterEmail' | translate}}" formControlName="email" required>
-                <mat-error *ngIf="rootFormGroup.controls['email'].hasError('email')">
-                    {{ 'dataField.validations.email' | translate}}
-                </mat-error>
+                <input matInput placeholder="{{ 'forms.register.email' | translate}}" disabled [value]="userEmail">
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">

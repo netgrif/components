@@ -1,21 +1,21 @@
+import {AbstractForgottenPasswordComponent} from './abstract-forgotten-password.component';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
+import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
-import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {FormBuilder} from '@angular/forms';
-import {AbstractRegistrationFormComponent} from './abstract-registration-form.component';
-import {LoggerService} from '../../logger/services/logger.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
-import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
+import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {LoggerService} from '../../logger/services/logger.service';
 
-describe('AbstractRegistrationPanelComponent', () => {
+describe('AbstractForgottenPasswordComponent', () => {
     let component: TestRegFormComponent;
     let fixture: ComponentFixture<TestRegFormComponent>;
     let mockSignupService: MockSignUpService;
@@ -52,15 +52,13 @@ describe('AbstractRegistrationPanelComponent', () => {
     });
 
     it('should submit', () => {
-        component.rootFormGroup.controls['name'].setValue('name');
-        component.rootFormGroup.controls['surname'].setValue('surname');
         component.rootFormGroup.controls['password'].setValue('passwd');
         component.rootFormGroup.controls['confirmPassword'].setValue('passwd');
         component.formSubmit.subscribe( event => {
             expect(event).toEqual({
                 token: undefined,
-                name: 'name',
-                surname: 'surname',
+                name: undefined,
+                surname: undefined,
                 password: 'passwd'
             });
         });
@@ -79,7 +77,7 @@ describe('AbstractRegistrationPanelComponent', () => {
     selector: 'nae-test-reg',
     template: ''
 })
-class TestRegFormComponent extends AbstractRegistrationFormComponent {
+class TestRegFormComponent extends AbstractForgottenPasswordComponent {
     constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
         super(formBuilder, signupService, log);
     }
