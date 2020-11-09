@@ -196,7 +196,7 @@
         "submit": "Potvrdiť"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Zadajte svoj email"
         },
         "login": {
@@ -207,11 +207,18 @@
             "enterPass": "Zadajte svoje heslo"
         },
         "register": {
+            "email": "Váš email",
             "name": "Meno",
             "surname": "Priezvisko",
             "repeatPass": "Zopakujte heslo",
             "register": "Registrovať",
-            "notVerified": "Nie je možné verifikovať token!"
+            "notVerified": "Nie je možné verifikovať token!",
+            "passwordsMustMatch": "Heslá sa musia zhodovať!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "recover": "Zmeniť heslo"
         }
     },
     "headers": {
@@ -233,7 +240,9 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
-            "creationDate": "Dátum nahratia"
+            "creationDate": "Dátum nahratia",
+            "title": "Názov",
+            "author": "Autor"
         },
         "orderMode": "Mód zoraďovania",
         "searchMode": "Mód vyhľadávania",

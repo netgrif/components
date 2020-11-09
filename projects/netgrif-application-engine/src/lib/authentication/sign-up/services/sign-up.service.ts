@@ -93,7 +93,7 @@ export class SignUpService {
 
     private processMessageResponse(message: MessageResource): Observable<MessageResource> {
         if (message.error) {
-            throwError(new Error(message.error));
+            return throwError(new Error(message.error));
         } else {
             return of(message);
         }
