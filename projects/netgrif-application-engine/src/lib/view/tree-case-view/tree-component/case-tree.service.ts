@@ -700,6 +700,7 @@ export class CaseTreeService implements OnDestroy {
                 this._reloadedCaseId = undefined;
                 Object.assign(this._currentCase, reloadedCurrentCase);
                 this._treeCaseViewService.loadTask$.next(this._currentCase);
+                this.refreshTree();
                 this._logger.debug('Current Case Tree Node reloaded');
             } else {
                 this._logger.debug('Discarding case reload response, since the current node has changed before it\'s case was received');
