@@ -10,7 +10,7 @@
                     <mat-icon class="icon-margin-right"
                               *ngIf="tab.label.icon !== undefined">{{tab.label.icon}}</mat-icon>
                     <span class="custom-badge" [matBadge]="(badgeCount(tab) | async)"
-                          [matBadgeHidden]="(badgeHidden(tab) | async)">{{tab.label.text + ((badgeHidden(tab) | async) ? '' : offset)}}</span>
+                          [matBadgeHidden]="(badgeHidden(tab) | async)">{{(tab.label.text | translate) + ((badgeHidden(tab) | async) ? '' : offset)}}</span>
                 </div>
                 <button mat-icon-button *ngIf="tab.canBeClosed" (click)="tabView.closeTabIndex(i)">
                     <mat-icon>clear</mat-icon>

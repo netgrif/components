@@ -240,7 +240,9 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
-            "creationDate": "Upload date"
+            "creationDate": "Upload date",
+            "title": "Title",
+            "author": "Author"
         },
         "orderMode": "Ordering mode",
         "searchMode": "Search mode",
