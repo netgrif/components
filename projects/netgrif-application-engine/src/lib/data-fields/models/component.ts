@@ -1,4 +1,6 @@
-export class Component {
+import {Properties} from './properties';
+
+export interface Component {
     name: string;
-    properties: Map<string, string | number>;
+    properties?: Properties;
 }
