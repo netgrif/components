@@ -309,9 +309,7 @@ export abstract class DataField<T> {
 
     private resolveComponent(component: Component): Component {
         if (component === undefined) {
-            const comp = new Component();
-            comp.name = 'default';
-            return comp;
+            return {name: 'default'};
         }
         return component;
     }
