@@ -14,6 +14,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractRegistrationPanelComponent', () => {
     let component: TestRegFormComponent;
@@ -80,7 +81,7 @@ describe('AbstractRegistrationPanelComponent', () => {
     template: ''
 })
 class TestRegFormComponent extends AbstractRegistrationFormComponent {
-    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
-        super(formBuilder, signupService, log);
+    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
+        super(formBuilder, signupService, log, translate);
     }
 }

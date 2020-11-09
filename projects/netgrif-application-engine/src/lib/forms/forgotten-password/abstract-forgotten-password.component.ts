@@ -2,18 +2,19 @@ import {AbstractRegistrationComponent} from '../models/abstract-registration.com
 import {passwordValidator} from '../models/password.validator';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
+import {TranslateService} from '@ngx-translate/core';
 
 export abstract class AbstractForgottenPasswordComponent extends AbstractRegistrationComponent {
 
-    protected constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService) {
-        super(signupService, log);
+    protected constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
+        super(signupService, log, translate);
         this.rootFormGroup = formBuilder.group({
-            password: [''],
-            confirmPassword: ['']
+            password: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]],
+            confirmPassword: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]]
         }, {validator: passwordValidator});
     }
 

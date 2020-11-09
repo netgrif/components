@@ -212,7 +212,8 @@
             "surname": "Priezvisko",
             "repeatPass": "Zopakujte heslo",
             "register": "Registrovať",
-            "notVerified": "Nie je možné verifikovať token!"
+            "notVerified": "Nie je možné verifikovať token!",
+            "passwordsMustMatch": "Heslá sa musia zhodovať!"
         },
         "forgottenPass": {
             "enterNewPass": "Zadajte nové heslo",
