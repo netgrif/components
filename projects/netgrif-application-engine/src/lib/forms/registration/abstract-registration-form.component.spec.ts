@@ -11,10 +11,15 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {FormBuilder} from '@angular/forms';
 import {AbstractRegistrationFormComponent} from './abstract-registration-form.component';
 import {LoggerService} from '../../logger/services/logger.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
+import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
+import {throwError} from 'rxjs';
 
 describe('AbstractRegistrationPanelComponent', () => {
     let component: TestRegFormComponent;
     let fixture: ComponentFixture<TestRegFormComponent>;
+    let mockSignupService: MockSignUpService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -27,8 +32,9 @@ describe('AbstractRegistrationPanelComponent', () => {
             ],
             declarations: [TestRegFormComponent],
             providers: [
-                SignUpService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: SignUpService, useClass: MockSignUpService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService}
             ],
             schemas: [NO_ERRORS_SCHEMA]
         })
@@ -39,6 +45,7 @@ describe('AbstractRegistrationPanelComponent', () => {
         fixture = TestBed.createComponent(TestRegFormComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        mockSignupService = TestBed.inject(SignUpService) as unknown as MockSignUpService;
     });
 
     it('should create', () => {
@@ -64,6 +71,17 @@ describe('AbstractRegistrationPanelComponent', () => {
             expect(event).toEqual({error: 'Provided token undefined is not valid'});
         });
         component.onSubmit();
+    });
+
+    it('should fail to verify token NAE-1073', (done) => {
+        mockSignupService.verifyResponse = throwError(new Error('err'));
+
+        component.invalidToken.subscribe( () => {
+            expect(component.loadingToken.isActive).toBeFalse();
+            expect(component.tokenVerified).toBeFalse();
+            done();
+        });
+        component.token = 'fakeToken';
     });
 
     afterEach(() => {
