@@ -68,6 +68,7 @@ export abstract class TaskContentService implements OnDestroy {
             return false;
         }
         const valid = !this._task.dataGroups.some(group => group.fields.some(field => !field.valid));
+        this._task.dataGroups.forEach(group => group.fields.forEach(field => field.checked = true));
         if (!valid) {
             this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
             this._task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));

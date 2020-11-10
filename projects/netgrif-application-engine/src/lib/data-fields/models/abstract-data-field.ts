@@ -66,6 +66,11 @@ export abstract class DataField<T> {
      */
     public materialAppearance: string;
     /**
+     * @ignore
+     * Marks if field was checked for finish
+     */
+    public checked: boolean;
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -86,6 +91,7 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
+        this.checked = false;
         this._component = this.resolveComponent(this._component);
     }
 
@@ -217,12 +223,20 @@ export abstract class DataField<T> {
     }
 
     public updateFormControlState(formControl: FormControl): void {
+        formControl.setValue(this.value);
         this._update.subscribe(() => {
-            this.disabled ? formControl.disable() : formControl.enable();
+            formControl.enable();
             formControl.clearValidators();
             formControl.setValidators(this.resolveFormControlValidators());
             formControl.updateValueAndValidity();
-            this._valid = this._determineFormControlValidity(formControl);
+            this.valid = this._determineFormControlValidity(formControl);
+
+            if (this.disabled) {
+                formControl.disable();
+                formControl.clearValidators();
+                formControl.setValidators(this.resolveFormControlValidators());
+                formControl.updateValueAndValidity();
+            }
         });
         this._block.subscribe(bool => {
             if (bool) {
@@ -239,8 +253,6 @@ export abstract class DataField<T> {
             }
         });
         this.update();
-        formControl.setValue(this.value);
-        this._valid = this._determineFormControlValidity(formControl);
     }
 
     /**
@@ -322,5 +334,9 @@ export abstract class DataField<T> {
             return comp;
         }
         return component;
+    }
+
+    public isInvalid(formControl: FormControl): boolean {
+        return (!formControl.disabled && !formControl.valid && formControl.touched) || (!this.valid && this.checked);
     }
 }

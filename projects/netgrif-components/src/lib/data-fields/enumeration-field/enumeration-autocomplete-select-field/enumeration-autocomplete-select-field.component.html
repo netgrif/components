@@ -14,5 +14,5 @@
         </mat-option>
     </mat-autocomplete>
     <mat-hint>{{enumerationField.description}}</mat-hint>
-    <mat-error *ngIf="!formControlRef.valid && formControlRef.touched">{{buildErrorMessage()}}</mat-error>
+    <mat-error *ngIf="enumerationField.isInvalid(formControlRef)">{{buildErrorMessage()}}</mat-error>
 </mat-form-field>
