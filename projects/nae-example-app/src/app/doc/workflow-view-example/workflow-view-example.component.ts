@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {PetriNetResourceService} from '@netgrif/application-engine';
+import {NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, PetriNetResourceService} from '@netgrif/application-engine';
 import {loadAllPages} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-workflows-view-example',
     templateUrl: './workflow-view-example.component.html',
-    styleUrls: ['./workflow-view-example.component.scss']
+    styleUrls: ['./workflow-view-example.component.scss'],
+    providers: [
+        // {provide: NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, useValue: false}
+    ]
 })
 export class WorkflowViewExampleComponent implements OnInit {
     readonly TITLE = 'Workflows view';
