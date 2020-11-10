@@ -750,7 +750,8 @@ export class CaseTreeService implements OnDestroy {
         };
 
         result.visibleTreePropertiesChanged = visibleAttributes.some(attribute => {
-            return getImmediateData(oldCase, attribute).value !== getImmediateData(newCase, attribute).value;
+            return getImmediateData(oldCase, attribute)
+                && getImmediateData(oldCase, attribute).value !== getImmediateData(newCase, attribute).value;
         });
 
         const oldChildren = new Set(getImmediateData(oldCase, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value);
