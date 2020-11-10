@@ -4,8 +4,8 @@ import {
     Tree
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration} from '../../_utility/utility-functions';
-import {View} from '../../../../netgrif-application-engine/src/lib/configuration/interfaces/schema';
 import {CreateViewArguments} from '../create-view-prompt/models/create-view-arguments';
+import {View} from '@netgrif/application-engine';
 
 
 export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule {

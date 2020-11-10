@@ -3,7 +3,7 @@ import {Observable, of} from 'rxjs';
 
 export abstract class ConfigurationService {
 
-    protected constructor(private configuration: NetgrifApplicationEngine) {
+    protected constructor(protected configuration: NetgrifApplicationEngine) {
     }
 
     public getAsync(): Observable<NetgrifApplicationEngine> {
