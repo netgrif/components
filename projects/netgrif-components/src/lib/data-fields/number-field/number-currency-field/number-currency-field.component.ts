@@ -27,8 +27,10 @@ export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldCom
 
     ngOnInit() {
         super.ngOnInit();
-        this.transformedValue = this.transformCurrency(this.dataField.value.toString());
-        this.numberValue = parseFloat(this.dataField.value.toString());
+        if (this.dataField.value !== undefined) {
+            this.transformedValue = this.transformCurrency(this.dataField.value.toString());
+            this.numberValue = parseFloat(this.dataField.value.toString());
+        }
     }
 
     onFocusOut(event: Event) {

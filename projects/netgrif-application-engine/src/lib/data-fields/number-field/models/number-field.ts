@@ -23,30 +23,14 @@ export enum NumberFieldValidation {
     VALID_IN_RANGE = 'validInRange'
 }
 
-export enum NumberFieldView {
-    DEFAULT = 'default',
-    CURRENCY = 'currency'
-}
-
 export class NumberField extends DataField<number> {
     private _validators: Array<ValidatorFn>;
     public _formatFilter: FormatFilter;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[], placeholder?: string,
                 description?: string, layout?: Layout, format?: FormatFilter, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout);
-        this._formatFilter = format;
-    }
-
-    set view(view: NumberFieldView) {
-        this._view = view;
-    }
-
-    get view(): NumberFieldView {
-        return this._view;
-    constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[],
-                placeholder?: string, description?: string, layout?: Layout, component?: Component) {
         super(stringId, title, value, behavior, placeholder, description, layout, component);
+        this._formatFilter = format;
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

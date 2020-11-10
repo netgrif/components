@@ -6,7 +6,7 @@
 </nc-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="dataField.view">
+    <div [ngSwitch]="dataField.component.name">
         <nc-number-default-field *ngSwitchCase="'default'"
                                    [dataField]="dataField"
                                    [formControlRef]="formControl"
