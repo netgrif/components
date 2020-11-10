@@ -30,6 +30,9 @@ export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldCom
         if (this.dataField.value !== undefined) {
             this.transformedValue = this.transformCurrency(this.dataField.value.toString());
             this.numberValue = parseFloat(this.dataField.value.toString());
+        } else {
+            this.transformedValue = '';
+            this.numberValue = 0.0;
         }
     }
 
