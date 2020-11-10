@@ -724,7 +724,7 @@ export class CaseTreeService implements OnDestroy {
                 }
                 this._logger.debug('Current Case Tree Node reloaded');
             } else {
-                this._logger.debug('Discarding case reload response, since the current node has changed before it\'s case was received');
+                this._logger.debug('Discarding case reload response, since the current node has changed before its case was received');
             }
         }, error => {
             this._logger.error('Current Case Tree Node reload request failed', error);
