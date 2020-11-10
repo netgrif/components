@@ -321,5 +321,18 @@
     },
     "dashboard": {
         "cases" : "cases"
+    },
+    "workflow": {
+        "delete": "delete",
+        "dialog": {
+            "header": "Are you sure you want to delete the process '{{name}}' with version '{{version}}'?",
+            "content": "Doing so will remove all cases created from this process!",
+            "typeToConfirm": "Type {{delete}} to confirm"
+        },
+        "snackBar": {
+            "deleteCanceled": "Process delete canceled",
+            "deleteSuccess": "Process successfully deleted",
+            "deleteError": "Process could not be deleted"
+        }
     }
 }
