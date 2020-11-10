@@ -25,11 +25,11 @@ export class SignUpService {
         if (!authAddress) {
             throw new Error('Authentication provider address is not set!');
         }
-        this._signUpUrl = this.resolveEndpoint(authAddress, 'signup');
-        this._verifyUrl = this.resolveEndpoint(authAddress, 'verify');
-        this._inviteUrl = this.resolveEndpoint(authAddress, 'invite');
-        this._resetUrl = this.resolveEndpoint(authAddress, 'reset');
-        this._recoverUrl = this.resolveEndpoint(authAddress, 'recover');
+        this._signUpUrl = this.resolveEndpoint('signup', authAddress);
+        this._verifyUrl = this.resolveEndpoint('verify', authAddress);
+        this._inviteUrl = this.resolveEndpoint('invite', authAddress);
+        this._resetUrl = this.resolveEndpoint('reset', authAddress);
+        this._recoverUrl = this.resolveEndpoint('recover', authAddress);
     }
 
     public signup(newUser: UserRegistrationRequest): Observable<MessageResource> {

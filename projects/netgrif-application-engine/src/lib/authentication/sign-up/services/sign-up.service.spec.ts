@@ -10,88 +10,93 @@ import {NetgrifApplicationEngine} from '../../../configuration/interfaces/schema
 describe('SignUpService', () => {
     let service: SignUpService;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
-            providers: [
-                SignUpService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ]
+    describe('standard endpoints configuration', () => {
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+                providers: [
+                    SignUpService,
+                    {provide: ConfigurationService, useValue: new TestConfigurationService()}
+                ]
+            });
+            service = TestBed.inject(SignUpService);
         });
-        service = TestBed.inject(SignUpService);
+
+        it('should be created', () => {
+            expect(service).toBeTruthy();
+        });
+
+        it('should signup', inject([HttpTestingController],
+            (httpMock: HttpTestingController) => {
+                service.signup({token: 'string', email: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
+                    expect(res.success).toEqual('Done');
+                });
+
+                const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/signup');
+                expect(reqLog.request.method).toEqual('POST');
+
+                reqLog.flush({success: 'Done'});
+            })
+        );
+
+        it('should verify token', inject([HttpTestingController],
+            (httpMock: HttpTestingController) => {
+                service.verify('string').subscribe(res => {
+                    expect(res.success).toEqual('username');
+                });
+
+                const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/token/verify');
+                expect(reqLog.request.method).toEqual('POST');
+
+                reqLog.flush({success: 'username'});
+            })
+        );
+
+        it('should invite', inject([HttpTestingController],
+            (httpMock: HttpTestingController) => {
+                service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
+                    expect(res.success).toEqual('Done');
+                });
+
+                const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
+                expect(reqLog.request.method).toEqual('POST');
+
+                reqLog.flush({success: 'Done'});
+            })
+        );
     });
 
-    it('should be created', () => {
-        expect(service).toBeTruthy();
-    });
-
-    it('should signup', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.signup({token: 'string', email: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
-                expect(res.success).toEqual('Done');
+    describe('no endpoints configuration', () => {
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+                providers: [
+                    SignUpService,
+                    {provide: ConfigurationService, useValue: new MissingEndpointsConfigurationService()}
+                ]
             });
-
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/signup');
-            expect(reqLog.request.method).toEqual('POST');
-
-            reqLog.flush({success: 'Done'});
-        })
-    );
-
-    it('should verify token', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.verify('string').subscribe(res => {
-                expect(res.success).toEqual('username');
-            });
-
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/token/verify');
-            expect(reqLog.request.method).toEqual('POST');
-
-            reqLog.flush({success: 'username'});
-        })
-    );
-
-    it('should invite', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
-                expect(res.success).toEqual('Done');
-            });
-
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
-            expect(reqLog.request.method).toEqual('POST');
-
-            reqLog.flush({success: 'Done'});
-        })
-    );
-
-    // NAE-1072
-    it('should not resolve undefined endpoints', () => {
-        TestBed.resetTestingModule();
-        TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
-            providers: [
-                SignUpService,
-                {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService}
-            ]
+            service = TestBed.inject(SignUpService);
         });
-        service = TestBed.inject(SignUpService);
 
-        expect(service).toBeTruthy();
-        expect(() => {
-            service.signup({token: '', email: '', name: '', surname: '', password: ''});
-        }).toThrowError('SingUp URL is not set in authentication provider endpoints!');
-        expect(() => {
-            service.invite({email: '', groups: [], processRoles: []});
-        }).toThrowError('Invite URL is not set in authentication provider endpoints!');
-        expect(() => {
-            service.resetPassword('');
-        }).toThrowError('Reset URL is not set in authentication provider endpoints!');
-        expect(() => {
-            service.recoverPassword('', '');
-        }).toThrowError('Recover URL is not set in authentication provider endpoints!');
-        expect(() => {
-            service.verify('');
-        }).toThrowError('Verify URL is not set in authentication provider endpoints!');
+        // NAE-1072
+        it('should not resolve undefined endpoints', () => {
+            expect(service).toBeTruthy();
+            expect(() => {
+                service.signup({token: '', email: '', name: '', surname: '', password: ''});
+            }).toThrowError('SingUp URL is not set in authentication provider endpoints!');
+            expect(() => {
+                service.invite({email: '', groups: [], processRoles: []});
+            }).toThrowError('Invite URL is not set in authentication provider endpoints!');
+            expect(() => {
+                service.resetPassword('');
+            }).toThrowError('Reset URL is not set in authentication provider endpoints!');
+            expect(() => {
+                service.recoverPassword('', '');
+            }).toThrowError('Recover URL is not set in authentication provider endpoints!');
+            expect(() => {
+                service.verify('');
+            }).toThrowError('Verify URL is not set in authentication provider endpoints!');
+        });
     });
 
     afterEach(() => {
