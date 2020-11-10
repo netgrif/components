@@ -16,7 +16,7 @@ describe('SignUpService', () => {
                 imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
                 providers: [
                     SignUpService,
-                    {provide: ConfigurationService, useValue: new TestConfigurationService()}
+                    {provide: ConfigurationService, useClass: TestConfigurationService}
                 ]
             });
             service = TestBed.inject(SignUpService);
@@ -72,7 +72,7 @@ describe('SignUpService', () => {
                 imports: [HttpClientTestingModule, NoopAnimationsModule, RouterTestingModule.withRoutes([])],
                 providers: [
                     SignUpService,
-                    {provide: ConfigurationService, useValue: new MissingEndpointsConfigurationService()}
+                    {provide: ConfigurationService, useClass: MissingEndpointsConfigurationService}
                 ]
             });
             service = TestBed.inject(SignUpService);
