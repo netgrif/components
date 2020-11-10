@@ -1,20 +1,31 @@
 <nc-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last">
     <ng-template #casePanelHeader>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
-            <span fxLayoutAlign="start center" fxFlex>
-                <mat-icon class="case-panel-icon panel-primary-icon" *ngIf="showCasePanelIcon">
-                    {{case_.icon ? case_.icon : 'label'}}</mat-icon>
-                <span>{{firstFeaturedValue}}</span>
-            </span>
-            <span *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
-                  [fxHide.lt-xl]="i >= 3 && responsiveBody"
-                  [fxHide.lt-lg]="i >= 2 && responsiveBody"
-                  [fxHide.lt-md]="i >= 1 && responsiveBody"
-                  [fxHide.lt-sm]="i >= 0 && responsiveBody">
-                <mat-icon class="case-panel-icon panel-primary-icon"
-                          *ngIf="field.icon && field.value">{{field.icon}}</mat-icon>
-                {{field.value}}
-            </span>
+        <div fxLayoutAlign="start start" fxLayout="row" fxFlex="95" class="panel-header-padding">
+            <div fxFlex class="text-column-div">
+                <span class="text-column-margin" fxLayoutAlign="start center">
+                    <mat-icon class="case-panel-icon panel-primary-icon" *ngIf="showCasePanelIcon">
+                            {{case_.icon ? case_.icon : 'label'}}</mat-icon>
+                    <span [ngClass]="{
+                                 'text-column-ellipsis': textEllipsis,
+                                 'text-column-word-wrap': !textEllipsis
+                          }">{{firstFeaturedValue}}</span>
+                </span>
+            </div>
+            <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
+                 class="text-column-div"
+                 [fxHide.lt-xl]="i >= 3 && responsiveBody"
+                 [fxHide.lt-lg]="i >= 2 && responsiveBody"
+                 [fxHide.lt-md]="i >= 1 && responsiveBody"
+                 [fxHide.lt-sm]="i >= 0 && responsiveBody">
+                <span class="text-column-margin" fxLayoutAlign="start center">
+                    <mat-icon class="case-panel-icon panel-primary-icon"
+                              *ngIf="field.icon && field.value">{{field.icon}}</mat-icon>
+                    <span [ngClass]="{
+                             'text-column-ellipsis': textEllipsis,
+                             'text-column-word-wrap': !textEllipsis
+                          }">{{field.value}}</span>
+                </span>
+            </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
             <div *ngIf="showDeleteMenu">

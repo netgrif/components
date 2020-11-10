@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+<div *ngIf="showVirtualScroll" fxLayout="column" fxLayoutAlign="start center" fxFlex>
     <ng-container *ngIf="tasks$ | async as tasks">
 
         <div *ngIf="(loading$ | async) === false && tasks.length === 0" fxLayout="column" fxLayoutAlign="center center"
@@ -7,7 +7,7 @@
             <span class="font-size-20">{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
         </div>
 
-        <mat-accordion multi="true" class="full-width" fxFlex="100">
+        <mat-accordion [multi]="allowMultiOpen" class="full-width" fxFlex="100">
             <cdk-virtual-scroll-viewport itemSize="52" (scrolledIndexChange)="loadNextPage()"
                                          class="task-panel-scroll-container full-width full-height">
 

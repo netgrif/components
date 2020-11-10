@@ -58,5 +58,18 @@ describe('AddChildNodeComponent', () => {
     template: '<nc-add-child-node [node]="node"></nc-add-child-node>'
 })
 class TestComponent {
-    node = new CaseTreeNode(undefined, undefined);
+    node = new CaseTreeNode({
+        author: undefined,
+        color: '',
+        creationDate: undefined,
+        icon: '',
+        lastModified: undefined,
+        petriNetId: '',
+        petriNetObjectId: undefined,
+        processIdentifier: '',
+        resetArcTokens: undefined,
+        stringId: '',
+        title: '',
+        visualId: '',
+        immediateData: []}, undefined);
 }

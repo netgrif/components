@@ -6,6 +6,7 @@ import {FileUploadMIMEType} from '../../file-field/models/file-field';
 import {DataField} from '../../models/abstract-data-field';
 import {FileListFieldValue} from './file-list-field-value';
 import {Validation} from '../../models/validation';
+import {Component} from '../../models/component';
 
 export enum FileListFieldValidation {
     MAX_FILES = 'maxFiles'
@@ -25,8 +26,8 @@ export class FileListField extends DataField<FileListFieldValue> {
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, public validations?: Validation[], private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
-        super(stringId, title, value, behavior, placeholder, description, layout);
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>, component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, component);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
         this.downloaded = new Array<string>();
     }

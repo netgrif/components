@@ -2,12 +2,14 @@ import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
+import {Component} from '../../models/component';
 
 export interface MultichoiceFieldValue {
     key: string;
     value: string;
 }
 
+/*@deprecated in 4.3.0*/
 export enum MultichoiceFieldView {
     DEFAULT = 'default',
     LIST = 'list'
@@ -17,8 +19,9 @@ export class MultichoiceField  extends DataField<Array<string>> {
 
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
-                private _view = MultichoiceFieldView.DEFAULT, private readonly _fieldType = FieldTypeResource.MULTICHOICE) {
-        super(stringId, title, values, behavior, placeholder, description, layout);
+                private _view = MultichoiceFieldView.DEFAULT, private readonly _fieldType = FieldTypeResource.MULTICHOICE,
+                component?: Component) {
+        super(stringId, title, values, behavior, placeholder, description, layout, component);
     }
 
     set choices(choices: Array<MultichoiceFieldValue>) {
@@ -29,10 +32,12 @@ export class MultichoiceField  extends DataField<Array<string>> {
         return this._choices;
     }
 
+    /*@deprecated in 4.3.0*/
     set view(view: MultichoiceFieldView) {
         this._view = view;
     }
 
+    /*@deprecated in 4.3.0*/
     get view(): MultichoiceFieldView {
         return this._view;
     }

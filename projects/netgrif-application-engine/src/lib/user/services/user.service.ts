@@ -112,7 +112,7 @@ export class UserService implements OnDestroy {
     }
 
     private emptyUser() {
-        return new User('', '', '', '', [], [], []);
+        return new User('', '', '', '', [], [], [], []);
     }
 
     private loadUser(): void {

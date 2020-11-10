@@ -14,6 +14,7 @@ import {
     LoggerService,
     NAE_TASK_OPERATIONS,
     NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+    BOOLEAN_VALUE_LABEL_ENABLED,
     PaperViewService,
     SingleTaskContentService,
     SubjectTaskOperations,
@@ -60,17 +61,20 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _assignPolicyService: AssignPolicyService,
                 protected _callChain: CallChainService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
-                @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions) {
+                @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions,
+                @Optional() @Inject(BOOLEAN_VALUE_LABEL_ENABLED) protected isEnabled: boolean,
+                protected _parentInjector: Injector) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, _disableFunctions);
+            _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _parentInjector);
     }
 
     protected createContentPortal(): void {
         const providers: StaticProvider[] = [
-            {provide: TaskContentService, useValue: this._taskContentService}
+            {provide: TaskContentService, useValue: this._taskContentService},
+            {provide: BOOLEAN_VALUE_LABEL_ENABLED, useValue: this.isEnabled}
         ];
-        const injector = Injector.create({providers});
+        const injector = Injector.create({providers, parent: this._parentInjector});
 
         if (this.panelContentComponent === undefined) {
             this.portal = new ComponentPortal(TaskContentComponent, null, injector);

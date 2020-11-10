@@ -178,6 +178,13 @@
             "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
             "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: "
         },
+        "values": {
+            "boolean": {
+                "true": "ja",
+                "false": "nein"
+            }
+        },
+        "noFile": "No file",
         "file": {
             "noFile": "keine Datei",
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
