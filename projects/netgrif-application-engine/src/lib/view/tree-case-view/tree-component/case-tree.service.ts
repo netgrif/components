@@ -25,6 +25,20 @@ import {getImmediateData} from '../../../utility/get-immediate-data';
 import {NAE_OPTION_SELECTOR_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 
+/**
+ * An internal helper object, that is used to return two values from a function.
+ */
+interface CaseUpdateResult {
+    /**
+     * Whether the attributes that are visible on the tree changed
+     */
+    visibleTreePropertiesChanged: boolean;
+    /**
+     * Whether the nodes children changed
+     */
+    childrenChanged: boolean;
+}
+
 @Injectable()
 export class CaseTreeService implements OnDestroy {
 
@@ -698,9 +712,16 @@ export class CaseTreeService implements OnDestroy {
             }
             if (this._currentNode && reloadedCurrentCase.stringId === this._currentNode.case.stringId) {
                 this._reloadedCaseId = undefined;
+                const change = this.determineCaseUpdate(this._currentCase, reloadedCurrentCase);
                 Object.assign(this._currentCase, reloadedCurrentCase);
                 this._treeCaseViewService.loadTask$.next(this._currentCase);
-                this.refreshTree();
+                if (change.visibleTreePropertiesChanged) {
+                    this.refreshTree();
+                }
+                if (change.childrenChanged) {
+                    this._currentNode.dirtyChildren = true;
+                    this.expandNode(this._currentNode);
+                }
                 this._logger.debug('Current Case Tree Node reloaded');
             } else {
                 this._logger.debug('Discarding case reload response, since the current node has changed before it\'s case was received');
@@ -708,5 +729,40 @@ export class CaseTreeService implements OnDestroy {
         }, error => {
             this._logger.error('Current Case Tree Node reload request failed', error);
         });
+    }
+
+    /**
+     * Determines if anny of the case attributes that are visible on the tree changed.
+     * @param oldCase the previous version of the Case object, that is currently displayed on the tree
+     * @param newCase the new version of the Case object, that should replace the old one
+     */
+    private determineCaseUpdate(oldCase: Case, newCase: Case): CaseUpdateResult {
+        const visibleAttributes = [
+            TreePetriflowIdentifiers.CAN_ADD_CHILDREN,
+            TreePetriflowIdentifiers.CAN_REMOVE_NODE,
+            TreePetriflowIdentifiers.BEFORE_TEXT_ICON,
+            TreePetriflowIdentifiers.TREE_ADD_ICON
+        ];
+
+        const result: CaseUpdateResult = {
+            visibleTreePropertiesChanged: false,
+            childrenChanged: false
+        };
+
+        result.visibleTreePropertiesChanged = visibleAttributes.some(attribute => {
+            return getImmediateData(oldCase, attribute).value !== getImmediateData(newCase, attribute).value;
+        });
+
+        const oldChildren = new Set(getImmediateData(oldCase, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value);
+        const newChildren = new Set(getImmediateData(newCase, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value);
+
+        result.childrenChanged = oldChildren.size !== newChildren.size;
+        if (!result.childrenChanged) {
+            result.childrenChanged = Array.from(oldChildren).some(childId => !newChildren.has(childId));
+        }
+
+        result.visibleTreePropertiesChanged = result.visibleTreePropertiesChanged || result.childrenChanged;
+
+        return result;
     }
 }
