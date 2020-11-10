@@ -31,6 +31,7 @@ export class FieldConverterService {
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
                     item.placeholder, item.description, item.layout, item.validations);
             case FieldTypeResource.TEXT:
+                /*@deprecated in 4.3.0*/
                 let type = TextFieldView.DEFAULT;
                 if (item.subType !== undefined && item.subType === 'area') {
                     type = TextFieldView.TEXTAREA;
@@ -39,61 +40,71 @@ export class FieldConverterService {
                     type = TextFieldView.RICHTEXTAREA;
                     return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                         item.description, item.layout, item.validations, type);
-                } else  if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
+                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
                     type = TextFieldView.TEXTAREA;
                 } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'htmlEditor') {
                     type = TextFieldView.HTMLTEXTAREA;
                     return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                         item.description, item.layout, item.validations, type);
                 }
-                return new TextField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, type);
+                if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'editor' ||
+                    item.component.name === 'htmlEditor')) {
+                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
+                        item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component);
+                }
+                return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, type, item.component);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validations, item.placeholder, item.description, item.layout, item.formatFilter, this.resolveNumberViewType(item));
+                    item.validations, item.placeholder, item.description, item.layout, item.formatFilter, item.component, this.resolveNumberViewType(item));
             case FieldTypeResource.ENUMERATION:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item), item.type);
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
+                    item.type, item.component);
             case FieldTypeResource.ENUMERATION_MAP:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumOptions(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item), item.type);
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
+                    item.type, item.component);
             case FieldTypeResource.MULTICHOICE:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item), item.type);
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
+                    item.type, item.component);
             case FieldTypeResource.MULTICHOICE_MAP:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item), item.type);
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
+                    item.type, item.component);
             case FieldTypeResource.DATE:
                 let date;
                 if (item.value) {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations);
+                    item.description, item.layout, item.validations, item.component);
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations);
+                    item.placeholder, item.description, item.layout, item.validations, item.component);
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {
                     user = new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
-                    item.roles, item.placeholder, item.description, item.layout);
+                    item.roles, item.placeholder, item.description, item.layout, item.component);
             case FieldTypeResource.BUTTON:
+                /*@deprecated in 4.3.0*/
                 const typeBtn = this.resolveButtonView(item);
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
-                    item.placeholder, item.description, item.layout, typeBtn);
+                    item.placeholder, item.description, item.layout, typeBtn, item.component);
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout);
+                    item.placeholder, item.description, item.layout, null, null, item.component);
             case FieldTypeResource.FILE_LIST:
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, item.validations);
+                    item.placeholder, item.description, item.layout, item.validations, null, null, item.component);
         }
     }
 
@@ -121,6 +132,7 @@ export class FieldConverterService {
         }
     }
 
+    /*@deprecated in 4.3.0*/
     public resolveButtonView(item: DataFieldResource): ButtonFieldView {
         if (item.view !== undefined && item.view.value !== undefined) {
             switch (item.view.value) {
@@ -145,10 +157,15 @@ export class FieldConverterService {
     }
 
     public formatValueForBackend(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
+        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
-        if (value === undefined || value === null)
+        }
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password') {
+            return btoa(value);
+        }
+        if (value === undefined || value === null) {
             return;
+        }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             if (moment.isMoment(value)) {
                 return value.format('YYYY-MM-DD');
@@ -176,6 +193,7 @@ export class FieldConverterService {
     /**
      * @param enumField enumeration field resource object who's view type we want to resolve
      * @returns the view type defined in the field object, or default if none, or invalid type is defined
+     * @deprecated in 4.3.0
      */
     protected resolveEnumViewType(enumField: DataFieldResource): EnumerationFieldView {
         let typeEnum = EnumerationFieldView.DEFAULT;
@@ -220,6 +238,7 @@ export class FieldConverterService {
     /**
      * @param multiField multichoice field resource object who's view type we want to resolve
      * @returns the view type defined in the field object, or default if none, or invalid type is defined
+     * @deprecated in 4.3.0
      */
     protected resolveMultichoiceViewType(multiField: DataFieldResource): MultichoiceFieldView {
         let typeMulti = MultichoiceFieldView.DEFAULT;
@@ -260,10 +279,15 @@ export class FieldConverterService {
     }
 
     public formatValueFromBackend(field: DataField<any>, value: any): any {
-        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null)
+        if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
-        if (value === undefined || value === null)
+        }
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password') {
+            return atob(value);
+        }
+        if (value === undefined || value === null) {
             return;
+        }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));
         }
@@ -283,6 +307,13 @@ export class FieldConverterService {
                 }
             });
             return array;
+        }
+        return value;
+    }
+
+    private resolveTextValue(field: DataFieldResource, value: string): string {
+        if (field.component !== undefined && field.component.name === 'password' && value !== '' && value !== undefined) {
+            return atob(value);
         }
         return value;
     }

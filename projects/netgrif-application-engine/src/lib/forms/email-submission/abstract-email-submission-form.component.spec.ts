@@ -4,11 +4,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormBuilder} from '@angular/forms';
 import {Component} from '@angular/core';
-import {AbstractForgottenPasswordFormComponent} from './abstract-forgotten-password-form.component';
+import {AbstractEmailSubmissionFormComponent} from './abstract-email-submission-form.component';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 
-describe('AbstractForgottenPasswordFormComponent ', () => {
+describe('AbstractEmailSubmissionFormComponent ', () => {
     let component: TestPassFormComponent;
     let fixture: ComponentFixture<TestPassFormComponent>;
 
@@ -52,7 +52,7 @@ describe('AbstractForgottenPasswordFormComponent ', () => {
     selector: 'nae-test-password',
     template: ''
 })
-class TestPassFormComponent extends AbstractForgottenPasswordFormComponent {
+class TestPassFormComponent extends AbstractEmailSubmissionFormComponent {
     constructor(formBuilder: FormBuilder) {
         super(formBuilder);
     }

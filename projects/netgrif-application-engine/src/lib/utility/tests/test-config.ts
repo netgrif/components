@@ -1,5 +1,4 @@
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {DashboardCardTypes} from '../../dashboard/cards/model/dashboard-card-types';
 
 export class TestConfigurationService extends ConfigurationService {
     constructor() {
@@ -13,8 +12,11 @@ export class TestConfigurationService extends ConfigurationService {
                         login: 'auth/login',
                         logout: 'auth/logout',
                         signup: 'auth/signup',
+                        verification: 'auth/verify',
                         verify: 'auth/token/verify',
-                        invite: 'auth/invite'
+                        invite: 'auth/invite',
+                        reset: 'auth/reset',
+                        recover: '/auth/recover'
                     },
                     sessionBearer: 'X-Auth-Token'
                 },
@@ -39,6 +41,11 @@ export class TestConfigurationService extends ConfigurationService {
                         name: 'user',
                         address: 'http://localhost:8080/api/',
                         format: 'json'
+                    },
+                    {
+                        name: 'dashboard',
+                        address: 'http://localhost:8080/api/',
+                        format: 'json'
                     }
                 ]
             },
@@ -48,39 +55,120 @@ export class TestConfigurationService extends ConfigurationService {
                         name: 'dashboard',
                         params: {
                             columns: 4,
-                            cards: [{
-                                type: DashboardCardTypes.COUNT,
-                                title: 'All tasks',
-                                resourceType: 'task',
-                                filter: '{}',
-                                layout: {
-                                    x: 0,
-                                    y: 0,
-                                    rows: 1,
-                                    cols: 1
+                            cards: [
+                                {
+                                    type: 'count',
+                                    title: 'All tasks',
+                                    resourceType: 'Task',
+                                    filter: {},
+                                    layout: {
+                                        x: 0,
+                                        y: 0,
+                                        rows: 1,
+                                        cols: 1
+                                    }
+                                },
+                                {
+                                    type: 'iframe',
+                                    url: 'https://netgrif.com/',
+                                    layout: {
+                                        x: 2,
+                                        y: 0,
+                                        rows: 2,
+                                        cols: 2
+                                    }
+                                },
+                                {
+                                    type: 'count',
+                                    title: 'All cases',
+                                    resourceType: 'Case',
+                                    filter: {},
+                                    layout: {
+                                        x: 1,
+                                        y: 1,
+                                        rows: 1,
+                                        cols: 1
+                                    }
+                                }, {
+                                    type: 'pie',
+                                    title: 'Custom',
+                                    resourceType: 'case',
+                                    query: {
+                                        aggs: {
+                                            result: {
+                                                terms: {
+                                                    field: 'dataSet.text.value.keyword'
+                                                }
+                                            }
+                                        }
+                                    },
+                                    filter: {},
+                                    layout: {
+                                        x: 0,
+                                        y: 1,
+                                        rows: 1,
+                                        cols: 1
+                                    }
+                                }, {
+                                    type: 'bar',
+                                    title: 'Custom',
+                                    resourceType: 'case',
+                                    query: {aggs: {result: {terms: {field: 'dataSet.text.value.keyword'}}}},
+                                    xAxisLabel: 'Country',
+                                    yAxisLabel: 'Population',
+                                    filter: {},
+                                    layout: {
+                                        x: 2,
+                                        y: 1,
+                                        rows: 1,
+                                        cols: 1
+                                    }
+                                }, {
+                                    type: 'line',
+                                    title: 'Custom',
+                                    resourceType: 'case',
+                                    query: {
+                                        aggs: {
+                                            result1: {terms: {field: 'dataSet.text.value.keyword'}},
+                                            result2: {terms: {field: 'dataSet.text.value.keyword'}}
+                                        }
+                                    },
+                                    xAxisLabel: 'Country',
+                                    yAxisLabel: 'Population',
+                                    filter: {},
+                                    layout: {
+                                        x: 0,
+                                        y: 2,
+                                        rows: 1,
+                                        cols: 1
+                                    }
+                                }, {
+                                    type: 'lineargauge',
+                                    title: 'Custom',
+                                    resourceType: 'case',
+                                    query: {aggs: {types_count: {value_count: {field: 'dataSet.text.value.keyword'}}}},
+                                    xAxisLabel: 'Country',
+                                    yAxisLabel: 'Population',
+                                    units: 'cases',
+                                    filter: {},
+                                    layout: {
+                                        x: 1,
+                                        y: 2,
+                                        rows: 1,
+                                        cols: 1
+                                    }
+                                }, {
+                                    type: 'default',
+                                    layout: {
+                                        x: 2,
+                                        y: 2,
+                                        rows: 1,
+                                        cols: 1
+                                    }
                                 }
-                            }, {
-                                type: DashboardCardTypes.IFRAME,
-                                url: 'https://netgrif.com/',
-                                layout: {
-                                    x: 2,
-                                    y: 0,
-                                    rows: 2,
-                                    cols: 2
-                                }
-                            }, {
-                                type: DashboardCardTypes.COUNT,
-                                title: 'All cases',
-                                resourceType: 'case',
-                                filter: '{}',
-                                layout: {
-                                    x: 1,
-                                    y: 1,
-                                    rows: 1,
-                                    cols: 1
-                                }
-                            }]
-                        }
+                            ]
+                        },
+                        componentName: 'MyDashboard'
                     },
                     access: 'private',
                     navigation: {
@@ -88,7 +176,7 @@ export class TestConfigurationService extends ConfigurationService {
                         icon: 'dashboard'
                     },
                     routing: {
-                        path: 'dashboard'
+                        path: 'comp-dashboard'
                     }
                 },
                 cases: {

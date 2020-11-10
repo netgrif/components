@@ -5,7 +5,6 @@ import {CommonModule} from '@angular/common';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MaterialModule} from 'netgrif-application-engine';
 
 // describe('LinechartCardComponent', () => {
 //     let component: LineChartCardComponent;

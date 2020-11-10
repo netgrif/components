@@ -6,7 +6,6 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 
 export interface FileState {
     progress: number;
@@ -49,10 +48,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
      */
-    constructor(protected _taskResourceService: TaskResourceService,
-                protected _log: LoggerService,
-                protected _snackbar: SnackBarService,
-                protected _translate: TranslateService) {
+    protected constructor(protected _taskResourceService: TaskResourceService,
+                          protected _log: LoggerService,
+                          protected _snackbar: SnackBarService,
+                          protected _translate: TranslateService) {
         super();
         this.state = this.defaultState;
     }
@@ -116,18 +115,14 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
             );
         }
-
         this.state = this.defaultState;
         this.state.uploading = true;
         const fileFormData = new FormData();
         fileFormData.append('file', this.fileUploadEl.nativeElement.files.item(0) as File);
-        this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
-        this.name = this.constructDisplayName();
         this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 this._log.debug(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
                 );
@@ -136,7 +131,12 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.state.uploading = false;
                 this.state.progress = 0;
                 this.dataField.downloaded = false;
+                this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
+                this.name = this.constructDisplayName();
+                this.formControl.setValue(this.dataField.value.name);
             }
+            this.dataField.touch = true;
+            this.dataField.update();
         }, error => {
             this.state.completed = true;
             this.state.error = true;
@@ -146,6 +146,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
             );
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+            this.dataField.touch = true;
+            this.dataField.update();
         });
     }
 
@@ -202,11 +204,13 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
         this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).subscribe(response => {
             if (response.success) {
-                this.dataField.value.name = null;
-                this.dataField.value.file = null;
+                this.dataField.value = {};
+                this.formControl.setValue('');
                 this.name = this.constructDisplayName();
+                this.dataField.update();
                 this.dataField.downloaded = false;
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
+                this.formControl.markAsTouched();
             } else {
                 this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
                 this._snackbar.openErrorSnackBar(
@@ -214,6 +218,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 );
             }
         });
+    }
+
+    isEmpty(): boolean {
+        return !this.dataField.value || !this.dataField.value.name;
     }
 
     protected get defaultState(): FileState {
@@ -231,7 +239,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     protected constructDisplayName(): string {
         return this.dataField.value && this.dataField.value.name ? this.dataField.value.name :
-            (this.dataField.placeholder ? this.dataField.placeholder : this._translate.instant('dataField.noFile'));
+            (this.dataField.placeholder ? this.dataField.placeholder : this._translate.instant('dataField.file.noFile'));
     }
 
     /**

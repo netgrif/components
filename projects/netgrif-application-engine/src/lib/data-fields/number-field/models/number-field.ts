@@ -4,6 +4,7 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {FormatFilter} from '../../models/format-filter';
+import {Component} from '../../models/component';
 
 export enum NumberFieldValidation {
     ODD = 'odd',
@@ -32,7 +33,7 @@ export class NumberField extends DataField<number> {
     public _formatFilter: FormatFilter;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[], placeholder?: string,
-                description?: string, layout?: Layout, format?: FormatFilter, private _view = NumberFieldView.DEFAULT) {
+                description?: string, layout?: Layout, format?: FormatFilter, component?: Component) {
         super(stringId, title, value, behavior, placeholder, description, layout);
         this._formatFilter = format;
     }
@@ -43,6 +44,9 @@ export class NumberField extends DataField<number> {
 
     get view(): NumberFieldView {
         return this._view;
+    constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[],
+                placeholder?: string, description?: string, layout?: Layout, component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, component);
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

@@ -30,4 +30,12 @@ export enum TreePetriflowIdentifiers {
      * Id of the transition that is executed to set the new child data
      */
     CASE_REF_TRANSITION = 'treeCaseRefAccessor',
+    /**
+     * Before text icon
+     */
+    BEFORE_TEXT_ICON = 'beforeTextIcon',
+    /**
+     * Add icon in tree
+     */
+    TREE_ADD_ICON = 'treeAddIcon',
 }

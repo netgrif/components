@@ -177,14 +177,26 @@
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: "
         },
-        "noFile": "No file"
+        "values": {
+            "boolean": {
+                "true": "true",
+                "false": "false"
+            }
+        },
+        "noFile": "No file",
+        "file": {
+            "noFile": "No File",
+            "clickToUpload": "Click to upload file",
+            "clickToDownload": "Click to download {{fileName}}",
+            "clickToDelete": "Click to delete file"
+        }
     },
     "dialog": {
         "close": "Close",
         "submit": "Submit"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Enter your email"
         },
         "login": {
@@ -195,11 +207,18 @@
             "enterPass": "Enter your password"
         },
         "register": {
+            "email": "Your email",
             "name": "Name",
             "surname": "Surname",
             "repeatPass": "Repeat your password",
             "register": "Register",
-            "notVerified": "It is not possible to verify token!"
+            "notVerified": "It is not possible to verify token!",
+            "passwordsMustMatch": "The passwords must match!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Enter your new password",
+            "repeatNewPass": "Repeat your new password",
+            "recover": "Change password"
         }
     },
     "headers": {
@@ -221,7 +240,9 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
-            "creationDate": "Upload date"
+            "creationDate": "Upload date",
+            "title": "Title",
+            "author": "Author"
         },
         "orderMode": "Ordering mode",
         "searchMode": "Search mode",

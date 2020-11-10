@@ -9,7 +9,8 @@ export class User implements IUser {
         public lastName: string,
         public authorities: Array<string>,
         public roles: Array<Role>,
-        public groups?: Array<string>) {
+        public groups?: Array<string>,
+        public nextGroups?: Array<string>) {
     }
 
     get fullName() {

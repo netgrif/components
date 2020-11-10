@@ -11,46 +11,30 @@
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>
         </mat-label>
-        <div fxLayout="column" fxLayoutAlign="start none">
-            <div fxLayout="row" fxLayoutAlign="start center" class="margin-bottom-default">
-                <div fxFlex="20">
-                    <button mat-stroked-button color="primary" (click)="chooseFile()" *ngIf="!formControl.disabled"
-                            [class.do-not-click]="state.uploading" fxFlex>
-                        <mat-icon>file_upload</mat-icon>
+        <div class="form-input button-icon-input full-width input-margin" fxLayout="row" fxLayoutAlign="start center">
+            <button mat-icon-button color="accent" (click)="chooseFile()" [matTooltip]="'dataField.file.clickToUpload' | translate" *ngIf="!formControl.disabled"
+                    [class.do-not-click]="state.uploading">
+                <mat-icon>file_upload</mat-icon>
+            </button>
+            <span *ngIf="uploadedFiles.length === 0" class="input-placeholder input-name-ellipsis">{{constructDisplayName()}}</span>
+            <div *ngIf="uploadedFiles.length !== 0" class="input-name-ellipsis" fxFlex>
+                <div *ngFor="let name of uploadedFiles" fxLayoutAlign="start center">
+                    <span (click)="download(name)" fxFlex [matTooltip]="'dataField.file.clickToDownload' | translate : {fileName: name}"
+                          class="input-name-ellipsis">{{name}}</span>
+                    <button (click)="deleteFile(name)" [matTooltip]="'dataField.file.clickToDelete' | translate" mat-icon-button
+                            *ngIf="!formControl.disabled">
+                        <mat-icon color="warn">close</mat-icon>
                     </button>
                 </div>
-                <div fxFlex="5"></div>
-                <div fxLayout="column" fxFlex="75">
-                    <div fxFlex="100" *ngIf="uploadedFiles.length === 0">
-                        <button mat-button color="accent" fxFlex="100">
-                            {{constructDisplayName()}}
-                        </button>
-                    </div>
-                    <div fxLayout="column" fxFlex="100" *ngIf="uploadedFiles.length !== 0">
-                        <div *ngFor="let name of uploadedFiles">
-                            <button mat-button class="file-button"
-                                    color="{{dataField.downloaded.includes(name) ? 'primary' : 'accent'}}"
-                                    (click)="download(name)" matTooltip="Click to download {{name}}" fxFlex="95">
-                                <mat-icon *ngIf="state.completed && !state.error" color="accent">done</mat-icon>
-                                <mat-icon *ngIf="state.completed && state.error" color="warn">error</mat-icon>
-                                {{name}}
-                            </button>
-                            <button mat-button *ngIf="!formControl.disabled" fxFlex="5">
-                                <mat-icon color="warn" (click)="deleteFile(name)" matTooltip="Click to delete">close
-                                </mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <mat-progress-bar *ngIf="state.uploading || state.downloading" color="primary" [value]="state.progress"
-                              [mode]="state.uploading ? 'determinate' : 'indeterminate'"
-                              class="margin-bottom-default"></mat-progress-bar>
         </div>
+        <mat-progress-bar *ngIf="state.uploading || state.downloading" color="primary" [value]="state.progress"
+                          [mode]="state.uploading ? 'determinate' : 'indeterminate'"
+                          class="margin-bottom-default"></mat-progress-bar>
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="true"
                accept="{{dataField.allowTypes}}" class="invisible-input"/>
-        <input type="hidden" [formControl]="formControl" [multiple]="true" accept="{{dataField.allowTypes}}">
-        <mat-error
-            *ngIf="!formControl.valid && formControl.touched">{{'dataField.validations.required' | translate}}</mat-error>
+        <input type="text" [formControl]="formControl" [multiple]="true" accept="{{dataField.allowTypes}}" class="invisible-input">
+        <mat-hint class="file-hint-error" *ngIf="formControl.valid || !formControl.touched">{{dataField.description}}</mat-hint>
+        <mat-error class="file-hint-error" *ngIf="!formControl.valid && formControl.touched">{{'dataField.validations.required' | translate}}</mat-error>
     </div>
 </ng-template>

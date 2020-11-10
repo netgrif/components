@@ -41,6 +41,7 @@ import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-
 import {QuillModule} from 'ngx-quill';
 import { NumberCurrencyFieldComponent } from './number-field/number-currency-field/number-currency-field.component';
 import { NumberDefaultFieldComponent } from './number-field/number-default-field/number-default-field.component';
+import { PasswordTextFieldComponent } from './text-field/password-text-field/password-text-field.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +67,7 @@ import { NumberDefaultFieldComponent } from './number-field/number-default-field
         UserFieldComponent,
         RequiredLabelComponent,
         HtmlTextareaFieldComponent,
+        PasswordTextFieldComponent,
         NumberCurrencyFieldComponent,
         NumberDefaultFieldComponent
     ],
