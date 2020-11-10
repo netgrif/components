@@ -10,6 +10,7 @@ import {CaseResourceService} from '../../resources/engine-endpoint/case-resource
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {LoggerService} from '../../logger/services/logger.service';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding {
@@ -23,7 +24,8 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
     @Input() showDeleteMenu = false;
 
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
-                protected _snackBarService: SnackBarService, protected _translateService: TranslateService) {
+                protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
+                protected _log: LoggerService) {
         super();
     }
 
@@ -79,14 +81,15 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
             if (data.success) {
                 this._caseViewService.reload();
             } else if (data.error) {
-                this.throwError();
+                this.throwError(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
             }
         }, error => {
-            this.throwError();
+            this.throwError(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
         });
     }
 
-    public throwError() {
-        this._snackBarService.openErrorSnackBar(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
+    public throwError(message: string) {
+        this._snackBarService.openErrorSnackBar(message);
+        this._log.error(message);
     }
 }
