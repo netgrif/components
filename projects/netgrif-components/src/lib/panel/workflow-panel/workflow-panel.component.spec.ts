@@ -21,7 +21,8 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
-    WorkflowMetaField
+    WorkflowMetaField,
+    WorkflowViewService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
@@ -45,7 +46,8 @@ describe('WorkflowPanelComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                WorkflowViewService
             ],
             declarations: [WorkflowPanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA],

@@ -4,6 +4,8 @@ import {Layout} from '../../models/layout';
 import {FileFieldValue} from './file-field-value';
 import {Observable, Subject} from 'rxjs';
 import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
+import {Component} from '../../models/component';
+import {FormControl} from '@angular/forms';
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -53,8 +55,8 @@ export class FileField extends DataField<FileFieldValue> {
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>) {
-        super(stringId, title, value, behavior, placeholder, description, layout);
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>, component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, component);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
     }
 
@@ -75,10 +77,45 @@ export class FileField extends DataField<FileFieldValue> {
     }
 
     protected valueEquality(a: FileFieldValue, b: FileFieldValue): boolean {
-        let file = !a === !b;
+        let file = JSON.stringify(a) === JSON.stringify(b);
         if (a && a.file && b && b.file) {
             file = a.file.name === b.file.name;
         }
         return (!a && !b) || (!!a && !!b && a.name === b.name && file);
+    }
+
+    public registerFormControl(formControl: FormControl): void {
+        formControl.setValue(!this.value || !this.value.name ? '' : this.value.name);
+        this.updateFormControlState(formControl);
+        this.initialized = true;
+        this._initialized$.next(true);
+        this._initialized$.complete();
+        this.changed = false;
+    }
+
+    public updateFormControlState(formControl: FormControl): void {
+        this._update.subscribe(() => {
+            this.disabled ? formControl.disable() : formControl.enable();
+            formControl.clearValidators();
+            formControl.setValidators(this.resolveFormControlValidators());
+            formControl.updateValueAndValidity();
+            this.valid = this._determineFormControlValidity(formControl);
+        });
+        this._block.subscribe(bool => {
+            if (bool) {
+                formControl.disable();
+            } else {
+                this.disabled ? formControl.disable() : formControl.enable();
+            }
+        });
+        this._touch.subscribe(bool => {
+            if (bool) {
+                formControl.markAsTouched();
+            } else {
+                formControl.markAsUntouched();
+            }
+        });
+        this.update();
+        this.valid = this._determineFormControlValidity(formControl);
     }
 }

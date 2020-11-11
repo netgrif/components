@@ -6,7 +6,7 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {Net} from '../../../process/net';
@@ -23,6 +23,7 @@ import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
+import {arrayToObservable} from '../../../utility/array-to-observable';
 
 
 @Injectable()
@@ -88,7 +89,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                 if (pageLoadResult.requestContext && pageLoadResult.requestContext.clearLoaded) {
                     // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
                     const results = [{tasks: {}, requestContext: null}, pageLoadResult];
-                    return timer(0, 1).pipe(take(2), map(i => results[i]));
+                    return arrayToObservable(results);
                 } else {
                     return of(pageLoadResult);
                 }
@@ -117,7 +118,11 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                 } else {
                     result = {...acc, ...pageLoadResult.tasks};
                 }
+
                 Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
+                if (pageLoadResult.requestContext !== null) {
+                    this._loading$.off(pageLoadResult.requestContext.filter);
+                }
                 return result;
             }, {})
         );
@@ -238,8 +243,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                     };
                 }, {});
             }),
-            map(tasks => ({tasks, requestContext})),
-            tap(_ => this._loading$.off(requestContext.filter))
+            map(tasks => ({tasks, requestContext}))
         );
     }
 
