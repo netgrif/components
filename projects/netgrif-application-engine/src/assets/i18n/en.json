@@ -25,7 +25,8 @@
             "invalidData": "Some fields have invalid values",
             "noCase": "No cases found",
             "caseGetFailed": "Getting cases failed",
-            "noLongerExists": "The selected task no longer exists"
+            "noLongerExists": "The selected task no longer exists",
+            "caseDeleteFailed": "Case could not be deleted"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
