@@ -24,9 +24,9 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
 
-    constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
-                protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                protected _log: LoggerService) {
+    protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
+                          protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
+                          protected _log: LoggerService) {
         super();
     }
 
@@ -91,7 +91,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
         });
     }
 
-    public throwError(message: string) {
+    private throwError(message: string) {
         this._snackBarService.openErrorSnackBar(message);
         this._log.error(message);
     }
