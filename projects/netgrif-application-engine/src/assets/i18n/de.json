@@ -197,7 +197,7 @@
         "submit": "Bestätigen"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Ihre E-Mail Adresse eingeben"
         },
         "login": {
@@ -208,11 +208,18 @@
             "enterPass": "Ihre Kennwort eingeben"
         },
         "register": {
+            "email": "Ihre E-Mail Adresse",
             "name": "Vorname",
             "surname": "Nachname",
             "repeatPass": "Kennwort viederhollen",
             "register": "Registrieren",
-            "notVerified": "Token kann nicht verifiziert werden!"
+            "notVerified": "Token kann nicht verifiziert werden!",
+            "passwordsMustMatch": "Die Kennwörter müssen übereinstimmen!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Ihre neues Kennwort eingeben",
+            "repeatNewPass": "Neues Kennwort viederhollen",
+            "recover": "Kennwort ändern"
         }
     },
     "headers": {
@@ -234,7 +241,9 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
-            "creationDate": "Hochladungsdatum"
+            "creationDate": "Hochladungsdatum",
+            "title": "Prozessname",
+            "author": "Prozessautor"
         },
         "orderMode": "Anordnungsmodus",
         "searchMode": "Suchmodus",
@@ -313,5 +322,18 @@
     },
     "dashboard": {
         "cases" : "Fälle"
+    },
+    "workflow": {
+        "delete": "löschen",
+        "dialog": {
+            "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
+            "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",
+            "typeToConfirm": "Geben Sie zur Bestätigung {{delete}} ein"
+        },
+        "snackBar": {
+            "deleteCanceled": "Prozess löschen abgebrochen",
+            "deleteSuccess": "Prozess erfolgreich gelöscht",
+            "deleteError": "Prozess konnte nicht gelöscht werden"
+        }
     }
 }

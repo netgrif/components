@@ -5,11 +5,11 @@ import {
     SchematicsException
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration} from '../../_utility/utility-functions';
-import {Views} from '../../../../netgrif-application-engine/src/lib/configuration/interfaces/schema';
 import {NullableCreateViewArguments} from './models/nullable-create-view-arguments';
 import {constructRoutePath} from '../_utility/view-utility-functions';
 import {ViewClassInfo} from '../../_commons/view-class-info';
 import {getGeneratedViewClassNames} from '../_utility/view-service-functions';
+import {Views} from '@netgrif/application-engine';
 
 
 export function schematicEntryPoint(): Rule {

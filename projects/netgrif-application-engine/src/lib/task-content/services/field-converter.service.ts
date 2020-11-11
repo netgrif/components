@@ -160,7 +160,7 @@ export class FieldConverterService {
         if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password') {
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return btoa(value);
         }
         if (value === undefined || value === null) {
@@ -274,7 +274,7 @@ export class FieldConverterService {
         if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password') {
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return atob(value);
         }
         if (value === undefined || value === null) {
