@@ -5,6 +5,7 @@ import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {Component} from './component';
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -29,7 +30,7 @@ export abstract class DataField<T> {
      *
      * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
      */
-    private _initialized$: ReplaySubject<true>;
+    protected _initialized$: ReplaySubject<true>;
     /**
      * @ignore
      * Whether the field fulfills all of it's validators.
@@ -45,20 +46,20 @@ export abstract class DataField<T> {
      * Data field subscribes this stream.
      * The data field updates it's Validators, validity and enabled/disabled according to it's behavior.
      */
-    private _update: Subject<void>;
+    protected _update: Subject<void>;
     /**
      * @ignore
      * Data field subscribes this stream. When a `true` value is received the data field disables itself.
      * When a `false`value is received data field disables/enables itself based on it's behavior.
      */
-    private _block: Subject<boolean>;
+    protected _block: Subject<boolean>;
     /**
      * @ignore
      * Data field subscribes this stream. Sets the state of the data field to "touched" or "untouched" (`true`/`false`).
      * Validity of the data field is not checked in an "untouched" state.
      * All fields are touched before a task is finished to check their validity.
      */
-    private _touch: Subject<boolean>;
+    protected _touch: Subject<boolean>;
     /**
      * @ignore
      * Appearance of dataFields, possible values - outline, standard, fill, legacy
@@ -72,10 +73,11 @@ export abstract class DataField<T> {
      * @param _placeholder - placeholder displayed in the datafield
      * @param _description - tooltip of the datafield
      * @param _layout - information regarding the component rendering
+     * @param _component - component data of datafield
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
-                          private _description?: string, private _layout?: Layout) {
+                          private _description?: string, private _layout?: Layout, private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new ReplaySubject<true>(1);
         this._initialized = false;
@@ -145,12 +147,20 @@ export abstract class DataField<T> {
         return !!this._behavior.visible && !this._behavior.editable;
     }
 
+    set initialized(set: boolean) {
+        this._initialized = set;
+    }
+
     get initialized(): boolean {
         return this._initialized;
     }
 
     get initialized$(): Observable<true> {
         return this._initialized$.asObservable();
+    }
+
+    set valid(set: boolean) {
+        this._valid = set;
     }
 
     get valid(): boolean {
@@ -171,6 +181,10 @@ export abstract class DataField<T> {
 
     set touch(set: boolean) {
         this._touch.next(set);
+    }
+
+    get component(): Component {
+        return this._component;
     }
 
     public update(): void {

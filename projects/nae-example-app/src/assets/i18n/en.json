@@ -6,5 +6,8 @@
         "caseMeta": {
             "title": "Title (overridden by app)"
         }
+    },
+    "tab": {
+        "testLabel": "English label"
     }
 }

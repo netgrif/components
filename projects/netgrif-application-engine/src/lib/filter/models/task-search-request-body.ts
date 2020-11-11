@@ -58,6 +58,12 @@ export interface TaskSearchRequestBody {
      * If more than one transition ID is specified, the returned tasks must have one of them.
      */
     transitionId?: string | Array<string>;
+    /**
+     * Returned tasks must be from cases that are instances of processes of the group with the specified ID.
+     *
+     * If more than one group ID is specified, the returned tasks are from cases of one of the groups.
+     */
+    group?: string | Array<string>;
 }
 
 /**

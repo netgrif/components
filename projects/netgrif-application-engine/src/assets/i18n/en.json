@@ -25,7 +25,8 @@
             "invalidData": "Some fields have invalid values",
             "noCase": "No cases found",
             "caseGetFailed": "Getting cases failed",
-            "noLongerExists": "The selected task no longer exists"
+            "noLongerExists": "The selected task no longer exists",
+            "caseDeleteFailed": "Case could not be deleted"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
@@ -177,6 +178,13 @@
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: "
         },
+        "values": {
+            "boolean": {
+                "true": "true",
+                "false": "false"
+            }
+        },
+        "noFile": "No file",
         "file": {
             "noFile": "No File",
             "clickToUpload": "Click to upload file",
@@ -189,7 +197,7 @@
         "submit": "Submit"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Enter your email"
         },
         "login": {
@@ -200,11 +208,18 @@
             "enterPass": "Enter your password"
         },
         "register": {
+            "email": "Your email",
             "name": "Name",
             "surname": "Surname",
             "repeatPass": "Repeat your password",
             "register": "Register",
-            "notVerified": "It is not possible to verify token!"
+            "notVerified": "It is not possible to verify token!",
+            "passwordsMustMatch": "The passwords must match!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Enter your new password",
+            "repeatNewPass": "Repeat your new password",
+            "recover": "Change password"
         }
     },
     "headers": {
@@ -226,7 +241,9 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
-            "creationDate": "Upload date"
+            "creationDate": "Upload date",
+            "title": "Title",
+            "author": "Author"
         },
         "orderMode": "Ordering mode",
         "searchMode": "Search mode",
@@ -305,5 +322,18 @@
     },
     "dashboard": {
         "cases" : "cases"
+    },
+    "workflow": {
+        "delete": "delete",
+        "dialog": {
+            "header": "Are you sure you want to delete the process '{{name}}' with version '{{version}}'?",
+            "content": "Doing so will remove all cases created from this process!",
+            "typeToConfirm": "Type {{delete}} to confirm"
+        },
+        "snackBar": {
+            "deleteCanceled": "Process delete canceled",
+            "deleteSuccess": "Process successfully deleted",
+            "deleteError": "Process could not be deleted"
+        }
     }
 }
