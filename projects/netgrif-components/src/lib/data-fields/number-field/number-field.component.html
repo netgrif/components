@@ -6,17 +6,24 @@
 </nc-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="dataField.component.name">
-        <nc-number-default-field *ngSwitchCase="'default'"
-                                   [dataField]="dataField"
-                                   [formControlRef]="formControl"
-                                   [showLargeLayout] = showLargeLayout>
-        </nc-number-default-field>
+    <div *ngIf="dataField.component !== undefined" [ngSwitch]="dataField.component.name">
         <nc-number-currency-field *ngSwitchCase="'currency'"
                                  [dataField]="dataField"
                                  [formControlRef]="formControl"
                                  [showLargeLayout] = showLargeLayout>
         </nc-number-currency-field>
+        <nc-number-default-field *ngSwitchDefault
+                                 [dataField]="dataField"
+                                 [formControlRef]="formControl"
+                                 [showLargeLayout] = showLargeLayout>
+        </nc-number-default-field>
+    </div>
+
+    <div *ngIf="dataField.component === undefined">
+        <nc-number-default-field [dataField]="dataField"
+                                 [formControlRef]="formControl"
+                                 [showLargeLayout] = showLargeLayout>
+        </nc-number-default-field>
     </div>
 
 </ng-template>
