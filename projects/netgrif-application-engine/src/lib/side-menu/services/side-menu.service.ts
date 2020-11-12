@@ -19,13 +19,13 @@ export class SideMenuService {
     private _sideMenuComponent: any; // SideMenuContainerComponent
     private _controlObject: SideMenuControl;
 
-    constructor(@Optional() @Inject(NAE_NET_VERSION_VISIBLE) protected netVersionVisible: boolean,
-                @Optional() @Inject(NAE_NET_ALL_VERSIONS) protected netAllVersions: boolean) {
-        if (this.netVersionVisible === null) {
-            this.netVersionVisible = true;
+    constructor(@Optional() @Inject(NAE_NET_VERSION_VISIBLE) protected isVersionVisible: boolean,
+                @Optional() @Inject(NAE_NET_ALL_VERSIONS) protected allVersionEnabled: boolean) {
+        if (this.isVersionVisible === null) {
+            this.isVersionVisible = true;
         }
-        if (this.netAllVersions === null) {
-            this.netAllVersions = false;
+        if (this.allVersionEnabled === null) {
+            this.allVersionEnabled = false;
         }
     }
 
@@ -61,7 +61,7 @@ export class SideMenuService {
         this._controlObject = new SideMenuControl(((event) => {
             ref = new SideMenuRef(event);
         }), this._sideMenuComponent.openedChange(), () => this._sideMenuComponent.close(this._sideMenuComponent),
-            injectionData, this.netVersionVisible, this.netAllVersions);
+            injectionData, this.isVersionVisible, this.allVersionEnabled);
 
         const wrapper = this._createPortal(componentOrTemplateRef, width, this._controlObject);
         this._sideMenuComponent.open(wrapper).subscribe((opened) => {

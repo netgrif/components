@@ -63,7 +63,7 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
             this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}));
         });
 
-        if (!this._sideMenuControl.allVersions) {
+        if (!this._sideMenuControl.allVersionEnabled) {
             this.removeOldVersions();
         }
 
@@ -191,7 +191,6 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
                 }
             }
         }
-
     }
 
     private checkVersion(v1: Form, v2: Form): Form {

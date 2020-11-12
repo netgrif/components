@@ -22,7 +22,7 @@ import {
 export class NewCaseComponent extends AbstractNewCaseComponent {
 
     netVersion: string;
-    visibleVersion: boolean;
+    isVersionVisible: boolean;
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _formBuilder: FormBuilder,
@@ -31,6 +31,6 @@ export class NewCaseComponent extends AbstractNewCaseComponent {
                 protected _hotkeysService: HotkeysService,
                 protected _translate: TranslateService) {
         super(_sideMenuControl, _formBuilder, _snackBarService, _caseResourceService, _hotkeysService, _translate);
-        this.visibleVersion = _sideMenuControl.visibleVersion;
+        this.isVersionVisible = _sideMenuControl.isVersionVisible;
     }
 }
