@@ -11,4 +11,12 @@ export class NumberFieldComponent extends AbstractNumberFieldComponent {
     constructor(protected _translate: TranslateService) {
         super(_translate);
     }
+
+    resolveComponent(): string {
+        if (this.dataField.component !== undefined) {
+            return this.dataField.component.name;
+        } else {
+            return 'default';
+        }
+    }
 }
