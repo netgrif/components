@@ -5,6 +5,9 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {TranslateLibModule} from '../../translate/translate-lib.module';
 
 describe('WorkflowsViewService', () => {
     let service: WorkflowViewService;
@@ -13,7 +16,10 @@ describe('WorkflowsViewService', () => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                MatDialogModule,
+                MatSnackBarModule,
+                TranslateLibModule
             ],
             providers: [
                 WorkflowViewService,

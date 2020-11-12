@@ -14,10 +14,12 @@ import {
     TabContent,
     TestConfigurationService,
     TestViewService,
+    TranslateLibModule,
     UserResourceService,
     ViewService
 } from '@netgrif/application-engine';
 import {RouterModule} from '@angular/router';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('TabViewComponent', () => {
     let component: TabViewComponent;
@@ -26,6 +28,8 @@ describe('TabViewComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                HttpClientTestingModule,
+                TranslateLibModule,
                 MaterialModule,
                 TabTestModule,
                 NoopAnimationsModule,
