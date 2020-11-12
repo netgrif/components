@@ -7,6 +7,7 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {FileListField, FileListFieldValidation} from './models/file-list-field';
 import {FileFieldValue} from '../file-field/models/file-field-value';
+import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 
 export interface FilesState {
     progress: number;
@@ -143,6 +144,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this._log.debug(
                     `Files [${this.dataField.stringId}] were successfully uploaded`
                 );
+                this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 this.state.completed = true;
                 this.state.error = false;
                 this.state.uploading = false;
