@@ -63,16 +63,16 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('should display data group title', () => {
-        expect(component._dataSource$).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
             createDataGroup([createField()], 'hello world', DataGroupAlignment.START, DataGroupLayoutType.LEGACY, true)
         ]);
 
-        expect(component._dataSource$).toBeTruthy();
-        expect(Array.isArray(component._dataSource$)).toBeTrue();
-        expect(component._dataSource$.length).toEqual(2);
+        expect(component.dataSource).toBeTruthy();
+        expect(Array.isArray(component.dataSource)).toBeTrue();
+        expect(component.dataSource.length).toEqual(2);
 
         expect(component.gridAreas).toBeTruthy();
         const grid = transformStringToGrid(component.gridAreas);
@@ -85,7 +85,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('should hide data group title', () => {
-        expect(component._dataSource$).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
@@ -93,9 +93,9 @@ describe('AbstractTaskContentComponent', () => {
             createDataGroup([createField()])
         ]);
 
-        expect(component._dataSource$).toBeTruthy();
-        expect(Array.isArray(component._dataSource$)).toBeTrue();
-        expect(component._dataSource$.length).toEqual(3);
+        expect(component.dataSource).toBeTruthy();
+        expect(Array.isArray(component.dataSource)).toBeTrue();
+        expect(component.dataSource.length).toEqual(3);
 
         expect(component.gridAreas).toBeTruthy();
         const grid = transformStringToGrid(component.gridAreas);
@@ -121,7 +121,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('legacy layout should work', () => {
-        expect(component._dataSource$).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
@@ -130,9 +130,9 @@ describe('AbstractTaskContentComponent', () => {
             createDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.END)
         ]);
 
-        expect(component._dataSource$).toBeTruthy();
-        expect(Array.isArray(component._dataSource$)).toBeTrue();
-        expect(component._dataSource$.length).toEqual(18);
+        expect(component.dataSource).toBeTruthy();
+        expect(Array.isArray(component.dataSource)).toBeTrue();
+        expect(component.dataSource.length).toEqual(18);
 
         expect(component.gridAreas).toBeTruthy();
         const grid = transformStringToGrid(component.gridAreas);
@@ -163,7 +163,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('flow layout should work', () => {
-        expect(component._dataSource$).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
@@ -175,9 +175,9 @@ describe('AbstractTaskContentComponent', () => {
                 'title', DataGroupAlignment.END, DataGroupLayoutType.FLOW)
         ]);
 
-        expect(component._dataSource$).toBeTruthy();
-        expect(Array.isArray(component._dataSource$)).toBeTrue();
-        expect(component._dataSource$.length).toEqual(27);
+        expect(component.dataSource).toBeTruthy();
+        expect(Array.isArray(component.dataSource)).toBeTrue();
+        expect(component.dataSource.length).toEqual(27);
 
         expect(component.gridAreas).toBeTruthy();
         const grid = transformStringToGrid(component.gridAreas);
@@ -220,7 +220,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('grid layout should work', () => {
-        expect(component._dataSource$).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
@@ -233,9 +233,9 @@ describe('AbstractTaskContentComponent', () => {
                 '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
         ]);
 
-        expect(component._dataSource$).toBeTruthy();
-        expect(Array.isArray(component._dataSource$)).toBeTrue();
-        expect(component._dataSource$.length).toEqual(9);
+        expect(component.dataSource).toBeTruthy();
+        expect(Array.isArray(component.dataSource)).toBeTrue();
+        expect(component.dataSource.length).toEqual(9);
 
         expect(component.gridAreas).toBeTruthy();
         const grid = transformStringToGrid(component.gridAreas);
