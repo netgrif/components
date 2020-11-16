@@ -1,15 +1,16 @@
-import {Component, Optional} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Optional} from '@angular/core';
 import {
     AbstractTaskContentComponent,
     FieldConverterService,
-    TaskContentService,
-    PaperViewService,
     LoggerService,
+    PaperViewService,
+    TaskContentService,
     TaskEventService
 } from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-task-content',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './task-content.component.html',
     styleUrls: ['./task-content.component.scss']
 })
