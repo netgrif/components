@@ -186,6 +186,17 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             : this.DEFAULT_FIELD_ALIGNMENT;
     }
 
+    public gridElementTrackBy(index: number, element: DatafieldGridLayoutElement) {
+        switch (element.type) {
+            case TaskElementType.BLANK:
+                return element.gridAreaId;
+            case TaskElementType.DATA_GROUP_TITLE:
+                return element.title;
+            default:
+                return element.item.stringId;
+        }
+    }
+
     /**
      * Computes the layout data for the tasks grid layout and sets the result to the public properties
      * of this class that are then bound to HTML.

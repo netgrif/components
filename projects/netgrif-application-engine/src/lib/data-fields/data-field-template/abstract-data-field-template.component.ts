@@ -21,10 +21,6 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 
     /**
-     * Datafield model object that should be displayed in the template
-     */
-    @Input() public dataField: DataField<any>;
-    /**
      * Content of the datafield that should be displayed in the template
      */
     @Input() public dataFieldTemplate: TemplateRef<any>;
@@ -41,25 +37,49 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      */
     @Input() public offset = 0;
 
+    protected _dataField: DataField<any>;
+    protected _isConfiguredNetgrifTemplate = true;
+    protected _isNetgrifTemplate = true;
+
     /**
      * @ignore
      * The value determines whether the layout should be "small" or not. Data field fills 100% of the width in "small" layout.
      */
     protected _showLargeLayout: WrappedBoolean = new WrappedBoolean();
 
-    constructor(protected _paperView: PaperViewService, protected _config: ConfigurationService) {
+    protected constructor(protected _paperView: PaperViewService, protected _config: ConfigurationService) {
+        const config = _config.get();
+        if (config.services && config.services.dataFields && config.services.dataFields.template) {
+            this._isConfiguredNetgrifTemplate = config.services.dataFields.template === TemplateAppearance.NETGRIF;
+        }
     }
 
     public ngOnInit() {
-        if (!!this.dataField && !!this.dataField.layout && !!this.dataField.layout.offset) {
-            this.offset += this.dataField.layout.offset;
+        if (!!this._dataField && !!this._dataField.layout && !!this._dataField.layout.offset) {
+            this.offset += this._dataField.layout.offset;
         }
         this._showLargeLayout.value = this.evaluateTemplate();
-        this.dataField.resolveAppearance(this._config);
+        this._dataField.resolveAppearance(this._config);
     }
 
     get showLargeLayout(): WrappedBoolean {
         return this._showLargeLayout;
+    }
+
+    /**
+     * Datafield model object that should be displayed in the template
+     */
+    @Input() set dataField(dataField: DataField<any>) {
+        this._dataField = dataField;
+        if (this._dataField.layout && this._dataField.layout.template) {
+            this._isNetgrifTemplate = this._dataField.layout.template === TemplateAppearance.NETGRIF;
+        } else {
+            this._isNetgrifTemplate = this._isConfiguredNetgrifTemplate;
+        }
+    }
+
+    get dataField(): DataField<any> {
+        return this._dataField;
     }
 
     /**
@@ -75,24 +95,13 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      * @returns `false` if the data field uses the `TemplateAppearance.MATERIAL` and `true` otherwise.
      */
     protected evaluateTemplate(): boolean {
-        if (!this.dataField) {
+        if (!this._dataField) {
             return true;
         }
-        return this.resolveTemplate();
+        return this._isNetgrifTemplate;
     }
 
     public isPaperView() {
         return this._paperView.paperView;
-    }
-
-    protected resolveTemplate() {
-        let temp = true;
-        if (this._config.get().services && this._config.get().services.dataFields && this._config.get().services.dataFields.template) {
-            temp = this._config.get().services.dataFields.template === TemplateAppearance.NETGRIF;
-        }
-        if (this.dataField.layout && this.dataField.layout.template) {
-            temp = this.dataField.layout.template === TemplateAppearance.NETGRIF;
-        }
-        return temp;
     }
 }
