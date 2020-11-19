@@ -154,9 +154,9 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                         return namePath['name'];
                     }).join('/'));
                 });
+                this.dataField.touch = true;
+                this.dataField.update();
             }
-            this.dataField.touch = true;
-            this.dataField.update();
         }, error => {
             this.state.completed = true;
             this.state.error = true;

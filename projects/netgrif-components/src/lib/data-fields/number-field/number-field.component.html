@@ -11,7 +11,6 @@
         <input matInput
                type="number"
                [formControl]="formControl"
-               [readonly]="dataField.disabled"
                [placeholder]="dataField.placeholder"
                [required]="dataField.behavior.required">
         <mat-hint>{{dataField.description}}</mat-hint>

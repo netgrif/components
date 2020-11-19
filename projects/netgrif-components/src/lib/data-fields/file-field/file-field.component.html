@@ -28,7 +28,7 @@
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="false"
                accept="{{dataField.allowTypes}}" class="invisible-input">
         <input type="text" [formControl]="formControl" class="invisible-input">
-        <mat-hint class="file-hint-error">{{dataField.description}}</mat-hint>
+        <mat-hint class="file-hint-error" *ngIf="!dataField.isInvalid(formControl)">{{dataField.description}}</mat-hint>
         <mat-error class="file-hint-error" *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
     </div>
 </ng-template>

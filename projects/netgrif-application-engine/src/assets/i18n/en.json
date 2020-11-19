@@ -23,6 +23,7 @@
             "cancelTask": "Canceling assignment of task",
             "finishTask": "Finishing task",
             "invalidData": "Some fields have invalid values",
+            "missingRequired": "Some required fields are empty",
             "noCase": "No cases found",
             "caseGetFailed": "Getting cases failed",
             "noLongerExists": "The selected task no longer exists"

@@ -67,9 +67,9 @@ export abstract class DataField<T> {
     public materialAppearance: string;
     /**
      * @ignore
-     * Marks if field was checked for finish
+     * Whether the field fulfills required validator.
      */
-    public checked: boolean;
+    private _validRequired: boolean;
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -91,7 +91,7 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
-        this.checked = false;
+        this._validRequired = true;
         this._component = this.resolveComponent(this._component);
     }
 
@@ -194,6 +194,14 @@ export abstract class DataField<T> {
         return this._component;
     }
 
+    set validRequired(set: boolean) {
+        this._validRequired = set;
+    }
+
+    get validRequired(): boolean {
+        return this._validRequired;
+    }
+
     public update(): void {
         this._update.next();
     }
@@ -225,18 +233,8 @@ export abstract class DataField<T> {
     public updateFormControlState(formControl: FormControl): void {
         formControl.setValue(this.value);
         this._update.subscribe(() => {
-            formControl.enable();
-            formControl.clearValidators();
-            formControl.setValidators(this.resolveFormControlValidators());
-            formControl.updateValueAndValidity();
-            this.valid = this._determineFormControlValidity(formControl);
-
-            if (this.disabled) {
-                formControl.disable();
-                formControl.clearValidators();
-                formControl.setValidators(this.resolveFormControlValidators());
-                formControl.updateValueAndValidity();
-            }
+            this.validRequired = this.calculateValidity(true, formControl);
+            this.valid = this.calculateValidity(false, formControl);
         });
         this._block.subscribe(bool => {
             if (bool) {
@@ -336,7 +334,23 @@ export abstract class DataField<T> {
         return component;
     }
 
+    protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
+        if (forValidRequired) {
+            formControl.enable();
+        } else if (this.disabled) {
+            formControl.disable();
+        }
+        formControl.clearValidators();
+        if (forValidRequired) {
+            formControl.setValidators(this.behavior.required ? [Validators.required] : []);
+        } else {
+            formControl.setValidators(this.resolveFormControlValidators());
+        }
+        formControl.updateValueAndValidity();
+        return this._determineFormControlValidity(formControl);
+    }
+
     public isInvalid(formControl: FormControl): boolean {
-        return (!formControl.disabled && !formControl.valid && formControl.touched) || (!this.valid && this.checked);
+        return !formControl.disabled && !formControl.valid && formControl.touched;
     }
 }
