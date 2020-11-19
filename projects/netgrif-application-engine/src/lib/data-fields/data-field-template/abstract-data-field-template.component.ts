@@ -48,9 +48,9 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
     protected _showLargeLayout: WrappedBoolean = new WrappedBoolean();
 
     protected constructor(protected _paperView: PaperViewService, protected _config: ConfigurationService) {
-        const config = _config.get();
-        if (config.services && config.services.dataFields && config.services.dataFields.template) {
-            this._isConfiguredNetgrifTemplate = config.services.dataFields.template === TemplateAppearance.NETGRIF;
+        const configuredTemplate = this._config.getConfigurationSubtree(['services', 'dataFields', 'template']);
+        if (configuredTemplate !== undefined) {
+            this._isConfiguredNetgrifTemplate = configuredTemplate === TemplateAppearance.NETGRIF;
         }
     }
 
