@@ -6,7 +6,6 @@ import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserValue} from './models/user-value';
 import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
-import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 /**
