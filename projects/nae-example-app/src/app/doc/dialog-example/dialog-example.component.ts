@@ -32,7 +32,9 @@ export class DialogExampleComponent implements OnInit {
     answer(title: string, question: string, placeholder: string) {
         this.dialogService.openPromptDialog(title, question, placeholder)
             .afterClosed().subscribe(result => {
-            this.answerResult = result.prompt;
+                if (result.submitted) {
+                    this.answerResult = result.prompt;
+                }
         });
     }
 }

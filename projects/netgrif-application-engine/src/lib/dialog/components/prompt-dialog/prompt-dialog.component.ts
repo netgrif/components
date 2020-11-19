@@ -17,6 +17,7 @@ export class PromptDialogComponent extends AbstractDialog<PromptDialogComponent>
     /** Set submit button to disabled or enabled according to the user answer. */
     public disableButton = true;
     public prompt: string;
+    public submitClick: boolean;
 
     /**
      * Only injecting.
@@ -30,7 +31,8 @@ export class PromptDialogComponent extends AbstractDialog<PromptDialogComponent>
 
     onClose() {
         this.dialogRef.close({
-            prompt: this.prompt
+            prompt: this.prompt,
+            submitted: this.submitClick
         });
     }
 
