@@ -10,6 +10,17 @@ import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CaseMetaField, HeaderColumn, HeaderColumnType, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {
+    TestConfigurationService,
+    ConfigurationService,
+    CaseViewService,
+    TestCaseViewFactory,
+    ConfigCaseViewServiceFactory,
+    SearchService,
+    TestCaseSearchServiceFactory,
+    AuthenticationMethodService,
+    MockAuthenticationMethodService
+} from '@netgrif/application-engine';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
@@ -25,6 +36,20 @@ describe('CasePanelComponent', () => {
                 DataFieldsComponentModule,
                 TranslateLibModule,
                 HttpClientTestingModule
+            ],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {
+                    provide: CaseViewService,
+                    useFactory: TestCaseViewFactory,
+                    deps: [ConfigCaseViewServiceFactory]
+                },
+                ConfigCaseViewServiceFactory,
+                {
+                    provide: SearchService,
+                    useFactory: TestCaseSearchServiceFactory
+                },
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ],
             declarations: [CasePanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA]

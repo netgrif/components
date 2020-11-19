@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent { node { label 'master' } }
   environment {
         NEXUS_CRED = credentials('1986c778-eba7-44d7-b6f6-71e73906d894')
   }

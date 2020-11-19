@@ -118,7 +118,11 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                 } else {
                     result = {...acc, ...pageLoadResult.tasks};
                 }
+
                 Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
+                if (pageLoadResult.requestContext !== null) {
+                    this._loading$.off(pageLoadResult.requestContext.filter);
+                }
                 return result;
             }, {})
         );
@@ -239,8 +243,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                     };
                 }, {});
             }),
-            map(tasks => ({tasks, requestContext})),
-            tap(_ => this._loading$.off(requestContext.filter))
+            map(tasks => ({tasks, requestContext}))
         );
     }
 
