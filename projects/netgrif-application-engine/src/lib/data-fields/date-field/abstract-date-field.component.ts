@@ -10,7 +10,7 @@ export abstract class AbstractDateFieldComponent extends AbstractTimeInstanceFie
 
     protected constructor(protected _translate: TranslateService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(_translate);
+        super(_translate, informAboutInvalidData);
     }
 
     getErrorMessage() {
