@@ -126,7 +126,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 dataGroups.forEach(group => {
                     group.fields.forEach(field => {
                         field.valueChanges().subscribe(() => {
-                            if (field.initialized && field.valid && field.changed) {
+                            if (field.initialized && field.changed && (field.valid || field.sendInvalidValues)) {
                                 this.updateTaskDataFields();
                             }
                         });
