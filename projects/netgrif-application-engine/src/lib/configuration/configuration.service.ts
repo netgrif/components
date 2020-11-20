@@ -6,7 +6,7 @@ export abstract class ConfigurationService {
     private readonly _dataFieldConfiguration: Services['dataFields'];
 
     protected constructor(protected configuration: NetgrifApplicationEngine) {
-        this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields', 'template']);
+        this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields']);
     }
 
     public getAsync(): Observable<NetgrifApplicationEngine> {
