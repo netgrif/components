@@ -1,9 +1,12 @@
-import {NetgrifApplicationEngine, View, Views} from './interfaces/schema';
+import {NetgrifApplicationEngine, Services, View, Views} from './interfaces/schema';
 import {Observable, of} from 'rxjs';
 
 export abstract class ConfigurationService {
 
+    private readonly _dataFieldConfiguration: Services['dataFields'];
+
     protected constructor(protected configuration: NetgrifApplicationEngine) {
+        this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields', 'template']);
     }
 
     public getAsync(): Observable<NetgrifApplicationEngine> {
@@ -122,6 +125,16 @@ export abstract class ConfigurationService {
             root = root[segment];
         }
         return this.deepCopy(root);
+    }
+
+    /**
+     * @returns the appropriate template configuration for data fields, or `undefined` if such configuration is not present.
+     */
+    public getDatafieldConfiguration(): Services['dataFields'] | undefined {
+        if (this._dataFieldConfiguration === undefined) {
+            return undefined;
+        }
+        return {...this._dataFieldConfiguration};
     }
 
     private getView(searched: string, view: View): Array<string> {
