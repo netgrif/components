@@ -37,6 +37,5 @@ export * from './interface/page';
 export * from './types/nae-date-type';
 
 /* ABSTRACTIONS */
-export * from './resource-utility-functions';
 export * from './abstract-endpoint/count-service';
 export * from './abstract-endpoint/abstract-resource.service';
