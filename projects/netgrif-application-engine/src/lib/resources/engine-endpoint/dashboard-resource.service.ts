@@ -7,7 +7,9 @@ import {AggregationQuery} from '../../dashboard/cards/model/custom-dashboard-mod
 import {AggregationResult} from '../../dashboard/cards/model/custom-dashboard-model/aggregation-result';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DashboardResourceService extends AbstractResourceService {
 
     constructor(provider: ResourceProvider, configService: ConfigurationService) {
