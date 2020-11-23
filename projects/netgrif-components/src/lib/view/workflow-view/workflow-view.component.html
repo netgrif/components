@@ -24,7 +24,8 @@
                     <nc-workflow-panel
                         *cdkVirtualFor="let workflow of workflows; let i = index; templateCacheSize: 0; trackBy: trackBy"
                         [workflow]="workflow"
-                        [selectedHeaders$]="selectedHeaders$">
+                        [selectedHeaders$]="selectedHeaders$"
+                        [showDeleteMenu]="showDeleteMenu">
                     </nc-workflow-panel>
 
                     <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center"

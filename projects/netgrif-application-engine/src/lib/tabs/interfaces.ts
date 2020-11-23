@@ -70,6 +70,8 @@ export interface TabLabel {
     icon?: string;
     /**
      * Tab name that is displayed in it's label.
+     *
+     * The text is passed trough the translate pipe. If you want the tab label to be translated simply pass the translation key as value.
      */
     text?: string;
     /**

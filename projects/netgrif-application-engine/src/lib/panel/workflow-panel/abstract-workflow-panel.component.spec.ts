@@ -22,6 +22,7 @@ import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column'
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {RouterTestingModule} from '@angular/router/testing';
+import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
@@ -42,7 +43,8 @@ describe('AbstractWorkflowPanelComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                WorkflowViewService
             ],
             declarations: [TestWorkflowPanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -70,8 +72,8 @@ describe('AbstractWorkflowPanelComponent', () => {
     template: ''
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
-    constructor(protected _log: LoggerService, protected _translate: TranslateService) {
-        super(_log, _translate);
+    constructor(log: LoggerService, translate: TranslateService, workflowService: WorkflowViewService) {
+        super(log, translate, workflowService);
     }
 }
 

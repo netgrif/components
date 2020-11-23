@@ -13,6 +13,7 @@ import {ProcessService} from '../../process/process.service';
 export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders implements AfterViewInit {
 
     @Input() public footerSize: number;
+    @Input() showDeleteMenu = false;
     @ViewChild('header') public workflowHeader: AbstractHeaderComponent;
 
     public readonly headerType = HeaderType.WORKFLOW;
