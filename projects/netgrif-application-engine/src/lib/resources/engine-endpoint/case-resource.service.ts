@@ -4,7 +4,6 @@ import {map} from 'rxjs/operators';
 import {Params, ResourceProvider} from '../resource-provider.service';
 import {Count} from '../interface/count';
 import {Case} from '../interface/case';
-import {changeType, getResourceAddress, getResourcePage} from '../resource-utility-functions';
 import {MessageResource} from '../interface/message-resource';
 import {DataGroupsResource} from '../interface/data-groups';
 import {FileResource} from '../interface/file-resource';
