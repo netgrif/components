@@ -232,6 +232,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 return;
             }
 
+            this.revertToPreviousValue();
             this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
             this.updateStateInfo(afterAction, false, setTaskId);
             this._taskOperations.reload();
@@ -302,5 +303,15 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      */
     private sendNotification(event: TaskEvent.GET_DATA | TaskEvent.SET_DATA, success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, event, success));
+    }
+
+    private revertToPreviousValue(): void {
+        this._safeTask.dataGroups.forEach(dataGroup => {
+            dataGroup.fields.forEach(field => {
+                if (field.initialized && field.valid && field.changed) {
+                    field.value = field.prevValue;
+                }
+            });
+        });
     }
 }

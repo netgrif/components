@@ -19,6 +19,11 @@ export abstract class DataField<T> {
     protected _value: BehaviorSubject<T>;
     /**
      * @ignore
+     * Previous value of the data field
+     */
+    protected _prevValue: BehaviorSubject<T>;
+    /**
+     * @ignore
      * Whether the data field Model object was initialized.
      *
      * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
@@ -79,6 +84,7 @@ export abstract class DataField<T> {
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout, private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
+        this._prevValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new ReplaySubject<true>(1);
         this._initialized = false;
         this._valid = true;
@@ -133,7 +139,16 @@ export abstract class DataField<T> {
         if (!this.valueEquality(this._value.getValue(), value)) {
             this._changed = true;
         }
+        this.resolvePrevValue(value);
         this._value.next(value);
+    }
+
+    get prevValue() {
+        return this._prevValue.getValue();
+    }
+
+    set prevValue(value: T) {
+        this._prevValue.next(value);
     }
 
     set layout(layout: Layout) {
@@ -314,5 +329,13 @@ export abstract class DataField<T> {
             return comp;
         }
         return component;
+    }
+
+    public resolvePrevValue(value: T): void {
+        if (this._value.getValue() !== undefined
+            && this._prevValue.getValue() !== undefined
+            && this._prevValue.getValue() !== value) {
+            this._prevValue.next(this._value.getValue());
+        }
     }
 }
