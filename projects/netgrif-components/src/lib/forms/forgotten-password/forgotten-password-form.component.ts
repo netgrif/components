@@ -1,14 +1,15 @@
 import {Component} from '@angular/core';
+import {AbstractForgottenPasswordComponent, LoggerService, SignUpService} from '@netgrif/application-engine';
 import {FormBuilder} from '@angular/forms';
-import {AbstractForgottenPasswordFormComponent} from '@netgrif/application-engine';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nc-forgotten-password-form',
     templateUrl: './forgotten-password-form.component.html',
     styleUrls: ['./forgotten-password-form.component.scss']
 })
-export class ForgottenPasswordFormComponent extends AbstractForgottenPasswordFormComponent {
-    constructor(formBuilder: FormBuilder) {
-        super(formBuilder);
+export class ForgottenPasswordFormComponent extends AbstractForgottenPasswordComponent {
+    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
+        super(formBuilder, signupService, log, translate);
     }
 }

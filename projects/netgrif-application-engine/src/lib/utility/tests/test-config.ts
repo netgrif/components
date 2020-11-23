@@ -1,5 +1,4 @@
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {DashboardCardTypes} from '../../dashboard/cards/model/dashboard-card-types';
 
 export class TestConfigurationService extends ConfigurationService {
     constructor() {
