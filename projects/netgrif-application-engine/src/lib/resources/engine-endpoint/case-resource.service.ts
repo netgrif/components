@@ -13,15 +13,15 @@ import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {Page} from '../interface/page';
 import {CaseGetRequestBody} from '../interface/case-get-request-body';
+import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CaseResourceService implements CountService {
-    private SERVER_URL: string;
+export class CaseResourceService extends AbstractResourceService implements CountService {
 
-    protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
-        this.SERVER_URL = getResourceAddress('case', this._configService.get().providers.resources);
+    constructor(provider: ResourceProvider, configService: ConfigurationService) {
+        super('case', provider, configService);
     }
 
     /**
@@ -33,8 +33,8 @@ export class CaseResourceService implements CountService {
         if (filter.type !== FilterType.CASE) {
             throw new Error('Provided filter doesn\'t have type CASE');
         }
-        return this.provider.post$('workflow/case/count', this.SERVER_URL, filter.getRequestBody(), filter.getRequestParams())
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('workflow/case/count', this.SERVER_URL, filter.getRequestBody(), filter.getRequestParams())
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -43,7 +43,7 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/all
      */
     public getAllCase(): Observable<Array<Case>> {
-        return this.provider.get$('workflow/all', this.SERVER_URL).pipe(map(r => changeType(r, 'cases')));
+        return this._resourceProvider.get$('workflow/all', this.SERVER_URL).pipe(map(r => this.changeType(r, 'cases')));
     }
 
     /**
@@ -58,8 +58,8 @@ export class CaseResourceService implements CountService {
             throw new Error('Provided filter doesn\'t have type CASE');
         }
         params = ResourceProvider.combineParams(filter.getRequestParams(), params);
-        return this.provider.post$('workflow/case/search', this.SERVER_URL, filter.getRequestBody(), params)
-            .pipe(map(r => getResourcePage<Case>(r, 'cases')));
+        return this._resourceProvider.post$('workflow/case/search', this.SERVER_URL, filter.getRequestBody(), params)
+            .pipe(map(r => this.getResourcePage<Case>(r, 'cases')));
     }
 
 
@@ -69,10 +69,10 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/case/:id
      */
     public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<MessageResource> {
-        return this.provider.delete$('workflow/case/' + caseID,
+        return this._resourceProvider.delete$('workflow/case/' + caseID,
             this.SERVER_URL,
             deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
-            .pipe(map(r => changeType(r, undefined)));
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
 
@@ -82,7 +82,9 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/case/:id/data
      */
     public getCaseData(caseID: string): Observable<Array<DataGroupsResource>> {
-        return this.provider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(map(r => changeType(r, 'dataGroups')));
+        return this._resourceProvider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(
+            map(r => this.changeType(r, 'dataGroups'))
+        );
     }
 
 
@@ -92,7 +94,9 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/case/:id/file/:field
      */
     public getCaseFile(caseID: string, fieldID: string): Observable<FileResource> {
-        return this.provider.get$('workflow/case/' + caseID + '/file/' + fieldID, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('workflow/case/' + caseID + '/file/' + fieldID, this.SERVER_URL).pipe(
+            map(r => this.changeType(r, undefined))
+        );
     }
 
 
@@ -102,7 +106,7 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/case
      */
     public createCase(body: object): Observable<Case> {
-        return this.provider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -111,7 +115,9 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/case/author/:id
      */
     public getAllCaseUser(userId: string, body: object): Observable<Array<Case>> {
-        return this.provider.post$('workflow/case/author/' + userId, this.SERVER_URL, body).pipe(map(r => changeType(r, 'cases')));
+        return this._resourceProvider.post$('workflow/case/author/' + userId, this.SERVER_URL, body).pipe(
+            map(r => this.changeType(r, 'cases'))
+        );
     }
 
 
@@ -121,7 +127,9 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/case/search2
      */
     public getCasesQueryDSL(body: object): Observable<Page<Case>> {
-        return this.provider.post$('workflow/case/search2', this.SERVER_URL, body).pipe(map(r => getResourcePage<Case>(r, 'cases')));
+        return this._resourceProvider.post$('workflow/case/search2', this.SERVER_URL, body).pipe(
+            map(r => this.getResourcePage<Case>(r, 'cases'))
+        );
     }
 
     /**
@@ -132,8 +140,8 @@ export class CaseResourceService implements CountService {
      * @param params request parameters, that can be used for sorting of results.
      */
     public getCases(body: CaseGetRequestBody, params?: Params): Observable<Page<Case>> {
-        return this.provider.post$('workflow/case/search_mongo', this.SERVER_URL, body, params)
-            .pipe(map(r => getResourcePage<Case>(r, 'cases')));
+        return this._resourceProvider.post$('workflow/case/search_mongo', this.SERVER_URL, body, params)
+            .pipe(map(r => this.getResourcePage<Case>(r, 'cases')));
     }
 
     /**
@@ -142,7 +150,7 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/case/:id
      */
     public getOneCase(caseId: string): Observable<Case> {
-        return this.provider.get$('workflow/case/' + caseId, this.SERVER_URL).pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('workflow/case/' + caseId, this.SERVER_URL).pipe(map(r => this.changeType(r, undefined)));
     }
 
 
@@ -152,8 +160,8 @@ export class CaseResourceService implements CountService {
      * {{baseUrl}}/api/workflow/case/:caseId/field/:fieldId
      */
     public getOptionsEnumeration(caseId: string, fieldId: string): Observable<Case> {
-        return this.provider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('workflow/case/' + caseId + '/field/' + fieldId, this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
 }
