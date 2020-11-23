@@ -1,4 +1,4 @@
-import {Input, OnInit} from '@angular/core';
+import {Inject, Input, OnInit, Optional} from '@angular/core';
 import {UserField} from './models/user-field';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
@@ -6,6 +6,7 @@ import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserValue} from './models/user-value';
 import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
@@ -20,10 +21,13 @@ export abstract class AbstractUserFieldComponent extends AbstractDataFieldCompon
      * Inject services.
      * @param _sideMenuService Service to open and close [UserAssignComponent]{@link AbstractUserAssignComponent} with user data.
      * @param _snackbar Service to displaying information to the user.
+     * @param informAboutInvalidData whether the backend should be notified about invalid values.
+     * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      */
-    constructor(protected _sideMenuService: SideMenuService,
-                protected _snackbar: SnackBarService) {
-        super();
+    protected constructor(protected _sideMenuService: SideMenuService,
+                          protected _snackbar: SnackBarService,
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 
     ngOnInit() {

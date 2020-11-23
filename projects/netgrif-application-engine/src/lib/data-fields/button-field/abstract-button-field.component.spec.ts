@@ -12,11 +12,12 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractButtonFieldComponent} from './abstract-button-field.component';
 import {ButtonField} from './models/button-field';
 import {LanguageService} from '../../translate/language.service';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 describe('AbstractButtonFieldComponent', () => {
     let component: TestButtonComponent;
@@ -69,8 +70,9 @@ describe('AbstractButtonFieldComponent', () => {
     template: ''
 })
 class TestButtonComponent extends AbstractButtonFieldComponent {
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(translate: TranslateService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(translate, informAboutInvalidData);
     }
 }
 

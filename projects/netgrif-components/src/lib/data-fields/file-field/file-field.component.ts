@@ -1,6 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractFileFieldComponent, LoggerService, SnackBarService, TaskResourceService} from '@netgrif/application-engine';
+import {
+    AbstractFileFieldComponent,
+    LoggerService,
+    NAE_INFORM_ABOUT_INVALID_DATA,
+    SnackBarService,
+    TaskResourceService
+} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-file-field',
@@ -9,11 +15,12 @@ import {AbstractFileFieldComponent, LoggerService, SnackBarService, TaskResource
 })
 export class FileFieldComponent extends AbstractFileFieldComponent {
 
-    constructor(protected _taskResourceService: TaskResourceService,
-                protected _log: LoggerService,
-                protected _snackbar: SnackBarService,
-                protected _translate: TranslateService) {
-        super(_taskResourceService, _log, _snackbar, _translate);
+    constructor(taskResourceService: TaskResourceService,
+                log: LoggerService,
+                snackbar: SnackBarService,
+                translate: TranslateService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(taskResourceService, log, snackbar, translate, informAboutInvalidData);
     }
 }
 

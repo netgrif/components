@@ -52,6 +52,7 @@ export * from './data-field-template/models/wrapped-boolean';
 
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
+export * from './models/invalid-data-policy-token';
 
 /* Enums */
 export * from './models/template-appearance';
