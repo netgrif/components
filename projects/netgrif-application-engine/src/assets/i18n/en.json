@@ -290,6 +290,7 @@
         "process-list": {
             "newestVersion": "Newest version",
             "listTitle": "Processes",
+            "roles": "Roles",
             "noRoles": "There are no roles in the process",
             "noProcessesWereFound": "There are no processes in the system at the moment"
         },

@@ -290,6 +290,7 @@
         "process-list": {
             "newestVersion": "Najnovšia verzia",
             "listTitle": "Procesy",
+            "roles": "Roly",
             "noRoles": "Tento proces neobsahuje žiadne roly",
             "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
         },
