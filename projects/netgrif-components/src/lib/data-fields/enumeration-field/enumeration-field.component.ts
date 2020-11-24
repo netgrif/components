@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AbstractEnumerationFieldComponent} from '@netgrif/application-engine';
+import {Component, Inject, Optional} from '@angular/core';
+import {AbstractEnumerationFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-enumeration-field',
@@ -7,7 +7,7 @@ import {AbstractEnumerationFieldComponent} from '@netgrif/application-engine';
     styleUrls: ['./enumeration-field.component.scss']
 })
 export class EnumerationFieldComponent extends AbstractEnumerationFieldComponent {
-    constructor() {
-        super();
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
