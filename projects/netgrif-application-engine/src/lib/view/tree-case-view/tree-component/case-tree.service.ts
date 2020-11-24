@@ -745,24 +745,30 @@ export class CaseTreeService implements OnDestroy {
         ];
 
         const result: CaseUpdateResult = {
-            visibleTreePropertiesChanged: false,
+            visibleTreePropertiesChanged: true, // for short-circuiting the evaluation, if nodes children changed
             childrenChanged: false
         };
+
+        const oldChildCaseRef = getImmediateData(oldCase, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
+        if (oldChildCaseRef !== undefined) {
+            const oldChildren = new Set(oldChildCaseRef.value);
+            const newChildren = new Set(getImmediateData(newCase, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value);
+
+            result.childrenChanged = oldChildren.size !== newChildren.size;
+            if (!result.childrenChanged) {
+                result.childrenChanged = Array.from(oldChildren).some(childId => !newChildren.has(childId));
+            }
+
+            // short-circuit
+            if (result.childrenChanged) {
+                return result;
+            }
+        }
 
         result.visibleTreePropertiesChanged = visibleAttributes.some(attribute => {
             return getImmediateData(oldCase, attribute)
                 && getImmediateData(oldCase, attribute).value !== getImmediateData(newCase, attribute).value;
         });
-
-        const oldChildren = new Set(getImmediateData(oldCase, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value);
-        const newChildren = new Set(getImmediateData(newCase, TreePetriflowIdentifiers.CHILDREN_CASE_REF).value);
-
-        result.childrenChanged = oldChildren.size !== newChildren.size;
-        if (!result.childrenChanged) {
-            result.childrenChanged = Array.from(oldChildren).some(childId => !newChildren.has(childId));
-        }
-
-        result.visibleTreePropertiesChanged = result.visibleTreePropertiesChanged || result.childrenChanged;
 
         return result;
     }

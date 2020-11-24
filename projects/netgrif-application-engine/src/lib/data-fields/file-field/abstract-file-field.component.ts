@@ -6,6 +6,7 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 
 export interface FileState {
     progress: number;
@@ -123,6 +124,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
+                this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 this._log.debug(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
                 );
