@@ -224,7 +224,7 @@ export class UserListService {
                     } else {
                         this._log.info(message.success);
                         selectedUsers[idx].roles = new Set<string>(selectedRoles);
-                        this._snackbar.openSuccessSnackBar('Roles successfully assigned to selected users');
+                        this._snackbar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.rolesSuccessAssign'));
                     }
                 });
                 this._updateProgress$.off();
