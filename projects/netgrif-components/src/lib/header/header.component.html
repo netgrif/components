@@ -3,53 +3,72 @@
         <div fxLayout="row" fxFlex="95" class="header-content-container flex-95" fxLayoutAlign="start center"
              [ngSwitch]="headerService.headerState.mode" *ngIf="!headerService.loading.isActive">
             <div *ngSwitchCase="headerModeEnum.SORT" fxFlex="100" fxLayout="row">
-                <nc-sort-mode fxFlex="100" [headerService]="headerService"></nc-sort-mode>
+                <nc-sort-mode fxFlex="100" [headerService]="headerService" [overflowWidth]="getMinWidth()"></nc-sort-mode>
             </div>
             <div *ngSwitchCase="headerModeEnum.SEARCH" fxFlex="100" fxLayout="row">
-                <nc-search-mode fxFlex="100" [headerService]="headerService"></nc-search-mode>
+                <nc-search-mode fxFlex="100" [headerService]="headerService" [overflowWidth]="getMinWidth()"></nc-search-mode>
             </div>
             <div *ngSwitchCase="headerModeEnum.EDIT" fxFlex="100" fxLayout="row">
-                <nc-edit-mode fxFlex="100" [headerService]="headerService"></nc-edit-mode>
+                <nc-edit-mode fxFlex="100" [headerService]="headerService" [overflowWidth]="getMinWidth()"></nc-edit-mode>
             </div>
         </div>
         <div fxLayout="row" fxFlex="95" class="header-content-container" fxLayoutAlign="start center"
              *ngIf="headerService.loading.isActive">
             <div fxFlex="100" fxLayout="row">
-                <nc-loading-mode fxFlex="100" [headerService]="headerService"></nc-loading-mode>
+                <nc-loading-mode fxFlex="100" [headerService]="headerService" [overflowWidth]="getMinWidth()"></nc-loading-mode>
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5" class="flex-5">
-            <div [ngSwitch]="headerService.headerState.mode" *ngIf="!hideEditMode">
-                <button *ngSwitchDefault mat-icon-button [matMenuTriggerFor]="headerMenu">
+            <div *ngIf="!hideEditMode">
+                <button mat-icon-button [matMenuTriggerFor]="headerMenu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
-                <div *ngSwitchCase="headerModeEnum.EDIT">
-                    <button mat-icon-button (click)="headerService.confirmEditMode()">
-                        <mat-icon color="primary">done</mat-icon>
-                    </button>
-                    <button mat-icon-button (click)="headerService.revertEditMode()">
-                        <mat-icon color="warn">close</mat-icon>
-                    </button>
-                </div>
                 <mat-menu #headerMenu="matMenu">
-                    <button mat-menu-item
-                            [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
-                            (click)="headerService.changeMode(headerModeEnum.SORT, false)">
-                        <mat-icon>sort</mat-icon>
-                        {{ 'headers.orderMode' | translate}}
-                    </button>
-                    <button *ngIf="type === headerTypeEnum.CASE" mat-menu-item
-                            [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
-                            (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
-                        <mat-icon>search</mat-icon>
-                        {{ 'headers.searchMode' | translate}}
-                    </button>
-                    <button mat-menu-item
-                            [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.EDIT}"
-                            (click)="headerService.changeMode(headerModeEnum.EDIT)">
-                        <mat-icon>edit</mat-icon>
-                        {{ 'headers.editMode' | translate}}
-                    </button>
+                    <div *ngIf="headerService.headerState.mode !== headerModeEnum.EDIT">
+                        <button mat-menu-item
+                                [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SORT}"
+                                (click)="headerService.changeMode(headerModeEnum.SORT, false)">
+                            <mat-icon>sort</mat-icon>
+                            {{ 'headers.orderMode' | translate}}
+                        </button>
+                        <button *ngIf="type === headerTypeEnum.CASE" mat-menu-item
+                                [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.SEARCH}"
+                                (click)="headerService.changeMode(headerModeEnum.SEARCH, false)">
+                            <mat-icon>search</mat-icon>
+                            {{ 'headers.searchMode' | translate}}
+                        </button>
+                        <button mat-menu-item (click)="headerService.changeMode(headerModeEnum.EDIT)"> <!-- [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.EDIT}" -->
+                            <mat-icon>edit</mat-icon>
+                            {{ 'headers.editMode' | translate}}
+                        </button>
+                    </div>
+                    <div *ngIf="headerService.headerState.mode === headerModeEnum.EDIT">
+                        <button mat-menu-item (click)="confirmEditMode()">
+                            <mat-icon color="primary">done</mat-icon>
+                            {{ 'dialog.submit' | translate}}
+                        </button>
+                        <button mat-menu-item (click)="headerService.revertEditMode()">
+                            <mat-icon color="warn">close</mat-icon>
+                            {{ 'tasks.view.cancel' | translate}}
+                        </button>
+                        <div class="mat-menu-item-look" *ngIf="canOverflow">
+                            <mat-slide-toggle [formControl]="overflowControl">{{ 'headers.overflowMode' | translate}}</mat-slide-toggle>
+                        </div>
+                        <div class="mat-menu-item-look mat-menu-item-height" (click)="clickStop($event)" *ngIf="canOverflow && overflowControl.value">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'headers.columnWidth' | translate}}</mat-label>
+                                <input matInput type="number"  [formControl]="columnWidthControl">
+                                <mat-error *ngIf="!columnWidthControl.valid">{{getErrorMessageWidth()}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="mat-menu-item-look mat-menu-item-height" (click)="clickStop($event)" *ngIf="canOverflow && overflowControl.value">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'headers.columnCount' | translate}}</mat-label>
+                                <input matInput type="number" [formControl]="columnCountControl">
+                                <mat-error *ngIf="!columnCountControl.valid">{{getErrorMessageCount()}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
                 </mat-menu>
             </div>
         </div>

@@ -6,6 +6,9 @@ import {WorkflowHeaderService} from './workflow-header/workflow-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderSearchService} from '../search/header-search-service/header-search.service';
+import {FormControl, Validators} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
+import {OverflowService} from './services/overflow.service';
 
 export abstract class AbstractHeaderComponent implements OnInit {
 
@@ -15,19 +18,67 @@ export abstract class AbstractHeaderComponent implements OnInit {
     protected _headerSearch: HeaderSearchService;
     public readonly headerModeEnum = HeaderMode;
     public readonly headerTypeEnum = HeaderType;
+    public overflowControl: FormControl;
+    public columnCountControl: FormControl;
+    public columnWidthControl: FormControl;
+    public canOverflow: boolean;
 
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
 
-    constructor(protected _injector: Injector) {
+    constructor(protected _injector: Injector,
+                protected _translate: TranslateService,
+                protected _overflowService: OverflowService) {
+        if (this._overflowService !== null) {
+            this.canOverflow = true;
+            this.overflowControl = new FormControl(this._overflowService.overflowMode);
+            this.columnCountControl = new FormControl(this._overflowService.columnCount, [
+                Validators.required,
+                Validators.min(1)]);
+            this.columnWidthControl = new FormControl(this._overflowService.columnWidth, [
+                Validators.required,
+                Validators.min(180)]);
+
+            this.overflowControl.valueChanges.subscribe(value => {
+                this._overflowService.overflowMode = value;
+            });
+            this.columnCountControl.valueChanges.subscribe(value => {
+                if (this.columnCountControl.valid) {
+                    this._overflowService.columnCount = value;
+                    if (this.headerService && this.type === HeaderType.CASE) {
+                        this.headerService.headerColumnCount = value;
+                        (this.headerService as CaseHeaderService).updateColumnCount();
+                    }
+                }
+            });
+            this.columnWidthControl.valueChanges.subscribe(value => {
+                if (this.columnWidthControl.valid) {
+                    this._overflowService.columnWidth = value;
+                    if (this.headerService && this.type === HeaderType.CASE) {
+                        (this.headerService as CaseHeaderService).updateColumnCount();
+                    }
+                }
+            });
+        } else {
+            this.canOverflow = false;
+            this.overflowControl = new FormControl(false);
+            this.columnCountControl = new FormControl(6, [
+                Validators.required,
+                Validators.min(1)]);
+            this.columnWidthControl = new FormControl(190, [
+                Validators.required,
+                Validators.min(180)]);
+        }
     }
 
     @Input()
     public set maxHeaderColumns(count: number) {
         if (this.headerService) {
             this.headerService.headerColumnCount = count;
+            this.columnCountControl.setValue(count);
         } else {
             this._initHeaderCount = count;
+            this.columnCountControl.setValue(count);
         }
     }
 
@@ -78,4 +129,36 @@ export abstract class AbstractHeaderComponent implements OnInit {
         }
     }
 
+    clickStop($event) {
+        $event.stopPropagation();
+        $event.preventDefault();
+    }
+
+    getMinWidth() {
+        return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
+    }
+
+    confirmEditMode() {
+        if (!this.overflowControl.value || (this.overflowControl.value && this.columnWidthControl.valid && this.columnWidthControl.valid)) {
+            this.headerService.confirmEditMode();
+        }
+    }
+
+    getErrorMessageWidth() {
+        return this.buildErrorMessage(this.columnWidthControl, 180);
+    }
+
+    getErrorMessageCount() {
+        return this.buildErrorMessage(this.columnCountControl, 1);
+    }
+
+    buildErrorMessage(formControlRef: FormControl, minNumber) {
+        if (formControlRef.hasError('required')) {
+            return this._translate.instant('dataField.validations.required');
+        }
+        if (formControlRef.hasError('min')) {
+            return this._translate.instant('dataField.validations.min', {length: minNumber});
+        }
+        return '';
+    }
 }

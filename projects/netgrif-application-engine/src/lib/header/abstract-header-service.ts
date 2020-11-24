@@ -302,6 +302,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
         if (saveLastMode) {
             this._headerState.saveState();
+            this.saveState();
         }
 
         const change = this.modeChangeFromCurrent(newMode);
@@ -311,6 +312,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     public confirmEditMode(): void {
         this._headerState.restoreLastMode();
+        this.saveNewState();
         const change = this.modeChangeAfterEdit();
         const viewId = this._viewService.getViewId();
         if (!!viewId) {
@@ -326,6 +328,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
      */
     public revertEditMode(): void {
         this._headerState.restoreLastState();
+        this.restoreLastState();
         const change = this.modeChangeAfterEdit();
         this._headerChange$.next({
             headerType: this.headerType,
@@ -384,5 +387,14 @@ export abstract class AbstractHeaderService implements OnDestroy {
      */
     public clearHeaderSearch(columnIndex: number): void {
         this._clearHeaderSearch$.next(columnIndex);
+    }
+
+    protected saveState() {
+    }
+
+    protected saveNewState() {
+    }
+
+    protected restoreLastState() {
     }
 }
