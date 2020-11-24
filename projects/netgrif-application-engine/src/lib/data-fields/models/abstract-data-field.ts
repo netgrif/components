@@ -66,6 +66,10 @@ export abstract class DataField<T> {
      */
     public materialAppearance: string;
     /**
+     * Whether invalid field values should be sent to backend.
+     */
+    private _sendInvalidValues = false;
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -185,6 +189,14 @@ export abstract class DataField<T> {
 
     get component(): Component {
         return this._component;
+    }
+
+    get sendInvalidValues(): boolean {
+        return this._sendInvalidValues;
+    }
+
+    set sendInvalidValues(value: boolean | null) {
+        this._sendInvalidValues = value !== null && value;
     }
 
     public update(): void {

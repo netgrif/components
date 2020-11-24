@@ -1,15 +1,17 @@
-import {Input} from '@angular/core';
+import {Inject, Input, Optional} from '@angular/core';
 import {BooleanField, BooleanFieldValidation} from './models/boolean-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
 import {FormControl} from '@angular/forms';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 export abstract class AbstractBooleanFieldComponent extends AbstractDataFieldComponent {
 
     @Input() dataField: BooleanField;
 
-    constructor(protected _translate: TranslateService) {
-        super();
+    protected constructor(protected _translate: TranslateService,
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
         this._formControl = new FormControl('');
     }
 
