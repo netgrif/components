@@ -26,7 +26,8 @@
             "noCase": "No cases found",
             "caseGetFailed": "Getting cases failed",
             "noLongerExists": "The selected task no longer exists",
-            "caseDeleteFailed": "Case could not be deleted"
+            "caseDeleteFailed": "Case could not be deleted",
+            "rolesSuccessAssign": "Roles successfully assigned to selected users"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
@@ -176,7 +177,9 @@
             "fileUploadFailed": "The file failed to upload",
             "fileDeleteFailed":  "The file could not be deleted",
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
-            "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: "
+            "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
+            "notSelectedUser": "No user has been selected",
+            "userAssigned": "User {{userName}} was assigned"
         },
         "values": {
             "boolean": {
@@ -333,7 +336,8 @@
         "snackBar": {
             "deleteCanceled": "Process delete canceled",
             "deleteSuccess": "Process successfully deleted",
-            "deleteError": "Process could not be deleted"
+            "deleteError": "Process could not be deleted",
+            "uploadFailed": "Process file could not be uploaded"
         }
     }
 }
