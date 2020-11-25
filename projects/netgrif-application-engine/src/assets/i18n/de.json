@@ -25,7 +25,9 @@
             "invalidData": "Manche Felder haben ungültige Werten",
             "noCase": "Keine Fälle gefunden",
             "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten",
-            "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr"
+            "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr",
+            "caseDeleteFailed": "Fall konnte nicht gelöscht werden",
+            "rolesSuccessAssign": "Rollen, die ausgewählten Benutzern erfolgreich zugewiesen wurden"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Es gibt keine Aufgaben, die den ausgewählten Filter erfüllen",
@@ -175,7 +177,9 @@
             "fileUploadFailed": "The file failed to upload",
             "fileDeleteFailed":  "Die Datei konnte nicht gelöscht werden",
             "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
-            "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: "
+            "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
+            "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
+            "userAssigned": "Benutzer {{userName}} wurde zugewiesen"
         },
         "values": {
             "boolean": {
@@ -289,6 +293,7 @@
         "process-list": {
             "newestVersion": "Neuste Version",
             "listTitle": "Prozesse",
+            "roles": "Rollen",
             "noRoles": "Dieser Prozess enthält keine Rollen",
             "noProcessesWereFound": "Derzeit befinden sich keine Prozesse im System"
         },
@@ -332,7 +337,8 @@
         "snackBar": {
             "deleteCanceled": "Prozess löschen abgebrochen",
             "deleteSuccess": "Prozess erfolgreich gelöscht",
-            "deleteError": "Prozess konnte nicht gelöscht werden"
+            "deleteError": "Prozess konnte nicht gelöscht werden",
+            "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden"
         }
     }
 }

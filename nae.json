@@ -880,8 +880,8 @@
             "wildcardRedirect": "authentication"
         },
         "dataFields": {
-            "template": "netgrif",
-            "appearance": "standard"
+            "template": "material",
+            "appearance": "outline"
         }
     }
 }

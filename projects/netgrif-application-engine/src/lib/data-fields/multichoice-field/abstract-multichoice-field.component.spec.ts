@@ -2,11 +2,12 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {AbstractMultichoiceFieldComponent} from './abstract-multichoice-field.component';
 import {MultichoiceField} from './models/multichoice-field';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 describe('AbstractMultichoiceFieldComponent', () => {
     let component: TestEnumComponent;
@@ -48,8 +49,8 @@ describe('AbstractMultichoiceFieldComponent', () => {
     template: ''
 })
 class TestEnumComponent extends AbstractMultichoiceFieldComponent {
-    constructor() {
-        super();
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }
 

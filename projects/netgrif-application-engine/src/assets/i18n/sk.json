@@ -25,7 +25,9 @@
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
             "noCase": "Nenašli sa žiadne prípady",
             "caseGetFailed": "Načítanie prípadov zlyhalo",
-            "noLongerExists": "Zvolená úloha už neexistuje"
+            "noLongerExists": "Zvolená úloha už neexistuje",
+            "caseDeleteFailed": "Prípad sa nepodarilo vymazať",
+            "rolesSuccessAssign": "Roly boli úspešne priradené vybraným používateľom"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
@@ -175,7 +177,9 @@
             "fileUploadFailed": "Súbor sa nepodarilo nahrať",
             "fileDeleteFailed":  "Súbor sa nepodarilo vymazať",
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
-            "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: "
+            "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
+            "notSelectedUser": "Nebol vybraný žiadny používateľ",
+            "userAssigned": "Používateľ {{userName}} bol pridelený"
         },
         "values": {
             "boolean": {
@@ -289,6 +293,7 @@
         "process-list": {
             "newestVersion": "Najnovšia verzia",
             "listTitle": "Procesy",
+            "roles": "Roly",
             "noRoles": "Tento proces neobsahuje žiadne roly",
             "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
         },
@@ -332,7 +337,8 @@
         "snackBar": {
             "deleteCanceled": "Zmazanie procesu zrušené",
             "deleteSuccess": "Proces bol úspešne zmazaný",
-            "deleteError": "Proces sa nepodarilo zmazať"
+            "deleteError": "Proces sa nepodarilo zmazať",
+            "uploadFailed": "Súbor procesu sa nepodarilo nahrať"
         }
     }
 }
