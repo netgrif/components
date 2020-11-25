@@ -7,6 +7,7 @@
 .case-view-search-container {
     margin-top: 16px;
     padding: 16px;
+    margin-bottom: 4px;
 }
 
 .case-header-padding {
@@ -22,7 +23,25 @@
     width: 100%;
 }
 
-
 .full-height {
     height: 100%;
+}
+
+.overflow-div {
+    overflow-x: scroll;
+}
+
+.transform-div {
+    transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg);
+}
+
+.custom-scrollbar {
+
+    &::-webkit-scrollbar {
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+    }
 }

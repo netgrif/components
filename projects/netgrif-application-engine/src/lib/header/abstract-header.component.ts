@@ -6,8 +6,15 @@ import {WorkflowHeaderService} from './workflow-header/workflow-header.service';
 import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderSearchService} from '../search/header-search-service/header-search.service';
+import {FormControl, Validators} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
+import {OverflowService} from './services/overflow.service';
+import {stopPropagation} from '../utility/stop-propagation';
 
 export abstract class AbstractHeaderComponent implements OnInit {
+
+    protected readonly DEFAULT_COLUMN_COUNT = 6;
+    protected readonly DEFAULT_COLUMN_WIDTH = 190;
 
     @Input() type: HeaderType = HeaderType.CASE;
     @Input() hideEditMode = false;
@@ -15,19 +22,30 @@ export abstract class AbstractHeaderComponent implements OnInit {
     protected _headerSearch: HeaderSearchService;
     public readonly headerModeEnum = HeaderMode;
     public readonly headerTypeEnum = HeaderType;
+    public overflowControl: FormControl;
+    public columnCountControl: FormControl;
+    public columnWidthControl: FormControl;
+    public canOverflow: boolean;
 
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
 
-    constructor(protected _injector: Injector) {
+    constructor(protected _injector: Injector,
+                protected _translate: TranslateService,
+                protected _overflowService: OverflowService) {
+        (this._overflowService !== null) ?
+            this.initializeFormControls(true) :
+            this.initializeFormControls(false);
     }
 
     @Input()
     public set maxHeaderColumns(count: number) {
         if (this.headerService) {
             this.headerService.headerColumnCount = count;
+            this.columnCountControl.setValue(count);
         } else {
             this._initHeaderCount = count;
+            this.columnCountControl.setValue(count);
         }
     }
 
@@ -78,4 +96,73 @@ export abstract class AbstractHeaderComponent implements OnInit {
         }
     }
 
+    clickStop($event) {
+        stopPropagation($event);
+    }
+
+    getMinWidth() {
+        return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
+    }
+
+    confirmEditMode() {
+        if (!this.overflowControl.value || (this.overflowControl.value && this.columnWidthControl.valid && this.columnWidthControl.valid)) {
+            this.headerService.confirmEditMode();
+        }
+    }
+
+    getErrorMessageWidth() {
+        return this.buildErrorMessage(this.columnWidthControl, 180);
+    }
+
+    getErrorMessageCount() {
+        return this.buildErrorMessage(this.columnCountControl, 1);
+    }
+
+    buildErrorMessage(formControlRef: FormControl, minNumber) {
+        if (formControlRef.hasError('required')) {
+            return this._translate.instant('dataField.validations.required');
+        }
+        if (formControlRef.hasError('min')) {
+            return this._translate.instant('dataField.validations.min', {length: minNumber});
+        }
+        return '';
+    }
+
+    protected initializeFormControls(exist: boolean) {
+        this.canOverflow = exist;
+        this.overflowControl = new FormControl(exist ? this._overflowService.overflowMode : false);
+        this.columnCountControl = new FormControl(exist ? this._overflowService.columnCount : this.DEFAULT_COLUMN_COUNT, [
+            Validators.required,
+            Validators.min(1)]);
+        this.columnWidthControl = new FormControl(exist ? this._overflowService.columnWidth : this.DEFAULT_COLUMN_WIDTH, [
+            Validators.required,
+            Validators.min(180)]);
+
+        if (exist) {
+            this.initializeValueChanges();
+        }
+    }
+
+    protected initializeValueChanges() {
+        this.overflowControl.valueChanges.subscribe(value => {
+            this._overflowService.overflowMode = value;
+        });
+        this.columnCountControl.valueChanges.subscribe(value => {
+            if (this.columnCountControl.valid) {
+                this._overflowService.columnCount = value;
+                if (this.headerService && this.type === HeaderType.CASE) {
+                    this.headerService.headerColumnCount = value;
+                    (this.headerService as CaseHeaderService).updateColumnCount();
+                }
+            }
+        });
+        this.columnWidthControl.valueChanges.subscribe(value => {
+            if (this.columnWidthControl.valid) {
+                this._overflowService.columnWidth = value;
+                if (this.headerService && this.type === HeaderType.CASE) {
+                    (this.headerService as CaseHeaderService).updateColumnCount();
+                }
+            }
+        });
+    }
 }
