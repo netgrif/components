@@ -30,7 +30,7 @@ export abstract class DataField<T> {
      *
      * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
      */
-    private _initialized$: ReplaySubject<true>;
+    protected _initialized$: ReplaySubject<true>;
     /**
      * @ignore
      * Whether the field fulfills all of it's validators.
@@ -46,25 +46,29 @@ export abstract class DataField<T> {
      * Data field subscribes this stream.
      * The data field updates it's Validators, validity and enabled/disabled according to it's behavior.
      */
-    private _update: Subject<void>;
+    protected _update: Subject<void>;
     /**
      * @ignore
      * Data field subscribes this stream. When a `true` value is received the data field disables itself.
      * When a `false`value is received data field disables/enables itself based on it's behavior.
      */
-    private _block: Subject<boolean>;
+    protected _block: Subject<boolean>;
     /**
      * @ignore
      * Data field subscribes this stream. Sets the state of the data field to "touched" or "untouched" (`true`/`false`).
      * Validity of the data field is not checked in an "untouched" state.
      * All fields are touched before a task is finished to check their validity.
      */
-    private _touch: Subject<boolean>;
+    protected _touch: Subject<boolean>;
     /**
      * @ignore
      * Appearance of dataFields, possible values - outline, standard, fill, legacy
      */
     public materialAppearance: string;
+    /**
+     * Whether invalid field values should be sent to backend.
+     */
+    private _sendInvalidValues = false;
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -86,7 +90,6 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
-        this._component = this.resolveComponent(this._component);
     }
 
     get stringId(): string {
@@ -148,12 +151,20 @@ export abstract class DataField<T> {
         return !!this._behavior.visible && !this._behavior.editable;
     }
 
+    set initialized(set: boolean) {
+        this._initialized = set;
+    }
+
     get initialized(): boolean {
         return this._initialized;
     }
 
     get initialized$(): Observable<true> {
         return this._initialized$.asObservable();
+    }
+
+    set valid(set: boolean) {
+        this._valid = set;
     }
 
     get valid(): boolean {
@@ -178,6 +189,14 @@ export abstract class DataField<T> {
 
     get component(): Component {
         return this._component;
+    }
+
+    get sendInvalidValues(): boolean {
+        return this._sendInvalidValues;
+    }
+
+    set sendInvalidValues(value: boolean | null) {
+        this._sendInvalidValues = value !== null && value;
     }
 
     public update(): void {
@@ -305,14 +324,5 @@ export abstract class DataField<T> {
             appearance = this.layout.appearance;
         }
         this.materialAppearance = appearance;
-    }
-
-    private resolveComponent(component: Component): Component {
-        if (component === undefined) {
-            const comp = new Component();
-            comp.name = 'default';
-            return comp;
-        }
-        return component;
     }
 }
