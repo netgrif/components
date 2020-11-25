@@ -14,8 +14,9 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     @Input() transformedValue: string;
     fieldType: string;
 
-    constructor(protected _currencyPipe: CurrencyPipe, private _translateService: TranslateService) {
-        super(_translateService);
+    constructor(protected _currencyPipe: CurrencyPipe, private _translateService: TranslateService,
+                informAboutInvalidData: boolean | null) {
+        super(_translateService, informAboutInvalidData);
     }
 
     ngOnInit() {
