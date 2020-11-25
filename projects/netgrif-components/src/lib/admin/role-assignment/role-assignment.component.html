@@ -109,7 +109,7 @@
 
                 <div *ngIf="!item.loading && !item.emptyRoles" fxLayout="column" fxLayoutAlign="start start"
                      class="full-height full-width net-panel-content">
-                    <h3>Roles</h3>
+                    <h3>{{ 'admin.process-list.roles' | translate}}</h3>
                     <div *ngFor="let net of item.processes; let first = first" fxLayout="column"
                          fxLayoutAlign="start center" class="full-width">
                         <mat-divider *ngIf="!first" style="position: relative"></mat-divider>

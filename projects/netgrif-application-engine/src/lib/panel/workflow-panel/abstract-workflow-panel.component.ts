@@ -12,6 +12,7 @@ import {Behavior} from '../../data-fields/models/behavior';
 import {Net} from '../../process/net';
 import {TranslateService} from '@ngx-translate/core';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
+import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 
 
 export interface WorkflowPanelContent {
@@ -27,12 +28,15 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
     @Input() public workflow: Net;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
+    @Input() showDeleteMenu = false;
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
 
     protected dataFieldsBehaviour: Behavior = {visible: true, editable: false};
 
-    constructor(protected _log: LoggerService, protected _translate: TranslateService) {
+    protected constructor(protected _log: LoggerService,
+                          protected _translate: TranslateService,
+                          protected _workflowService: WorkflowViewService) {
         super();
     }
 
@@ -51,6 +55,15 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
 
     public setPanelRef(panelRef: MatExpansionPanel) {
         this.panelRef = panelRef;
+    }
+
+    /**
+     * Handles the logic that should be executed when the "delete workflow" button is clicked.
+     *
+     * Calls the appropriate method in the {@link WorkflowViewService}.
+     */
+    public deleteWorkflow(): void {
+        this._workflowService.deleteWorkflow(this.workflow);
     }
 
     /**

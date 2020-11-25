@@ -11,12 +11,12 @@ import {
 } from '@angular-devkit/schematics';
 import {FileEntry, UpdateRecorder, DirEntry} from '@angular-devkit/schematics/src/tree/interface';
 import {experimental, normalize, strings} from '@angular-devkit/core';
-import {NetgrifApplicationEngine} from '../../../netgrif-application-engine/src/lib/configuration/interfaces/schema';
 import {Change, InsertChange} from '@schematics/angular/utility/change';
 import {FileData} from './models/file-data';
 import {FileSystemNode} from './models/file-system-node';
 import {ProjectInfo} from './models/project-info';
 import {addSymbolToDecoratorMetadata} from './modified-library-functions';
+import {NetgrifApplicationEngine} from '@netgrif/application-engine';
 
 
 export function getProjectInfo(tree: Tree): ProjectInfo {

@@ -41,7 +41,7 @@ import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-e
 import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
 import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
 import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
-import {PasswordFormComponent} from './doc/forms/password-form/password-form.component';
+import {PasswordFormComponent} from './doc/forms/email-form/password-form.component';
 import {RegisterFormComponent} from './doc/forms/register-form/register-form.component';
 import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
@@ -63,7 +63,7 @@ import {
     AuthenticationComponentModule,
     CaseViewComponentModule,
     DashboardComponentModule,
-    DataFieldsComponentModule,
+    DataFieldsComponentModule, EmailSubmissionFormComponentModule,
     ForgottenPasswordFormComponentModule,
     HeaderComponentModule,
     LoginFormComponentModule,
@@ -82,6 +82,7 @@ import {
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { ResetPasswordFormComponent } from './doc/forms/reset-password-form/reset-password-form.component';
 import { GroupViewGroupViewComponent } from './views/group-view/group-view-group-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -122,6 +123,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TreeViewExampleComponent,
         UserInviteComponent,
         ExamplePortalCardComponent,
+        ResetPasswordFormComponent,
         GroupViewGroupViewComponent
     ],
     imports: [
@@ -169,6 +171,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TreeCaseViewComponentModule,
         WorkflowViewComponentModule,
         NgxChartsModule,
+        EmailSubmissionFormComponentModule,
     ],
     entryComponents: [
         ContentComponent,
@@ -201,6 +204,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         RolesAssignComponent,
         TreeViewExampleComponent,
         ExamplePortalCardComponent,
+        ResetPasswordFormComponent,
         GroupViewGroupViewComponent
     ],
     providers: [{

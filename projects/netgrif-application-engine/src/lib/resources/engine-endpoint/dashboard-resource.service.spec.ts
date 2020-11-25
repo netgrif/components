@@ -12,8 +12,7 @@ describe('DashboardResourceService', () => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, NoopAnimationsModule],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService},
-                DashboardResourceService
+                {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         });
         service = TestBed.inject(DashboardResourceService);

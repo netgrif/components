@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {AbstractCasePanelComponent} from '@netgrif/application-engine';
+import {AbstractCasePanelComponent, CaseViewService, LoggerService} from '@netgrif/application-engine';
+import {CaseResourceService} from '@netgrif/application-engine';
+import {SnackBarService} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -8,7 +10,9 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./case-panel.component.scss']
 })
 export class CasePanelComponent extends AbstractCasePanelComponent {
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
+                protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
+                protected _log: LoggerService) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log);
     }
 }
