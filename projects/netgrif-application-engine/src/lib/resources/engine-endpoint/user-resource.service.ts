@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Params, ResourceProvider} from '../resource-provider.service';
-import {changeType, getResourceAddress, getResourcePage} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {MessageResource} from '../interface/message-resource';
 import {User} from '../interface/user';
@@ -10,21 +9,15 @@ import {Authority} from '../interface/authority';
 import {Preferences} from '../../user/models/preferences';
 import {Page} from '../interface/page';
 import {GroupsInterface} from '../interface/group';
+import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserResourceService {
-    /**
-     * @ignore
-     */
-    private SERVER_URL: string;
+export class UserResourceService extends AbstractResourceService {
 
-    /**
-     * @ignore
-     */
-    protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
-        this.SERVER_URL = getResourceAddress('user', this._configService.get().providers.resources);
+    constructor(provider: ResourceProvider, configService: ConfigurationService) {
+        super('user', provider, configService);
     }
 
     /**
@@ -35,8 +28,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/{id}/authority/assign
      */
     public assignAuthority(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this.provider.post$('user/' + userId + '/authority/assign', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('user/' + userId + '/authority/assign', this.SERVER_URL, body, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -47,8 +40,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/{id}/role/assign
      */
     public assignRoles(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this.provider.post$('user/' + userId + '/role/assign', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('user/' + userId + '/role/assign', this.SERVER_URL, body, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -59,8 +52,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/authority
      */
     public getAllAuthorities(): Observable<Array<Authority>> {
-        return this.provider.get$('user/authority', this.SERVER_URL)
-            .pipe(map(r => changeType(r, 'authorities')));
+        return this._resourceProvider.get$('user/authority', this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, 'authorities')));
     }
 
     /**
@@ -71,8 +64,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user
      */
     public getAll(params?: Params): Observable<Page<User>> {
-        return this.provider.get$('user', this.SERVER_URL, params)
-            .pipe(map(r => getResourcePage<User>(r, 'users')));
+        return this._resourceProvider.get$('user', this.SERVER_URL, params)
+            .pipe(map(r => this.getResourcePage<User>(r, 'users')));
     }
 
     /**
@@ -83,8 +76,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/role
      */
     public getAllWithRole(body: object, params?: Params): Observable<Array<User>> {
-        return this.provider.post$('user/role', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, 'users')));
+        return this._resourceProvider.post$('user/role', this.SERVER_URL, body, params)
+            .pipe(map(r => this.changeType(r, 'users')));
     }
 
     /**
@@ -95,8 +88,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/me
      */
     public getLoggedUser(params?: Params): Observable<User> {
-        return this.provider.get$('user/me', this.SERVER_URL, params).pipe(
-                map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('user/me', this.SERVER_URL, params).pipe(
+                map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -107,8 +100,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/{id}
      */
     public getUser(userId: string, params?: Params): Observable<User> {
-        return this.provider.get$('user/' + userId, this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('user/' + userId, this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -119,8 +112,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/preferences
      */
     public getPreferences(params?: Params): Observable<Preferences> {
-        return this.provider.get$('user/preferences', this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('user/preferences', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -131,8 +124,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/preferences
      */
     public setPreferences(body: object, params?: Params): Observable<MessageResource> {
-        return this.provider.post$('user/preferences', this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('user/preferences', this.SERVER_URL, body, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -143,8 +136,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/search
      */
     public search(body: object, params?: Params): Observable<Page<User>> {
-        return this.provider.post$('user/search', this.SERVER_URL, body, params)
-            .pipe(map(r => getResourcePage<User>(r, 'users')));
+        return this._resourceProvider.post$('user/search', this.SERVER_URL, body, params)
+            .pipe(map(r => this.getResourcePage<User>(r, 'users')));
     }
 
     /**
@@ -155,8 +148,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/user/{id}
      */
     public updateUser(userId: string, body: object, params?: Params): Observable<User> {
-        return this.provider.post$('user/' + userId, this.SERVER_URL, body, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('user/' + userId, this.SERVER_URL, body, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -167,8 +160,8 @@ export class UserResourceService {
      * **Request URL:** {{baseUrl}}/api/group/all
      */
     public getAllGroups(params?: Params): Observable<GroupsInterface> {
-        return this.provider.get$('group/all', this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('group/all', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
 }

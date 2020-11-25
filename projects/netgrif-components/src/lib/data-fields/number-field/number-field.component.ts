@@ -8,8 +8,15 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./number-field.component.scss']
 })
 export class NumberFieldComponent extends AbstractNumberFieldComponent {
-    constructor(translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+    constructor(translate: TranslateService) {
+        super(translate);
+    }
+
+    resolveComponent(): string {
+        if (this.dataField.component !== undefined) {
+            return this.dataField.component.name;
+        } else {
+            return 'default';
+        }
     }
 }

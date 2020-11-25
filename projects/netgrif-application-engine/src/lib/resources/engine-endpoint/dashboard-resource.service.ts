@@ -1,24 +1,24 @@
 import {Injectable} from '@angular/core';
 import {ResourceProvider} from '../resource-provider.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {getResourceAddress} from '../resource-utility-functions';
 import {HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AggregationQuery} from '../../dashboard/cards/model/custom-dashboard-model/aggregation-query';
 import {AggregationResult} from '../../dashboard/cards/model/custom-dashboard-model/aggregation-result';
+import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 
-@Injectable()
-export class DashboardResourceService {
-    private readonly SERVER_URL: string;
+@Injectable({
+    providedIn: 'root'
+})
+export class DashboardResourceService extends AbstractResourceService {
 
-    public constructor(protected provider: ResourceProvider,
-                       protected _configService: ConfigurationService) {
-        this.SERVER_URL = getResourceAddress('dashboard', this._configService.get().providers.resources);
+    constructor(provider: ResourceProvider, configService: ConfigurationService) {
+        super('dashboard', provider, configService);
     }
 
     public getDashboardData(type: string, jsonQuery: AggregationQuery): Observable<AggregationResult> {
         let params: HttpParams = new HttpParams();
         params = params.set('type', type);
-        return this.provider.post$<AggregationResult>('/dashboard/search', this.SERVER_URL, jsonQuery, params);
+        return this._resourceProvider.post$<AggregationResult>('/dashboard/search', this.SERVER_URL, jsonQuery, params);
     }
 }

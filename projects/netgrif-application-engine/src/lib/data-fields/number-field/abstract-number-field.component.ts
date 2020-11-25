@@ -8,9 +8,8 @@ export abstract class AbstractNumberFieldComponent extends AbstractDataFieldComp
 
     @Input() public dataField: NumberField;
 
-    protected constructor(protected _translate: TranslateService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+    protected constructor(protected _translate: TranslateService) {
+        super();
     }
 
     getErrorMessage() {

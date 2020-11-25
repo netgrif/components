@@ -11,6 +11,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {UserField} from './models/user-field';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractUserFieldComponent', () => {
     let component: TestUserComponent;
@@ -27,7 +28,10 @@ describe('AbstractUserFieldComponent', () => {
                 SnackBarModule
             ],
             declarations: [TestUserComponent, TestWrapperComponent],
-            providers: [SideMenuService],
+            providers: [
+                SideMenuService,
+                TranslateService
+            ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
@@ -52,8 +56,9 @@ describe('AbstractUserFieldComponent', () => {
 class TestUserComponent extends AbstractUserFieldComponent {
     constructor(sideMenuService: SideMenuService,
                 snackbar: SnackBarService,
+                translate: TranslateService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(sideMenuService, snackbar, informAboutInvalidData);
+        super(sideMenuService, snackbar, translate, informAboutInvalidData);
     }
 }
 
