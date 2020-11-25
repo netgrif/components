@@ -95,7 +95,12 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
             startWith(''),
             map(value => typeof value === 'string' ? value : this.objectName(value)),
             map(inputText => this._filterOptions(inputText)),
-            mergeAll()
+            mergeAll(),
+            map(s => s.sort((a, b) => {
+                const tmp_a = !!a.translationPath ? this.categoryName(a) : (!!a.text ? a.text : '');
+                const tmp_b = !!b.translationPath ? this.categoryName(b) : (!!b.text ? b.text : '');
+                return tmp_a.localeCompare(tmp_b);
+            }))
         );
         this._searchService.predicateRemoved$.subscribe(event => this.processChipRemoval(event.index));
         if (this._searchChipService) {
