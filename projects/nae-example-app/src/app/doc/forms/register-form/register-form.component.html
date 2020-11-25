@@ -7,7 +7,7 @@
     <div fxLayout="row" fxLayoutAlign="center center">
         <div fxLayout="column" fxLayoutAlign="stretch">
             <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="16px">
-                <mat-card fxFlex="100">
+                <mat-card fxFlex="100" class="card-width">
                     <nc-registration-form [token]="token" (register)="handleServerResponse($event)"></nc-registration-form>
                 </mat-card>
             </div>
