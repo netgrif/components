@@ -60,6 +60,7 @@ export class OverflowService {
         localStorage.setItem(id + '-overflowMode', this._overflowMode + '');
         localStorage.setItem(id + '-columnCount', this._columnCount + '');
         localStorage.setItem(id + '-columnWidth', this._columnWidth + '');
+        this._state = undefined;
     }
 
     public restoreLastState(): void {
