@@ -10,8 +10,8 @@ export abstract class AbstractDefaultNumberFieldComponent extends AbstractNumber
     @Input() showLargeLayout: WrappedBoolean;
     @Input() formControlRef: FormControl;
 
-    constructor(protected _translateService: TranslateService) {
-        super(_translateService);
+    constructor(protected _translateService: TranslateService, informAboutInvalidData: boolean | null) {
+        super(_translateService, informAboutInvalidData);
     }
 
     ngOnInit() {

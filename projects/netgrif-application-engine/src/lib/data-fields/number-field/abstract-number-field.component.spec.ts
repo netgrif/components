@@ -72,8 +72,9 @@ describe('AbstractNumberFieldComponent', () => {
     template: ''
 })
 class TestNumComponent extends AbstractNumberFieldComponent {
-    constructor(translate: TranslateService) {
-        super(translate);
+    constructor(translate: TranslateService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(translate, informAboutInvalidData);
     }
 }
 
