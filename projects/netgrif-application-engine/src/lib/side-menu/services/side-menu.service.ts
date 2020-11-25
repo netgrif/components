@@ -19,14 +19,13 @@ export class SideMenuService {
     private _sideMenuComponent: any; // SideMenuContainerComponent
     private _controlObject: SideMenuControl;
 
-    constructor(@Optional() @Inject(NAE_NET_VERSION_VISIBLE) protected isVersionVisible: boolean,
-                @Optional() @Inject(NAE_NET_ALL_VERSIONS) protected allVersionEnabled: boolean) {
-        if (this.isVersionVisible === null) {
-            this.isVersionVisible = true;
-        }
-        if (this.allVersionEnabled === null) {
-            this.allVersionEnabled = false;
-        }
+    private readonly isVersionVisible: boolean;
+    private readonly allVersionEnabled: boolean;
+
+    constructor(@Optional() @Inject(NAE_NET_VERSION_VISIBLE) isVersionVisible: boolean,
+                @Optional() @Inject(NAE_NET_ALL_VERSIONS) allVersionEnabled: boolean) {
+        this.isVersionVisible = isVersionVisible !== null ? isVersionVisible : true;
+        this.allVersionEnabled = allVersionEnabled !== null ? allVersionEnabled : false;
     }
 
     /**

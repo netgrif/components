@@ -184,21 +184,23 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
     }
 
     private removeOldVersions() {
-        const tempOptions = this.options;
-        for (const currNet of tempOptions) {
-            for (const net of tempOptions) {
-                if (currNet.value === net.value) {
-                    this.options.splice(this.options.indexOf(this.checkVersion(currNet, net)), 1);
+        const tempNets = Object.assign([], this.options);
+        const petriNetIds = new Set(this.options.map(form => form.value));
+        const newestNets = new Array<Form>();
+
+        for (const value of petriNetIds) {
+            let current: Form = {value, version: '1.0.0', viewValue: ''};
+            for (const net of tempNets) {
+                if (value === net.value && this.isNewest(current.version, net.version)) {
+                    current = net;
                 }
             }
+            newestNets.push(current);
         }
+        this.options = Object.assign([], newestNets);
     }
 
-    private checkVersion(v1: Form, v2: Form): Form {
-            if (v1.version > v2.version) {
-                return v2;
-            } else {
-                return v1;
-            }
+    private isNewest(v1: string, v2: string): boolean {
+            return v1 <= v2;
     }
 }
