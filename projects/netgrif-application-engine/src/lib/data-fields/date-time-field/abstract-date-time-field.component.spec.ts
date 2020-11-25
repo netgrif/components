@@ -3,7 +3,7 @@ import {AngularResizedEventModule} from 'angular-resize-event';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import moment from 'moment';
 import {BehaviorSubject} from 'rxjs';
 import {DateTimeField} from './models/date-time-field';
@@ -20,6 +20,7 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 describe('AbstractDatetimeFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
@@ -70,8 +71,9 @@ describe('AbstractDatetimeFieldComponent', () => {
     template: ''
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeFieldComponent {
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(translate: TranslateService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(translate, informAboutInvalidData);
     }
 }
 

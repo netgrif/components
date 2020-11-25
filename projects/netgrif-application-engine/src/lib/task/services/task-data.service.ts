@@ -20,6 +20,7 @@ import {FileListField} from '../../data-fields/file-list-field/models/file-list-
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -126,7 +127,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 dataGroups.forEach(group => {
                     group.fields.forEach(field => {
                         field.valueChanges().subscribe(() => {
-                            if (field.initialized && field.valid && field.changed) {
+                            if (this.wasFieldUpdated(field)) {
                                 this.updateTaskDataFields();
                             }
                         });
@@ -246,7 +247,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         const body = {};
         this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
-                if (field.initialized && field.valid && field.changed) {
+                if (this.wasFieldUpdated(field)) {
                     body[field.stringId] = {
                         type: this._fieldConverterService.resolveType(field),
                         value: this._fieldConverterService.formatValueForBackend(field, field.value)
@@ -255,6 +256,14 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             });
         });
         return body;
+    }
+
+    /**
+     * @param field the checked field
+     * @returns whether the field was updated on frontend and thus the backend should be notified
+     */
+    private wasFieldUpdated(field: DataField<unknown>): boolean {
+        return field.initialized && field.changed && (field.valid || field.sendInvalidValues);
     }
 
     /**

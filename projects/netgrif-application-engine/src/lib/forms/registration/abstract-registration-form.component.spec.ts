@@ -11,10 +11,15 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {FormBuilder} from '@angular/forms';
 import {AbstractRegistrationFormComponent} from './abstract-registration-form.component';
 import {LoggerService} from '../../logger/services/logger.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
+import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractRegistrationPanelComponent', () => {
     let component: TestRegFormComponent;
     let fixture: ComponentFixture<TestRegFormComponent>;
+    let mockSignupService: MockSignUpService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -27,8 +32,9 @@ describe('AbstractRegistrationPanelComponent', () => {
             ],
             declarations: [TestRegFormComponent],
             providers: [
-                SignUpService,
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: SignUpService, useClass: MockSignUpService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: NullAuthenticationService}
             ],
             schemas: [NO_ERRORS_SCHEMA]
         })
@@ -39,6 +45,7 @@ describe('AbstractRegistrationPanelComponent', () => {
         fixture = TestBed.createComponent(TestRegFormComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        mockSignupService = TestBed.inject(SignUpService) as unknown as MockSignUpService;
     });
 
     it('should create', () => {
@@ -46,7 +53,6 @@ describe('AbstractRegistrationPanelComponent', () => {
     });
 
     it('should submit', () => {
-        component.rootFormGroup.controls['email'].setValue('mail@mail.sk');
         component.rootFormGroup.controls['name'].setValue('name');
         component.rootFormGroup.controls['surname'].setValue('surname');
         component.rootFormGroup.controls['password'].setValue('passwd');
@@ -54,7 +60,6 @@ describe('AbstractRegistrationPanelComponent', () => {
         component.formSubmit.subscribe( event => {
             expect(event).toEqual({
                 token: undefined,
-                email: 'mail@mail.sk',
                 name: 'name',
                 surname: 'surname',
                 password: 'passwd'
@@ -76,7 +81,7 @@ describe('AbstractRegistrationPanelComponent', () => {
     template: ''
 })
 class TestRegFormComponent extends AbstractRegistrationFormComponent {
-    constructor(formBuilder: FormBuilder, protected _signupService: SignUpService, protected _log: LoggerService) {
-        super(formBuilder, _signupService, _log);
+    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
+        super(formBuilder, signupService, log, translate);
     }
 }

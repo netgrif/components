@@ -47,10 +47,12 @@ export * from './models/changed-fields';
 export * from './models/validation';
 export * from './models/layout';
 export * from './models/component';
+export * from './models/properties';
 export * from './data-field-template/models/wrapped-boolean';
 
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
+export * from './models/invalid-data-policy-token';
 
 /* Enums */
 export * from './models/template-appearance';
