@@ -13,6 +13,7 @@ import {SideMenuControl} from '../models/side-menu-control';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractSideMenuContainerComponent', () => {
     let component: TestSideMenuComponent;
@@ -28,7 +29,10 @@ describe('AbstractSideMenuContainerComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
-            declarations: [TestSideMenuComponent]
+            declarations: [TestSideMenuComponent],
+            providers: [
+                TranslateService
+            ]
         })
             .compileComponents();
     }));
@@ -82,7 +86,8 @@ class TestImportComponent extends AbstractImportNetComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
                 protected _log: LoggerService,
-                protected _snackbar: SnackBarService) {
-        super(_sideMenuControl, _petriNetResource,  _log, _snackbar);
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
+        super(_sideMenuControl, _petriNetResource,  _log, _snackbar, _translate);
     }
 }
