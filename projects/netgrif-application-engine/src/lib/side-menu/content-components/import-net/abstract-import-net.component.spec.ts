@@ -17,6 +17,7 @@ import {AbstractImportNetComponent} from './abstract-import-net.component';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractImportNetComponent', () => {
     let component: TestImportComponent;
@@ -36,9 +37,10 @@ describe('AbstractImportNetComponent', () => {
             providers: [{
                 provide: NAE_SIDE_MENU_CONTROL,
                 useValue: new SideMenuControl(() => {}, new Observable<boolean>(), null)
-            },
+                },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: PetriNetResourceService, useClass: MyPetriNetResource}
+                {provide: PetriNetResourceService, useClass: MyPetriNetResource},
+                TranslateService
             ],
             declarations: [TestImportComponent],
         }).overrideModule(BrowserDynamicTestingModule, {
@@ -96,7 +98,8 @@ class TestImportComponent extends AbstractImportNetComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
                 protected _log: LoggerService,
-                protected _snackbar: SnackBarService) {
-        super(_sideMenuControl, _petriNetResource,  _log, _snackbar);
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
+        super(_sideMenuControl, _petriNetResource,  _log, _snackbar, _translate);
     }
 }
