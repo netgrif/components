@@ -2,7 +2,7 @@
     <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle</mat-icon>
-            <mat-form-field fxFlex="96">
+            <mat-form-field fxFlex="96" class="input-width">
                 <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4"
                        required autocomplete="username">
                 <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
@@ -12,7 +12,7 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">vpn_key</mat-icon>
-            <mat-form-field fxFlex="96">
+            <mat-form-field fxFlex="96" class="input-width">
                 <input matInput placeholder="{{ 'forms.login.enterPass' | translate}}"
                        [type]="hidePassword ? 'password' : 'text'"
                        formControlName="password" required autocomplete="current-password">
@@ -26,7 +26,7 @@
                 </button>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-2x">
+        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-2x" class="margin-top-4">
             <button color="primary" type="submit" mat-raised-button fxFlex="50" fxFlex.xs="70"
                     fxLayout="row" fxLayoutAlign="center center">
                 <mat-spinner *ngIf="loading | async"
