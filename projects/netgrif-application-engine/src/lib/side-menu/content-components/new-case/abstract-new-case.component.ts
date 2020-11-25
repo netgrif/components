@@ -184,8 +184,9 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
     }
 
     private removeOldVersions() {
-        for (const currNet of this.options) {
-            for (const net of this.options) {
+        const tempOptions = this.options;
+        for (const currNet of tempOptions) {
+            for (const net of tempOptions) {
                 if (currNet.value === net.value) {
                     this.options.splice(this.options.indexOf(this.checkVersion(currNet, net)), 1);
                 }
@@ -194,17 +195,10 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
     }
 
     private checkVersion(v1: Form, v2: Form): Form {
-        const v1Array = v1.version.split('.').map(n => parseInt(n, 10));
-        const v2Array = v1.version.split('.').map(n => parseInt(n, 10));
-
-        for (let i = 0; i < v1Array.length; i++) {
-            if (v1Array[i] > v2Array[i]) {
+            if (v1.version > v2.version) {
                 return v2;
-            }
-            if (v1Array[i] < v2Array[i]) {
+            } else {
                 return v1;
             }
-        }
-        return v1;
     }
 }
