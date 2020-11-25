@@ -1,14 +1,16 @@
-import {Input} from '@angular/core';
+import {Inject, Input, Optional} from '@angular/core';
 import {DateTimeField} from './models/date-time-field';
 import {AbstractTimeInstanceFieldComponent} from '../time-instance-abstract-field/abstract-time-instance-field.component';
 import {TranslateService} from '@ngx-translate/core';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 export abstract class AbstractDateTimeFieldComponent extends AbstractTimeInstanceFieldComponent {
 
     @Input() public dataField: DateTimeField;
 
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    protected constructor(protected _translate: TranslateService,
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(_translate, informAboutInvalidData);
     }
 
     getErrorMessage() {

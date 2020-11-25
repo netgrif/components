@@ -18,7 +18,7 @@ export abstract class AbstractTextErrorsComponent {
         }
         if (formControlRef.hasError(TextFieldValidation.VALID_MAX_LENGTH)) {
             return this.resolveErrorMessage(textField, TextFieldValidation.MAX_LENGTH,
-                this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.minlength.requiredLength}));
+                this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.maxlength.requiredLength}));
         }
         if (formControlRef.hasError(TextFieldValidation.PATTERN)) {
             return this.resolveErrorMessage(textField, TextFieldValidation.REGEX, this._translate.instant('dataField.validations.pattern'));

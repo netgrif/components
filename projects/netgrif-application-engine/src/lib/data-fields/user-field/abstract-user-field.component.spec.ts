@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
@@ -10,6 +10,8 @@ import {AbstractUserFieldComponent} from './abstract-user-field.component';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {UserField} from './models/user-field';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractUserFieldComponent', () => {
     let component: TestUserComponent;
@@ -26,7 +28,10 @@ describe('AbstractUserFieldComponent', () => {
                 SnackBarModule
             ],
             declarations: [TestUserComponent, TestWrapperComponent],
-            providers: [SideMenuService],
+            providers: [
+                SideMenuService,
+                TranslateService
+            ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
@@ -49,9 +54,11 @@ describe('AbstractUserFieldComponent', () => {
     template: ''
 })
 class TestUserComponent extends AbstractUserFieldComponent {
-    constructor(protected _sideMenuService: SideMenuService,
-                protected _snackbar: SnackBarService) {
-        super(_sideMenuService, _snackbar);
+    constructor(sideMenuService: SideMenuService,
+                snackbar: SnackBarService,
+                translate: TranslateService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(sideMenuService, snackbar, translate, informAboutInvalidData);
     }
 }
 
