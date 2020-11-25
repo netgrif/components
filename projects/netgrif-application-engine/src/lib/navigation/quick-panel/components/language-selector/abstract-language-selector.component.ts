@@ -5,6 +5,8 @@ export abstract class AbstractLanguageSelectorComponent implements OnInit {
 
     @Input() public language: string;
 
+    protected _flagOverrides: Map<string, string>;
+
     /**
      * ISO 639-1
      */
@@ -19,10 +21,17 @@ export abstract class AbstractLanguageSelectorComponent implements OnInit {
         },
         {
             key: 'en-US',
-            value: 'en'
+            value: 'en',
+            flag: 'gb'
         }];
 
-    constructor(protected _select: LanguageService) {
+    protected constructor(protected _select: LanguageService) {
+        this._flagOverrides = new Map<string, string>();
+        this.langMenuItems.forEach(option => {
+            if (option.flag !== undefined) {
+                this._flagOverrides.set(option.key, option.flag);
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -33,6 +42,9 @@ export abstract class AbstractLanguageSelectorComponent implements OnInit {
     }
 
     flagCode(languageCode: string): string {
+        if (this._flagOverrides.has(languageCode)) {
+            return this._flagOverrides.get(languageCode);
+        }
         if (languageCode.includes('-')) {
             return languageCode.split('-')[1].toLowerCase();
         }
