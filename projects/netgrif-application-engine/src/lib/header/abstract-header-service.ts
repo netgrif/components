@@ -389,12 +389,9 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._clearHeaderSearch$.next(columnIndex);
     }
 
-    protected saveState() {
-    }
+    protected abstract saveState();
 
-    protected saveNewState() {
-    }
+    protected abstract saveNewState();
 
-    protected restoreLastState() {
-    }
+    protected abstract restoreLastState();
 }

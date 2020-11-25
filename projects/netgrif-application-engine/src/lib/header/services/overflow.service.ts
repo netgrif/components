@@ -10,30 +10,17 @@ interface OverflowState {
 @Injectable()
 export class OverflowService {
 
+    protected readonly DEFAULT_COLUMN_WIDTH = 190;
+    protected readonly DEFAULT_COLUMN_COUNT = 6;
     private _overflowMode: boolean;
     private _columnWidth: number;
     private _columnCount: number;
     private _state: OverflowState;
 
     constructor(protected viewService: ViewService) {
-        const overflow = localStorage.getItem(this.viewService.getViewId() + '-overflowMode');
-        if (overflow !== undefined) {
-            this._overflowMode = overflow === 'true';
-        } else {
-            this._overflowMode = false;
-        }
-        const count = localStorage.getItem(this.viewService.getViewId() + '-columnCount');
-        if (count !== undefined) {
-            this._columnCount = isNaN(parseInt(count, 10)) ? 6 : parseInt(count, 10);
-        } else {
-            this._columnCount = 6;
-        }
-        const width = localStorage.getItem(this.viewService.getViewId() + '-columnWidth');
-        if (width !== undefined) {
-            this._columnWidth = isNaN(parseInt(width, 10)) ? 190 : parseInt(width, 10);
-        } else {
-            this._columnWidth = 190;
-        }
+        this._overflowMode = this.initializeItem('overflowMode', false) === 'true';
+        this._columnCount = this.checkIsNan(this.initializeItem('columnCount', this.DEFAULT_COLUMN_COUNT), this.DEFAULT_COLUMN_COUNT);
+        this._columnWidth = this.checkIsNan(this.initializeItem('columnWidth', this.DEFAULT_COLUMN_WIDTH), this.DEFAULT_COLUMN_WIDTH);
     }
 
     get overflowMode(): boolean {
@@ -80,5 +67,18 @@ export class OverflowService {
         this._columnWidth = this._state.columnWidth;
         this._columnCount = this._state.columnCount;
         this._state = undefined;
+    }
+
+    protected initializeItem(id: string, defaultValue) {
+        const item = localStorage.getItem(this.viewService.getViewId() + '-' + id);
+        if (item !== undefined) {
+            return item;
+        } else {
+            return defaultValue;
+        }
+    }
+
+    protected checkIsNan(item, defaultValue) {
+        return isNaN(parseInt(item, 10)) ? defaultValue : parseInt(item, 10);
     }
 }

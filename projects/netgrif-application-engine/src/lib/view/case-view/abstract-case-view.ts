@@ -9,6 +9,7 @@ import {OverflowService} from '../../header/services/overflow.service';
 
 export abstract class AbstractCaseView extends ViewWithHeaders {
 
+    public readonly MINIMAL_OFFSET = 120;
     public readonly headerType: HeaderType = HeaderType.CASE;
     public cases$: Observable<Array<Case>>;
     public loading: boolean;
@@ -37,7 +38,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
 
     public getWidth() {
         return (this._overflowService && this._overflowService.overflowMode && this._overflowService.columnCount) ?
-            `${this._overflowService.columnCount * this._overflowService.columnWidth + 120}px` : '100%';
+            `${this._overflowService.columnCount * this._overflowService.columnWidth + this.MINIMAL_OFFSET}px` : '100%';
     }
 
     public getOverflowStatus() {
