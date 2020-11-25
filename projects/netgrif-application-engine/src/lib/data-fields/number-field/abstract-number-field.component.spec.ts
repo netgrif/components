@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {AbstractNumberFieldComponent} from './abstract-number-field.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NumberField} from './models/number-field';
@@ -17,6 +17,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 describe('AbstractNumberFieldComponent', () => {
     let component: TestNumComponent;
@@ -71,8 +72,8 @@ describe('AbstractNumberFieldComponent', () => {
     template: ''
 })
 class TestNumComponent extends AbstractNumberFieldComponent {
-    constructor(_translate: TranslateService) {
-        super(_translate);
+    constructor(translate: TranslateService) {
+        super(translate);
     }
 }
 

@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {UserRegistrationRequest} from '../models/user-registration-request';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {switchMap} from 'rxjs/operators';
 import {UserInvitationRequest} from '../models/user-invitation-request';
 import {SignUpModule} from '../sign-up.module';
+import {processMessageResponse} from '../../../utility/process-message-response';
 
 @Injectable({
     providedIn: SignUpModule
@@ -38,7 +39,7 @@ export class SignUpService {
         }
         newUser.password = btoa(newUser.password);
         return this._http.post<MessageResource>(this._signUpUrl, newUser).pipe(
-            switchMap(this.processMessageResponse)
+            switchMap(processMessageResponse)
         );
     }
 
@@ -53,7 +54,7 @@ export class SignUpService {
             invitation.processRoles = [];
         }
         return this._http.post<MessageResource>(this._inviteUrl, invitation).pipe(
-            switchMap(this.processMessageResponse)
+            switchMap(processMessageResponse)
         );
     }
 
@@ -62,7 +63,7 @@ export class SignUpService {
             throw new Error('Reset URL is not set in authentication provider endpoints!');
         }
         return this._http.post<MessageResource>(this._resetUrl, email).pipe(
-            switchMap(this.processMessageResponse)
+            switchMap(processMessageResponse)
         );
     }
 
@@ -78,7 +79,7 @@ export class SignUpService {
             surname: ''
         };
         return this._http.post<MessageResource>(this._recoverUrl, request).pipe(
-            switchMap(this.processMessageResponse)
+            switchMap(processMessageResponse)
         );
     }
 
@@ -87,16 +88,8 @@ export class SignUpService {
             throw new Error('Verify URL is not set in authentication provider endpoints!');
         }
         return this._http.post<MessageResource>(this._verifyUrl, token).pipe(
-            switchMap(this.processMessageResponse)
+            switchMap(processMessageResponse)
         );
-    }
-
-    private processMessageResponse(message: MessageResource): Observable<MessageResource> {
-        if (message.error) {
-            throwError(new Error(message.error));
-        } else {
-            return of(message);
-        }
     }
 
     /**

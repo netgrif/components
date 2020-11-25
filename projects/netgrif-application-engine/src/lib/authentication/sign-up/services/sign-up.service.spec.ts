@@ -28,7 +28,7 @@ describe('SignUpService', () => {
 
         it('should signup', inject([HttpTestingController],
             (httpMock: HttpTestingController) => {
-                service.signup({token: 'string', email: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
+                service.signup({token: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
                     expect(res.success).toEqual('Done');
                 });
 
@@ -82,7 +82,7 @@ describe('SignUpService', () => {
         it('should not resolve undefined endpoints', () => {
             expect(service).toBeTruthy();
             expect(() => {
-                service.signup({token: '', email: '', name: '', surname: '', password: ''});
+                service.signup({token: '', name: '', surname: '', password: ''});
             }).toThrowError('SingUp URL is not set in authentication provider endpoints!');
             expect(() => {
                 service.invite({email: '', groups: [], processRoles: []});

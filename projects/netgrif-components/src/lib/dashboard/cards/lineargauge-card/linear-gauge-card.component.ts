@@ -6,10 +6,7 @@ import {AggregationResult, LoggerService} from '@netgrif/application-engine';
 @Component({
     selector: 'nc-linear-gauge-card',
     templateUrl: './linear-gauge-card.component.html',
-    styleUrls: ['./linear-gauge-card.component.scss'],
-    providers: [
-        DashboardResourceService
-    ]
+    styleUrls: ['./linear-gauge-card.component.scss']
 })
 export class LinearGaugeCardComponent extends AbstractCustomCard implements OnInit {
 

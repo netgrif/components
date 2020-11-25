@@ -6,5 +6,8 @@
         "caseMeta": {
             "title": "Názov (prepísaný appkou)"
         }
+    },
+    "tab": {
+        "testLabel": "Slovenský názov"
     }
 }

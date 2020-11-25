@@ -94,7 +94,7 @@
         "demo-reset-password": {
             "component": {
                 "class": "PasswordFormComponent",
-                "from": "./doc/forms/password-form/password-form.component"
+                "from": "./doc/forms/email-form/password-form.component"
             },
             "access": "public",
             "navigation": false,
@@ -111,6 +111,17 @@
             "navigation": false,
             "routing": {
                 "path": "registration/:token"
+            }
+        },
+        "demo-password-recovery": {
+            "component": {
+                "class": "ResetPasswordFormComponent",
+                "from": "./doc/forms/reset-password-form/reset-password-form.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "recover/:token"
             }
         },
         "demo-drawer": {
@@ -869,8 +880,8 @@
             "wildcardRedirect": "authentication"
         },
         "dataFields": {
-            "template": "netgrif",
-            "appearance": "standard"
+            "template": "material",
+            "appearance": "outline"
         }
     }
 }
