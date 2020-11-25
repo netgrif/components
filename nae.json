@@ -722,6 +722,10 @@
             }
         },
         "group-view": {
+            "component": {
+                "class": "GroupViewComponent",
+                "from": "./doc/group-view/group-view.component"
+            },
             "layout": {
                 "name": "groupView",
                 "params": {}

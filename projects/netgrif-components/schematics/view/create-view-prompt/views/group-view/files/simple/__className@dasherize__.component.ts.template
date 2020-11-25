@@ -15,7 +15,7 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
 };
 
 const searchServiceFactory = (nextGroupService: NextGroupService) => {
-    return new SearchService(SimpleFilter.fromTaskQuery({case: {id: nextGroupService.groupsOfUser.stringId}}));
+    return new SearchService(SimpleFilter.fromTaskQuery({case: {id: nextGroupService.groupOfUser.stringId}}));
 };
 
 @Component({

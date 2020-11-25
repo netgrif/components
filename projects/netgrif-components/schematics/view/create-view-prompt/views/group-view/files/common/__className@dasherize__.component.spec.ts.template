@@ -28,7 +28,7 @@ describe('<%= classify(className) %>Component', () => {
                 BrowserAnimationsModule
             ],
             providers: [
-                {provide: NAE_TAB_DATA, useValue: {baseFilter: new SimpleFilter('id', FilterType.TASK, {});})}},
+                {provide: NAE_TAB_DATA, useValue: {baseFilter: new SimpleFilter('id', FilterType.TASK, {})}},
                 AuthenticationMethodService,
                 {provide: ConfigurationService, useClass: <%= configName %>ConfigurationService}
             ],
