@@ -12,10 +12,7 @@ import {AggregationResult, LoggerService} from '@netgrif/application-engine';
 @Component({
     selector: 'nc-line-chart-card',
     templateUrl: './line-chart-card.component.html',
-    styleUrls: ['./line-chart-card.component.scss'],
-    providers: [
-        DashboardResourceService
-    ]
+    styleUrls: ['./line-chart-card.component.scss']
 })
 export class LineChartCardComponent extends AbstractCustomCard implements OnInit {
 

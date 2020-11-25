@@ -30,8 +30,9 @@ export class RedirectService {
             this._router.navigateByUrl(path).then(log => {
                 this._log.info('Router navigate to path ' + path + ' : ' + log);
             });
-        } else if (this._lastIntendedRoute && this._lastIntendedRoute.url[0]) {
-            this._router.navigateByUrl(this._lastIntendedRoute.url[0].path).then(log => {
+        } else if (this._lastIntendedRoute && (this._lastIntendedRoute as any)._routerState
+            && (this._lastIntendedRoute as any)._routerState.url) {
+            this._router.navigateByUrl((this._lastIntendedRoute as any)._routerState.url).then(log => {
                 this._log.info('Router navigate to last path : ' + log);
             });
         }

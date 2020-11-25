@@ -1,9 +1,9 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {SortableView} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
-import {BehaviorSubject, Observable, of, timer} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Net} from '../../process/net';
-import {catchError, concatMap, map, mergeMap, scan, take, tap} from 'rxjs/operators';
+import {catchError, concatMap, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {HttpParams} from '@angular/common/http';
@@ -13,7 +13,11 @@ import {Page} from '../../resources/interface/page';
 import {ListRange} from '@angular/cdk/collections';
 import {hasContent} from '../../utility/pagination/page-has-content';
 import {PetriNetRequestBody} from '../../resources/interface/petri-net-request-body';
-import {NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
+import {NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, NAE_WORKFLOW_SERVICE_FILTER} from './models/injection-token-workflow-service';
+import {DialogService} from '../../dialog/services/dialog.service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
+import {TranslateService} from '@ngx-translate/core';
+import {arrayToObservable} from '../../utility/array-to-observable';
 
 
 @Injectable()
@@ -27,10 +31,15 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _baseFilter: PetriNetRequestBody;
+    protected _showDeleteConfirmationDialog: boolean;
 
-    constructor(private _petriNetResource: PetriNetResourceService,
-                private _log: LoggerService,
-                @Optional() @Inject(NAE_WORKFLOW_SERVICE_FILTER) injectedBaseFilter: PetriNetRequestBody) {
+    constructor(protected _petriNetResource: PetriNetResourceService,
+                protected _log: LoggerService,
+                protected _dialogService: DialogService,
+                protected _snackBarService: SnackBarService,
+                protected _translate: TranslateService,
+                @Optional() @Inject(NAE_WORKFLOW_SERVICE_FILTER) injectedBaseFilter: PetriNetRequestBody,
+                @Optional() @Inject(NAE_WORKFLOW_SERVICE_CONFIRM_DELETE) confirmDelete: boolean) {
         super();
         this._loading$ = new LoadingEmitter();
         this._clear = false;
@@ -46,26 +55,36 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
         );
 
         this._baseFilter = injectedBaseFilter !== null ? injectedBaseFilter : {};
+        this._showDeleteConfirmationDialog = confirmDelete === null || confirmDelete;
 
         const workflowsMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
             map(petriNets => {
                 if (this._clear) {
-                    this._clear = false;
                     // we set an empty value to the virtual scroll and then replace it by the real value forcing it to redraw its content
-                    const results = [[], petriNets];
-                    return timer(0, 1).pipe(take(2), map(i => results[i]));
+                    const results = [{content: [], stopLoading: false}, {content: petriNets, stopLoading: true}];
+                    return arrayToObservable(results);
                 } else {
-                    return of(petriNets);
+                    return of({content: petriNets, stopLoading: true});
                 }
             }),
             concatMap(o => o),
+            map(o => {
+                if (o.stopLoading) {
+                    this._loading$.off();
+                }
+                return o.content;
+            }),
             map(petriNets => {
                 return petriNets.reduce((acc, cur) => {
                     return {...acc, [cur.stringId]: cur};
                 }, {});
             }),
             scan((acc, petriNetsMap) => {
+                if (this._clear) {
+                    this._clear = false;
+                    return {...petriNetsMap};
+                }
                 return {...acc, ...petriNetsMap};
             }, {})
         );
@@ -122,8 +141,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
                     return array;
                 }
                 return [];
-            }),
-            tap(() => this._loading$.off())
+            })
         );
     }
 
@@ -156,6 +174,47 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
             end: 0
         };
         this.nextPage(range, 0, p);
+    }
+
+    /**
+     * Opens a dialog (if configured) and then asks the service to delete the selected workflow.
+     * @param workflow the workflow that should be deleted
+     */
+    public deleteWorkflow(workflow: Net): void {
+        if (this._showDeleteConfirmationDialog) {
+            const confirmationText = this._translate.instant('workflow.delete').toUpperCase();
+
+            this._dialogService.openPromptDialog(
+                this._translate.instant('workflow.dialog.header', {name: workflow.title, version: workflow.version}),
+                this._translate.instant('workflow.dialog.content'),
+                this._translate.instant('workflow.dialog.typeToConfirm', {delete: confirmationText}))
+                .afterClosed().subscribe(result => {
+                if (result !== undefined && result.prompt === confirmationText) {
+                    this._deleteWorkflow(workflow);
+                } else {
+                    this._snackBarService.openGenericSnackBar(this._translate.instant('workflow.snackBar.deleteCanceled'), 'info');
+                }
+            });
+        } else {
+            this._deleteWorkflow(workflow);
+        }
+    }
+
+    /**
+     * Sends the workflow delete to backend and processes the result.
+     * @param workflow the workflow that should be deleted
+     */
+    protected _deleteWorkflow(workflow: Net): void {
+        this._petriNetResource.deletePetriNet(workflow.stringId).subscribe(response => {
+                this._snackBarService.openSuccessSnackBar(this._translate.instant('workflow.snackBar.deleteSuccess'));
+                this._log.info('Process delete success. Server response: ' + response.success);
+                this.reload();
+            },
+            error => {
+                this._snackBarService.openErrorSnackBar(this._translate.instant('workflow.snackBar.deleteError'));
+                this._log.error('Process delete failed. Server response: ' + error);
+            }
+        );
     }
 
     protected getMetaFieldSortId(): string {

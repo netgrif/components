@@ -10,7 +10,21 @@ import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column'
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
+import {CaseViewService} from '../../view/case-view/service/case-view-service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {LoggerService} from '../../logger/services/logger.service';
+import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
+import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
+import {SearchService} from '../../search/search-service/search.service';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -26,7 +40,30 @@ describe('AbstractCasePanelComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
-            declarations: [TestCasePanelComponent, TestWrapperComponent],
+            providers: [
+                SnackBarService,
+                LoggerService,
+                TranslateService,
+                CaseResourceService,
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {
+                    provide: CaseViewService,
+                    useFactory: TestCaseViewFactory,
+                    deps: [ConfigCaseViewServiceFactory]
+                },
+                ConfigCaseViewServiceFactory,
+                {
+                    provide: SearchService,
+                    useFactory: TestCaseSearchServiceFactory
+                },
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                SignUpService
+            ],
+            declarations: [
+                TestCasePanelComponent,
+                TestWrapperComponent
+            ],
             schemas: [NO_ERRORS_SCHEMA]
         })
             .compileComponents();
@@ -53,8 +90,10 @@ describe('AbstractCasePanelComponent', () => {
     template: ''
 })
 class TestCasePanelComponent extends AbstractCasePanelComponent {
-    constructor(translate: TranslateService) {
-        super(translate);
+    constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
+                protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
+                protected _log: LoggerService) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log);
     }
 }
 

@@ -16,6 +16,7 @@ import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
+import {Component} from '../../data-fields/models/component';
 
 @Injectable({
     providedIn: 'root'
@@ -55,8 +56,8 @@ export class FieldConverterService {
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, type, item.component);
             case FieldTypeResource.NUMBER:
-                return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validations, item.placeholder, item.description, item.layout, item.component);
+                return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item));
             case FieldTypeResource.ENUMERATION:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
@@ -160,7 +161,7 @@ export class FieldConverterService {
         if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password') {
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return btoa(value);
         }
         if (value === undefined || value === null) {
@@ -180,6 +181,17 @@ export class FieldConverterService {
             }
         }
         return value;
+    }
+
+    protected resolveNumberComponent(numberField: DataFieldResource): Component {
+        let numberComponent = {name: 'default', properties: undefined};
+        if (numberField.component !== undefined) {
+            numberComponent = {
+                name: numberField.component.name,
+                properties: numberField.component.properties
+            };
+        }
+        return numberComponent;
     }
 
     /**
@@ -274,7 +286,7 @@ export class FieldConverterService {
         if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
         }
-        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component.name === 'password') {
+        if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return atob(value);
         }
         if (value === undefined || value === null) {
