@@ -1,9 +1,10 @@
-import {Input, OnInit} from '@angular/core';
+import {Inject, Input, OnInit, Optional} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractNumberFieldComponent} from '../abstract-number-field.component';
 import {FormControl} from '@angular/forms';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../../models/invalid-data-policy-token';
 
 
 export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberFieldComponent implements OnInit {

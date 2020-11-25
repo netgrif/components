@@ -25,7 +25,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
      */
     protected _formControl: FormControl;
 
-    protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) protected _informAboutInvalidData: boolean | null) {
+    protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) protected _informAboutInvalidData?: boolean | null) {
         this._formControl = new FormControl('', { updateOn: 'blur' });
     }
 
