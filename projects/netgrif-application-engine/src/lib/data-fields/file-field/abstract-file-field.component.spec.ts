@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -24,6 +24,7 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 describe('AbstractFileFieldComponent', () => {
     let component: TestFileComponent;
@@ -79,11 +80,12 @@ describe('AbstractFileFieldComponent', () => {
     template: ''
 })
 class TestFileComponent extends AbstractFileFieldComponent {
-    constructor(protected _taskResourceService: TaskResourceService,
-                protected _log: LoggerService,
-                protected _snackbar: SnackBarService,
-                protected _translate: TranslateService) {
-        super(_taskResourceService, _log, _snackbar, _translate);
+    constructor(taskResourceService: TaskResourceService,
+                log: LoggerService,
+                snackbar: SnackBarService,
+                translate: TranslateService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(taskResourceService, log, snackbar, translate, informAboutInvalidData);
     }
 }
 

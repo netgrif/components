@@ -14,7 +14,7 @@ export class TabViewExampleComponent implements OnInit {
     tabs: Array<TabContent> = [
         {
             label: {
-                text: 'tab title',
+                text: 'tab.testLabel',
                 icon: 'home'
             },
             canBeClosed: false,
