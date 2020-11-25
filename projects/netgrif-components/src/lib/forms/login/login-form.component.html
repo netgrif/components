@@ -1,10 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="24px">
-    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()">
+    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle</mat-icon>
-            <mat-form-field fxFlex="96">
+            <mat-form-field fxFlex="96" class="full-width">
                 <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4"
-                       required>
+                       required autocomplete="username">
                 <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
                     {{ 'forms.login.length' | translate}}
                 </mat-error>
@@ -12,10 +12,10 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">vpn_key</mat-icon>
-            <mat-form-field fxFlex="96">
+            <mat-form-field fxFlex="96" class="full-width">
                 <input matInput placeholder="{{ 'forms.login.enterPass' | translate}}"
                        [type]="hidePassword ? 'password' : 'text'"
-                       formControlName="password" required>
+                       formControlName="password" required autocomplete="current-password">
                 <button mat-icon-button matSuffix type="button"
                         (click)="hidePassword = !hidePassword"
                         (keypress)="false"
@@ -26,25 +26,22 @@
                 </button>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-2x">
-            <button color="primary" type="submit" mat-raised-button fxFlex="50" fxFlex.xs="70"
-                    fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-2x" class="margin-top-4">
+            <button color="primary" type="submit" mat-raised-button fxLayout="row" fxLayoutAlign="center center">
                 <mat-spinner *ngIf="loading | async"
                              mode="indeterminate"
                              diameter="36"
                              color="accent"
                              fxFlex></mat-spinner>
-                <span *ngIf="(loading | async) === false"
-                      fxFlex>{{ 'forms.login.login' | translate}}</span>
+                <span *ngIf="(loading | async) === false" fxFlex>{{ 'forms.login.login' | translate}}</span>
             </button>
         </div>
     </form>
 
     <mat-divider *ngIf="registerResetButtons" class="position-relative"></mat-divider>
 
-    <div *ngIf="registerResetButtons" fxLayout="row" class="width-100" fxLayoutAlign="end" fxLayoutGap="16px">
-        <button mat-stroked-button (click)="resetEmit()" fxFlex="60">{{ 'forms.login.reset' | translate}}</button>
-        <button mat-stroked-button (click)="signUpEmit()" color="accent"
-                fxFlex="40">{{ 'forms.login.sign' | translate}}</button>
+    <div *ngIf="registerResetButtons" fxLayout="row" class="width-100" fxLayoutAlign="space-between" fxLayoutGap="16px">
+        <button mat-stroked-button (click)="resetEmit()">{{ 'forms.login.reset' | translate}}</button>
+        <button mat-stroked-button (click)="signUpEmit()" color="accent">{{ 'forms.login.sign' | translate}}</button>
     </div>
 </div>
