@@ -4,7 +4,7 @@
             <mat-icon color="primary">account_circle</mat-icon>
             <mat-form-field fxFlex="96">
                 <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4"
-                       required>
+                       required autocomplete="username">
                 <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
                     {{ 'forms.login.length' | translate}}
                 </mat-error>
@@ -15,7 +15,7 @@
             <mat-form-field fxFlex="96">
                 <input matInput placeholder="{{ 'forms.login.enterPass' | translate}}"
                        [type]="hidePassword ? 'password' : 'text'"
-                       formControlName="password" required>
+                       formControlName="password" required autocomplete="current-password">
                 <button mat-icon-button matSuffix type="button"
                         (click)="hidePassword = !hidePassword"
                         (keypress)="false"
