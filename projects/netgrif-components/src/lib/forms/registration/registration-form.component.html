@@ -3,23 +3,21 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">email</mat-icon>
             <mat-form-field fxFlex="96">
-                <input matInput placeholder="{{ 'forms.pass.enterEmail' | translate}}" formControlName="email" required>
-                <mat-error *ngIf="rootFormGroup.controls['email'].hasError('email')">
-                    {{ 'dataField.validations.email' | translate}}
-                </mat-error>
+                <input matInput placeholder="{{ 'forms.register.email' | translate}}" disabled [value]="userEmail">
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle</mat-icon>
             <mat-form-field fxFlex="96">
                 <input matInput placeholder="{{ 'forms.register.name' | translate }}" formControlName="name" required>
+                <mat-error *ngIf="!isFieldValid('name')">{{getErrorMessage('name')}}</mat-error>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle_outline</mat-icon>
             <mat-form-field fxFlex="96">
-                <input matInput placeholder="{{ 'forms.register.surname' | translate }}" formControlName="surname"
-                       required>
+                <input matInput placeholder="{{ 'forms.register.surname' | translate }}" formControlName="surname" required>
+                <mat-error *ngIf="!isFieldValid('surname')">{{getErrorMessage('surname')}}</mat-error>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
@@ -36,6 +34,7 @@
                     <mat-icon
                         [color]="hidePassword ? undefined : 'accent'">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                <mat-error *ngIf="!isFieldValid('password')">{{getErrorMessage('password')}}</mat-error>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
@@ -52,6 +51,7 @@
                     <mat-icon
                         [color]="hideRepeatPassword ? undefined : 'accent'">{{hideRepeatPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                <mat-error *ngIf="!isFieldValid('confirmPassword')">{{getErrorMessage('confirmPassword')}}</mat-error>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center">

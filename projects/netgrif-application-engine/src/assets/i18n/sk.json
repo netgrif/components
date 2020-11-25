@@ -25,7 +25,9 @@
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
             "noCase": "Nenašli sa žiadne prípady",
             "caseGetFailed": "Načítanie prípadov zlyhalo",
-            "noLongerExists": "Zvolená úloha už neexistuje"
+            "noLongerExists": "Zvolená úloha už neexistuje",
+            "caseDeleteFailed": "Prípad sa nepodarilo vymazať",
+            "rolesSuccessAssign": "Roly boli úspešne priradené vybraným používateľom"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
@@ -175,7 +177,9 @@
             "fileUploadFailed": "Súbor sa nepodarilo nahrať",
             "fileDeleteFailed":  "Súbor sa nepodarilo vymazať",
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
-            "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: "
+            "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
+            "notSelectedUser": "Nebol vybraný žiadny používateľ",
+            "userAssigned": "Používateľ {{userName}} bol pridelený"
         },
         "values": {
             "boolean": {
@@ -196,7 +200,7 @@
         "submit": "Potvrdiť"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Zadajte svoj email"
         },
         "login": {
@@ -207,11 +211,18 @@
             "enterPass": "Zadajte svoje heslo"
         },
         "register": {
+            "email": "Váš email",
             "name": "Meno",
             "surname": "Priezvisko",
             "repeatPass": "Zopakujte heslo",
             "register": "Registrovať",
-            "notVerified": "Nie je možné verifikovať token!"
+            "notVerified": "Nie je možné verifikovať token!",
+            "passwordsMustMatch": "Heslá sa musia zhodovať!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "recover": "Zmeniť heslo"
         }
     },
     "headers": {
@@ -233,7 +244,9 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
-            "creationDate": "Dátum nahratia"
+            "creationDate": "Dátum nahratia",
+            "title": "Názov",
+            "author": "Autor"
         },
         "orderMode": "Mód zoraďovania",
         "searchMode": "Mód vyhľadávania",
@@ -312,5 +325,19 @@
     },
     "dashboard": {
         "cases" : "prípady"
+    },
+    "workflow": {
+        "delete": "zmazať",
+        "dialog": {
+            "header": "Ste si istý, že chcete vymazať proces '{{name}}' verzia '{{version}}'?",
+            "content": "Spolu s procesom budú vymazané aj všetky prípady z neho vytvorené!",
+            "typeToConfirm": "Zadajte {{delete}} pre potvrdenie"
+        },
+        "snackBar": {
+            "deleteCanceled": "Zmazanie procesu zrušené",
+            "deleteSuccess": "Proces bol úspešne zmazaný",
+            "deleteError": "Proces sa nepodarilo zmazať",
+            "uploadFailed": "Súbor procesu sa nepodarilo nahrať"
+        }
     }
 }

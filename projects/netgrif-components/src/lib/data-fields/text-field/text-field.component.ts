@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AbstractTextFieldComponent} from '@netgrif/application-engine';
+import {Component, Inject, Optional} from '@angular/core';
+import {AbstractTextFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-text-field',
@@ -8,7 +8,7 @@ import {AbstractTextFieldComponent} from '@netgrif/application-engine';
 })
 export class TextFieldComponent extends AbstractTextFieldComponent {
 
-    constructor() {
-        super();
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }

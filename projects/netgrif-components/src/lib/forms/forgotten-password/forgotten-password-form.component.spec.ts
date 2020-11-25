@@ -1,20 +1,37 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+
 import {ForgottenPasswordFormComponent} from './forgotten-password-form.component';
-import {FormBuilder} from '@angular/forms';
+import {
+    ConfigurationService,
+    MaterialModule,
+    SignUpService,
+    TestConfigurationService,
+    TranslateLibModule
+} from '@netgrif/application-engine';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
-describe('ForgottenPasswordPanelComponent', () => {
+describe('ForgottenPasswordFormComponent', () => {
     let component: ForgottenPasswordFormComponent;
     let fixture: ComponentFixture<ForgottenPasswordFormComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, FlexLayoutModule, BrowserAnimationsModule, TranslateLibModule, HttpClientTestingModule],
+            imports: [
+                MaterialModule,
+                FlexLayoutModule,
+                BrowserAnimationsModule,
+                HttpClientTestingModule,
+                TranslateLibModule
+            ],
             declarations: [ForgottenPasswordFormComponent],
-            providers: [FormBuilder]
+            providers: [
+                SignUpService,
+                {provide: ConfigurationService, useClass: TestConfigurationService}
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
         })
             .compileComponents();
     }));
