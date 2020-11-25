@@ -26,8 +26,8 @@ interface Datafield {
 export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     private static readonly _i18n = 'search.category.case.dataset';
-    // TODO 4.5.2020 - only button and file fields are truly unsupported, dateTime is implemented but lacks elastic support
-    protected static DISABLED_TYPES = ['button', 'file', 'dateTime'];
+    // TODO 4.5.2020 - only button, file and file list fields are truly unsupported, dateTime is implemented but lacks elastic support
+    protected static DISABLED_TYPES = ['button', 'file', 'dateTime', 'fileList'];
 
     private _searchingUsers = false;
 
