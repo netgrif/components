@@ -67,6 +67,14 @@ describe('ProcessService', () => {
         expect(logSpy).toHaveBeenCalled();
     });
 
+    // NAE-1085
+    it('getNets should emit with empty argument', (done) => {
+        service.getNets([]).subscribe(result => {
+            expect(result).toEqual([]);
+            done();
+        });
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });

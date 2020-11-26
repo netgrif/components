@@ -6,7 +6,8 @@ import {
     SearchChipService,
     SearchService,
     SimpleFilter,
-    AllNetsCaseViewServiceFactory
+    AllNetsCaseViewServiceFactory,
+    OverflowService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -25,6 +26,7 @@ const searchServiceFactory = () => {
     providers: [
         SearchChipService,
         AllNetsCaseViewServiceFactory,
+        OverflowService,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
@@ -36,8 +38,8 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    constructor(caseViewService: CaseViewService) {
-        super(caseViewService);
+    constructor(caseViewService: CaseViewService, protected overflowService: OverflowService) {
+        super(caseViewService, overflowService);
     }
 
     ngAfterViewInit(): void {

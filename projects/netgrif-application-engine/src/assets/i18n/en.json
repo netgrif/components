@@ -26,7 +26,8 @@
             "noCase": "No cases found",
             "caseGetFailed": "Getting cases failed",
             "noLongerExists": "The selected task no longer exists",
-            "caseDeleteFailed": "Case could not be deleted"
+            "caseDeleteFailed": "Case could not be deleted",
+            "rolesSuccessAssign": "Roles successfully assigned to selected users"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
@@ -164,7 +165,8 @@
             "dateRange": "Entered date must be between {{left}} and {{right}}",
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day",
-            "enumeration": "One of the options must be selected"
+            "enumeration": "One of the options must be selected",
+            "min": "Entered number must be greater than {{length}}"
         },
         "snackBar": {
             "downloadFail": " failed to download",
@@ -176,7 +178,9 @@
             "fileUploadFailed": "The file failed to upload",
             "fileDeleteFailed":  "The file could not be deleted",
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
-            "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: "
+            "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
+            "notSelectedUser": "No user has been selected",
+            "userAssigned": "User {{userName}} was assigned"
         },
         "values": {
             "boolean": {
@@ -247,7 +251,10 @@
         },
         "orderMode": "Ordering mode",
         "searchMode": "Search mode",
-        "editMode": "Enable edit mode"
+        "editMode": "Enable edit mode",
+        "overflowMode": "Table mode",
+        "columnWidth": "Column width",
+        "columnCount": "Number of columns"
     },
     "panel": {
         "case": {
@@ -290,6 +297,7 @@
         "process-list": {
             "newestVersion": "Newest version",
             "listTitle": "Processes",
+            "roles": "Roles",
             "noRoles": "There are no roles in the process",
             "noProcessesWereFound": "There are no processes in the system at the moment"
         },
@@ -333,7 +341,8 @@
         "snackBar": {
             "deleteCanceled": "Process delete canceled",
             "deleteSuccess": "Process successfully deleted",
-            "deleteError": "Process could not be deleted"
+            "deleteError": "Process could not be deleted",
+            "uploadFailed": "Process file could not be uploaded"
         }
     }
 }
