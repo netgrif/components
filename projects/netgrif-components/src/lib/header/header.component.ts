@@ -1,12 +1,14 @@
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, Optional} from '@angular/core';
 import {
     AbstractHeaderComponent,
     CaseHeaderService,
     CategoryFactory,
     HeaderSearchService,
     TaskHeaderService,
-    WorkflowHeaderService
+    WorkflowHeaderService,
+    OverflowService
 } from '@netgrif/application-engine';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nc-header',
@@ -21,7 +23,10 @@ import {
     ]
 })
 export class HeaderComponent extends AbstractHeaderComponent {
-    constructor(protected _injector: Injector) {
-        super(_injector);
+
+    constructor(protected _injector: Injector,
+                protected _translate: TranslateService,
+                @Optional() protected overflowService: OverflowService) {
+        super(_injector, _translate, overflowService);
     }
 }

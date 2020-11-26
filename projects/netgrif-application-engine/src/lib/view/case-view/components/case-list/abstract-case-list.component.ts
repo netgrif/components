@@ -17,6 +17,7 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
     @Input() showCasePanelIcon = true;
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
+    @Input() width: string;
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
     public cases$: Observable<Array<Case>>;
