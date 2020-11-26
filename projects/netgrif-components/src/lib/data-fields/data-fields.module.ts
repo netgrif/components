@@ -40,6 +40,7 @@ import {SideMenuContentComponentModule} from '../side-menu/content-components/si
 import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
 import {QuillModule} from 'ngx-quill';
 import { PasswordTextFieldComponent } from './text-field/password-text-field/password-text-field.component';
+import { EnumerationStepperFieldComponent } from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
 
 @NgModule({
     declarations: [
@@ -65,7 +66,8 @@ import { PasswordTextFieldComponent } from './text-field/password-text-field/pas
         UserFieldComponent,
         RequiredLabelComponent,
         HtmlTextareaFieldComponent,
-        PasswordTextFieldComponent
+        PasswordTextFieldComponent,
+        EnumerationStepperFieldComponent
     ],
     exports: [
         BooleanFieldComponent,

@@ -16,6 +16,11 @@
                                    [enumerationField]="dataField"
                                    [formControlRef]="formControl">
         </nc-enumeration-list-field>
+        <nc-enumeration-stepper-field *ngSwitchCase="'stepper'"
+                                      [showLargeLayout]="showLargeLayout"
+                                      [enumerationField]="dataField"
+                                      [formControlRef]="formControl">
+        </nc-enumeration-stepper-field>
         <nc-enumeration-select-field *ngSwitchDefault
                                      [showLargeLayout]="showLargeLayout"
                                      [enumerationField]="dataField"
@@ -35,6 +40,11 @@
                                    [enumerationField]="dataField"
                                    [formControlRef]="formControl">
         </nc-enumeration-list-field>
+        <nc-enumeration-stepper-field *ngSwitchCase="'stepper'"
+                                      [showLargeLayout]="showLargeLayout"
+                                      [enumerationField]="dataField"
+                                      [formControlRef]="formControl">
+        </nc-enumeration-stepper-field>
         <nc-enumeration-select-field *ngSwitchDefault
                                      [showLargeLayout]="showLargeLayout"
                                      [enumerationField]="dataField"

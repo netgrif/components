@@ -1,0 +1,17 @@
+<mat-label class="stepper-label" *ngIf="!showLargeLayout.value" matTooltipClass="stepper-tooltip-text" [matTooltip]="enumerationField.description" matTooltipPosition="right">
+    {{enumerationField.title}}
+    <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="!enumerationField.disabled" ></nc-required-label>
+</mat-label>
+<div class="horizontal-stepper" fxLayout="row">
+    <div class="horizontal-step">
+        <ng-template ngFor let-option [ngForOf]="enumerationField.choices" let-i="index">
+            <div class="horizontal-step-header">
+                <div class="horizontal-state" [ngClass]="{'horizontal-state-primary': canShowDoneIcon(i), 'horizontal-state-secondary': !canShowDoneIcon(i)}">
+                    <mat-icon *ngIf="canShowDoneIcon(i + 1)">done</mat-icon>
+                </div>
+                <div class="horizontal-state-label">{{option.value}}</div>
+            </div>
+            <div class="horizontal-line" fxFlex *ngIf="i < enumerationField.choices.length - 1"></div>
+        </ng-template>
+    </div>
+</div>
