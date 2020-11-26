@@ -10,6 +10,7 @@ import {
     SideMenuControl,
     SnackBarService
 } from '@netgrif/application-engine';
+import {MatOption} from '@angular/material/core';
 
 @Component({
     selector: 'nc-new-case',
@@ -32,5 +33,17 @@ export class NewCaseComponent extends AbstractNewCaseComponent {
                 protected _translate: TranslateService) {
         super(_sideMenuControl, _formBuilder, _snackBarService, _caseResourceService, _hotkeysService, _translate);
         this.isVersionVisible = _sideMenuControl.isVersionVisible;
+    }
+
+    showVersion(option: MatOption): void {
+        if (option !== undefined && option.value !== undefined && option.value.version !== undefined)
+            this.netVersion = option.value.version;
+    }
+
+    checkVersion(viewValue: string): void {
+        const currentOption = this.options.find(option => option.viewValue === viewValue);
+        if (currentOption === undefined) {
+            this.netVersion = '';
+        }
     }
 }

@@ -11,6 +11,7 @@ import {NewCaseInjectionData} from './model/new-case-injection-data';
 import {TranslateService} from '@ngx-translate/core';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {MatToolbar} from '@angular/material/toolbar';
+import semver from 'semver';
 
 interface Form {
     value: string;
@@ -191,16 +192,12 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         for (const value of petriNetIds) {
             let current: Form = {value, version: '1.0.0', viewValue: ''};
             for (const net of tempNets) {
-                if (value === net.value && this.isNewest(current.version, net.version)) {
+                if (value === net.value && !semver.lt(net.version, current.version)) {
                     current = net;
                 }
             }
             newestNets.push(current);
         }
         this.options = Object.assign([], newestNets);
-    }
-
-    private isNewest(v1: string, v2: string): boolean {
-            return v1 <= v2;
     }
 }
