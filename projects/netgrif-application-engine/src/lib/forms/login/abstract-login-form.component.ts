@@ -53,12 +53,9 @@ export abstract class AbstractLoginFormComponent implements HasForm {
     }
 
     getButtonsFxLayoutAlign(): string {
-        if (this.showSignUpButton && this.showForgottenPasswordButton) {
+        if (this.showSignUpButton || this.showForgottenPasswordButton) {
             return 'space-between';
         }
-        if (this.showSignUpButton || this.showForgottenPasswordButton) {
-            return 'end';
-        }
-        return '';
+        return 'end';
     }
 }
