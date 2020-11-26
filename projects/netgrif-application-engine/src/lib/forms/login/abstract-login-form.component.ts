@@ -1,24 +1,24 @@
-import {EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
 import {UserService} from '../../user/services/user.service';
 import {User} from '../../user/models/user';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 
-export abstract class AbstractLoginFormComponent implements OnInit, HasForm {
+export abstract class AbstractLoginFormComponent implements HasForm {
 
     public rootFormGroup: FormGroup;
     public hidePassword = true;
     public loading: LoadingEmitter;
-    private _registerResetButtons: boolean;
 
-    @Input() public downButtons: boolean;
+    @Input() public showSignUpButton: boolean;
+    @Input() public showForgottenPasswordButton: boolean;
     @Output() public login: EventEmitter<User>;
     @Output() public resetPassword: EventEmitter<void>;
     @Output() public signUp: EventEmitter<void>;
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
 
-    constructor(formBuilder: FormBuilder, protected _userService: UserService) {
+    protected constructor(formBuilder: FormBuilder, protected _userService: UserService) {
         this.rootFormGroup = formBuilder.group({
             login: [''],
             password: ['']
@@ -28,18 +28,6 @@ export abstract class AbstractLoginFormComponent implements OnInit, HasForm {
         this.signUp = new EventEmitter<void>();
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
         this.loading = new LoadingEmitter();
-    }
-
-    ngOnInit() {
-        if (this.downButtons !== undefined) {
-            this._registerResetButtons = this.downButtons;
-        } else {
-            this._registerResetButtons = true;
-        }
-    }
-
-    get registerResetButtons() {
-        return this._registerResetButtons;
     }
 
     onSubmit() {
@@ -62,5 +50,15 @@ export abstract class AbstractLoginFormComponent implements OnInit, HasForm {
 
     signUpEmit() {
         this.signUp.emit();
+    }
+
+    getButtonsFxLayoutAlign(): string {
+        if (this.showSignUpButton && this.showForgottenPasswordButton) {
+            return 'space-between';
+        }
+        if (this.showSignUpButton || this.showForgottenPasswordButton) {
+            return 'end';
+        }
+        return '';
     }
 }

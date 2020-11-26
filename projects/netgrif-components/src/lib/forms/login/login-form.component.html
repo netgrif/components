@@ -38,10 +38,10 @@
         </div>
     </form>
 
-    <mat-divider *ngIf="registerResetButtons" class="position-relative"></mat-divider>
+    <mat-divider *ngIf="showSignUpButton || showForgottenPasswordButton" class="position-relative"></mat-divider>
 
-    <div *ngIf="registerResetButtons" fxLayout="row" class="width-100" fxLayoutAlign="space-between" fxLayoutGap="16px">
-        <button mat-stroked-button (click)="resetEmit()">{{ 'forms.login.reset' | translate}}</button>
-        <button mat-stroked-button (click)="signUpEmit()" color="accent">{{ 'forms.login.sign' | translate}}</button>
+    <div *ngIf="showSignUpButton || showForgottenPasswordButton" fxLayout="row" class="width-100" [fxLayoutAlign]="getButtonsFxLayoutAlign()" fxLayoutGap="16px">
+        <button mat-stroked-button *ngIf="showForgottenPasswordButton" (click)="resetEmit()">{{ 'forms.login.reset' | translate}}</button>
+        <button mat-stroked-button *ngIf="showSignUpButton" (click)="signUpEmit()" color="accent">{{ 'forms.login.sign' | translate}}</button>
     </div>
 </div>
