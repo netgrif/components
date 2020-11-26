@@ -206,7 +206,8 @@
         },
         "login": {
             "length": "Prihlasovacie meno musí mať aspoň 4 písmená",
-            "login": "Prihlásiť",
+            "login": "Prihlasovacie meno",
+            "loginButton": "Prihlásiť",
             "reset": "Obnova hesla",
             "sign": "Registrovať",
             "enterPass": "Zadajte svoje heslo"
