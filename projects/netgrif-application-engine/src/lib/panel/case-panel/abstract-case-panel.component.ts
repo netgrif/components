@@ -6,7 +6,13 @@ import {HeaderColumn} from '../../header/models/header-column';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
+import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
+import {CaseViewService} from '../../view/case-view/service/case-view-service';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {LoggerService} from '../../logger/services/logger.service';
+import {OverflowService} from '../../header/services/overflow.service';
+
 
 export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding {
 
@@ -19,7 +25,9 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
 
-    constructor(protected _translate: TranslateService) {
+    protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
+                          protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
+                          protected _log: LoggerService, protected _overflowService: OverflowService) {
         super();
     }
 
@@ -61,7 +69,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
                 case 'user':
                     return {value: immediate.value.fullName, icon: 'account_circle'};
                 case 'boolean':
-                    return {value: this._translate.instant('dataField.values.boolean.' + immediate.value), icon: undefined};
+                    return {value: this._translateService.instant('dataField.values.boolean.' + immediate.value), icon: undefined};
                 default:
                     // TODO 8.4.2020 - File field value rendering once file field works
                     // TODO 8.4.2020 - User field value rendering once user field works
@@ -72,4 +80,24 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
         }
     }
 
+    public deleteCase() {
+        this._caseResourceService.deleteCase(this.case_.stringId).subscribe(data => {
+            if (data.success) {
+                this._caseViewService.reload();
+            } else if (data.error) {
+                this.throwError(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
+            }
+        }, error => {
+            this.throwError(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
+        });
+    }
+
+    private throwError(message: string) {
+        this._snackBarService.openErrorSnackBar(message);
+        this._log.error(message);
+    }
+
+    public getMinWidth() {
+        return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
+    }
 }

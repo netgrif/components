@@ -6,14 +6,17 @@
 </nc-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
-    <mat-form-field [appearance]="dataField.materialAppearance" class="full-width" color="primary">
-        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
-        <input matInput
-               type="number"
-               [formControl]="formControl"
-               [placeholder]="dataField.placeholder"
-               [required]="dataField.behavior.required">
-        <mat-hint>{{dataField.description}}</mat-hint>
-        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
-    </mat-form-field>
+    <div [ngSwitch]="resolveComponent()">
+        <nc-number-currency-field *ngSwitchCase="'currency'"
+                                 [dataField]="dataField"
+                                 [formControlRef]="formControl"
+                                 [showLargeLayout] = showLargeLayout>
+        </nc-number-currency-field>
+        <nc-number-default-field *ngSwitchDefault
+                                 [dataField]="dataField"
+                                 [formControlRef]="formControl"
+                                 [showLargeLayout] = showLargeLayout>
+        </nc-number-default-field>
+    </div>
+
 </ng-template>

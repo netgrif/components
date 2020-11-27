@@ -19,10 +19,19 @@ export class WorkflowHeaderService extends AbstractHeaderService {
     protected createMetaHeaders(): Array<HeaderColumn> {
         return [
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.INITIALS, 'headers.workflowMeta.initials', 'text'),
-            new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.TITLE, 'headers.caseMeta.title', 'text'),
+            new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.TITLE, 'headers.workflowMeta.title', 'text'),
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.VERSION, 'headers.workflowMeta.version', 'text'),
-            new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.AUTHOR, 'headers.caseMeta.author', 'text'),
+            new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.AUTHOR, 'headers.workflowMeta.author', 'text'),
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.CREATION_DATE, 'headers.workflowMeta.creationDate', 'date'),
         ];
+    }
+
+    protected saveState() {
+    }
+
+    protected saveNewState() {
+    }
+
+    protected restoreLastState() {
     }
 }

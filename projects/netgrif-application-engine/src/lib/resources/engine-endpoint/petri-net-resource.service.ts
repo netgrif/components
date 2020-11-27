@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
+import {filter, map, switchMap} from 'rxjs/operators';
 import {PetriNet} from '../interface/petri-net';
 import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
-import {changeType, getResourceAddress, getResourcePage} from '../resource-utility-functions';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
 import {HttpEventType, HttpParams} from '@angular/common/http';
@@ -13,21 +12,16 @@ import {MessageResource, PetriNetMessageResource} from '../interface/message-res
 import {PetriNetReference} from '../interface/petri-net-reference';
 import {PetriNetRequestBody} from '../interface/petri-net-request-body';
 import {Page} from '../interface/page';
+import {processMessageResponse} from '../../utility/process-message-response';
+import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PetriNetResourceService {
-    /**
-     * @ignore
-     */
-    private SERVER_URL: string;
+export class PetriNetResourceService extends AbstractResourceService {
 
-    /**
-     * @ignore
-     */
-    protected constructor(protected provider: ResourceProvider, protected _configService: ConfigurationService) {
-        this.SERVER_URL = getResourceAddress('petrinet', this._configService.get().providers.resources);
+    constructor(provider: ResourceProvider, configService: ConfigurationService) {
+        super('petrinet', provider, configService);
     }
 
     /**
@@ -38,8 +32,8 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet
      */
     public getAll(params?: Params): Observable<Array<PetriNetReference>> {
-        return this.provider.get$('petrinet', this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, 'petriNetReferences')));
+        return this._resourceProvider.get$('petrinet', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, 'petriNetReferences')));
     }
 
     /**
@@ -50,8 +44,8 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/data
      */
     public getDataPetriNet(body: object): Observable<any> {  // TODO: response
-        return this.provider.post$('petrinet/data', this.SERVER_URL, body)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('petrinet/data', this.SERVER_URL, body)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -62,8 +56,8 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/transitions
      */
     public getPetriNetTranstions(netId: string): Observable<Array<Transition>> {
-        return this.provider.get$('/petrinet/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
-            .pipe(map(r => changeType(r, 'transitionReferences')));
+        return this._resourceProvider.get$('/petrinet/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
+            .pipe(map(r => this.changeType(r, 'transitionReferences')));
     }
 
     /**
@@ -74,8 +68,8 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}/transactions
      */
     public getPetriNetTransactions(netId: string, params?: Params): Observable<Array<Transaction>> {
-        return this.provider.get$('/petrinet/' + netId + '/transactions', this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, 'transactions')));
+        return this._resourceProvider.get$('/petrinet/' + netId + '/transactions', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, 'transactions')));
     }
 
     /**
@@ -86,8 +80,8 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}/roles
      */
     public getPetriNetRoles(netId: string, params?: Params): Observable<Array<NetRole>> {
-        return this.provider.get$('/petrinet/' + netId + '/roles', this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, 'processRoles')));
+        return this._resourceProvider.get$('/petrinet/' + netId + '/roles', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, 'processRoles')));
     }
 
     /**
@@ -98,8 +92,8 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{netId}/file
      */
     public getNetFile(netId: string, params?: Params): Observable<any> {  // TODO: response
-        return this.provider.get$('petrinet/' + netId + '/file', this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('petrinet/' + netId + '/file', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -110,8 +104,8 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{identifier}/{version}
      */
     public getOne(identifier: string, version: string, params?: Params): Observable<PetriNetReference> {
-        return this.provider.get$('petrinet/' + identifier + '/' + version, this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, 'petriNetReferences')));
+        return this._resourceProvider.get$('petrinet/' + identifier + '/' + version, this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, 'petriNetReferences')));
     }
 
     /**
@@ -122,8 +116,8 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}
      */
     public getOneById(netId: string, params?: Params): Observable<PetriNet> {
-        return this.provider.get$('petrinet/' + netId, this.SERVER_URL, params)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('petrinet/' + netId, this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
 
@@ -135,7 +129,7 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/import
      */
     public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | PetriNetMessageResource> {
-        return this.provider.postWithEvent$<MessageResource>('petrinet/import', this.SERVER_URL, body, params).pipe(
+        return this._resourceProvider.postWithEvent$<MessageResource>('petrinet/import', this.SERVER_URL, body, params).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:
@@ -159,7 +153,21 @@ export class PetriNetResourceService {
      * **Request URL:** {{baseUrl}}/api/petrinet/search
      */
     public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
-        return this.provider.post$('petrinet/search', this.SERVER_URL, body, params)
-            .pipe(map(r => getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
+        return this._resourceProvider.post$('petrinet/search', this.SERVER_URL, body, params)
+            .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
+    }
+
+    /**
+     * delete PetriNet
+     *
+     * **Request Type:** DELETE
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/{id}
+     *
+     * @param netId stringId of the deleted Petri Net
+     */
+    public deletePetriNet(netId: string): Observable<MessageResource> {
+        return this._resourceProvider.delete$<MessageResource>('petrinet/' + netId, this.SERVER_URL)
+            .pipe(switchMap(processMessageResponse));
     }
 }

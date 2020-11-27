@@ -2,14 +2,14 @@ import {EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
 
-export abstract class AbstractForgottenPasswordFormComponent implements OnInit, HasForm {
+export abstract class AbstractEmailSubmissionFormComponent implements OnInit, HasForm {
 
     public rootFormGroup: FormGroup;
 
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
     @Output() public goBackButton: EventEmitter<void>;
 
-    constructor(formBuilder: FormBuilder) {
+    protected constructor(formBuilder: FormBuilder) {
         this.rootFormGroup = formBuilder.group({
             email: ['', Validators.email]
         });

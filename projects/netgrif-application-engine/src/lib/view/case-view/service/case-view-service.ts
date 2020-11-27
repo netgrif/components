@@ -72,6 +72,8 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
             scan((acc, pageLoadResult) => {
                 if (pageLoadResult.requestContext === null) {
                     return pageLoadResult.cases;
+                } else {
+                    this._loading$.off(pageLoadResult.requestContext.filter);
                 }
                 Object.assign(this._pagination, pageLoadResult.requestContext.pagination);
                 return {...acc, ...pageLoadResult.cases};
@@ -141,8 +143,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
                     return {...acc, [cur.stringId]: cur};
                 }, {});
             }),
-            map(cases => ({cases, requestContext})),
-            tap(_ => this._loading$.off(requestContext.filter))
+            map(cases => ({cases, requestContext}))
         );
     }
 
