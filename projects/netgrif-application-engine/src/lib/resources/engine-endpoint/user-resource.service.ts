@@ -28,7 +28,8 @@ export class UserResourceService extends AbstractResourceService {
      * **Request URL:** {{baseUrl}}/api/user/{id}/authority/assign
      */
     public assignAuthority(userId: string, body: object, params?: Params): Observable<MessageResource> {
-        return this._resourceProvider.post$('user/' + userId + '/authority/assign', this.SERVER_URL, body, params)
+        return this._resourceProvider.post$('user/' + userId + '/authority/assign', this.SERVER_URL, body, params,
+            {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
