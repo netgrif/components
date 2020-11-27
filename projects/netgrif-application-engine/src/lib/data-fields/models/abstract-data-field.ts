@@ -138,8 +138,8 @@ export abstract class DataField<T> {
     set value(value: T) {
         if (!this.valueEquality(this._value.getValue(), value)) {
             this._changed = true;
+            this.resolvePrevValue(value);
         }
-        this.resolvePrevValue(value);
         this._value.next(value);
     }
 
@@ -193,6 +193,11 @@ export abstract class DataField<T> {
 
     get component(): Component {
         return this._component;
+    }
+
+    public revertToPreviousValue(): void {
+        this.value = this.prevValue;
+        this.changed = false;
     }
 
     public update(): void {
@@ -334,7 +339,8 @@ export abstract class DataField<T> {
     public resolvePrevValue(value: T): void {
         if (this._value.getValue() !== undefined
             && this._prevValue.getValue() !== undefined
-            && this._prevValue.getValue() !== value) {
+            && this._prevValue.getValue() !== value
+            && this._value.getValue() !== value) {
             this._prevValue.next(this._value.getValue());
         }
     }

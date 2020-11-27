@@ -309,7 +309,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
                 if (field.initialized && field.valid && field.changed) {
-                    field.value = field.prevValue;
+                    field.revertToPreviousValue();
                 }
             });
         });
