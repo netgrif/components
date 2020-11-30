@@ -10,7 +10,7 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
     @Input() dataField: ButtonField;
 
     protected constructor(protected _translate: TranslateService,
-                          protected dialogService: DialogService,
+                          protected _dialogService: DialogService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
     }
@@ -21,17 +21,24 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
         }
     }
 
-    public resolveComponentType() {
-        if (this.dataField.component !== undefined) {
+    /**
+     * This function resolve type of component for HTML
+     * @returns type of component in string
+     */
+    public resolveComponentType(): string {
+        if (this.dataField.component && this.dataField.component.name !== undefined) {
             return this.dataField.component.name;
         }
         return this.dataField.view;
     }
 
-    public resolveValue() {
+    /**
+     * This function depends on type of component, if had dialogText provided in component, then its open a dialog with that text
+     */
+    public resolveValue(): void {
         if (this.dataField.component && this.dataField.component.properties &&
             this.dataField.component.properties.dialogText !== undefined) {
-            const dialogRef = this.dialogService.openConfirmDialog(this.dataField.component.properties.dialogTitle,
+            const dialogRef = this._dialogService.openConfirmDialog(this.dataField.component.properties.dialogTitle,
                 this.dataField.component.properties.dialogText, this._translate.instant('dialog.close'),
                 this._translate.instant('dialog.submit'));
             dialogRef.afterClosed().subscribe(result => {
