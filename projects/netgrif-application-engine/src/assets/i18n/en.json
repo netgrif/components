@@ -165,7 +165,8 @@
             "dateRange": "Entered date must be between {{left}} and {{right}}",
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day",
-            "enumeration": "One of the options must be selected"
+            "enumeration": "One of the options must be selected",
+            "min": "Entered number must be greater than {{length}}"
         },
         "snackBar": {
             "downloadFail": " failed to download",
@@ -205,7 +206,8 @@
         },
         "login": {
             "length": "The login name must have at least 4 letters",
-            "login": "Login",
+            "login": "Username",
+            "loginButton": "Log in",
             "reset": "Reset password",
             "sign": "Sign Up",
             "enterPass": "Enter your password"
@@ -250,7 +252,10 @@
         },
         "orderMode": "Ordering mode",
         "searchMode": "Search mode",
-        "editMode": "Enable edit mode"
+        "editMode": "Enable edit mode",
+        "overflowMode": "Table mode",
+        "columnWidth": "Column width",
+        "columnCount": "Number of columns"
     },
     "panel": {
         "case": {
@@ -293,6 +298,7 @@
         "process-list": {
             "newestVersion": "Newest version",
             "listTitle": "Processes",
+            "roles": "Roles",
             "noRoles": "There are no roles in the process",
             "noProcessesWereFound": "There are no processes in the system at the moment"
         },

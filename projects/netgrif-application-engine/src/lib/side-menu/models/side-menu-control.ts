@@ -11,7 +11,9 @@ export class SideMenuControl {
     constructor(bindingsFunction: (event$: Subject<SideMenuEvent>) => void = () => {},
                 sideMenuOpenedStateChange: Observable<boolean> = of(true),
                 private sideMenuCloseFunction: () => Observable<MatDrawerToggleResult>,
-                private readonly _injectionData?: SideMenuInjectionData) {
+                private readonly _injectionData?: SideMenuInjectionData,
+                public isVersionVisible?: boolean,
+                public allVersionEnabled?: boolean) {
         this._event$ = new Subject<SideMenuEvent>();
         bindingsFunction(this._event$);
         sideMenuOpenedStateChange.subscribe((opened) => {

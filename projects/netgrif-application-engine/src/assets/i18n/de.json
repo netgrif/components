@@ -165,7 +165,8 @@
             "dateRange": "Das eingegebene Datum muss zwischen {{left}} und {{right}} liegen",
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
             "workday": "Das eingegebene Datum muss ein Wochentag sein",
-            "enumeration": "One of the options must be selected"
+            "enumeration": "Eine von der angebotenen Optionen muss ausgewählt sein",
+            "min": "Die eingegebene Nummer muss größer als {{length}} sein"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",
@@ -205,7 +206,8 @@
         },
         "login": {
             "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
-            "login": "Anmelden",
+            "login": "Benützername",
+            "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
             "enterPass": "Ihre Kennwort eingeben"
@@ -250,7 +252,10 @@
         },
         "orderMode": "Anordnungsmodus",
         "searchMode": "Suchmodus",
-        "editMode": "Editationsmodus einschalten"
+        "editMode": "Editationsmodus einschalten",
+        "overflowMode": "Tabellenmodus",
+        "columnWidth": "Spaltenbreite",
+        "columnCount": "Spaltenanzahl"
     },
     "panel": {
         "case": {
@@ -293,6 +298,7 @@
         "process-list": {
             "newestVersion": "Neuste Version",
             "listTitle": "Prozesse",
+            "roles": "Rollen",
             "noRoles": "Dieser Prozess enthält keine Rollen",
             "noProcessesWereFound": "Derzeit befinden sich keine Prozesse im System"
         },
