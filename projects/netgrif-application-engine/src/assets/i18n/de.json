@@ -206,7 +206,8 @@
         },
         "login": {
             "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
-            "login": "Anmelden",
+            "login": "Benützername",
+            "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
             "enterPass": "Ihre Kennwort eingeben"
