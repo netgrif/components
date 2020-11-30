@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="24px">
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="8px">
     <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle</mat-icon>
@@ -26,22 +26,21 @@
                 </button>
             </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-2x" class="margin-top-4">
+        <div fxLayout="row" [fxLayoutAlign]="getButtonsFxLayoutAlign()" fxLayoutAlign.xs="center" class="margin-top-4">
+            <button mat-stroked-button *ngIf="showForgottenPasswordButton && !showSignUpButton" (click)="resetEmit()" color="primary" class="margin-left-40">{{ 'forms.login.reset' | translate}}</button>
+            <button mat-stroked-button *ngIf="showSignUpButton" (click)="signUpEmit()" color="primary" class="margin-left-40">{{ 'forms.login.sign' | translate}}</button>
             <button color="primary" type="submit" mat-raised-button fxLayout="row" fxLayoutAlign="center center">
                 <mat-spinner *ngIf="loading | async"
                              mode="indeterminate"
                              diameter="36"
                              color="accent"
                              fxFlex></mat-spinner>
-                <span *ngIf="(loading | async) === false" fxFlex>{{ 'forms.login.login' | translate}}</span>
+                <span *ngIf="(loading | async) === false" fxFlex>{{ 'forms.login.loginButton' | translate}}</span>
             </button>
         </div>
     </form>
 
-    <mat-divider *ngIf="registerResetButtons" class="position-relative"></mat-divider>
-
-    <div *ngIf="registerResetButtons" fxLayout="row" class="width-100" fxLayoutAlign="space-between" fxLayoutGap="16px">
-        <button mat-stroked-button (click)="resetEmit()">{{ 'forms.login.reset' | translate}}</button>
-        <button mat-stroked-button (click)="signUpEmit()" color="accent">{{ 'forms.login.sign' | translate}}</button>
+    <div *ngIf="showSignUpButton && showForgottenPasswordButton" fxLayout="row" class="width-100" fxLayoutAlign="end">
+        <button mat-button *ngIf="showForgottenPasswordButton" (click)="resetEmit()" color="primary">{{ 'forms.login.reset' | translate}}</button>
     </div>
 </div>
