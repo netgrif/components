@@ -137,7 +137,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                             });
                         }
                     });
-                    this._safeTask.dataSize += group.fields.length;
+                    this._safeTask.dataSize === undefined ?
+                        this._safeTask.dataSize = group.fields.length :
+                        this._safeTask.dataSize += group.fields.length;
                 });
             }
             this._taskState.stopLoading(gottenTaskId);
@@ -178,6 +180,11 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      */
     public updateTaskDataFields(afterAction = new Subject<boolean>()): void {
         if (!this.isTaskPresent()) {
+            return;
+        }
+
+        if (this._safeTask.user === undefined) {
+            this._log.debug('current task is not assigned...');
             return;
         }
 

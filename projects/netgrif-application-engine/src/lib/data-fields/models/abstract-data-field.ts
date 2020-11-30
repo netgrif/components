@@ -154,6 +154,11 @@ export abstract class DataField<T> {
         this._prevValue.next(value);
     }
 
+    public valueWithoutChange(value: T) {
+        this._changed = false;
+        this._value.next(value);
+    }
+
     set layout(layout: Layout) {
         this._layout = layout;
     }
