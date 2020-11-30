@@ -4,10 +4,13 @@
         <ng-template matStepLabel>{{'side-menu.new-case.choose' | translate}}</ng-template>
         <mat-form-field>
             <input type="text" matInput [formControl]="processFormControl" [matAutocomplete]="auto" required
-                   (keyup.enter)="nextStep()">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                   (keyup.enter)="nextStep()" (change)="checkVersion(processFormControl.value)">
+            <span class="version-span" *ngIf="isVersionVisible" matSuffix>{{netVersion}}</span>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                              (optionSelected)="showVersion($event.option)">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                     {{option.viewValue}}
+                    <span class="version-span" *ngIf="isVersionVisible">{{option.version}}</span>
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>

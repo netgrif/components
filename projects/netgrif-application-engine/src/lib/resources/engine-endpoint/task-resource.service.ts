@@ -82,7 +82,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      */
     // {{baseUrl}}/api/task/delegate/:id
     public delegateTask(taskId: string, body: object): Observable<EventOutcome> {
-        return this._resourceProvider.post$('task/delegate/' + taskId, this.SERVER_URL, body)
+        return this._resourceProvider.post$('task/delegate/' + taskId, this.SERVER_URL, body, undefined, {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
 
