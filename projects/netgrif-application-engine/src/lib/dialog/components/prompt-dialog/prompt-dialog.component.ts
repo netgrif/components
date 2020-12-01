@@ -29,11 +29,10 @@ export class PromptDialogComponent extends AbstractDialog<PromptDialogComponent>
         super(dialogRef, data);
     }
 
-    onClose() {
-        this.dialogRef.close({
-            prompt: this.prompt,
-            submitted: this.submitClick
-        });
+    onClose(isSubmitted: boolean) {
+        this.dialogRef.close(isSubmitted ? {
+            prompt: this.prompt
+        } : {});
     }
 
 }
