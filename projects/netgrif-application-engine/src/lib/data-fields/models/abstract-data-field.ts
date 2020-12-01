@@ -21,7 +21,7 @@ export abstract class DataField<T> {
      * @ignore
      * Previous value of the data field
      */
-    protected _prevValue: BehaviorSubject<T>;
+    protected _previousValue: BehaviorSubject<T>;
     /**
      * @ignore
      * Whether the data field Model object was initialized.
@@ -88,7 +88,7 @@ export abstract class DataField<T> {
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout, private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
-        this._prevValue = new BehaviorSubject<T>(initialValue);
+        this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new ReplaySubject<true>(1);
         this._initialized = false;
         this._valid = true;
@@ -146,12 +146,12 @@ export abstract class DataField<T> {
         this._value.next(value);
     }
 
-    get prevValue() {
-        return this._prevValue.getValue();
+    get previousValue() {
+        return this._previousValue.getValue();
     }
 
-    set prevValue(value: T) {
-        this._prevValue.next(value);
+    set previousValue(value: T) {
+        this._previousValue.next(value);
     }
 
     public valueWithoutChange(value: T) {
@@ -213,7 +213,7 @@ export abstract class DataField<T> {
 
     public revertToPreviousValue(): void {
         this.changed = false;
-        this.value = this.prevValue;
+        this.value = this.previousValue;
     }
 
     get sendInvalidValues(): boolean {
@@ -353,10 +353,10 @@ export abstract class DataField<T> {
 
     public resolvePrevValue(value: T): void {
         if (this._value.getValue() !== undefined
-            && this._prevValue.getValue() !== undefined
-            && this._prevValue.getValue() !== value
+            && this._previousValue.getValue() !== undefined
+            && this._previousValue.getValue() !== value
             && this._value.getValue() !== value) {
-            this._prevValue.next(this._value.getValue());
+            this._previousValue.next(this._value.getValue());
         }
     }
 }
