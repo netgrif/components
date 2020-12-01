@@ -6,10 +6,19 @@
 <ng-template #loginFormExample>
     <nc-authentication-overlay>
         <div class="login-form-container" fxLayout="row" fxLayoutAlign="center center">
-            <div fxLayout="column" fxLayoutAlign="stretch">
-                <div fxLayout="row" fxLayoutAlign="center" fxFlexOffset="16px">
+            <div fxLayout="column" fxLayoutAlign="stretch" class="full-width">
+                <div fxLayout="row" fxLayoutAlign="space-between start" fxFlexOffset="16px" class="full-width">
                     <mat-card fxFlex="100" class="card-width">
                         <nc-login-form (login)="onLogin($event)"></nc-login-form>
+                    </mat-card>
+                    <mat-card fxFlex="100" class="card-width">
+                        <nc-login-form (login)="onLogin($event)" [showSignUpButton]="true"></nc-login-form>
+                    </mat-card>
+                    <mat-card fxFlex="100" class="card-width">
+                        <nc-login-form (login)="onLogin($event)" [showForgottenPasswordButton]="true"></nc-login-form>
+                    </mat-card>
+                    <mat-card fxFlex="100" class="card-width">
+                        <nc-login-form (login)="onLogin($event)" [showSignUpButton]="true" [showForgottenPasswordButton]="true"></nc-login-form>
                     </mat-card>
                 </div>
             </div>
