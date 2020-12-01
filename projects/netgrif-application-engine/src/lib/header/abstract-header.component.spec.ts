@@ -5,7 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {of} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, Optional} from '@angular/core';
 import {AbstractHeaderComponent} from './abstract-header.component';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -26,6 +26,8 @@ import {MaterialModule} from '../material/material.module';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {HeaderSearchService} from '../search/header-search-service/header-search.service';
 import {CategoryFactory} from '../search/category-factory/category-factory';
+import {TranslateService} from '@ngx-translate/core';
+import {OverflowService} from './services/overflow.service';
 
 describe('AbstractHeaderComponent', () => {
     let component: TestHeaderComponent;
@@ -84,7 +86,9 @@ describe('AbstractHeaderComponent', () => {
     template: ''
 })
 class TestHeaderComponent extends AbstractHeaderComponent {
-    constructor(protected _injector: Injector) {
-        super(_injector);
+    constructor(protected _injector: Injector,
+                protected _translate: TranslateService,
+                @Optional() protected overflowService: OverflowService) {
+        super(_injector, _translate, overflowService);
     }
 }

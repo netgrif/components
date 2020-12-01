@@ -120,8 +120,7 @@ export abstract class TaskContentService implements OnDestroy {
                     const updatedField = chFields[field.stringId];
                     Object.keys(updatedField).forEach(key => {
                         if (key === 'value') {
-                            field.value = this._fieldConverterService.formatValueFromBackend(field, updatedField[key]);
-                            field.changed = false;
+                            field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
                         } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
                             field.behavior = updatedField.behavior[this._task.transitionId];
                         } else if (key === 'choices') {

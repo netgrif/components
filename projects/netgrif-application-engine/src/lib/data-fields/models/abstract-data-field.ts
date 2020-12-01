@@ -71,6 +71,10 @@ export abstract class DataField<T> {
      */
     private _validRequired: boolean;
     /**
+     * Whether invalid field values should be sent to backend.
+     */
+    private _sendInvalidValues = false;
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -92,7 +96,6 @@ export abstract class DataField<T> {
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
         this._validRequired = true;
-        this._component = this.resolveComponent(this._component);
     }
 
     get stringId(): string {
@@ -139,6 +142,11 @@ export abstract class DataField<T> {
         if (!this.valueEquality(this._value.getValue(), value)) {
             this._changed = true;
         }
+        this._value.next(value);
+    }
+
+    public valueWithoutChange(value: T) {
+        this._changed = false;
         this._value.next(value);
     }
 
@@ -200,6 +208,14 @@ export abstract class DataField<T> {
 
     get validRequired(): boolean {
         return this._validRequired;
+    }
+
+    get sendInvalidValues(): boolean {
+        return this._sendInvalidValues;
+    }
+
+    set sendInvalidValues(value: boolean | null) {
+        this._sendInvalidValues = value !== null && value;
     }
 
     public update(): void {
@@ -323,15 +339,6 @@ export abstract class DataField<T> {
             appearance = this.layout.appearance;
         }
         this.materialAppearance = appearance;
-    }
-
-    private resolveComponent(component: Component): Component {
-        if (component === undefined) {
-            const comp = new Component();
-            comp.name = 'default';
-            return comp;
-        }
-        return component;
     }
 
     protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {

@@ -1,4 +1,4 @@
-import {AfterViewInit, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ElementRef, Inject, Input, OnInit, Optional, ViewChild} from '@angular/core';
 import {FileField} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -6,6 +6,8 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
+import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 export interface FileState {
     progress: number;
@@ -47,12 +49,15 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _log Logger service
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
+     * @param informAboutInvalidData whether the backend should be notified about invalid values.
+     * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      */
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
-                          protected _translate: TranslateService) {
-        super();
+                          protected _translate: TranslateService,
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
         this.state = this.defaultState;
     }
 
@@ -123,6 +128,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
+                this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 this._log.debug(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
                 );

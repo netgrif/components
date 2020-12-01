@@ -7,7 +7,7 @@ import {
     ConfigurationService,
     CovalentModule,
     DialogModule,
-    MaterialModule,
+    MaterialModule, NAE_NET_ALL_VERSIONS, NAE_NET_VERSION_VISIBLE,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
     NAE_SNACKBAR_VERTICAL_POSITION,
     ResourceProvider,
@@ -41,7 +41,7 @@ import {TabbedViewsExampleComponent} from './doc/tabbed-case-view/tabbed-views-e
 import {TabbedTaskViewComponent} from './doc/tabbed-case-view/tabbed-task-view/tabbed-task-view.component';
 import {WorkflowViewExampleComponent} from './doc/workflow-view-example/workflow-view-example.component';
 import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
-import {PasswordFormComponent} from './doc/forms/password-form/password-form.component';
+import {PasswordFormComponent} from './doc/forms/email-form/password-form.component';
 import {RegisterFormComponent} from './doc/forms/register-form/register-form.component';
 import {HeadersComponent} from './doc/headers/headers.component';
 import {PanelsComponent} from './doc/panels/panels.component';
@@ -63,7 +63,7 @@ import {
     AuthenticationComponentModule,
     CaseViewComponentModule,
     DashboardComponentModule,
-    DataFieldsComponentModule,
+    DataFieldsComponentModule, EmailSubmissionFormComponentModule,
     ForgottenPasswordFormComponentModule,
     HeaderComponentModule,
     LoginFormComponentModule,
@@ -82,6 +82,7 @@ import {
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { ResetPasswordFormComponent } from './doc/forms/reset-password-form/reset-password-form.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -120,7 +121,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         RolesAssignComponent,
         TreeViewExampleComponent,
         UserInviteComponent,
-        ExamplePortalCardComponent
+        ExamplePortalCardComponent,
+        ResetPasswordFormComponent
     ],
     imports: [
         BrowserModule,
@@ -167,6 +169,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TreeCaseViewComponentModule,
         WorkflowViewComponentModule,
         NgxChartsModule,
+        EmailSubmissionFormComponentModule,
     ],
     entryComponents: [
         ContentComponent,
@@ -198,7 +201,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ButtonsNavComponent,
         RolesAssignComponent,
         TreeViewExampleComponent,
-        ExamplePortalCardComponent
+        ExamplePortalCardComponent,
+        ResetPasswordFormComponent
     ],
     providers: [{
         provide: ConfigurationService,
