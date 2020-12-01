@@ -5,7 +5,7 @@
 <div class="horizontal-stepper" fxLayout="row">
     <div class="horizontal-step">
         <ng-template ngFor let-option [ngForOf]="enumerationField.choices" let-i="index">
-            <div class="horizontal-step-header">
+            <div class="horizontal-step-header" #oneStep>
                 <div class="horizontal-state" [ngClass]="{'horizontal-state-primary': canShowDoneIcon(i), 'horizontal-state-secondary': !canShowDoneIcon(i)}">
                     <mat-icon *ngIf="canShowDoneIcon(i + 1)">done</mat-icon>
                 </div>
