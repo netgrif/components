@@ -10,7 +10,7 @@
             </mat-form-field>
         </div>
         <div *ngIf="displayLegalNotice">
-            {{'legal.bySubmitting' | translate}}
+            {{'legal.byClicking' | translate:{'buttonName': ('dialog.submit'| translate)} }}
             {{'legal.youIndicate' | translate}}
             <a [href]="termsOfServiceLink">{{'legal.termsOfService' | translate}}</a>
             {{'legal.and' | translate}}
