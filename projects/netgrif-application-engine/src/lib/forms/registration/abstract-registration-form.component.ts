@@ -7,19 +7,20 @@ import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TranslateService} from '@ngx-translate/core';
-import {ConfigurationService} from '../../configuration/configuration.service';
+import {Input} from '@angular/core';
 
 /**
  * Holds the logic of the `RegistrationFormComponent`.
  */
 export abstract class AbstractRegistrationFormComponent extends AbstractRegistrationComponent {
 
+    @Input() public displayLegalNotice = true;
+
     protected constructor(formBuilder: FormBuilder,
                           signupService: SignUpService,
                           log: LoggerService,
-                          translate: TranslateService,
-                          config: ConfigurationService) {
-        super(signupService, log, translate, config);
+                          translate: TranslateService) {
+        super(signupService, log, translate);
         this.rootFormGroup = formBuilder.group({
             name: ['', Validators.required],
             surname: ['', Validators.required],

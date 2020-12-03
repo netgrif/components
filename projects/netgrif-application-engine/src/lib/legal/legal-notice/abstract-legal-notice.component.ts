@@ -2,17 +2,14 @@ import {Input} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Services} from '../../configuration/interfaces/schema';
 
-/**
- * Holds the logic for components that can display the legal notice.
- */
-export abstract class AbstractLegalFormComponent {
+export abstract class AbstractLegalNoticeComponent {
 
-    @Input() public displayLegalNotice = true;
+    @Input() buttonName: string;
 
     protected _legalConfig: Services['legal'];
 
-    protected constructor(configService: ConfigurationService) {
-        this._legalConfig = configService.getConfigurationSubtree(['services', 'legal']);
+    protected constructor(config: ConfigurationService) {
+        this._legalConfig = config.getConfigurationSubtree(['services', 'legal']);
     }
 
     public get termsOfServiceLink(): string {

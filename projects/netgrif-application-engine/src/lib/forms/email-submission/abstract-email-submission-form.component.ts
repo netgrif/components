@@ -1,18 +1,17 @@
-import {EventEmitter, OnInit, Output} from '@angular/core';
+import {EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {AbstractLegalFormComponent} from '../models/abstract-legal-form.component';
 
-export abstract class AbstractEmailSubmissionFormComponent extends AbstractLegalFormComponent implements OnInit, HasForm {
+export abstract class AbstractEmailSubmissionFormComponent implements OnInit, HasForm {
 
     public rootFormGroup: FormGroup;
+
+    @Input() public displayLegalNotice = true;
 
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
     @Output() public goBackButton: EventEmitter<void>;
 
-    protected constructor(formBuilder: FormBuilder, config: ConfigurationService) {
-        super(config);
+    protected constructor(formBuilder: FormBuilder) {
         this.rootFormGroup = formBuilder.group({
             email: ['', Validators.email]
         });

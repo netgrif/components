@@ -8,13 +8,11 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractLegalFormComponent} from './abstract-legal-form.component';
-import {ConfigurationService} from '../../configuration/configuration.service';
 
 /**
  * Holds the logic that is shared between `RegistrationFormComponent` and `ForgottenPasswordFormComponent`.
  */
-export abstract class AbstractRegistrationComponent extends AbstractLegalFormComponent implements HasForm {
+export abstract class AbstractRegistrationComponent implements HasForm {
 
     protected readonly MIN_PASSWORD_LENGTH = 8;
 
@@ -36,9 +34,7 @@ export abstract class AbstractRegistrationComponent extends AbstractLegalFormCom
 
     protected constructor(protected _signupService: SignUpService,
                           protected _log: LoggerService,
-                          protected _translate: TranslateService,
-                          config: ConfigurationService) {
-        super(config);
+                          protected _translate: TranslateService) {
         this.hidePassword = true;
         this.hideRepeatPassword = true;
         this.formSubmit = new EventEmitter<FormSubmitEvent>();
