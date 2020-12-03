@@ -28,6 +28,7 @@ import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
+import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
 
 @Injectable({
     providedIn: 'root'
@@ -63,6 +64,7 @@ export class NaeExampleAppViewService extends ViewService {
             LoginFormComponent,
             AuthenticationComponent,
             RolesAssignComponent,
+            PublicTaskViewComponent,
             ResetPasswordFormComponent], configurationService, router, loggerService);
     }
 }

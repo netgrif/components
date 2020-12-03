@@ -350,6 +350,40 @@
                 "path": "tree-view"
             }
         },
+        "demo-public-view": {
+            "layout": {
+                "name": "publicTaskView",
+                "params": {
+                    "allowedNets": []
+                }
+            },
+            "component": {
+                "class": "PublicTaskViewComponent",
+                "from": "./doc/public-task-view/public-task-view.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "public-view/:petriNetId/:caseId"
+            }
+        },
+        "demo-public-view-case": {
+            "layout": {
+                "name": "publicTaskView",
+                "params": {
+                    "allowedNets": []
+                }
+            },
+            "component": {
+                "class": "PublicTaskViewComponent",
+                "from": "./doc/public-task-view/public-task-view.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "public-view/:petriNetId"
+            }
+        },
         "demo-navigation-test": {
             "component": {
                 "class": "NavigationExampleComponent",

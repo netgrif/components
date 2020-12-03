@@ -96,7 +96,7 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         if (this.titleFormControl.valid) {
             const newCase = {
                 title: this.titleFormControl.value,
-                color: 'black',
+                color: 'panel-primary-icon',
                 netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
             };
 

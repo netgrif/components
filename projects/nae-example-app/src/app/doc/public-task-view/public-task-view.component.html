@@ -1,0 +1,6 @@
+<div class="task-tab-background full-height">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
+        <nc-header #header type="task" class="task-panel-padding-mini"></nc-header>
+        <nc-task-list [tasks$]="tasks$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" (taskEvent)="logEvent($event)" fxFlex></nc-task-list>
+    </div>
+</div>
