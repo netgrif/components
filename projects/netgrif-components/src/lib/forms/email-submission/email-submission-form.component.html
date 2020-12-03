@@ -9,6 +9,14 @@
                 </mat-error>
             </mat-form-field>
         </div>
+        <div *ngIf="displayLegalNotice">
+            {{'legal.bySubmitting' | translate}}
+            {{'legal.youIndicate' | translate}}
+            <a [href]="termsOfServiceLink">{{'legal.termsOfService' | translate}}</a>
+            {{'legal.and' | translate}}
+            <a [href]="privacyPolicyLink">{{'legal.privacyNotice' | translate}}</a>
+            {{'legal.sentenceEnd' | translate}}
+        </div>
         <div fxLayout="row" class="margin-top-4">
             <button mat-icon-button fxLayoutAlign="start" (click)="emitGoBack()">
                 <mat-icon>arrow_back</mat-icon>

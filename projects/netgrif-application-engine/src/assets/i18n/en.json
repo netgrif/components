@@ -347,12 +347,12 @@
         }
     },
     "legal": {
-        "byClicking": "By clicking '{{buttonName}}'",
-        "bySubmitting": "By submitting the form",
-        "youIndicate": ", you are indicating that you have read and acknowledge the ",
+        "byClicking": "By clicking '{{buttonName}}',",
+        "bySubmitting": "By submitting the form,",
+        "youIndicate": "you are indicating that you have read and acknowledge the",
         "termsOfService": "Terms of Service",
-        "and": " and ",
-        "privacyNotice": "Privacy Notice",
-        "sentenceEnd": "."
+        "and": "and",
+        "privacyNotice": "Privacy Notice.",
+        "sentenceEnd": ""
     }
 }
