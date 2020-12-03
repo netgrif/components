@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractLegalNoticeComponent, ConfigurationService} from 'netgrif-application-engine';
+import {AbstractLegalNoticeComponent, ConfigurationService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-legal-notice',
