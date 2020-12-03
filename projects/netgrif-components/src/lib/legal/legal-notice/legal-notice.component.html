@@ -1,8 +1,8 @@
-<div>
+<div class="text-style">
     {{'legal.byClicking' | translate:{'buttonName': (buttonName | translate)} }}
     {{'legal.youIndicate' | translate}}
-    <a [href]="termsOfServiceLink">{{'legal.termsOfService' | translate}}</a>
+    <a [href]="termsOfServiceLink" [target]="'blank'">{{'legal.termsOfService' | translate}}</a>
     {{'legal.and' | translate}}
-    <a [href]="privacyPolicyLink">{{'legal.privacyNotice' | translate}}</a>
+    <a [href]="privacyPolicyLink" [target]="'blank'">{{'legal.privacyNotice' | translate}}</a>
     {{'legal.sentenceEnd' | translate}}
 </div>
