@@ -22,7 +22,8 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
     return factory.create('demo-public-view');
 };
 
-const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService, snackBarService: SnackBarService) => {
+const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
+                              caseResourceService: CaseResourceService, snackBarService: SnackBarService) => {
     if (route.snapshot.paramMap.get('caseId') === null && route.snapshot.paramMap.get('petriNetId') !== null) {
         process.getNet(route.snapshot.paramMap.get('petriNetId')).subscribe(net => {
             if (net) {
@@ -31,12 +32,9 @@ const searchServiceFactory = (router: Router, route: ActivatedRoute, process: Pr
                     color: 'panel-primary-icon',
                     netId: net.stringId
                 };
-                this._caseResourceService.createCase(newCase)
+                caseResourceService.createCase(newCase)
                     .subscribe(response => {
-                            router.navigate([route.url, {
-                                caseId: response.id,
-                                petriNetId: route.snapshot.paramMap.get('petriNetId')
-                            }]);
+                            router.navigate([route.snapshot.url.join('/') + '/' + response.stringId]);
                         }, error => {
                             snackBarService.openErrorSnackBar('Error while creating case ' + error);
                         }
@@ -66,7 +64,7 @@ const searchServiceFactory = (router: Router, route: ActivatedRoute, process: Pr
         {
             provide: SearchService,
             useFactory: searchServiceFactory,
-            deps: [Router, ActivatedRoute, ProcessService, SnackBarService]
+            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService]
         },
         {
             provide: TaskViewService,
