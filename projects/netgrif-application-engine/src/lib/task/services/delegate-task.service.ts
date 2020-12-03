@@ -115,7 +115,7 @@ export class DelegateTaskService extends TaskHandlingService {
      * @ignore
      * Reloads the task and emits `true` to the `afterAction` stream
      */
-    private completeSuccess(afterAction: Subject<boolean>): void {
+    protected completeSuccess(afterAction: Subject<boolean>): void {
         this._taskOperations.reload();
         this.sendNotification(true);
         afterAction.next(true);
@@ -125,7 +125,7 @@ export class DelegateTaskService extends TaskHandlingService {
      * Publishes a delegate notification to the {@link TaskEventService}
      * @param success whether the delegate operation was successful or not
      */
-    private sendNotification(success: boolean): void {
+    protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.DELEGATE, success));
     }
 }

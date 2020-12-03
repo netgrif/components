@@ -41,7 +41,7 @@ export class FinishPolicyService extends TaskHandlingService {
      *
      * @param afterAction the action that should be performed when the finish policy finishes
      */
-    private autoNoDataFinishPolicy(afterAction: Subject<boolean>): void {
+    protected autoNoDataFinishPolicy(afterAction: Subject<boolean>): void {
         if (this._safeTask.dataSize <= 0) {
             this._finishTaskService.validateDataAndFinish(afterAction);
             this._taskOperations.close();
@@ -59,7 +59,7 @@ export class FinishPolicyService extends TaskHandlingService {
      *
      * @param afterAction the action that should be performed when the finish policy finishes
      */
-    private manualFinishPolicy(afterAction: Subject<boolean>): void {
+    protected manualFinishPolicy(afterAction: Subject<boolean>): void {
         this._taskOperations.open();
         this._dataFocusPolicyService.performDataFocusPolicy();
         afterAction.next(true);
