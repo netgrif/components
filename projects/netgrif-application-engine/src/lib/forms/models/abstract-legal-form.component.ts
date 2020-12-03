@@ -12,8 +12,7 @@ export abstract class AbstractLegalFormComponent {
     protected _legalConfig: Services['legal'];
 
     protected constructor(configService: ConfigurationService) {
-        // TODO initialize
-        // this._legalConfig = configService.
+        this._legalConfig = configService.getConfigurationSubtree(['services', 'legal']);
     }
 
     public get termsOfServiceLink(): string {

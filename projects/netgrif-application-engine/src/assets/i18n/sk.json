@@ -345,5 +345,14 @@
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať"
         }
+    },
+    "legal": {
+        "byClicking": "Kliknutím na tlačidlo '{{buttonName}}'",
+        "bySubmitting": "Odoslaním formulára",
+        "youIndicate": " potvrdzujete, že ste prečítali a beriete na vedomie ",
+        "termsOfService": "podmienky služby",
+        "and": " a ",
+        "privacyNotice": "zásady ochrany osobných údajov",
+        "sentenceEnd": "."
     }
 }

@@ -345,5 +345,14 @@
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded"
         }
+    },
+    "legal": {
+        "byClicking": "By clicking '{{buttonName}}'",
+        "bySubmitting": "By submitting the form",
+        "youIndicate": ", you are indicating that you have read and acknowledge the ",
+        "termsOfService": "Terms of Service",
+        "and": " and ",
+        "privacyNotice": "Privacy Notice",
+        "sentenceEnd": "."
     }
 }
