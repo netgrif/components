@@ -882,6 +882,10 @@
         "dataFields": {
             "template": "material",
             "appearance": "outline"
+        },
+        "legal": {
+            "termsOfService": "https://netgrif.com/",
+            "privacyPolicy": "https://netgrif.com/"
         }
     }
 }
