@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractForgottenPasswordComponent, ConfigurationService, LoggerService, SignUpService} from '@netgrif/application-engine';
+import {AbstractForgottenPasswordComponent, LoggerService, SignUpService} from '@netgrif/application-engine';
 import {FormBuilder} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -12,8 +12,7 @@ export class ForgottenPasswordFormComponent extends AbstractForgottenPasswordCom
     constructor(formBuilder: FormBuilder,
                 signupService: SignUpService,
                 log: LoggerService,
-                translate: TranslateService,
-                config: ConfigurationService) {
-        super(formBuilder, signupService, log, translate, config);
+                translate: TranslateService) {
+        super(formBuilder, signupService, log, translate);
     }
 }

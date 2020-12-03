@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {AbstractRegistrationFormComponent, ConfigurationService, LoggerService, SignUpService} from '@netgrif/application-engine';
+import {AbstractRegistrationFormComponent, LoggerService, SignUpService} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -12,8 +12,7 @@ export class RegistrationFormComponent extends AbstractRegistrationFormComponent
     constructor(formBuilder: FormBuilder,
                 signupService: SignUpService,
                 log: LoggerService,
-                translate: TranslateService,
-                config: ConfigurationService) {
-        super(formBuilder, signupService, log, translate, config);
+                translate: TranslateService) {
+        super(formBuilder, signupService, log, translate);
     }
 }

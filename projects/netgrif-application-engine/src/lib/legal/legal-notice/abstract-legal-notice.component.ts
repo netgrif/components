@@ -4,6 +4,10 @@ import {Services} from '../../configuration/interfaces/schema';
 
 export abstract class AbstractLegalNoticeComponent {
 
+    /**
+     * The button text that should be displayed in the legal notice.
+     * The text is passed trough the `translate` pipe before being displayed.
+     */
     @Input() buttonName: string;
 
     protected _legalConfig: Services['legal'];
