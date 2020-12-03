@@ -49,9 +49,9 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 
     protected constructor(protected _paperView: PaperViewService, protected _config: ConfigurationService) {
         const configuredTemplate = this._config.getDatafieldConfiguration();
-        if (configuredTemplate !== undefined && configuredTemplate.template) {
-            this._isConfiguredNetgrifTemplate = configuredTemplate === TemplateAppearance.NETGRIF;
-        }
+        this._isConfiguredNetgrifTemplate = configuredTemplate
+            && configuredTemplate.template
+            && configuredTemplate.template === TemplateAppearance.NETGRIF;
     }
 
     public ngOnInit() {
