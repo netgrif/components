@@ -35,8 +35,7 @@ export abstract class AbstractResourceService {
     protected getResourceAddress(name: string): string {
         let URL = '';
 
-        // TODO 23.11.2020 - refactor get call on configuration service to use methods with better performance from NAE-1095
-        const resourcesArray = this._configService.get().providers.resources;
+        const resourcesArray = this._configService.getConfigurationSubtree(['providers', 'resources']);
 
         if (resourcesArray instanceof Array) {
             resourcesArray.forEach(resource => {
