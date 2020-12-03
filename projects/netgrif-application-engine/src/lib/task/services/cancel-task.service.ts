@@ -106,7 +106,7 @@ export class CancelTaskService extends TaskHandlingService {
      * Publishes a cancel notification to the {@link TaskEventService}
      * @param success whether the cancel operation was successful or not
      */
-    private sendNotification(success: boolean): void {
+    protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.CANCEL, success));
     }
 }
