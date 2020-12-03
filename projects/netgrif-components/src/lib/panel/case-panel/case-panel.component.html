@@ -1,7 +1,7 @@
 <nc-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last">
     <ng-template #casePanelHeader>
         <div fxLayoutAlign="start start" fxLayout="row" fxFlex="95" class="panel-header-padding">
-            <div fxFlex class="text-column-div">
+            <div fxFlex class="text-column-div" [ngStyle]="{'min-width': getMinWidth()}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="case-panel-icon panel-primary-icon" *ngIf="showCasePanelIcon">
                             {{case_.icon ? case_.icon : 'label'}}</mat-icon>
@@ -12,7 +12,7 @@
                 </span>
             </div>
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
-                 class="text-column-div"
+                 class="text-column-div" [ngStyle]="{'min-width': getMinWidth()}"
                  [fxHide.lt-xl]="i >= 3 && responsiveBody"
                  [fxHide.lt-lg]="i >= 2 && responsiveBody"
                  [fxHide.lt-md]="i >= 1 && responsiveBody"

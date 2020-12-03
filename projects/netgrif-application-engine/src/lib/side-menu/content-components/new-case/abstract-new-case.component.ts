@@ -11,10 +11,12 @@ import {NewCaseInjectionData} from './model/new-case-injection-data';
 import {TranslateService} from '@ngx-translate/core';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {MatToolbar} from '@angular/material/toolbar';
+import semver from 'semver';
 
 interface Form {
     value: string;
     viewValue: string;
+    version?: string;
 }
 
 export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
@@ -59,8 +61,12 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         }
 
         this.injectedData.allowedNets$.subscribe(allowedNets => {
-            this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title}));
+            this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}));
         });
+
+        if (!this._sideMenuControl.allVersionEnabled) {
+            this.removeOldVersions();
+        }
 
         this.filteredOptions = this.processFormControl.valueChanges
             .pipe(
@@ -176,5 +182,22 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
             return tmp + '...';
         }
         return title;
+    }
+
+    private removeOldVersions() {
+        const tempNets = Object.assign([], this.options);
+        const petriNetIds = new Set(this.options.map(form => form.value));
+        const newestNets = new Array<Form>();
+
+        for (const value of petriNetIds) {
+            let current: Form = {value, version: '1.0.0', viewValue: ''};
+            for (const net of tempNets) {
+                if (value === net.value && !semver.lt(net.version, current.version)) {
+                    current = net;
+                }
+            }
+            newestNets.push(current);
+        }
+        this.options = Object.assign([], newestNets);
     }
 }

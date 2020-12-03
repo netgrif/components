@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {Component, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {of} from 'rxjs';
 import {AbstractCasePanelComponent} from './abstract-case-panel.component';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
@@ -25,6 +25,7 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
+import {OverflowService} from '../../header/services/overflow.service';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -92,8 +93,8 @@ describe('AbstractCasePanelComponent', () => {
 class TestCasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                protected _log: LoggerService) {
-        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log);
+                protected _log: LoggerService, @Optional() protected overflowService: OverflowService) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService);
     }
 }
 

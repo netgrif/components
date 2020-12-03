@@ -88,7 +88,7 @@ export class FinishTaskService extends TaskHandlingService {
      * @param afterAction if finish request completes successfully `true` will be emitted into this Subject,
      * otherwise `false` will be emitted
      */
-    private sendFinishTaskRequest(afterAction: Subject<boolean>): void {
+    protected sendFinishTaskRequest(afterAction: Subject<boolean>): void {
         const finishedTaskId = this._safeTask.stringId;
 
         if (this._taskState.isLoading(finishedTaskId)) {
@@ -135,7 +135,7 @@ export class FinishTaskService extends TaskHandlingService {
      * Publishes a finish notification to the {@link TaskEventService}
      * @param success whether the finish operation was successful or not
      */
-    private sendNotification(success: boolean): void {
+    protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.FINISH, success));
     }
 }

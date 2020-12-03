@@ -45,6 +45,9 @@ export class ProcessService implements OnDestroy {
      * If any of the processes failed to load it is skipped from the result.
      */
     public getNets(identifiers: Array<string>): Observable<Array<Net>> {
+        if (identifiers.length === 0) {
+            return of([]);
+        }
         return forkJoin(identifiers.map(i => {
             return this.getNet(i);
         })).pipe(

@@ -122,12 +122,12 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     }
 
     protected validWorkday(fc: FormControl) {
-        const dayOfWeek = fc.value.weekday();
+        const dayOfWeek = !!fc.value ? fc.value.weekday() : null;
         return dayOfWeek === 6 || dayOfWeek === 0 ? {validWorkday: true} : null;
     }
 
     protected validWeekend(fc: FormControl) {
-        const dayOfWeek = fc.value.weekday();
+        const dayOfWeek = !!fc.value ? fc.value.weekday() : null;
         return dayOfWeek >= 1 && dayOfWeek <= 5 && dayOfWeek !== 0 ? {validWeekend: true} : null;
     }
 }
