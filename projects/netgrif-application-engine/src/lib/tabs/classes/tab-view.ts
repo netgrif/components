@@ -150,7 +150,7 @@ export class TabView implements TabViewInterface {
         }
         this.openedTabs.splice(index, 0, newTab);
 
-        if (autoswitch) {
+        if (autoswitch || this.openedTabs.length === 1) {
             this.openedTabs[this.selectedIndex].tabSelected$.next(false);
             this.selectedIndex = index;
             this.openedTabs[this.selectedIndex].tabSelected$.next(true);
