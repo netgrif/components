@@ -251,7 +251,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @ignore
      * Goes over all the data fields in the managed Task and if they are valid and changed adds them to the set data request
      */
-    private createUpdateRequestBody(): TaskSetDataRequestBody {
+    protected createUpdateRequestBody(): TaskSetDataRequestBody {
         const body = {};
         this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
@@ -270,7 +270,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param field the checked field
      * @returns whether the field was updated on frontend and thus the backend should be notified
      */
-    private wasFieldUpdated(field: DataField<unknown>): boolean {
+    protected wasFieldUpdated(field: DataField<unknown>): boolean {
         return field.initialized && field.changed && (field.valid || field.sendInvalidValues);
     }
 
@@ -281,7 +281,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      *
      * @param body body of the completed setData request
      */
-    private clearChangedFlagFromDataFields(body: TaskSetDataRequestBody): void {
+    protected clearChangedFlagFromDataFields(body: TaskSetDataRequestBody): void {
         Object.keys(body).forEach(id => {
             this._safeTask.dataGroups.forEach(dataGroup => {
                 const changed = dataGroup.fields.find(f => f.stringId === id);
@@ -302,7 +302,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param result result of the update data request
      * @param setTaskId the Id of the {@link Task}, who's state should be updated
      */
-    private updateStateInfo(afterAction: Subject<boolean>, result: boolean, setTaskId: string): void {
+    protected updateStateInfo(afterAction: Subject<boolean>, result: boolean, setTaskId: string): void {
         this._taskState.stopLoading(setTaskId);
         this._taskState.stopUpdating(setTaskId);
         if (this._updateSuccess$.observers.length !== 0) {
@@ -317,7 +317,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param event the event that occurred to the task
      * @param success whether the get/set data operation was successful or not
      */
-    private sendNotification(event: TaskEvent.GET_DATA | TaskEvent.SET_DATA, success: boolean): void {
+    protected sendNotification(event: TaskEvent.GET_DATA | TaskEvent.SET_DATA, success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, event, success));
     }
 

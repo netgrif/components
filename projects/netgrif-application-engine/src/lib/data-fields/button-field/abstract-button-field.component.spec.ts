@@ -18,6 +18,7 @@ import {AbstractButtonFieldComponent} from './abstract-button-field.component';
 import {ButtonField} from './models/button-field';
 import {LanguageService} from '../../translate/language.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DialogService} from '../../dialog/services/dialog.service';
 
 describe('AbstractButtonFieldComponent', () => {
     let component: TestButtonComponent;
@@ -71,8 +72,9 @@ describe('AbstractButtonFieldComponent', () => {
 })
 class TestButtonComponent extends AbstractButtonFieldComponent {
     constructor(translate: TranslateService,
+                dialog: DialogService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(translate, informAboutInvalidData);
+        super(translate, dialog, informAboutInvalidData);
     }
 }
 

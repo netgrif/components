@@ -15,7 +15,7 @@ export abstract class AbstractPanelComponent implements OnInit, AfterViewInit {
 
     @ViewChild('matExpansionPanel') matExpansionPanel;
 
-    constructor() {
+    protected constructor() {
     }
 
     ngOnInit() {

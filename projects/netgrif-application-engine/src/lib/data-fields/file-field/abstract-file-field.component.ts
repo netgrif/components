@@ -140,9 +140,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
                 this.name = this.constructDisplayName();
                 this.formControl.setValue(this.dataField.value.name);
+                this.dataField.touch = true;
+                this.dataField.update();
             }
-            this.dataField.touch = true;
-            this.dataField.update();
         }, error => {
             this.state.completed = true;
             this.state.error = true;

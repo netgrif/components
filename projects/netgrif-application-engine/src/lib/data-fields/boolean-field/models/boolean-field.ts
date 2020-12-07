@@ -3,6 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
+import {Component} from '../../models/component';
 
 export enum BooleanFieldValidation {
     REQUIRED_TRUE = 'requiredTrue',
@@ -13,9 +14,9 @@ export class BooleanField extends DataField<boolean> {
 
     private _validators: Array<ValidatorFn>;
 
-    constructor(stringId: string, title: string, value: boolean, behavior: Behavior,
-                placeholder?: string, description?: string, layout?: Layout, public validations?: Validation[]) {
-        super(stringId, title, value, behavior, placeholder, description, layout);
+    constructor(stringId: string, title: string, value: boolean, behavior: Behavior, placeholder?: string,
+                description?: string, layout?: Layout, public validations?: Validation[], component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, component);
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

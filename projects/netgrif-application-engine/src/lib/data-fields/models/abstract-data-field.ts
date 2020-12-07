@@ -71,6 +71,11 @@ export abstract class DataField<T> {
      */
     public materialAppearance: string;
     /**
+     * @ignore
+     * Whether the field fulfills required validator.
+     */
+    private _validRequired: boolean;
+    /**
      * Whether invalid field values should be sent to backend.
      */
     private _sendInvalidValues = false;
@@ -96,6 +101,7 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
+        this._validRequired = true;
     }
 
     get stringId(): string {
@@ -216,6 +222,14 @@ export abstract class DataField<T> {
         this.value = this.previousValue;
     }
 
+    set validRequired(set: boolean) {
+        this._validRequired = set;
+    }
+
+    get validRequired(): boolean {
+        return this._validRequired;
+    }
+
     get sendInvalidValues(): boolean {
         return this._sendInvalidValues;
     }
@@ -253,12 +267,10 @@ export abstract class DataField<T> {
     }
 
     public updateFormControlState(formControl: FormControl): void {
+        formControl.setValue(this.value);
         this._update.subscribe(() => {
-            this.disabled ? formControl.disable() : formControl.enable();
-            formControl.clearValidators();
-            formControl.setValidators(this.resolveFormControlValidators());
-            formControl.updateValueAndValidity();
-            this._valid = this._determineFormControlValidity(formControl);
+            this.validRequired = this.calculateValidity(true, formControl);
+            this.valid = this.calculateValidity(false, formControl);
         });
         this._block.subscribe(bool => {
             if (bool) {
@@ -275,8 +287,6 @@ export abstract class DataField<T> {
             }
         });
         this.update();
-        formControl.setValue(this.value);
-        this._valid = this._determineFormControlValidity(formControl);
     }
 
     /**
@@ -342,11 +352,13 @@ export abstract class DataField<T> {
 
     public resolveAppearance(config: ConfigurationService): void {
         let appearance = 'outline';
-        if (config.get().services && config.get().services.dataFields && config.get().services.dataFields.appearance) {
-            appearance = config.get().services.dataFields.appearance;
-        }
         if (this.layout && this.layout.appearance) {
             appearance = this.layout.appearance;
+        } else {
+            const datafieldConfiguration = config.getDatafieldConfiguration();
+            if (datafieldConfiguration && datafieldConfiguration.appearance) {
+                appearance = datafieldConfiguration.appearance;
+            }
         }
         this.materialAppearance = appearance;
     }
@@ -358,5 +370,25 @@ export abstract class DataField<T> {
             && this._value.getValue() !== value) {
             this._previousValue.next(this._value.getValue());
         }
+    }
+
+    protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
+        if (forValidRequired) {
+            formControl.enable();
+        } else if (this.disabled) {
+            formControl.disable();
+        }
+        formControl.clearValidators();
+        if (forValidRequired) {
+            formControl.setValidators(this.behavior.required ? [Validators.required] : []);
+        } else {
+            formControl.setValidators(this.resolveFormControlValidators());
+        }
+        formControl.updateValueAndValidity();
+        return this._determineFormControlValidity(formControl);
+    }
+
+    public isInvalid(formControl: FormControl): boolean {
+        return !formControl.disabled && !formControl.valid && formControl.touched;
     }
 }

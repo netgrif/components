@@ -12,6 +12,7 @@ import {EnumerationAutocompleteSelectFieldComponent} from './enumeration-autocom
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {EnumerationField, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {EnumerationStepperFieldComponent} from './enumeration-stepper-field/enumeration-stepper-field.component';
 
 describe('EnumerationFieldComponent', () => {
     let component: EnumerationFieldComponent;
@@ -32,6 +33,7 @@ describe('EnumerationFieldComponent', () => {
                 EnumerationSelectFieldComponent,
                 EnumerationListFieldComponent,
                 EnumerationAutocompleteSelectFieldComponent,
+                EnumerationStepperFieldComponent,
                 DataFieldTemplateComponent,
                 RequiredLabelComponent,
                 TestWrapperComponent
