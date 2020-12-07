@@ -83,6 +83,7 @@ import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { ResetPasswordFormComponent } from './doc/forms/reset-password-form/reset-password-form.component';
+import { GroupViewComponent } from './doc/group-view/group-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -122,7 +123,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         TreeViewExampleComponent,
         UserInviteComponent,
         ExamplePortalCardComponent,
-        ResetPasswordFormComponent
+        ResetPasswordFormComponent,
+        GroupViewComponent,
     ],
     imports: [
         BrowserModule,
@@ -202,7 +204,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         RolesAssignComponent,
         TreeViewExampleComponent,
         ExamplePortalCardComponent,
-        ResetPasswordFormComponent
+        ResetPasswordFormComponent,
+        GroupViewComponent
     ],
     providers: [{
         provide: ConfigurationService,
