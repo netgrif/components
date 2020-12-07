@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {MaterialModule} from '../../../material/material.module';
@@ -47,8 +47,8 @@ describe('AbstractEnumerationStepperFieldComponent', () => {
     template: ''
 })
 class TestEnumStepperComponent extends AbstractEnumerationStepperFieldComponent {
-    constructor() {
-        super();
+    constructor(protected ref: ElementRef) {
+        super(ref);
     }
 }
 
