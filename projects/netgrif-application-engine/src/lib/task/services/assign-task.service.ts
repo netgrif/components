@@ -96,7 +96,7 @@ export class AssignTaskService extends TaskHandlingService {
      * @ignore
      * Reloads the task and emits `true` to the `afterAction` stream
      */
-    private completeSuccess(afterAction: Subject<boolean>): void {
+    protected completeSuccess(afterAction: Subject<boolean>): void {
         this._taskOperations.reload();
         this.sendNotification(true);
         afterAction.next(true);
@@ -106,7 +106,7 @@ export class AssignTaskService extends TaskHandlingService {
      * Publishes an assign notification to the {@link TaskEventService}
      * @param success whether the assign operation was successful or not
      */
-    private sendNotification(success: boolean): void {
+    protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.ASSIGN, success));
     }
 }

@@ -9,7 +9,10 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./forgotten-password-form.component.scss']
 })
 export class ForgottenPasswordFormComponent extends AbstractForgottenPasswordComponent {
-    constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
+    constructor(formBuilder: FormBuilder,
+                signupService: SignUpService,
+                log: LoggerService,
+                translate: TranslateService) {
         super(formBuilder, signupService, log, translate);
     }
 }

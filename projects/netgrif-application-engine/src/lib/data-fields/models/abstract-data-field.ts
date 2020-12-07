@@ -332,11 +332,13 @@ export abstract class DataField<T> {
 
     public resolveAppearance(config: ConfigurationService): void {
         let appearance = 'outline';
-        if (config.get().services && config.get().services.dataFields && config.get().services.dataFields.appearance) {
-            appearance = config.get().services.dataFields.appearance;
-        }
         if (this.layout && this.layout.appearance) {
             appearance = this.layout.appearance;
+        } else {
+            const datafieldConfiguration = config.getDatafieldConfiguration();
+            if (datafieldConfiguration && datafieldConfiguration.appearance) {
+                appearance = datafieldConfiguration.appearance;
+            }
         }
         this.materialAppearance = appearance;
     }

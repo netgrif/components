@@ -1,4 +1,4 @@
-import {EventEmitter, Input, Output} from '@angular/core';
+import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
@@ -14,18 +14,32 @@ import {GridData} from '../model/grid-data';
 import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
+import {LoadingEmitter} from '../../utility/loading-emitter';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-export abstract class AbstractTaskContentComponent {
+export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
     readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;
 
-    dataSource: Array<DatafieldGridLayoutElement>;
-    loading: boolean;
+    /**
+     * Indicates whether data is being loaded from backend, or if it is being processed.
+     */
+    loading$: LoadingEmitter;
+    /**
+     * Emits `true` if there is at least one data field, that should be displayed. Emits `false` otherwise.
+     */
+    hasDataToDisplay$: Observable<boolean>;
     /**
      * The number of columns used by the tasks layout
      */
     formCols = 4;
     defaultAlignment: FieldAlignment;
+
+    /**
+     * Exists to allow references to the enum in the HTML
+     */
+    public fieldTypeResource = FieldTypeResource;
 
     /**
      * The translate text that should be displayed when the task contains no data.
@@ -57,22 +71,31 @@ export abstract class AbstractTaskContentComponent {
      * Grid area identifiers that are already in use
      */
     protected _existingIdentifiers: Set<string>;
+    /**
+     * The data fields that are currently displayed
+     */
+    protected _dataSource$: BehaviorSubject<Array<DatafieldGridLayoutElement>>;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
                           protected _paperView: PaperViewService,
                           protected _logger: LoggerService,
                           protected _taskEventService: TaskEventService = null) {
-        this.loading = true;
+        this.loading$ = new LoadingEmitter(true);
+        this._dataSource$ = new BehaviorSubject<Array<DatafieldGridLayoutElement>>([]);
+        this.hasDataToDisplay$ = this._dataSource$.pipe(map(data => {
+            return data.length !== 0;
+        }));
+
         this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
                 this.computeDefaultAlignment();
                 this.formCols = this.getNumberOfFormColumns();
                 this.computeLayoutData(data);
             } else {
-                this.dataSource = [];
+                this._dataSource$.next([]);
             }
-            this.loading = false;
+            this.loading$.off();
         });
         if (this._taskEventService !== null) {
             this.taskEvent = new EventEmitter<TaskEventNotification>();
@@ -82,13 +105,17 @@ export abstract class AbstractTaskContentComponent {
         }
     }
 
-    /**
-     * Exists to allow references to the enum in the HTML
-     */
-    public fieldTypeResource = FieldTypeResource;
+    ngOnDestroy(): void {
+        this.loading$.complete();
+        this._dataSource$.complete();
+    }
 
     public get taskId(): string {
         return this.taskContentService.task.stringId;
+    }
+
+    public get dataSource(): Array<DatafieldGridLayoutElement> {
+        return this._dataSource$.getValue();
     }
 
     /**
@@ -166,7 +193,7 @@ export abstract class AbstractTaskContentComponent {
      */
     public computeLayoutData(dataGroups: Array<DataGroup>) {
         if (!this.taskContentService.task) {
-            this.dataSource = [];
+            this._dataSource$.next([]);
             this.gridAreas = '';
             return;
         }
@@ -210,7 +237,7 @@ export abstract class AbstractTaskContentComponent {
         });
 
         this.fillEmptySpace(gridData);
-        this.dataSource = gridData.gridElements;
+        this._dataSource$.next(gridData.gridElements);
         this.gridAreas = this.createGridAreasString(gridData.grid);
     }
 
