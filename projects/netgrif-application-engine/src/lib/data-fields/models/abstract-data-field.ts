@@ -19,6 +19,11 @@ export abstract class DataField<T> {
     protected _value: BehaviorSubject<T>;
     /**
      * @ignore
+     * Previous value of the data field
+     */
+    protected _previousValue: BehaviorSubject<T>;
+    /**
+     * @ignore
      * Whether the data field Model object was initialized.
      *
      * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
@@ -88,6 +93,7 @@ export abstract class DataField<T> {
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout, private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
+        this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new ReplaySubject<true>(1);
         this._initialized = false;
         this._valid = true;
@@ -141,8 +147,17 @@ export abstract class DataField<T> {
     set value(value: T) {
         if (!this.valueEquality(this._value.getValue(), value)) {
             this._changed = true;
+            this.resolvePrevValue(value);
         }
         this._value.next(value);
+    }
+
+    get previousValue() {
+        return this._previousValue.getValue();
+    }
+
+    set previousValue(value: T) {
+        this._previousValue.next(value);
     }
 
     public valueWithoutChange(value: T) {
@@ -200,6 +215,11 @@ export abstract class DataField<T> {
 
     get component(): Component {
         return this._component;
+    }
+
+    public revertToPreviousValue(): void {
+        this.changed = false;
+        this.value = this.previousValue;
     }
 
     set validRequired(set: boolean) {
@@ -341,6 +361,15 @@ export abstract class DataField<T> {
             }
         }
         this.materialAppearance = appearance;
+    }
+
+    public resolvePrevValue(value: T): void {
+        if (this._value.getValue() !== undefined
+            && this._previousValue.getValue() !== undefined
+            && this._previousValue.getValue() !== value
+            && this._value.getValue() !== value) {
+            this._previousValue.next(this._value.getValue());
+        }
     }
 
     protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
