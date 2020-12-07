@@ -28,9 +28,9 @@ export class ConfirmDialogComponent extends AbstractDialog<ConfirmDialogComponen
         this.choice = false;
     }
 
-    public onClose() {
+    public onClose(isSubmitted: boolean) {
         this.dialogRef.close({
-            confirmed: this.choice
+            confirmed: isSubmitted
         });
     }
 

@@ -10,6 +10,6 @@
 </div>
 
 <mat-dialog-actions fxLayoutAlign="end">
-    <button mat-button (click)="onClose()">{{ 'dialog.close' | translate}}</button>
-    <button mat-flat-button color="primary" [disabled]="disableButton" (click)="onClose()">{{ 'dialog.submit' | translate}}</button>
+    <button mat-button (click)="onClose(false)">{{ 'dialog.close' | translate}}</button>
+    <button mat-flat-button color="primary" [disabled]="disableButton" (click)="onClose(true)">{{ 'dialog.submit' | translate}}</button>
 </mat-dialog-actions>
