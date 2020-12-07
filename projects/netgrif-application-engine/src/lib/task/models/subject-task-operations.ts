@@ -7,9 +7,9 @@ import {OnDestroy} from '@angular/core';
  */
 export class SubjectTaskOperations implements TaskOperations, OnDestroy {
 
-    private _open: Subject<void>;
-    private _close: Subject<void>;
-    private _reload: Subject<void>;
+    protected _open: Subject<void>;
+    protected _close: Subject<void>;
+    protected _reload: Subject<void>;
 
     constructor() {
         this._open = new Subject<void>();

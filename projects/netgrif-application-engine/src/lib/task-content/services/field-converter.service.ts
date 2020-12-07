@@ -317,7 +317,7 @@ export class FieldConverterService {
         return value;
     }
 
-    private resolveTextValue(field: DataFieldResource, value: string): string {
+    protected resolveTextValue(field: DataFieldResource, value: string): string {
         if (field.component !== undefined && field.component.name === 'password' && value !== '' && value !== undefined) {
             return atob(value);
         }

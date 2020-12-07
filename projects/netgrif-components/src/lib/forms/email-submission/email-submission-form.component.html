@@ -2,7 +2,7 @@
     <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">email</mat-icon>
-            <mat-form-field fxFlex="96" class="full-width">
+            <mat-form-field fxFlex="100">
                 <input matInput placeholder="{{ 'forms.email.enterEmail' | translate}}" formControlName="email" required autocomplete="email">
                 <mat-error *ngIf="rootFormGroup.controls['email'].hasError('email')">
                     {{ 'dataField.validations.email' | translate}}
