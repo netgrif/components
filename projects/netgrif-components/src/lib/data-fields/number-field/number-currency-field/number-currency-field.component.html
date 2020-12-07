@@ -9,7 +9,7 @@
            (focusout)="onFocusOut($event)"
            (focusin)="onFocusIn()">
     <mat-hint>{{dataField.description}}</mat-hint>
-    <mat-error *ngIf="!formControlRef.valid">{{getErrorMessage()}}</mat-error>
+    <mat-error *ngIf="dataField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
 <mat-label class="currency-label" *ngIf="fieldType == 'number'">{{getCurrencySymbol()}}</mat-label>
 

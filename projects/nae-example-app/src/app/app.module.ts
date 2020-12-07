@@ -7,7 +7,7 @@ import {
     ConfigurationService,
     CovalentModule,
     DialogModule,
-    MaterialModule,
+    MaterialModule, NAE_NET_ALL_VERSIONS, NAE_NET_VERSION_VISIBLE,
     NAE_SNACKBAR_HORIZONTAL_POSITION,
     NAE_SNACKBAR_VERTICAL_POSITION,
     ResourceProvider,

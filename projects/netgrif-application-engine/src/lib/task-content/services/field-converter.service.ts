@@ -206,6 +206,8 @@ export class FieldConverterService {
                 typeEnum = EnumerationFieldView.LIST;
             } else if (enumField.view.value === 'autocomplete') {
                 typeEnum = EnumerationFieldView.AUTOCOMPLETE;
+            } else if (enumField.view.value === 'stepper') {
+                typeEnum = EnumerationFieldView.STEPPER;
             }
         }
         return typeEnum;
@@ -315,7 +317,7 @@ export class FieldConverterService {
         return value;
     }
 
-    private resolveTextValue(field: DataFieldResource, value: string): string {
+    protected resolveTextValue(field: DataFieldResource, value: string): string {
         if (field.component !== undefined && field.component.name === 'password' && value !== '' && value !== undefined) {
             return atob(value);
         }

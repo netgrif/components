@@ -3,7 +3,7 @@
          [fxHide.lt-xl]="i >= 4 && this.headerService.responsiveHeaders"
          [fxHide.lt-lg]="i >= 3 && this.headerService.responsiveHeaders"
          [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders"
-         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders" fxFlex>
+         [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders" fxFlex [ngStyle]="{'min-width': getMinWidth()}"> <!-- TODO: TABLEMODE -->
         <div
             *ngIf="!!header && header.fieldType !== 'button' && header.fieldType !== 'file' && header.fieldType !== 'dateTime'; then thenBlock else elseBlock"
             fxFlex></div>

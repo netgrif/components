@@ -13,8 +13,12 @@
         </div>
     </mat-card>
 
-    <nc-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="false" hideEditMode="true" class="case-header-padding"></nc-header>
+    <div class="full-height transform-div custom-scrollbar" [ngClass]="{'overflow-div': getOverflowStatus()}" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="full-height transform-div" fxLayout="column" fxLayoutAlign="start stretch">
+            <nc-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
 
-    <nc-case-list [selectedHeaders$]="selectedHeaders$" [showCasePanelIcon]="false" [showDeleteMenu]="true"
-                   (caseClick)="handleCaseClick($event)" [responsiveBody]="false" fxFlex></nc-case-list>
+            <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="true" [width]="getWidth()"
+                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex></nc-case-list>
+        </div>
+    </div>
 </div>
