@@ -2,7 +2,8 @@
     {{enumerationField.title}}
     <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="!enumerationField.disabled" ></nc-required-label>
 </mat-label>
-<div class="horizontal-stepper" fxLayout="row">
+
+<div class="horizontal-stepper" fxLayout="row" *ngIf="!arrowStepper">
     <div class="horizontal-step">
         <ng-template ngFor let-option [ngForOf]="enumerationField.choices" let-i="index">
             <div class="horizontal-step-header" #oneStep>
@@ -14,4 +15,14 @@
             <div class="horizontal-line" fxFlex *ngIf="i < enumerationField.choices.length - 1"></div>
         </ng-template>
     </div>
+</div>
+
+<div *ngIf="arrowStepper" class="stepper-min-height" fxLayoutAlign="stretch center" fxLayout="row">
+    <ng-template ngFor let-option [ngForOf]="enumerationField.choices" let-i="index">
+        <span class="stepper-arrow-text" [ngClass]="{'stepper-arrow-selected': isSelected(option.key), 'stepper-disabled': enumerationField.disabled}"
+              (click)="setStepperValue(option.key)" fxFlex fxLayoutAlign="center center">{{option.value}}</span>
+        <span fxFlex *ngIf="i < enumerationField.choices.length - 1" fxLayoutAlign="center center">
+            <mat-icon>arrow_forward_ios</mat-icon>
+        </span>
+    </ng-template>
 </div>

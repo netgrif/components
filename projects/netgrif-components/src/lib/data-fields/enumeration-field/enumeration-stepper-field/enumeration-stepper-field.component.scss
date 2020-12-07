@@ -85,3 +85,22 @@
     color: #FFFFFF;
     padding: 10px 15px;
 }
+
+.stepper-min-height {
+    border-radius: 10px;
+    min-height: 70px;
+    background-color: #F9F9F9;
+}
+
+.stepper-arrow-text {
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.2;
+    line-height: 24px;
+    color: #333333;
+    cursor: pointer;
+}
+
+.stepper-disabled {
+    cursor: unset !important;
+}
