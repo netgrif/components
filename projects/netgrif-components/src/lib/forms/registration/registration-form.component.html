@@ -54,6 +54,7 @@
                 <mat-error *ngIf="!isFieldValid('confirmPassword')">{{getErrorMessage('confirmPassword')}}</mat-error>
             </mat-form-field>
         </div>
+        <nc-legal-notice *ngIf="displayLegalNotice" [buttonName]="'forms.register.register'"></nc-legal-notice>
         <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-4">
             <button fxFlexOffset="8px" fxFlexOffset.xs="0" mat-raised-button class="register-button" color="primary">
                 {{ 'forms.register.register' | translate }}

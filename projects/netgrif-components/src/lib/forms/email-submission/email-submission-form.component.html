@@ -9,6 +9,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
+        <nc-legal-notice *ngIf="displayLegalNotice" [buttonName]="'dialog.submit'"></nc-legal-notice>
         <div fxLayout="row" class="margin-top-4">
             <button mat-icon-button fxLayoutAlign="start" (click)="emitGoBack()">
                 <mat-icon>arrow_back</mat-icon>

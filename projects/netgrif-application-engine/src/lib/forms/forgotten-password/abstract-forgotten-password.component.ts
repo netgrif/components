@@ -7,10 +7,16 @@ import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TranslateService} from '@ngx-translate/core';
+import {Input} from '@angular/core';
 
 export abstract class AbstractForgottenPasswordComponent extends AbstractRegistrationComponent {
 
-    protected constructor(formBuilder: FormBuilder, signupService: SignUpService, log: LoggerService, translate: TranslateService) {
+    @Input() public displayLegalNotice = false;
+
+    protected constructor(formBuilder: FormBuilder,
+                          signupService: SignUpService,
+                          log: LoggerService,
+                          translate: TranslateService) {
         super(signupService, log, translate);
         this.rootFormGroup = formBuilder.group({
             password: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]],
