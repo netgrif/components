@@ -14,7 +14,8 @@ export interface EnumerationFieldValue {
 export enum EnumerationFieldView {
     DEFAULT = 'default',
     LIST = 'list',
-    AUTOCOMPLETE = 'autocomplete'
+    AUTOCOMPLETE = 'autocomplete',
+    STEPPER= 'stepper'
 }
 
 export enum EnumerationFieldValidation {
@@ -69,5 +70,9 @@ export class EnumerationField extends DataField<string> {
             return null;
         }
         return this._choices.find(choice => choice.key === control.value) ? null : {wrongValue: true};
+    }
+
+    getType(): string {
+        return !!this.component && !!this.component.name ? this.component.name : this.view;
     }
 }

@@ -3,7 +3,10 @@
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
 
-@mixin data-field-component() {
+@mixin data-field-component($theme) {
+    $primary: map-get($theme, primary);
+    $secondary: map-get($theme, accent);
+
     .editor-preview > h1 {
         border-bottom: 1px solid #ddd;
     }
@@ -36,6 +39,14 @@
         display: flex !important;
         justify-content: center;
         flex-direction: column;
+    }
+
+    .horizontal-state-primary {
+        background-color: mat-color($primary);
+    }
+
+    .horizontal-state-secondary {
+        background-color: mat-color($secondary);
     }
 }
 

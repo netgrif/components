@@ -206,6 +206,8 @@ export class FieldConverterService {
                 typeEnum = EnumerationFieldView.LIST;
             } else if (enumField.view.value === 'autocomplete') {
                 typeEnum = EnumerationFieldView.AUTOCOMPLETE;
+            } else if (enumField.view.value === 'stepper') {
+                typeEnum = EnumerationFieldView.STEPPER;
             }
         }
         return typeEnum;

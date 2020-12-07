@@ -42,6 +42,7 @@ import {QuillModule} from 'ngx-quill';
 import { NumberCurrencyFieldComponent } from './number-field/number-currency-field/number-currency-field.component';
 import { NumberDefaultFieldComponent } from './number-field/number-default-field/number-default-field.component';
 import { PasswordTextFieldComponent } from './text-field/password-text-field/password-text-field.component';
+import { EnumerationStepperFieldComponent } from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
 
 @NgModule({
     declarations: [
@@ -69,7 +70,8 @@ import { PasswordTextFieldComponent } from './text-field/password-text-field/pas
         HtmlTextareaFieldComponent,
         PasswordTextFieldComponent,
         NumberCurrencyFieldComponent,
-        NumberDefaultFieldComponent
+        NumberDefaultFieldComponent,
+        EnumerationStepperFieldComponent
     ],
     exports: [
         BooleanFieldComponent,
