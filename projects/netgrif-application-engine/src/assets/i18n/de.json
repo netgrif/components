@@ -23,6 +23,7 @@
             "cancelTask": "Aufgabenzuweisung wird abgebrochen",
             "finishTask": "Aufgabe wird abgeschlossen",
             "invalidData": "Manche Felder haben ungültige Werten",
+            "missingRequired": "Einige Pflichtfelder sind leer",
             "noCase": "Keine Fälle gefunden",
             "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten",
             "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr",

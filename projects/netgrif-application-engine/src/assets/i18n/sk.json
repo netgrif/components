@@ -23,6 +23,7 @@
             "cancelTask": "Ruším priradenie úlohy",
             "finishTask": "Dokončujem úlohu",
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
+            "missingRequired": "Niektoré povinné polia sú prázdne",
             "noCase": "Nenašli sa žiadne prípady",
             "caseGetFailed": "Načítanie prípadov zlyhalo",
             "noLongerExists": "Zvolená úloha už neexistuje",

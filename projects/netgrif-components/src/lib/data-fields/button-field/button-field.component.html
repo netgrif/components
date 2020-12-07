@@ -27,6 +27,7 @@
             <mat-icon
                 *ngIf="dataField.view === 'fab' || dataField.view === 'minifab'">{{dataField.placeholder}}</mat-icon>
         </button>
-        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
+
+        <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>
