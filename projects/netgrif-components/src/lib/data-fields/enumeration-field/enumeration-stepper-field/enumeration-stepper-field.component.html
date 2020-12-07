@@ -19,7 +19,7 @@
 
 <div *ngIf="arrowStepper" class="stepper-min-height" fxLayoutAlign="stretch center" fxLayout="row">
     <ng-template ngFor let-option [ngForOf]="enumerationField.choices" let-i="index">
-        <span class="stepper-arrow-text" [ngClass]="{'stepper-arrow-selected': isSelected(i), 'stepper-disabled': enumerationField.disabled}"
+        <span class="stepper-arrow-text" [ngClass]="{'stepper-arrow-selected': isSelected(option.key), 'stepper-disabled': enumerationField.disabled}"
               (click)="setStepperValue(option.key)" fxFlex fxLayoutAlign="center center">{{option.value}}</span>
         <span fxFlex *ngIf="i < enumerationField.choices.length - 1" fxLayoutAlign="center center">
             <mat-icon>arrow_forward_ios</mat-icon>

@@ -22,12 +22,12 @@ export class AbstractEnumerationStepperFieldComponent implements OnInit, AfterVi
         }
     }
 
-    canShowDoneIcon(index: number) {
+    canShowDoneIcon(index: number): boolean {
         return index <= this.enumerationField.choices.findIndex(choice => choice.key === this.enumerationField.value);
     }
 
-    isSelected(index: number) {
-        return index === this.enumerationField.choices.findIndex(choice => choice.key === this.enumerationField.value);
+    isSelected(key: string): boolean {
+        return key === this.enumerationField.value;
     }
 
     ngAfterViewChecked() {
