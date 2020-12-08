@@ -99,7 +99,7 @@
             "access": "public",
             "navigation": false,
             "routing": {
-                "path": "reset-password"
+                "path": "signup-or-reset"
             }
         },
         "demo-registration": {
@@ -110,7 +110,7 @@
             "access": "public",
             "navigation": false,
             "routing": {
-                "path": "registration/:token"
+                "path": "signup/:token"
             }
         },
         "demo-password-recovery": {
@@ -720,6 +720,21 @@
             "routing": {
                 "path": "comp-task"
             }
+        },
+        "group-view": {
+            "component": {
+                "class": "GroupViewComponent",
+                "from": "./doc/group-view/group-view.component"
+            },
+            "layout": {
+                "name": "groupView",
+                "params": {}
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "group-view"
+            }
         }
     },
     "theme": {
@@ -882,6 +897,10 @@
         "dataFields": {
             "template": "material",
             "appearance": "outline"
+        },
+        "legal": {
+            "termsOfService": "https://netgrif.com/",
+            "privacyPolicy": "https://netgrif.com/"
         }
     }
 }

@@ -408,6 +408,10 @@ export class TestConfigurationService extends ConfigurationService {
                 },
                 auth: {
                     loginRedirect: 'login'
+                },
+                legal: {
+                    termsOfService: 'https://netgrif.com/',
+                    privacyPolicy: 'https://netgrif.com/'
                 }
             }
         });

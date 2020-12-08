@@ -8,6 +8,7 @@ import {ProgressType, ProviderProgress} from '../../../resources/resource-provid
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadDataModel} from '../../../data-fields/file-field/models/file-field';
 import {Subscription} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 export class FileUploadModel {
     stringId: string;
@@ -37,7 +38,8 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
     constructor(protected _sideMenuControl: SideMenuControl,
                 protected _petriNetResource: PetriNetResourceService,
                 protected _log: LoggerService,
-                protected _snackbar: SnackBarService) {
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
     }
 
     ngOnInit() {
@@ -147,7 +149,7 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
             file.completed = false;
             file.error = true;
             this._log.error('Importing process file has failed!', error);
-            this._snackbar.openErrorSnackBar('Uploading process file has failed');
+            this._snackbar.openErrorSnackBar(this._translate.instant('workflow.snackBar.uploadFailed'));
         });
     }
 

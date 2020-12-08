@@ -17,3 +17,4 @@ export * from './lib/task-content/public-api';
 export * from './lib/toolbar/public-api';
 export * from './lib/user/public-api';
 export * from './lib/view/public-api';
+export * from './lib/legal/public-api';

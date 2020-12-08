@@ -40,6 +40,9 @@ export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErr
 
     ngOnInit(): void {
         this.disabledDisplay = this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value);
+        this.textAreaField.valueChanges().subscribe(() => {
+            this.disabledDisplay = this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value);
+        });
     }
 
     public getErrorMessage() {

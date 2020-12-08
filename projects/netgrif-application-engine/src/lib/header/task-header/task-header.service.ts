@@ -27,4 +27,12 @@ export class TaskHeaderService extends AbstractHeaderService {
         ];
     }
 
+    protected saveState() {
+    }
+
+    protected saveNewState() {
+    }
+
+    protected restoreLastState() {
+    }
 }

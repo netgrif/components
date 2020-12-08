@@ -271,6 +271,10 @@ export interface Services {
         template?: string,
         appearance?: string
     };
+    legal: {
+        termsOfService: string,
+        privacyPolicy: string
+    };
 
     [k: string]: any;
 }

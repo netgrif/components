@@ -61,6 +61,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'ToolbarView';
             case 'sidenavAndToolbarView':
                 return 'SidenavAndToolbarView';
+            case 'groupView':
+                return 'GroupView';
             case 'dashboard':
                 return 'Dashboard';
             case 'treeCaseView':

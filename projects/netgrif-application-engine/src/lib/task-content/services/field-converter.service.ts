@@ -16,6 +16,7 @@ import {UserValue} from '../../data-fields/user-field/models/user-value';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
+import {Component} from '../../data-fields/models/component';
 
 @Injectable({
     providedIn: 'root'
@@ -55,8 +56,8 @@ export class FieldConverterService {
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, type, item.component);
             case FieldTypeResource.NUMBER:
-                return new NumberField(item.stringId, item.name, item.value as number, item.behavior,
-                    item.validations, item.placeholder, item.description, item.layout, item.component);
+                return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item));
             case FieldTypeResource.ENUMERATION:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
@@ -182,6 +183,17 @@ export class FieldConverterService {
         return value;
     }
 
+    protected resolveNumberComponent(numberField: DataFieldResource): Component {
+        let numberComponent = {name: 'default', properties: undefined};
+        if (numberField.component !== undefined) {
+            numberComponent = {
+                name: numberField.component.name,
+                properties: numberField.component.properties
+            };
+        }
+        return numberComponent;
+    }
+
     /**
      * @param enumField enumeration field resource object who's view type we want to resolve
      * @returns the view type defined in the field object, or default if none, or invalid type is defined
@@ -194,6 +206,8 @@ export class FieldConverterService {
                 typeEnum = EnumerationFieldView.LIST;
             } else if (enumField.view.value === 'autocomplete') {
                 typeEnum = EnumerationFieldView.AUTOCOMPLETE;
+            } else if (enumField.view.value === 'stepper') {
+                typeEnum = EnumerationFieldView.STEPPER;
             }
         }
         return typeEnum;
@@ -303,7 +317,7 @@ export class FieldConverterService {
         return value;
     }
 
-    private resolveTextValue(field: DataFieldResource, value: string): string {
+    protected resolveTextValue(field: DataFieldResource, value: string): string {
         if (field.component !== undefined && field.component.name === 'password' && value !== '' && value !== undefined) {
             return atob(value);
         }

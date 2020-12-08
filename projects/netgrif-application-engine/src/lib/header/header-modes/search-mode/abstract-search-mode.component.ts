@@ -5,8 +5,9 @@ import {debounceTime, map} from 'rxjs/operators';
 import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {Subscription} from 'rxjs';
+import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
-export abstract class AbstractSearchModeComponent implements OnInit, OnDestroy {
+export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
 
     /**
      * The time that must elapse since last keypress in search input before a search request is sent
@@ -21,6 +22,7 @@ export abstract class AbstractSearchModeComponent implements OnInit, OnDestroy {
     public headerService: AbstractHeaderService;
 
     constructor(protected _sideMenuService: SideMenuService) {
+        super();
     }
 
     ngOnInit() {

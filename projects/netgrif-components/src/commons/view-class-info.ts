@@ -60,6 +60,8 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'SidenavAndToolbarView';
             case 'dashboard':
                 return 'Dashboard';
+            case 'groupView':
+                return 'GroupView';
             case 'treeCaseView':
                 return 'TreeCaseView';
             default:

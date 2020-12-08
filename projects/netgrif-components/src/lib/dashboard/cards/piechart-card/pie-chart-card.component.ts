@@ -6,10 +6,7 @@ import {AggregationResult, LoggerService} from '@netgrif/application-engine';
 @Component({
     selector: 'nc-pie-chart-card',
     templateUrl: './pie-chart-card.component.html',
-    styleUrls: ['./pie-chart-card.component.scss'],
-    providers: [
-        DashboardResourceService
-    ]
+    styleUrls: ['./pie-chart-card.component.scss']
 })
 export class PieChartCardComponent extends AbstractCustomCard implements OnInit {
 

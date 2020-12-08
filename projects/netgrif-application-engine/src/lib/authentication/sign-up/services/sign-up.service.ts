@@ -26,11 +26,11 @@ export class SignUpService {
         if (!authAddress) {
             throw new Error('Authentication provider address is not set!');
         }
-        this._signUpUrl = authAddress + _config.get().providers.auth.endpoints['signup'];
-        this._verifyUrl = authAddress + _config.get().providers.auth.endpoints['verify'];
-        this._inviteUrl = authAddress + _config.get().providers.auth.endpoints['invite'];
-        this._resetUrl = authAddress + _config.get().providers.auth.endpoints['reset'];
-        this._recoverUrl = authAddress + _config.get().providers.auth.endpoints['recover'];
+        this._signUpUrl = this.resolveEndpoint('signup', authAddress);
+        this._verifyUrl = this.resolveEndpoint('verify', authAddress);
+        this._inviteUrl = this.resolveEndpoint('invite', authAddress);
+        this._resetUrl = this.resolveEndpoint('reset', authAddress);
+        this._recoverUrl = this.resolveEndpoint('recover', authAddress);
     }
 
     public signup(newUser: UserRegistrationRequest): Observable<MessageResource> {
@@ -90,5 +90,22 @@ export class SignUpService {
         return this._http.post<MessageResource>(this._verifyUrl, token).pipe(
             switchMap(processMessageResponse)
         );
+    }
+
+    /**
+     * @param endpointKey the attribute name of the endpoint address in `nae.json`
+     * @param baseUrl the base of the endpoint URL. Content resolved by key from `nae.json` is appended to the URL provided by this argument
+     * @returns the endpoint address or `undefined` if such endpoint is not defined in `nae.json`
+     */
+    protected resolveEndpoint(endpointKey: string, baseUrl: string): string | undefined {
+        const config = this._config.get();
+        if (!config
+            || !config.providers
+            || !config.providers.auth
+            || !config.providers.auth.endpoints
+            || !config.providers.auth.endpoints[endpointKey]) {
+            return undefined;
+        }
+        return baseUrl + config.providers.auth.endpoints[endpointKey];
     }
 }
