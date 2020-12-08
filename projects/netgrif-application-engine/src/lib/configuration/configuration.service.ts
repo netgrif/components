@@ -27,26 +27,7 @@ export abstract class ConfigurationService {
      */
     public getViewByPath(viewConfigPath: string): View | undefined {
         const pathFragments = viewConfigPath.split('/');
-
-        const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
-        if (!config.views) {
-            return undefined;
-        }
-        let views = config.views;
-        for (let i = 0; i < pathFragments.length; i++) {
-            const pathFragment = pathFragments[i];
-            const view = views[pathFragment];
-            if (!view) {
-                return undefined;
-            }
-            if (i === pathFragments.length - 1) {
-                return view;
-            }
-            if (!view.children) {
-                return undefined;
-            }
-            views = view.children;
-        }
+        return this.getConfigurationSubtree(['views', ...pathFragments]);
     }
 
     /**

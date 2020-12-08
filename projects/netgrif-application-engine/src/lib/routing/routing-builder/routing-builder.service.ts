@@ -66,6 +66,7 @@ export class RoutingBuilderService {
         if (!!view.children) {
             route['children'] = [];
             Object.entries(view.children).forEach(([configPathSegment, childView]) => {
+                // TODO check if routes are constructed correctly regarding empty route segments
                 const childRoute = this.constructRouteObject(childView, `${configPath}/${configPathSegment}`);
                 if (childRoute !== undefined) {
                     route['children'].push(childRoute);
