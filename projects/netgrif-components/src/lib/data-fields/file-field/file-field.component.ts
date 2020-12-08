@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, ElementRef, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractFileFieldComponent,
@@ -7,6 +7,7 @@ import {
     SnackBarService,
     TaskResourceService
 } from '@netgrif/application-engine';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'nc-file-field',
@@ -19,8 +20,10 @@ export class FileFieldComponent extends AbstractFileFieldComponent {
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(taskResourceService, log, snackbar, translate, informAboutInvalidData);
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
+                protected _sanitizer: DomSanitizer,
+                protected el: ElementRef) {
+        super(taskResourceService, log, snackbar, translate, informAboutInvalidData, _sanitizer, el);
     }
 }
 

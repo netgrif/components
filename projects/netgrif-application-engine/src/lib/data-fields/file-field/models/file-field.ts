@@ -22,6 +22,16 @@ export enum FileUploadMIMEType {
 }
 
 /**
+ * Supported types for file preview
+ */
+export enum FilePreviewType {
+    PDF = '.pdf',
+    PNG = '.png',
+    JPG = '.jpg',
+    JPEG = '.jpeg'
+}
+
+/**
  * Extended structure for file by name and extension.
  */
 export interface FileUploadDataModel {

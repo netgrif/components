@@ -8,6 +8,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DomSanitizer} from '@angular/platform-browser';
 
 export interface FileState {
     progress: number;
@@ -41,7 +42,23 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     /**
      * Image field view element reference from component template that is initialized after view init.
      */
-    @ViewChild('imageEl') public imageEl: ElementRef<HTMLImageElement>;
+    @ViewChild('imageEl') public imageEl: ElementRef;
+    /**
+     * If file preview should be displayed
+     */
+    public filePreview = false;
+    /**
+     * If view is already initialized
+     */
+    private isInitialized = false;
+    /**
+     * Store file for preview
+     */
+    private fileForPreview: Blob;
+    /**
+     * Url for image download
+     */
+    public imgSource = '';
 
     /**
      * Only inject services.
@@ -56,7 +73,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
+                          protected _sanitizer: DomSanitizer,
+                          protected el: ElementRef) {
         super(informAboutInvalidData);
         this.state = this.defaultState;
     }
@@ -77,10 +96,17 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Initialize file image.
      */
     ngAfterViewInit(): void {
-        if (this.fileUploadEl) {
-            this.fileUploadEl.nativeElement.onchange = () => this.upload();
+        if (!this.isInitialized) {
+            if (this.fileUploadEl) {
+                this.fileUploadEl.nativeElement.onchange = () => this.upload();
+            }
+            if (this.dataField && this.dataField.component && this.dataField.component.name
+                && this.dataField.component.name === 'preview') {
+                this.filePreview = true;
+                this.initFileFieldImage();
+            }
+            this.isInitialized = true;
         }
-        this.initFileFieldImage();
     }
 
     public chooseFile() {
@@ -158,14 +184,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     public download() {
-        if (!this.dataField.value || !this.dataField.value.name) {
+        if (!this.checkFileBeforeDownlaod()) {
             return;
         }
-        if (!this.taskId) {
-            this._log.error('File cannot be downloaded. No task is set to the field.');
-            return;
-        }
-
         this.state = this.defaultState;
         this.state.downloading = true;
         this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
@@ -184,6 +205,17 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this.state.downloading = false;
             this.state.progress = 0;
         });
+    }
+
+    public downloadFromPreview() {
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = this.imgSource;
+        a.download = this.dataField.value.name;
+        a.click();
+        window.URL.revokeObjectURL(this.imgSource);
+        document.body.removeChild(a);
     }
 
     protected downloadViaAnchor(blob: Blob): void {
@@ -252,28 +284,38 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Initialize file field image from backend if it is image type.
      */
     protected initFileFieldImage() {
-        // this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId)
-        //     .subscribe(fileBlob => {
-        //         const file: File = new File([fileBlob], this.name);
-        //         if (!file.type.includes('image')) {
-        //             return;
-        //         }
-        //         this._fileFieldService.allFiles = [];
-        //         this._fileFieldService.allFiles.push(this._fileFieldService.createFileUploadModel(file, true));
-        //
-        //         // TODO: 11.4.2020 unify image element assignment URL
-        //         //  for blob or file type as arguments to setImageSourceUrl function in FileFieldService
-        //         //  this._fileFieldService.setImageSourceUrl(fileBlob)
-        //         const reader = new FileReader();
-        //         reader.readAsDataURL(fileBlob);
-        //         reader.onloadend = () => {
-        //             if (typeof reader.result === 'string') {
-        //                 this.imageEl.nativeElement.src = reader.result;
-        //                 this.imageEl.nativeElement.alt = this.name;
-        //             }
-        //         };
-        //     });
+        if (!this.checkFileBeforeDownlaod()) {
+            return;
+        }
+        this.imageEl.nativeElement.style.height = this.el.nativeElement.offsetHeight + 'px';
+        this.imageEl.nativeElement.style.width = 'auto';
+        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+            if (response instanceof Blob) {
+                this._log.debug(`Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
+                this.fileForPreview = response;
+                this.imgSource = URL.createObjectURL(this.fileForPreview);
+            }
+        }, error => {
+            this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
+            this._snackbar.openErrorSnackBar(this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail'));
+            this.state.downloading = false;
+            this.state.progress = 0;
+        });
     }
 
+    private checkFileBeforeDownlaod() {
+        if (!this.fileExists()) {
+            return false;
+        }
+        if (!this.taskId) {
+            this._log.error('File cannot be downloaded. No task is set to the field.');
+            return false;
+        }
+        return true;
+    }
+
+    public fileExists() {
+        return this.dataField && this.dataField.value && this.dataField.value;
+    }
 }
 
