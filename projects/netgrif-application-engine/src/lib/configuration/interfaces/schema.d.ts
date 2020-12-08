@@ -214,7 +214,7 @@ export interface View {
     access:
         | 'public' | 'private'
         | {
-            role?: Array<string> | string;
+            role?: Array<string> | string | Array<RoleAccess>;
             group?: Array<string> | string;
             authority?: Array<string> | string;
             [k: string]: any;
@@ -233,6 +233,11 @@ export interface View {
     };
 
     [k: string]: any;
+}
+
+export interface RoleAccess {
+    processId: string;
+    roleId: string;
 }
 
 export interface CaseLayout {

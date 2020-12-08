@@ -28,7 +28,7 @@ export class RoleGuardService implements CanActivate {
         this._redirectService.intendedRoute = route;
         const view = this._configService.getViewByUrl(state.url.toString());
         if (typeof view.access !== 'string' && view.access.hasOwnProperty('role')) {
-            const netRoleMap: Array<{ net, role }> = [];
+            const netRoleMap: Array<{ net, role }> = []; // TODO: change
             let accessRole;
             if (typeof view.access.role === 'string') {
                 accessRole = [view.access.role];
@@ -36,11 +36,18 @@ export class RoleGuardService implements CanActivate {
                 accessRole = view.access.role;
             }
             accessRole.forEach(accessNetRole => {
-                const splitRoleArray = accessNetRole.split('.');
-                if (splitRoleArray.length === 2) {
-                    netRoleMap.push({net: splitRoleArray[0], role: splitRoleArray[1]});
+                if (typeof accessNetRole === 'string') {
+                    const splitRoleArray = accessNetRole.split('.');
+                    if (splitRoleArray.length === 2) {
+                        netRoleMap.push({net: splitRoleArray[0], role: splitRoleArray[1]});
+                    } else {
+                        throw new Error('Please enter the correct format NET.ROLE');
+                    }
                 } else {
-                    throw new Error('Please enter the correct format NET.ROLE');
+                    if (!accessNetRole.processId || !accessNetRole.roleId) {
+                        throw new Error('Please enter both process and role id: ' + accessNetRole);
+                    }
+                    netRoleMap.push({net: accessNetRole.processId, role: accessNetRole.roleId});
                 }
             });
             return this._processService.hasLoadNets(netRoleMap.map(({net}) => net)) ?
@@ -48,14 +55,14 @@ export class RoleGuardService implements CanActivate {
         }
     }
 
-    protected hasRole(netRoleMap: Array<{ net; role }>): boolean | UrlTree {
+    protected hasRole(netRoleMap: Array<{ net; role }>): Promise<boolean> | UrlTree { // TODO: change
         let access = false;
         this._processService.getNets(netRoleMap.map(({net}) => net)).subscribe(nets => {
             nets.forEach(netId => {
                 netId.roles.forEach(roles => {
                     if (netRoleMap.filter(({net}) => {
-                        return net === netId.identifier;
-                    }).map(({role}) => role).includes(roles.name)) {
+                        return net === netId.identifier; // TODO: change to map
+                    }).map(({role}) => role).includes(roles.name)) { // TODO: change name to id
                         if (this._userService.hasRoleById(roles.stringId)) {
                             access = true;
                         }
