@@ -8,7 +8,7 @@ import {MaterialModule} from '../../material/material.module';
 import {Component, Inject} from '@angular/core';
 import {AbstractSideMenuContainerComponent} from './abstract-side-menu-container.component';
 import {AbstractImportNetComponent} from '../content-components/import-net/abstract-import-net.component';
-import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token.module';
+import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token';
 import {SideMenuControl} from '../models/side-menu-control';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
