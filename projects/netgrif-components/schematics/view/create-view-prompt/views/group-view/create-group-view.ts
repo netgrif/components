@@ -1,7 +1,7 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
-import {updateAppModule} from '../../../_utility/view-utility-functions';
+import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../../../_commons/view-class-info';
@@ -24,7 +24,8 @@ export function createGroupView(tree: Tree, args: CreateViewArguments & TabbedVi
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
-        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
+        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
+        viewIdSegment: getViewIdSegmentFromPath(args.path)
     }));
 
     updateAppModule(tree, view.className, view.fileImportPath, [

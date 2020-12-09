@@ -9,7 +9,7 @@ import {
 } from '../../../../_utility/utility-functions';
 import {EmbeddedView, TabViewParams} from '../../models/params-interfaces';
 import {strings} from '@angular-devkit/core';
-import {updateAppModule} from '../../../_utility/view-utility-functions';
+import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabContentTemplate} from '../../models/tab-content-template';
 import {ImportToAdd} from '../../../../_commons/import-to-add';
@@ -79,7 +79,8 @@ export function createTabView(
         imports: tabViews.tabViewImports,
         dasherize: strings.dasherize,
         classify: strings.classify,
-        modulePath: createRelativePath(view.fileImportPath, './app.module')
+        modulePath: createRelativePath(view.fileImportPath, './app.module'),
+        viewIdSegment: getViewIdSegmentFromPath(args.path)
     }));
 
     updateAppModule(tree, view.className, view.fileImportPath, [
