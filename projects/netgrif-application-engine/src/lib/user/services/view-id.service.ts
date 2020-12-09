@@ -9,8 +9,10 @@ export class ViewIdService {
     constructor(@Optional() @SkipSelf() parentInjector: Injector, @Inject(NAE_VIEW_ID_SEGMENT) idSegment: string) {
         this._viewId = '';
         if (parentInjector !== null) {
-            const parentIdService = parentInjector.get(ViewIdService);
-            this._viewId = parentIdService.viewId + '.';
+            const parentIdService = parentInjector.get(ViewIdService, null);
+            if (parentIdService !== null) {
+                this._viewId = parentIdService.viewId + '.';
+            }
         }
         this._viewId += idSegment;
     }
