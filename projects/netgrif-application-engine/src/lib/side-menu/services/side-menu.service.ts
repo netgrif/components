@@ -1,4 +1,4 @@
-import {Injectable, Injector, TemplateRef, Type} from '@angular/core';
+import {Inject, Injectable, Injector, Optional, TemplateRef, Type} from '@angular/core';
 import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/portal';
 import {Observable} from 'rxjs';
 import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token.module';
@@ -9,6 +9,7 @@ import {SideMenuInjectionData} from '../models/side-menu-injection-data';
 import {SideMenuControl} from '../models/side-menu-control';
 import {SideMenuEvent} from '../models/side-menu-event';
 import {MatDrawerToggleResult} from '@angular/material/sidenav';
+import {NAE_NET_ALL_VERSIONS, NAE_NET_VERSION_VISIBLE} from '../net-version-visible-injection-token.module';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,13 @@ export class SideMenuService {
     private _sideMenuComponent: any; // SideMenuContainerComponent
     private _controlObject: SideMenuControl;
 
-    constructor() {
+    private readonly isVersionVisible: boolean;
+    private readonly allVersionEnabled: boolean;
+
+    constructor(@Optional() @Inject(NAE_NET_VERSION_VISIBLE) isVersionVisible: boolean,
+                @Optional() @Inject(NAE_NET_ALL_VERSIONS) allVersionEnabled: boolean) {
+        this.isVersionVisible = isVersionVisible !== null ? isVersionVisible : true;
+        this.allVersionEnabled = allVersionEnabled !== null ? allVersionEnabled : false;
     }
 
     /**
@@ -52,7 +59,8 @@ export class SideMenuService {
         let ref: SideMenuRef = new SideMenuRef(null);
         this._controlObject = new SideMenuControl(((event) => {
             ref = new SideMenuRef(event);
-        }), this._sideMenuComponent.openedChange(), () => this._sideMenuComponent.close(this._sideMenuComponent), injectionData);
+        }), this._sideMenuComponent.openedChange(), () => this._sideMenuComponent.close(this._sideMenuComponent),
+            injectionData, this.isVersionVisible, this.allVersionEnabled);
 
         const wrapper = this._createPortal(componentOrTemplateRef, width, this._controlObject);
         this._sideMenuComponent.open(wrapper).subscribe((opened) => {

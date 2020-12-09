@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {ViewService, ConfigurationService, LoggerService} from '@netgrif/application-engine';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';
 import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
-import {PasswordFormComponent} from './doc/forms/password-form/password-form.component';
+import {PasswordFormComponent} from './doc/forms/email-form/password-form.component';
 import {RegisterFormComponent} from './doc/forms/register-form/register-form.component';
 import {DrawerExampleComponent} from './doc/drawer-example/drawer-example.component';
 import {RailExampleComponent} from './doc/rail-example/rail-example.component';
@@ -27,6 +27,8 @@ import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
+import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
+import { GroupViewComponent } from './doc/group-view/group-view.component';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +38,7 @@ export class NaeExampleAppViewService extends ViewService {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([
+            GroupViewComponent,
             UserInviteComponent,
             TreeViewExampleComponent,
             ButtonsNavComponent,
@@ -61,6 +64,7 @@ export class NaeExampleAppViewService extends ViewService {
             PasswordFormComponent,
             LoginFormComponent,
             AuthenticationComponent,
-            RolesAssignComponent], configurationService, router, loggerService);
+            RolesAssignComponent,
+            ResetPasswordFormComponent], configurationService, router, loggerService);
     }
 }

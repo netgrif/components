@@ -7,6 +7,7 @@ import {DataField} from '../../models/abstract-data-field';
 import {FileListFieldValue} from './file-list-field-value';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
+import {FormControl} from '@angular/forms';
 
 export enum FileListFieldValidation {
     MAX_FILES = 'maxFiles'
@@ -52,10 +53,44 @@ export class FileListField extends DataField<FileListFieldValue> {
      * We assume that files are always given in the same order.
      */
     protected valueEquality(a: FileListFieldValue, b: FileListFieldValue): boolean {
-        let array = !a === !b;
-        if (a && a.namesPaths && b && b.namesPaths) {
+        let array = (JSON.stringify(a) === '{}' || !a.namesPaths || a.namesPaths.length === 0) &&
+            (JSON.stringify(b) === '{}' || !b.namesPaths || b.namesPaths.length === 0);
+        if (a && a.namesPaths && a.namesPaths.length !== 0 && b && b.namesPaths && b.namesPaths.length !== 0) {
             array = a.namesPaths.every((element, index) => element.name === b.namesPaths[index].name);
         }
         return (!a && !b) || (!!a && !!b && array);
+    }
+
+    public registerFormControl(formControl: FormControl): void {
+        formControl.setValue(!this.value || !this.value.namesPaths ? '' : this.value.namesPaths.map(namePath => {
+            return namePath['name'];
+        }).join('/'));
+        this.updateFormControlState(formControl);
+        this.initialized = true;
+        this._initialized$.next(true);
+        this._initialized$.complete();
+        this.changed = false;
+    }
+
+    public updateFormControlState(formControl: FormControl): void {
+        this._update.subscribe(() => {
+            this.validRequired = this.calculateValidity(true, formControl);
+            this.valid = this.calculateValidity(false, formControl);
+        });
+        this._block.subscribe(bool => {
+            if (bool) {
+                formControl.disable();
+            } else {
+                this.disabled ? formControl.disable() : formControl.enable();
+            }
+        });
+        this._touch.subscribe(bool => {
+            if (bool) {
+                formControl.markAsTouched();
+            } else {
+                formControl.markAsUntouched();
+            }
+        });
+        this.update();
     }
 }

@@ -23,7 +23,7 @@ export class SelectedCaseService implements OnDestroy {
      * Subscribed library services don't modify the provided {@link Case}, only the owner ({@link TreeTaskContentService})
      * of the {@link Case} object performs modifications of it.
      */
-    private _selectedCase$: BehaviorSubject<Case>;
+    protected _selectedCase$: BehaviorSubject<Case>;
 
     constructor() {
         this._selectedCase$ = new BehaviorSubject<Case>(undefined);

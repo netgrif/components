@@ -12,7 +12,7 @@
 @mixin nae-lib-theme($app-theme, $app-typography-config) {
     @include nae-typography($app-typography-config);
     @include panel-component($app-theme);
-    @include data-field-component();
+    @include data-field-component($app-theme);
     @include user-profile($app-theme);
     @include navigation-theme($app-theme);
     @include header-component($app-theme);

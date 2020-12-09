@@ -8,13 +8,14 @@ import {FieldsGroup} from '../../models/fields-group';
 import {orderBy} from 'natural-orderby';
 import {Observable, Subscription} from 'rxjs';
 import {LoggerService} from '../../../logger/services/logger.service';
+import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
 export interface HeaderOption {
     groupTitle: string;
     fields: Array<HeaderColumn>;
 }
 
-export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
+export abstract class AbstractEditModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
     public formControls: Array<FormControl> = [];
     public filterOptions: Array<Observable<Array<HeaderOption>>> = [];
     protected subHeader: Subscription;
@@ -23,6 +24,7 @@ export abstract class AbstractEditModeComponent implements OnInit, OnDestroy {
 
     protected constructor(protected _translate: TranslateService,
                           protected _log: LoggerService) {
+        super();
     }
 
     ngOnInit(): void {

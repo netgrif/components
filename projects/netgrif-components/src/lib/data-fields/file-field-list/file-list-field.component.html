@@ -33,8 +33,8 @@
                           class="margin-bottom-default"></mat-progress-bar>
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="true"
                accept="{{dataField.allowTypes}}" class="invisible-input"/>
-        <input type="hidden" [formControl]="formControl" [multiple]="true" accept="{{dataField.allowTypes}}">
-        <mat-hint class="file-hint-error" *ngIf="formControl.valid || !formControl.touched">{{dataField.description}}</mat-hint>
-        <mat-error class="file-hint-error" *ngIf="!formControl.valid && formControl.touched">{{'dataField.validations.required' | translate}}</mat-error>
+        <input type="text" [formControl]="formControl" class="invisible-input">
+        <mat-hint class="file-hint-error" *ngIf="!dataField.isInvalid(formControl)">{{dataField.description}}</mat-hint>
+        <mat-error class="file-hint-error" *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
     </div>
 </ng-template>

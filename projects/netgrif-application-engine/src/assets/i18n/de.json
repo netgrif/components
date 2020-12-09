@@ -23,9 +23,12 @@
             "cancelTask": "Aufgabenzuweisung wird abgebrochen",
             "finishTask": "Aufgabe wird abgeschlossen",
             "invalidData": "Manche Felder haben ungültige Werten",
+            "missingRequired": "Einige Pflichtfelder sind leer",
             "noCase": "Keine Fälle gefunden",
             "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten",
-            "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr"
+            "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr",
+            "caseDeleteFailed": "Fall konnte nicht gelöscht werden",
+            "rolesSuccessAssign": "Rollen, die ausgewählten Benutzern erfolgreich zugewiesen wurden"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Es gibt keine Aufgaben, die den ausgewählten Filter erfüllen",
@@ -163,7 +166,8 @@
             "dateRange": "Das eingegebene Datum muss zwischen {{left}} und {{right}} liegen",
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
             "workday": "Das eingegebene Datum muss ein Wochentag sein",
-            "enumeration": "One of the options must be selected"
+            "enumeration": "Eine von der angebotenen Optionen muss ausgewählt sein",
+            "min": "Die eingegebene Nummer muss größer als {{length}} sein"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",
@@ -175,7 +179,9 @@
             "fileUploadFailed": "The file failed to upload",
             "fileDeleteFailed":  "Die Datei konnte nicht gelöscht werden",
             "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
-            "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: "
+            "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
+            "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
+            "userAssigned": "Benutzer {{userName}} wurde zugewiesen"
         },
         "values": {
             "boolean": {
@@ -196,22 +202,30 @@
         "submit": "Bestätigen"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Ihre E-Mail Adresse eingeben"
         },
         "login": {
             "length": "Das Benützername muss mindestens 4 Zeichen enthalten",
-            "login": "Anmelden",
+            "login": "Benützername",
+            "loginButton": "Anmelden",
             "reset": "Kennwort wiederherstellen",
             "sign": "Registrieren",
             "enterPass": "Ihre Kennwort eingeben"
         },
         "register": {
+            "email": "Ihre E-Mail Adresse",
             "name": "Vorname",
             "surname": "Nachname",
             "repeatPass": "Kennwort viederhollen",
             "register": "Registrieren",
-            "notVerified": "Token kann nicht verifiziert werden!"
+            "notVerified": "Token kann nicht verifiziert werden!",
+            "passwordsMustMatch": "Die Kennwörter müssen übereinstimmen!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Ihre neues Kennwort eingeben",
+            "repeatNewPass": "Neues Kennwort viederhollen",
+            "recover": "Kennwort ändern"
         }
     },
     "headers": {
@@ -233,11 +247,16 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
-            "creationDate": "Hochladungsdatum"
+            "creationDate": "Hochladungsdatum",
+            "title": "Prozessname",
+            "author": "Prozessautor"
         },
         "orderMode": "Anordnungsmodus",
         "searchMode": "Suchmodus",
-        "editMode": "Editationsmodus einschalten"
+        "editMode": "Editationsmodus einschalten",
+        "overflowMode": "Tabellenmodus",
+        "columnWidth": "Spaltenbreite",
+        "columnCount": "Spaltenanzahl"
     },
     "panel": {
         "case": {
@@ -280,6 +299,7 @@
         "process-list": {
             "newestVersion": "Neuste Version",
             "listTitle": "Prozesse",
+            "roles": "Rollen",
             "noRoles": "Dieser Prozess enthält keine Rollen",
             "noProcessesWereFound": "Derzeit befinden sich keine Prozesse im System"
         },
@@ -312,5 +332,27 @@
     },
     "dashboard": {
         "cases" : "Fälle"
+    },
+    "workflow": {
+        "delete": "löschen",
+        "dialog": {
+            "header": "Sind Sie sicher, dass Sie den Prozess '{{name}}' mit Version '{{version}}' löschen wollen?",
+            "content": "Alle Fälle aus diesem Prozess werden gleichzeitig gelöscht!",
+            "typeToConfirm": "Geben Sie zur Bestätigung {{delete}} ein"
+        },
+        "snackBar": {
+            "deleteCanceled": "Prozess löschen abgebrochen",
+            "deleteSuccess": "Prozess erfolgreich gelöscht",
+            "deleteError": "Prozess konnte nicht gelöscht werden",
+            "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden"
+        }
+    },
+    "legal": {
+        "byClicking": "Indem Sie auf '{{buttonName}}' klicken,",
+        "youIndicate": "bestätigen Sie, dass Sie die",
+        "termsOfService": "Nutzungsbedingungen",
+        "and": "und die",
+        "privacyNotice": "Datenschutzerklärung",
+        "sentenceEnd": "gelesen und akzeptiert haben"
     }
 }

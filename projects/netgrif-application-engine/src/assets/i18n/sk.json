@@ -23,9 +23,12 @@
             "cancelTask": "Ruším priradenie úlohy",
             "finishTask": "Dokončujem úlohu",
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
+            "missingRequired": "Niektoré povinné polia sú prázdne",
             "noCase": "Nenašli sa žiadne prípady",
             "caseGetFailed": "Načítanie prípadov zlyhalo",
-            "noLongerExists": "Zvolená úloha už neexistuje"
+            "noLongerExists": "Zvolená úloha už neexistuje",
+            "caseDeleteFailed": "Prípad sa nepodarilo vymazať",
+            "rolesSuccessAssign": "Roly boli úspešne priradené vybraným používateľom"
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
@@ -163,7 +166,8 @@
             "dateRange": "Zadaný dátum musí byť z rozsahu {{left}} a {{right}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň",
-            "enumeration": "Musí byť vybraná jedna z možností"
+            "enumeration": "Musí byť vybraná jedna z možností",
+            "min": "Zadané číslo musí byť väčšie ako {{length}}"
         },
         "snackBar": {
             "downloadFail": " stahovanie zlyhalo",
@@ -175,7 +179,9 @@
             "fileUploadFailed": "Súbor sa nepodarilo nahrať",
             "fileDeleteFailed":  "Súbor sa nepodarilo vymazať",
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
-            "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: "
+            "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
+            "notSelectedUser": "Nebol vybraný žiadny používateľ",
+            "userAssigned": "Používateľ {{userName}} bol pridelený"
         },
         "values": {
             "boolean": {
@@ -196,22 +202,30 @@
         "submit": "Potvrdiť"
     },
     "forms": {
-        "pass": {
+        "email": {
             "enterEmail": "Zadajte svoj email"
         },
         "login": {
             "length": "Prihlasovacie meno musí mať aspoň 4 písmená",
-            "login": "Prihlásiť",
+            "login": "Prihlasovacie meno",
+            "loginButton": "Prihlásiť",
             "reset": "Obnova hesla",
             "sign": "Registrovať",
             "enterPass": "Zadajte svoje heslo"
         },
         "register": {
+            "email": "Váš email",
             "name": "Meno",
             "surname": "Priezvisko",
             "repeatPass": "Zopakujte heslo",
             "register": "Registrovať",
-            "notVerified": "Nie je možné verifikovať token!"
+            "notVerified": "Nie je možné verifikovať token!",
+            "passwordsMustMatch": "Heslá sa musia zhodovať!"
+        },
+        "forgottenPass": {
+            "enterNewPass": "Zadajte nové heslo",
+            "repeatNewPass": "Zopakujte nové heslo",
+            "recover": "Zmeniť heslo"
         }
     },
     "headers": {
@@ -233,11 +247,16 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
-            "creationDate": "Dátum nahratia"
+            "creationDate": "Dátum nahratia",
+            "title": "Názov",
+            "author": "Autor"
         },
         "orderMode": "Mód zoraďovania",
         "searchMode": "Mód vyhľadávania",
-        "editMode": "Zapnúť editačný mód"
+        "editMode": "Zapnúť editačný mód",
+        "overflowMode": "Tabuľkový mód",
+        "columnWidth": "Šírka stĺpca",
+        "columnCount": "Počet stĺpcov"
     },
     "panel": {
         "case": {
@@ -280,6 +299,7 @@
         "process-list": {
             "newestVersion": "Najnovšia verzia",
             "listTitle": "Procesy",
+            "roles": "Roly",
             "noRoles": "Tento proces neobsahuje žiadne roly",
             "noProcessesWereFound": "Momentálne nie sú v systéme žiadne procesy"
         },
@@ -312,5 +332,27 @@
     },
     "dashboard": {
         "cases" : "prípady"
+    },
+    "workflow": {
+        "delete": "zmazať",
+        "dialog": {
+            "header": "Ste si istý, že chcete vymazať proces '{{name}}' verzia '{{version}}'?",
+            "content": "Spolu s procesom budú vymazané aj všetky prípady z neho vytvorené!",
+            "typeToConfirm": "Zadajte {{delete}} pre potvrdenie"
+        },
+        "snackBar": {
+            "deleteCanceled": "Zmazanie procesu zrušené",
+            "deleteSuccess": "Proces bol úspešne zmazaný",
+            "deleteError": "Proces sa nepodarilo zmazať",
+            "uploadFailed": "Súbor procesu sa nepodarilo nahrať"
+        }
+    },
+    "legal": {
+        "byClicking": "Kliknutím na tlačidlo '{{buttonName}}'",
+        "youIndicate": "potvrdzujete, že ste prečítali a beriete na vedomie",
+        "termsOfService": "podmienky služby",
+        "and": "a",
+        "privacyNotice": "zásady ochrany osobných údajov",
+        "sentenceEnd": ""
     }
 }

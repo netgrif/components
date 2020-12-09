@@ -1,13 +1,14 @@
-import {AfterViewInit, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ElementRef, Inject, Input, OnInit, Optional, ViewChild} from '@angular/core';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {FileListField, FileListFieldValidation} from './models/file-list-field';
 import {FileFieldValue} from '../file-field/models/file-field-value';
+import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 export interface FilesState {
     progress: number;
@@ -43,11 +44,12 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      */
     @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
 
-    constructor(protected _taskResourceService: TaskResourceService,
-                protected _log: LoggerService,
-                protected _snackbar: SnackBarService,
-                protected _translate: TranslateService) {
-        super();
+    protected constructor(protected _taskResourceService: TaskResourceService,
+                          protected _log: LoggerService,
+                          protected _snackbar: SnackBarService,
+                          protected _translate: TranslateService,
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
         this.maxFilesNumber = Number.POSITIVE_INFINITY;
@@ -141,10 +143,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 this._log.debug(
                     `Files [${this.dataField.stringId}] were successfully uploaded`
                 );
+                this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 this.state.completed = true;
                 this.state.error = false;
                 this.state.uploading = false;
@@ -152,7 +154,12 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 filesToUpload.forEach(fileToUpload => {
                     this.uploadedFiles.push(fileToUpload.name);
                     this.dataField.value.namesPaths.push({name: fileToUpload.name});
+                    this.formControl.setValue(this.dataField.value.namesPaths.map(namePath => {
+                        return namePath['name'];
+                    }).join('/'));
                 });
+                this.dataField.touch = true;
+                this.dataField.update();
             }
         }, error => {
             this.state.completed = true;
@@ -163,6 +170,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
             );
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
+            this.dataField.touch = true;
+            this.dataField.update();
         });
     }
 
@@ -224,9 +233,14 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
                 if (this.dataField.value.namesPaths) {
                     this.dataField.value.namesPaths = this.dataField.value.namesPaths.filter(namePath => namePath.name !== fileName);
+                    this.formControl.setValue(this.dataField.value.namesPaths.map(namePath => {
+                        return namePath['name'];
+                    }).join('/'));
+                    this.dataField.update();
                 }
                 this.dataField.downloaded = this.dataField.downloaded.filter(one => one !== fileName);
                 this._log.debug(`File [${this.dataField.stringId}] ${fileName} was successfully deleted`);
+                this.formControl.markAsTouched();
             } else {
                 this._log.error(`Downloading file [${this.dataField.stringId}] ${fileName} has failed!`, response.error);
                 this._snackbar.openErrorSnackBar(

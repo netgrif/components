@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractButtonFieldComponent} from '@netgrif/application-engine';
+import {AbstractButtonFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA, DialogService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-button-field',
@@ -9,7 +9,9 @@ import {AbstractButtonFieldComponent} from '@netgrif/application-engine';
 })
 export class ButtonFieldComponent extends AbstractButtonFieldComponent {
 
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(translate: TranslateService,
+                protected dialogService: DialogService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(translate,  dialogService, informAboutInvalidData);
     }
 }
