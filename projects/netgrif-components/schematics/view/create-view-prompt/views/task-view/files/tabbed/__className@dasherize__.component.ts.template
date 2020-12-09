@@ -6,7 +6,9 @@ import {
     SearchService,
     TabbedTaskView,
     TaskViewService,
-    tabbedTaskViewServiceFactory
+    tabbedTaskViewServiceFactory,<% if(initiallyOpened) { %>
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService,<% } %>
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
@@ -27,7 +29,8 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
             deps: [NAE_TAB_DATA]},
         {   provide: TaskViewService,
             useFactory: tabbedTaskViewServiceFactory,
-            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},
+            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(initiallyOpened) { %>
+        ViewIdService,<% } %>
     ]
 })
 export class <%= classify(className) %>Component extends TabbedTaskView implements AfterViewInit {
