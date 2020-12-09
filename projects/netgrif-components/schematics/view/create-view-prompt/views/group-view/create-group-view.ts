@@ -17,7 +17,7 @@ export function createGroupView(tree: Tree, args: CreateViewArguments & TabbedVi
         args.componentName);
     const rules = [];
 
-    const templateParams = {
+    rules.push(createFilesFromTemplates('./views/group-view/files/', `${projectInfo.path}/views/${args.path}`, {
         prefix: projectInfo.projectPrefixDasherized,
         className: view.nameWithoutComponent,
         viewPath: args.path,
@@ -25,12 +25,7 @@ export function createGroupView(tree: Tree, args: CreateViewArguments & TabbedVi
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
-    };
-
-    const commonPathPrefix = './views/group-view/files/';
-    const destinationPath = `${projectInfo.path}/views/${args.path}`;
-    rules.push(createFilesFromTemplates(`${commonPathPrefix}common`, destinationPath, templateParams));
-    rules.push(createFilesFromTemplates(`${commonPathPrefix}simple`, destinationPath, templateParams));
+    }));
 
     updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
