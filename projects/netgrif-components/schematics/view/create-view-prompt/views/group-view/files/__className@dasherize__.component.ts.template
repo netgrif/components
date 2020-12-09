@@ -5,6 +5,8 @@ import {
     SearchService,
     SimpleFilter,
     TaskViewService
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService,
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
@@ -31,6 +33,9 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},
+        {   provide: NAE_VIEW_ID_SEGMENT,
+            useValue: '<%= viewIdSegment %>'},
+        ViewIdService,
     ]
 })
 export class <%= classify(className) %>Component extends AbstractTaskView implements AfterViewInit {
