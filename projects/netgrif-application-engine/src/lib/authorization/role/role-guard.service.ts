@@ -50,7 +50,7 @@ export class RoleGuardService implements CanActivate {
                     netRoleMap.push({net: accessNetRole.processId, role: accessNetRole.roleId});
                 }
             });
-            return this._processService.hasLoadNets(netRoleMap.map(({net}) => net)) ?
+            return this._processService.areNetsLoaded(netRoleMap.map(({net}) => net)) ?
                 this.hasRole(netRoleMap) : this._roleOverlayService.setLoadNet(netRoleMap.map(({net}) => net), state.url.toString());
         }
     }
