@@ -18,7 +18,7 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
 
     constructor(protected _caseViewService: CaseViewService,
                 preferences: UserPreferenceService,
-                viewIdService: ViewIdService,
+                @Optional() viewIdService: ViewIdService,
                 logger: LoggerService,
                 @Optional() protected overflowService: OverflowService,
                 @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Optional} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
@@ -10,7 +10,7 @@ import {ViewIdService} from '../../user/services/view-id.service';
 @Injectable()
 export class WorkflowHeaderService extends AbstractHeaderService {
 
-    constructor(preferences: UserPreferenceService, viewIdService: ViewIdService, logger: LoggerService) {
+    constructor(preferences: UserPreferenceService, @Optional() viewIdService: ViewIdService, logger: LoggerService) {
         super(HeaderType.WORKFLOW, preferences, viewIdService, logger);
         this.loadHeadersFromPreferences();
         this.loading.off();
