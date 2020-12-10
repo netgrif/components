@@ -44,7 +44,7 @@ export function createTabView(
 
     if (!!params.defaultTaskView) {
         processEmbeddedView(params.defaultTaskView, tabViews, view, args.path,
-            viewCounterStart, tree, createViewFunctionRef);
+            viewCounterStart, tree, createViewFunctionRef, true);
         viewCounterStart++;
     }
 
@@ -129,7 +129,8 @@ function processEmbeddedView(embeddedView: EmbeddedView,
                              hostViewPath: string,
                              viewNumber: number,
                              tree: Tree,
-                             createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
+                             createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
+                             isDefaultTabbedTaskView: boolean = false
 ): void {
     let tabTemplate: TabContentTemplate;
     if (embeddedView.component !== undefined) {
@@ -140,7 +141,8 @@ function processEmbeddedView(embeddedView: EmbeddedView,
             hostClassName,
             `${hostViewPath}/content/${viewNumber}`,
             tree,
-            createViewFunctionRef);
+            createViewFunctionRef,
+            isDefaultTabbedTaskView);
     } else {
         throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
     }
@@ -191,7 +193,8 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
                                 hostClassName: ViewClassInfo,
                                 newViewPath: string,
                                 tree: Tree,
-                                createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
+                                createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
+                                isDefaultTabbedTaskView: boolean = false
 ): TabContentTemplate {
     if (!embeddedView.view) {
         throw new SchematicsException('processEmbeddedNewView can\'t be called with EmbeddedView object' +
@@ -208,7 +211,8 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
         layoutParams: embeddedView.view.params,
         componentName: embeddedView.view.componentName,
         isTabbed: true,
-        access: 'private' as 'private'
+        access: 'private' as 'private',
+        isDefaultTabbedTaskView
     };
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
