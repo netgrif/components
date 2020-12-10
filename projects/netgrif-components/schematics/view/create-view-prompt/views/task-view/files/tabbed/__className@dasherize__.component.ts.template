@@ -6,9 +6,8 @@ import {
     SearchService,
     TabbedTaskView,
     TaskViewService,
-    tabbedTaskViewServiceFactory,<% if(initiallyOpened) { %>
-    NAE_VIEW_ID_SEGMENT,
-    ViewIdService,<% } %>
+    tabbedTaskViewServiceFactory,
+    ViewIdService,
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
@@ -29,7 +28,8 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
             deps: [NAE_TAB_DATA]},
         {   provide: TaskViewService,
             useFactory: tabbedTaskViewServiceFactory,
-            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(initiallyOpened) { %>
+            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(defaultTabbedTaskView) { %>
+        {   provide: ViewIdService, useValue: null},<% } else { %>
         ViewIdService,<% } %>
     ]
 })
