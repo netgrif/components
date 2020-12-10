@@ -57,9 +57,11 @@ export class OverflowService {
 
     public saveNewState(): void {
         const viewId = this.getViewId();
-        localStorage.setItem(viewId + '-overflowMode', this._overflowMode + '');
-        localStorage.setItem(viewId + '-columnCount', this._columnCount + '');
-        localStorage.setItem(viewId + '-columnWidth', this._columnWidth + '');
+        if (viewId) {
+            localStorage.setItem(viewId + '-overflowMode', this._overflowMode + '');
+            localStorage.setItem(viewId + '-columnCount', this._columnCount + '');
+            localStorage.setItem(viewId + '-columnWidth', this._columnWidth + '');
+        }
         this._state = undefined;
     }
 
