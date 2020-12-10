@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/application-engine';
 
 @Component({
     selector: '<%= prefix %>-<%= dasherize(className) %>',
