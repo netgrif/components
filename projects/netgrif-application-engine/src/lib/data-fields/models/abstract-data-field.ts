@@ -19,6 +19,11 @@ export abstract class DataField<T> {
     protected _value: BehaviorSubject<T>;
     /**
      * @ignore
+     * Previous value of the data field
+     */
+    protected _previousValue: BehaviorSubject<T>;
+    /**
+     * @ignore
      * Whether the data field Model object was initialized.
      *
      * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
@@ -66,6 +71,15 @@ export abstract class DataField<T> {
      */
     public materialAppearance: string;
     /**
+     * @ignore
+     * Whether the field fulfills required validator.
+     */
+    private _validRequired: boolean;
+    /**
+     * Whether invalid field values should be sent to backend.
+     */
+    private _sendInvalidValues = false;
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -79,6 +93,7 @@ export abstract class DataField<T> {
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout, private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
+        this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new ReplaySubject<true>(1);
         this._initialized = false;
         this._valid = true;
@@ -86,6 +101,7 @@ export abstract class DataField<T> {
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
+        this._validRequired = true;
     }
 
     get stringId(): string {
@@ -131,7 +147,21 @@ export abstract class DataField<T> {
     set value(value: T) {
         if (!this.valueEquality(this._value.getValue(), value)) {
             this._changed = true;
+            this.resolvePrevValue(value);
         }
+        this._value.next(value);
+    }
+
+    get previousValue() {
+        return this._previousValue.getValue();
+    }
+
+    set previousValue(value: T) {
+        this._previousValue.next(value);
+    }
+
+    public valueWithoutChange(value: T) {
+        this._changed = false;
         this._value.next(value);
     }
 
@@ -187,6 +217,27 @@ export abstract class DataField<T> {
         return this._component;
     }
 
+    public revertToPreviousValue(): void {
+        this.changed = false;
+        this.value = this.previousValue;
+    }
+
+    set validRequired(set: boolean) {
+        this._validRequired = set;
+    }
+
+    get validRequired(): boolean {
+        return this._validRequired;
+    }
+
+    get sendInvalidValues(): boolean {
+        return this._sendInvalidValues;
+    }
+
+    set sendInvalidValues(value: boolean | null) {
+        this._sendInvalidValues = value !== null && value;
+    }
+
     public update(): void {
         this._update.next();
     }
@@ -216,12 +267,10 @@ export abstract class DataField<T> {
     }
 
     public updateFormControlState(formControl: FormControl): void {
+        formControl.setValue(this.value);
         this._update.subscribe(() => {
-            this.disabled ? formControl.disable() : formControl.enable();
-            formControl.clearValidators();
-            formControl.setValidators(this.resolveFormControlValidators());
-            formControl.updateValueAndValidity();
-            this._valid = this._determineFormControlValidity(formControl);
+            this.validRequired = this.calculateValidity(true, formControl);
+            this.valid = this.calculateValidity(false, formControl);
         });
         this._block.subscribe(bool => {
             if (bool) {
@@ -238,8 +287,6 @@ export abstract class DataField<T> {
             }
         });
         this.update();
-        formControl.setValue(this.value);
-        this._valid = this._determineFormControlValidity(formControl);
     }
 
     /**
@@ -305,12 +352,43 @@ export abstract class DataField<T> {
 
     public resolveAppearance(config: ConfigurationService): void {
         let appearance = 'outline';
-        if (config.get().services && config.get().services.dataFields && config.get().services.dataFields.appearance) {
-            appearance = config.get().services.dataFields.appearance;
-        }
         if (this.layout && this.layout.appearance) {
             appearance = this.layout.appearance;
+        } else {
+            const datafieldConfiguration = config.getDatafieldConfiguration();
+            if (datafieldConfiguration && datafieldConfiguration.appearance) {
+                appearance = datafieldConfiguration.appearance;
+            }
         }
         this.materialAppearance = appearance;
+    }
+
+    public resolvePrevValue(value: T): void {
+        if (this._value.getValue() !== undefined
+            && this._previousValue.getValue() !== undefined
+            && this._previousValue.getValue() !== value
+            && this._value.getValue() !== value) {
+            this._previousValue.next(this._value.getValue());
+        }
+    }
+
+    protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
+        if (forValidRequired) {
+            formControl.enable();
+        } else if (this.disabled) {
+            formControl.disable();
+        }
+        formControl.clearValidators();
+        if (forValidRequired) {
+            formControl.setValidators(this.behavior.required ? [Validators.required] : []);
+        } else {
+            formControl.setValidators(this.resolveFormControlValidators());
+        }
+        formControl.updateValueAndValidity();
+        return this._determineFormControlValidity(formControl);
+    }
+
+    public isInvalid(formControl: FormControl): boolean {
+        return !formControl.disabled && !formControl.valid && formControl.touched;
     }
 }

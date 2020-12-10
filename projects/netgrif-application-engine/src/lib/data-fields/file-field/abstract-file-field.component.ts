@@ -1,4 +1,4 @@
-import {AfterViewInit, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ElementRef, Inject, Input, OnInit, Optional, ViewChild} from '@angular/core';
 import {FileField} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -7,6 +7,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 export interface FileState {
     progress: number;
@@ -48,12 +49,15 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _log Logger service
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
+     * @param informAboutInvalidData whether the backend should be notified about invalid values.
+     * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      */
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
-                          protected _translate: TranslateService) {
-        super();
+                          protected _translate: TranslateService,
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
         this.state = this.defaultState;
     }
 
@@ -136,9 +140,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
                 this.name = this.constructDisplayName();
                 this.formControl.setValue(this.dataField.value.name);
+                this.dataField.touch = true;
+                this.dataField.update();
             }
-            this.dataField.touch = true;
-            this.dataField.update();
         }, error => {
             this.state.completed = true;
             this.state.error = true;

@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AbstractMultichoiceFieldComponent} from '@netgrif/application-engine';
+import {Component, Inject, Optional} from '@angular/core';
+import {AbstractMultichoiceFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-multichoice-field',
@@ -8,7 +8,7 @@ import {AbstractMultichoiceFieldComponent} from '@netgrif/application-engine';
 })
 export class MultichoiceFieldComponent extends AbstractMultichoiceFieldComponent {
 
-    constructor() {
-        super();
+    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
     }
 }

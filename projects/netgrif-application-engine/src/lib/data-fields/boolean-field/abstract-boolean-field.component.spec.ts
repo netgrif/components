@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
@@ -16,6 +16,7 @@ import {MaterialModule} from '../../material/material.module';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractBooleanFieldComponent} from './abstract-boolean-field.component';
 import {BooleanField} from './models/boolean-field';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 describe('AbstractBooleanFieldComponent', () => {
     let component: TestBooleanComponent;
@@ -66,8 +67,9 @@ describe('AbstractBooleanFieldComponent', () => {
     template: ''
 })
 class TestBooleanComponent extends AbstractBooleanFieldComponent {
-    constructor(protected _translate: TranslateService) {
-        super(_translate);
+    constructor(translate: TranslateService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(translate, informAboutInvalidData);
     }
 }
 

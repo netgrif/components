@@ -23,6 +23,6 @@
                                  [enableMeridian]="false">
         </ngx-mat-datetime-picker>
         <mat-hint>{{dataField.description}}</mat-hint>
-        <mat-error *ngIf="!formControl.valid">{{getErrorMessage()}}</mat-error>
+        <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
 </ng-template>

@@ -88,7 +88,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
             this._taskPanelData.changedFields.next(changedFields);
             if (this._taskContentService.task) {
                 Object.keys(changedFields).forEach(value => {
-                    if (changedFields[value].type === 'taskRef') {
+                    if (changedFields[value].type === 'taskRef' && this._taskContentService.task.user !== undefined) {
                         this._taskDataService.initializeTaskDataFields(new Subject<boolean>(), true);
                     }
                 });

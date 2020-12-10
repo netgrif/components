@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "4.3.1",
+    "version": "4.4.0-alpha.7",
     "description": "Netgrif Application Engine Angular components",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -49,7 +49,7 @@
         "@ngx-translate/core": "^12.1.2",
         "@ngx-translate/http-loader": "^5.0.0",
         "@schematics/angular": "^9.1.11",
-        "angular-resize-event": "^1.2.2",
+        "angular-resize-event": "^2.0.1",
         "angular2-hotkeys": "^2.2.0",
         "hammerjs": "^2.0.8",
         "json-schema-to-typescript": "^8.1.0",
@@ -58,7 +58,7 @@
         "natural-orderby": "^2.0.3",
         "rxjs": "^6.6.0",
         "zone.js": "~0.10.2",
-        "@netgrif/application-engine": "^4.2.0-beta.1"
+        "@netgrif/application-engine": "^4.4.0-alpha.1"
     },
     "publishConfig": {
         "registry": "https://nexus.netgrif.com/repository/npm-private/"
