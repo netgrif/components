@@ -28,7 +28,7 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
             deps: [NAE_TAB_DATA]},
         {   provide: TaskViewService,
             useFactory: tabbedTaskViewServiceFactory,
-            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(defaultTabbedTaskView) { %>
+            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(isDefaultTabbedTaskView) { %>
         {   provide: ViewIdService, useValue: null},<% } else { %>
         ViewIdService,<% } %>
     ]
