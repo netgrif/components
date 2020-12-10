@@ -36,14 +36,8 @@ export class TextField extends DataField<string> {
     private _validators: Array<ValidatorFn>;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, public validations?: Validation[], protected _view = TextFieldView.DEFAULT,
-                _component?: Component) {
+                description?: string, layout?: Layout, public validations?: Validation[], _component?: Component) {
         super(stringId, title, value, behavior, placeholder, description, layout, _component);
-    }
-
-    /*@deprecated in 4.3.0*/
-    get view(): TextFieldView {
-        return this._view;
     }
 
     protected resolveFormControlValidators(): Array<ValidatorFn> {

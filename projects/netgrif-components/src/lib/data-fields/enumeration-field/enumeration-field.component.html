@@ -5,7 +5,7 @@
 </nc-data-field-template>
 
 <ng-template #enumFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div [ngSwitch]="dataField.getType()">
+    <div [ngSwitch]="dataField.getComponentType()">
         <nc-enumeration-autocomplete-select-field *ngSwitchCase="'autocomplete'"
                                                   [showLargeLayout]="showLargeLayout"
                                                   [enumerationField]="dataField"

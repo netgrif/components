@@ -2,21 +2,18 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     BooleanField,
     ButtonField,
-    ButtonFieldView,
     ChangedFields,
     DataField,
     DateField,
     DateTimeField,
     EnumerationField,
-    EnumerationFieldView,
+    FieldTypeResource,
     FileField,
     FileListField,
     MultichoiceField,
-    MultichoiceFieldView,
     NumberField,
     TextAreaField,
     TextField,
-    TextFieldView,
     UserField,
     UserValue
 } from '@netgrif/application-engine';
@@ -24,16 +21,16 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
 import moment from 'moment';
 import {
-    TextFieldComponent,
     BooleanFieldComponent,
     ButtonFieldComponent,
-    NumberFieldComponent,
     DateFieldComponent,
     DateTimeFieldComponent,
     EnumerationFieldComponent,
-    MultichoiceFieldComponent,
     FileFieldComponent,
     FileListFieldComponent,
+    MultichoiceFieldComponent,
+    NumberFieldComponent,
+    TextFieldComponent,
     UserFieldComponent
 } from '@netgrif/components';
 
@@ -58,17 +55,17 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // TEXT AREA FIELD
     @ViewChild('textAreaFieldComponent') naeTextAreaField: TextFieldComponent;
     textAreaField = new TextField('textAreaFieldId', 'Reactive text area field', 'hello world', {visible: true, editable: true},
-        undefined, undefined, undefined, undefined, TextFieldView.TEXTAREA);
+        undefined, undefined, undefined, undefined, {name: 'textarea'});
 
     // RICH TEXT FIELD
     @ViewChild('textRichFieldComponent') naeTextRichField: TextFieldComponent;
     textRichField = new TextAreaField('textRichFieldId', 'Reactive text rich field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
-        undefined, undefined, TextFieldView.RICHTEXTAREA );
+        undefined, undefined, {name: 'richtextarea'} );
 
     // HTML TEXT FIELD
     @ViewChild('textHtmlFieldComponent') naeTextHtmlField: TextFieldComponent;
     textHtmlField = new TextField('textHtmlFieldId', 'Reactive text html field', 'hello', {visible: true, editable: true}, 'hej', 'hej',
-        undefined, undefined, TextFieldView.HTMLTEXTAREA );
+        undefined, undefined, {name: 'htmltextarea'});
 
     // BOOLEAN FIELD
     @ViewChild('booleanFieldComponent') naeBooleanField: BooleanFieldComponent;
@@ -77,7 +74,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // BUTTON FIELD
     @ViewChild('buttonFieldComponent') naeButtonField: ButtonFieldComponent;
     buttonField = new ButtonField('buttonFieldId', 'Reactive button field',
-        {visible: true, editable: true}, undefined,  undefined, 'test', undefined, ButtonFieldView.STROKED);
+        {visible: true, editable: true}, undefined,  undefined, 'test', undefined, {name: 'stroked'});
 
     // NUMBER FIELD
     @ViewChild('numberFieldComponent') naeNumberField: NumberFieldComponent;
@@ -102,19 +99,19 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     @ViewChild('enumListFieldComponent') naeEnumListField: EnumerationFieldComponent;
     enumListField = new EnumerationField('enumListFieldId', 'Reactive enum list field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', undefined, EnumerationFieldView.LIST);
+        '', '', undefined, FieldTypeResource.ENUMERATION, {name: 'list'});
 
     // ENUM AUTO COMPLETE FIELD
     @ViewChild('enumAutoFieldComponent') naeEnumAutoField: EnumerationFieldComponent;
     enumAutoField = new EnumerationField('enumAutoFieldId', 'Reactive enum autocomplete field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', undefined, EnumerationFieldView.AUTOCOMPLETE);
+        '', '', undefined, FieldTypeResource.ENUMERATION, {name: 'autocomplete'});
 
     // MULTICHOICE LIST FIELD
     @ViewChild('multichoiceListFieldComponent') naeMultichoiceListField: MultichoiceFieldComponent;
     multichoiceListField = new MultichoiceField('multichoiceListFieldId', 'Reactive multichoice list field', ['a', 'b'],
         [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true},
-        undefined, undefined, undefined, MultichoiceFieldView.LIST);
+        undefined, undefined, undefined, FieldTypeResource.MULTICHOICE, {name: 'list'});
 
     // MULTICHOICE SELECT FIELD
     @ViewChild('multichoiceSelectFieldComponent') naeMultichoiceSelectField: MultichoiceFieldComponent;

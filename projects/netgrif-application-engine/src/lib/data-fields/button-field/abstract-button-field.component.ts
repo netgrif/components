@@ -22,17 +22,6 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
     }
 
     /**
-     * This function resolve type of component for HTML
-     * @returns type of component in string
-     */
-    public resolveComponentType(): string {
-        if (this.dataField.component && this.dataField.component.name !== undefined) {
-            return this.dataField.component.name;
-        }
-        return this.dataField.view;
-    }
-
-    /**
      * This function depends on type of component, if had dialogText provided in component, then its open a dialog with that text
      */
     public resolveValue(): void {

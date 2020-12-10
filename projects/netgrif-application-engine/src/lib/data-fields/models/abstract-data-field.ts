@@ -217,6 +217,14 @@ export abstract class DataField<T> {
         return this._component;
     }
 
+    /**
+     * This function resolve type of component for HTML
+     * @returns type of component in string
+     */
+    public getComponentType(): string {
+        return !!this.component && !!this.component.name ? this.component.name : '';
+    }
+
     public revertToPreviousValue(): void {
         this.changed = false;
         this.value = this.previousValue;

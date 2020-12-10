@@ -13,19 +13,20 @@
         </mat-label>
         <button mat-button
                 [ngClass]="{
-                'mat-raised-button': resolveComponentType() === 'raised',
-                'mat-stroked-button': resolveComponentType() === 'stroked',
-                'mat-flat-button': resolveComponentType() === 'flat',
-                'mat-icon-button': resolveComponentType() === 'icon',
-                'mat-fab': resolveComponentType() === 'fab',
-                'mat-mini-fab': resolveComponentType() === 'minifab'}"
+                'mat-raised-button': dataField.getComponentType() === 'raised',
+                'mat-stroked-button': dataField.getComponentType() === 'stroked',
+                'mat-flat-button': dataField.getComponentType() === 'flat',
+                'mat-icon-button': dataField.getComponentType() === 'icon',
+                'mat-fab': dataField.getComponentType() === 'fab',
+                'mat-mini-fab': dataField.getComponentType() === 'minifab'}"
                 color="primary"
                 [matTooltip]="dataField.description"
                 [disabled]="formControl.disabled"
                 (click)="resolveValue()">
-            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : ((dataField.view === 'fab' || dataField.view === 'minifab') ? '' : dataField.placeholder) }}
+            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title :
+            ((dataField.getComponentType() === 'fab' || dataField.getComponentType() === 'minifab' || dataField.getComponentType() === 'icon') ? '' : dataField.placeholder) }}
             <mat-icon
-                *ngIf="dataField.view === 'fab' || dataField.view === 'minifab'">{{dataField.placeholder}}</mat-icon>
+                *ngIf="dataField.getComponentType() === 'fab' || dataField.getComponentType() === 'minifab' || dataField.getComponentType() === 'icon'">{{dataField.placeholder}}</mat-icon>
         </button>
 
         <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
