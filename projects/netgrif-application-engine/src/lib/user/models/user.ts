@@ -1,27 +1,12 @@
-import {Role} from './role';
-import {IUser} from './iuser';
+import {UserSmall} from './user-small';
+import {ProcessRole} from './process-role';
+import {Authority} from '../../resources/interface/authority';
+import {Group} from '../../resources/interface/user';
 
-export class User implements IUser {
-    constructor(
-        public id: string,
-        public email: string,
-        public firstName: string,
-        public lastName: string,
-        public authorities: Array<string>,
-        public roles: Array<Role>,
-        public groups?: Array<string>,
-        public nextGroups?: Array<string>) {
-    }
-
-    get fullName() {
-        return this.firstName + ' ' + this.lastName;
-    }
-
-    public get name(): string {
-        return this.firstName;
-    }
-
-    public get surname(): string {
-        return this.lastName;
-    }
+export interface User extends UserSmall {
+    telNumber?: string;
+    groups: Array<Group>;
+    authorities: Array<Authority>;
+    nextGroups: Array<string>;
+    processRoles: Array<ProcessRole>;
 }

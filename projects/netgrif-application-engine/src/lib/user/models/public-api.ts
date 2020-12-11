@@ -1,7 +1,8 @@
 // USER MODELS
 export * from './user';
-export * from './role';
+export * from './process-role';
 export * from './iuser';
+export * from './user-small';
 
 // PREFERENCE MODELS
 export * from './preferences';

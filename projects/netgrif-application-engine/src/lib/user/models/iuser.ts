@@ -1,4 +1,4 @@
-export class IUser {
+export interface IUser {
     id: string;
     /**
      * **Example:** example@netgrif.com
