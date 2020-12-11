@@ -4,12 +4,12 @@ import {map} from 'rxjs/operators';
 import {Params, ResourceProvider} from '../resource-provider.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {MessageResource} from '../interface/message-resource';
-import {User} from '../interface/user';
 import {Authority} from '../interface/authority';
 import {Preferences} from '../../user/models/preferences';
 import {Page} from '../interface/page';
 import {GroupsInterface} from '../interface/group';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
+import {User} from '../../user/models/user';
 
 @Injectable({
     providedIn: 'root'
