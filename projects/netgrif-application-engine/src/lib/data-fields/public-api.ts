@@ -11,6 +11,7 @@ export * from './enumeration-field/enumeration-select-field/abstract-enumeration
 export * from './enumeration-field/enumeration-list-field/abstract-enumeration-list-field.component';
 export * from './enumeration-field/enumeration-autocomplete-select-field/abstract-enumeration-autocomplete-select-field.component';
 export * from './file-field/abstract-file-field.component';
+export * from './file-field/abstract-preview-dialog/preview-dialog-data';
 export * from './file-list-field/abstract-file-list-field.component';
 export * from './multichoice-field/abstract-multichoice-field.component';
 export * from './multichoice-field/multichoice-list-field/abstract-multichoice-list-field.component';

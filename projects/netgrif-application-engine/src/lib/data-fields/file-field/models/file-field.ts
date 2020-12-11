@@ -25,10 +25,10 @@ export enum FileUploadMIMEType {
  * Supported types for file preview
  */
 export enum FilePreviewType {
-    PDF = '.pdf',
-    PNG = '.png',
-    JPG = '.jpg',
-    JPEG = '.jpeg'
+    PDF = 'pdf',
+    PNG = 'png',
+    JPG = 'jpg',
+    JPEG = 'jpeg'
 }
 
 /**

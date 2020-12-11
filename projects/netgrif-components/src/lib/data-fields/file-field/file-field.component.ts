@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
     AbstractFileFieldComponent,
@@ -8,6 +8,8 @@ import {
     TaskResourceService
 } from '@netgrif/application-engine';
 import {DomSanitizer} from '@angular/platform-browser';
+import {MatDialog} from '@angular/material/dialog';
+import {PreviewDialogComponent} from './preview-dialog/preview-dialog.component';
 
 @Component({
     selector: 'nc-file-field',
@@ -22,8 +24,19 @@ export class FileFieldComponent extends AbstractFileFieldComponent {
                 translate: TranslateService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
                 protected _sanitizer: DomSanitizer,
-                protected el: ElementRef) {
-        super(taskResourceService, log, snackbar, translate, informAboutInvalidData, _sanitizer, el);
+                protected dialog: MatDialog) {
+        super(taskResourceService, log, snackbar, translate, informAboutInvalidData, _sanitizer);
+    }
+
+    public showPreviewDialog() {
+        super.showPreviewDialog();
+        this.dialog.open(PreviewDialogComponent, {
+            data: {
+                dataField: this.dataField,
+                imagePreview: this.previewSource,
+                imageFull: this.fullSource
+            }
+        });
     }
 }
 

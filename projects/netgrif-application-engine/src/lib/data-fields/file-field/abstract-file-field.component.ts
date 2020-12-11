@@ -1,5 +1,5 @@
-import {AfterViewInit, ElementRef, Inject, Input, OnInit, Optional, ViewChild} from '@angular/core';
-import {FileField} from './models/file-field';
+import {AfterViewChecked, ElementRef, Inject, Input, OnInit, Optional, ViewChild} from '@angular/core';
+import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
@@ -8,7 +8,8 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {BehaviorSubject} from 'rxjs';
 
 export interface FileState {
     progress: number;
@@ -21,7 +22,7 @@ export interface FileState {
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
-export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
+export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewChecked {
     /**
      * Keep display name.
      */
@@ -43,14 +44,20 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Image field view element reference from component template that is initialized after view init.
      */
     @ViewChild('imageEl') public imageEl: ElementRef;
+
+    @ViewChild('imageDiv') public divEl: ElementRef;
     /**
      * If file preview should be displayed
      */
     public filePreview = false;
     /**
+     * If file type can be displayed
+     */
+    public isDisplayable = false;
+    /**
      * If view is already initialized
      */
-    private isInitialized = false;
+    private maxHeight: string;
     /**
      * Store file for preview
      */
@@ -58,7 +65,15 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     /**
      * Url for image download
      */
-    public imgSource = '';
+    public previewSource: SafeUrl;
+    /**
+     * Store file to show/download
+     */
+    private fileForDownload: Blob;
+    /**
+     * Full image url
+     */
+    public fullSource: BehaviorSubject<SafeUrl>;
 
     /**
      * Only inject services.
@@ -68,16 +83,17 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _translate Translate service for I18N
      * @param informAboutInvalidData whether the backend should be notified about invalid values.
      * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
+     * @param _sanitizer Sanitize url of image preview
      */
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
-                          protected _sanitizer: DomSanitizer,
-                          protected el: ElementRef) {
+                          protected _sanitizer: DomSanitizer) {
         super(informAboutInvalidData);
         this.state = this.defaultState;
+        this.fullSource = new BehaviorSubject<SafeUrl>(null);
     }
 
     /**
@@ -88,6 +104,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     ngOnInit() {
         super.ngOnInit();
         this.name = this.constructDisplayName();
+        this.previewSource = undefined;
+        if (this.dataField && this.dataField.component && this.dataField.component.name
+            && this.dataField.component.name === 'preview') {
+            this.filePreview = true;
+        }
     }
 
     /**
@@ -95,17 +116,26 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      *
      * Initialize file image.
      */
-    ngAfterViewInit(): void {
-        if (!this.isInitialized) {
-            if (this.fileUploadEl) {
-                this.fileUploadEl.nativeElement.onchange = () => this.upload();
+    ngAfterViewChecked(): void {
+        if (this.fileUploadEl) {
+            this.fileUploadEl.nativeElement.onchange = () => this.upload();
+        }
+        if (this.filePreview) {
+            if (!!this.divEl && !this.maxHeight) {
+                this.maxHeight = this.divEl.nativeElement.parentElement.parentElement.offsetHeight - 16 + 'px';
+                if (!this.isEmpty()) {
+                    const extension = this.dataField.value.name.split('.');
+                    this.isDisplayable = Object.values(FilePreviewType).includes(extension[extension.length - 1] as any);
+                    if (this.isDisplayable) {
+                        this.initFileFieldImage();
+                        console.log('Getting file preview from ' + this.dataField.stringId);
+                    }
+                }
             }
-            if (this.dataField && this.dataField.component && this.dataField.component.name
-                && this.dataField.component.name === 'preview') {
-                this.filePreview = true;
-                this.initFileFieldImage();
+            if (!this.isEmpty()  && !!this.imageEl && !!this.maxHeight) {
+                this.imageEl.nativeElement.style.maxHeight = this.maxHeight;
             }
-            this.isInitialized = true;
+
         }
     }
 
@@ -149,7 +179,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         this.state = this.defaultState;
         this.state.uploading = true;
         const fileFormData = new FormData();
-        fileFormData.append('file', this.fileUploadEl.nativeElement.files.item(0) as File);
+        const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
+        fileFormData.append('file', fileToUpload);
         this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
@@ -163,7 +194,14 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.state.uploading = false;
                 this.state.progress = 0;
                 this.dataField.downloaded = false;
-                this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
+                this.dataField.value.name = fileToUpload.name;
+                const extension = this.dataField.value.name.split('.');
+                this.isDisplayable = Object.values(FilePreviewType).includes(extension[extension.length - 1] as any);
+                // TODO: use server side of image
+                // if (this.isDisplayable) {
+                //     this.fileForPreview = new Blob([fileToUpload], {type: 'application/octet-stream'});
+                //     this.previewSource = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
+                // }
                 this.name = this.constructDisplayName();
                 this.formControl.setValue(this.dataField.value.name);
             }
@@ -184,17 +222,23 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     public download() {
-        if (!this.checkFileBeforeDownlaod()) {
+        if (!this.checkFileBeforeDownload()) {
+            return;
+        }
+        if (!!this.fileForDownload) {
+            this.downloadViaAnchor(this.fileForDownload);
             return;
         }
         this.state = this.defaultState;
         this.state.downloading = true;
         this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
-            if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
-                this.state.progress = (response as ProviderProgress).progress;
-            } else {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
+                if (response instanceof Blob) {
+                    this.fileForDownload = new Blob([response], {type: 'application/octet-stream'});
+                    this.fullSource.next(this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForDownload)));
+                }
                 this.state.downloading = false;
                 this.state.progress = 0;
                 this.dataField.downloaded = true;
@@ -205,17 +249,6 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this.state.downloading = false;
             this.state.progress = 0;
         });
-    }
-
-    public downloadFromPreview() {
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.href = this.imgSource;
-        a.download = this.dataField.value.name;
-        a.click();
-        window.URL.revokeObjectURL(this.imgSource);
-        document.body.removeChild(a);
     }
 
     protected downloadViaAnchor(blob: Blob): void {
@@ -247,6 +280,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.name = this.constructDisplayName();
                 this.dataField.update();
                 this.dataField.downloaded = false;
+                this.fullSource = undefined;
+                this.fileForDownload = undefined;
+                this.previewSource = undefined;
+                this.fileForPreview = undefined;
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
                 this.formControl.markAsTouched();
             } else {
@@ -284,16 +321,16 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Initialize file field image from backend if it is image type.
      */
     protected initFileFieldImage() {
-        if (!this.checkFileBeforeDownlaod()) {
+        if (!this.checkFileBeforeDownload()) {
             return;
         }
-        this.imageEl.nativeElement.style.height = this.el.nativeElement.offsetHeight + 'px';
-        this.imageEl.nativeElement.style.width = 'auto';
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+        this.state.downloading = true;
+        this._taskResourceService.downloadFilePreview(this.taskId, this.dataField.stringId).subscribe(response => {
             if (response instanceof Blob) {
                 this._log.debug(`Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
-                this.fileForPreview = response;
-                this.imgSource = URL.createObjectURL(this.fileForPreview);
+                this.fileForPreview = new Blob([response], {type: 'application/octet-stream'});
+                this.previewSource = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
+                this.state.downloading = false;
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
@@ -303,8 +340,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         });
     }
 
-    private checkFileBeforeDownlaod() {
-        if (!this.fileExists()) {
+    private checkFileBeforeDownload() {
+        if (this.isEmpty()) {
             return false;
         }
         if (!this.taskId) {
@@ -314,8 +351,27 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         return true;
     }
 
-    public fileExists() {
-        return this.dataField && this.dataField.value && this.dataField.value;
+    public showPreviewDialog() {
+        if (!this.checkFileBeforeDownload()) {
+            return;
+        }
+        if (!this.fileForDownload) {
+            this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+                if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
+                    this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
+                    if (response instanceof Blob) {
+                        this.fileForDownload = new Blob([response], {type: 'application/octet-stream'});
+                        this.fullSource.next(this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForDownload)));
+                    }
+                }
+            }, error => {
+                this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
+                this._snackbar.openErrorSnackBar(
+                    this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+                );
+                this.state.progress = 0;
+            });
+        }
     }
 }
 

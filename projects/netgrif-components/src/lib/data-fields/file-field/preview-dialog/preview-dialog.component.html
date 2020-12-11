@@ -1,0 +1,8 @@
+<button class="close" mat-icon-button [mat-dialog-close]="true">
+    <mat-icon>close</mat-icon>
+</button>
+<h1 mat-dialog-title>Image: {{data.dataField.value.name}}</h1>
+<div mat-dialog-content fxLayout="row" fxLayoutAlign="center center">
+    <img class="image-size" *ngIf="!fullImageExists()" [src]="data.imagePreview" alt="Image preview"/>
+    <img class="image-size" *ngIf="fullImageExists()" [src]="image" alt="Image"/>
+</div>
