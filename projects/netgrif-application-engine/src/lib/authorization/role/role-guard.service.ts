@@ -55,7 +55,7 @@ export class RoleGuardService implements CanActivate {
         }
     }
 
-    protected hasRole(netRoleMap: Array<{ net; role }>): Promise<boolean> | UrlTree { // TODO: change
+    protected hasRole(netRoleMap: Array<{ net; role }>): boolean | UrlTree { // TODO: change
         let access = false;
         this._processService.getNets(netRoleMap.map(({net}) => net)).subscribe(nets => {
             nets.forEach(netId => {
