@@ -1,14 +1,39 @@
-import {UserResourceSmall} from '../../resources/interface/user-resource-small';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {Group} from '../../resources/interface/group';
+import {IUser} from './iuser';
 
 /**
  * The user object that is used by the frontend in its logic.
  */
-export interface User extends UserResourceSmall {
-    telNumber?: string;
-    groups: Array<Group>;
-    authorities: Array<string>;
-    nextGroups: Array<string>;
-    processRoles: Array<ProcessRole>;
+export class User implements IUser {
+
+    constructor(
+        public id: string,
+        public email: string,
+        public firstName: string,
+        public lastName: string,
+        public authorities: Array<string>,
+        public roles: Array<ProcessRole>,
+        public groups?: Array<Group>,
+        public nextGroups?: Array<string>
+    ) {
+    }
+
+    get fullName() {
+        return this.firstName + ' ' + this.lastName;
+    }
+
+    /**
+     * Synonym for `firstName`.
+     */
+    public get name(): string {
+        return this.firstName;
+    }
+
+    /**
+     * Synonym for `lastName`.
+     */
+    public get surname(): string {
+        return this.lastName;
+    }
 }
