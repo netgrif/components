@@ -2,12 +2,12 @@ import {Credentials} from '../../models/credentials';
 import {Injectable, OnDestroy} from '@angular/core';
 import {AuthenticationMethodService} from '../authentication-method.service';
 import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
-import {User as AuthUser} from '../../models/user';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {catchError, map, tap} from 'rxjs/operators';
 import {User} from '../../../user/models/user';
 import {UserTransformer} from '../../models/user.transformer';
 import {SessionService} from '../../session/services/session.service';
+import {UserResource} from '../../../resources/interface/user-resource';
 
 @Injectable({
     providedIn: 'root'
@@ -31,10 +31,10 @@ export class AuthenticationService implements OnDestroy {
 
     login(credentials: Credentials): Observable<User> {
         return this._auth.login(credentials).pipe(
-            tap((user: AuthUser) => {
+            tap((user: UserResource) => {
                 this._authenticated$.next(!!user[AuthenticationService.IDENTIFICATION_ATTRIBUTE]);
             }),
-            map((user: AuthUser) => this._userTransformer.transform(user)),
+            map((user: UserResource) => this._userTransformer.transform(user)),
             catchError(error => {
                 console.error(error);
                 return of(null);
