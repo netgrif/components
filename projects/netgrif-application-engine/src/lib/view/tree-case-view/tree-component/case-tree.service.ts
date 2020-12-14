@@ -54,7 +54,7 @@ export class CaseTreeService implements OnDestroy {
      *
      * Defaults to `false`.
      *
-     * It is not recommended to eager load large trees as each node sends a separate backend request.
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
      */
     private _isEagerLoaded = false;
     /**
@@ -145,7 +145,7 @@ export class CaseTreeService implements OnDestroy {
      *
      * Defaults to `false`.
      *
-     * It is not recommended to eager load large trees as each node sends a separate backend request.
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
      */
     public get isEagerLoaded(): boolean {
         return this._isEagerLoaded;
@@ -156,7 +156,7 @@ export class CaseTreeService implements OnDestroy {
      *
      * Defaults to `false`.
      *
-     * It is not recommended to eager load large trees as each node sends a separate backend request.
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
      *
      * @param eager the new setting for eager loading
      */

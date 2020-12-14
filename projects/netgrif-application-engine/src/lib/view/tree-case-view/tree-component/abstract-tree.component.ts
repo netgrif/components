@@ -30,7 +30,7 @@ export abstract class AbstractTreeComponent {
      */
     @Output() treeRootAddingChild = new EventEmitter<boolean>();
 
-    constructor(protected _treeService: CaseTreeService) {
+    protected constructor(protected _treeService: CaseTreeService) {
         this._treeService.treeRootLoaded$.subscribe(success => {
             if (success) {
                 this._treeService.rootNodeLoading$.subscribe(loading => {
@@ -73,6 +73,19 @@ export abstract class AbstractTreeComponent {
                 this._treeService.initializeTree(showTreeRoot);
             }
         });
+    }
+
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
+     *
+     * @param eager the new setting for eager loading
+     */
+    @Input() set eagerLoaded(eager: boolean) {
+        this._treeService.isEagerLoaded = eager;
     }
 
     /**
