@@ -86,6 +86,7 @@ import { ResetPasswordFormComponent } from './doc/forms/reset-password-form/rese
 import { PublicTaskViewComponent } from './doc/public-task-view/public-task-view.component';
 import { PublicWorkflowViewComponent } from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
+import { GroupViewComponent } from './doc/group-view/group-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -128,7 +129,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ResetPasswordFormComponent,
         PublicTaskViewComponent,
         PublicWorkflowViewComponent,
-        PublicResolverComponent
+        PublicResolverComponent,
+        GroupViewComponent,
     ],
     imports: [
         BrowserModule,
@@ -211,7 +213,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ResetPasswordFormComponent,
         PublicTaskViewComponent,
         PublicWorkflowViewComponent,
-        PublicResolverComponent
+        PublicResolverComponent,
+        GroupViewComponent
     ],
     providers: [{
         provide: ConfigurationService,

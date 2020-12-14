@@ -1,10 +1,12 @@
-import {EventEmitter, OnInit, Output} from '@angular/core';
+import {EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
 
 export abstract class AbstractEmailSubmissionFormComponent implements OnInit, HasForm {
 
     public rootFormGroup: FormGroup;
+
+    @Input() public displayLegalNotice = true;
 
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
     @Output() public goBackButton: EventEmitter<void>;
