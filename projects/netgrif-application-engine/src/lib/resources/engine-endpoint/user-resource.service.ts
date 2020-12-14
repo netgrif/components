@@ -5,11 +5,11 @@ import {Params, ResourceProvider} from '../resource-provider.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {MessageResource} from '../interface/message-resource';
 import {Authority} from '../interface/authority';
-import {Preferences} from '../../user/models/preferences';
+import {Preferences} from '../interface/preferences';
 import {Page} from '../interface/page';
 import {GroupsInterface} from '../interface/group';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
-import {User} from '../../user/models/user';
+import {UserResource} from '../interface/user-resource';
 
 @Injectable({
     providedIn: 'root'
@@ -64,9 +64,9 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user
      */
-    public getAll(params?: Params): Observable<Page<User>> {
+    public getAll(params?: Params): Observable<Page<UserResource>> {
         return this._resourceProvider.get$('user', this.SERVER_URL, params)
-            .pipe(map(r => this.getResourcePage<User>(r, 'users')));
+            .pipe(map(r => this.getResourcePage<UserResource>(r, 'users')));
     }
 
     /**
@@ -76,7 +76,7 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user/role
      */
-    public getAllWithRole(body: object, params?: Params): Observable<Array<User>> {
+    public getAllWithRole(body: object, params?: Params): Observable<Array<UserResource>> {
         return this._resourceProvider.post$('user/role', this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, 'users')));
     }
@@ -88,7 +88,7 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user/me
      */
-    public getLoggedUser(params?: Params): Observable<User> {
+    public getLoggedUser(params?: Params): Observable<UserResource> {
         return this._resourceProvider.get$('user/me', this.SERVER_URL, params).pipe(
                 map(r => this.changeType(r, undefined)));
     }
@@ -100,7 +100,7 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user/{id}
      */
-    public getUser(userId: string, params?: Params): Observable<User> {
+    public getUser(userId: string, params?: Params): Observable<UserResource> {
         return this._resourceProvider.get$('user/' + userId, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -136,9 +136,9 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user/search
      */
-    public search(body: object, params?: Params): Observable<Page<User>> {
+    public search(body: object, params?: Params): Observable<Page<UserResource>> {
         return this._resourceProvider.post$('user/search', this.SERVER_URL, body, params)
-            .pipe(map(r => this.getResourcePage<User>(r, 'users')));
+            .pipe(map(r => this.getResourcePage<UserResource>(r, 'users')));
     }
 
     /**
@@ -148,7 +148,7 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user/{id}
      */
-    public updateUser(userId: string, body: object, params?: Params): Observable<User> {
+    public updateUser(userId: string, body: object, params?: Params): Observable<UserResource> {
         return this._resourceProvider.post$('user/' + userId, this.SERVER_URL, body, params)
             .pipe(map(r => this.changeType(r, undefined)));
     }
