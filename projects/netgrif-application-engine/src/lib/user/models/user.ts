@@ -1,5 +1,4 @@
 import {ProcessRole} from '../../resources/interface/process-role';
-import {Group} from '../../resources/interface/group';
 import {IUser} from './iuser';
 
 /**
@@ -14,7 +13,7 @@ export class User implements IUser {
         public lastName: string,
         public authorities: Array<string>,
         public roles: Array<ProcessRole>,
-        public groups?: Array<Group>,
+        public groups?: Array<string>,
         public nextGroups?: Array<string>
     ) {
     }
