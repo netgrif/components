@@ -2,7 +2,7 @@ import {DataGroup} from './data-groups';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskLayout} from './task-layout';
 import {NaeDate} from '../types/nae-date-type';
-import {UserSmall} from '../../user/models/user-small';
+import {UserResourceSmall} from './user-resource-small';
 
 /**
  * Object from Backend
@@ -24,9 +24,9 @@ export interface Task {
     caseColor: string;
     caseTitle: string;
     /**
-     * See [UserSmall]{@link UserSmall#}
+     * See [UserSmall]{@link UserResourceSmall#}
      */
-    user: UserSmall;
+    user: UserResourceSmall;
     /**
      * ***Example:***
      *
