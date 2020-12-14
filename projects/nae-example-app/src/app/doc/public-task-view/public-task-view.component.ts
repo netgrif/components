@@ -11,9 +11,19 @@ import {
     PublicProcessService,
     ProcessService,
     TaskResourceService,
-    SimpleFilter,
-    FilterType,
-    SnackBarService
+    SnackBarService,
+    UserService,
+    SessionService,
+    PetriNetResourceService,
+    PublicPetriNetResourceService,
+    LoggerService,
+    ResourceProvider,
+    ConfigurationService,
+    FieldConverterService,
+    AuthenticationService,
+    PublicUrlResolverService,
+    publicSearchServiceFactory,
+    publicFactoryResolver
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -24,31 +34,32 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
 
 const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
                               caseResourceService: CaseResourceService, snackBarService: SnackBarService) => {
-    if (route.snapshot.paramMap.get('caseId') === null && route.snapshot.paramMap.get('petriNetId') !== null) {
-        process.getNet(route.snapshot.paramMap.get('petriNetId')).subscribe(net => {
-            if (net) {
-                const newCase = {
-                    title: 'Nový prípad',
-                    color: 'panel-primary-icon',
-                    netId: net.stringId
-                };
-                caseResourceService.createCase(newCase)
-                    .subscribe(response => {
-                            router.navigate([route.snapshot.url.join('/') + '/' + response.stringId]);
-                        }, error => {
-                            snackBarService.openErrorSnackBar('Error while creating case ' + error);
-                        }
-                    );
-            } else {
-                snackBarService.openWarningSnackBar('Net doesn\'t exists');
-            }
-        }, errorNet => {
-            snackBarService.openErrorSnackBar('Error while requesting net ' + errorNet);
-        });
-    } else if (route.snapshot.paramMap.get('caseId') !== null) {
-        return new SearchService(new SimpleFilter('', FilterType.TASK, {case: {id: route.snapshot.paramMap.get('caseId')}}));
-    }
-    return new SearchService(new SimpleFilter('', FilterType.TASK, {case: {id: 'No Case'}}));
+    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService);
+};
+
+const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
+                               router: Router, publicResolverService: PublicUrlResolverService, petriNetResource: PetriNetResourceService,
+                               publicPetriNetResource: PublicPetriNetResourceService, loggerService: LoggerService) => {
+    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
+        new ProcessService(petriNetResource, loggerService),
+        new PublicProcessService(publicPetriNetResource, loggerService));
+};
+
+const taskResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
+                                    router: Router, publicResolverService: PublicUrlResolverService,
+                                    logger: LoggerService, provider: ResourceProvider, config: ConfigurationService,
+                                    fieldConverter: FieldConverterService) => {
+    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
+        new TaskResourceService(provider, config, fieldConverter, logger),
+        new PublicTaskResourceService(provider, config, fieldConverter, logger));
+};
+
+const caseResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
+                                    router: Router, publicResolverService: PublicUrlResolverService,
+                                    provider: ResourceProvider, config: ConfigurationService) => {
+    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
+        new CaseResourceService(provider, config),
+        new PublicCaseResourceService(provider, config));
 };
 
 @Component({
@@ -59,7 +70,21 @@ const searchServiceFactory = (router: Router, route: ActivatedRoute, process: Pr
         ConfigTaskViewServiceFactory,
         {
             provide: ProcessService,
-            useClass: PublicProcessService
+            useFactory: processServiceFactory,
+            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService, PetriNetResourceService,
+                PublicPetriNetResourceService, LoggerService]
+        },
+        {
+            provide: TaskResourceService,
+            useFactory: taskResourceServiceFactory,
+            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
+                LoggerService, ResourceProvider, ConfigurationService, FieldConverterService]
+        },
+        {
+            provide: CaseResourceService,
+            useFactory: caseResourceServiceFactory,
+            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
+                ResourceProvider, ConfigurationService]
         },
         {
             provide: SearchService,
@@ -71,14 +96,6 @@ const searchServiceFactory = (router: Router, route: ActivatedRoute, process: Pr
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]
         },
-        {
-            provide: TaskResourceService,
-            useClass: PublicTaskResourceService
-        },
-        {
-            provide: CaseResourceService,
-            useClass: PublicCaseResourceService
-        }
     ]
 })
 export class PublicTaskViewComponent extends AbstractTaskView implements AfterViewInit {

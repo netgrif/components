@@ -6,6 +6,8 @@ import {Observable} from 'rxjs';
 import {PetriNet} from '../../interface/petri-net';
 import {PetriNetReference} from '../../interface/petri-net-reference';
 import {map} from 'rxjs/operators';
+import {PetriNetRequestBody} from '../../interface/petri-net-request-body';
+import {Page} from '../../interface/page';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +40,17 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
     public getOne(identifier: string, version: string, params?: Params): Observable<PetriNetReference> {
         return this.provider.get$('public/petrinet/' + identifier + '/' + version, this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'petriNetReferences')));
+    }
+
+    /**
+     * search PetriNets
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/search
+     */
+    public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
+        return this._resourceProvider.post$('public/petrinet/search', this.SERVER_URL, body, params)
+            .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
     }
 }

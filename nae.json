@@ -364,7 +364,7 @@
             "access": "public",
             "navigation": false,
             "routing": {
-                "path": "public-view/:petriNetId/:caseId"
+                "path": "process/:petriNetId/:caseId"
             }
         },
         "demo-public-view-case": {
@@ -381,7 +381,41 @@
             "access": "public",
             "navigation": false,
             "routing": {
-                "path": "public-view/:petriNetId"
+                "path": "process/:petriNetId"
+            }
+        },
+        "demo-public-view-workflow": {
+            "layout": {
+                "name": "publicWorkflowView",
+                "params": {
+                    "allowedNets": []
+                }
+            },
+            "component": {
+                "class": "PublicWorkflowViewComponent",
+                "from": "./doc/public-workflow-view/public-workflow-view.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "process"
+            }
+        },
+        "demo-public-view-resolver": {
+            "layout": {
+                "name": "publicResolverView",
+                "params": {
+                    "allowedNets": []
+                }
+            },
+            "component": {
+                "class": "PublicResolverComponent",
+                "from": "./doc/public-resolver/public-resolver.component"
+            },
+            "access": "public",
+            "navigation": false,
+            "routing": {
+                "path": "public-resolver"
             }
         },
         "demo-navigation-test": {
