@@ -34,7 +34,8 @@ export class FileFieldComponent extends AbstractFileFieldComponent {
             data: {
                 dataField: this.dataField,
                 imagePreview: this.previewSource,
-                imageFull: this.fullSource
+                imageFull: this.fullSource,
+                extension: this.previewExtension
             }
         });
     }

@@ -6,4 +6,5 @@ export interface PreviewDialogData {
     dataField: FileField;
     imagePreview: SafeUrl;
     imageFull: BehaviorSubject<SafeUrl>;
+    extension: string;
 }

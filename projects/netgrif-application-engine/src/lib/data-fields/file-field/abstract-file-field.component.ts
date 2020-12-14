@@ -74,6 +74,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Full image url
      */
     public fullSource: BehaviorSubject<SafeUrl>;
+    /**
+     * Extension of file to preview
+     */
+    public previewExtension: string;
 
     /**
      * Only inject services.
@@ -124,8 +128,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if (!!this.divEl && !this.maxHeight) {
                 this.maxHeight = this.divEl.nativeElement.parentElement.parentElement.offsetHeight - 16 + 'px';
                 if (!this.isEmpty()) {
-                    const extension = this.dataField.value.name.split('.');
-                    this.isDisplayable = Object.values(FilePreviewType).includes(extension[extension.length - 1] as any);
+                    this.previewExtension = this.dataField.value.name.split('.').reverse()[0];
+                    this.isDisplayable = Object.values(FilePreviewType).includes(this.previewExtension as any);
                     if (this.isDisplayable) {
                         this.initFileFieldImage();
                         console.log('Getting file preview from ' + this.dataField.stringId);
@@ -235,10 +239,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
-                if (response instanceof Blob) {
-                    this.fileForDownload = new Blob([response], {type: 'application/octet-stream'});
-                    this.fullSource.next(this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForDownload)));
-                }
+                this.initDownloadFile(response);
                 this.state.downloading = false;
                 this.state.progress = 0;
                 this.dataField.downloaded = true;
@@ -249,6 +250,18 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this.state.downloading = false;
             this.state.progress = 0;
         });
+    }
+
+    private initDownloadFile(response: Blob | ProviderProgress) {
+        if (response instanceof Blob) {
+            if (this.previewExtension === 'pdf') {
+                this.fileForDownload = new Blob([response], {type: 'application/pdf'});
+                this.fullSource.next(this._sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(this.fileForDownload)));
+            } else {
+                this.fileForDownload = new Blob([response], {type: 'application/octet-stream'});
+                this.fullSource.next(this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForDownload)));
+            }
+        }
     }
 
     protected downloadViaAnchor(blob: Blob): void {
@@ -359,10 +372,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
                 if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                     this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
-                    if (response instanceof Blob) {
-                        this.fileForDownload = new Blob([response], {type: 'application/octet-stream'});
-                        this.fullSource.next(this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForDownload)));
-                    }
+                    this.initDownloadFile(response);
                 }
             }, error => {
                 this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);

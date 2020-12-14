@@ -24,4 +24,8 @@ export class PreviewDialogComponent implements OnInit {
     fullImageExists(): boolean {
         return !!this.image;
     }
+
+    isPdf(): boolean {
+        return this.data.extension === 'pdf';
+    }
 }
