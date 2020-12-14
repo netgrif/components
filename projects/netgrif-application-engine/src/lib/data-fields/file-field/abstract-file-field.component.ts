@@ -55,15 +55,19 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     public isDisplayable = false;
     /**
-     * If view is already initialized
+     * Max height of preview
      */
     private maxHeight: string;
+    /**
+     * Max width of preview
+     */
+    private maxWidth: string;
     /**
      * Store file for preview
      */
     private fileForPreview: Blob;
     /**
-     * Url for image download
+     * Url of preview file
      */
     public previewSource: SafeUrl;
     /**
@@ -71,7 +75,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     private fileForDownload: Blob;
     /**
-     * Full image url
+     * Full size file url
      */
     public fullSource: BehaviorSubject<SafeUrl>;
     /**
@@ -127,17 +131,18 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (this.filePreview) {
             if (!!this.divEl && !this.maxHeight) {
                 this.maxHeight = this.divEl.nativeElement.parentElement.parentElement.offsetHeight - 16 + 'px';
+                this.maxWidth = this.divEl.nativeElement.offsetWidth + 'px';
                 if (!this.isEmpty()) {
                     this.previewExtension = this.dataField.value.name.split('.').reverse()[0];
                     this.isDisplayable = Object.values(FilePreviewType).includes(this.previewExtension as any);
                     if (this.isDisplayable) {
                         this.initFileFieldImage();
-                        console.log('Getting file preview from ' + this.dataField.stringId);
                     }
                 }
             }
             if (!this.isEmpty()  && !!this.imageEl && !!this.maxHeight) {
                 this.imageEl.nativeElement.style.maxHeight = this.maxHeight;
+                this.imageEl.nativeElement.style.maxWidth = this.maxWidth;
             }
 
         }
@@ -201,13 +206,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.dataField.value.name = fileToUpload.name;
                 const extension = this.dataField.value.name.split('.');
                 this.isDisplayable = Object.values(FilePreviewType).includes(extension[extension.length - 1] as any);
-                // TODO: use server side of image
-                // if (this.isDisplayable) {
-                //     this.fileForPreview = new Blob([fileToUpload], {type: 'application/octet-stream'});
-                //     this.previewSource = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
-                // }
+                if (this.isDisplayable) {
+                    this.initFileFieldImage();
+                }
                 this.name = this.constructDisplayName();
-                this.formControl.setValue(this.dataField.value.name);
             }
             this.dataField.touch = true;
             this.dataField.update();
