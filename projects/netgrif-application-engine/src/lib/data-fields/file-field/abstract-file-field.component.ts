@@ -270,8 +270,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        blob = new Blob([blob], {type: 'application/octet-stream'});
-        const url = window.URL.createObjectURL(blob);
+        if (!this.fileForDownload) {
+            blob = new Blob([blob], {type: 'application/octet-stream'});
+        }
+        const url = window.URL.createObjectURL(!!this.fileForDownload ? this.fileForDownload : blob);
         a.href = url;
         a.download = this.dataField.value.name;
         a.click();
