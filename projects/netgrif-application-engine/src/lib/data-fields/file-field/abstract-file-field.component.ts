@@ -210,9 +210,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                     this.initFileFieldImage();
                 }
                 this.name = this.constructDisplayName();
+                this.dataField.touch = true;
+                this.dataField.update();
             }
-            this.dataField.touch = true;
-            this.dataField.update();
         }, error => {
             this.state.completed = true;
             this.state.error = true;

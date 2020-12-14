@@ -44,6 +44,7 @@ import { NumberDefaultFieldComponent } from './number-field/number-default-field
 import { PasswordTextFieldComponent } from './text-field/password-text-field/password-text-field.component';
 import { PreviewDialogComponent } from './file-field/preview-dialog/preview-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { EnumerationStepperFieldComponent } from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
 
 @NgModule({
     declarations: [
@@ -72,7 +73,9 @@ import {MatDialogModule} from '@angular/material/dialog';
         PasswordTextFieldComponent,
         NumberCurrencyFieldComponent,
         NumberDefaultFieldComponent,
-        PreviewDialogComponent
+        PreviewDialogComponent,
+        NumberDefaultFieldComponent,
+        EnumerationStepperFieldComponent
     ],
     exports: [
         BooleanFieldComponent,

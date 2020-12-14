@@ -23,6 +23,7 @@
             "cancelTask": "Ruším priradenie úlohy",
             "finishTask": "Dokončujem úlohu",
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
+            "missingRequired": "Niektoré povinné polia sú prázdne",
             "noCase": "Nenašli sa žiadne prípady",
             "caseGetFailed": "Načítanie prípadov zlyhalo",
             "noLongerExists": "Zvolená úloha už neexistuje",
@@ -345,5 +346,13 @@
             "deleteError": "Proces sa nepodarilo zmazať",
             "uploadFailed": "Súbor procesu sa nepodarilo nahrať"
         }
+    },
+    "legal": {
+        "byClicking": "Kliknutím na tlačidlo '{{buttonName}}'",
+        "youIndicate": "potvrdzujete, že ste prečítali a beriete na vedomie",
+        "termsOfService": "podmienky služby",
+        "and": "a",
+        "privacyNotice": "zásady ochrany osobných údajov",
+        "sentenceEnd": ""
     }
 }

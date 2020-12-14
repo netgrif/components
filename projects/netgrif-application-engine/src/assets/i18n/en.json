@@ -23,6 +23,7 @@
             "cancelTask": "Canceling assignment of task",
             "finishTask": "Finishing task",
             "invalidData": "Some fields have invalid values",
+            "missingRequired": "Some required fields are empty",
             "noCase": "No cases found",
             "caseGetFailed": "Getting cases failed",
             "noLongerExists": "The selected task no longer exists",
@@ -345,5 +346,13 @@
             "deleteError": "Process could not be deleted",
             "uploadFailed": "Process file could not be uploaded"
         }
+    },
+    "legal": {
+        "byClicking": "By clicking '{{buttonName}}',",
+        "youIndicate": "you are indicating that you have read and acknowledge the",
+        "termsOfService": "Terms of Service",
+        "and": "and",
+        "privacyNotice": "Privacy Notice",
+        "sentenceEnd": ""
     }
 }
