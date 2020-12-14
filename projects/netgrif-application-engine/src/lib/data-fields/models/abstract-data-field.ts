@@ -80,6 +80,10 @@ export abstract class DataField<T> {
      */
     private _sendInvalidValues = false;
     /**
+     * Flag that is set during reverting
+     */
+    private _reverting = false;
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -145,11 +149,12 @@ export abstract class DataField<T> {
     }
 
     set value(value: T) {
-        if (!this.valueEquality(this._value.getValue(), value)) {
+        if (!this.valueEquality(this._value.getValue(), value) && !this._reverting) {
             this._changed = true;
             this.resolvePrevValue(value);
         }
         this._value.next(value);
+        this._reverting = false;
     }
 
     get previousValue() {
@@ -219,6 +224,7 @@ export abstract class DataField<T> {
 
     public revertToPreviousValue(): void {
         this.changed = false;
+        this._reverting = true;
         this.value = this.previousValue;
     }
 
