@@ -18,6 +18,7 @@ import {CreateViewArguments} from './models/create-view-arguments';
 import {addViewToViewService} from '../_utility/view-service-functions';
 import {ImportToAdd} from '../../_commons/import-to-add';
 import {createTreeCaseView} from './views/tree-case-view/create-tree-case-view';
+import {createGroupView} from './views/group-view/create-group-view';
 
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
@@ -56,6 +57,9 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
             break;
         case 'dashboard':
             rules.push(createDashboardView(tree, args, addViewToService));
+            break;
+        case 'groupView':
+            rules.push(createGroupView(tree, args, addViewToService));
             break;
         case 'treeCaseView':
             rules.push(createTreeCaseView(tree, args, addViewToService));

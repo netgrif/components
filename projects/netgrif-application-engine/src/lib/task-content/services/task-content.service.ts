@@ -67,12 +67,16 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return false;
         }
-        const valid = !this._task.dataGroups.some(group => group.fields.some(field => !field.valid));
+        const valid = !this._task.dataGroups.some(group => group.fields.some(field => !field.valid && !field.disabled));
+        const validDisabled = !this._task.dataGroups.some(group => group.fields.some(field => !field.validRequired && field.disabled));
         if (!valid) {
             this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.invalidData'));
             this._task.dataGroups.forEach(group => group.fields.forEach(field => field.touch = true));
         }
-        return valid;
+        if (!validDisabled) {
+            this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.missingRequired'));
+        }
+        return valid && validDisabled;
     }
 
     /**
@@ -116,8 +120,7 @@ export abstract class TaskContentService implements OnDestroy {
                     const updatedField = chFields[field.stringId];
                     Object.keys(updatedField).forEach(key => {
                         if (key === 'value') {
-                            field.value = this._fieldConverterService.formatValueFromBackend(field, updatedField[key]);
-                            field.changed = false;
+                            field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
                         } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
                             field.behavior = updatedField.behavior[this._task.transitionId];
                         } else if (key === 'choices') {

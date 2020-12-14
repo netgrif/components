@@ -7,9 +7,9 @@
             <span class="font-size-20">{{ 'view-list.noCasesSatisfyingThisFilter' | translate}}</span>
         </div>
 
-        <mat-accordion multi="true" class="full-width" fxFlex="100">
+        <mat-accordion multi="true" class="full-width" fxFlex fxLayout="row">
             <cdk-virtual-scroll-viewport itemSize="50" (scrolledIndexChange)="loadNextPage()"
-                                         class="full-height full-width">
+                                         class="full-height" [ngStyle]="{'width': width ? width : '100%' }">
 
                 <nc-case-panel [responsiveBody]="responsiveBody"
                                [textEllipsis]="textEllipsis"

@@ -28,6 +28,7 @@ import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
+import { GroupViewComponent } from './doc/group-view/group-view.component';
 
 @Injectable({
     providedIn: 'root'
@@ -37,6 +38,7 @@ export class NaeExampleAppViewService extends ViewService {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([
+            GroupViewComponent,
             UserInviteComponent,
             TreeViewExampleComponent,
             ButtonsNavComponent,

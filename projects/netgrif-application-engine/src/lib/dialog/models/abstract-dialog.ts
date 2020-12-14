@@ -14,7 +14,7 @@ export abstract class AbstractDialog<T> implements OnInit {
     }
 
     /** On close dialog or on click answer button closed current open modal dialog. */
-    public abstract onClose();
+    public abstract onClose(isSubmitted?: boolean);
 
     public ngOnInit() {
     }

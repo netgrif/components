@@ -25,4 +25,13 @@ export class WorkflowHeaderService extends AbstractHeaderService {
             new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.CREATION_DATE, 'headers.workflowMeta.creationDate', 'date'),
         ];
     }
+
+    protected saveState() {
+    }
+
+    protected saveNewState() {
+    }
+
+    protected restoreLastState() {
+    }
 }

@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {Observable} from 'rxjs';
 import {Count} from '../interface/count';
-import {changeType, getResourceAddress, getResourcePage} from '../resource-utility-functions';
 import {MessageResource} from '../interface/message-resource';
 import {filter, map} from 'rxjs/operators';
 import {TaskReference} from '../interface/task-reference';
@@ -18,22 +17,20 @@ import {Page} from '../interface/page';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
-import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
-import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
 import {LoggerService} from '../../logger/services/logger.service';
 import {EventOutcome} from '../interface/event-outcome';
+import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskResourceService implements CountService {
-    private SERVER_URL: string;
+export class TaskResourceService extends AbstractResourceService implements CountService {
 
-    protected constructor(protected provider: ResourceProvider,
-                          protected _configService: ConfigurationService,
-                          protected _fieldConverter: FieldConverterService,
-                          protected _logger: LoggerService) {
-        this.SERVER_URL = getResourceAddress('task', this._configService.get().providers.resources);
+    constructor(provider: ResourceProvider,
+                configService: ConfigurationService,
+                protected _fieldConverter: FieldConverterService,
+                protected _logger: LoggerService) {
+        super('task', provider, configService);
     }
 
     /**
@@ -45,8 +42,8 @@ export class TaskResourceService implements CountService {
         if (filterParam.type !== FilterType.TASK) {
             throw new Error('Provided filter doesn\'t have type TASK');
         }
-        return this.provider.post$('task/count', this.SERVER_URL, filterParam.getRequestBody(), filterParam.getRequestParams())
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('task/count', this.SERVER_URL, filterParam.getRequestBody(), filterParam.getRequestParams())
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -55,8 +52,8 @@ export class TaskResourceService implements CountService {
      * {{baseUrl}}/api/task
      */
     public getAllTask(): Observable<Array<Task>> {
-        return this.provider.get$('task', this.SERVER_URL)
-            .pipe(map(r => changeType(r, 'tasks')));
+        return this._resourceProvider.get$('task', this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, 'tasks')));
     }
 
     /**
@@ -65,8 +62,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/assign/:id
     public assignTask(taskId: string): Observable<EventOutcome> {
-        return this.provider.get$('task/assign/' + taskId, this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('task/assign/' + taskId, this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -75,8 +72,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/cancel/:id
     public cancelTask(taskId: string): Observable<EventOutcome> {
-        return this.provider.get$('task/cancel/' + taskId, this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('task/cancel/' + taskId, this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -85,8 +82,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/delegate/:id
     public delegateTask(taskId: string, body: object): Observable<EventOutcome> {
-        return this.provider.post$('task/delegate/' + taskId, this.SERVER_URL, body)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('task/delegate/' + taskId, this.SERVER_URL, body, undefined, {'Content-Type': 'text/plain'})
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -95,8 +92,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/finish/:id
     public finishTask(taskId: string): Observable<EventOutcome> {
-        return this.provider.get$('task/finish/' + taskId, this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('task/finish/' + taskId, this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -111,8 +108,8 @@ export class TaskResourceService implements CountService {
             throw new Error('Provided filter doesn\'t have type TASK');
         }
         params = ResourceProvider.combineParams(filterParam.getRequestParams(), params);
-        return this.provider.post$('task/search_es', this.SERVER_URL, filterParam.getRequestBody(), params)
-            .pipe(map(r => getResourcePage<Task>(r, 'tasks')));
+        return this._resourceProvider.post$('task/search_es', this.SERVER_URL, filterParam.getRequestBody(), params)
+            .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
     }
 
     /**
@@ -134,21 +131,8 @@ export class TaskResourceService implements CountService {
         }
 
         params = ResourceProvider.combineParams(filterParam.getRequestParams(), params);
-        return this.provider.post$('task/search', this.SERVER_URL, filterParam.getRequestBody(), params)
-            .pipe(map(r => getResourcePage<Task>(r, 'tasks')));
-    }
-
-    /**
-     * Removes the 'query' attribute from the provided filter body
-     * @param filterBody the filter body that should have its `query` attribute removed
-     * @returns `true` if the `query` attribute was removed. `false` otherwise
-     */
-    private removeElasticQuery(filterBody: TaskSearchRequestBody | CaseSearchRequestBody): boolean {
-        if (filterBody.query) {
-            delete filterBody.query;
-            return true;
-        }
-        return false;
+        return this._resourceProvider.post$('task/search', this.SERVER_URL, filterParam.getRequestBody(), params)
+            .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
     }
 
     // ----------- CASE ----------
@@ -158,8 +142,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/case
     public getAllTasksByCases(body: object): Observable<Array<Task>> { // TODO: ??
-        return this.provider.post$('task/case', this.SERVER_URL, body)
-            .pipe(map(r => changeType(r, 'tasks')));
+        return this._resourceProvider.post$('task/case', this.SERVER_URL, body)
+            .pipe(map(r => this.changeType(r, 'tasks')));
     }
 
     /**
@@ -168,8 +152,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/case/:id
     public getAllTasksByCase(caseId: string): Observable<Array<TaskReference>> {
-        return this.provider.get$('task/case/' + caseId, this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('task/case/' + caseId, this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     // ----------- MY Task ----------
@@ -179,8 +163,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/my
     public getAllMyTasks(): Observable<Array<Task>> {
-        return this.provider.get$('task/my', this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('task/my', this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -189,8 +173,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/my/finished
     public getAllFinishedTask(): Observable<Array<Task>> {
-        return this.provider.get$('task/my/finished', this.SERVER_URL)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.get$('task/my/finished', this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -204,8 +188,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/:id/data
     public rawGetData(taskId: string): Observable<Array<DataGroupsResource>> {
-        return this.provider.get$('task/' + taskId + '/data', this.SERVER_URL)
-            .pipe(map(r => changeType(r, 'dataGroups')));
+        return this._resourceProvider.get$('task/' + taskId + '/data', this.SERVER_URL)
+            .pipe(map(r => this.changeType(r, 'dataGroups')));
     }
 
     /**
@@ -255,8 +239,8 @@ export class TaskResourceService implements CountService {
      */
     // {{baseUrl}}/api/task/:id/data
     public setData(taskId: string, body: TaskSetDataRequestBody): Observable<ChangedFieldContainer> {
-        return this.provider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
-            .pipe(map(r => changeType(r, undefined)));
+        return this._resourceProvider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     // ------------- FILE ------------
@@ -268,7 +252,7 @@ export class TaskResourceService implements CountService {
     // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
     public downloadFile(taskId: string, fieldId: string, name?: string): Observable<ProviderProgress | Blob> {
         const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this.provider.getBlob$(url, this.SERVER_URL).pipe(
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.DownloadProgress:
@@ -292,7 +276,7 @@ export class TaskResourceService implements CountService {
     public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | ChangedFieldContainer> {
         const url = !multipleFiles ? 'task/' + taskId + '/file/' + fieldId : 'task/' + taskId + '/files/' + fieldId;
-        return this.provider.postWithEvent$<ChangedFieldContainer>(url, this.SERVER_URL, body).pipe(
+        return this._resourceProvider.postWithEvent$<ChangedFieldContainer>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:
@@ -313,8 +297,8 @@ export class TaskResourceService implements CountService {
      */
     public deleteFile(taskId: string, fieldId: string, name?: string): Observable<MessageResource> {
         const url = !!name ? 'task/' + taskId + '/file/' + fieldId + '/' + name : 'task/' + taskId + '/file/' + fieldId;
-        return this.provider.delete$(url, this.SERVER_URL).pipe(
-            map(r => changeType(r, undefined))
+        return this._resourceProvider.delete$(url, this.SERVER_URL).pipe(
+            map(r => this.changeType(r, undefined))
         );
     }
 }

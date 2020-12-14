@@ -39,7 +39,10 @@ import {RequiredLabelComponent} from './required-label/required-label.component'
 import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
 import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
 import {QuillModule} from 'ngx-quill';
+import { NumberCurrencyFieldComponent } from './number-field/number-currency-field/number-currency-field.component';
+import { NumberDefaultFieldComponent } from './number-field/number-default-field/number-default-field.component';
 import { PasswordTextFieldComponent } from './text-field/password-text-field/password-text-field.component';
+import { EnumerationStepperFieldComponent } from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
 
 @NgModule({
     declarations: [
@@ -65,7 +68,10 @@ import { PasswordTextFieldComponent } from './text-field/password-text-field/pas
         UserFieldComponent,
         RequiredLabelComponent,
         HtmlTextareaFieldComponent,
-        PasswordTextFieldComponent
+        PasswordTextFieldComponent,
+        NumberCurrencyFieldComponent,
+        NumberDefaultFieldComponent,
+        EnumerationStepperFieldComponent
     ],
     exports: [
         BooleanFieldComponent,

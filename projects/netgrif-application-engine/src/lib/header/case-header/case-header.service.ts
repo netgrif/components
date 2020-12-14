@@ -9,6 +9,7 @@ import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
 import {Subscription} from 'rxjs';
+import {OverflowService} from '../services/overflow.service';
 
 
 @Injectable()
@@ -19,6 +20,7 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
                 preferences: UserPreferenceService,
                 viewService: ViewService,
                 logger: LoggerService,
+                @Optional() protected overflowService: OverflowService,
                 @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
         super(HeaderType.CASE, preferences, viewService, logger);
         this.subAllowedNets = _caseViewService.allowedNets$.subscribe(allowedNets => {
@@ -45,5 +47,28 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
     ngOnDestroy(): void {
         super.ngOnDestroy();
         this.subAllowedNets.unsubscribe();
+    }
+
+    public updateColumnCount() {
+        this.updateHeaderColumnCount();
+    }
+
+    protected saveState() {
+        if (this.overflowService) {
+            this.overflowService.saveState();
+        }
+    }
+
+    protected saveNewState() {
+        if (this.overflowService) {
+            this.overflowService.saveNewState();
+        }
+        this.updateHeaderColumnCount();
+    }
+
+    protected restoreLastState() {
+        if (this.overflowService) {
+            this.overflowService.restoreLastState();
+        }
     }
 }

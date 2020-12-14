@@ -63,7 +63,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('should display data group title', () => {
-        expect(component.dataSource).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
@@ -85,7 +85,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('should hide data group title', () => {
-        expect(component.dataSource).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
@@ -121,7 +121,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('legacy layout should work', () => {
-        expect(component.dataSource).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
@@ -163,7 +163,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('flow layout should work', () => {
-        expect(component.dataSource).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
@@ -220,7 +220,7 @@ describe('AbstractTaskContentComponent', () => {
     });
 
     it('grid layout should work', () => {
-        expect(component.dataSource).toBeUndefined();
+        expect(component.dataSource).toEqual([]);
         expect(component.gridAreas).toBeUndefined();
 
         component.computeLayoutData([
