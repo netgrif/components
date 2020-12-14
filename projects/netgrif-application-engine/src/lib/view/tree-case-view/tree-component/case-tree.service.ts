@@ -50,6 +50,14 @@ export class CaseTreeService implements OnDestroy {
     private _rootNode: CaseTreeNode;
     private _showRoot: boolean;
     /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request.
+     */
+    private _isEagerLoaded = false;
+    /**
      * string id of the case, that is currently being reloaded, `undefined` if no case is currently being reloaded
      */
     private _reloadedCaseId: string;
@@ -130,6 +138,30 @@ export class CaseTreeService implements OnDestroy {
      */
     public get rootNodeAddingChild$(): Observable<boolean> | undefined {
         return !!this._rootNode ? this._rootNode.addingNode.asObservable() : undefined;
+    }
+
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request.
+     */
+    public get isEagerLoaded(): boolean {
+        return this._isEagerLoaded;
+    }
+
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request.
+     *
+     * @param eager the new setting for eager loading
+     */
+    public set isEagerLoaded(eager: boolean) {
+        this._isEagerLoaded = eager;
     }
 
     /**
@@ -224,6 +256,11 @@ export class CaseTreeService implements OnDestroy {
         this.updateNodeChildren(node).subscribe(() => {
             if (node.children.length > 0) {
                 this.treeControl.expand(node);
+
+                if (this._isEagerLoaded) {
+                    this._logger.debug(`Eager loading children of tree node with case id '${node.case.stringId}'`);
+                    node.children.forEach(childNode => this.expandNode(childNode));
+                }
             }
             ret.next(node.children.length > 0);
             ret.complete();
