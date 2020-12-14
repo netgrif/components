@@ -531,7 +531,7 @@ export class CaseTreeService implements OnDestroy {
             return;
         }
         let rootNode = this.dataSource.data[0];
-        while(rootNode.parent !== undefined) {
+        while (rootNode.parent !== undefined) {
             rootNode = rootNode.parent;
         }
         this.expandLevel([rootNode], this.convertPathToExpansionTree(path));
