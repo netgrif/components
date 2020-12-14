@@ -46,7 +46,7 @@ describe('UserService', () => {
     });
 
     it('should check authorities and roles', () => {
-        expect(service.hasRole({id: 'ids', name: 'ids'})).toBeFalse();
+        expect(service.hasRole({stringId: 'ids', name: 'ids', importId: 'importId'})).toBeFalse();
         expect(service.hasAuthority('USER')).toBeFalse();
         expect(service.hasRoleById('ids')).toBeFalse();
     });
