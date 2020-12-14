@@ -1,15 +1,21 @@
-import {NetgrifApplicationEngine, View, Views} from './interfaces/schema';
+import {NetgrifApplicationEngine, Services, View, Views} from './interfaces/schema';
 import {Observable, of} from 'rxjs';
 
 export abstract class ConfigurationService {
 
+    private readonly _dataFieldConfiguration: Services['dataFields'];
+
     protected constructor(protected configuration: NetgrifApplicationEngine) {
+        this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields']);
     }
 
     public getAsync(): Observable<NetgrifApplicationEngine> {
         return of(this.get());
     }
 
+    /**
+     * @returns a deep copy of the entire configuration object
+     */
     public get(): NetgrifApplicationEngine {
         return this.createConfigurationCopy();
     }
@@ -73,7 +79,7 @@ export abstract class ConfigurationService {
                     prefix;
                 const viewPath = views[view].routing.path.charAt(0) === '/' ?
                     views[view].routing.path.length > 1 ? views[view].routing.path.substring(1) : '' :
-                        views[view].routing.path;
+                    views[view].routing.path;
                 map.set(
                     views[view].routing.match ?
                         prefix + '/' + viewPath + '/**' :
@@ -105,6 +111,32 @@ export abstract class ConfigurationService {
         return result;
     }
 
+    /**
+     * @param pathSegments the keys specifying the path trough the configuration that should be accessed
+     * @returns a deep copy of a specified subsection of the configuration object, or `undefined` if such subsection doesn't exist.
+     * Calling this method with an empty array as argument is equivalent to calling the [get()]{@link ConfigurationService#get} method.
+     */
+    public getConfigurationSubtree(pathSegments: Array<string>): any | undefined {
+        let root = this.configuration;
+        for (const segment of pathSegments) {
+            if (root[segment] === undefined) {
+                return undefined;
+            }
+            root = root[segment];
+        }
+        return this.deepCopy(root);
+    }
+
+    /**
+     * @returns the appropriate template configuration for data fields, or `undefined` if such configuration is not present.
+     */
+    public getDatafieldConfiguration(): Services['dataFields'] | undefined {
+        if (this._dataFieldConfiguration === undefined) {
+            return undefined;
+        }
+        return {...this._dataFieldConfiguration};
+    }
+
     private getView(searched: string, view: View): Array<string> {
         const paths = [];
         if (!!view.layout && view.layout.name === searched) {
@@ -119,6 +151,10 @@ export abstract class ConfigurationService {
     }
 
     private createConfigurationCopy(): any {
-        return JSON.parse(JSON.stringify(this.configuration));
+        return this.deepCopy(this.configuration);
+    }
+
+    private deepCopy(obj: object): object {
+        return JSON.parse(JSON.stringify(obj));
     }
 }

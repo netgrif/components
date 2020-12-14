@@ -7,6 +7,5 @@
     <mat-list-option *ngFor="let option of multichoiceField.choices" [value]="option.key">
         {{option.value}}
     </mat-list-option>
-    <mat-error
-        *ngIf="formControlRef.status != 'DISABLED' && !formControlRef.valid && formControlRef.touched">{{'dataField.validations.required' | translate}}</mat-error>
+    <mat-error *ngIf="multichoiceField.isInvalid(formControlRef)">{{'dataField.validations.required' | translate}}</mat-error>
 </mat-selection-list>

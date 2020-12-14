@@ -35,4 +35,6 @@ export * from './lib/task-content/public-api';
 export * from './lib/task/public-api';
 export * from './lib/moment/public-api';
 export * from './lib/authorization/public-api';
+export * from './lib/groups/public-api';
+export * from './lib/legal/public-api';
 

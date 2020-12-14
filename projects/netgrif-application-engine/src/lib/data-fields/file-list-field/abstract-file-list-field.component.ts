@@ -1,4 +1,4 @@
-import {AfterViewInit, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ElementRef, Inject, Input, OnInit, Optional, ViewChild} from '@angular/core';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -8,6 +8,7 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {FileListField, FileListFieldValidation} from './models/file-list-field';
 import {FileFieldValue} from '../file-field/models/file-field-value';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 export interface FilesState {
     progress: number;
@@ -43,11 +44,12 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      */
     @ViewChild('fileUploadInput') public fileUploadEl: ElementRef<HTMLInputElement>;
 
-    constructor(protected _taskResourceService: TaskResourceService,
-                protected _log: LoggerService,
-                protected _snackbar: SnackBarService,
-                protected _translate: TranslateService) {
-        super();
+    protected constructor(protected _taskResourceService: TaskResourceService,
+                          protected _log: LoggerService,
+                          protected _snackbar: SnackBarService,
+                          protected _translate: TranslateService,
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(informAboutInvalidData);
         this.state = this.defaultState;
         this.uploadedFiles = new Array<string>();
         this.maxFilesNumber = Number.POSITIVE_INFINITY;
@@ -156,9 +158,9 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                         return namePath['name'];
                     }).join('/'));
                 });
+                this.dataField.touch = true;
+                this.dataField.update();
             }
-            this.dataField.touch = true;
-            this.dataField.update();
         }, error => {
             this.state.completed = true;
             this.state.error = true;

@@ -32,7 +32,9 @@ export abstract class AbstractRegistrationComponent implements HasForm {
     public loadingToken: LoadingEmitter;
     public userEmail: string;
 
-    protected constructor(protected _signupService: SignUpService, protected _log: LoggerService, protected _translate: TranslateService) {
+    protected constructor(protected _signupService: SignUpService,
+                          protected _log: LoggerService,
+                          protected _translate: TranslateService) {
         this.hidePassword = true;
         this.hideRepeatPassword = true;
         this.formSubmit = new EventEmitter<FormSubmitEvent>();

@@ -74,11 +74,8 @@ export class FileListField extends DataField<FileListFieldValue> {
 
     public updateFormControlState(formControl: FormControl): void {
         this._update.subscribe(() => {
-            this.disabled ? formControl.disable() : formControl.enable();
-            formControl.clearValidators();
-            formControl.setValidators(this.resolveFormControlValidators());
-            formControl.updateValueAndValidity();
-            this.valid = this._determineFormControlValidity(formControl);
+            this.validRequired = this.calculateValidity(true, formControl);
+            this.valid = this.calculateValidity(false, formControl);
         });
         this._block.subscribe(bool => {
             if (bool) {
@@ -95,6 +92,5 @@ export class FileListField extends DataField<FileListFieldValue> {
             }
         });
         this.update();
-        this.valid = this._determineFormControlValidity(formControl);
     }
 }

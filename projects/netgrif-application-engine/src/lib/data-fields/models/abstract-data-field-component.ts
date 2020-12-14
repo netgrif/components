@@ -2,8 +2,9 @@ import {DataField} from './abstract-data-field';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {ChangedFields} from './changed-fields';
-import {Input, OnInit} from '@angular/core';
+import {Inject, Input, OnInit, Optional} from '@angular/core';
 import {filter, map} from 'rxjs/operators';
+import {NAE_INFORM_ABOUT_INVALID_DATA} from './invalid-data-policy-token';
 
 /**
  * Holds the common functionality for all DataFieldComponents.
@@ -24,7 +25,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
      */
     protected _formControl: FormControl;
 
-    protected constructor() {
+    protected constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) protected _informAboutInvalidData: boolean | null) {
         this._formControl = new FormControl('', { updateOn: 'blur' });
     }
 
@@ -35,6 +36,7 @@ export abstract class AbstractDataFieldComponent implements OnInit {
      */
     ngOnInit(): void {
         this.dataField.registerFormControl(this._formControl);
+        this.dataField.sendInvalidValues = this._informAboutInvalidData;
 
         if (this.changedFields !== undefined) {
             this.changedFields.pipe(
