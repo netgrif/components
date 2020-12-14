@@ -1,10 +1,8 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {Observable, ReplaySubject, Subscription} from 'rxjs';
-import {Role} from '../models/role';
+import {ProcessRole} from '../../resources/interface/process-role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
-import {User as UserResource} from '../../resources/interface/user';
-import {User as AuthUser} from '../../authentication/models/user';
 import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
@@ -12,6 +10,7 @@ import {UserTransformer} from '../../authentication/models/user.transformer';
 import {LoggerService} from '../../logger/services/logger.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {SessionService} from '../../authentication/session/services/session.service';
+import {UserResource} from '../../resources/interface/user-resource';
 
 @Injectable({
     providedIn: 'root'
@@ -73,7 +72,7 @@ export class UserService implements OnDestroy {
         }
     }
 
-    public hasRole(role: Role): boolean {
+    public hasRole(role: ProcessRole): boolean {
         if (!role || !this._user.roles) {
             return false;
         }
@@ -84,7 +83,7 @@ export class UserService implements OnDestroy {
         if (!role || !this._user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.id === role);
+        return this._user.roles.some(r => r.stringId === role);
     }
 
     public login(credentials: Credentials): Observable<User> {
@@ -119,7 +118,7 @@ export class UserService implements OnDestroy {
         this._userResource.getLoggedUser().subscribe((user: UserResource) => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
-                this._user = this._userTransform.transform(backendUser as AuthUser);
+                this._user = this._userTransform.transform(backendUser);
                 this.publishUserChange();
             }
         }, error => {
