@@ -11,6 +11,13 @@ import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {Component} from '@angular/core';
 import {AbstractNavigationTreeComponent} from './abstract-navigation-tree.component';
 import {Router} from '@angular/router';
+import {LoggerService} from '../../logger/services/logger.service';
+import {UserService} from '../../user/services/user.service';
+import {RoleGuardService} from '../../authorization/role/role-guard.service';
+import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
+import {AuthenticationModule} from '../../authentication/authentication.module';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 
 describe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
@@ -20,7 +27,8 @@ describe('AbstractNavigationTreeComponent', () => {
         TestBed.configureTestingModule({
             declarations: [TestTreeComponent],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ],
             imports: [
                 CommonModule,
@@ -30,7 +38,8 @@ describe('AbstractNavigationTreeComponent', () => {
                 RouterTestingModule.withRoutes([]),
                 HttpClientTestingModule,
                 TranslateLibModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                AuthenticationModule,
             ]
         }).compileComponents();
     }));
@@ -55,7 +64,12 @@ describe('AbstractNavigationTreeComponent', () => {
     template: ''
 })
 class TestTreeComponent extends AbstractNavigationTreeComponent {
-    constructor(protected _config: ConfigurationService, protected _router: Router) {
-        super(_config, _router);
+    constructor(config: ConfigurationService,
+                router: Router,
+                log: LoggerService,
+                userService: UserService,
+                roleGuard: RoleGuardService,
+                authorityGuard: AuthorityGuardService) {
+        super(config, router, log, userService, roleGuard, authorityGuard);
     }
 }

@@ -70,7 +70,7 @@ export class RoleGuardService implements CanActivate {
     }
 
     /**
-     * @deprecated
+     * @deprecated in 5.0.0
      */
     protected parseStringRoleConstraints(roleConstrains: string | Array<string>): Array<RoleConstraint> {
         if (!Array.isArray(roleConstrains)) {
