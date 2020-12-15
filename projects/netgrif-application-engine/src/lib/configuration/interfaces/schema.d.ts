@@ -213,12 +213,7 @@ export interface View {
     // layout: CaseLayout | TaskLayout;
     access:
         | 'public' | 'private'
-        | {
-            role?: Array<string> | string | Array<RoleAccess>;
-            group?: Array<string> | string;
-            authority?: Array<string> | string;
-            [k: string]: any;
-        };
+        | Access;
     navigation:
         | boolean
         | {
@@ -235,8 +230,32 @@ export interface View {
     [k: string]: any;
 }
 
+/**
+ * Defines the access constraints of an application view
+ */
+export interface Access {
+    /**
+     * `string` and `Array<string>` types are deprecated and support for them will be removed in a future version.
+     *
+     *  For `string` values the format is: <net import id>.<role name>
+     */
+    role?: Array<string> | string | RoleAccess | Array<RoleAccess>;
+    group?: Array<string> | string;
+    authority?: Array<string> | string;
+    [k: string]: any;
+}
+
+/**
+ * Defines a single role access constraint
+ */
 export interface RoleAccess {
+    /**
+     * Process identifier (import ID)
+     */
     processId: string;
+    /**
+     * Role import ID
+     */
     roleId: string;
 }
 

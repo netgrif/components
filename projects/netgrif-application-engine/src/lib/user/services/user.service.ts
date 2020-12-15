@@ -79,11 +79,39 @@ export class UserService implements OnDestroy {
         return this._user.roles.some(r => r === role);
     }
 
-    public hasRoleById(role: string): boolean {
-        if (!role || !this._user.roles) {
+    /**
+     * Checks whether the user has role with a specific stringId
+     * @param roleStringId ID of the role we want to check
+     */
+    public hasRoleById(roleStringId: string): boolean {
+        if (!roleStringId || !this._user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.stringId === role);
+        return this._user.roles.some(r => r.stringId === roleStringId);
+    }
+
+    /**
+     * Checks whether the user has role with the specified identifier in a process with the specified identifier (any version)
+     * @param roleIdentifier identifier (import ID) of the role we want to check
+     * @param netIdentifier identifier (import ID) of the process the role is defined in
+     */
+    public hasRoleByIdentifier(roleIdentifier: string, netIdentifier: string): boolean {
+        if (!roleIdentifier || !netIdentifier || !this._user.roles) {
+            return false;
+        }
+        return this._user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
+    }
+
+    /**
+     * Checks whether the user has role with the specified name in a process with the specified identifier (any version)
+     * @param roleName name of the role we want to check
+     * @param netIdentifier identifier (import ID) of the process the role is defined in
+     */
+    public hasRoleByName(roleName: string, netIdentifier: string): boolean {
+        if (!roleName || !netIdentifier || !this._user.roles) {
+            return false;
+        }
+        return this._user.roles.some(r => r.netImportId === netIdentifier && r.name === roleName);
     }
 
     public login(credentials: Credentials): Observable<User> {
