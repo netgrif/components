@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {PreviewDialogData} from '@netgrif/application-engine';
+import {FilePreviewType, PreviewDialogData} from '@netgrif/application-engine';
 import {SafeUrl} from '@angular/platform-browser';
 
 
@@ -26,6 +26,6 @@ export class PreviewDialogComponent implements OnInit {
     }
 
     isPdf(): boolean {
-        return this.data.extension === 'pdf';
+        return this.data.extension === FilePreviewType.pdf;
     }
 }

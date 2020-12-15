@@ -1,4 +1,13 @@
-import {AfterViewChecked, ElementRef, Inject, Input, OnInit, Optional, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from '@angular/core';
 import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -10,6 +19,7 @@ import {ChangedFieldContainer} from '../../resources/interface/changed-field-con
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {BehaviorSubject} from 'rxjs';
+import {ResizedEvent} from 'angular-resize-event';
 
 export interface FileState {
     progress: number;
@@ -19,10 +29,14 @@ export interface FileState {
     error: boolean;
 }
 
+const preview = 'preview';
+
+const fieldPadding = 16;
+
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
-export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewChecked {
+export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Keep display name.
      */
@@ -45,7 +59,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     @ViewChild('imageEl') public imageEl: ElementRef;
 
-    @ViewChild('imageDiv') public divEl: ElementRef;
+    @ViewChild('imageDiv') public imageDivEl: ElementRef;
     /**
      * If file preview should be displayed
      */
@@ -58,10 +72,6 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Max height of preview
      */
     private maxHeight: string;
-    /**
-     * Max width of preview
-     */
-    private maxWidth: string;
     /**
      * Store file for preview
      */
@@ -81,7 +91,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     /**
      * Extension of file to preview
      */
-    public previewExtension: string;
+    public previewExtension: FilePreviewType;
 
     /**
      * Only inject services.
@@ -112,40 +122,26 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     ngOnInit() {
         super.ngOnInit();
         this.name = this.constructDisplayName();
-        this.previewSource = undefined;
-        if (this.dataField && this.dataField.component && this.dataField.component.name
-            && this.dataField.component.name === 'preview') {
-            this.filePreview = true;
-        }
+        this.filePreview = this.dataField && this.dataField.component && this.dataField.component.name
+            && this.dataField.component.name === preview;
     }
 
-    /**
-     * Set file picker and image elements to [FileFieldService]{@link FileFieldService}.
-     *
-     * Initialize file image.
-     */
-    ngAfterViewChecked(): void {
+    ngAfterViewInit() {
         if (this.fileUploadEl) {
             this.fileUploadEl.nativeElement.onchange = () => this.upload();
         }
         if (this.filePreview) {
-            if (!!this.divEl && !this.maxHeight) {
-                this.maxHeight = this.divEl.nativeElement.parentElement.parentElement.offsetHeight - 16 + 'px';
-                this.maxWidth = this.divEl.nativeElement.offsetWidth + 'px';
+            if (!!this.imageDivEl) {
+                this.maxHeight = this.imageDivEl.nativeElement.parentElement.parentElement.offsetHeight - fieldPadding + 'px';
                 if (!this.isEmpty()) {
-                    this.previewExtension = this.dataField.value.name.split('.').reverse()[0];
-                    this.isDisplayable = Object.values(FilePreviewType).includes(this.previewExtension as any);
-                    if (this.isDisplayable) {
-                        this.initFileFieldImage();
-                    }
+                    this.initializePreviewIfDisplayable();
                 }
             }
-            if (!this.isEmpty()  && !!this.imageEl && !!this.maxHeight) {
-                this.imageEl.nativeElement.style.maxHeight = this.maxHeight;
-                this.imageEl.nativeElement.style.maxWidth = this.maxWidth;
-            }
-
         }
+    }
+
+    ngOnDestroy(): void {
+        this.fullSource.complete();
     }
 
     public chooseFile() {
@@ -194,7 +190,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                if (Object.keys(response).length === 0 && response.constructor === Object) {
+                    this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                }
                 this._log.debug(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
                 );
@@ -204,11 +202,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.state.progress = 0;
                 this.dataField.downloaded = false;
                 this.dataField.value.name = fileToUpload.name;
-                const extension = this.dataField.value.name.split('.');
-                this.isDisplayable = Object.values(FilePreviewType).includes(extension[extension.length - 1] as any);
-                if (this.isDisplayable) {
-                    this.initFileFieldImage();
-                }
+                this.initializePreviewIfDisplayable();
                 this.name = this.constructDisplayName();
                 this.dataField.touch = true;
                 this.dataField.update();
@@ -256,7 +250,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     private initDownloadFile(response: Blob | ProviderProgress) {
         if (response instanceof Blob) {
-            if (this.previewExtension === 'pdf') {
+            if (this.previewExtension === FilePreviewType.pdf) {
                 this.fileForDownload = new Blob([response], {type: 'application/pdf'});
                 this.fullSource.next(this._sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(this.fileForDownload)));
             } else {
@@ -297,7 +291,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.name = this.constructDisplayName();
                 this.dataField.update();
                 this.dataField.downloaded = false;
-                this.fullSource = undefined;
+                this.fullSource.next(undefined);
                 this.fileForDownload = undefined;
                 this.previewSource = undefined;
                 this.fileForPreview = undefined;
@@ -385,6 +379,22 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 );
                 this.state.progress = 0;
             });
+        }
+    }
+
+    public changeMaxWidth(event: ResizedEvent) {
+        if (!!this.imageEl) {
+            this.imageEl.nativeElement.style.maxHeight = this.maxHeight;
+            this.imageEl.nativeElement.style.maxWidth = event.newWidth + 'px';
+        }
+    }
+
+    private initializePreviewIfDisplayable() {
+        const extension = this.dataField.value.name.split('.').reverse()[0];
+        this.isDisplayable = Object.values(FilePreviewType).includes(extension as any);
+        if (this.isDisplayable) {
+            this.previewExtension = FilePreviewType[extension];
+            this.initFileFieldImage();
         }
     }
 }

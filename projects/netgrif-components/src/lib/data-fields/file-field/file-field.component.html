@@ -22,7 +22,7 @@
                 <mat-icon color="warn">close</mat-icon>
             </button>
         </div>
-        <mat-progress-bar *ngIf="state.uploading" color="primary" [value]="state.progress"
+        <mat-progress-bar *ngIf="state.uploading || state.downloading" color="primary" [value]="state.progress"
                           [mode]="state.uploading ? 'determinate' : 'indeterminate'"
                           class="margin-bottom-default"></mat-progress-bar>
         <input type="file" #fileUploadInput name="fileUpload" [multiple]="false"
@@ -32,7 +32,7 @@
         <mat-error class="file-hint-error" *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
     </div>
     <div *ngIf="filePreview" fxFlex="5"></div>
-    <div *ngIf="filePreview" fxFlex="20" fxLayout="row" fxLayoutAlign="center center" #imageDiv>
+    <div *ngIf="filePreview" fxFlex="20" fxLayout="row" fxLayoutAlign="center center" #imageDiv (resized)="changeMaxWidth($event)">
         <img *ngIf="previewSource !== undefined && !state.downloading && isDisplayable" class="image-preview" #imageEl
              [src]="previewSource" alt="Image preview" (click)="showPreviewDialog()"/>
         <mat-spinner *ngIf="previewSource === undefined && !!state.downloading && isDisplayable" [diameter]="26"></mat-spinner>
