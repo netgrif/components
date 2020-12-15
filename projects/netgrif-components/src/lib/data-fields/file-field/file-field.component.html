@@ -5,7 +5,7 @@
 </nc-data-field-template>
 
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
-    <div>
+    <div fxFlex="{{!filePreview ? '100' : '75'}}">
         <mat-label *ngIf="!showLargeLayout.value">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
@@ -30,5 +30,11 @@
         <input type="text" [formControl]="formControl" class="invisible-input">
         <mat-hint class="file-hint-error" *ngIf="!dataField.isInvalid(formControl)">{{dataField.description}}</mat-hint>
         <mat-error class="file-hint-error" *ngIf="dataField.isInvalid(formControl)">{{'dataField.validations.required' | translate}}</mat-error>
+    </div>
+    <div *ngIf="filePreview" fxFlex="5"></div>
+    <div *ngIf="filePreview" fxFlex="20" fxLayout="row" fxLayoutAlign="center center" #imageDiv (resized)="changeMaxWidth($event)">
+        <img *ngIf="previewSource !== undefined && !state.downloading && isDisplayable" class="image-preview" #imageEl
+             [src]="previewSource" alt="Image preview" (click)="showPreviewDialog()"/>
+        <mat-spinner *ngIf="previewSource === undefined && !!state.downloading && isDisplayable" [diameter]="26"></mat-spinner>
     </div>
 </ng-template>
