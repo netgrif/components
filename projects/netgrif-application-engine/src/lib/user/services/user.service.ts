@@ -17,16 +17,16 @@ import {UserResource} from '../../resources/interface/user-resource';
 })
 export class UserService implements OnDestroy {
 
-    private _user: User;
-    private _userChange$: ReplaySubject<User>;
-    private _loginCalled: boolean;
-    private _subAuth: Subscription;
+    protected _user: User;
+    protected _userChange$: ReplaySubject<User>;
+    protected _loginCalled: boolean;
+    protected _subAuth: Subscription;
 
-    constructor(private _authService: AuthenticationService,
-                private _userResource: UserResourceService,
-                private _userTransform: UserTransformer,
-                private _log: LoggerService,
-                private _session: SessionService) {
+    constructor(protected _authService: AuthenticationService,
+                protected _userResource: UserResourceService,
+                protected _userTransform: UserTransformer,
+                protected _log: LoggerService,
+                protected _session: SessionService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
@@ -138,11 +138,11 @@ export class UserService implements OnDestroy {
         this.loadUser();
     }
 
-    private emptyUser() {
+    protected emptyUser() {
         return new User('', '', '', '', [], [], [], []);
     }
 
-    private loadUser(): void {
+    protected loadUser(): void {
         this._userResource.getLoggedUser().subscribe((user: UserResource) => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
@@ -159,7 +159,7 @@ export class UserService implements OnDestroy {
         });
     }
 
-    private publishUserChange(): void {
+    protected publishUserChange(): void {
         this._userChange$.next(this.user);
     }
 
