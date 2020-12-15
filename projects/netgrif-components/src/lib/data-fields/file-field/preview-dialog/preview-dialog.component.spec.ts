@@ -1,25 +1,67 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PreviewDialogComponent } from './preview-dialog.component';
+import {PreviewDialogComponent} from './preview-dialog.component';
+import {
+    AuthenticationMethodService,
+    ConfigurationService,
+    FileField,
+    MaterialModule,
+    MockAuthenticationMethodService,
+    TestConfigurationService,
+    TranslateLibModule
+} from 'netgrif-application-engine';
+import {AngularResizedEventModule} from 'angular-resize-event';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {of} from 'rxjs';
 
 describe('PreviewDialogComponent', () => {
-  let component: PreviewDialogComponent;
-  let fixture: ComponentFixture<PreviewDialogComponent>;
+    let component: PreviewDialogComponent;
+    let fixture: ComponentFixture<PreviewDialogComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PreviewDialogComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                MaterialModule,
+                FlexLayoutModule,
+                AngularResizedEventModule,
+                HttpClientTestingModule,
+                TranslateLibModule,
+                NoopAnimationsModule
+            ],
+            declarations: [PreviewDialogComponent],
+            providers: [
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {
+                    provide: MAT_DIALOG_DATA, useValue: {
+                        imageFull: of(''),
+                        dataField: new FileField('', '', {
+                            required: true,
+                            optional: true,
+                            visible: true,
+                            editable: true,
+                            hidden: true
+                        }, {file: null, name: ''})
+                    }
+                },
+                {provide: MatDialogRef, useValue: {}}
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PreviewDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PreviewDialogComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
