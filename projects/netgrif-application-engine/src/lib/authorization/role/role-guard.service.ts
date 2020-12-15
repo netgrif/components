@@ -4,7 +4,7 @@ import {UserService} from '../../user/services/user.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Access, RoleAccess} from '../../configuration/interfaces/schema';
+import {Access, RoleAccess, View} from '../../configuration/interfaces/schema';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Observable} from 'rxjs';
 
@@ -33,19 +33,23 @@ export class RoleGuardService implements CanActivate {
                 state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         this._redirectService.intendedRoute = route;
         const view = this._configService.getViewByUrl(state.url.toString());
+        return this.canAccessView(view, state.url.toString());
+    }
+
+    public canAccessView(view: View, url: string): boolean {
         if (typeof view.access !== 'string' && view.access.hasOwnProperty('role')) {
-            const allowedRoles = this.parseRoleConstraints(view.access.role, state.url.toString());
+            const allowedRoles = this.parseRoleConstraints(view.access.role, url);
 
             return allowedRoles.some(constraint => {
                 if (constraint.roleIdentifier) {
-                   return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
+                    return this._userService.hasRoleByIdentifier(constraint.roleIdentifier, constraint.processIdentifier);
                 } else {
                     return this._userService.hasRoleByName(constraint.roleName, constraint.processIdentifier);
                 }
             });
         }
         throw new Error('Role guard is declared for a view with no role guard configuration!'
-            + ` Add role guard configuration for view at ${state.url.toString()}, or remove the guard.`);
+            + ` Add role guard configuration for view at ${url}, or remove the guard.`);
     }
 
     protected parseRoleConstraints(roleConstrains: Access['role'], viewUrl: string): Array<RoleConstraint> {

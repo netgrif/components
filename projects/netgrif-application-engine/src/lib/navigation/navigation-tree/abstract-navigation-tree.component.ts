@@ -5,6 +5,10 @@ import {View, Views} from '../../configuration/interfaces/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {Subscription} from 'rxjs';
+import {LoggerService} from '../../logger/services/logger.service';
+import {UserService} from '../../user/services/user.service';
+import {RoleGuardService} from '../../authorization/role/role-guard.service';
+import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 
 export interface NavigationNode {
     name: string;
@@ -24,7 +28,12 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
 
-    protected constructor(protected _config: ConfigurationService, protected _router: Router) {
+    protected constructor(protected _config: ConfigurationService,
+                          protected _router: Router,
+                          protected _log: LoggerService,
+                          protected _userService: UserService,
+                          protected _roleGuard: RoleGuardService,
+                          protected _authorityGuard: AuthorityGuardService) {
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
         this.dataSource.data = this.resolveNavigationNodes(_config.getConfigurationSubtree(['views']), '');
@@ -68,9 +77,14 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
         Object.keys(views).forEach((viewKey: string) => {
             const view = views[viewKey];
             if (!this.hasNavigation(view) && !this.hasSubRoutes(view)) {
-                return;
+                return; // continue
             }
             const routeSegment = this.getNodeRouteSegment(view);
+
+            if  (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
+                return; // continue
+            }
+
             if (this.hasNavigation(view)) {
                 const node: NavigationNode = this.buildNode(view, routeSegment, parentUrl);
                 if (this.hasSubRoutes(view)) {
@@ -160,6 +174,49 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
                 this.resolveLevels(node.children, currentLevel);
             }
         });
+    }
+
+    /**
+     * @param view the view whose access permissions we want to check
+     * @param url URL to which the view maps. Is used only for error message generation
+     * @returns whether the user can access the provided view
+     */
+    protected canAccessView(view: View, url: string): boolean {
+        if (!view.hasOwnProperty('access')) {
+            return true;
+        }
+
+        if (typeof view.access === 'string') {
+            if (view.access === 'public') {
+                return true;
+            }
+            if (view.access !== 'private') {
+                throw new Error(`Unknown access option '${view.access}'. Only 'public' or 'private' is allowed.`);
+            }
+            return !this._userService.user.isEmpty();
+        }
+
+        return !this._userService.user.isEmpty() // AuthGuard
+                && this.passesRoleGuard(view, url)
+                && this.passesAuthorityGuard(view);
+        // TODO 15.12.2020 - add GroupGuard once NAE-1164 is implemented
+    }
+
+    /**
+     * @param view the view whose access permissions we want to check
+     * @param url URL to which the view maps. Is used only for error message generation
+     * @returns whether the user passes the role guard condition for accessing the specified view
+     */
+    protected passesRoleGuard(view: View, url: string): boolean {
+        return !view.access.hasOwnProperty('role') || this._roleGuard.canAccessView(view, url);
+    }
+
+    /**
+     * @param view the view whose access permissions we want to check
+     * @returns whether the user passes the authority guard condition for accessing the specified view
+     */
+    protected passesAuthorityGuard(view: View): boolean {
+        return !view.access.hasOwnProperty('authority') || this._authorityGuard.canAccessView(view);
     }
 
 }
