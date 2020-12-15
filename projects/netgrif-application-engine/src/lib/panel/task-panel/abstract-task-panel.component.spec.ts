@@ -53,6 +53,7 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -173,11 +174,12 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
                 protected _callChain: CallChainService,
+                protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 parentInjector: Injector) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined, parentInjector);
+            _assignPolicyService, _callChain, _taskOperations, undefined, _translate);
     }
 
     ngAfterViewInit() {
