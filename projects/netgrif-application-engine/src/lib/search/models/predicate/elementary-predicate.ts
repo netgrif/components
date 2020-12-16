@@ -6,7 +6,7 @@ import {Query} from '../query/query';
  */
 export class ElementaryPredicate extends Predicate {
 
-    constructor(private _query: Query) {
+    constructor(protected _query: Query) {
         super();
     }
 
