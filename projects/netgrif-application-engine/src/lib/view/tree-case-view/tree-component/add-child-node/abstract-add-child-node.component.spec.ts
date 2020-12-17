@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component} from '@angular/core';
-import {CaseTreeNode} from '../model/CaseTreeNode';
+import {CaseTreeNode} from '../model/case-tree-node';
 import {AbstractAddChildNodeComponent} from './abstract-add-child-node.component';
 import {CaseTreeService} from '../case-tree.service';
 import {MaterialModule} from '../../../../material/material.module';

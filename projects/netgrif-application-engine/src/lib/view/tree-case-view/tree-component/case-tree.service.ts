@@ -2,7 +2,7 @@ import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {CaseTreeNode} from './model/CaseTreeNode';
+import {CaseTreeNode} from './model/case-tree-node';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -24,6 +24,8 @@ import {CaseGetRequestBody} from '../../../resources/interface/case-get-request-
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {NAE_OPTION_SELECTOR_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {CaseTreePath} from './model/case-tree-path';
+import {ExpansionTree} from './model/expansion-tree';
 
 /**
  * An internal helper object, that is used to return two values from a function.
@@ -49,6 +51,14 @@ export class CaseTreeService implements OnDestroy {
     private _treeRootLoaded$: ReplaySubject<boolean>;
     private _rootNode: CaseTreeNode;
     private _showRoot: boolean;
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
+     */
+    private _isEagerLoaded = false;
     /**
      * string id of the case, that is currently being reloaded, `undefined` if no case is currently being reloaded
      */
@@ -130,6 +140,30 @@ export class CaseTreeService implements OnDestroy {
      */
     public get rootNodeAddingChild$(): Observable<boolean> | undefined {
         return !!this._rootNode ? this._rootNode.addingNode.asObservable() : undefined;
+    }
+
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
+     */
+    public get isEagerLoaded(): boolean {
+        return this._isEagerLoaded;
+    }
+
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
+     *
+     * @param eager the new setting for eager loading
+     */
+    public set isEagerLoaded(eager: boolean) {
+        this._isEagerLoaded = eager;
     }
 
     /**
@@ -224,6 +258,11 @@ export class CaseTreeService implements OnDestroy {
         this.updateNodeChildren(node).subscribe(() => {
             if (node.children.length > 0) {
                 this.treeControl.expand(node);
+
+                if (this._isEagerLoaded) {
+                    this._logger.debug(`Eager loading children of tree node with case id '${node.case.stringId}'`);
+                    node.children.forEach(childNode => this.expandNode(childNode));
+                }
             }
             ret.next(node.children.length > 0);
             ret.complete();
@@ -480,6 +519,71 @@ export class CaseTreeService implements OnDestroy {
         });
 
         this.deselectNodeIfDescendantOf(node);
+    }
+
+    /**
+     * Expands all nodes in the tree dictated by the argument.
+     *
+     * @param path nodes that should be expanded along with their path from the root node
+     */
+    public expandPath(path: CaseTreePath): void {
+        if (this.dataSource.data.length === 0) {
+            return;
+        }
+        let rootNode = this.dataSource.data[0];
+        while (rootNode.parent !== undefined) {
+            rootNode = rootNode.parent;
+        }
+        this.expandLevel([rootNode], this.convertPathToExpansionTree(path));
+    }
+
+    /**
+     * Transforms a {@Link CaseTreePath} object into an {@link ExpansionTree} object.
+     * The result has all the common paths merged into single branches of the resulting tree structure.
+     *
+     * @param paths nodes that should be expanded along with their path from the root node
+     * @returns an {@link ExpansionTree} equivalent to the provided {@link CaseTreePath}
+     */
+    protected convertPathToExpansionTree(paths: CaseTreePath): ExpansionTree {
+        const result = {};
+        Object.values(paths).forEach(path => {
+            let currentNode = result;
+            path.forEach(nodeId => {
+                if (currentNode[nodeId] === undefined) {
+                    currentNode[nodeId] = {};
+                }
+                currentNode = currentNode[nodeId];
+            });
+        });
+        return result;
+    }
+
+    /**
+     * Recursively expands all nodes from the provided array of nodes, that appear in the top level of the {@link ExpansionTree} object.
+     *
+     * @param levelNodes nodes from which the expansion should start
+     * @param targets a tree structure representing the nodes that are to be expanded recursively.
+     * The top level nodes are expanded first, from the provided `levelNodes`.
+     */
+    protected expandLevel(levelNodes: Array<CaseTreeNode>, targets: ExpansionTree): void {
+        const desiredIds = new Set(Object.keys(targets));
+        if (desiredIds.size === 0) {
+            return;
+        }
+
+        levelNodes.forEach(n => {
+            const node = n;
+            if (!desiredIds.has(node.case.stringId)) {
+                return; // continue
+            }
+            this.expandNode(node).subscribe(success => {
+                if (!success) {
+                    this._logger.debug('Could not expand tree node with ID: ' + node.case.stringId);
+                    return;
+                }
+                this.expandLevel(node.children, targets[node.case.stringId]);
+            });
+        });
     }
 
     /**
@@ -772,4 +876,6 @@ export class CaseTreeService implements OnDestroy {
 
         return result;
     }
+
+
 }
