@@ -203,6 +203,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.dataField.downloaded = false;
                 this.dataField.value.name = fileToUpload.name;
                 this.initializePreviewIfDisplayable();
+                this.fullSource.next(undefined);
                 this.name = this.constructDisplayName();
                 this.dataField.touch = true;
                 this.dataField.update();
@@ -366,20 +367,18 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (!this.checkFileBeforeDownload()) {
             return;
         }
-        if (!this.fileForDownload) {
-            this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
-                if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
-                    this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
-                    this.initDownloadFile(response);
-                }
-            }, error => {
-                this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
-                this._snackbar.openErrorSnackBar(
-                    this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
-                );
-                this.state.progress = 0;
-            });
-        }
+        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
+                this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
+                this.initDownloadFile(response);
+            }
+        }, error => {
+            this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+            );
+            this.state.progress = 0;
+        });
     }
 
     public changeMaxWidth(event: ResizedEvent) {
