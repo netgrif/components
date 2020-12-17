@@ -9,7 +9,7 @@ import {TreeCaseViewService} from '../../tree-case-view.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {AbstractRemoveNodeComponent} from './abstract-remove-node.component';
-import {CaseTreeNode} from '../model/CaseTreeNode';
+import {CaseTreeNode} from '../model/case-tree-node';
 
 describe('AbstractRemoveNodeComponent', () => {
     let component: TestRemoveComponent;

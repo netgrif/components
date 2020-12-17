@@ -3,6 +3,7 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/mo
 import {TaskLayout} from './task-layout';
 import {NaeDate} from '../types/nae-date-type';
 import {UserResourceSmall} from './user-resource-small';
+import {ImmediateData} from './immediate-data';
 
 /**
  * Object from Backend
@@ -63,4 +64,5 @@ export interface Task {
     finishTitle?: string;
     cancelTitle?: string;
     delegateTitle?: string;
+    immediateData?: Array<ImmediateData>;
 }

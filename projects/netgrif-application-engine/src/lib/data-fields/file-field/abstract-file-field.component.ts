@@ -1,5 +1,14 @@
-import {AfterViewInit, ElementRef, Inject, Input, OnInit, Optional, ViewChild} from '@angular/core';
-import {FileField} from './models/file-field';
+import {
+    AfterViewInit,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from '@angular/core';
+import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
@@ -8,6 +17,9 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {BehaviorSubject} from 'rxjs';
+import {ResizedEvent} from 'angular-resize-event';
 
 export interface FileState {
     progress: number;
@@ -17,10 +29,14 @@ export interface FileState {
     error: boolean;
 }
 
+const preview = 'preview';
+
+const fieldPadding = 16;
+
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
-export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit {
+export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Keep display name.
      */
@@ -41,7 +57,41 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     /**
      * Image field view element reference from component template that is initialized after view init.
      */
-    @ViewChild('imageEl') public imageEl: ElementRef<HTMLImageElement>;
+    @ViewChild('imageEl') public imageEl: ElementRef;
+
+    @ViewChild('imageDiv') public imageDivEl: ElementRef;
+    /**
+     * If file preview should be displayed
+     */
+    public filePreview = false;
+    /**
+     * If file type can be displayed
+     */
+    public isDisplayable = false;
+    /**
+     * Max height of preview
+     */
+    private maxHeight: string;
+    /**
+     * Store file for preview
+     */
+    private fileForPreview: Blob;
+    /**
+     * Url of preview file
+     */
+    public previewSource: SafeUrl;
+    /**
+     * Store file to show/download
+     */
+    private fileForDownload: Blob;
+    /**
+     * Full size file url
+     */
+    public fullSource: BehaviorSubject<SafeUrl>;
+    /**
+     * Extension of file to preview
+     */
+    public previewExtension: FilePreviewType;
 
     /**
      * Only inject services.
@@ -51,14 +101,17 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _translate Translate service for I18N
      * @param informAboutInvalidData whether the backend should be notified about invalid values.
      * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
+     * @param _sanitizer Sanitize url of image preview
      */
     protected constructor(protected _taskResourceService: TaskResourceService,
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
-                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+                          @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
+                          protected _sanitizer: DomSanitizer) {
         super(informAboutInvalidData);
         this.state = this.defaultState;
+        this.fullSource = new BehaviorSubject<SafeUrl>(null);
     }
 
     /**
@@ -69,18 +122,26 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     ngOnInit() {
         super.ngOnInit();
         this.name = this.constructDisplayName();
+        this.filePreview = this.dataField && this.dataField.component && this.dataField.component.name
+            && this.dataField.component.name === preview;
     }
 
-    /**
-     * Set file picker and image elements to [FileFieldService]{@link FileFieldService}.
-     *
-     * Initialize file image.
-     */
-    ngAfterViewInit(): void {
+    ngAfterViewInit() {
         if (this.fileUploadEl) {
             this.fileUploadEl.nativeElement.onchange = () => this.upload();
         }
-        this.initFileFieldImage();
+        if (this.filePreview) {
+            if (!!this.imageDivEl) {
+                this.maxHeight = this.imageDivEl.nativeElement.parentElement.parentElement.offsetHeight - fieldPadding + 'px';
+                if (!this.isEmpty()) {
+                    this.initializePreviewIfDisplayable();
+                }
+            }
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.fullSource.complete();
     }
 
     public chooseFile() {
@@ -123,12 +184,15 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         this.state = this.defaultState;
         this.state.uploading = true;
         const fileFormData = new FormData();
-        fileFormData.append('file', this.fileUploadEl.nativeElement.files.item(0) as File);
+        const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
+        fileFormData.append('file', fileToUpload);
         this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                if (Object.keys(response).length === 0 && response.constructor === Object) {
+                    this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                }
                 this._log.debug(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
                 );
@@ -137,9 +201,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.state.uploading = false;
                 this.state.progress = 0;
                 this.dataField.downloaded = false;
-                this.dataField.value.name = this.fileUploadEl.nativeElement.files.item(0).name;
+                this.dataField.value.name = fileToUpload.name;
+                this.initializePreviewIfDisplayable();
+                this.fullSource.next(undefined);
                 this.name = this.constructDisplayName();
-                this.formControl.setValue(this.dataField.value.name);
                 this.dataField.touch = true;
                 this.dataField.update();
             }
@@ -158,22 +223,20 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     public download() {
-        if (!this.dataField.value || !this.dataField.value.name) {
+        if (!this.checkFileBeforeDownload()) {
             return;
         }
-        if (!this.taskId) {
-            this._log.error('File cannot be downloaded. No task is set to the field.');
+        if (!!this.fileForDownload) {
+            this.downloadViaAnchor(this.fileForDownload);
             return;
         }
-
         this.state = this.defaultState;
         this.state.downloading = true;
         this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
-            if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
-                this.state.progress = (response as ProviderProgress).progress;
-            } else {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
+                this.initDownloadFile(response);
                 this.state.downloading = false;
                 this.state.progress = 0;
                 this.dataField.downloaded = true;
@@ -186,12 +249,26 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         });
     }
 
+    private initDownloadFile(response: Blob | ProviderProgress) {
+        if (response instanceof Blob) {
+            if (this.previewExtension === FilePreviewType.pdf) {
+                this.fileForDownload = new Blob([response], {type: 'application/pdf'});
+                this.fullSource.next(this._sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(this.fileForDownload)));
+            } else {
+                this.fileForDownload = new Blob([response], {type: 'application/octet-stream'});
+                this.fullSource.next(this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForDownload)));
+            }
+        }
+    }
+
     protected downloadViaAnchor(blob: Blob): void {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        blob = new Blob([blob], {type: 'application/octet-stream'});
-        const url = window.URL.createObjectURL(blob);
+        if (!this.fileForDownload) {
+            blob = new Blob([blob], {type: 'application/octet-stream'});
+        }
+        const url = window.URL.createObjectURL(!!this.fileForDownload ? this.fileForDownload : blob);
         a.href = url;
         a.download = this.dataField.value.name;
         a.click();
@@ -215,6 +292,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.name = this.constructDisplayName();
                 this.dataField.update();
                 this.dataField.downloaded = false;
+                this.fullSource.next(undefined);
+                this.fileForDownload = undefined;
+                this.previewSource = undefined;
+                this.fileForPreview = undefined;
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
                 this.formControl.markAsTouched();
             } else {
@@ -252,28 +333,68 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Initialize file field image from backend if it is image type.
      */
     protected initFileFieldImage() {
-        // this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId)
-        //     .subscribe(fileBlob => {
-        //         const file: File = new File([fileBlob], this.name);
-        //         if (!file.type.includes('image')) {
-        //             return;
-        //         }
-        //         this._fileFieldService.allFiles = [];
-        //         this._fileFieldService.allFiles.push(this._fileFieldService.createFileUploadModel(file, true));
-        //
-        //         // TODO: 11.4.2020 unify image element assignment URL
-        //         //  for blob or file type as arguments to setImageSourceUrl function in FileFieldService
-        //         //  this._fileFieldService.setImageSourceUrl(fileBlob)
-        //         const reader = new FileReader();
-        //         reader.readAsDataURL(fileBlob);
-        //         reader.onloadend = () => {
-        //             if (typeof reader.result === 'string') {
-        //                 this.imageEl.nativeElement.src = reader.result;
-        //                 this.imageEl.nativeElement.alt = this.name;
-        //             }
-        //         };
-        //     });
+        if (!this.checkFileBeforeDownload()) {
+            return;
+        }
+        this.state.downloading = true;
+        this._taskResourceService.downloadFilePreview(this.taskId, this.dataField.stringId).subscribe(response => {
+            if (response instanceof Blob) {
+                this._log.debug(`Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
+                this.fileForPreview = new Blob([response], {type: 'application/octet-stream'});
+                this.previewSource = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
+                this.state.downloading = false;
+            }
+        }, error => {
+            this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
+            this._snackbar.openErrorSnackBar(this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail'));
+            this.state.downloading = false;
+            this.state.progress = 0;
+        });
     }
 
+    private checkFileBeforeDownload() {
+        if (this.isEmpty()) {
+            return false;
+        }
+        if (!this.taskId) {
+            this._log.error('File cannot be downloaded. No task is set to the field.');
+            return false;
+        }
+        return true;
+    }
+
+    public showPreviewDialog() {
+        if (!this.checkFileBeforeDownload()) {
+            return;
+        }
+        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
+                this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
+                this.initDownloadFile(response);
+            }
+        }, error => {
+            this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+            );
+            this.state.progress = 0;
+        });
+    }
+
+    public changeMaxWidth(event: ResizedEvent) {
+        if (!!this.imageEl) {
+            this.imageEl.nativeElement.style.maxHeight = this.maxHeight;
+            this.imageEl.nativeElement.style.maxWidth = event.newWidth + 'px';
+        }
+    }
+
+    private initializePreviewIfDisplayable() {
+        const extension = this.dataField.value.name.split('.').reverse()[0];
+        this.isDisplayable = Object.values(FilePreviewType).includes(extension as any);
+        if (this.isDisplayable) {
+            this.previewExtension = FilePreviewType[extension];
+            this.initFileFieldImage();
+        }
+    }
 }
 
