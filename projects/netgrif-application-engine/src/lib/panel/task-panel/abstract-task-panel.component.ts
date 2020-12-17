@@ -34,8 +34,10 @@ import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {DisableButtonFuntions} from './models/disable-functions';
 import {Task} from '../../resources/interface/task';
+import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
+import {TranslateService} from '@ngx-translate/core';
 
-export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
     /**
      * @ignore
@@ -78,8 +80,8 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
-                          protected _parentInjector: Injector) {
-        super();
+                          protected _translate: TranslateService) {
+        super(_translate);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
@@ -297,7 +299,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     }
 
     protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
-        this._log.warn('Immediate data in task panel headers are currently not supported');
+        if (this._taskContentService.task && this._taskContentService.task.immediateData) {
+            const immediate = this._taskContentService.task.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
+            return this.parseImmediateValue(immediate);
+        }
         return {value: '', icon: ''};
     }
 

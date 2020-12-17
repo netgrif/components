@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {AbstractHeaderService} from '../abstract-header-service';
 import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
@@ -6,15 +6,31 @@ import {TaskMetaField} from './task-meta-enum';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
-
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {Subscription} from 'rxjs';
+import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
 
 
 @Injectable()
-export class TaskHeaderService extends AbstractHeaderService {
-    constructor(preferences: UserPreferenceService, viewService: ViewService, logger: LoggerService) {
+export class TaskHeaderService extends AbstractHeaderService implements OnDestroy {
+    protected subAllowedNets: Subscription;
+
+    constructor(protected _taskViewService: TaskViewService,
+                preferences: UserPreferenceService,
+                viewService: ViewService,
+                logger: LoggerService,
+                @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
         super(HeaderType.TASK, preferences, viewService, logger);
-        this.loadHeadersFromPreferences();
-        this.loading.off();
+        this.subAllowedNets = _taskViewService.allowedNets$.subscribe(allowedNets => {
+            this.setTaskAllowedNets(allowedNets);
+            if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {
+                this.initDefaultHeaders = naeDefaultHeaders;
+                this.initializeDefaultHeaderState();
+            } else {
+                this.loadHeadersFromPreferences();
+            }
+            this.loading.off();
+        });
     }
 
     protected createMetaHeaders(): Array<HeaderColumn> {
@@ -34,5 +50,10 @@ export class TaskHeaderService extends AbstractHeaderService {
     }
 
     protected restoreLastState() {
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.subAllowedNets.unsubscribe();
     }
 }
