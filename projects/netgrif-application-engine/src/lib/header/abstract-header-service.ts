@@ -15,6 +15,7 @@ import {LoadingEmitter} from '../utility/loading-emitter';
 import {SortDirection} from '@angular/material/sort';
 import {HeaderChangeType} from './models/user-changes/header-change-type';
 import {ViewIdService} from '../user/services/view-id.service';
+import {Net} from '../process/net';
 
 export abstract class AbstractHeaderService implements OnDestroy {
 
@@ -176,6 +177,37 @@ export abstract class AbstractHeaderService implements OnDestroy {
                 fieldsGroup.fields.push(
                     new HeaderColumn(HeaderColumnType.IMMEDIATE, immediate.stringId, immediate.title, immediate.type, allowedNet.identifier)
                 );
+            });
+            fieldsGroups.push(fieldsGroup);
+        });
+
+        this.fieldsGroup.splice(1, this.fieldsGroup.length - 1);
+        this.fieldsGroup.push(...fieldsGroups);
+    }
+
+    public setTaskAllowedNets(allowedNets: Array<Net>) {
+        /* TODO by simply replacing the select options with new object, we don't loose the old references.
+             Columns with headers from nets that are no longer allowed should have their value cleared.
+             Columns with valid values that are not metadata should have their selection remapped to the new objects.
+         */
+
+        const fieldsGroups: Array<FieldsGroup> = [];
+        allowedNets.forEach(allowedNet => {
+            const fieldsGroup: FieldsGroup = {
+                groupTitle: allowedNet.title,
+                fields: []
+            };
+            const existing = new Set();
+            allowedNet.transitions.forEach(trans => {
+                trans.immediateData.forEach(data => {
+                    if (!existing.has(data.stringId)) {
+                        existing.add(data.stringId);
+                        fieldsGroup.fields.push(
+                            new HeaderColumn(HeaderColumnType.IMMEDIATE, data.stringId,
+                                data.title, data.type, allowedNet.identifier)
+                        );
+                    }
+                });
             });
             fieldsGroups.push(fieldsGroup);
         });
