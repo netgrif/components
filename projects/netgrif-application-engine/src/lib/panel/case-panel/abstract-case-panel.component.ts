@@ -12,9 +12,10 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OverflowService} from '../../header/services/overflow.service';
+import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 
 
-export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding {
+export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
 
     @Input() public case_: Case;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
@@ -28,7 +29,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                           protected _log: LoggerService, protected _overflowService: OverflowService) {
-        super();
+        super(_translateService);
     }
 
     public show(event: MouseEvent): boolean {
@@ -54,30 +55,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
 
     protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
         const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
-        if (immediate && immediate.value !== undefined) {
-            switch (immediate.type) {
-                case 'date':
-                    return {value: toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING), icon: 'event'};
-                case 'dateTime':
-                    return {value: toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING), icon: 'event'};
-                case 'enumeration':
-                    return {value: immediate.value.defaultValue, icon: undefined};
-                case 'multichoice':
-                    return {value: immediate.value.map(it => it.defaultValue).join(', '), icon: undefined};
-                case 'file':
-                    return {value: immediate.value, icon: 'insert_drive_file'};
-                case 'user':
-                    return {value: immediate.value.fullName, icon: 'account_circle'};
-                case 'boolean':
-                    return {value: this._translateService.instant('dataField.values.boolean.' + immediate.value), icon: undefined};
-                default:
-                    // TODO 8.4.2020 - File field value rendering once file field works
-                    // TODO 8.4.2020 - User field value rendering once user field works
-                    return {value: immediate.value, icon: undefined};
-            }
-        } else {
-            return {value: '', icon: ''};
-        }
+        return this.parseImmediateValue(immediate);
     }
 
     public deleteCase() {
