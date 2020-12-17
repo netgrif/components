@@ -61,7 +61,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     protected _subOperationClose: Subscription;
     protected _subOperationReload: Subscription;
     protected _subPanelUpdate: Subscription;
-    protected _taskDisableButtonFuntions: DisableButtonFuntions;
+    protected _taskDisableButtonFunctions: DisableButtonFuntions;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -86,13 +86,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
         });
         this._subTaskData = _taskDataService.changedFields$.subscribe(changedFields => {
             this._taskPanelData.changedFields.next(changedFields);
-            if (this._taskContentService.task) {
-                Object.keys(changedFields).forEach(value => {
-                    if (changedFields[value].type === 'taskRef' && this._taskContentService.task.user !== undefined) {
-                        this._taskDataService.initializeTaskDataFields(new Subject<boolean>(), true);
-                    }
-                });
-            }
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
             this.expand();
@@ -103,7 +96,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
         this._subOperationReload = _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
         });
-        this._taskDisableButtonFuntions = {
+        this._taskDisableButtonFunctions = {
             finish: (t: Task) => false,
             assign: (t: Task) => false,
             delegate: (t: Task) => false,
@@ -111,7 +104,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
             cancel: (t: Task) => false,
         };
         if (_disableFunctions) {
-             Object.assign(this._taskDisableButtonFuntions, _disableFunctions);
+             Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
         }
     }
 
@@ -267,7 +260,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     }
 
     public canDisable(type: string): boolean {
-        return this._taskDisableButtonFuntions[type]({...this._taskContentService.task});
+        return this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
