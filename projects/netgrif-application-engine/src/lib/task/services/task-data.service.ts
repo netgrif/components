@@ -1,5 +1,5 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskRequestStateService} from './task-request-state.service';
@@ -31,6 +31,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     protected _updateSuccess$: Subject<boolean>;
     protected _changedFields$: Subject<ChangedFields>;
+    protected _dataReloadSubscription: Subscription;
 
     constructor(protected _taskState: TaskRequestStateService,
                 protected _translate: TranslateService,
@@ -46,11 +47,15 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ = new Subject<boolean>();
         this._changedFields$ = new Subject<ChangedFields>();
+        this._dataReloadSubscription = this._taskContentService.taskDataReloadRequest$.subscribe(() => {
+            this.initializeTaskDataFields(undefined, true);
+        });
     }
 
     ngOnDestroy(): void {
         this._updateSuccess$.complete();
         this._changedFields$.complete();
+        this._dataReloadSubscription.unsubscribe();
     }
 
     /**
