@@ -202,8 +202,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.state.progress = 0;
                 this.dataField.downloaded = false;
                 this.dataField.value.name = fileToUpload.name;
-                this.initializePreviewIfDisplayable();
+                if (this.filePreview) {
+                    this.initializePreviewIfDisplayable();
+                }
                 this.fullSource.next(undefined);
+                this.fileForDownload = undefined;
                 this.name = this.constructDisplayName();
                 this.dataField.touch = true;
                 this.dataField.update();
@@ -236,7 +239,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
-                this.initDownloadFile(response);
+                if (this.filePreview) {
+                    this.initDownloadFile(response);
+                }
                 this.state.downloading = false;
                 this.state.progress = 0;
                 this.dataField.downloaded = true;
