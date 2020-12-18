@@ -114,9 +114,12 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return;
         }
+        // let rerenderData = false;
+
         this._task.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
                 if (chFields[field.stringId]) {
+                    // rerenderData = true;
                     const updatedField = chFields[field.stringId];
                     Object.keys(updatedField).forEach(key => {
                         if (key === 'value') {
@@ -149,6 +152,8 @@ export abstract class TaskContentService implements OnDestroy {
                 }
             });
         });
+        // if (rerenderData) {
         this.$shouldCreate.next(this._task.dataGroups);
+        // }
     }
 }

@@ -12,7 +12,7 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, Subject, Subscription} from 'rxjs';
+import {Observable, Subject, Subscription, timer} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -34,6 +34,7 @@ import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {DisableButtonFuntions} from './models/disable-functions';
 import {Task} from '../../resources/interface/task';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit, OnDestroy {
 
@@ -84,14 +85,14 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
-        this._subTaskData = _taskDataService.changedFields$.subscribe(changedFields => {
+        this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
+            const actions = changedFields['frontend_action_321465978'];
+            delete changedFields['frontend_action_321465978'];
+
             this._taskPanelData.changedFields.next(changedFields);
-            if (this._taskContentService.task) {
-                Object.keys(changedFields).forEach(value => {
-                    if (changedFields[value].type === 'taskRef' && this._taskContentService.task.user !== undefined) {
-                        this._taskDataService.initializeTaskDataFields(new Subject<boolean>(), true);
-                    }
-                });
+
+            if (actions && actions.type === 'validate') {
+                timer().subscribe(() => this._taskContentService.validateTaskData());
             }
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
