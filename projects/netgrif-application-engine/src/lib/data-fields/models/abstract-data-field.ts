@@ -253,6 +253,7 @@ export abstract class DataField<T> {
     }
 
     public registerFormControl(formControl: FormControl): void {
+        formControl.setValidators(this.resolveFormControlValidators());
         formControl.valueChanges.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
@@ -371,8 +372,6 @@ export abstract class DataField<T> {
 
     public resolvePrevValue(value: T): void {
         if (this._value.getValue() !== undefined
-            && this._previousValue.getValue() !== undefined
-            && this._previousValue.getValue() !== value
             && this._value.getValue() !== value) {
             this._previousValue.next(this._value.getValue());
         }
