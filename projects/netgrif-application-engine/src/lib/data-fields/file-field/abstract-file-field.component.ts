@@ -190,7 +190,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                if (Object.keys(response).length === 0 && response.constructor === Object) {
+                if (Object.keys((response as ChangedFieldContainer).changedFields).length !== 0 ||
+                    (response as ChangedFieldContainer).changedFields.constructor !== Object) {
                     this.dataField.emitChangedFields(response as ChangedFieldContainer);
                 }
                 this._log.debug(
