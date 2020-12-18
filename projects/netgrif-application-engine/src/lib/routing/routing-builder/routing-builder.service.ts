@@ -50,40 +50,23 @@ export class RoutingBuilderService {
         if (view.routing.match !== undefined && view.routing.match) {
             route['pathMatch'] = 'full';
         }
-        // TODO 26.5.2020 - Finer granularity for view access control
-        if (view.access === 'private') {
-            route['canActivate'] = [AuthenticationGuardService];
+        route['canActivate'] = [];
+        if (view.access === 'private'
+            || view.access.hasOwnProperty('role')
+            || view.access.hasOwnProperty('group')
+            || view.access.hasOwnProperty('authority')) {
+            route['canActivate'].push(AuthenticationGuardService);
         }
         if (view.access.hasOwnProperty('role')) {
-            if (!route['canActivate']) {
-                route['canActivate'] = [AuthenticationGuardService];
-            }
-            if (!route['canActivate'].includes(AuthenticationGuardService)) {
-                route['canActivate'].push(AuthenticationGuardService);
-            }
             route['canActivate'].push(RoleGuardService);
         }
-        if (view.access.hasOwnProperty('group')) {
-            if (!route['canActivate']) {
-                route['canActivate'] = [AuthenticationGuardService];
-            }
-            if (!route['canActivate'].includes(AuthenticationGuardService)) {
-                route['canActivate'].push(AuthenticationGuardService);
-            }
-            route['canActivate'].push();
-        }
         if (view.access.hasOwnProperty('authority')) {
-            if (!route['canActivate']) {
-                route['canActivate'] = [AuthenticationGuardService];
-            }
-            if (!route['canActivate'].includes(AuthenticationGuardService)) {
-                route['canActivate'].push(AuthenticationGuardService);
-            }
             route['canActivate'].push(AuthorityGuardService);
         }
         if (!!view.children) {
             route['children'] = [];
             Object.entries(view.children).forEach(([configPathSegment, childView]) => {
+                // TODO check if routes are constructed correctly regarding empty route segments
                 const childRoute = this.constructRouteObject(childView, `${configPath}/${configPathSegment}`);
                 if (childRoute !== undefined) {
                     route['children'].push(childRoute);

@@ -1,8 +1,8 @@
-import {UserTask} from './user-task';
 import {DataGroup} from './data-groups';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskLayout} from './task-layout';
 import {NaeDate} from '../types/nae-date-type';
+import {UserResourceSmall} from './user-resource-small';
 import {ImmediateData} from './immediate-data';
 
 /**
@@ -25,9 +25,9 @@ export interface Task {
     caseColor: string;
     caseTitle: string;
     /**
-     * See [UserTask]{@link UserTask#}
+     * See [UserSmall]{@link UserResourceSmall#}
      */
-    user: UserTask;
+    user: UserResourceSmall;
     /**
      * ***Example:***
      *

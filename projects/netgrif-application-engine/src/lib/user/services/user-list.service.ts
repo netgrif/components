@@ -8,11 +8,11 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
-import {User} from '../../resources/interface/user';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {Page} from '../../resources/interface/page';
+import {UserResource} from '../../resources/interface/user-resource';
 
-export interface UserListItem extends User {
+export interface UserListItem extends UserResource {
     selected: boolean;
     roles: Set<string>;
 
@@ -158,14 +158,13 @@ export class UserListService {
             tap(u => this._endOfData = !Array.isArray(u.content) ||
                 (Array.isArray(u.content) && u.content.length === 0) ||
                 u.pagination.number === u.pagination.totalPages),
-            map(users => (Array.isArray(users.content) ? users : {...users, content: []}) as Page<User>),
+            map(users => (Array.isArray(users.content) ? users : {...users, content: []}) as Page<UserResource>),
             map(users => {
                 this._pagination = users.pagination;
                 return users.content.reduce((acc, curr) => {
                     const item = curr as UserListItem;
                     item.roles = new Set<string>(curr.processRoles.map(pr => pr.stringId));
                     item.processRoles = undefined;
-                    item.userProcessRoles = undefined;
                     item.selected = false;
                     item.toggle = function() {
                         this.selected = !this.selected;

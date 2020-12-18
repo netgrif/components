@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Preferences} from '../models/preferences';
+import {Preferences} from '../../resources/interface/preferences';
 import {UserService} from './user.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
