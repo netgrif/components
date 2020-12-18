@@ -38,6 +38,9 @@ import {ChangedFields} from '../../data-fields/models/changed-fields';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit, OnDestroy {
 
+    private static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
+    private static readonly VALIDATE_FRONTEND_ACTION = 'validate';
+
     /**
      * @ignore
      * Set by an @Input() on a setter function, that also resolves featured fields.
@@ -86,12 +89,12 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
             this.taskEvent.emit(event);
         });
         this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
-            const actions = changedFields['frontend_action_321465978'];
-            delete changedFields['frontend_action_321465978'];
+            const actions = changedFields[AbstractTaskPanelComponent.FRONTEND_ACTIONS_KEY];
+            delete changedFields[AbstractTaskPanelComponent.FRONTEND_ACTIONS_KEY];
 
             this._taskPanelData.changedFields.next(changedFields);
 
-            if (actions && actions.type === 'validate') {
+            if (actions && actions.type === AbstractTaskPanelComponent.VALIDATE_FRONTEND_ACTION) {
                 timer().subscribe(() => this._taskContentService.validateTaskData());
             }
         });
