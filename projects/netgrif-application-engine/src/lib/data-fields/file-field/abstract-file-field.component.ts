@@ -209,6 +209,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.fullSource.next(undefined);
                 this.fileForDownload = undefined;
                 this.name = this.constructDisplayName();
+                this.formControl.setValue(this.dataField.value.name);
                 this.dataField.touch = true;
                 this.dataField.update();
             }
