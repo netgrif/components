@@ -112,6 +112,11 @@ export class FinishTaskService extends TaskHandlingService {
                 this._taskOperations.close();
             } else if (eventOutcome.error) {
                 this._snackBar.openErrorSnackBar(eventOutcome.error);
+                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                this.sendNotification(false);
+                afterAction.next(false);
+            } else if (eventOutcome.error === '') {
+                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this.sendNotification(false);
                 afterAction.next(false);
             }
