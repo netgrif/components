@@ -16,6 +16,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 export class ConfirmDialogComponent extends AbstractDialog<ConfirmDialogComponent> {
 
     public choice: boolean;
+    public parsedContent: string;
 
     /**
      * Only injecting.
@@ -26,6 +27,7 @@ export class ConfirmDialogComponent extends AbstractDialog<ConfirmDialogComponen
                 @Inject(MAT_DIALOG_DATA) public data: DialogData) {
         super(dialogRef, data);
         this.choice = false;
+        this.parsedContent = data.content.replace('\\n', '<br>');
     }
 
     public onClose(isSubmitted: boolean) {
