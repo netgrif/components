@@ -17,6 +17,9 @@ export enum AbstractTimeInstanceFieldValidation {
 
 export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
+    public min: Moment;
+    public max: Moment;
+
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
                           description?: string, layout?: Layout, public validations?: any, component?: Component) {
         super(stringId, title, value, behavior, placeholder, description, layout, component);
@@ -93,10 +96,14 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
                 if (start && end) {
                     if (start === 'past' && moment(end).isValid()) {
                         result.push(this.validFromPast(moment(end)));
+                        this.max = moment(end);
                     } else if (end === 'future' && moment(start).isValid()) {
                         result.push(this.validToFuture(moment(start)));
+                        this.min = moment(start);
                     } else if (moment(start).isValid() && moment(end).isValid()) {
                         result.push(this.validBetween(moment(start), moment(end)));
+                        this.min = moment(start);
+                        this.max = moment(end);
                     }
                 }
             } else if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.WORKDAY)) {
