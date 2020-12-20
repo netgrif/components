@@ -13,6 +13,8 @@
                [placeholder]="dataField.placeholder"
                [formControl]="formControl"
                (click)="datepicker.open()"
+               [min]="dataField.min"
+               [max]="dataField.max"
                (keydown.enter)="datepicker.close()">
         <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
         <mat-datepicker #datepicker></mat-datepicker>
