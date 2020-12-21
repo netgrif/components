@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine",
-    "version": "5.0.0-alpha.1",
+    "version": "5.0.0-alpha.2",
     "description": "Netgrif Application engine frontend Angular library",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -25,7 +25,8 @@
         "Martin Miklovič <miklovic@netgrif.com>",
         "Daniel Vaník <vanik@netgrif.com>",
         "Lukáš Rezák <rezak@netgrif.com>",
-        "Jozef Daxner <daxner@netgrif.com>"
+        "Jozef Daxner <daxner@netgrif.com>",
+        "Štefan Renczés <renczes@netgrif.com>"
     ],
     "dependencies": {
         "palette-creator": "^0.5.4",
