@@ -26,8 +26,15 @@ export abstract class ConfigurationService {
      * @return requested configuration if it exists. `undefined` otherwise.
      */
     public getViewByPath(viewConfigPath: string): View | undefined {
-        const pathFragments = viewConfigPath.split('/');
-        return this.getConfigurationSubtree(['views', ...pathFragments]);
+        const viewPathSegments = viewConfigPath.split('/');
+        const configTreePathSegments = ['views'];
+        for (let i = 0; i < viewPathSegments.length; i++) {
+            if (i > 0) {
+                configTreePathSegments.push('children');
+            }
+            configTreePathSegments.push(viewPathSegments[i]);
+        }
+        return this.getConfigurationSubtree(configTreePathSegments);
     }
 
     /**
