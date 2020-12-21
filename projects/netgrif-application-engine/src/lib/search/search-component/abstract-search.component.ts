@@ -17,10 +17,13 @@ import {ChipRequest} from '../models/chips/chip-request';
 import {LoggerService} from '../../logger/services/logger.service';
 
 /**
- * Provides the basic functionality of a search GUI. Allows fulltext searching and simple category searching.
- * Categories must be provided externally.
+ * A generic search component that can be used to interactively create search predicates for anything with supported categories.
+ *
+ * This component is responsible for the interactive creation of an AND {@link ClausePredicate} object instance.
+ * The nested Predicates are OR {@link ClausePredicate} instances created by {@link AbstractSearchClauseComponent}.
+ *
+ * Search categories must be provided externally.
  */
-
 export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
 
     /**
