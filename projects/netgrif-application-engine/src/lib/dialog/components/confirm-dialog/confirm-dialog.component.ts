@@ -29,7 +29,11 @@ export class ConfirmDialogComponent extends AbstractDialog<ConfirmDialogComponen
                 @Inject(MAT_DIALOG_DATA) public data: DialogData, private sanitizer: DomSanitizer) {
         super(dialogRef, data);
         this.choice = false;
-        this.parsedContent = sanitizer.bypassSecurityTrustHtml(data.content.replace('\\n', '<br>'));
+        if (data && data.content) {
+            this.parsedContent = sanitizer.bypassSecurityTrustHtml(data.content.replace('\\n', '<br>'));
+        } else {
+            this.parsedContent = sanitizer.bypassSecurityTrustHtml('');
+        }
     }
 
     public onClose(isSubmitted: boolean) {
