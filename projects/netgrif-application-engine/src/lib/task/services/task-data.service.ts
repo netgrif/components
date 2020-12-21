@@ -21,6 +21,7 @@ import {createTaskEventNotification} from '../../task-content/model/task-event-n
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {DataField} from '../../data-fields/models/abstract-data-field';
+import {CallChainService} from '../../utility/call-chain/call-chain.service';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -43,12 +44,17 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
-                _taskContentService: TaskContentService) {
+                _taskContentService: TaskContentService,
+                protected _afterActionFactory: CallChainService) {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ = new Subject<boolean>();
         this._changedFields$ = new Subject<ChangedFields>();
-        this._dataReloadSubscription = this._taskContentService.taskDataReloadRequest$.subscribe(() => {
-            this.initializeTaskDataFields(undefined, true);
+        this._dataReloadSubscription = this._taskContentService.taskDataReloadRequest$.subscribe(queuedFrontendAction => {
+            this.initializeTaskDataFields(this._afterActionFactory.create(success => {
+                if (success && queuedFrontendAction) {
+                    this._taskContentService.performFrontendAction(queuedFrontendAction);
+                }
+            }), true);
         });
     }
 

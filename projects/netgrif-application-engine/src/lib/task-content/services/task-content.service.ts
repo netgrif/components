@@ -1,13 +1,13 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {DataGroup} from '../../resources/interface/data-groups';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {Observable, ReplaySubject, Subject, timer} from 'rxjs';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
-import {ChangedFields} from '../../data-fields/models/changed-fields';
+import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-fields';
 import {FieldConverterService} from './field-converter.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
@@ -22,9 +22,13 @@ import {FieldTypeResource} from '../model/field-type-resource';
  */
 @Injectable()
 export abstract class TaskContentService implements OnDestroy {
+
+    private static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
+    private static readonly VALIDATE_FRONTEND_ACTION = 'validate';
+
     $shouldCreate: ReplaySubject<DataGroup[]>;
     protected _task: Task;
-    protected _taskDataReloadRequest$: Subject<void>;
+    protected _taskDataReloadRequest$: Subject<FrontendActions>;
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
@@ -32,7 +36,7 @@ export abstract class TaskContentService implements OnDestroy {
                           protected _logger: LoggerService) {
         this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
         this._task = undefined;
-        this._taskDataReloadRequest$ = new Subject<void>();
+        this._taskDataReloadRequest$ = new Subject<FrontendActions>();
     }
 
     ngOnDestroy(): void {
@@ -63,7 +67,7 @@ export abstract class TaskContentService implements OnDestroy {
     /**
      * Stream that emits every time a data reload is requested.
      */
-    public get taskDataReloadRequest$(): Observable<void> {
+    public get taskDataReloadRequest$(): Observable<FrontendActions> {
         return this._taskDataReloadRequest$.asObservable();
     }
 
@@ -125,11 +129,14 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return;
         }
+
+        const frontendActions = chFields.frontendActionsOwner === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
+
         for (const dataGroup of this._task.dataGroups) {
             for (const field of dataGroup.fields) {
                 if (chFields[field.stringId]) {
                     if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
-                        this._taskDataReloadRequest$.next();
+                        this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
                         return;
                     }
 
@@ -166,5 +173,21 @@ export abstract class TaskContentService implements OnDestroy {
             }
         }
         this.$shouldCreate.next(this._task.dataGroups);
+        this.performFrontendAction(frontendActions);
+    }
+
+    /**
+     * Performs the specific frontend action.
+     *
+     * A prototype implementation of frontend actions.
+     *
+     * The specifics are subject to change. It is very likely that this method will be moved to a different service.
+     *
+     * @param frontendAction the action that should be performed.
+     */
+    public performFrontendAction(frontendAction: FrontendActions): void {
+        if (frontendAction && frontendAction.type === TaskContentService.VALIDATE_FRONTEND_ACTION) {
+            timer().subscribe(() => this.validateTaskData());
+        }
     }
 }
