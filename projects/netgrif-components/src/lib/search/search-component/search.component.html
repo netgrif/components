@@ -1,3 +1,11 @@
+<div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center">
+        <nc-search-clause></nc-search-clause>
+        <!-- TODO i18n -->
+        <button mat-stroked-button>+ AND</button>
+    </div>
+</div>
+<br>
 <div fxLayout="row" fxLayoutAlign="start center">
     <div [ngSwitch]="shownInput$ | async" ngClass.gt-md="search-input-lg" ngClass.lt-lg="search-input-md"
          ngClass.lt-md="search-input-sm">

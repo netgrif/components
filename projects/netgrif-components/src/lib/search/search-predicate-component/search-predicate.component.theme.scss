@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+@mixin search-predicate-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .argument-placeholder {
+        height: 1.5em;
+        width: 6em;
+        background: mat-color($primary, 50);
+        border-radius: 4px;
+    }
+}
