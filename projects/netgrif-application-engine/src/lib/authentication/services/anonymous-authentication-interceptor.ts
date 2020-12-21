@@ -12,7 +12,7 @@ export class AnonymousAuthenticationInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const jwtAuthToken = localStorage.getItem(this._anonymousService.jwtHeader);
 
-        if (!this._anonymousService) {
+        if (!this._anonymousService || !this._anonymousService.jwtEnabled) {
             next.handle(req);
         }
 

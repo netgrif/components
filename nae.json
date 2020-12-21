@@ -16,6 +16,7 @@
                 "recover": "/auth/recover"
             },
             "sessionBearer": "X-Auth-Token",
+            "jwtEnabled": true,
             "jwtBearer": "Jwt-Auth-Token"
         },
         "resources": [
