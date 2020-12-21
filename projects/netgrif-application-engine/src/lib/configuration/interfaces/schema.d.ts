@@ -45,6 +45,7 @@ export interface Auth {
     address: string;
     authentication: string;
     sessionBearer?: string;
+    jwtBearer?: string;
     endpoints?: string | { [k: string]: string };
 
     [k: string]: any;
