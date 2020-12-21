@@ -11,7 +11,6 @@ import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-f
 import {FieldConverterService} from './field-converter.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
-import {AbstractTaskPanelComponent} from '../../panel/task-panel/abstract-task-panel.component';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
