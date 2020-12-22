@@ -1,7 +1,10 @@
 <div class="clause-border">
     <div fxLayout="row wrap" fxLayoutAlign="start center">
-        <nc-search-predicate></nc-search-predicate>
         <!-- TODO i18n -->
-        <button mat-stroked-button>+ OR</button>
+        <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last">
+            <nc-search-predicate [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$"></nc-search-predicate>
+            <div *ngIf="!last">OR</div>
+        </ng-template>
+        <button mat-stroked-button (click)="addChildPredicate()">+ OR</button>
     </div>
 </div>

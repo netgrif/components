@@ -50,6 +50,10 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         return r;
     }
 
+    public getPredicateMap(): Map<number, EditableElementaryPredicate> {
+        return this._predicates;
+    }
+
     /**
      * Updates the `Query` and notifies the parent.
      */
