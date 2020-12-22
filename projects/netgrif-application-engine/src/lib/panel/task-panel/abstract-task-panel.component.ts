@@ -1,4 +1,4 @@
-import {AfterViewInit, EventEmitter, Input, OnDestroy, OnInit, Output, Type,} from '@angular/core';
+import {AfterViewInit, EventEmitter, Input, OnDestroy, OnInit, Output, Type} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
