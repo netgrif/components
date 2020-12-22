@@ -207,6 +207,75 @@ describe('ConfigurationService', () => {
         });
     });
 
+    // NAE-1179
+    it('should get view by path', () => {
+        expect(service.getViewByPath('task')).toEqual({
+            layout: {
+                name: 'emptyView'
+            },
+            access: 'private',
+            navigation: {
+                title: 'Tasks',
+                icon: 'assignment'
+            },
+            routing: {
+                path: 'task'
+            },
+            children: {
+                some_tasks: {
+                    layout: {
+                        name: 'emptyView'
+                    },
+                    access: 'private',
+                    navigation: false,
+                    routing: {
+                        path: 'some_tasks'
+                    },
+                    children: {
+                        some_specifics: {
+                            layout: {
+                                name: 'emptyView'
+                            },
+                            access: 'private',
+                            navigation: true,
+                            routing: {
+                                path: 'some_specifics'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        expect(service.getViewByPath('non_existent')).toBeUndefined();
+    });
+
+    // NAE-1179
+    it('should get child view by path', () => {
+        expect(service.getViewByPath('task/some_tasks')).toEqual({
+            layout: {
+                name: 'emptyView'
+            },
+            access: 'private',
+            navigation: false,
+            routing: {
+                path: 'some_tasks'
+            },
+            children: {
+                some_specifics: {
+                    layout: {
+                        name: 'emptyView'
+                    },
+                    access: 'private',
+                    navigation: true,
+                    routing: {
+                        path: 'some_specifics'
+                    }
+                }
+            }
+        });
+        expect(service.getViewByPath('task/non_existent')).toBeUndefined();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
