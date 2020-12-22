@@ -6,6 +6,7 @@ import {OnDestroy} from '@angular/core';
 import {Query} from '../query/query';
 import {EditablePredicate} from './editable-predicate';
 
+
 /**
  * A complex, editable `Predicate`. Represents an inner node in the predicate tree, that can process changes of `Query` objects
  * held by its child nodes. It can notify the parent tree node about changes to the held `Query`.
@@ -22,7 +23,10 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         this._predicates = new Map<number, EditableElementaryPredicate>();
         this._childUpdated$ = new Subject<void>();
         this._childCounter = new IncrementingCounter();
-        this.addPredicate();
+
+        this._childUpdated$.subscribe(() => {
+            this.updateQueryAndNotify();
+        });
     }
 
     ngOnDestroy(): void {
@@ -36,16 +40,22 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
     addPredicate(): number {
         const id = this._childCounter.next();
         this._predicates.set(id, new EditableElementaryPredicate(this._childUpdated$));
-        this.updateQuery();
-        this.notifyParentPredicate();
+        this.updateQueryAndNotify();
         return id;
     }
 
     removePredicate(id: number): boolean {
         const r = this._predicates.delete(id);
+        this.updateQueryAndNotify();
+        return r;
+    }
+
+    /**
+     * Updates the `Query` and notifies the parent.
+     */
+    protected updateQueryAndNotify(): void {
         this.updateQuery();
         this.notifyParentPredicate();
-        return r;
     }
 
     /**
