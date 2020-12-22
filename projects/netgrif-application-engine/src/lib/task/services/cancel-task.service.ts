@@ -81,8 +81,11 @@ export class CancelTaskService extends TaskHandlingService {
                 this._taskOperations.reload();
                 this.sendNotification(true);
                 afterAction.next(true);
-            } else if (eventOutcome.error) {
-                this._snackBar.openErrorSnackBar(eventOutcome.error);
+            } else if (eventOutcome.error !== undefined) {
+                if (eventOutcome.error !== '') {
+                    this._snackBar.openErrorSnackBar(eventOutcome.error);
+                }
+                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this.sendNotification(false);
                 afterAction.next(false);
             }

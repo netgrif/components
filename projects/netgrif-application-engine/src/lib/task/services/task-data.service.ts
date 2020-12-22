@@ -1,5 +1,5 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskRequestStateService} from './task-request-state.service';
@@ -21,6 +21,7 @@ import {createTaskEventNotification} from '../../task-content/model/task-event-n
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {DataField} from '../../data-fields/models/abstract-data-field';
+import {CallChainService} from '../../utility/call-chain/call-chain.service';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -31,6 +32,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     protected _updateSuccess$: Subject<boolean>;
     protected _changedFields$: Subject<ChangedFields>;
+    protected _dataReloadSubscription: Subscription;
 
     constructor(protected _taskState: TaskRequestStateService,
                 protected _translate: TranslateService,
@@ -42,15 +44,24 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
-                _taskContentService: TaskContentService) {
+                _taskContentService: TaskContentService,
+                protected _afterActionFactory: CallChainService) {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ = new Subject<boolean>();
         this._changedFields$ = new Subject<ChangedFields>();
+        this._dataReloadSubscription = this._taskContentService.taskDataReloadRequest$.subscribe(queuedFrontendAction => {
+            this.initializeTaskDataFields(this._afterActionFactory.create(success => {
+                if (success && queuedFrontendAction) {
+                    this._taskContentService.performFrontendAction(queuedFrontendAction);
+                }
+            }), true);
+        });
     }
 
     ngOnDestroy(): void {
         this._updateSuccess$.complete();
         this._changedFields$.complete();
+        this._dataReloadSubscription.unsubscribe();
     }
 
     /**

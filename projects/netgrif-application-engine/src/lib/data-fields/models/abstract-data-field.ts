@@ -80,6 +80,10 @@ export abstract class DataField<T> {
      */
     private _sendInvalidValues = false;
     /**
+     * Flag that is set during reverting
+     */
+    private _reverting = false;
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -145,11 +149,12 @@ export abstract class DataField<T> {
     }
 
     set value(value: T) {
-        if (!this.valueEquality(this._value.getValue(), value)) {
+        if (!this.valueEquality(this._value.getValue(), value) && !this._reverting) {
             this._changed = true;
             this.resolvePrevValue(value);
         }
         this._value.next(value);
+        this._reverting = false;
     }
 
     get previousValue() {
@@ -219,6 +224,7 @@ export abstract class DataField<T> {
 
     public revertToPreviousValue(): void {
         this.changed = false;
+        this._reverting = true;
         this.value = this.previousValue;
     }
 
@@ -247,6 +253,7 @@ export abstract class DataField<T> {
     }
 
     public registerFormControl(formControl: FormControl): void {
+        formControl.setValidators(this.resolveFormControlValidators());
         formControl.valueChanges.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
@@ -365,8 +372,6 @@ export abstract class DataField<T> {
 
     public resolvePrevValue(value: T): void {
         if (this._value.getValue() !== undefined
-            && this._previousValue.getValue() !== undefined
-            && this._previousValue.getValue() !== value
             && this._value.getValue() !== value) {
             this._previousValue.next(this._value.getValue());
         }
