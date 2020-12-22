@@ -3,7 +3,9 @@ export * from './models/query/query';
 
 export * from './models/predicate/predicate';
 export * from './models/predicate/elementary-predicate';
+export * from './models/predicate/editable-elementary-predicate';
 export * from './models/predicate/clause-predicate';
+export * from './models/predicate/editable-clause-predicate';
 
 export * from './models/operator/operator';
 export * from './models/operator/substring';

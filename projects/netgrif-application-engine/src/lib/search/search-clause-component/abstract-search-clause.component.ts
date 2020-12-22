@@ -3,4 +3,7 @@
  * The nested Predicates are {@link ElementaryPredicate} instances created by {@link AbstractSearchPredicateComponent}.
  */
 export abstract class AbstractSearchClauseComponent {
+
+    protected
+
 }
