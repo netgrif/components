@@ -8,6 +8,10 @@ import {PetriNetReference} from '../../interface/petri-net-reference';
 import {map} from 'rxjs/operators';
 import {PetriNetRequestBody} from '../../interface/petri-net-request-body';
 import {Page} from '../../interface/page';
+import NetRole from '../../../process/netRole';
+import Transaction from '../../../process/transaction';
+import Transition from '../../../process/transition';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +56,53 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
     public searchPetriNets(body: PetriNetRequestBody, params?: Params): Observable<Page<PetriNetReference>> {
         return this._resourceProvider.post$('public/petrinet/search', this.SERVER_URL, body, params)
             .pipe(map(r => this.getResourcePage<PetriNetReference>(r, 'petriNetReferences')));
+    }
+
+    /**
+     * Get Roles References Using
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/{id}/roles
+     */
+    public getPetriNetRoles(netId: string, params?: Params): Observable<Array<NetRole>> {
+        return this._resourceProvider.get$('public/petrinet/' + netId + '/roles', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, 'processRoles')));
+    }
+
+    /**
+     * Get Transaction References Using
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/{id}/transactions
+     */
+    public getPetriNetTransactions(netId: string, params?: Params): Observable<Array<Transaction>> {
+        return this._resourceProvider.get$('public/petrinet/' + netId + '/transactions', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, 'transactions')));
+    }
+
+    /**
+     * Get Data Field References Using
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/data
+     */
+    public getDataPetriNet(body: object): Observable<any> {  // TODO: response
+        return this._resourceProvider.post$('public/petrinet/data', this.SERVER_URL, body)
+            .pipe(map(r => this.changeType(r, undefined)));
+    }
+
+    /**
+     * Get Transition References Using
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/petrinet/transitions
+     */
+    public getPetriNetTranstions(netId: string): Observable<Array<Transition>> {
+        return this._resourceProvider.get$('public/petrinet/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
+            .pipe(map(r => this.changeType(r, 'transitionReferences')));
     }
 }
