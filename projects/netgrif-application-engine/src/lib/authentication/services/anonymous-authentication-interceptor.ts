@@ -10,13 +10,13 @@ export class AnonymousAuthenticationInterceptor implements HttpInterceptor {
     constructor(protected _anonymousService: AnonymousService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const jwtAuthToken = localStorage.getItem(this._anonymousService.jwtHeader);
+        const jwtAuthToken = this._anonymousService.getToken();
 
-        if (!this._anonymousService || !this._anonymousService.jwtEnabled) {
+        if (!this._anonymousService) {
             next.handle(req);
         }
 
-        if (jwtAuthToken !== undefined && jwtAuthToken !== null && jwtAuthToken !== '') {
+        if (!!jwtAuthToken) {
             req = req.clone({
                 headers: req.headers.set(this._anonymousService.jwtHeader, jwtAuthToken)
             });
@@ -25,14 +25,14 @@ export class AnonymousAuthenticationInterceptor implements HttpInterceptor {
             tap(event => {
                 if (event instanceof HttpResponse) {
                     if (event.headers.has(this._anonymousService.jwtHeader)) {
-                        localStorage.setItem(this._anonymousService.jwtHeader, event.headers.get(this._anonymousService.jwtHeader));
+                        this._anonymousService.setToken(event.headers.get(this._anonymousService.jwtHeader));
                     }
                 }
             }),
             catchError(errorEvent => {
                 if (errorEvent instanceof HttpErrorResponse && errorEvent.status === 401) {
                     console.debug('Authentication token is invalid. Clearing session token');
-                    localStorage.removeItem(this._anonymousService.jwtHeader);
+                    this._anonymousService.removeToken();
                 }
                 return throwError(errorEvent);
             })
