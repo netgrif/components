@@ -22,6 +22,7 @@ export class UserService implements OnDestroy {
     private _userChange$: ReplaySubject<User>;
     private _loginCalled: boolean;
     private _subAuth: Subscription;
+    private _publicLoadCalled: boolean;
 
     constructor(private _authService: AuthenticationService,
                 private _userResource: UserResourceService,
@@ -111,6 +112,26 @@ export class UserService implements OnDestroy {
         this.loadUser();
     }
 
+    public loadPublicUser(): void {
+        if (this._publicLoadCalled)
+            return;
+        this._publicLoadCalled = true;
+        this._userResource.getPublicLoggedUser().subscribe((user: UserResource) => {
+            if (user) {
+                const backendUser = {...user, id: user.id.toString()};
+                this._user = this._userTransform.transform(backendUser as AuthUser);
+                this._publicLoadCalled = false;
+            }
+        }, error => {
+            this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
+            this._publicLoadCalled = false;
+        });
+    }
+
+    public clearPublicUser() {
+        this._user = this.emptyUser();
+    }
+
     private emptyUser() {
         return new User('', '', '', '', [], [], [], []);
     }
@@ -135,5 +156,4 @@ export class UserService implements OnDestroy {
     private publishUserChange(): void {
         this._userChange$.next(this.user);
     }
-
 }

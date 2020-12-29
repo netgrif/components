@@ -1,6 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {NullStorage} from '../session/null-storage';
+import {UserService} from '../../user/services/user.service';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AnonymousService implements OnDestroy {
     private readonly _jwtHeader: string;
     private _storage: Storage;
 
-    constructor(private _config: ConfigurationService) {
+    constructor(private _config: ConfigurationService, private _userService: UserService) {
         this._jwtHeader = this._config.get().providers.auth.jwtBearer ?
             this._config.get().providers.auth.jwtBearer : AnonymousService.JWT_BEARER_HEADER_DEFAULT;
         this._storage = this.resolveStorage(this._config.get().providers.auth['sessionStore']);
@@ -29,10 +30,12 @@ export class AnonymousService implements OnDestroy {
 
     public setToken(token: string): void {
         this._storage.setItem(this._jwtHeader, token);
+        this._userService.loadPublicUser();
     }
 
     public removeToken(): void {
         this._storage.removeItem(this._jwtHeader);
+        this._userService.clearPublicUser();
     }
 
     ngOnDestroy(): void {
