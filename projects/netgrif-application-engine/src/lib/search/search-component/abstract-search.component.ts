@@ -47,10 +47,6 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
     protected _inputPlaceholder$: BehaviorSubject<string> = new BehaviorSubject<string>('search.placeholder.text');
 
     /**
-     * Array that holds all the available [Categories]{@link Category}
-     */
-    @Input() public searchCategories: Array<Category<any>>;
-    /**
      * @ignore
      * FormControls for the user input fields. One for each input type.
      */
@@ -147,7 +143,8 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
     protected _filterOptions(userInput: string): Observable<Array<Category<any>>> | Observable<Array<SearchAutocompleteOption>> {
         if (!this._selectedCategory) {
             const value = userInput.toLocaleLowerCase();
-            return of(this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value)));
+            // return of(this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value)));
+            return of([]);
         } else {
             if (this._selectedCategory instanceof AutocompleteCategory) {
                 return this._selectedCategory.filterOptions(userInput);
@@ -287,9 +284,9 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
      * Iterates over all Categories and selects their default Operator.
      */
     protected selectDefaultOperators(): void {
-        this.searchCategories.forEach(category => {
-            category.selectDefaultOperator();
-        });
+        // this.searchCategories.forEach(category => {
+        //     category.selectDefaultOperator();
+        // });
     }
 
     /**

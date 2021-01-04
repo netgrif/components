@@ -21,7 +21,7 @@ import {TaskTask} from '../models/category/task/task-task';
  * @returns an Array containing the default case search categories: {@link CaseTitle}, {@link CaseVisualId}, {@link CaseAuthor},
  * {@link CaseProcess}, {@link CaseRole}, {@link CaseTask}, {@link CaseCreationDate}, {@link CaseDataset}
  */
-export function defaultCaseSearchCategoriesFactoryMethod(factory: CategoryFactory): Array<Category<any>> {
+export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     return [
         factory.get(CaseTitle),
         factory.get(CaseVisualId),
@@ -42,7 +42,7 @@ export function defaultCaseSearchCategoriesFactoryMethod(factory: CategoryFactor
  * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskProcess}, {@link TaskRole},
  * {@link TaskTask}
  */
-export function defaultTaskSearchCategoriesFactoryMethod(factory: CategoryFactory): Array<Category<any>> {
+export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     return [
         factory.get(TaskAssignee),
         factory.get(TaskProcess),

@@ -53,8 +53,6 @@ export * from './search-chip-service/search-chip.service';
 
 /* Components */
 export * from './search-component/abstract-search.component';
-export * from './search-component/case-search/abstract-case-search.component';
-export * from './search-component/task-search/abstract-task-search.component';
 export * from './search-clause-component/abstract-search-clause.component';
 export * from './search-predicate-component/abstract-search-predicate.component';
 
