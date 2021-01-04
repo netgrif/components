@@ -15,6 +15,11 @@ import {WrapResult} from '../wrap-result';
 export abstract class Operator<T> {
 
     /**
+     * Represents the placeholder "block" in operator display names.
+     */
+    public static readonly INPUT_PLACEHOLDER = '';
+
+    /**
      * Reserved characters for Elasticsearch queries. These characters can be escaped with a `\` character.
      */
     private static readonly ESCAPABLE_CHARACTERS = new Set (
@@ -122,4 +127,14 @@ export abstract class Operator<T> {
             return new Query(queryString);
         });
     }
+
+    /**
+     * The name template is used when generating search GUI, and so the arity of the operator should match the number of
+     * {@link INPUT_PLACEHOLDER} constant occurrences in the returned array.
+     *
+     * @returns an array of translation paths that represent the operator name, as it should be displayed to the user.
+     * The {@link INPUT_PLACEHOLDER} constant (or any falsy value) can be used to place visual input placeholder blocks in the
+     * operator name where user input is expected.
+     */
+    public abstract getOperatorNameTemplate(): Array<string>;
 }
