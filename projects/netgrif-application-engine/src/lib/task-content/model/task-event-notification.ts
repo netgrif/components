@@ -12,6 +12,10 @@ export interface TaskEventNotification {
      */
     taskId: string;
     /**
+     * StringId of the Transition
+     */
+    transitionId: string;
+    /**
      * The event that occurred
      */
     event: TaskEvent;
@@ -30,6 +34,7 @@ export interface TaskEventNotification {
 export function createTaskEventNotification(task: Task, event: TaskEvent, success: boolean): TaskEventNotification {
     return {
         taskId: task.stringId,
+        transitionId: task.transitionId,
         event,
         success
     };

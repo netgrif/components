@@ -42,6 +42,8 @@ import {QuillModule} from 'ngx-quill';
 import { NumberCurrencyFieldComponent } from './number-field/number-currency-field/number-currency-field.component';
 import { NumberDefaultFieldComponent } from './number-field/number-default-field/number-default-field.component';
 import { PasswordTextFieldComponent } from './text-field/password-text-field/password-text-field.component';
+import { PreviewDialogComponent } from './file-field/preview-dialog/preview-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 import { EnumerationStepperFieldComponent } from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
 
 @NgModule({
@@ -71,6 +73,8 @@ import { EnumerationStepperFieldComponent } from './enumeration-field/enumeratio
         PasswordTextFieldComponent,
         NumberCurrencyFieldComponent,
         NumberDefaultFieldComponent,
+        PreviewDialogComponent,
+        NumberDefaultFieldComponent,
         EnumerationStepperFieldComponent
     ],
     exports: [
@@ -99,10 +103,14 @@ import { EnumerationStepperFieldComponent } from './enumeration-field/enumeratio
         NgxMatMomentModule,
         TranslateLibModule,
         SideMenuContentComponentModule,
-        QuillModule.forRoot()
+        QuillModule.forRoot(),
+        MatDialogModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
+    ],
+    entryComponents: [
+        PreviewDialogComponent
     ]
 })
 export class DataFieldsComponentModule {

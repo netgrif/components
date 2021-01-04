@@ -7,6 +7,9 @@ import {
     SnackBarService,
     TaskResourceService
 } from '@netgrif/application-engine';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatDialog} from '@angular/material/dialog';
+import {PreviewDialogComponent} from './preview-dialog/preview-dialog.component';
 
 @Component({
     selector: 'nc-file-field',
@@ -19,8 +22,22 @@ export class FileFieldComponent extends AbstractFileFieldComponent {
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
-                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(taskResourceService, log, snackbar, translate, informAboutInvalidData);
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
+                protected _sanitizer: DomSanitizer,
+                protected dialog: MatDialog) {
+        super(taskResourceService, log, snackbar, translate, informAboutInvalidData, _sanitizer);
+    }
+
+    public showPreviewDialog() {
+        super.showPreviewDialog();
+        this.dialog.open(PreviewDialogComponent, {
+            data: {
+                dataField: this.dataField,
+                imagePreview: this.previewSource,
+                imageFull: this.fullSource,
+                extension: this.previewExtension
+            }
+        });
     }
 }
 
