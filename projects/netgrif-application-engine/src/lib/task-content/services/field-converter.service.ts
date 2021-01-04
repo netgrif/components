@@ -17,6 +17,7 @@ import {FieldTypeResource} from '../model/field-type-resource';
 import {FileListField} from '../../data-fields/file-list-field/models/file-list-field';
 import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
 import {Component} from '../../data-fields/models/component';
+import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 
 @Injectable({
     providedIn: 'root'
@@ -106,6 +107,9 @@ export class FieldConverterService {
             case FieldTypeResource.FILE_LIST:
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout, item.validations, null, null, item.component);
+            case FieldTypeResource.TASK_REF:
+                return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout);
         }
     }
 
@@ -128,6 +132,8 @@ export class FieldConverterService {
             return FieldTypeResource.FILE_LIST;
         } else if (item instanceof UserField) {
             return FieldTypeResource.USER;
+        } else if (item instanceof TaskRefField) {
+            return FieldTypeResource.TASK_REF;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
             return item.fieldType;
         }
