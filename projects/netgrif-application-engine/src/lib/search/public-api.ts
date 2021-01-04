@@ -57,3 +57,9 @@ export * from './search-component/case-search/abstract-case-search.component';
 export * from './search-component/task-search/abstract-task-search.component';
 export * from './search-clause-component/abstract-search-clause.component';
 export * from './search-predicate-component/abstract-search-predicate.component';
+
+/* Functions */
+export * from './category-factory/default-categories-factories';
+
+/* Tokens */
+export * from './category-factory/search-categories-injection-token';
