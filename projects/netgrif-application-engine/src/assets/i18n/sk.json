@@ -142,7 +142,8 @@
                     "name": "Úloha",
                     "placeholder": "Vyberte úlohu"
                 }
-            }
+            },
+            "select": "Vyberte kategóriu vyhľadávania"
         },
         "placeholder": {
             "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"

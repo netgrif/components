@@ -5,9 +5,14 @@
                 <mat-icon>clear</mat-icon>
             </button>
         </div>
-        <mat-select class="category-select">
-            <mat-option>Hello</mat-option>
-            <mat-option><div fxLayout="row" fxLayoutAlign="start center">World <div class="argument-placeholder-color argument-placeholder-dimensions"></div></div></mat-option>
-        </mat-select>
+
+        <mat-form-field>
+            <mat-label>{{'search.category.select' | translate}}</mat-label>
+            <mat-select class="category-select" (selectionChange)="categoryChanged($event.value)">
+                <mat-option *ngFor="let category of searchCategories" [value]="category">{{category.translationPath | translate}}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
 </div>
+
+<!-- <mat-option><div fxLayout="row" fxLayoutAlign="start center">World <div class="argument-placeholder-color argument-placeholder-dimensions"></div></div></mat-option> -->

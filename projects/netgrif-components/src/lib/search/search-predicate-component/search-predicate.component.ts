@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AbstractSearchPredicateComponent} from '@netgrif/application-engine';
+import {Component, Inject} from '@angular/core';
+import {AbstractSearchPredicateComponent, Category, NAE_SEARCH_CATEGORIES} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-search-predicate',
@@ -7,7 +7,7 @@ import {AbstractSearchPredicateComponent} from '@netgrif/application-engine';
     styleUrls: ['./search-predicate.component.scss']
 })
 export class SearchPredicateComponent extends AbstractSearchPredicateComponent {
-    constructor() {
-        super();
+    constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>) {
+        super(searchCategories);
     }
 }

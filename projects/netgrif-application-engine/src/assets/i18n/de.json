@@ -142,7 +142,8 @@
                     "name": "Aufgabe",
                     "placeholder": "Wählen Sie die Aufgabe aus"
                 }
-            }
+            },
+            "select": "Wählen Sie die Suchkategorie aus"
         },
         "placeholder": {
             "text": "Suchen oder Suchkategorie auswählen"
