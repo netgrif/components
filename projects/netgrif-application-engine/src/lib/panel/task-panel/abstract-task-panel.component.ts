@@ -1,12 +1,4 @@
-import {
-    AfterViewInit,
-    Output,
-    Input,
-    OnDestroy,
-    OnInit,
-    EventEmitter,
-    Type, Injector,
-} from '@angular/core';
+import {AfterViewInit, EventEmitter, Input, OnDestroy, OnInit, Output, Type} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -16,7 +8,6 @@ import {Observable, Subject, Subscription, timer} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
-import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
@@ -264,7 +255,13 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canDisable(type: string): boolean {
-        return this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
+        let disable = false;
+        if (!!this.taskPanelData && !!this.taskPanelData.task) {
+            disable = disable
+                || !!this._taskState.isLoading(this.taskPanelData.task.stringId)
+                || !!this._taskState.isUpdating(this.taskPanelData.task.stringId);
+        }
+        return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
