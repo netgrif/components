@@ -36,7 +36,8 @@ export class AnonymousService implements OnDestroy {
 
     public setToken(token: string): void {
         this._storage.setItem(this._jwtHeader, token);
-        this._tokenSet.next(true);
+        if (!this._tokenSet.getValue())
+            this._tokenSet.next(true);
     }
 
     public removeToken(): void {
