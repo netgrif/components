@@ -8,7 +8,7 @@ import {
     TaskViewService,
     Task,
     NAE_DEFAULT_HEADERS,
-    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS, CategoryFactory, NAE_SEARCH_CATEGORIES, defaultTaskSearchCategoriesFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -43,6 +43,7 @@ const disableButtonsFactory = () => {
     templateUrl: './task-view.component.html',
     styleUrls: ['./task-view.component.scss'],
     providers: [
+        CategoryFactory,
         ConfigTaskViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
@@ -55,7 +56,8 @@ const disableButtonsFactory = () => {
             ]},
         {provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
             useFactory: disableButtonsFactory
-        }
+        },
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
 export class TaskViewComponent extends AbstractTaskView implements AfterViewInit {

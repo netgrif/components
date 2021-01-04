@@ -8,7 +8,7 @@ import {
     SimpleFilter,
     TabbedCaseView,
     SearchChipService,
-    AllNetsCaseViewServiceFactory
+    AllNetsCaseViewServiceFactory, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory, CategoryFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -25,6 +25,7 @@ const searchServiceFactory = () => {
     templateUrl: './tabbed-case-view.component.html',
     styleUrls: ['./tabbed-case-view.component.scss'],
     providers: [
+        CategoryFactory,
         SearchChipService,
         AllNetsCaseViewServiceFactory,
         {   provide: SearchService,
@@ -32,6 +33,7 @@ const searchServiceFactory = () => {
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
             deps: [AllNetsCaseViewServiceFactory]},
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
