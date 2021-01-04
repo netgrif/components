@@ -11,6 +11,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {UserResource} from '../../resources/interface/user-resource';
+import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,8 @@ export class UserService implements OnDestroy {
                 protected _userResource: UserResourceService,
                 protected _userTransform: UserTransformer,
                 protected _log: LoggerService,
-                protected _session: SessionService) {
+                protected _session: SessionService,
+                protected _anonymousService: AnonymousService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
@@ -40,6 +42,13 @@ export class UserService implements OnDestroy {
                     this.publishUserChange();
                 }
             });
+        });
+        this._anonymousService.tokenSet.subscribe(token => {
+            if (token) {
+                this.loadPublicUser();
+            } else {
+                this.clearPublicUser();
+            }
         });
     }
 
@@ -161,14 +170,10 @@ export class UserService implements OnDestroy {
     }
 
     public loadPublicUser(): void {
-        if (this._publicLoadCalled)
-            return;
-        this._publicLoadCalled = true;
         this._userResource.getPublicLoggedUser().subscribe((user: UserResource) => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
                 this._user = this._userTransform.transform(backendUser);
-                this._publicLoadCalled = false;
             }
         }, error => {
             this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);

@@ -100,7 +100,7 @@ export class UserResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/user/me
      */
-    public getPublicLoggedUser(params?: Params): Observable<User> {
+    public getPublicLoggedUser(params?: Params): Observable<UserResource> {
         return this._resourceProvider.get$('public/user/me', this.SERVER_URL, params).pipe(
             map(r => this.changeType(r, undefined)));
     }
