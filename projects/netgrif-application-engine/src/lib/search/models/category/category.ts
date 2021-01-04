@@ -3,6 +3,7 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
+import {FormControl} from '@angular/forms';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -29,23 +30,19 @@ export abstract class Category<T> {
      * @param _elasticKeywords Elasticsearch keywords that should be queried by queries generated with this category
      * @param _allowedOperators Operators that can be used to generated queries on the above keywords
      * @param translationPath path to the translation string
-     * @param _inputType input field type that should be used to enter values for this category
      * @param _log used to record information about incorrect use of this class
      */
     protected constructor(protected readonly _elasticKeywords: Array<string>,
                           protected readonly _allowedOperators: Array<Operator<any>>,
                           public readonly translationPath: string,
-                          protected readonly _inputType: SearchInputType,
                           protected _log: LoggerService) {
     }
 
     /**
-     * Be aware that while most categories always return the same constant it is not a requirement.
-     * @returns the required input type for values for this category
+     * Beware that while most categories always return the same constant it must not always be the case.
+     * @returns the required input type for values for inputs of this category
      */
-    public get inputType(): SearchInputType {
-        return this._inputType;
-    }
+    public abstract get activeInputs(): Array<SearchInputType>;
 
     /**
      * @returns the set of Operators that can be used with this category.
@@ -65,6 +62,12 @@ export abstract class Category<T> {
         result.push(...this._elasticKeywords);
         return result;
     }
+
+    /**
+     * @param inputIndex the input index for which the form control should be returned.
+     * @returns the FormControl object for the input at the specified index.
+     */
+    public abstract getActiveInputFormControl(inputIndex: number): FormControl;
 
     /**
      * Changes the state of the Category. Category can create queries when an {@link Operator} is selected.
