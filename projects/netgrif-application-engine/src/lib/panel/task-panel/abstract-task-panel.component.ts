@@ -4,11 +4,10 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, Subject, Subscription, timer} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
-import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
@@ -82,6 +81,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
             changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
             this._taskPanelData.changedFields.next(changedFields);
+            // TODO 5.1.2021 [After 4.5.0 merge] - prešetriť či tento if je ešte nutný, nakoľko v 4.5.0 neexsituje
             if (this._taskContentService.task) {
                 Object.keys(changedFields).forEach(value => {
                     if (changedFields[value].type === 'taskRef' && this._taskContentService.task.user !== undefined) {
@@ -263,7 +263,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canDisable(type: string): boolean {
-        return this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
         let disable = false;
         if (!!this.taskPanelData && !!this.taskPanelData.task) {
             disable = disable || !!this._taskState.isLoading(this.taskPanelData.task.stringId) ||
