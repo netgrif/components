@@ -1,4 +1,3 @@
-import {AutocompleteCategory} from '../autocomplete-category';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
@@ -7,8 +6,9 @@ import {CaseProcess} from './case-process';
 import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
 import {NetTaskPair} from '../net-task-pair';
+import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 
-export class CaseTask extends AutocompleteCategory<NetTaskPair> {
+export class CaseTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
 
     private static readonly _i18n = 'search.category.case.task';
     protected _processCategory: CaseProcess;

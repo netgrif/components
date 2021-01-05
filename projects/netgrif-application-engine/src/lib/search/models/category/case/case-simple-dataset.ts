@@ -1,4 +1,3 @@
-import {Category} from '../category';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {Query} from '../../query/query';
@@ -10,6 +9,7 @@ import {Substring} from '../../operator/substring';
 import {CaseProcess} from './case-process';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {BooleanOperator} from '../../boolean-operator';
+import {NoConfigurationCategory} from '../no-configuration-category';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -18,7 +18,7 @@ import {BooleanOperator} from '../../boolean-operator';
  *
  * See [configure]{@link CaseSimpleDataset#configure} for more information.
  */
-export class CaseSimpleDataset extends Category<string> {
+export class CaseSimpleDataset extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.dataset';
 

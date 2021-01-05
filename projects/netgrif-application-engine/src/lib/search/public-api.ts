@@ -15,6 +15,8 @@ export * from './models/operator/equals-date';
 export * from './models/operator/in-range-date';
 
 export * from './models/category/category';
+export * from './models/category/no-configuration-category';
+export * from './models/category/no-configuration-autocomplete-category';
 export * from './models/category/autocomplete-category';
 export * from './models/category/case/case-title';
 export * from './models/category/case/case-visual-id';

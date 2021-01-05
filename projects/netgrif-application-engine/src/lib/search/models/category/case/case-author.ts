@@ -1,10 +1,10 @@
-import {Category} from '../category';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {Substring} from '../../operator/substring';
 import {SearchInputType} from '../search-input-type';
+import {NoConfigurationCategory} from '../no-configuration-category';
 
-export class CaseAuthor extends Category<string> {
+export class CaseAuthor extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.author';
 

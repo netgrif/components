@@ -17,4 +17,8 @@ export class Substring extends Operator<string> {
         const escapedValue = Operator.escapeInput(args[0]).value;
         return Operator.forEachKeyword(elasticKeywords, keyword => new Query(`(${keyword}:*${escapedValue}*)`));
     }
+
+    getOperatorNameTemplate(): Array<string> {
+        return ['search.operator.substring', Operator.INPUT_PLACEHOLDER];
+    }
 }

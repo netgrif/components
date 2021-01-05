@@ -1,12 +1,12 @@
-import {AutocompleteCategory} from '../autocomplete-category';
 import {Query} from '../../query/query';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {Equals} from '../../operator/equals';
 import {BooleanOperator} from '../../boolean-operator';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
+import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 
-export class CaseProcess extends AutocompleteCategory<string> {
+export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.case.process';
 

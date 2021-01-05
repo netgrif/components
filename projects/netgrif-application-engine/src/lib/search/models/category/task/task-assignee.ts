@@ -1,4 +1,3 @@
-import {AutocompleteCategory} from '../autocomplete-category';
 import {SearchAutocompleteOption} from '../search-autocomplete-option';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
@@ -8,9 +7,10 @@ import {Query} from '../../query/query';
 import {Observable, of} from 'rxjs';
 import {filter, map, tap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
+import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 
 
-export class TaskAssignee extends AutocompleteCategory<number> {
+export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
 
     private static readonly _i18n = 'search.category.task.assignee';
 

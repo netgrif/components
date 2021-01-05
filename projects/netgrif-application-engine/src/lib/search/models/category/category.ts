@@ -4,6 +4,7 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -53,7 +54,7 @@ export abstract class Category<T> {
      *
      * @returns the required input type for configuration steps of this category
      */
-    public abstract get configurationInputs(): Array<SearchInputType>;
+    public abstract get configurationInputs(): Observable<Array<SearchInputType>>;
 
     /**
      * Beware that while most categories always return the same constant it is not a requirement.

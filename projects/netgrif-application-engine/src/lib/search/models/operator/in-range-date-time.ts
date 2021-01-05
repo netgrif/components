@@ -33,4 +33,8 @@ export class InRangeDateTime extends Operator<Moment> {
             return new Query(`(${keyword}:[${arg1.valueOf()} TO ${arg2.valueOf()}})`);
         });
     }
+
+    getOperatorNameTemplate(): Array<string> {
+        return ['search.operator.inRange.from', Operator.INPUT_PLACEHOLDER, 'search.operator.inRange.to', Operator.INPUT_PLACEHOLDER];
+    }
 }

@@ -1,4 +1,3 @@
-import {AutocompleteCategory} from '../autocomplete-category';
 import {NetRolePair} from '../net-role-pair';
 import {TaskProcess} from './task-process';
 import {OperatorService} from '../../../operator-service/operator.service';
@@ -7,8 +6,9 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {Equals} from '../../operator/equals';
 import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
+import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 
-export class TaskRole extends AutocompleteCategory<NetRolePair> {
+export class TaskRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
     private static readonly _i18n = 'search.category.task.role';
     protected _processCategory: TaskProcess;

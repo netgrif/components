@@ -1,10 +1,10 @@
-import {Category} from '../category';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {Substring} from '../../operator/substring';
 import {SearchInputType} from '../search-input-type';
+import {NoConfigurationCategory} from '../no-configuration-category';
 
-export class CaseVisualId extends Category<string> {
+export class CaseVisualId extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.visualId';
 

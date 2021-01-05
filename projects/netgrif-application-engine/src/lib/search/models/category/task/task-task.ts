@@ -1,4 +1,3 @@
-import {AutocompleteCategory} from '../autocomplete-category';
 import {NetTaskPair} from '../net-task-pair';
 import {TaskProcess} from './task-process';
 import {OperatorService} from '../../../operator-service/operator.service';
@@ -7,9 +6,10 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {Equals} from '../../operator/equals';
 import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
+import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 
 
-export class TaskTask extends AutocompleteCategory<NetTaskPair> {
+export class TaskTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
 
     private static readonly _i18n = 'search.category.task.task';
     protected _processCategory: TaskProcess;

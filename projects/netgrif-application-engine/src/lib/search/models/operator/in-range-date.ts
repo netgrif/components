@@ -43,4 +43,8 @@ export class InRangeDate extends Operator<Moment> {
         date.minutes(0);
         date.hours(0);
     }
+
+    getOperatorNameTemplate(): Array<string> {
+        return ['search.operator.inRange.from', Operator.INPUT_PLACEHOLDER, 'search.operator.inRange.to', Operator.INPUT_PLACEHOLDER];
+    }
 }

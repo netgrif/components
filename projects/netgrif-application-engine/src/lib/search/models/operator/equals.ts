@@ -11,4 +11,8 @@ export class Equals extends Operator<string | number> {
         // query string queries don't use a special symbol for strict equality
         super(1, '');
     }
+
+    getOperatorNameTemplate(): Array<string> {
+        return ['search.operator.equals', Operator.INPUT_PLACEHOLDER];
+    }
 }

@@ -1,4 +1,3 @@
-import {AutocompleteCategory} from '../autocomplete-category';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {Equals} from '../../operator/equals';
@@ -7,8 +6,9 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {CaseProcess} from './case-process';
 import {BooleanOperator} from '../../boolean-operator';
 import {NetRolePair} from '../net-role-pair';
+import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 
-export class CaseRole extends AutocompleteCategory<NetRolePair> {
+export class CaseRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
     private static readonly _i18n = 'search.category.case.role';
     protected _processCategory: CaseProcess;

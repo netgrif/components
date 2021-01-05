@@ -145,6 +145,14 @@
             },
             "select": "Wählen Sie die Suchkategorie aus"
         },
+        "operator": {
+            "substring": "enthält Teilzeichenfolge",
+            "inRange": {
+                "from": "von",
+                "to": "bis"
+            },
+            "equals": "ist"
+        },
         "placeholder": {
             "text": "Suchen oder Suchkategorie auswählen"
         }

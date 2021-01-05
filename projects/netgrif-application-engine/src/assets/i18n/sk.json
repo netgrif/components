@@ -145,6 +145,14 @@
             },
             "select": "Vyberte kategóriu vyhľadávania"
         },
+        "operator": {
+            "substring": "obsahuje podreťazec",
+            "inRange": {
+                "from": "od",
+                "to": "do"
+            },
+            "equals": "je"
+        },
         "placeholder": {
             "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"
         }
