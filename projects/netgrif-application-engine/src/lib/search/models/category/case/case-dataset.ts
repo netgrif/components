@@ -79,7 +79,7 @@ export class CaseDataset extends Category<Datafield> {
         this.createDatafieldOptions();
 
         this._datafieldFormControl.valueChanges.subscribe(newValue => {
-            if (newValue === undefined) {
+            if (newValue === undefined || typeof newValue === 'string') {
                 this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE]);
             } else if (this._configurationInputs$.getValue().length === 1) {
                 this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE, SearchInputType.OPERATOR]);
@@ -135,11 +135,11 @@ export class CaseDataset extends Category<Datafield> {
     }
 
     public get hasSelectedDatafields(): boolean {
-        return !!this._datafieldFormControl.value;
+        return !!this._datafieldFormControl.value && typeof this._datafieldFormControl.value !== 'string';
     }
 
     protected get _selectedDatafields(): Array<Datafield> {
-        return this._datafieldFormControl.value;
+        return this._datafieldOptions.get(this._datafieldFormControl.value.value);
     }
 
     public reset() {
