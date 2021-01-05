@@ -134,7 +134,7 @@ export abstract class Category<T> {
      * effectively turning the category instance into a predicate builder.
      */
     public reset(): void {
-        this._operatorFormControl.setValue(undefined);
+        this.clearOperatorSelection();
     }
 
     /**
@@ -185,5 +185,12 @@ export abstract class Category<T> {
      */
     public isOperatorSelected(): boolean {
         return !!this._operatorFormControl.value;
+    }
+
+    /**
+     * Deselects the currently selected operator (if any)
+     */
+    public clearOperatorSelection(): void {
+        this._operatorFormControl.setValue(undefined);
     }
 }

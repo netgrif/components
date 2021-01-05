@@ -145,7 +145,6 @@ export class CaseDataset extends Category<Datafield> {
     public reset() {
         super.reset();
         this._datafieldFormControl.setValue('');
-        this._operatorFormControl.setValue(undefined);
     }
 
     protected get elasticKeywords(): Array<string> {
