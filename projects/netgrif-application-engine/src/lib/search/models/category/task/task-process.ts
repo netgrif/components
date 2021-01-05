@@ -26,7 +26,7 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
     }
 
     protected generateQuery(userInput: Array<string>): Query {
-        const queries = userInput.map(id => this._selectedOperator.createQuery(this.elasticKeywords, [id]));
+        const queries = userInput.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 

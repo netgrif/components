@@ -37,20 +37,33 @@
                         </mat-form-field>
                     </ng-template>
                     <ng-template [ngSwitchCase]="searchInputType.OPERATOR">
-                        <mat-form-field>
-                            <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)">
-                                <mat-option *ngFor="let operator of selectedCategory.allowedOperators" [value]="operator">
-                                    <div fxLayout="row" fxLayoutAlign="start center">
-                                        <ng-template ngFor let-namePart [ngForOf]="operator.getOperatorNameTemplate()">
-                                            <div *ngIf="!!namePart; else operatorInputPlaceholder">{{namePart | translate}}</div>
-                                        </ng-template>
-                                        <ng-template #operatorInputPlaceholder>
-                                            <div class="argument-placeholder-color argument-placeholder-dimensions"></div>
-                                        </ng-template>
-                                    </div>
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        <div *ngIf="selectedCategory.isOperatorSelected(); then argumentsSelection; else operatorSelection"></div>
+                        <ng-template #operatorSelection>
+                            <mat-form-field>
+                                <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)">
+                                    <mat-option *ngFor="let operator of selectedCategory.allowedOperators" [value]="operator">
+                                        <div fxLayout="row" fxLayoutAlign="start center">
+                                            <ng-template ngFor let-namePart [ngForOf]="operator.getOperatorNameTemplate()">
+                                                <div *ngIf="!!namePart; else operatorInputPlaceholder">{{namePart | translate}}</div>
+                                            </ng-template>
+                                            <ng-template #operatorInputPlaceholder>
+                                                <div class="argument-placeholder-color argument-placeholder-dimensions"></div>
+                                            </ng-template>
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-template>
+                        <ng-template #argumentsSelection>
+                            <div>
+                                <ng-template ngFor let-namePart [ngForOf]="selectedCategory.selectedOperator.getOperatorNameTemplate()">
+                                    <div *ngIf="!!namePart; else operatorInput">{{namePart | translate}}</div>
+                                </ng-template>
+                                <ng-template #operatorInput>
+                                    TODO INPUT HERE
+                                </ng-template>
+                            </div>
+                        </ng-template>
                     </ng-template>
                 </div>
             </ng-template>

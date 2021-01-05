@@ -44,7 +44,7 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
     }
 
     protected generateQuery(userInput: Array<number>): Query {
-        return this._selectedOperator.createQuery(this.elasticKeywords, [`${userInput[0]}`]);
+        return this.selectedOperator.createQuery(this.elasticKeywords, [`${userInput[0]}`]);
     }
 
     get inputPlaceholder(): string {

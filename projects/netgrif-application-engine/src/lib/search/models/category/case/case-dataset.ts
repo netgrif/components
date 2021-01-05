@@ -185,7 +185,7 @@ export class CaseDataset extends Category<Datafield> {
 
     protected generateQuery(userInput: Array<unknown>): Query {
         const queries = this._selectedDatafields.map(datafield => {
-            const valueQuery = this._selectedOperator.createQuery(this.elasticKeywords, userInput);
+            const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
             const netQuery = this._processCategory.generatePredicate([datafield.netId]).query;
             return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
         });

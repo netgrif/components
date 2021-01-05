@@ -37,7 +37,7 @@ export class CaseRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
     protected generateQuery(userInput: Array<NetRolePair>): Query {
         const queries = userInput.map(pair => {
-            const roleQuery = this._selectedOperator.createQuery(this.elasticKeywords, [pair.roleId]);
+            const roleQuery = this.selectedOperator.createQuery(this.elasticKeywords, [pair.roleId]);
             const netQuery = this._processCategory.generatePredicate([pair.netId]).query;
             return Query.combineQueries([roleQuery, netQuery], BooleanOperator.AND);
         });

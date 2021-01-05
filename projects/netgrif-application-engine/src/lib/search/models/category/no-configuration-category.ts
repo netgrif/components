@@ -14,17 +14,9 @@ import {FormControl} from '@angular/forms';
  */
 export abstract class NoConfigurationCategory<T> extends Category<T> {
 
-    /**
-     * Contains the `FormControl` object that is used to drive the operator selection.
-     *
-     * The category can subscribe to it if it wishes to react to the selection change by the user.
-     */
-    protected _operatorFormControl: FormControl;
-
     protected constructor(elasticKeywords: Array<string>, allowedOperators: Array<Operator<any>>,
                           translationPath: string, inputType: SearchInputType, log: LoggerService) {
         super(elasticKeywords, allowedOperators, translationPath, inputType, log);
-        this._operatorFormControl = new FormControl();
     }
 
     /**

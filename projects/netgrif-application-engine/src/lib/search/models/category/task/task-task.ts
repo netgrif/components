@@ -38,7 +38,7 @@ export class TaskTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
 
     protected generateQuery(userInput: Array<NetTaskPair>): Query {
         const queries = userInput.map(pair => {
-            const taskQuery = this._selectedOperator.createQuery(this.elasticKeywords, [pair.taskId]);
+            const taskQuery = this.selectedOperator.createQuery(this.elasticKeywords, [pair.taskId]);
             const netQuery = this._processCategory.generatePredicate([pair.netId]).query;
             return Query.combineQueries([taskQuery, netQuery], BooleanOperator.AND);
         });

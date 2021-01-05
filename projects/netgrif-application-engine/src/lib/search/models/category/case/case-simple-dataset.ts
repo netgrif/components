@@ -62,7 +62,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         }
     }
 
-    protected get selectedOperator(): Operator<any> {
+    public get selectedOperator(): Operator<any> {
         switch (this._fieldType) {
             case 'number':
                 return this._operators.getOperator(Equals);
