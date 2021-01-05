@@ -25,6 +25,7 @@ import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {DisableButtonFuntions} from './models/disable-functions';
 import {Task} from '../../resources/interface/task';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -54,7 +55,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     protected _subOperationClose: Subscription;
     protected _subOperationReload: Subscription;
     protected _subPanelUpdate: Subscription;
-    protected _taskDisableButtonFuntions: DisableButtonFuntions;
+    protected _taskDisableButtonFunctions: DisableButtonFuntions;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -77,8 +78,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
-        this._subTaskData = _taskDataService.changedFields$.subscribe(changedFields => {
+        this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
+            changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
             this._taskPanelData.changedFields.next(changedFields);
+            // TODO 5.1.2021 [After 4.5.0 merge] - prešetriť či tento if je ešte nutný, nakoľko v 4.5.0 neexsituje
             if (this._taskContentService.task) {
                 Object.keys(changedFields).forEach(value => {
                     if (changedFields[value].type === 'taskRef' && this._taskContentService.task.user !== undefined) {
@@ -96,7 +99,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subOperationReload = _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
         });
-        this._taskDisableButtonFuntions = {
+        this._taskDisableButtonFunctions = {
             finish: (t: Task) => false,
             assign: (t: Task) => false,
             delegate: (t: Task) => false,
@@ -104,7 +107,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             cancel: (t: Task) => false,
         };
         if (_disableFunctions) {
-            Object.assign(this._taskDisableButtonFuntions, _disableFunctions);
+            Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
         }
     }
 
@@ -265,7 +268,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             disable = disable || !!this._taskState.isLoading(this.taskPanelData.task.stringId) ||
                 !!this._taskState.isUpdating(this.taskPanelData.task.stringId);
         }
-        return disable || this._taskDisableButtonFuntions[type]({...this._taskContentService.task});
+        return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
