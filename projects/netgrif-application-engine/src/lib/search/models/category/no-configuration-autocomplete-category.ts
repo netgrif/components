@@ -30,7 +30,7 @@ export abstract class NoConfigurationAutocompleteCategory<T> extends Autocomplet
     /**
      * Always returns an array with only the [OPERATOR]{@link SearchInputType#OPERATOR} constant.
      */
-    get configurationInputs(): Observable<Array<SearchInputType>> {
+    get configurationInputs$(): Observable<Array<SearchInputType>> {
         return of([SearchInputType.OPERATOR]);
     }
 

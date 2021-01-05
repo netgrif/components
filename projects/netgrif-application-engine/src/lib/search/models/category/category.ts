@@ -54,7 +54,7 @@ export abstract class Category<T> {
      *
      * @returns the required input type for configuration steps of this category
      */
-    public abstract get configurationInputs(): Observable<Array<SearchInputType>>;
+    public abstract get configurationInputs$(): Observable<Array<SearchInputType>>;
 
     /**
      * Beware that while most categories always return the same constant it is not a requirement.

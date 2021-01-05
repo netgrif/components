@@ -13,9 +13,10 @@ import {EqualsDate} from '../../operator/equals-date';
 import {Substring} from '../../operator/substring';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {filter, map, tap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
+import {FormControl} from '@angular/forms';
 
 interface Datafield {
     netId: string;
@@ -31,9 +32,12 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     private _searchingUsers = false;
 
-    protected _selectedDatafields: Array<Datafield>;
-
     protected _processCategory: CaseProcess;
+
+    protected _configurationInputs$: BehaviorSubject<Array<SearchInputType>>;
+
+    protected _datafieldFormControl: FormControl;
+    protected _operatorFormControl: FormControl;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -57,20 +61,37 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             undefined,
             `${CaseDataset._i18n}.name`,
             logger);
+
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
+
+        this._configurationInputs$ = new BehaviorSubject<Array<SearchInputType>>([SearchInputType.AUTOCOMPLETE]);
+
+        this._datafieldFormControl = new FormControl();
+        this._operatorFormControl = new FormControl();
+
+        this._datafieldFormControl.valueChanges.subscribe(newValue => {
+            if (newValue === undefined) {
+                this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE]);
+            } else if (this._configurationInputs$.getValue().length === 1) {
+                this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE, SearchInputType.OPERATOR]);
+            }
+        });
+    }
+
+    get configurationInputs$(): Observable<Array<SearchInputType>> {
+        return this._configurationInputs$.asObservable();
     }
 
     public get inputType(): SearchInputType {
-        if (!this._selectedDatafields) {
-            return SearchInputType.AUTOCOMPLETE;
-        } else {
-            return CaseDataset.FieldTypeToInputType(this._selectedDatafields[0].fieldType);
+        if (!this.hasSelectedDatafields) {
+            throw new Error('Input type of arguments cannot be determined before selecting a data field in during the configuration.');
         }
+        return CaseDataset.FieldTypeToInputType(this._selectedDatafields[0].fieldType);
     }
 
     public get allowedOperators(): Array<Operator<any>> {
-        if (!this._selectedDatafields) {
+        if (!this.hasSelectedDatafields) {
             return [];
         }
         switch (this._selectedDatafields[0].fieldType) {
@@ -93,7 +114,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
     public get options(): Array<SearchAutocompleteOption> {
         const result = [];
 
-        if (!this._selectedDatafields) {
+        if (!this.hasSelectedDatafields) {
             for (const serializedKey of this._optionsMap.keys()) {
                 const mapKey = DatafieldMapKey.parse(serializedKey);
                 result.push({
@@ -108,24 +129,42 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
     }
 
     public get hasSelectedDatafields(): boolean {
-        return !!this._selectedDatafields;
+        return !!this._datafieldFormControl.value;
+    }
+
+    protected get _selectedDatafields(): Array<Datafield> {
+        return this._datafieldFormControl.value;
     }
 
     public reset() {
         super.reset();
-        this._selectedDatafields = undefined;
+        this._datafieldFormControl.setValue(undefined);
+        this._operatorFormControl.setValue(undefined);
     }
 
     protected get elasticKeywords(): Array<string> {
-        if (!this._selectedDatafields) {
+        if (!this.hasSelectedDatafields) {
             return [];
         } else {
             return this._selectedDatafields.map(datafield => `dataSet.${datafield.fieldId}.value`);
         }
     }
 
+    getActiveInputFormControl(inputIndex: number): FormControl {
+        if (inputIndex >= this._configurationInputs$.value.length || inputIndex < 0) {
+            throw new Error(`The requested input index '${inputIndex}' is illegal. FormControl can only be obtained for inputs withing the`
+                + ` provided configurationInputs array`);
+        }
+        if (inputIndex === 0) {
+            return this._datafieldFormControl;
+        }
+        if (inputIndex === 1) {
+            return this._operatorFormControl;
+        }
+    }
+
     get inputPlaceholder(): string {
-        if (!this._selectedDatafields) {
+        if (!this.hasSelectedDatafields) {
             return `${CaseDataset._i18n}.placeholder.field`;
         }
         return `${CaseDataset._i18n}.placeholder.value`;
@@ -161,7 +200,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
     }
 
     filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
-        if (!this._selectedDatafields) {
+        if (!this.hasSelectedDatafields) {
             return super.filterOptions(userInput);
         }
         if (this._selectedDatafields[0].fieldType !== 'user' || this._searchingUsers) {
@@ -186,7 +225,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             this._log.warn(`The provided 'datafieldMapKey' does not exist.`);
             return;
         }
-        this._selectedDatafields = this._optionsMap.get(datafieldMapKey);
+        this._datafieldFormControl.setValue(this._optionsMap.get(datafieldMapKey));
         if (selectDefaultOperator) {
             this.selectDefaultOperator();
         }
