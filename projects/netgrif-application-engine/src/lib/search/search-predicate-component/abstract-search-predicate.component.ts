@@ -14,7 +14,7 @@ export abstract class AbstractSearchPredicateComponent {
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
 
-    protected _selectedCategory: Category<any>;
+    public selectedCategory: Category<any>;
 
     protected constructor(@Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>) {
     }
@@ -28,9 +28,9 @@ export abstract class AbstractSearchPredicateComponent {
     }
 
     public categoryChanged(newCategory: Category<any>): void {
-        if (this._selectedCategory !== undefined) {
-            this._selectedCategory.reset();
+        if (this.selectedCategory !== undefined) {
+            this.selectedCategory.reset();
         }
-        this._selectedCategory = newCategory;
+        this.selectedCategory = newCategory;
     }
 }

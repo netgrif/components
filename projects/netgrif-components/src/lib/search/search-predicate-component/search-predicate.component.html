@@ -9,10 +9,44 @@
         <mat-form-field>
             <mat-label>{{'search.category.select' | translate}}</mat-label>
             <mat-select class="category-select" (selectionChange)="categoryChanged($event.value)">
-                <mat-option *ngFor="let category of searchCategories" [value]="category">{{category.translationPath | translate}}</mat-option>
+                <mat-option *ngFor="let category of searchCategories"
+                            [value]="category">{{category.translationPath | translate}}</mat-option>
             </mat-select>
         </mat-form-field>
+
+        <div *ngIf="selectedCategory">
+            <ng-template ngFor let-configurationInput [ngForOf]="selectedCategory.configurationInputs$ | async" let-i="index">
+                <div [ngSwitch]="configurationInput">
+                    <!--                <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">-->
+                    <!--                    <mat-form-field>-->
+                    <!--                        <input type="text" matInput-->
+                    <!--                               [formControl]="selectedCategory.getActiveInputFormControl(i)"-->
+                    <!--                               [matAutocomplete]="configurationAutocomplete">-->
+                    <!--                        <mat-autocomplete #configurationAutocomplete="matAutocomplete">-->
+                    <!--                            <mat-option *ngFor="let option of ">-->
+                    <!--                                -->
+                    <!--                            </mat-option>-->
+                    <!--                        </mat-autocomplete>-->
+                    <!--                    </mat-form-field>-->
+                    <!--                </ng-template>-->
+                    <ng-template [ngSwitchCase]="searchInputType.OPERATOR">
+                        <mat-form-field>
+                            <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)">
+                                <mat-option *ngFor="let operator of selectedCategory.allowedOperators" [value]="operator">
+                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                        <ng-template ngFor let-namePart [ngForOf]="operator.getOperatorNameTemplate()">
+                                            <div *ngIf="!!namePart; else operatorInputPlaceholder">{{namePart | translate}}</div>
+                                        </ng-template>
+                                        <ng-template #operatorInputPlaceholder>
+                                            <div class="argument-placeholder-color argument-placeholder-dimensions"></div>
+                                        </ng-template>
+                                    </div>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-template>
+                </div>
+            </ng-template>
+        </div>
     </div>
 </div>
-
-<!-- <mat-option><div fxLayout="row" fxLayoutAlign="start center">World <div class="argument-placeholder-color argument-placeholder-dimensions"></div></div></mat-option> -->
