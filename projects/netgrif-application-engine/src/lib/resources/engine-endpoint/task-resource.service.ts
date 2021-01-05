@@ -301,4 +301,26 @@ export class TaskResourceService extends AbstractResourceService implements Coun
             map(r => this.changeType(r, undefined))
         );
     }
+
+    /**
+     * Download task file preview for field value
+     * GET
+     */
+    // {{baseUrl}}/api/task/:id/file_preview/:field
+    public downloadFilePreview(taskId: string, fieldId: string): Observable<ProviderProgress | Blob> {
+        const url = 'task/' + taskId + '/file_preview/' + fieldId;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.DownloadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return event.body;
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value => !!value)
+        );
+    }
 }
