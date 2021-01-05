@@ -81,14 +81,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
             changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
             this._taskPanelData.changedFields.next(changedFields);
-            // TODO 5.1.2021 [After 4.5.0 merge] - prešetriť či tento if je ešte nutný, nakoľko v 4.5.0 neexsituje
-            if (this._taskContentService.task) {
-                Object.keys(changedFields).forEach(value => {
-                    if (changedFields[value].type === 'taskRef' && this._taskContentService.task.user !== undefined) {
-                        this._taskDataService.initializeTaskDataFields(new Subject<boolean>(), true);
-                    }
-                });
-            }
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
             this.expand();
