@@ -18,7 +18,7 @@ export class AnonymousService implements OnDestroy {
     constructor(private _config: ConfigurationService) {
         this._jwtHeader = this._config.get().providers.auth.jwtBearer ?
             this._config.get().providers.auth.jwtBearer : AnonymousService.JWT_BEARER_HEADER_DEFAULT;
-        this._storage = this.resolveStorage(this._config.get().providers.auth['sessionStore']);
+        this._storage = this.resolveStorage(this._config.get().providers.auth['local']);
         this._tokenSet = new BehaviorSubject<boolean>(false);
     }
 
