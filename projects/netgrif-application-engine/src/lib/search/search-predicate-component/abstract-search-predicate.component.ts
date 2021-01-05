@@ -3,6 +3,7 @@ import {EditableElementaryPredicate} from '../models/predicate/editable-elementa
 import {Subject} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
+import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 
 
 /**
@@ -32,5 +33,23 @@ export abstract class AbstractSearchPredicateComponent {
             this.selectedCategory.reset();
         }
         this.selectedCategory = newCategory;
+    }
+
+    /**
+     * Lambda that is used to preserve `this` reference in HTML binding.
+     *
+     * See [_renderSelection()]{@link AbstractSearchPredicateComponent#_renderSelection} for information about the transform function.
+     * @param option the {@link SearchAutocompleteOption} object that was selected in the autocomplete list.
+     */
+    public renderSelection = (option: SearchAutocompleteOption) => this._renderSelection(option);
+
+    /**
+     * Transforms a {@link SearchAutocompleteOption} object into it's name.
+     * Used for displaying user selection in the input field, when an autocomplete option is selected.
+     * @param option the object we want to transform. It might not exist if user input doesn't match any autocomplete option
+     * @returns option name if it exists, empty string otherwise
+     */
+    protected _renderSelection(option: SearchAutocompleteOption): string {
+        return option ? option.text : '';
     }
 }

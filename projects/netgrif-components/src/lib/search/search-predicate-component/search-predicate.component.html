@@ -20,9 +20,14 @@
                     <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
                         <mat-form-field>
                             <input type="text" matInput
+                                   #autocompleteInput
+                                   #autocompleteTrigger="matAutocompleteTrigger"
                                    [formControl]="selectedCategory.getActiveInputFormControl(i)"
-                                   [matAutocomplete]="configurationAutocomplete">
-                            <mat-autocomplete #configurationAutocomplete="matAutocomplete">
+                                   [matAutocomplete]="configurationAutocomplete"
+                                   (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">
+                            <mat-autocomplete #configurationAutocomplete="matAutocomplete"
+                                              [displayWith]="renderSelection"
+                                              (optionSelected)="autocompleteInput.blur()">
                                 <mat-option *ngFor="let option of selectedCategory.getFilteredAutocompleteConfigurationOptions(i) | async"
                                             [value]="option">
                                     <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
