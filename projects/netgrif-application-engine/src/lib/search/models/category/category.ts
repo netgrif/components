@@ -5,6 +5,7 @@ import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
+import {SearchAutocompleteOption} from './search-autocomplete-option';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -88,9 +89,15 @@ export abstract class Category<T> {
 
     /**
      * @param inputIndex the input index for which the form control should be returned.
-     * @returns the FormControl object for the input at the specified index.
+     * @returns the FormControl object for the input at the given index.
      */
     public abstract getActiveInputFormControl(inputIndex: number): FormControl;
+
+    /**
+     * @param inputIndex the input index for which the stream of filtered autocomplete configuration options should be returned.
+     * @returns the stream of filtered autocomplete configuration options at the given index.
+     */
+    public abstract getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption>>;
 
     /**
      * Changes the state of the Category. Category can create queries when an {@link Operator} is selected.

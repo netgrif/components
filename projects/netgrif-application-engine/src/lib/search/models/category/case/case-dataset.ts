@@ -1,4 +1,3 @@
-import {AutocompleteCategory} from '../autocomplete-category';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {Operator} from '../../operator/operator';
@@ -17,6 +16,7 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {filter, map, tap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {FormControl} from '@angular/forms';
+import {Category} from '../category';
 
 interface Datafield {
     netId: string;
@@ -24,7 +24,7 @@ interface Datafield {
     fieldType: string;
 }
 
-export class CaseDataset extends AutocompleteCategory<Datafield> {
+export class CaseDataset extends Category<Datafield> {
 
     private static readonly _i18n = 'search.category.case.dataset';
     // TODO 4.5.2020 - only button, file and file list fields are truly unsupported, dateTime is implemented but lacks elastic support
@@ -38,6 +38,10 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     protected _datafieldFormControl: FormControl;
     protected _operatorFormControl: FormControl;
+
+    protected _filteredConfigurationOptions$: Observable<Array<SearchAutocompleteOption>>;
+
+    protected _datafieldOptions: Map<string, Array<Datafield>>;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -60,6 +64,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         super(undefined,
             undefined,
             `${CaseDataset._i18n}.name`,
+            undefined,
             logger);
 
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
@@ -70,6 +75,9 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         this._datafieldFormControl = new FormControl();
         this._operatorFormControl = new FormControl();
 
+        this._datafieldOptions = new Map<string, Array<Datafield>>();
+        this.createDatafieldOptions();
+
         this._datafieldFormControl.valueChanges.subscribe(newValue => {
             if (newValue === undefined) {
                 this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE]);
@@ -77,6 +85,17 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
                 this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE, SearchInputType.OPERATOR]);
             }
         });
+
+        this._filteredConfigurationOptions$ = this._datafieldFormControl.valueChanges.pipe(map(newValue => {
+            return Array.from(this._datafieldOptions.keys())
+                .map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
+                .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue))
+                .map(mapKey => ({
+                    text: mapKey.title,
+                    value: mapKey.toSerializedForm(),
+                    icon: mapKey.icon
+                }));
+        }));
     }
 
     get configurationInputs$(): Observable<Array<SearchInputType>> {
@@ -109,23 +128,6 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
             default:
                 return [this._operators.getOperator(Substring)];
         }
-    }
-
-    public get options(): Array<SearchAutocompleteOption> {
-        const result = [];
-
-        if (!this.hasSelectedDatafields) {
-            for (const serializedKey of this._optionsMap.keys()) {
-                const mapKey = DatafieldMapKey.parse(serializedKey);
-                result.push({
-                    text: mapKey.title,
-                    value: mapKey.toSerializedForm(),
-                    icon: mapKey.icon
-                });
-            }
-        }
-
-        return result;
     }
 
     public get hasSelectedDatafields(): boolean {
@@ -163,6 +165,13 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         }
     }
 
+    getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption>> {
+        if (inputIndex !== 0) {
+            throw new Error(`Illegal inputIndex '${inputIndex}'. This category doesn't have an autocomplete input at that index!`);
+        }
+        return this._filteredConfigurationOptions$;
+    }
+
     get inputPlaceholder(): string {
         if (!this.hasSelectedDatafields) {
             return `${CaseDataset._i18n}.placeholder.field`;
@@ -179,7 +188,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
-    protected createOptions(): void {
+    protected createDatafieldOptions(): void {
         this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.immediateData
@@ -189,7 +198,7 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
                             && !CaseDataset.DISABLED_TYPES.includes(immediateData.type);
                     })
                     .forEach(immediateData => {
-                        this.addToMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
+                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
                             netId: petriNet.stringId,
                             fieldId: immediateData.stringId,
                             fieldType: immediateData.type,
@@ -201,7 +210,8 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
 
     filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
         if (!this.hasSelectedDatafields) {
-            return super.filterOptions(userInput);
+            // TODO
+            throw new Error('TODO');
         }
         if (this._selectedDatafields[0].fieldType !== 'user' || this._searchingUsers) {
             return of([]);
@@ -221,13 +231,27 @@ export class CaseDataset extends AutocompleteCategory<Datafield> {
     }
 
     public selectDatafields(datafieldMapKey: string, selectDefaultOperator = true): void {
-        if (!this._optionsMap.has(datafieldMapKey)) {
+        if (!this._datafieldOptions.has(datafieldMapKey)) {
             this._log.warn(`The provided 'datafieldMapKey' does not exist.`);
             return;
         }
-        this._datafieldFormControl.setValue(this._optionsMap.get(datafieldMapKey));
+        this._datafieldFormControl.setValue(this._datafieldOptions.get(datafieldMapKey));
         if (selectDefaultOperator) {
             this.selectDefaultOperator();
+        }
+    }
+
+    /**
+     * Adds a new entry or pushes value into an existing entry.
+     * When a new entry is created, it is created as an Array of one element.
+     * @param key where in the map should the value be added
+     * @param value the value that should be added to the map
+     */
+    protected addToDatafieldOptionsMap(key: string, value: Datafield): void {
+        if (this._datafieldOptions.has(key)) {
+            this._datafieldOptions.get(key).push(value);
+        } else {
+            this._datafieldOptions.set(key, [value]);
         }
     }
 }

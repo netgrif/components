@@ -40,4 +40,11 @@ export abstract class NoConfigurationAutocompleteCategory<T> extends Autocomplet
         }
         throw new Error(`Illegal inputIndex '${inputIndex}'. This category has only one configuration input!`);
     }
+
+    /**
+     * Always throws an error.
+     */
+    getFilteredAutocompleteConfigurationOptions(inputIndex: number): never {
+        throw new Error('NoConfigurationAutocompleteCategory has no configuration options!');
+    }
 }
