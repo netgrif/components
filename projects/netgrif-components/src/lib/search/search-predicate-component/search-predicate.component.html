@@ -17,18 +17,20 @@
         <div *ngIf="selectedCategory">
             <ng-template ngFor let-configurationInput [ngForOf]="selectedCategory.configurationInputs$ | async" let-i="index">
                 <div [ngSwitch]="configurationInput">
-                    <!--                <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">-->
-                    <!--                    <mat-form-field>-->
-                    <!--                        <input type="text" matInput-->
-                    <!--                               [formControl]="selectedCategory.getActiveInputFormControl(i)"-->
-                    <!--                               [matAutocomplete]="configurationAutocomplete">-->
-                    <!--                        <mat-autocomplete #configurationAutocomplete="matAutocomplete">-->
-                    <!--                            <mat-option *ngFor="let option of ">-->
-                    <!--                                -->
-                    <!--                            </mat-option>-->
-                    <!--                        </mat-autocomplete>-->
-                    <!--                    </mat-form-field>-->
-                    <!--                </ng-template>-->
+                    <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
+                        <mat-form-field>
+                            <input type="text" matInput
+                                   [formControl]="selectedCategory.getActiveInputFormControl(i)"
+                                   [matAutocomplete]="configurationAutocomplete">
+                            <mat-autocomplete #configurationAutocomplete="matAutocomplete">
+                                <mat-option *ngFor="let option of selectedCategory.getFilteredAutocompleteConfigurationOptions(i) | async"
+                                            [value]="option">
+                                    <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
+                                    <span>{{option.text}}</span>
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </ng-template>
                     <ng-template [ngSwitchCase]="searchInputType.OPERATOR">
                         <mat-form-field>
                             <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)">

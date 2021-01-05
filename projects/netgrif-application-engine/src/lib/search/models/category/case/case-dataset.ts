@@ -13,7 +13,7 @@ import {Substring} from '../../operator/substring';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {filter, map, tap} from 'rxjs/operators';
+import {filter, map, startWith, tap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {FormControl} from '@angular/forms';
 import {Category} from '../category';
@@ -86,16 +86,20 @@ export class CaseDataset extends Category<Datafield> {
             }
         });
 
-        this._filteredConfigurationOptions$ = this._datafieldFormControl.valueChanges.pipe(map(newValue => {
-            return Array.from(this._datafieldOptions.keys())
-                .map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
-                .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue))
-                .map(mapKey => ({
-                    text: mapKey.title,
-                    value: mapKey.toSerializedForm(),
-                    icon: mapKey.icon
-                }));
-        }));
+        this._filteredConfigurationOptions$ = this._datafieldFormControl.valueChanges.pipe(
+            startWith(''),
+            filter(newValue => typeof newValue === 'string'),
+            map(newValue => {
+                return Array.from(this._datafieldOptions.keys())
+                    .map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
+                    .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue))
+                    .map(mapKey => ({
+                        text: mapKey.title,
+                        value: mapKey.toSerializedForm(),
+                        icon: mapKey.icon
+                    }));
+            })
+        );
     }
 
     get configurationInputs$(): Observable<Array<SearchInputType>> {
@@ -140,7 +144,7 @@ export class CaseDataset extends Category<Datafield> {
 
     public reset() {
         super.reset();
-        this._datafieldFormControl.setValue(undefined);
+        this._datafieldFormControl.setValue('');
         this._operatorFormControl.setValue(undefined);
     }
 
