@@ -9,6 +9,7 @@ export * from './service/spinner-overlay.service';
 export * from './incrementing-counter';
 export * from './array-to-observable';
 export * from './process-message-response';
+export * from './result-with-after-actions';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';

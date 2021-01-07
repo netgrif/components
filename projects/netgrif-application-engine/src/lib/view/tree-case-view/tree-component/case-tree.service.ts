@@ -26,6 +26,7 @@ import {NAE_OPTION_SELECTOR_COMPONENT} from '../../../side-menu/content-componen
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {CaseTreePath} from './model/case-tree-path';
 import {ExpansionTree} from './model/expansion-tree';
+import {ResultWithAfterActions} from '../../../utility/result-with-after-actions';
 
 /**
  * An internal helper object, that is used to return two values from a function.
@@ -487,11 +488,12 @@ export class CaseTreeService implements OnDestroy {
      * @param operationResult the result of the operation will be emitted into this stream when the operation completes
      */
     protected updateTreeAfterChildAdd(clickedNode: CaseTreeNode, newCaseRefValue: Array<string>, operationResult: Subject<boolean>): void {
-        this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(() => {
+        this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(result => {
             clickedNode.addingNode.off();
             this.expandNode(clickedNode).subscribe(expandSuccess => {
                 if (expandSuccess) {
                     this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
+                    result.executeAfterActions();
                 }
                 operationResult.next(true);
                 operationResult.complete();
@@ -693,9 +695,11 @@ export class CaseTreeService implements OnDestroy {
      *
      * @param affectedNode node that had it's children changed
      * @param newCaseRefValue new value of the caseRef field returned by backend
-     * @returns an `Observable` that emits once the update completes (either successfully or not)
+     * @returns an `Observable` that emits an object with the [result]{@link ResultWithAfterActions#result} attribute set to `true` if
+     * the update completes successfully and `false` otherwise.
      */
-    private updateNodeChildrenFromChangedFields(affectedNode: CaseTreeNode, newCaseRefValue: Array<string>): Observable<void> {
+    private updateNodeChildrenFromChangedFields(affectedNode: CaseTreeNode,
+                                                newCaseRefValue: Array<string>): Observable<ResultWithAfterActions<boolean>> {
         const caseRefField = getImmediateData(affectedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         const newChildren = new Set<string>();
         newCaseRefValue.forEach(id => newChildren.add(id));
@@ -714,10 +718,12 @@ export class CaseTreeService implements OnDestroy {
             && numberOfMissingChildren === 1;
 
         if (!exactlyOneChildAdded && !exactlyOneChildRemoved) {
+            // TODO BUG 7.1.2021 - eager loaded tree doesn't process addition of multiple nodes at once
+            //  (or addition of a single node combined with node removal)
             caseRefField.value = newCaseRefValue;
             this._treeControl.collapseDescendants(affectedNode);
             affectedNode.dirtyChildren = true;
-            return ofVoid();
+            return of(new ResultWithAfterActions(true));
         }
 
         if (exactlyOneChildAdded) {
@@ -732,27 +738,32 @@ export class CaseTreeService implements OnDestroy {
      * @param affectedNode the node in the tree that had a child added - the parent node
      * @param caseRefField the case ref field of the affected node
      * @param newCaseRefValue the new value of the case ref field in the node
-     * @returns an `Observable` that emits when the add operation completes (either successfully or not)
+     * @returns an `Observable` that emits `true` if a node was successfully added, `false` otherwise.
      */
     protected processChildNodeAdd(affectedNode: CaseTreeNode,
                                   caseRefField: ImmediateData,
-                                  newCaseRefValue: Array<string>): Observable<void> {
-        const result$ = new ReplaySubject<void>(1);
+                                  newCaseRefValue: Array<string>): Observable<ResultWithAfterActions<boolean>> {
+        const result$ = new ReplaySubject<ResultWithAfterActions<boolean>>(1);
 
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
             if (childCase) {
                 this._logger.debug('Pushing child node to tree', {childCase, affectedNode});
-                this.pushChildToTree(affectedNode, childCase);
+                const childNode = this.pushChildToTree(affectedNode, childCase);
+                result$.next(new ResultWithAfterActions(true, [() => {
+                    if (this._isEagerLoaded) {
+                        this._logger.debug('Eagerly expanding a newly added node.', childNode);
+                        this.expandNode(childNode);
+                    }
+                }]));
             } else {
                 this._logger.error('New child case was not found, illegal state', childCase);
+                result$.next(new ResultWithAfterActions(false));
             }
-            this._logger.debug('Emitting processChildNodeAdd finish');
-            result$.next();
             result$.complete();
         }, error => {
             this._logger.error('New child node case could not be found', error);
-            result$.next();
+            result$.next(new ResultWithAfterActions(false));
             result$.complete();
         });
 
@@ -763,10 +774,13 @@ export class CaseTreeService implements OnDestroy {
      * Adds a new child node to the target parent node.
      * @param parentNode the nodes whose child should be added
      * @param childCase the child case
+     * @returns the newly added node
      */
-    protected pushChildToTree(parentNode: CaseTreeNode, childCase: Case): void {
-        parentNode.children.push(new CaseTreeNode(childCase, parentNode));
+    protected pushChildToTree(parentNode: CaseTreeNode, childCase: Case): CaseTreeNode {
+        const childNode = new CaseTreeNode(childCase, parentNode);
+        parentNode.children.push(childNode);
         this.refreshTree();
+        return childNode;
     }
 
     /**
@@ -774,16 +788,16 @@ export class CaseTreeService implements OnDestroy {
      * @param affectedNode the node in the tree that had it's child removed
      * @param caseRefField the case ref field of the affected node
      * @param newCaseRefValues the new value of the case ref field in the node
-     * @returns an `Observable` that emits when add operation completes (either successfully or not)
+     * @returns an `Observable` that emits `true` when the remove operation completes.
      */
     protected processChildNodeRemove(affectedNode: CaseTreeNode,
                                      caseRefField: ImmediateData,
-                                     newCaseRefValues: Set<string>): Observable<void> {
+                                     newCaseRefValues: Set<string>): Observable<ResultWithAfterActions<boolean>> {
         const index = caseRefField.value.findIndex(it => !newCaseRefValues.has(it));
         caseRefField.value.splice(index, 1);
         affectedNode.children.splice(index, 1);
         this.refreshTree();
-        return ofVoid();
+        return of(new ResultWithAfterActions(true));
     }
 
     /**
@@ -884,6 +898,4 @@ export class CaseTreeService implements OnDestroy {
 
         return result;
     }
-
-
 }
