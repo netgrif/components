@@ -413,7 +413,6 @@ export class CaseTreeService implements OnDestroy {
      * @returns emits `true` if the child was successfully added, `false` if not
      */
     public addChildNode(clickedNode: CaseTreeNode): Observable<boolean> {
-        const ret = new ReplaySubject<boolean>(1);
         clickedNode.addingNode.on();
         const caseRefField = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
 
@@ -423,6 +422,7 @@ export class CaseTreeService implements OnDestroy {
             return of(false);
         }
 
+        const ret = new ReplaySubject<boolean>(1);
         const childTitleImmediate = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILD_NODE_TITLE);
         const childTitle = childTitleImmediate ? childTitleImmediate.value : this._translateService.instant('caseTree.newNodeDefaultName');
 
@@ -690,15 +690,16 @@ export class CaseTreeService implements OnDestroy {
      * @param newCaseRefValue new value of the caseRef field returned by backend
      * @returns an `Observable` that emits once the update completes (either successfully or not)
      */
-    private updateNodeChildrenFromChangedFields(affectedNode: CaseTreeNode,
-                                                newCaseRefValue: Array<string>): Observable<void> {
+    private updateNodeChildrenFromChangedFields(affectedNode: CaseTreeNode, newCaseRefValue: Array<string>): Observable<void> {
         const caseRefField = getImmediateData(affectedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         const newChildren = new Set<string>();
         newCaseRefValue.forEach(id => newChildren.add(id));
 
         let numberOfMissingChildren = 0;
         for (let i = 0; i < caseRefField.value.length && numberOfMissingChildren < 2; i++) {
-            numberOfMissingChildren += !newChildren.has(caseRefField.value[i]) ? 1 : 0;
+            if (!newChildren.has(caseRefField.value[i])) {
+                numberOfMissingChildren++;
+            }
         }
 
         const exactlyOneChildAdded = caseRefField.value.length + 1 === newCaseRefValue.length
@@ -722,16 +723,16 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
-     * Adds a new child node to the `affectedNode` by adding the last net from the `newCaseRefValue`
-     * @param affectedNode the node in the tree that had a child added
+     * Adds a new child node to the `affectedNode` by adding the last Case from the `newCaseRefValue`
+     * @param affectedNode the node in the tree that had a child added - the parent node
      * @param caseRefField the case ref field of the affected node
      * @param newCaseRefValue the new value of the case ref field in the node
-     * @returns an `Observable` that emits when add operation completes (either successfully or not)
+     * @returns an `Observable` that emits when the add operation completes (either successfully or not)
      */
     protected processChildNodeAdd(affectedNode: CaseTreeNode,
                                   caseRefField: ImmediateData,
                                   newCaseRefValue: Array<string>): Observable<void> {
-        const result$ = new Subject<void>();
+        const result$ = new ReplaySubject<void>(1);
 
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
@@ -743,7 +744,7 @@ export class CaseTreeService implements OnDestroy {
             result$.next();
             result$.complete();
         }, error => {
-            this._logger.error('Child node case could not be found', error);
+            this._logger.error('New child node case could not be found', error);
             result$.next();
             result$.complete();
         });
@@ -753,7 +754,7 @@ export class CaseTreeService implements OnDestroy {
 
     /**
      * Adds a new child node to the target parent node.
-     * @param parentNode the nodes whose child shoulc be added
+     * @param parentNode the nodes whose child should be added
      * @param childCase the child case
      */
     protected pushChildToTree(parentNode: CaseTreeNode, childCase: Case): void {
