@@ -5,6 +5,7 @@ import {CaseTreeService} from './case-tree.service';
 import {CaseTreeNode} from './model/case-tree-node';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
+import {CaseTreePath} from './model/case-tree-path';
 
 export abstract class AbstractTreeComponent {
 
@@ -139,5 +140,14 @@ export abstract class AbstractTreeComponent {
      */
     public addRootChildNode(): void {
         this._treeService.addRootChildNode();
+    }
+
+    /**
+     * Expands all nodes in the tree dictated by the argument.
+     *
+     * @param path nodes that should be expanded along with their path from the root node
+     */
+    public expandPath(path: CaseTreePath): void {
+        this._treeService.expandPath(path);
     }
 }
