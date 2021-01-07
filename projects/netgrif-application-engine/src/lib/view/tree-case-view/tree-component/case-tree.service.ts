@@ -245,20 +245,25 @@ export class CaseTreeService implements OnDestroy {
      * @returns emits `true` if the node is expanded and `false` if not
      */
     protected expandNode(node: CaseTreeNode): Observable<boolean> {
+        this._logger.debug('Requesting expansion of tree node', node);
+
         if (node.loadingChildren.isActive) {
+            this._logger.debug('Node requested for expansion is loading. Expansion canceled.');
             return of(false);
         }
 
         if (!node.dirtyChildren) {
+            this._logger.debug('Node requested for expansion has clean children. Simple expansion.');
             this.treeControl.expand(node);
             return of(true);
         }
 
         const ret = new ReplaySubject<boolean>(1);
         this.updateNodeChildren(node).subscribe(() => {
+            this._logger.debug('Node requested for expansion with dirty children had its children reloaded.');
             if (node.children.length > 0) {
+                this._logger.debug('Node expanded.', node);
                 this.treeControl.expand(node);
-
                 if (this._isEagerLoaded) {
                     this._logger.debug(`Eager loading children of tree node with case id '${node.case.stringId}'`);
                     node.children.forEach(childNode => this.expandNode(childNode));
@@ -737,10 +742,12 @@ export class CaseTreeService implements OnDestroy {
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
             if (childCase) {
+                this._logger.debug('Pushing child node to tree', {childCase, affectedNode});
                 this.pushChildToTree(affectedNode, childCase);
             } else {
                 this._logger.error('New child case was not found, illegal state', childCase);
             }
+            this._logger.debug('Emitting processChildNodeAdd finish');
             result$.next();
             result$.complete();
         }, error => {
