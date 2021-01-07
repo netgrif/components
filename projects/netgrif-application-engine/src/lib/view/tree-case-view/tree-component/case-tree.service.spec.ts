@@ -23,6 +23,7 @@ import {createMockCase} from '../../../utility/tests/utility/create-mock-case';
 import {createMockImmediateData} from '../../../utility/tests/utility/create-mock-immediate-data';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {CaseGetRequestBody} from '../../../resources/interface/case-get-request-body';
 
 
 class MockTreeNode {
@@ -92,6 +93,64 @@ describe('CaseTreeService', () => {
 
         treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
     });
+
+    it('should initialize lazy-loaded tree with root node shown', (done) => {
+        /*
+              O
+              /\
+             O  O
+            /\  /\
+           O  OO  O
+         */
+        caseResourceMock.createMockTree(new MockTreeNode(true, [
+            new MockTreeNode(true, [new MockTreeNode(true), new MockTreeNode(true)]),
+            new MockTreeNode(true, [new MockTreeNode(true), new MockTreeNode(true)])
+        ], 'root'));
+
+        treeService.treeRootLoaded$.subscribe(loaded => {
+            if (loaded) {
+                treeService.initializeTree(true);
+                expect(treeService.dataSource).toBeTruthy();
+                expect(treeService.dataSource.data).toBeTruthy();
+                expect(treeService.dataSource.data.length).toEqual(1);
+                expect(treeService.dataSource.data[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children.length).toEqual(0);
+                done();
+            }
+        });
+
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+    });
+
+    it('should initialize lazy-loaded tree with root node hidden', (done) => {
+        /*
+              O
+              /\
+             O  O
+            /\  /\
+           O  OO  O
+         */
+        caseResourceMock.createMockTree(new MockTreeNode(true, [
+            new MockTreeNode(true, [new MockTreeNode(true), new MockTreeNode(true)]),
+            new MockTreeNode(true, [new MockTreeNode(true), new MockTreeNode(true)])
+        ], 'root'));
+
+        treeService.treeRootLoaded$.subscribe(loaded => {
+            if (loaded) {
+                treeService.initializeTree(false);
+                expect(treeService.dataSource).toBeTruthy();
+                expect(treeService.dataSource.data).toBeTruthy();
+                expect(treeService.dataSource.data.length).toEqual(2);
+                expect(treeService.dataSource.data[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children.length).toEqual(0);
+                expect(treeService.dataSource.data[1].children).toBeTruthy();
+                expect(treeService.dataSource.data[1].children.length).toEqual(0);
+                done();
+            }
+        });
+
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+    });
 });
 
 @Injectable()
@@ -108,13 +167,19 @@ class TreeTestCaseResourceService {
     }
 
     public createMockTree(rootNode: MockTreeNode): void {
-        const treeCase = createMockCase(`${rootNode.stringId ? rootNode.stringId : this._idGenerator.next()}`, 'mockTree');
+        this.createMockTreeNode(rootNode);
+    }
+
+    private createMockTreeNode(node: MockTreeNode): string {
+        const treeCase = createMockCase(`${node.stringId ? node.stringId : this._idGenerator.next()}`, 'mockTree');
         treeCase.immediateData.push(createMockImmediateData(TreePetriflowIdentifiers.FEATURED_TRANSITION, '1'));
         this._mockTaskService.addTask(treeCase.stringId, '1');
-        treeCase.immediateData.push(createMockImmediateData(TreePetriflowIdentifiers.CHILDREN_CASE_REF, [], ['mockTree']));
+        treeCase.immediateData.push(createMockImmediateData(TreePetriflowIdentifiers.CHILDREN_CASE_REF,
+            node.children.map(childNode => this.createMockTreeNode(childNode)), ['mockTree']));
 
         this._mockTaskService.addTask(treeCase.stringId, TreePetriflowIdentifiers.CASE_REF_TRANSITION);
         this.mockCases.set(treeCase.stringId, treeCase);
+        return treeCase.stringId;
     }
 
     public searchCases(filter: Filter, params?: Params): Observable<Page<Case>> {
@@ -123,7 +188,7 @@ class TreeTestCaseResourceService {
             && (filter.getRequestBody() as CaseSearchRequestBody).stringId
             && !Array.isArray((filter.getRequestBody() as CaseSearchRequestBody).stringId)) {
             const page: Page<Case> = {
-                content: undefined,
+                content: {} as any,
                 pagination: {
                     size: 1,
                     totalElements: 0,
@@ -135,6 +200,36 @@ class TreeTestCaseResourceService {
             if (this.mockCases.has((filter.getRequestBody() as CaseSearchRequestBody).stringId as string)) {
                 page.content = [this.mockCases.get((filter.getRequestBody() as CaseSearchRequestBody).stringId as string)];
                 page.pagination.totalElements = 1;
+            }
+
+            return of(page);
+        } else {
+            throw new Error('The mock TreeTestCaseResourceService cannot mock the provided filter');
+        }
+    }
+
+    public getCases(body: CaseGetRequestBody, params?: Params): Observable<Page<Case>> {
+        if (Array.isArray(body.stringId)) {
+            const page: Page<Case> = {
+                content: {} as any,
+                pagination: {
+                    size: 1,
+                    totalElements: 0,
+                    totalPages: 1,
+                    number: 0
+                }
+            };
+
+            const cases = [];
+            body.stringId.forEach(id => {
+                if (this.mockCases.has(id)) {
+                    cases.push(this.mockCases.get(id));
+                }
+            });
+            if (cases.length > 0) {
+                page.content = cases;
+                page.pagination.size = cases.length;
+                page.pagination.totalElements = cases.length;
             }
 
             return of(page);
