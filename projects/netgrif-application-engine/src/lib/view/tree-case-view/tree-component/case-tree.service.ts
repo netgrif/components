@@ -217,7 +217,6 @@ export class CaseTreeService implements OnDestroy {
         }
 
         this.refreshTree();
-
     }
 
     /**
@@ -402,8 +401,10 @@ export class CaseTreeService implements OnDestroy {
      * Adds a child to the root node.
      *
      * Useful if you are using the layout where the root node is hidden.
+     * @returns emits `true` if the child was successfully added, `false` if not
      */
-    public addRootChildNode(): void {
+    public addRootChildNode(): Observable<boolean> {
+        const ret = new ReplaySubject<boolean>(1);
         this.addChildNode(this._rootNode).subscribe(added => {
             if (added) {
                 if (!this._showRoot && this._treeDataSource.data.length === 0) {
@@ -411,7 +412,10 @@ export class CaseTreeService implements OnDestroy {
                     this.refreshTree();
                 }
             }
+            ret.next(added);
+            ret.complete();
         });
+        return ret;
     }
 
     /**
@@ -718,12 +722,14 @@ export class CaseTreeService implements OnDestroy {
             && numberOfMissingChildren === 1;
 
         if (!exactlyOneChildAdded && !exactlyOneChildRemoved) {
-            // TODO BUG 7.1.2021 - eager loaded tree doesn't process addition of multiple nodes at once
-            //  (or addition of a single node combined with node removal)
             caseRefField.value = newCaseRefValue;
             this._treeControl.collapseDescendants(affectedNode);
             affectedNode.dirtyChildren = true;
-            return of(new ResultWithAfterActions(true));
+            return of(new ResultWithAfterActions(true, [() => {
+                if (this._isEagerLoaded) {
+
+                }
+            }]));
         }
 
         if (exactlyOneChildAdded) {
