@@ -749,11 +749,7 @@ export class CaseTreeService implements OnDestroy {
             caseRefField.value = newCaseRefValue;
             this._treeControl.collapseDescendants(affectedNode);
             affectedNode.dirtyChildren = true;
-            return of(new ResultWithAfterActions(true, [() => {
-                if (this._isEagerLoaded) {
-
-                }
-            }]));
+            return of(new ResultWithAfterActions(true));
         }
 
         if (exactlyOneChildAdded) {
