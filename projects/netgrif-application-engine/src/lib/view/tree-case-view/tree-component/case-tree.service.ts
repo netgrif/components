@@ -661,7 +661,7 @@ export class CaseTreeService implements OnDestroy {
      * @param newCaseRefValue the new value of the case ref field
      */
     private performCaseRefCall(caseId: string, newCaseRefValue: Array<string>): Observable<Array<string> | undefined> {
-        const result$ = new Subject<Array<string>>();
+        const result$ = new ReplaySubject<Array<string>>(1);
 
         this._taskResourceService.getTasks(SimpleFilter.fromTaskQuery({
             case: {id: caseId},
