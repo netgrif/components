@@ -218,10 +218,6 @@ describe('CaseTreeService', () => {
                     expect(treeService.dataSource.data).toBeTruthy();
                     expect(treeService.dataSource.data.length).toEqual(2);
                     expect(treeService.dataSource.data[0].children).toBeTruthy();
-                    expect(treeService.dataSource.data[0].children.length).toEqual(0);
-                    expect(treeService.dataSource.data[1].children).toBeTruthy();
-                    expect(treeService.dataSource.data[1].children.length).toEqual(0);
-                    expect(treeService.dataSource.data[0].children).toBeTruthy();
                     expect(treeService.dataSource.data[0].children.length).toEqual(2);
                     expect(treeService.dataSource.data[1].children).toBeTruthy();
                     expect(treeService.dataSource.data[1].children.length).toEqual(2);
