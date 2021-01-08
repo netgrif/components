@@ -151,6 +151,90 @@ describe('CaseTreeService', () => {
 
         treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
     });
+
+    it('should initialize eager-loaded tree with root node shown', (done) => {
+        /*
+              O
+              /\
+             O  O
+            /\  /\
+           O  OO  O
+         */
+        caseResourceMock.createMockTree(new MockTreeNode(true, [
+            new MockTreeNode(true, [new MockTreeNode(true), new MockTreeNode(true)]),
+            new MockTreeNode(true, [new MockTreeNode(true), new MockTreeNode(true)])
+        ], 'root'));
+
+        treeService.treeRootLoaded$.subscribe(loaded => {
+            if (loaded) {
+                treeService.initializeTree(true);
+                expect(treeService.dataSource).toBeTruthy();
+                expect(treeService.dataSource.data).toBeTruthy();
+                expect(treeService.dataSource.data.length).toEqual(1);
+                expect(treeService.dataSource.data[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children.length).toEqual(2);
+                expect(treeService.dataSource.data[0].children[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children[0].children.length).toEqual(2);
+                expect(treeService.dataSource.data[0].children[1].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children[1].children.length).toEqual(2);
+                expect(treeService.dataSource.data[0].children[0].children[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children[0].children[0].children.length).toEqual(0);
+                expect(treeService.dataSource.data[0].children[0].children[1].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children[0].children[1].children.length).toEqual(0);
+                expect(treeService.dataSource.data[0].children[1].children[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children[1].children[0].children.length).toEqual(0);
+                expect(treeService.dataSource.data[0].children[1].children[1].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children[1].children[1].children.length).toEqual(0);
+                done();
+            }
+        });
+
+        treeService.isEagerLoaded = true;
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+    });
+
+    it('should initialize eager-loaded tree with root node hidden', (done) => {
+        /*
+              O
+              /\
+             O  O
+            /\  /\
+           O  OO  O
+         */
+        caseResourceMock.createMockTree(new MockTreeNode(true, [
+            new MockTreeNode(true, [new MockTreeNode(true), new MockTreeNode(true)]),
+            new MockTreeNode(true, [new MockTreeNode(true), new MockTreeNode(true)])
+        ], 'root'));
+
+        treeService.treeRootLoaded$.subscribe(loaded => {
+            if (loaded) {
+                treeService.initializeTree(false);
+                expect(treeService.dataSource).toBeTruthy();
+                expect(treeService.dataSource.data).toBeTruthy();
+                expect(treeService.dataSource.data.length).toEqual(2);
+                expect(treeService.dataSource.data[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children.length).toEqual(0);
+                expect(treeService.dataSource.data[1].children).toBeTruthy();
+                expect(treeService.dataSource.data[1].children.length).toEqual(0);
+                expect(treeService.dataSource.data[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children.length).toEqual(2);
+                expect(treeService.dataSource.data[1].children).toBeTruthy();
+                expect(treeService.dataSource.data[1].children.length).toEqual(2);
+                expect(treeService.dataSource.data[0].children[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children[0].children.length).toEqual(0);
+                expect(treeService.dataSource.data[0].children[1].children).toBeTruthy();
+                expect(treeService.dataSource.data[0].children[1].children.length).toEqual(0);
+                expect(treeService.dataSource.data[1].children[0].children).toBeTruthy();
+                expect(treeService.dataSource.data[1].children[0].children.length).toEqual(0);
+                expect(treeService.dataSource.data[1].children[1].children).toBeTruthy();
+                expect(treeService.dataSource.data[1].children[1].children.length).toEqual(0);
+                done();
+            }
+        });
+
+        treeService.isEagerLoaded = true;
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+    });
 });
 
 @Injectable()
