@@ -67,11 +67,12 @@ describe('CaseTreeService', () => {
 
         treeService.treeRootLoaded$.subscribe(loaded => {
             if (loaded) {
-                treeService.initializeTree(true);
-                expect(treeService.dataSource).toBeTruthy();
-                expect(treeService.dataSource.data).toBeTruthy();
-                expect(treeService.dataSource.data.length).toEqual(1);
-                done();
+                treeService.initializeTree(true).subscribe(() => {
+                    expect(treeService.dataSource).toBeTruthy();
+                    expect(treeService.dataSource.data).toBeTruthy();
+                    expect(treeService.dataSource.data.length).toEqual(1);
+                    done();
+                });
             }
         });
 
@@ -83,11 +84,12 @@ describe('CaseTreeService', () => {
 
         treeService.treeRootLoaded$.subscribe(loaded => {
             if (loaded) {
-                treeService.initializeTree(false);
-                expect(treeService.dataSource).toBeTruthy();
-                expect(treeService.dataSource.data).toBeTruthy();
-                expect(treeService.dataSource.data.length).toEqual(0);
-                done();
+                treeService.initializeTree(false).subscribe(() => {
+                    expect(treeService.dataSource).toBeTruthy();
+                    expect(treeService.dataSource.data).toBeTruthy();
+                    expect(treeService.dataSource.data.length).toEqual(0);
+                    done();
+                });
             }
         });
 
@@ -109,13 +111,14 @@ describe('CaseTreeService', () => {
 
         treeService.treeRootLoaded$.subscribe(loaded => {
             if (loaded) {
-                treeService.initializeTree(true);
-                expect(treeService.dataSource).toBeTruthy();
-                expect(treeService.dataSource.data).toBeTruthy();
-                expect(treeService.dataSource.data.length).toEqual(1);
-                expect(treeService.dataSource.data[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children.length).toEqual(0);
-                done();
+                treeService.initializeTree(true).subscribe(() => {
+                    expect(treeService.dataSource).toBeTruthy();
+                    expect(treeService.dataSource.data).toBeTruthy();
+                    expect(treeService.dataSource.data.length).toEqual(1);
+                    expect(treeService.dataSource.data[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children.length).toEqual(0);
+                    done();
+                });
             }
         });
 
@@ -137,15 +140,16 @@ describe('CaseTreeService', () => {
 
         treeService.treeRootLoaded$.subscribe(loaded => {
             if (loaded) {
-                treeService.initializeTree(false);
-                expect(treeService.dataSource).toBeTruthy();
-                expect(treeService.dataSource.data).toBeTruthy();
-                expect(treeService.dataSource.data.length).toEqual(2);
-                expect(treeService.dataSource.data[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children.length).toEqual(0);
-                expect(treeService.dataSource.data[1].children).toBeTruthy();
-                expect(treeService.dataSource.data[1].children.length).toEqual(0);
-                done();
+                treeService.initializeTree(false).subscribe(() => {
+                    expect(treeService.dataSource).toBeTruthy();
+                    expect(treeService.dataSource.data).toBeTruthy();
+                    expect(treeService.dataSource.data.length).toEqual(2);
+                    expect(treeService.dataSource.data[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[1].children).toBeTruthy();
+                    expect(treeService.dataSource.data[1].children.length).toEqual(0);
+                    done();
+                });
             }
         });
 
@@ -167,25 +171,26 @@ describe('CaseTreeService', () => {
 
         treeService.treeRootLoaded$.subscribe(loaded => {
             if (loaded) {
-                treeService.initializeTree(true);
-                expect(treeService.dataSource).toBeTruthy();
-                expect(treeService.dataSource.data).toBeTruthy();
-                expect(treeService.dataSource.data.length).toEqual(1);
-                expect(treeService.dataSource.data[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children.length).toEqual(2);
-                expect(treeService.dataSource.data[0].children[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children[0].children.length).toEqual(2);
-                expect(treeService.dataSource.data[0].children[1].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children[1].children.length).toEqual(2);
-                expect(treeService.dataSource.data[0].children[0].children[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children[0].children[0].children.length).toEqual(0);
-                expect(treeService.dataSource.data[0].children[0].children[1].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children[0].children[1].children.length).toEqual(0);
-                expect(treeService.dataSource.data[0].children[1].children[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children[1].children[0].children.length).toEqual(0);
-                expect(treeService.dataSource.data[0].children[1].children[1].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children[1].children[1].children.length).toEqual(0);
-                done();
+                treeService.initializeTree(true).subscribe(() => {
+                    expect(treeService.dataSource).toBeTruthy();
+                    expect(treeService.dataSource.data).toBeTruthy();
+                    expect(treeService.dataSource.data.length).toEqual(1);
+                    expect(treeService.dataSource.data[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children.length).toEqual(2);
+                    expect(treeService.dataSource.data[0].children[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children[0].children.length).toEqual(2);
+                    expect(treeService.dataSource.data[0].children[1].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children[1].children.length).toEqual(2);
+                    expect(treeService.dataSource.data[0].children[0].children[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children[0].children[0].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[0].children[0].children[1].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children[0].children[1].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[0].children[1].children[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children[1].children[0].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[0].children[1].children[1].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children[1].children[1].children.length).toEqual(0);
+                    done();
+                });
             }
         });
 
@@ -208,27 +213,28 @@ describe('CaseTreeService', () => {
 
         treeService.treeRootLoaded$.subscribe(loaded => {
             if (loaded) {
-                treeService.initializeTree(false);
-                expect(treeService.dataSource).toBeTruthy();
-                expect(treeService.dataSource.data).toBeTruthy();
-                expect(treeService.dataSource.data.length).toEqual(2);
-                expect(treeService.dataSource.data[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children.length).toEqual(0);
-                expect(treeService.dataSource.data[1].children).toBeTruthy();
-                expect(treeService.dataSource.data[1].children.length).toEqual(0);
-                expect(treeService.dataSource.data[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children.length).toEqual(2);
-                expect(treeService.dataSource.data[1].children).toBeTruthy();
-                expect(treeService.dataSource.data[1].children.length).toEqual(2);
-                expect(treeService.dataSource.data[0].children[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children[0].children.length).toEqual(0);
-                expect(treeService.dataSource.data[0].children[1].children).toBeTruthy();
-                expect(treeService.dataSource.data[0].children[1].children.length).toEqual(0);
-                expect(treeService.dataSource.data[1].children[0].children).toBeTruthy();
-                expect(treeService.dataSource.data[1].children[0].children.length).toEqual(0);
-                expect(treeService.dataSource.data[1].children[1].children).toBeTruthy();
-                expect(treeService.dataSource.data[1].children[1].children.length).toEqual(0);
-                done();
+                treeService.initializeTree(false).subscribe(() => {
+                    expect(treeService.dataSource).toBeTruthy();
+                    expect(treeService.dataSource.data).toBeTruthy();
+                    expect(treeService.dataSource.data.length).toEqual(2);
+                    expect(treeService.dataSource.data[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[1].children).toBeTruthy();
+                    expect(treeService.dataSource.data[1].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children.length).toEqual(2);
+                    expect(treeService.dataSource.data[1].children).toBeTruthy();
+                    expect(treeService.dataSource.data[1].children.length).toEqual(2);
+                    expect(treeService.dataSource.data[0].children[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children[0].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[0].children[1].children).toBeTruthy();
+                    expect(treeService.dataSource.data[0].children[1].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[1].children[0].children).toBeTruthy();
+                    expect(treeService.dataSource.data[1].children[0].children.length).toEqual(0);
+                    expect(treeService.dataSource.data[1].children[1].children).toBeTruthy();
+                    expect(treeService.dataSource.data[1].children[1].children.length).toEqual(0);
+                    done();
+                });
             }
         });
 

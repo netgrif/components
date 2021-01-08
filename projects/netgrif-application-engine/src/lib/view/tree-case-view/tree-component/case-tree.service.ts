@@ -11,7 +11,7 @@ import {Case} from '../../../resources/interface/case';
 import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
-import {Observable, of, ReplaySubject, Subject, Subscription} from 'rxjs';
+import {forkJoin, Observable, of, ReplaySubject, Subject, Subscription, throwError} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';
@@ -200,11 +200,12 @@ export class CaseTreeService implements OnDestroy {
      * Adds the loaded tree root to the display based on the setting.
      * @param showRoot whether the root of the tree should be displayed in the tree or not.
      * If the root is not displayed it's children will be displayed on the first level.
+     * @returns an Observable that emits when the tree finishes initialization.
      */
-    public initializeTree(showRoot: boolean): void {
+    public initializeTree(showRoot: boolean): Observable<void> {
         if (!this._rootNode) {
             this._logger.error('Set a Filter before initializing the case tree');
-            return;
+            return throwError(new Error('Set a Filter before initializing the case tree'));
         }
 
         this._showRoot = showRoot;
@@ -213,10 +214,22 @@ export class CaseTreeService implements OnDestroy {
             this.dataSource.data = [this._rootNode];
         } else {
             this.dataSource.data = this._rootNode.children;
-            this.expandNode(this._rootNode);
         }
 
-        this.refreshTree();
+        let ret: Observable<void>;
+        if (!showRoot || this._isEagerLoaded) {
+            const result = new ReplaySubject<void>(1);
+            ret = result.asObservable();
+            this.expandNode(this._rootNode).subscribe(() => {
+                this.refreshTree();
+                result.next();
+                result.complete();
+            });
+        } else {
+            this.refreshTree();
+            ret = ofVoid();
+        }
+        return ret;
     }
 
     /**
@@ -242,10 +255,11 @@ export class CaseTreeService implements OnDestroy {
     /**
      * Expands the target node in the tree and reloads it's children if they are marked as dirty
      * @param node the {@link CaseTreeNode} that should be expanded
-     * @returns emits `true` if the node is expanded and `false` if not
+     * @returns emits `true` if the node is expanded and `false` if not. If the expansion causes more node expansions
+     * (e.g. eager loaded tree) then, the Observable emits after all the subtree expansions complete.
      */
     protected expandNode(node: CaseTreeNode): Observable<boolean> {
-        this._logger.debug('Requesting expansion of tree node', node);
+        this._logger.debug('Requesting expansion of tree node', node.toLoggableForm());
 
         if (node.loadingChildren.isActive) {
             this._logger.debug('Node requested for expansion is loading. Expansion canceled.');
@@ -262,17 +276,27 @@ export class CaseTreeService implements OnDestroy {
         this.updateNodeChildren(node).subscribe(() => {
             this._logger.debug('Node requested for expansion with dirty children had its children reloaded.');
             if (node.children.length > 0) {
-                this._logger.debug('Node expanded.', node);
+                this._logger.debug('Node expanded.', node.toLoggableForm());
                 this.treeControl.expand(node);
                 if (this._isEagerLoaded) {
                     this._logger.debug(`Eager loading children of tree node with case id '${node.case.stringId}'`);
-                    node.children.forEach(childNode => this.expandNode(childNode));
+                    const innerObservables = node.children.map(childNode => this.expandNode(childNode));
+                    // forkJoin doesn't emit with 0 input observables
+                    innerObservables.push(of(true));
+                    forkJoin(innerObservables).subscribe(() => {
+                        ret.next(true);
+                        ret.complete();
+                    });
+                } else {
+                    ret.next(true);
+                    ret.complete();
                 }
+            } else {
+                ret.next(false);
+                ret.complete();
             }
-            ret.next(node.children.length > 0);
-            ret.complete();
         });
-        return ret;
+        return ret.asObservable();
     }
 
     /**
@@ -326,10 +350,10 @@ export class CaseTreeService implements OnDestroy {
         const requestBody = this.createChildRequestBody(node);
         if (!requestBody) {
             this._logger.error('Cannot create filter to find children of the given node', node.case);
-            return;
+            return throwError(new Error('Cannot create filter to find children of the given node'));
         }
 
-        const done = new Subject<void>();
+        const done = new ReplaySubject<void>(1);
 
         let params: HttpParams = new HttpParams();
         params = params.set('page', `${pageNumber}`).set('sort', 'creationDate,asc');
@@ -754,11 +778,11 @@ export class CaseTreeService implements OnDestroy {
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
             if (childCase) {
-                this._logger.debug('Pushing child node to tree', {childCase, affectedNode});
+                this._logger.debug('Pushing child node to tree', {childCase, affectedNode: affectedNode.toLoggableForm()});
                 const childNode = this.pushChildToTree(affectedNode, childCase);
                 result$.next(new ResultWithAfterActions(true, [() => {
                     if (this._isEagerLoaded) {
-                        this._logger.debug('Eagerly expanding a newly added node.', childNode);
+                        this._logger.debug('Eagerly expanding a newly added node.', childNode.toLoggableForm());
                         this.expandNode(childNode);
                     }
                 }]));
