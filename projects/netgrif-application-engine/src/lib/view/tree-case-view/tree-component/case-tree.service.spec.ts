@@ -32,6 +32,7 @@ import {EventOutcome} from '../../../resources/interface/event-outcome';
 import {TaskSetDataRequestBody} from '../../../resources/interface/task-set-data-request-body';
 import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
 import {getImmediateData} from '../../../utility/get-immediate-data';
+import {ChangedFields} from '../../../data-fields/models/changed-fields';
 
 
 class MockTreeNode {
@@ -44,6 +45,7 @@ class MockTreeNode {
 describe('CaseTreeService', () => {
     let treeService: CaseTreeService;
     let caseResourceMock: TreeTestCaseResourceService;
+    let taskResourceMock: TreeTestTaskResourceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -61,6 +63,7 @@ describe('CaseTreeService', () => {
         });
         treeService = TestBed.inject(CaseTreeService);
         caseResourceMock = TestBed.inject(TreeTestCaseResourceService);
+        taskResourceMock = TestBed.inject(TreeTestTaskResourceService);
     });
 
     afterEach(() => {
@@ -306,6 +309,13 @@ describe('CaseTreeService', () => {
 
     // NAE-1185
     it('should eager load added subtree', (done) => {
+        /*
+           O
+           |
+           O <- added later
+           |
+           O
+         */
         const subtreeToAdd = new MockTreeNode(false, [new MockTreeNode(true)]);
         caseResourceMock.createMockTree(new MockTreeNode(true, [subtreeToAdd], 'root'));
         caseResourceMock.createNext = subtreeToAdd;
@@ -326,6 +336,55 @@ describe('CaseTreeService', () => {
                         expect(treeService.dataSource.data[0].children.length).toEqual(1);
                         expect(treeService.dataSource.data[0].children[0]).toBeTruthy();
                         expect(treeService.dataSource.data[0].children[0].children.length).toEqual(0);
+                        done();
+                    });
+                });
+            }
+        });
+
+        treeService.isEagerLoaded = true;
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+    });
+
+    // NAE-1185 similar to the reported bug but in combination with changed fields response adding multiple sibling branches
+    it('should eager load multiple added subtrees', (done) => {
+        /*
+           O
+           /\
+           O O <- one node is added later, the second with changed fields
+           | |
+           O O
+         */
+        const subtreeToAdd = new MockTreeNode(false, [new MockTreeNode(true)]);
+        const secondSubtree = new MockTreeNode(true, [new MockTreeNode(true)]);
+        caseResourceMock.createMockTree(new MockTreeNode(true, [subtreeToAdd, secondSubtree], 'root'));
+        caseResourceMock.createNext = subtreeToAdd;
+        getImmediateData(caseResourceMock.mockCases.get('root'), TreePetriflowIdentifiers.CHILDREN_CASE_REF).value = [];
+        taskResourceMock.changeNext = {};
+        taskResourceMock.changeNext[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {
+            value: [subtreeToAdd.stringId, secondSubtree.stringId]
+        };
+
+        treeService.treeRootLoaded$.subscribe(loaded => {
+            if (loaded) {
+                treeService.initializeTree(false).subscribe(() => {
+                    expect(treeService.dataSource).toBeTruthy();
+                    expect(treeService.dataSource.data).toBeTruthy();
+                    expect(treeService.dataSource.data.length).toEqual(0);
+
+                    treeService.addRootChildNode().subscribe(success => {
+                        expect(success).toBeTrue();
+                        expect(treeService.dataSource).toBeTruthy();
+                        expect(treeService.dataSource.data).toBeTruthy();
+                        expect(treeService.dataSource.data.length).toEqual(2);
+                        expect(treeService.dataSource.data[0].children).toBeTruthy();
+                        expect(treeService.dataSource.data[0].children.length).toEqual(1);
+                        expect(treeService.dataSource.data[0].children[0]).toBeTruthy();
+                        expect(treeService.dataSource.data[0].children[0].children.length).toEqual(0);
+                        expect(treeService.dataSource.data[1].children).toBeTruthy();
+                        expect(treeService.dataSource.data[1].children.length).toEqual(1);
+                        expect(treeService.dataSource.data[1].children[0]).toBeTruthy();
+                        expect(treeService.dataSource.data[1].children[0].children.length).toEqual(0);
                         done();
                     });
                 });
@@ -422,8 +481,9 @@ class TreeTestCaseResourceService {
                 return of(newCase);
             } else {
                 const preparedCase = this.unavailableMockCases.get(this.createNext.stringId);
+                this.createNext = undefined;
                 if (!preparedCase) {
-                   throw new Error('The createNext mock case must be provided to the mock service beforehand!');
+                    throw new Error('The createNext mock case must be provided to the mock service beforehand!');
                 }
                 this.unavailableMockCases.delete(preparedCase.stringId);
                 this.mockCases.set(preparedCase.stringId, preparedCase);
@@ -444,6 +504,9 @@ class TreeTestTaskResourceService {
     // caseId#transitionId -> Task
     // stringId -> Task
     public mockTasks: Map<string, Task>;
+
+    // merging of changes is not implemented so be careful when using this feature for testing
+    public changeNext: ChangedFields = undefined;
 
     constructor() {
         this.mockTasks = new Map<string, Task>();
@@ -490,7 +553,20 @@ class TreeTestTaskResourceService {
                 data.value = changeRequest.value;
             }
         });
-        return of({changedFields: {}});
+
+        if (!this.changeNext) {
+            return of({changedFields: {}});
+        } else {
+            Object.entries(this.changeNext).forEach(([fieldId, changeRequest]) => {
+                const data = getImmediateData(caseOfTask, fieldId);
+                if (data) {
+                    data.value = changeRequest.value;
+                }
+            });
+            const change = this.changeNext;
+            this.changeNext = undefined;
+            return of({changedFields: change});
+        }
     }
 
     public finishTask(taskId: string): Observable<EventOutcome> {
