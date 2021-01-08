@@ -303,6 +303,38 @@ describe('CaseTreeService', () => {
 
         treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
     });
+
+    // NAE-1185
+    it('should eager load added subtree', (done) => {
+        const subtreeToAdd = new MockTreeNode(false, [new MockTreeNode(true)]);
+        caseResourceMock.createMockTree(new MockTreeNode(true, [subtreeToAdd], 'root'));
+        caseResourceMock.createNext = subtreeToAdd;
+
+        treeService.treeRootLoaded$.subscribe(loaded => {
+            if (loaded) {
+                treeService.initializeTree(false).subscribe(() => {
+                    expect(treeService.dataSource).toBeTruthy();
+                    expect(treeService.dataSource.data).toBeTruthy();
+                    expect(treeService.dataSource.data.length).toEqual(0);
+
+                    treeService.addRootChildNode().subscribe(success => {
+                        expect(success).toBeTrue();
+                        expect(treeService.dataSource).toBeTruthy();
+                        expect(treeService.dataSource.data).toBeTruthy();
+                        expect(treeService.dataSource.data.length).toEqual(1);
+                        expect(treeService.dataSource.data[0].children).toBeTruthy();
+                        expect(treeService.dataSource.data[0].children.length).toEqual(1);
+                        expect(treeService.dataSource.data[0].children[0]).toBeTruthy();
+                        expect(treeService.dataSource.data[0].children[0].children.length).toEqual(0);
+                        done();
+                    });
+                });
+            }
+        });
+
+        treeService.isEagerLoaded = true;
+        treeService.rootFilter = SimpleFilter.fromCaseQuery({stringId: 'root'});
+    });
 });
 
 @Injectable()
@@ -312,9 +344,13 @@ class TreeTestCaseResourceService {
 
     // stringId -> Case
     public mockCases: Map<string, Case>;
+    public unavailableMockCases: Map<string, Case>;
+
+    public createNext: MockTreeNode = undefined;
 
     constructor(protected _mockTaskService: TreeTestTaskResourceService) {
         this.mockCases = new Map<string, Case>();
+        this.unavailableMockCases = new Map<string, Case>();
         this._idGenerator = new IncrementingCounter();
         this._mockTaskService.mockCaseService = this;
     }
@@ -325,13 +361,25 @@ class TreeTestCaseResourceService {
 
     private createMockTreeNode(node: MockTreeNode): string {
         const treeCase = createMockCase(`${node.stringId ? node.stringId : this._idGenerator.next()}`, 'mockTree');
+        node.stringId = treeCase.stringId;
         treeCase.immediateData.push(createMockImmediateData(TreePetriflowIdentifiers.FEATURED_TRANSITION, '1'));
         this._mockTaskService.addTask(treeCase.stringId, '1');
-        treeCase.immediateData.push(createMockImmediateData(TreePetriflowIdentifiers.CHILDREN_CASE_REF,
-            node.children.map(childNode => this.createMockTreeNode(childNode)), ['mockTree']));
+
+        const availableChildren = [];
+        node.children.forEach(childNode => {
+            const childId = this.createMockTreeNode(childNode);
+            if (childNode.initiallyAvailable) {
+                availableChildren.push(childId);
+            }
+        });
+        treeCase.immediateData.push(createMockImmediateData(TreePetriflowIdentifiers.CHILDREN_CASE_REF, availableChildren, ['mockTree']));
 
         this._mockTaskService.addTask(treeCase.stringId, TreePetriflowIdentifiers.CASE_REF_TRANSITION);
-        this.mockCases.set(treeCase.stringId, treeCase);
+        if (node.initiallyAvailable) {
+            this.mockCases.set(treeCase.stringId, treeCase);
+        } else {
+            this.unavailableMockCases.set(treeCase.stringId, treeCase);
+        }
         return treeCase.stringId;
     }
 
@@ -366,11 +414,21 @@ class TreeTestCaseResourceService {
 
     public createCase(body: any): Observable<Case> {
         if (body && body.title && body.netId) {
-            const newCaseId = this.createMockTreeNode(new MockTreeNode(true));
-            const newCase = this.mockCases.get(newCaseId);
-            newCase.title = body.title;
-            newCase.petriNetId = body.netId;
-            return of(newCase);
+            if (!this.createNext) {
+                const newCaseId = this.createMockTreeNode(new MockTreeNode(true));
+                const newCase = this.mockCases.get(newCaseId);
+                newCase.title = body.title;
+                newCase.petriNetId = body.netId;
+                return of(newCase);
+            } else {
+                const preparedCase = this.unavailableMockCases.get(this.createNext.stringId);
+                if (!preparedCase) {
+                   throw new Error('The createNext mock case must be provided to the mock service beforehand!');
+                }
+                this.unavailableMockCases.delete(preparedCase.stringId);
+                this.mockCases.set(preparedCase.stringId, preparedCase);
+                return of(preparedCase);
+            }
         } else {
             throw new Error('The mock TreeTestCaseResourceService cannot mock the provided create case request');
         }
@@ -429,7 +487,7 @@ class TreeTestTaskResourceService {
         Object.entries(body).forEach(([fieldId, changeRequest]) => {
             const data = getImmediateData(caseOfTask, fieldId);
             if (data) {
-               data.value = changeRequest.value;
+                data.value = changeRequest.value;
             }
         });
         return of({changedFields: {}});
