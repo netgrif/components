@@ -24,6 +24,7 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {UserTransformer} from '../../authentication/models/user.transformer';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {User} from '../../user/models/user';
+import {GroupGuardService} from '../../authorization/group/group-guard.service';
 
 describe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
@@ -351,8 +352,9 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
                 log: LoggerService,
                 userService: UserService,
                 roleGuard: RoleGuardService,
-                authorityGuard: AuthorityGuardService) {
-        super(config, router, log, userService, roleGuard, authorityGuard);
+                authorityGuard: AuthorityGuardService,
+                groupGuard: GroupGuardService) {
+        super(config, router, log, userService, roleGuard, authorityGuard, groupGuard);
     }
 }
 

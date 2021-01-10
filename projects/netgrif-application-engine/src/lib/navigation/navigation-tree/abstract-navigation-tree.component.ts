@@ -9,6 +9,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
+import {GroupGuardService} from '../../authorization/group/group-guard.service';
 
 export interface NavigationNode {
     name: string;
@@ -33,7 +34,8 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
                           protected _log: LoggerService,
                           protected _userService: UserService,
                           protected _roleGuard: RoleGuardService,
-                          protected _authorityGuard: AuthorityGuardService) {
+                          protected _authorityGuard: AuthorityGuardService,
+                          protected _groupGuard: GroupGuardService) {
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
         this.dataSource.data = this.resolveNavigationNodes(_config.getConfigurationSubtree(['views']), '');
@@ -198,7 +200,8 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
 
         return !this._userService.user.isEmpty() // AuthGuard
                 && this.passesRoleGuard(view, url)
-                && this.passesAuthorityGuard(view);
+                && this.passesAuthorityGuard(view)
+                && this.passesGroupGuard(view, url);
         // TODO 15.12.2020 - add GroupGuard once NAE-1164 is implemented
     }
 
@@ -217,6 +220,15 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
      */
     protected passesAuthorityGuard(view: View): boolean {
         return !view.access.hasOwnProperty('authority') || this._authorityGuard.canAccessView(view);
+    }
+
+    /**
+     * @param view the view whose access permissions we want to check
+     * @param url URL to which the view maps. Is used only for error message generation
+     * @returns whether the user passes the role guard condition for accessing the specified view
+     */
+    protected passesGroupGuard(view: View, url: string): boolean {
+        return !view.access.hasOwnProperty('group') || this._groupGuard.canAccessView(view, url);
     }
 
 }
