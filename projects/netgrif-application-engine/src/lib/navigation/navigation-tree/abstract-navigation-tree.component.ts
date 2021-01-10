@@ -202,7 +202,6 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
                 && this.passesRoleGuard(view, url)
                 && this.passesAuthorityGuard(view)
                 && this.passesGroupGuard(view, url);
-        // TODO 15.12.2020 - add GroupGuard once NAE-1164 is implemented
     }
 
     /**
