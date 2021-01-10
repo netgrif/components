@@ -250,7 +250,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected cloneAndFilterHidden(dataGroups: Array<DataGroup>): Array<DataGroup> {
         const result = dataGroups.map(group => {
             const g = {...group};
-            g.fields = g.fields.filter(field => !field.behavior.hidden && !field.behavior.forbidden);
+            g.fields = g.fields.filter(field => !field.behavior.hidden
+                                                && !field.behavior.forbidden
+                                                && this._fieldConverter.resolveType(field) !== FieldTypeResource.TASK_REF);
             return g;
         });
 

@@ -69,8 +69,8 @@ export class NumberField extends DataField<number> {
             } else if (item.validationRule.includes(NumberFieldValidation.IN_RANGE)) {
                 const tmp = item.validationRule.split(' ');
                 const ranges = tmp[1].split(',');
-                const first = parseInt(ranges[0], 10);
-                const second = parseInt(ranges[1], 10);
+                const first = parseFloat(ranges[0]);
+                const second = parseFloat(ranges[1]);
 
                 if (isNaN(first) && !isNaN(second) && ranges[0].includes(NumberFieldValidation.INF)) {
                     result.push(this.validInRangeSmaller(second));
