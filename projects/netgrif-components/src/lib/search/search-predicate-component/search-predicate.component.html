@@ -58,9 +58,11 @@
                             <div (click)="selectedCategory.clearOperatorSelection()">
                                 <ng-template ngFor let-namePart [ngForOf]="selectedCategory.selectedOperator.getOperatorNameTemplate()">
                                     <div *ngIf="!!namePart; else operatorInput">{{namePart | translate}}</div>
-                                </ng-template>
-                                <ng-template #operatorInput>
-                                    <div (click)="$event.stopPropagation()">TODO INPUT HERE</div>
+                                    <ng-template #operatorInput>
+                                        <div (click)="$event.stopPropagation()">
+                                            <nc-search-operand-input [inputType]="selectedCategory.inputType"></nc-search-operand-input>
+                                        </div>
+                                    </ng-template>
                                 </ng-template>
                             </div>
                         </ng-template>

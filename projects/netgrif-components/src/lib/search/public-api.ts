@@ -7,3 +7,4 @@ export * from './search-component/case-search/case-search.component';
 export * from './search-component/task-search/task-search.component';
 export * from './search-clause-component/search-clause.component';
 export * from './search-predicate-component/search-predicate.component';
+export * from './search-operand-input/search-operand-input.component';

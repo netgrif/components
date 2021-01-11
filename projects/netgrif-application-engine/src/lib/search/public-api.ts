@@ -57,6 +57,7 @@ export * from './search-chip-service/search-chip.service';
 export * from './search-component/abstract-search.component';
 export * from './search-clause-component/abstract-search-clause.component';
 export * from './search-predicate-component/abstract-search-predicate.component';
+export * from './search-operand-input-component/abstract-search-operand-input.component';
 
 /* Functions */
 export * from './category-factory/default-categories-factories';
