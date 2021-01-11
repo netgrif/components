@@ -57,14 +57,19 @@
                         <ng-template #argumentsSelection>
                             <div (click)="selectedCategory.clearOperatorSelection()">
                                 <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate | async">
-                                    <div *ngIf="templatePart.type === operatorTemplatePartType.TEXT; else operatorInput">{{templatePart.content | translate}}</div>
-                                    <ng-template #operatorInput>
-                                        <div (click)="$event.stopPropagation()">
-                                            <nc-search-operand-input [formControl]="templatePart.content"
-                                                                     [inputType]="selectedCategory.inputType"
-                                                                     [filterOptionsFunction]="filterOptions()"></nc-search-operand-input>
-                                        </div>
-                                    </ng-template>
+                                    <ng-container *ngTemplateOutlet="templatePart.type === operatorTemplatePartType.TEXT ? templateText : operandInput; context: {tp: templatePart}"></ng-container>
+                                </ng-template>
+                                <ng-template #templateText let-templatePart="tp">
+                                    <div>
+                                        {{templatePart.content | translate}}
+                                    </div>
+                                </ng-template>
+                                <ng-template #operandInput let-templatePart="tp">
+                                    <div (click)="$event.stopPropagation()">
+                                        <nc-search-operand-input [inputFormControl]="templatePart.content"
+                                                                 [inputType]="selectedCategory.inputType"
+                                                                 [filterOptionsFunction]="filterOptions()"></nc-search-operand-input>
+                                    </div>
                                 </ng-template>
                             </div>
                         </ng-template>

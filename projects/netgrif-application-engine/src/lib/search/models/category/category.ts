@@ -61,6 +61,7 @@ export abstract class Category<T> {
                           protected readonly _inputType: SearchInputType,
                           protected _log: LoggerService) {
         this._operatorFormControl = new FormControl();
+        this._operandsFormControls = new ReplaySubject<Array<FormControl>>(1);
         this._operandsChangeSubscriptions = [];
         this.initializeCategory();
     }
@@ -268,6 +269,7 @@ export abstract class Category<T> {
                 this._operandsChangeSubscriptions.push(fc.valueChanges.pipe(debounceTime(300))
                     .subscribe(val => this.operandValueChanges(val)));
             }
+            this._operandsFormControls.next(args);
         });
     }
 

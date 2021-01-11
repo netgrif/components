@@ -8,7 +8,7 @@ import {debounceTime} from 'rxjs/operators';
 
 export class AbstractSearchOperandInputComponent {
 
-    @Input() formControl: FormControl;
+    @Input() inputFormControl: FormControl;
     @Input() inputType: SearchInputType;
     /**
      * Only if the input is of type [AUTOCOMPLETE{@link SearchInputType#AUTOCOMPLETE}
@@ -18,7 +18,7 @@ export class AbstractSearchOperandInputComponent {
     public renderSelection = (selection: SearchAutocompleteOption) => this._renderSelection(selection);
 
     public get filteredOptions(): Observable<Array<SearchAutocompleteOption>> {
-        return this.filterOptionsFunction(this.formControl.valueChanges.pipe(debounceTime(300)));
+        return this.filterOptionsFunction(this.inputFormControl.valueChanges.pipe(debounceTime(300)));
     }
 
     /**

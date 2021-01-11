@@ -3,7 +3,7 @@
     <ng-template [ngSwitchCase]="searchInputType.TEXT">
         <mat-form-field class="search-input">
             <input type="text" matInput
-                   [formControl]="formControl"
+                   [formControl]="inputFormControl"
                    (keydown.enter)="$event.target.blur()">
         </mat-form-field>
     </ng-template>
@@ -13,7 +13,7 @@
             <input type="text" matInput
                    #autocompleteInput
                    #autocompleteTrigger="matAutocompleteTrigger"
-                   [formControl]="formControl"
+                   [formControl]="inputFormControl"
                    [matAutocomplete]="searchAutocomplete"
                    (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">
             <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection"
@@ -29,7 +29,7 @@
     <ng-template [ngSwitchCase]="searchInputType.DATE">
         <mat-form-field class="search-input">
             <input matInput
-                   [formControl]="formControl"
+                   [formControl]="inputFormControl"
                    [matDatepicker]="searchDatepicker"
                    (click)="searchDatepicker.open()"
                    (keydown.enter)="searchDatepicker.close()">
@@ -41,7 +41,7 @@
     <ng-template [ngSwitchCase]="searchInputType.DATE_TIME">
         <mat-form-field class="search-input">
             <input matInput
-                   [formControl]="formControl"
+                   [formControl]="inputFormControl"
                    [ngxMatDatetimePicker]="searchDateTimepicker"
                    (click)="searchDateTimepicker.open()"
                    (keydown.enter)="searchDateTimepicker.close()">
@@ -61,7 +61,7 @@
     <ng-template [ngSwitchCase]="searchInputType.NUMBER">
         <mat-form-field class="search-input">
             <input type="number" matInput
-                   [formControl]="formControl"
+                   [formControl]="inputFormControl"
                    (keydown.enter)="$event.target.blur()">
         </mat-form-field>
     </ng-template>
@@ -70,7 +70,7 @@
         <div fxLayout="row">
             <mat-form-field floatLabel="always" class="search-input">
                 <mat-slide-toggle
-                    [formControl]="formControl"></mat-slide-toggle>
+                    [formControl]="inputFormControl"></mat-slide-toggle>
             </mat-form-field>
         </div>
     </ng-template>
