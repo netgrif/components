@@ -110,6 +110,13 @@ export abstract class Operator<T> {
     }
 
     /**
+     * @returns the arity of the operator.
+     */
+    public get numberOfOperands(): number {
+        return this._numberOfOperands;
+    }
+
+    /**
      * Simple implementation of query generation. Will not be suitable for all Operator derivatives.
      *
      * Escapes the first argument from the `args` array, calls the [query()]{@link Operator#query} function for each `keyword` and combines

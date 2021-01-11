@@ -4,8 +4,9 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
+import {debounceTime} from 'rxjs/operators';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -34,6 +35,19 @@ export abstract class Category<T> {
     protected _operatorFormControl: FormControl;
 
     /**
+     * Contains the `FormControl` objects that can be used to input search arguments.
+     */
+    protected _operandsFormControls: ReplaySubject<Array<FormControl>>;
+
+    /**
+     * Contains the subscriptions to the FormControl changes for each operator input argument.
+     */
+    protected _operandsChangeSubscriptions: Array<Subscription>;
+
+    /**
+     * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
+     * method. If you want to override the category creation behavior override that method.
+     *
      * @param _elasticKeywords Elasticsearch keywords that should be queried by queries generated with this category
      * @param _allowedOperators Operators that can be used to generated queries on the above keywords
      * @param translationPath path to the translation string
@@ -46,6 +60,8 @@ export abstract class Category<T> {
                           protected readonly _inputType: SearchInputType,
                           protected _log: LoggerService) {
         this._operatorFormControl = new FormControl();
+        this._operandsChangeSubscriptions = [];
+        this.initializeCategory();
     }
 
     /**
@@ -85,6 +101,19 @@ export abstract class Category<T> {
      */
     public get selectedOperator(): Operator<any> {
         return this._operatorFormControl.value;
+    }
+
+    /**
+     * @returns an array of `FormControl` objects that contains as many controls as is the arity of the selected operator.
+     * Calling this method without having an operator selected throws an error.
+     * Calling this method multiple times without changing the selected operator will return the same `FormControl` instances.
+     * Changing the operator selection will result in new instances being created.
+     */
+    public get operandsFormControls(): Observable<Array<FormControl>> {
+        if (!this.selectedOperator) {
+            throw new Error('An operator must be selected before getting argument FormControls!');
+        }
+        return this._operandsFormControls.asObservable();
     }
 
     /**
@@ -193,4 +222,42 @@ export abstract class Category<T> {
     public clearOperatorSelection(): void {
         this._operatorFormControl.setValue(undefined);
     }
+
+    /**
+     * This method is calle in the constructor. Apart from calling this method, the constructor only creates instances to fill the protected
+     * fields of this class.
+     *
+     * The default implementation manages creation of operand `FormControl` instances and manages subscriptions to them.
+     *
+     * You can override this method to change the initialization of your category without having to rewrite the base
+     * constructor from scratch.
+     */
+    protected initializeCategory(): void {
+        this._operatorFormControl.valueChanges.subscribe( (newOperator: Operator<any>) => {
+            this._operandsChangeSubscriptions.forEach(sub => {
+                sub.unsubscribe();
+            });
+            this._operandsChangeSubscriptions = [];
+
+            if (!newOperator) {
+                this._operandsFormControls.next(undefined);
+                return;
+            }
+
+            const args = [];
+            for (let i = 0; i < newOperator.numberOfOperands; i++) {
+                const fc = new FormControl();
+                args.push(fc);
+                this._operandsChangeSubscriptions.push(fc.valueChanges.pipe(debounceTime(300))
+                    .subscribe(val => this.operandValueChanges(val)));
+            }
+        });
+    }
+
+    /**
+     * The method that is (by default) called whenever an operand `FormControl` changes its value.
+     *
+     * @param newValue the newly selected value
+     */
+    protected abstract operandValueChanges(newValue: any): void;
 }
