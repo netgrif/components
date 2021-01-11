@@ -6,7 +6,8 @@ import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
 import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
-import {debounceTime} from 'rxjs/operators';
+import {debounceTime, map} from 'rxjs/operators';
+import {OperatorTemplatePart} from '../operator-template-part';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -105,15 +106,31 @@ export abstract class Category<T> {
 
     /**
      * @returns an array of `FormControl` objects that contains as many controls as is the arity of the selected operator.
-     * Calling this method without having an operator selected throws an error.
      * Calling this method multiple times without changing the selected operator will return the same `FormControl` instances.
      * Changing the operator selection will result in new instances being created.
+     * When no operator is selected `undefined` is emitted.
      */
-    public get operandsFormControls(): Observable<Array<FormControl>> {
-        if (!this.selectedOperator) {
-            throw new Error('An operator must be selected before getting argument FormControls!');
-        }
+    public get operandsFormControls(): Observable<Array<FormControl> | undefined> {
         return this._operandsFormControls.asObservable();
+    }
+
+    /**
+     * A new value is emitted whenever the selected operator changes. `undefined` is emitted if no operator is selected.
+     *
+     * @returns [operators template]{@link Operator#getOperatorNameTemplate} in processed form fit for GUI rendering
+     */
+    public get operatorTemplate(): Observable<Array<OperatorTemplatePart> | undefined> {
+        return this.operandsFormControls.pipe(
+            map(formControls => {
+                if (!formControls) {
+                    return undefined;
+                }
+
+                const parts = this.selectedOperator.getOperatorNameTemplate();
+                const fcs = [...formControls];
+                return parts.map(part => new OperatorTemplatePart(part ? part : fcs.shift()));
+            })
+        );
     }
 
     /**

@@ -33,6 +33,7 @@ export * from './models/category/task/task-role';
 export * from './models/category/task/task-task';
 
 export * from './models/datafield-map-key';
+export * from './models/operator-template-part';
 
 /* Interfaces */
 export * from './models/escape-result';
@@ -45,6 +46,7 @@ export * from './models/predicate-removal-event';
 /* Enums */
 export * from './models/boolean-operator';
 export * from './models/category/search-input-type';
+export * from './models/operator-template-part-type';
 
 /* Services */
 export * from './search-service/search.service';

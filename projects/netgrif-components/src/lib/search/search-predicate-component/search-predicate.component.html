@@ -56,11 +56,11 @@
                         </ng-template>
                         <ng-template #argumentsSelection>
                             <div (click)="selectedCategory.clearOperatorSelection()">
-                                <ng-template ngFor let-namePart [ngForOf]="selectedCategory.selectedOperator.getOperatorNameTemplate()">
-                                    <div *ngIf="!!namePart; else operatorInput">{{namePart | translate}}</div>
+                                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate | async">
+                                    <div *ngIf="templatePart.type === operatorTemplatePartType.TEXT; else operatorInput">{{templatePart.content | translate}}</div>
                                     <ng-template #operatorInput>
                                         <div (click)="$event.stopPropagation()">
-                                            <nc-search-operand-input [inputType]="selectedCategory.inputType"></nc-search-operand-input>
+                                            <nc-search-operand-input [formControl]="templatePart.content" [inputType]="selectedCategory.inputType"></nc-search-operand-input>
                                         </div>
                                     </ng-template>
                                 </ng-template>
