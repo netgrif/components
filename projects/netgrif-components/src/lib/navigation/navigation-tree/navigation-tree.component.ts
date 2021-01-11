@@ -5,7 +5,8 @@ import {
     ConfigurationService,
     LoggerService,
     RoleGuardService,
-    UserService
+    UserService,
+    GroupGuardService
 } from '@netgrif/application-engine';
 
 @Component({
@@ -20,7 +21,8 @@ export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
                 log: LoggerService,
                 userService: UserService,
                 roleGuard: RoleGuardService,
-                authorityGuard: AuthorityGuardService) {
-        super(config, router, log, userService, roleGuard, authorityGuard);
+                authorityGuard: AuthorityGuardService,
+                groupGuard: GroupGuardService) {
+        super(config, router, log, userService, roleGuard, authorityGuard, groupGuard);
     }
 }
