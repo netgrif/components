@@ -1,11 +1,13 @@
 import {Component, Inject} from '@angular/core';
 import {
-    AbstractSearchPredicateComponent,
+    AbstractSearchPredicateComponent, AutocompleteCategory,
     Category,
     NAE_SEARCH_CATEGORIES,
     OperatorTemplatePartType,
+    SearchAutocompleteOption,
     SearchInputType
 } from '@netgrif/application-engine';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'nc-search-predicate',
@@ -21,5 +23,9 @@ export class SearchPredicateComponent extends AbstractSearchPredicateComponent {
 
     constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>) {
         super(searchCategories);
+    }
+
+    public filterOptions(): (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption>> {
+        return (this.selectedCategory as AutocompleteCategory<any>).filterOptions;
     }
 }

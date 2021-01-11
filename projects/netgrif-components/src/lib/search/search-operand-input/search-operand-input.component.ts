@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractSearchOperandInputComponent} from '@netgrif/application-engine';
+import {AbstractSearchOperandInputComponent, SearchInputType} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-search-operand-input',
@@ -7,6 +7,9 @@ import {AbstractSearchOperandInputComponent} from '@netgrif/application-engine';
     styleUrls: ['./search-operand-input.component.scss']
 })
 export class SearchOperandInputComponent extends AbstractSearchOperandInputComponent {
+
+    // make enum accessible in HTMl
+    public searchInputType = SearchInputType;
 
     constructor() {
         super();

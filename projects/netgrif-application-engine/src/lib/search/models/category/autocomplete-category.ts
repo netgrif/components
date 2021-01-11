@@ -4,6 +4,7 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {SearchInputType} from './search-input-type';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 /**
  * Represents a Search Category whose values are a known set. The value selection is done with an autocomplete field.
@@ -65,9 +66,11 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
      * @param userInput user search input
      * @returns options that satisfy the autocomplete condition
      */
-    public filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
-        const value = userInput.toLocaleLowerCase();
-        return of(this.options.filter(option => option.text.toLocaleLowerCase().startsWith(value)));
+    public filterOptions(userInput: Observable<string>): Observable<Array<SearchAutocompleteOption>> {
+        return userInput.pipe(map(input => {
+            const value = input.toLocaleLowerCase();
+            return this.options.filter(option => option.text.toLocaleLowerCase().startsWith(value));
+        }));
     }
 
     /**
@@ -83,6 +86,4 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
             this._optionsMap.set(key, [value]);
         }
     }
-
-
 }

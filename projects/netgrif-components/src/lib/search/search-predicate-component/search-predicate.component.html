@@ -60,7 +60,9 @@
                                     <div *ngIf="templatePart.type === operatorTemplatePartType.TEXT; else operatorInput">{{templatePart.content | translate}}</div>
                                     <ng-template #operatorInput>
                                         <div (click)="$event.stopPropagation()">
-                                            <nc-search-operand-input [formControl]="templatePart.content" [inputType]="selectedCategory.inputType"></nc-search-operand-input>
+                                            <nc-search-operand-input [formControl]="templatePart.content"
+                                                                     [inputType]="selectedCategory.inputType"
+                                                                     [filterOptionsFunction]="filterOptions()"></nc-search-operand-input>
                                         </div>
                                     </ng-template>
                                 </ng-template>

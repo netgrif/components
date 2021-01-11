@@ -5,7 +5,7 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {Equals} from '../../operator/equals';
 import {Query} from '../../query/query';
 import {Observable, of} from 'rxjs';
-import {filter, map, tap} from 'rxjs/operators';
+import {filter, map, switchMap, tap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 
@@ -23,23 +23,30 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
             logger);
     }
 
-    protected createOptions(): void {}
+    protected createOptions(): void {
+    }
 
-    filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
-        if (this._searchingUsers) {
-            return of([]);
-        }
-        this._searchingUsers = true;
-        // TODO 13.5.2020 - Endpoint searches for substrings in name and surname separately, won't match "Name Surname" string to any result
-        //  User search should possibly be delegated to elastic in the future
-        return this._optionalDependencies.userResourceService.search({fulltext: userInput}).pipe(
-            tap(() => {
-                this._searchingUsers = false;
+    filterOptions(userInput: Observable<string>): Observable<Array<SearchAutocompleteOption>> {
+        return userInput.pipe(
+            map(input => {
+                if (this._searchingUsers) {
+                    return of([]);
+                }
+                this._searchingUsers = true;
+                // TODO 13.5.2020 - Endpoint searches for substrings in name and surname separately
+                //  and won't match "Name Surname" string to any result
+                //  User search should possibly be delegated to elastic in the future
+                return this._optionalDependencies.userResourceService.search({fulltext: userInput}).pipe(
+                    tap(() => {
+                        this._searchingUsers = false;
+                    }),
+                    filter(page => hasContent(page)),
+                    map(users => users.content.map(
+                        user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
+                    ))
+                );
             }),
-            filter(page => hasContent(page)),
-            map(users => users.content.map(
-                user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
-            ))
+            switchMap(o => o)
         );
     }
 

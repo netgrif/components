@@ -1,0 +1,77 @@
+<div [ngSwitch]="inputType" ngClass.gt-md="search-input-lg" ngClass.lt-lg="search-input-md"
+     ngClass.lt-md="search-input-sm">
+    <ng-template [ngSwitchCase]="searchInputType.TEXT">
+        <mat-form-field class="search-input">
+            <input type="text" matInput
+                   [formControl]="formControl"
+                   (keydown.enter)="$event.target.blur()">
+        </mat-form-field>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
+        <mat-form-field class="search-input">
+            <input type="text" matInput
+                   #autocompleteInput
+                   #autocompleteTrigger="matAutocompleteTrigger"
+                   [formControl]="formControl"
+                   [matAutocomplete]="searchAutocomplete"
+                   (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">
+            <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection"
+                              (optionSelected)="autocompleteInput.blur()">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
+                    <span>{{option.text}}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="searchInputType.DATE">
+        <mat-form-field class="search-input">
+            <input matInput
+                   [formControl]="formControl"
+                   [matDatepicker]="searchDatepicker"
+                   (click)="searchDatepicker.open()"
+                   (keydown.enter)="searchDatepicker.close()">
+            <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #searchDatepicker></mat-datepicker>
+        </mat-form-field>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="searchInputType.DATE_TIME">
+        <mat-form-field class="search-input">
+            <input matInput
+                   [formControl]="formControl"
+                   [ngxMatDatetimePicker]="searchDateTimepicker"
+                   (click)="searchDateTimepicker.open()"
+                   (keydown.enter)="searchDateTimepicker.close()">
+            <mat-datepicker-toggle matPrefix [for]="searchDateTimepicker">
+                <mat-icon matDatepickerToggleIcon>schedule</mat-icon>
+            </mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #searchDateTimepicker
+                                     [showSpinners]="true"
+                                     [showSeconds]="false"
+                                     [stepHour]="1"
+                                     [stepMinute]="5"
+                                     [color]="'primary'"
+                                     [enableMeridian]="false"></ngx-mat-datetime-picker>
+        </mat-form-field>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="searchInputType.NUMBER">
+        <mat-form-field class="search-input">
+            <input type="number" matInput
+                   [formControl]="formControl"
+                   (keydown.enter)="$event.target.blur()">
+        </mat-form-field>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="searchInputType.BOOLEAN">
+        <div fxLayout="row">
+            <mat-form-field floatLabel="always" class="search-input">
+                <mat-slide-toggle
+                    [formControl]="formControl"></mat-slide-toggle>
+            </mat-form-field>
+        </div>
+    </ng-template>
+</div>

@@ -92,17 +92,6 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
                           protected _searchService: SearchService,
                           protected _logger: LoggerService,
                           @Optional() protected _searchChipService: SearchChipService) {
-        this.filteredOptions = this.formControl.valueChanges.pipe(
-            startWith(''),
-            map(value => typeof value === 'string' ? value : this.objectName(value)),
-            map(inputText => this._filterOptions(inputText)),
-            mergeAll(),
-            map(s => s.sort((a, b) => {
-                const tmp_a = !!a.translationPath ? this.categoryName(a) : (!!a.text ? a.text : '');
-                const tmp_b = !!b.translationPath ? this.categoryName(b) : (!!b.text ? b.text : '');
-                return tmp_a.localeCompare(tmp_b);
-            }))
-        );
         this._searchService.predicateRemoved$.subscribe(event => this.processChipRemoval(event.index));
         if (this._searchChipService) {
             this._searchChipService.addChipRequests$.subscribe(request => this.addExternalChip(request));
@@ -132,25 +121,6 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
 
     public get inputPlaceholder$(): Observable<string> {
         return this._inputPlaceholder$.asObservable();
-    }
-
-    /**
-     * @ignore
-     * filters available [Categories]{@link Category} based on user input
-     * @param userInput string entered by the user
-     * @returns [Categories]{@link Category} that start with the user input. Case insensitive. Based on locale translation.
-     */
-    protected _filterOptions(userInput: string): Observable<Array<Category<any>>> | Observable<Array<SearchAutocompleteOption>> {
-        if (!this._selectedCategory) {
-            const value = userInput.toLocaleLowerCase();
-            // return of(this.searchCategories.filter(category => this.categoryName(category).toLocaleLowerCase().startsWith(value)));
-            return of([]);
-        } else {
-            if (this._selectedCategory instanceof AutocompleteCategory) {
-                return this._selectedCategory.filterOptions(userInput);
-            }
-            return of([]);
-        }
     }
 
     /**
