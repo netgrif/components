@@ -43,7 +43,7 @@ export class MockUserPreferenceService {
         return undefined;
     }
 
-    public preferencesChanged$(): Observable<void> {
+    public get preferencesChanged$(): Observable<void> {
         return of();
     }
 }
