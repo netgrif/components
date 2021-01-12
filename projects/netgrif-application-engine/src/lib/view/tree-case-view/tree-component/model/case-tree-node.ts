@@ -108,4 +108,17 @@ export class CaseTreeNode {
     private searchImmediateData(dataId: string): ImmediateData | undefined {
         return this.case.immediateData.find(data => data.stringId === dataId);
     }
+
+    /**
+     * @returns an object representing the same CaseTreeNode, but with circular references removed, so that it can be serialized and logged.
+     * The [parent]{@link CaseTreeNode#parent} reference is replaced by the parents case stringId (if defined).
+     * The [children]{@link CaseTreeNode#children} references are replaced by the child's case stringId (if defined).
+     */
+    public toLoggableForm(): object {
+        return {
+            ...this,
+            ...{parent: this.parent ? this.parent.case.stringId : this.parent},
+            ...{children: this.children.map(c => c.case.stringId)}
+        };
+    }
 }

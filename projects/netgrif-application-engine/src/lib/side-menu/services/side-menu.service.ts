@@ -1,7 +1,7 @@
 import {Inject, Injectable, Injector, Optional, TemplateRef, Type} from '@angular/core';
 import {ComponentPortal, ComponentType, TemplatePortal} from '@angular/cdk/portal';
 import {Observable} from 'rxjs';
-import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token.module';
+import {NAE_SIDE_MENU_CONTROL} from '../side-menu-injection-token';
 import {SideMenuSize} from '../models/side-menu-size';
 import {PortalWrapper} from '../models/portal-wrapper';
 import {SideMenuRef} from '../models/side-menu-ref';
@@ -9,7 +9,7 @@ import {SideMenuInjectionData} from '../models/side-menu-injection-data';
 import {SideMenuControl} from '../models/side-menu-control';
 import {SideMenuEvent} from '../models/side-menu-event';
 import {MatDrawerToggleResult} from '@angular/material/sidenav';
-import {NAE_NET_ALL_VERSIONS, NAE_NET_VERSION_VISIBLE} from '../net-version-visible-injection-token.module';
+import {NAE_NET_ALL_VERSIONS, NAE_NET_VERSION_VISIBLE} from '../net-version-visible-injection-token';
 
 @Injectable({
     providedIn: 'root'

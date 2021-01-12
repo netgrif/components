@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine-project",
-    "version": "5.0.0-alpha.4",
+    "version": "5.0.0-alpha.5",
     "description": "Netgrif Application Engine Frontend project. Project includes angular library as base for NAE applications.",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -59,8 +59,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "postversion": "node scripts/copy-version.js",
-        "schematic-debug": "ng g @netgrif/components:create-view-prompt"
+        "postversion": "node scripts/copy-version.js"
     },
     "private": true,
     "dependencies": {

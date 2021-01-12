@@ -1,11 +1,16 @@
 import {Component} from '@angular/core';
-import {Filter, TreeCaseViewService, FilterRepository} from '@netgrif/application-engine';
+import {Filter, TreeCaseViewService, FilterRepository, NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/application-engine';
 
 @Component({
     selector: '<%= prefix %>-<%= dasherize(className) %>',
     templateUrl: './<%= dasherize(className) %>.component.html',
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
-    providers: [TreeCaseViewService]
+    providers: [
+        TreeCaseViewService,
+        {   provide: NAE_VIEW_ID_SEGMENT,
+            useValue: '<%= viewIdSegment %>'},
+        ViewIdService,
+    ]
 })
 export class <%= classify(className) %>Component {
 

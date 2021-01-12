@@ -57,3 +57,11 @@ export function addImportsToAppModule(tree: Tree, imports: Array<ImportToAdd>): 
 export function constructRoutePath(pathPrefix: string, pathPart: string): string {
     return `${pathPrefix}${pathPrefix.length > 0 ? '/' : ''}${pathPart}`;
 }
+
+export function getViewIdSegmentFromPath(path: string): string {
+    const index = path.lastIndexOf('/');
+    if (index === -1) {
+        return path;
+    }
+    return path.substring(index + 1);
+}

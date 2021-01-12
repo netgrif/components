@@ -22,8 +22,7 @@ export class UserPreferenceService {
                 protected _userResourceService: UserResourceService,
                 protected _logger: LoggerService,
                 protected _snackbar: SnackBarService,
-                protected _translate: TranslateService,
-                protected _groupService: NextGroupService) {
+                protected _translate: TranslateService) {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
         this._drawerWidthChanged$ = new Subject<number>();
