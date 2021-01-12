@@ -59,6 +59,10 @@ export class Net {
     /**
      * @ignore
      */
+    private _permissions: object;
+    /**
+     * @ignore
+     */
     constructor(net: PetriNetReference) {
         this._stringId = net.stringId;
         this._title = net.title;
@@ -168,5 +172,13 @@ export class Net {
 
     set roles(value: Array<NetRole>) {
         this._roles = value;
+    }
+
+    get permissions(): object {
+        return this._permissions;
+    }
+
+    set permissions(value: object) {
+        this._permissions = value;
     }
 }

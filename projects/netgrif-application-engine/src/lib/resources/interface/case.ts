@@ -108,6 +108,10 @@ export interface Case {
      * **Example:** home
      */
     icon?: string;
+    /**
+     * **Example:** {}
+     */
+    permissions: object;
 }
 
 

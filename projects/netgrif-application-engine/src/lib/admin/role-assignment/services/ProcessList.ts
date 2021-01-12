@@ -5,6 +5,7 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {forkJoin, Observable, of, timer} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
 import NetRole from '../../../process/netRole';
+import RolesAndPermissions from '../../../process/rolesAndPermissions';
 
 export interface ExtendedProcessRole extends NetRole {
     selected: boolean;
@@ -165,8 +166,7 @@ export class ProcessList {
                 this._log.error('Failed to load roles for Petri net [' + net.stringId + '] ' + net.title, err);
                 return of([] as ExtendedProcessRole[]);
             }),
-            map(roles => Array.isArray(roles) ? roles : [] as NetRole[]),
-            map(roles => roles.map(role => ({
+            map((roles: RolesAndPermissions) => roles.processRoles.map(role => ({
                 ...role,
                 selected: false,
                 processIdentifier: net.identifier,

@@ -169,7 +169,11 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     public createNewCase(): Observable<Case> {
         const myCase = new Subject<Case>();
         this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
-            {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
+            {
+                allowedNets$: this.allowedNets$.pipe(
+                    map(net => net.filter(n => this.canDo('create', n)))
+                )
+            }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.reload();
@@ -219,5 +223,21 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
 
     public hasAuthority(authority: Array<string> | string): boolean {
         return this._user.hasAuthority(authority);
+    }
+
+    public canDo(action: string, net: Net): boolean {
+        if (!net
+            || !net.permissions
+            || !action
+            || !(net.permissions instanceof Object)
+        ) {
+            return false;
+        }
+        if (Object.keys(net.permissions).length === 0) {
+            return true;
+        }
+        return Object.keys(net.permissions).some(role =>
+            this._user.hasRoleById(role) ? !!net.permissions[role][action] : false
+        );
     }
 }
