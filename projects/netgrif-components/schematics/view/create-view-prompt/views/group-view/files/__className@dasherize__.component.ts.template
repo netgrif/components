@@ -1,10 +1,14 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
-    ConfigTaskViewServiceFactory, NextGroupService,
+    ConfigTaskViewServiceFactory,
+    NextGroupService,
     SearchService,
-    SimpleFilter, TaskSearchCaseQuery,
-    TaskViewService
+    SimpleFilter,
+    TaskSearchCaseQuery,
+    TaskViewService,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService,
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
@@ -35,6 +39,9 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},
+        {   provide: NAE_VIEW_ID_SEGMENT,
+            useValue: '<%= viewIdSegment %>'},
+        ViewIdService,
     ]
 })
 export class <%= classify(className) %>Component extends AbstractTaskView implements AfterViewInit {

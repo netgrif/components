@@ -1,44 +1,39 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    ArrayTaskViewServiceFactory, BOOLEAN_VALUE_LABEL_ENABLED,
+    ArrayTaskViewServiceFactory,
     InjectedTabbedTaskViewData,
     NAE_TAB_DATA,
     SearchService,
     TabbedTaskView,
-    tabbedTaskViewServiceFactory,
     TaskViewService,
-    ViewIdService
+    tabbedTaskViewServiceFactory,
+    ViewIdService,
 } from '@netgrif/application-engine';
-import {HeaderComponent} from '@netgrif/components';
+import {
+    HeaderComponent,
+} from '@netgrif/components';
 
 const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     return new SearchService(injectedTabData.baseFilter);
 };
 
 @Component({
-    selector: 'nae-app-tabbed-task-view',
-    templateUrl: './tabbed-task-view.component.html',
-    styleUrls: ['./tabbed-task-view.component.scss'],
+    selector: '<%= prefix %>-<%= dasherize(className) %>',
+    templateUrl: './<%= dasherize(className) %>.component.html',
+    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         ArrayTaskViewServiceFactory,
-        {
-            provide: SearchService,
+        {   provide: SearchService,
             useFactory: searchServiceFactory,
-            deps: [NAE_TAB_DATA]
-        },
-        {
-            provide: TaskViewService,
+            deps: [NAE_TAB_DATA]},
+        {   provide: TaskViewService,
             useFactory: tabbedTaskViewServiceFactory,
-            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]
-        },
-        {
-            provide: BOOLEAN_VALUE_LABEL_ENABLED,
-            useValue: true
-        },
-        {   provide: ViewIdService, useValue: null}
+            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(isDefaultTabbedTaskView) { %>
+        {   provide: ViewIdService, useValue: null},<% } else { %>
+        ViewIdService,<% } %>
     ]
 })
-export class TabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {
+export class <%= classify(className) %>Component extends TabbedTaskView implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
