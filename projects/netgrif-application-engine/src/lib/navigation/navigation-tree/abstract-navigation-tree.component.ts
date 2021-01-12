@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {View, Views} from '../../configuration/interfaces/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {Subscription} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
@@ -23,6 +23,8 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
+    @Input() public contentWidth: BehaviorSubject<number>;
+    public width: number;
     protected subRouter: Subscription;
 
     treeControl: NestedTreeControl<NavigationNode>;
@@ -57,6 +59,7 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
             }
             this.resolveLevels(this.dataSource.data);
         }
+        this.contentWidth.subscribe(newWidth => this.width = newWidth);
     }
 
     ngOnDestroy(): void {
