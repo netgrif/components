@@ -57,8 +57,11 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
             }
         });
         this.opened = this._config.opened;
-        this.width = this.userPreferenceService.getDrawerWidth();
-        this.contentWidth.next(this.width);
+        this.userPreferenceService.preferencesChanged$.subscribe(() => {
+            this.width = this.userPreferenceService.getDrawerWidth();
+            this.contentWidth.next(this.width);
+        });
+        // this.width = this.userPreferenceService.getDrawerWidth();
     }
 
     ngAfterViewInit(): void {
