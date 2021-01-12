@@ -31,6 +31,6 @@ export class AbstractSearchOperandInputComponent {
      * @param selection the selected option
      */
     protected _renderSelection(selection: SearchAutocompleteOption): string {
-        return selection.text;
+        return selection ? selection.text : '';
     }
 }

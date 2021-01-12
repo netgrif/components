@@ -10,23 +10,19 @@
     <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
         <mat-form-field>
             <input type="text" matInput autocomplete="off"
+                   #autocompleteInput
+                   #autocompleteTrigger="matAutocompleteTrigger"
                    [formControl]="inputFormControl"
-                   (keydown.enter)="$event.target.blur()">
-<!--            TODO: fix autocomplete operand selection -->
-<!--            <input type="text" matInput-->
-<!--                   #autocompleteInput-->
-<!--                   #autocompleteTrigger="matAutocompleteTrigger"-->
-<!--                   [formControl]="inputFormControl"-->
-<!--                   [matAutocomplete]="searchAutocomplete"-->
-<!--                   (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">-->
-<!--            <mat-autocomplete #searchAutocomplete="matAutocomplete"-->
-<!--                              [displayWith]="renderSelection"-->
-<!--                              (optionSelected)="autocompleteInput.blur()">-->
-<!--                <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">-->
-<!--                    <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>-->
-<!--                    <span>{{option.text}}</span>-->
-<!--                </mat-option>-->
-<!--            </mat-autocomplete>-->
+                   [matAutocomplete]="searchAutocomplete"
+                   (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">
+            <mat-autocomplete #searchAutocomplete="matAutocomplete"
+                              [displayWith]="renderSelection"
+                              (optionSelected)="autocompleteInput.blur()">
+                <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+                    <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
+                    <span>{{option.text}}</span>
+                </mat-option>
+            </mat-autocomplete>
         </mat-form-field>
     </ng-template>
 
@@ -72,10 +68,7 @@
 
     <ng-template [ngSwitchCase]="searchInputType.BOOLEAN">
         <div fxLayout="row">
-            <mat-form-field floatLabel="always">
-                <mat-slide-toggle
-                    [formControl]="inputFormControl"></mat-slide-toggle>
-            </mat-form-field>
+            <mat-slide-toggle [formControl]="inputFormControl"></mat-slide-toggle>
         </div>
     </ng-template>
 </div>
