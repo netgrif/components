@@ -1,9 +1,11 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
-    ConfigTaskViewServiceFactory, NextGroupService,
+    ConfigTaskViewServiceFactory,
+    NextGroupService,
     SearchService,
     SimpleFilter,
+    TaskSearchCaseQuery,
     TaskViewService,
     NAE_VIEW_ID_SEGMENT,
     ViewIdService,
@@ -17,7 +19,11 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
 };
 
 const searchServiceFactory = (nextGroupService: NextGroupService) => {
-    return new SearchService(SimpleFilter.fromTaskQuery({case: {id: nextGroupService.groupOfUser.stringId}}));
+    const groupIds: Array<TaskSearchCaseQuery> = [];
+    nextGroupService.groupOfUser.forEach(group => {
+       groupIds.push({id: group.stringId});
+    });
+    return new SearchService(SimpleFilter.fromTaskQuery({case: groupIds}));
 };
 
 @Component({

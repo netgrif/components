@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {User} from '../../../models/user';
 import {AuthenticationMethodService} from '../../authentication-method.service';
 import {Credentials} from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
+import {UserResource} from '../../../../resources/interface/user-resource';
 
 @Injectable()
 export class BasicAuthenticationService extends AuthenticationMethodService {
@@ -13,7 +13,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         super();
     }
 
-    login(credentials: Credentials = {username: '', password: ''}): Observable<User> {
+    login(credentials: Credentials = {username: '', password: ''}): Observable<UserResource> {
         const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['login'];
         if (!url) {
             throwError(new Error('Login URL is not defined in the config [nae.providers.auth.endpoints.login]'));
@@ -27,7 +27,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
             throwError(new Error('User\'s credentials are empty!'));
         }
 
-        return this._http.get<User>(url, {
+        return this._http.get<UserResource>(url, {
             headers: new HttpHeaders().set('Authorization', `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`)
         });
     }
