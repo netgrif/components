@@ -37,7 +37,6 @@ export class CaseDataset extends Category<Datafield> {
     protected _configurationInputs$: BehaviorSubject<Array<SearchInputType>>;
 
     protected _datafieldFormControl: FormControl;
-    protected _operatorFormControl: FormControl;
 
     protected _filteredConfigurationOptions$: Observable<Array<SearchAutocompleteOption>>;
 
@@ -73,7 +72,6 @@ export class CaseDataset extends Category<Datafield> {
         this._configurationInputs$ = new BehaviorSubject<Array<SearchInputType>>([SearchInputType.AUTOCOMPLETE]);
 
         this._datafieldFormControl = new FormControl();
-        this._operatorFormControl = new FormControl();
 
         this._datafieldOptions = new Map<string, Array<Datafield>>();
         this.createDatafieldOptions();

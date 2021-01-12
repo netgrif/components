@@ -1,7 +1,7 @@
 <div [ngSwitch]="inputType">
     <ng-template [ngSwitchCase]="searchInputType.TEXT">
         <mat-form-field>
-            <input type="text" matInput
+            <input type="text" matInput autocomplete="off"
                    [formControl]="inputFormControl"
                    (keydown.enter)="$event.target.blur()">
         </mat-form-field>
@@ -9,7 +9,7 @@
 
     <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
         <mat-form-field>
-            <input type="text" matInput
+            <input type="text" matInput autocomplete="off"
                    [formControl]="inputFormControl"
                    (keydown.enter)="$event.target.blur()">
 <!--            TODO: fix autocomplete operand selection -->
@@ -32,7 +32,7 @@
 
     <ng-template [ngSwitchCase]="searchInputType.DATE">
         <mat-form-field>
-            <input matInput
+            <input matInput autocomplete="off"
                    [formControl]="inputFormControl"
                    [matDatepicker]="searchDatepicker"
                    (click)="searchDatepicker.open()"
@@ -44,7 +44,7 @@
 
     <ng-template [ngSwitchCase]="searchInputType.DATE_TIME">
         <mat-form-field>
-            <input matInput
+            <input matInput autocomplete="off"
                    [formControl]="inputFormControl"
                    [ngxMatDatetimePicker]="searchDateTimepicker"
                    (click)="searchDateTimepicker.open()"
@@ -64,7 +64,7 @@
 
     <ng-template [ngSwitchCase]="searchInputType.NUMBER">
         <mat-form-field>
-            <input type="number" matInput
+            <input type="number" matInput autocomplete="off"
                    [formControl]="inputFormControl"
                    (keydown.enter)="$event.target.blur()">
         </mat-form-field>

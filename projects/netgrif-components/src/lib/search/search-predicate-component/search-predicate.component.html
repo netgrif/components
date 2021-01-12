@@ -14,7 +14,7 @@
             </mat-select>
         </mat-form-field>
 
-        <div *ngIf="selectedCategory">
+        <div *ngIf="selectedCategory" fxLayout="row" fxLayoutAlign="start center">
             <ng-template ngFor let-configurationInput [ngForOf]="selectedCategory.configurationInputs$ | async" let-i="index">
                 <div [ngSwitch]="configurationInput">
                     <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
