@@ -14,17 +14,9 @@ import {FormControl} from '@angular/forms';
  */
 export abstract class NoConfigurationAutocompleteCategory<T> extends AutocompleteCategory<T> {
 
-    /**
-     * Contains the `FormControl` object that is used to drive the operator selection.
-     *
-     * The category can subscribe to it if it wishes to react to the selection change by the user.
-     */
-    protected _operatorFormControl: FormControl;
-
     protected constructor(elasticKeywords: Array<string>, allowedOperators: Array<Operator<any>>,
                           translationPath: string, log: LoggerService) {
         super(elasticKeywords, allowedOperators, translationPath, log);
-        this._operatorFormControl = new FormControl();
     }
 
     /**

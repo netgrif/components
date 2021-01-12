@@ -15,10 +15,15 @@ export class AbstractSearchOperandInputComponent {
      */
     @Input() filterOptionsFunction: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption>>;
 
+    private _filteredOptions$: Observable<Array<SearchAutocompleteOption>>;
+
     public renderSelection = (selection: SearchAutocompleteOption) => this._renderSelection(selection);
 
-    public get filteredOptions(): Observable<Array<SearchAutocompleteOption>> {
-        return this.filterOptionsFunction(this.inputFormControl.valueChanges.pipe(debounceTime(300)));
+    public get filteredOptions$(): Observable<Array<SearchAutocompleteOption>> {
+        if (!this._filteredOptions$) {
+            this._filteredOptions$ = this.filterOptionsFunction(this.inputFormControl.valueChanges.pipe(debounceTime(300)));
+        }
+        return this._filteredOptions$;
     }
 
     /**

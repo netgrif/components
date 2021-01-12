@@ -38,6 +38,7 @@
                     </ng-template>
                     <ng-template [ngSwitchCase]="searchInputType.OPERATOR">
                         <div *ngIf="selectedCategory.isOperatorSelected(); then argumentsSelection; else operatorSelection"></div>
+
                         <ng-template #operatorSelection>
                             <mat-form-field>
                                 <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)">
@@ -54,11 +55,13 @@
                                 </mat-select>
                             </mat-form-field>
                         </ng-template>
+
                         <ng-template #argumentsSelection>
-                            <div (click)="selectedCategory.clearOperatorSelection()">
-                                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate | async">
+                            <div fxLayout="row" fxLayoutAlign="start center" (click)="selectedCategory.clearOperatorSelection()">
+                                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate$ | async">
                                     <ng-container *ngTemplateOutlet="templatePart.type === operatorTemplatePartType.TEXT ? templateText : operandInput; context: {tp: templatePart}"></ng-container>
                                 </ng-template>
+
                                 <ng-template #templateText let-templatePart="tp">
                                     <div>
                                         {{templatePart.content | translate}}

@@ -36,14 +36,14 @@ export abstract class Category<T> {
     protected _operatorFormControl: FormControl;
 
     /**
-     * Contains the `FormControl` objects that can be used to input search arguments.
+     * Stores the `FormControl` objects that are pushed into the observable when the number of operands changes.
      */
-    protected _operandsFormControls: ReplaySubject<Array<FormControl>>;
+    protected _operandsFormControls: Array<FormControl>;
 
     /**
-     * Contains the subscriptions to the FormControl changes for each operator input argument.
+     * Contains the `FormControl` objects that can be used to input search arguments.
      */
-    protected _operandsChangeSubscriptions: Array<Subscription>;
+    protected _operandsFormControls$: ReplaySubject<Array<FormControl>>;
 
     /**
      * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
@@ -61,8 +61,8 @@ export abstract class Category<T> {
                           protected readonly _inputType: SearchInputType,
                           protected _log: LoggerService) {
         this._operatorFormControl = new FormControl();
-        this._operandsFormControls = new ReplaySubject<Array<FormControl>>(1);
-        this._operandsChangeSubscriptions = [];
+        this._operandsFormControls$ = new ReplaySubject<Array<FormControl>>(1);
+        this._operandsFormControls = [];
         this.initializeCategory();
     }
 
@@ -107,12 +107,11 @@ export abstract class Category<T> {
 
     /**
      * @returns an array of `FormControl` objects that contains as many controls as is the arity of the selected operator.
-     * Calling this method multiple times without changing the selected operator will return the same `FormControl` instances.
-     * Changing the operator selection will result in new instances being created.
+     * Calling this method multiple times will return the same `FormControl` instances.
      * When no operator is selected `undefined` is emitted.
      */
-    public get operandsFormControls(): Observable<Array<FormControl> | undefined> {
-        return this._operandsFormControls.asObservable();
+    public get operandsFormControls$(): Observable<Array<FormControl> | undefined> {
+        return this._operandsFormControls$.asObservable();
     }
 
     /**
@@ -120,8 +119,8 @@ export abstract class Category<T> {
      *
      * @returns [operators template]{@link Operator#getOperatorNameTemplate} in processed form fit for GUI rendering
      */
-    public get operatorTemplate(): Observable<Array<OperatorTemplatePart> | undefined> {
-        return this.operandsFormControls.pipe(
+    public get operatorTemplate$(): Observable<Array<OperatorTemplatePart> | undefined> {
+        return this.operandsFormControls$.pipe(
             map(formControls => {
                 if (!formControls) {
                     return undefined;
@@ -251,25 +250,27 @@ export abstract class Category<T> {
      * constructor from scratch.
      */
     protected initializeCategory(): void {
-        this._operatorFormControl.valueChanges.subscribe( (newOperator: Operator<any>) => {
-            this._operandsChangeSubscriptions.forEach(sub => {
-                sub.unsubscribe();
-            });
-            this._operandsChangeSubscriptions = [];
-
+        this._operatorFormControl.valueChanges.subscribe((newOperator: Operator<any>) => {
             if (!newOperator) {
-                this._operandsFormControls.next(undefined);
+                this._operandsFormControls$.next(undefined);
                 return;
             }
 
-            const args = [];
-            for (let i = 0; i < newOperator.numberOfOperands; i++) {
-                const fc = new FormControl();
-                args.push(fc);
-                this._operandsChangeSubscriptions.push(fc.valueChanges.pipe(debounceTime(300))
-                    .subscribe(val => this.operandValueChanges(val)));
+            this._operandsFormControls.forEach(fc => {
+                fc.setValue(undefined);
+            });
+
+            if (newOperator.numberOfOperands > this._operandsFormControls.length) {
+                while (this._operandsFormControls.length < newOperator.numberOfOperands) {
+                    const fc = new FormControl();
+                    fc.valueChanges.subscribe(v => {
+                        this.operandValueChanges(v);
+                    });
+                    this._operandsFormControls.push(fc);
+                }
             }
-            this._operandsFormControls.next(args);
+
+            this._operandsFormControls$.next(this._operandsFormControls.slice(0, newOperator.numberOfOperands));
         });
     }
 
