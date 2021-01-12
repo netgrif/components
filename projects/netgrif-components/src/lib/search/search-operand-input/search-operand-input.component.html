@@ -10,19 +10,23 @@
     <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
         <mat-form-field class="search-input">
             <input type="text" matInput
-                   #autocompleteInput
-                   #autocompleteTrigger="matAutocompleteTrigger"
                    [formControl]="inputFormControl"
-                   [matAutocomplete]="searchAutocomplete"
-                   (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">
-            <mat-autocomplete #searchAutocomplete="matAutocomplete"
-                              [displayWith]="renderSelection"
-                              (optionSelected)="autocompleteInput.blur()">
-                <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
-                    <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
-                    <span>{{option.text}}</span>
-                </mat-option>
-            </mat-autocomplete>
+                   (keydown.enter)="$event.target.blur()">
+<!--            TODO: fix autocomplete operand selection -->
+<!--            <input type="text" matInput-->
+<!--                   #autocompleteInput-->
+<!--                   #autocompleteTrigger="matAutocompleteTrigger"-->
+<!--                   [formControl]="inputFormControl"-->
+<!--                   [matAutocomplete]="searchAutocomplete"-->
+<!--                   (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">-->
+<!--            <mat-autocomplete #searchAutocomplete="matAutocomplete"-->
+<!--                              [displayWith]="renderSelection"-->
+<!--                              (optionSelected)="autocompleteInput.blur()">-->
+<!--                <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">-->
+<!--                    <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>-->
+<!--                    <span>{{option.text}}</span>-->
+<!--                </mat-option>-->
+<!--            </mat-autocomplete>-->
         </mat-form-field>
     </ng-template>
 
