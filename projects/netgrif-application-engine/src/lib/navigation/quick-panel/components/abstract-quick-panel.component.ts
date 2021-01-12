@@ -15,7 +15,9 @@ export abstract class AbstractQuickPanelComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.contentWidth.subscribe(newWidth => this.width = newWidth);
+        if (!!this.contentWidth) {
+            this.contentWidth.subscribe(newWidth => this.width = newWidth);
+        }
     }
 
     getLang(): string {

@@ -46,7 +46,7 @@ export abstract class AbstractUserCardComponent implements OnInit, OnDestroy {
     }
 
     get userBanner(): string {
-        return this.user['banner'];
+        return this.user && this.user['banner'] ? this.user['banner'] : 'assets/default-user-background.jpg';
     }
 
     get userAvatar(): string {

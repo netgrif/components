@@ -59,7 +59,9 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
             }
             this.resolveLevels(this.dataSource.data);
         }
-        this.contentWidth.subscribe(newWidth => this.width = newWidth);
+        if (!!this.contentWidth) {
+            this.contentWidth.subscribe(newWidth => this.width = newWidth);
+        }
     }
 
     ngOnDestroy(): void {

@@ -36,6 +36,13 @@ export class MockUserPreferenceService {
         return undefined;
     }
 
+    public setDrawerWidth(drawerWidth: number): void {
+    }
+
+    public getDrawerWidth(): number {
+        return undefined;
+    }
+
     public preferencesChanged$(): Observable<void> {
         return of();
     }
