@@ -4,7 +4,7 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
@@ -44,7 +44,12 @@ export abstract class Category<T> {
     /**
      * Contains the `FormControl` objects that can be used to input search arguments.
      */
-    protected _operandsFormControls$: ReplaySubject<Array<FormControl>>;
+    protected _operandsFormControls$: ReplaySubject<Array<FormControl> | undefined>;
+
+    /**
+     * Contains the operator template parts that make up the operands GUI.
+     */
+    protected _operatorTemplate$: BehaviorSubject<Array<OperatorTemplatePart> | undefined>;
 
     /**
      * Generates IDs for template parts supplied to ng for.
@@ -67,10 +72,25 @@ export abstract class Category<T> {
                           protected readonly _inputType: SearchInputType,
                           protected _log: LoggerService) {
         this._operatorFormControl = new FormControl();
-        this._operandsFormControls$ = new ReplaySubject<Array<FormControl>>(1);
+        this._operandsFormControls$ = new ReplaySubject<Array<FormControl> | undefined>(1);
+        this._operatorTemplate$ = new BehaviorSubject<Array<OperatorTemplatePart> | undefined>(undefined);
         this._operandsFormControls = [];
         this._trackByIdGenerator = new IncrementingCounter();
         this.initializeCategory();
+
+        this.operandsFormControls$.pipe(
+            map(formControls => {
+                if (!formControls) {
+                    return undefined;
+                }
+
+                const parts = this.selectedOperator.getOperatorNameTemplate();
+                const fcs = [...formControls];
+                return parts.map(part => new OperatorTemplatePart(part ? part : fcs.shift(), this._trackByIdGenerator.next()));
+            })
+        ).subscribe(template => {
+            this._operatorTemplate$.next(template);
+        });
     }
 
     /**
@@ -127,17 +147,7 @@ export abstract class Category<T> {
      * @returns [operators template]{@link Operator#getOperatorNameTemplate} in processed form fit for GUI rendering
      */
     public get operatorTemplate$(): Observable<Array<OperatorTemplatePart> | undefined> {
-        return this.operandsFormControls$.pipe(
-            map(formControls => {
-                if (!formControls) {
-                    return undefined;
-                }
-
-                const parts = this.selectedOperator.getOperatorNameTemplate();
-                const fcs = [...formControls];
-                return parts.map(part => new OperatorTemplatePart(part ? part : fcs.shift(), this._trackByIdGenerator.next()));
-            })
-        );
+        return this._operatorTemplate$.asObservable();
     }
 
     /**
