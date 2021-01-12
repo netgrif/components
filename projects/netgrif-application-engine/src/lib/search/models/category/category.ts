@@ -4,10 +4,11 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {Observable, ReplaySubject, Subscription} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
-import {debounceTime, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
+import {IncrementingCounter} from '../../../utility/incrementing-counter';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -46,6 +47,11 @@ export abstract class Category<T> {
     protected _operandsFormControls$: ReplaySubject<Array<FormControl>>;
 
     /**
+     * Generates IDs for template parts supplied to ng for.
+     */
+    protected _trackByIdGenerator: IncrementingCounter;
+
+    /**
      * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
      * method. If you want to override the category creation behavior override that method.
      *
@@ -63,6 +69,7 @@ export abstract class Category<T> {
         this._operatorFormControl = new FormControl();
         this._operandsFormControls$ = new ReplaySubject<Array<FormControl>>(1);
         this._operandsFormControls = [];
+        this._trackByIdGenerator = new IncrementingCounter();
         this.initializeCategory();
     }
 
@@ -128,7 +135,7 @@ export abstract class Category<T> {
 
                 const parts = this.selectedOperator.getOperatorNameTemplate();
                 const fcs = [...formControls];
-                return parts.map(part => new OperatorTemplatePart(part ? part : fcs.shift()));
+                return parts.map(part => new OperatorTemplatePart(part ? part : fcs.shift(), this._trackByIdGenerator.next()));
             })
         );
     }

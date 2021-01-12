@@ -4,6 +4,7 @@ import {Subject} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
+import {OperatorTemplatePart} from '../models/operator-template-part';
 
 
 /**
@@ -35,6 +36,8 @@ export abstract class AbstractSearchPredicateComponent {
         this.selectedCategory = newCategory;
     }
 
+    public trackByTemplateParts = (a: number, b: OperatorTemplatePart) => this._trackByTemplateParts(a, b);
+
     /**
      * Lambda that is used to preserve `this` reference in HTML binding.
      *
@@ -51,5 +54,14 @@ export abstract class AbstractSearchPredicateComponent {
      */
     protected _renderSelection(option: SearchAutocompleteOption): string {
         return option ? option.text : '';
+    }
+
+    /**
+     * Function for tracking Template parts in ngFor.
+     * @param index index of the ngFor element
+     * @param item template part
+     */
+    protected _trackByTemplateParts(index: number, item: OperatorTemplatePart): any {
+        return item.id;
     }
 }

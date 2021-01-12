@@ -1,6 +1,6 @@
-<div [ngSwitch]="inputType" ngClass.gt-md="search-input-lg" ngClass.lt-lg="search-input-md" ngClass.lt-md="search-input-sm">
+<div [ngSwitch]="inputType">
     <ng-template [ngSwitchCase]="searchInputType.TEXT">
-        <mat-form-field class="search-input">
+        <mat-form-field>
             <input type="text" matInput
                    [formControl]="inputFormControl"
                    (keydown.enter)="$event.target.blur()">
@@ -8,7 +8,7 @@
     </ng-template>
 
     <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
-        <mat-form-field class="search-input">
+        <mat-form-field>
             <input type="text" matInput
                    [formControl]="inputFormControl"
                    (keydown.enter)="$event.target.blur()">
@@ -31,7 +31,7 @@
     </ng-template>
 
     <ng-template [ngSwitchCase]="searchInputType.DATE">
-        <mat-form-field class="search-input">
+        <mat-form-field>
             <input matInput
                    [formControl]="inputFormControl"
                    [matDatepicker]="searchDatepicker"
@@ -43,7 +43,7 @@
     </ng-template>
 
     <ng-template [ngSwitchCase]="searchInputType.DATE_TIME">
-        <mat-form-field class="search-input">
+        <mat-form-field>
             <input matInput
                    [formControl]="inputFormControl"
                    [ngxMatDatetimePicker]="searchDateTimepicker"
@@ -63,7 +63,7 @@
     </ng-template>
 
     <ng-template [ngSwitchCase]="searchInputType.NUMBER">
-        <mat-form-field class="search-input">
+        <mat-form-field>
             <input type="number" matInput
                    [formControl]="inputFormControl"
                    (keydown.enter)="$event.target.blur()">
@@ -72,7 +72,7 @@
 
     <ng-template [ngSwitchCase]="searchInputType.BOOLEAN">
         <div fxLayout="row">
-            <mat-form-field floatLabel="always" class="search-input">
+            <mat-form-field floatLabel="always">
                 <mat-slide-toggle
                     [formControl]="inputFormControl"></mat-slide-toggle>
             </mat-form-field>
