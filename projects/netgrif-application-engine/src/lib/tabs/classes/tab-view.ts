@@ -6,17 +6,19 @@ import {orderBy} from 'natural-orderby';
 import {NAE_TAB_DATA} from '../tab-data-injection-token/tab-data-injection-token';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
 import {InjectedTabbedTaskViewData} from '../../view/task-view/models/injected-tabbed-task-view-data';
 import {TaskSearchCaseQuery, TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
+import {NAE_VIEW_ID_SEGMENT} from '../../user/models/view-id-injection-tokens';
 
 /**
  * Holds the logic for tab management in {@link AbstractTabViewComponent}.
  * If you want to implement your own TabViewComponent, you might want to extend this class to hold your logic.
  */
 export class TabView implements TabViewInterface {
+
+    public static readonly DYNAMIC_TAB_VIEW_ID_SEGMENT = 'dynamic';
 
     /**
      * Holds the tabs that are opened in the tab view, and allows them to be bound to HTML.
@@ -81,10 +83,10 @@ export class TabView implements TabViewInterface {
      * Opens a new tab with the provided content.
      * @param tabContent - content of the new tab
      * @param autoswitch - whether the newly opened tab should be switched to. Defaults to `false`.
-     * @param openExising - whether the opened tab already existing should be switched to existing one. Defaults to `true`.
+     * @param openExisting - whether the opened tab already existing should be switched to existing one. Defaults to `true`.
      * @returns the `tabUniqueId` of the newly opened tab
      */
-    public openTab(tabContent: TabContent, autoswitch: boolean = false, openExising: boolean = true): string {
+    public openTab(tabContent: TabContent, autoswitch: boolean = false, openExisting: boolean = true): string {
         if (tabContent.initial) {
             this._logger.warn(`'initial' attribute is not meant to be used with new tabs and will be ignored`);
             delete tabContent.initial;
@@ -92,7 +94,7 @@ export class TabView implements TabViewInterface {
 
         const newTab = new OpenedTab(tabContent, `${this.uniqueIdCounter.next()}`);
         const indexExisting = this.findIndexExistingTab(newTab);
-        if (indexExisting === -1 || !openExising) {
+        if (indexExisting === -1 || !openExisting) {
             return this.openNewTab(newTab, autoswitch);
         } else {
             this.openedTabs[this.selectedIndex].tabSelected$.next(false);
@@ -251,12 +253,7 @@ export class TabView implements TabViewInterface {
             const providers: StaticProvider[] = [
                 {provide: NAE_TAB_DATA, useValue: tab.injectedObject}
             ];
-            if (tab.initial) {
-                tab.tabViewService = new FixedIdViewService(
-                    `${this._viewService.getViewId()}${this._viewService.ID_DELIMITER}${tab.uniqueId}`,
-                    this._viewService);
-                providers.push({provide: ViewService, useValue: tab.tabViewService});
-            }
+            providers.push({provide: NAE_VIEW_ID_SEGMENT, useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT});
 
             const injector = Injector.create({providers, parent: this._parentInjector});
 

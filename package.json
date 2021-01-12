@@ -59,8 +59,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "postversion": "node scripts/copy-version.js",
-        "schematic-debug": "ng g @netgrif/components:create-view-prompt"
+        "postversion": "node scripts/copy-version.js"
     },
     "private": true,
     "dependencies": {

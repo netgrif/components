@@ -8,7 +8,7 @@ import {
     SimpleFilter,
     TabbedCaseView,
     SearchChipService,
-    AllNetsCaseViewServiceFactory, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory, CategoryFactory
+    AllNetsCaseViewServiceFactory, ViewIdService, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory, CategoryFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -33,6 +33,7 @@ const searchServiceFactory = () => {
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
             deps: [AllNetsCaseViewServiceFactory]},
+        ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })

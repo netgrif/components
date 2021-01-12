@@ -7,7 +7,9 @@ import {
     SearchService,
     SimpleFilter,
     AllNetsCaseViewServiceFactory,
-    OverflowService, CategoryFactory, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory
+    OverflowService,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService, CategoryFactory, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -33,6 +35,8 @@ const searchServiceFactory = () => {
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
             deps: [AllNetsCaseViewServiceFactory]},
+        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'case'},
+        ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
 })

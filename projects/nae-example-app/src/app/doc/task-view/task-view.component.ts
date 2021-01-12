@@ -8,7 +8,10 @@ import {
     TaskViewService,
     Task,
     NAE_DEFAULT_HEADERS,
-    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS, CategoryFactory, NAE_SEARCH_CATEGORIES, defaultTaskSearchCategoriesFactory
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService,
+    CategoryFactory, NAE_SEARCH_CATEGORIES, defaultTaskSearchCategoriesFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -50,13 +53,15 @@ const disableButtonsFactory = () => {
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},
-        {provide: NAE_DEFAULT_HEADERS, useValue: [
-            'meta-case', 'meta-title', 'meta-priority', 'meta-priority',
+        {   provide: NAE_DEFAULT_HEADERS, useValue: [
+                'meta-case', 'meta-title', 'meta-priority', 'meta-priority',
                 'meta-user', 'all_data-number', 'all_data-text'
             ]},
-        {provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+        {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
             useFactory: disableButtonsFactory
         },
+        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'task'},
+        ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
