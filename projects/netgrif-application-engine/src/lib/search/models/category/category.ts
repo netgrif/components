@@ -4,9 +4,9 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
-import {map} from 'rxjs/operators';
+import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
 
@@ -57,6 +57,12 @@ export abstract class Category<T> {
     protected _trackByIdGenerator: IncrementingCounter;
 
     /**
+     * Emit a new `Predicate` if the `Category` is in a state that it can be created.
+     * Emits `undefined` if the `Category` is not in such state.
+     */
+    protected _generatedPredicate$: BehaviorSubject<ElementaryPredicate | undefined>;
+
+    /**
      * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
      * method. If you want to override the category creation behavior override that method.
      *
@@ -76,6 +82,7 @@ export abstract class Category<T> {
         this._operatorTemplate$ = new BehaviorSubject<Array<OperatorTemplatePart> | undefined>(undefined);
         this._operandsFormControls = [];
         this._trackByIdGenerator = new IncrementingCounter();
+        this._generatedPredicate$ = new BehaviorSubject<ElementaryPredicate | undefined>(undefined);
         this.initializeCategory();
 
         this.operandsFormControls$.pipe(
@@ -101,9 +108,25 @@ export abstract class Category<T> {
      *
      * Beware that while most categories always return the same constant it must not always be the case.
      *
+     * Not all [SearchInputTypes]{@link SearchInputType} are supported as configuration inputs.
+     * The GUI can be currently automatically generated only for inputs of type [OPERATOR]{@link SearchInputType#OPERATOR} and
+     * [AUTOCOMPLETE]{@link SearchInputType#AUTOCOMPLETE}.
+     *
      * @returns the required input type for configuration steps of this category
      */
     public abstract get configurationInputs$(): Observable<Array<SearchInputType>>;
+
+    /**
+     * If you use the `Category` class as a sort of PredicateBuilder, then you want to use the
+     * [generatePredicate()]{@link Category#generatePredicate} method instead.
+     *
+     * This stream publishes either a new `Predicate` object or `undefined` based on changes to the `FormControls` that are
+     * managed by this class. If (based on user input) the `Category` reaches a state when construction of a `Predicate` is possible
+     * it will emit this `Predicate`. If it reaches a state when the `Predicate` can not longer be created `undefined` is emitted.
+     */
+    public get generatedPredicate$(): Observable<ElementaryPredicate | undefined> {
+        return this._generatedPredicate$.asObservable();
+    }
 
     /**
      * Beware that while most categories always return the same constant it is not a requirement.
@@ -280,8 +303,8 @@ export abstract class Category<T> {
             if (newOperator.numberOfOperands > this._operandsFormControls.length) {
                 while (this._operandsFormControls.length < newOperator.numberOfOperands) {
                     const fc = new FormControl();
-                    fc.valueChanges.subscribe(v => {
-                        this.operandValueChanges(v);
+                    fc.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+                        this.operandValueChanges(this._operandsFormControls.length);
                     });
                     this._operandsFormControls.push(fc);
                 }
@@ -294,7 +317,31 @@ export abstract class Category<T> {
     /**
      * The method that is (by default) called whenever an operand `FormControl` changes its value.
      *
-     * @param newValue the newly selected value
+     * @param operandIndex the index of the operand that changed its value
      */
-    protected abstract operandValueChanges(newValue: any): void;
+    protected operandValueChanges(operandIndex: number): void {
+        if (!this.isOperatorSelected()) {
+            return;
+        }
+        if (operandIndex >= this.selectedOperator.numberOfOperands) {
+            return;
+        }
+
+        for (let i = 0; i < this.selectedOperator.numberOfOperands; i++) {
+            if (!this.isOperandValueSelected(this._operandsFormControls[i].value)) {
+                if (this._generatedPredicate$.getValue()) {
+                    this._generatedPredicate$.next(undefined);
+                }
+                return;
+            }
+        }
+
+        this._generatedPredicate$.next(this.generatePredicate(this._operandsFormControls.map(fc => fc.value)));
+    }
+
+    /**
+     * @param newValue the value of the `FormControl` object that we want to test
+     * @returns `true` if the newly selected value is a valid value, `false` otherwise.
+     */
+    protected abstract isOperandValueSelected(newValue: any): boolean;
 }
