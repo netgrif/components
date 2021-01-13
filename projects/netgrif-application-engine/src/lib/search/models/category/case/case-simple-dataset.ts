@@ -29,13 +29,13 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     protected _processCategory: CaseProcess;
 
     constructor(protected _operators: OperatorService,
-                protected _logger: LoggerService,
+                logger: LoggerService,
                 protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
             `${CaseSimpleDataset._i18n}.name`,
             undefined,
-            _logger);
+            logger);
 
         this._processCategory = _optionalDependencies.categoryFactory.getWithDefaultOperator(CaseProcess) as CaseProcess;
     }
@@ -46,7 +46,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
 
     public configure(fieldId: string, fieldType: string, netIds: Array<string>): void {
         if (!fieldId || !fieldType || !netIds || netIds.length === 0) {
-            this._logger.error('CaseSimpleDataset must be configured with defined values and a non-empty array');
+            this._log.error('CaseSimpleDataset must be configured with defined values and a non-empty array');
             return;
         }
         this._fieldId = fieldId;
@@ -87,4 +87,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);
     }
 
+    duplicate(): CaseSimpleDataset {
+        return new CaseSimpleDataset(this._operators, this._log, this._optionalDependencies);
+    }
 }

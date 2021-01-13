@@ -8,9 +8,9 @@ export class CaseAuthor extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.author';
 
-    constructor(operators: OperatorService, logger: LoggerService) {
+    constructor(protected _operators: OperatorService, logger: LoggerService) {
         super(['authorEmail', 'authorName'],
-            [operators.getOperator(Substring)],
+            [_operators.getOperator(Substring)],
             `${CaseAuthor._i18n}.name`,
             SearchInputType.TEXT,
             logger);
@@ -18,5 +18,9 @@ export class CaseAuthor extends NoConfigurationCategory<string> {
 
     get inputPlaceholder(): string {
         return `${CaseAuthor._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseAuthor {
+        return new CaseAuthor(this._operators, this._log);
     }
 }

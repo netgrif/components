@@ -8,9 +8,9 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.visualId';
 
-    constructor(operators: OperatorService, logger: LoggerService) {
+    constructor(protected _operators: OperatorService, logger: LoggerService) {
         super(['visualId'],
-            [operators.getOperator(Substring)],
+            [_operators.getOperator(Substring)],
             `${CaseVisualId._i18n}.name`,
             SearchInputType.TEXT,
             logger);
@@ -18,5 +18,9 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
 
     get inputPlaceholder(): string {
         return `${CaseVisualId._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseVisualId {
+        return new CaseVisualId(this._operators, this._log);
     }
 }

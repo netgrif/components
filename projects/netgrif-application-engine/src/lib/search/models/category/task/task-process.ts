@@ -10,9 +10,9 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.task.process';
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
-            [operators.getOperator(Equals)],
+            [_operators.getOperator(Equals)],
             `${TaskProcess._i18n}.name`,
             logger);
     }
@@ -32,5 +32,9 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
     get inputPlaceholder(): string {
         return `${TaskProcess._i18n}.placeholder`;
+    }
+
+    duplicate(): TaskProcess {
+        return new TaskProcess(this._operators, this._log, this._optionalDependencies);
     }
 }

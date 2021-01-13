@@ -15,9 +15,9 @@ export class CaseTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
 
     // TODO 30.4.2020 - CaseTask and CaseRole are almost identical, consider making an abstract class with implementation and
     //  extending it for specific details
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['taskIds'],
-            [operators.getOperator(Equals)],
+            [_operators.getOperator(Equals)],
             `${CaseTask._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
@@ -48,5 +48,9 @@ export class CaseTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
 
     get inputPlaceholder(): string {
         return `${CaseTask._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseTask {
+        return new CaseTask(this._operators, this._log, this._optionalDependencies);
     }
 }

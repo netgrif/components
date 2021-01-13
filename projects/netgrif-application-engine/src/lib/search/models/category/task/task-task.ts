@@ -14,9 +14,9 @@ export class TaskTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
     private static readonly _i18n = 'search.category.task.task';
     protected _processCategory: TaskProcess;
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['transitionId'],
-            [operators.getOperator(Equals)],
+            [_operators.getOperator(Equals)],
             `${TaskTask._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;
@@ -47,5 +47,9 @@ export class TaskTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
 
     get inputPlaceholder(): string {
         return `${TaskTask._i18n}.placeholder`;
+    }
+
+    duplicate(): TaskTask {
+        return new TaskTask(this._operators, this._log, this._optionalDependencies);
     }
 }

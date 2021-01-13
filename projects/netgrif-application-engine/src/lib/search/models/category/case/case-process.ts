@@ -10,9 +10,9 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.case.process';
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
-            [operators.getOperator(Equals)],
+            [_operators.getOperator(Equals)],
             `${CaseProcess._i18n}.name`,
             logger);
     }
@@ -32,5 +32,9 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     get inputPlaceholder(): string {
         return `${CaseProcess._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseProcess {
+        return new CaseProcess(this._operators, this._log, this._optionalDependencies);
     }
 }

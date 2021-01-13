@@ -13,9 +13,9 @@ export class CaseRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
     private static readonly _i18n = 'search.category.case.role';
     protected _processCategory: CaseProcess;
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['enabledRoles'],
-            [operators.getOperator(Equals)],
+            [_operators.getOperator(Equals)],
             `${CaseRole._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
@@ -46,5 +46,9 @@ export class CaseRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
     get inputPlaceholder(): string {
         return `${CaseRole._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseRole {
+        return new CaseRole(this._operators, this._log, this._optionalDependencies);
     }
 }

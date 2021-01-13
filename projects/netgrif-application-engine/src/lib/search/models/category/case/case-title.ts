@@ -8,9 +8,9 @@ export class CaseTitle extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.title';
 
-    constructor(operators: OperatorService, logger: LoggerService) {
+    constructor(protected _operators: OperatorService, logger: LoggerService) {
         super(['title'],
-            [operators.getOperator(Substring)],
+            [_operators.getOperator(Substring)],
             `${CaseTitle._i18n}.name`,
             SearchInputType.TEXT,
             logger);
@@ -18,5 +18,9 @@ export class CaseTitle extends NoConfigurationCategory<string> {
 
     get inputPlaceholder(): string {
         return `${CaseTitle._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseTitle {
+        return new CaseTitle(this._operators, this._log);
     }
 }

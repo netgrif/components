@@ -145,6 +145,10 @@ export class CaseDataset extends Category<Datafield> {
         this._datafieldFormControl.setValue('');
     }
 
+    duplicate(): CaseDataset {
+        return new CaseDataset(this._operators, this._log, this._optionalDependencies);
+    }
+
     protected get elasticKeywords(): Array<string> {
         if (!this.hasSelectedDatafields) {
             return [];

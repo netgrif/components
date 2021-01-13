@@ -284,6 +284,14 @@ export abstract class Category<T> {
     }
 
     /**
+     * Creates a duplicate of the current category object. Note that a duplicate is NOT a clone.
+     * The state of the returned category is not necessarily the same as the state of this category.
+     *
+     * @returns a category instance of the same type as this category in its initial state.
+     */
+    public abstract duplicate(): Category<T>;
+
+    /**
      * This method is calle in the constructor. Apart from calling this method, the constructor only creates instances to fill the protected
      * fields of this class.
      *

@@ -13,9 +13,9 @@ export class TaskRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
     private static readonly _i18n = 'search.category.task.role';
     protected _processCategory: TaskProcess;
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['roles'],
-            [operators.getOperator(Equals)],
+            [_operators.getOperator(Equals)],
             `${TaskRole._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;
@@ -46,5 +46,9 @@ export class TaskRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
     get inputPlaceholder(): string {
         return `${TaskRole._i18n}.placeholder`;
+    }
+
+    duplicate(): TaskRole {
+        return new TaskRole(this._operators, this._log, this._optionalDependencies);
     }
 }

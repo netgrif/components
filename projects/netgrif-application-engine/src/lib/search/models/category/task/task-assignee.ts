@@ -16,9 +16,9 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
 
     private _searchingUsers = false;
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['userId'],
-            [operators.getOperator(Equals)],
+            [_operators.getOperator(Equals)],
             `${TaskAssignee._i18n}.name`,
             logger);
     }
@@ -56,5 +56,9 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
 
     get inputPlaceholder(): string {
         return `${TaskAssignee._i18n}.placeholder`;
+    }
+
+    duplicate(): TaskAssignee {
+        return new TaskAssignee(this._operators, this._log, this._optionalDependencies);
     }
 }

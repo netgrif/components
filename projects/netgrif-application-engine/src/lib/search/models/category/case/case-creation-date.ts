@@ -9,9 +9,9 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
     private static readonly _i18n = 'search.category.case.creationDate';
 
-    constructor(operators: OperatorService, logger: LoggerService) {
+    constructor(protected _operators: OperatorService, logger: LoggerService) {
         super(['creationDateSortable'],
-            [operators.getOperator(EqualsDate)],
+            [_operators.getOperator(EqualsDate)],
             `${CaseCreationDate._i18n}.name`,
             SearchInputType.DATE,
             logger);
@@ -19,5 +19,9 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
     get inputPlaceholder(): string {
         return `${CaseCreationDate._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseCreationDate {
+        return new CaseCreationDate(this._operators, this._log);
     }
 }
