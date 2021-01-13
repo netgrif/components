@@ -23,6 +23,7 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         this._predicates = new Map<number, EditablePredicate>();
         this._childUpdated$ = new Subject<void>();
         this._childCounter = new IncrementingCounter();
+        this._query = Query.emptyQuery();
 
         this._childUpdated$.subscribe(() => {
             this.updateQueryAndNotify();
