@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {
     AbstractSearchPredicateComponent, AutocompleteCategory,
-    Category,
+    Category, LoggerService,
     NAE_SEARCH_CATEGORIES,
     OperatorTemplatePartType,
     SearchAutocompleteOption,
@@ -21,8 +21,8 @@ export class SearchPredicateComponent extends AbstractSearchPredicateComponent {
     // make the enum referencable in HTML
     public operatorTemplatePartType = OperatorTemplatePartType;
 
-    constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>) {
-        super(searchCategories);
+    constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>, logger: LoggerService) {
+        super(searchCategories, logger);
     }
 
     public filterOptions: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption>> = userInput  => {

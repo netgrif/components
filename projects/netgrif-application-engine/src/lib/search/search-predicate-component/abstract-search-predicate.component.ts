@@ -1,16 +1,19 @@
-import {Inject, Input} from '@angular/core';
+import {Inject, Input, OnDestroy} from '@angular/core';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
-import {Subject} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {OperatorTemplatePart} from '../models/operator-template-part';
+import {ElementaryPredicate} from '../models/predicate/elementary-predicate';
+import {Query} from '../models/query/query';
+import {LoggerService} from '../../logger/services/logger.service';
 
 
 /**
  * Is responsible for the interactive creation of a single {@link ElementaryPredicate} object instance.
  */
-export abstract class AbstractSearchPredicateComponent {
+export abstract class AbstractSearchPredicateComponent implements OnDestroy {
 
     @Input() predicate: EditableElementaryPredicate;
     @Input() predicateId: number;
@@ -18,7 +21,16 @@ export abstract class AbstractSearchPredicateComponent {
 
     public selectedCategory: Category<any>;
 
-    protected constructor(@Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>) {
+    protected _predicateChange: Subscription;
+
+    protected constructor(@Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>,
+                          protected _logger: LoggerService) {
+    }
+
+    ngOnDestroy(): void {
+        if (this._predicateChange && !this._predicateChange.closed) {
+            this._predicateChange.unsubscribe();
+        }
     }
 
     public get searchCategories(): Array<Category<any>> {
@@ -34,6 +46,12 @@ export abstract class AbstractSearchPredicateComponent {
             this.selectedCategory.reset();
         }
         this.selectedCategory = newCategory;
+        if (newCategory !== undefined) {
+            if (this._predicateChange) {
+                this._predicateChange.unsubscribe();
+            }
+            this._predicateChange = newCategory.generatedPredicate$.subscribe(predicate => this.processPredicateChange(predicate));
+        }
     }
 
     public trackByTemplateParts = (a: number, b: OperatorTemplatePart) => this._trackByTemplateParts(a, b);
@@ -63,5 +81,15 @@ export abstract class AbstractSearchPredicateComponent {
      */
     protected _trackByTemplateParts(index: number, item: OperatorTemplatePart): any {
         return item.id;
+    }
+
+    protected processPredicateChange(newPredicate: ElementaryPredicate | undefined): void {
+        if (newPredicate === undefined) {
+            this.predicate.query = Query.emptyQuery();
+            this._logger.debug('Editable query changed to empty query');
+        } else {
+            this.predicate.query = newPredicate.query;
+            this._logger.debug(`Editable query changed to: ${newPredicate.query.value}`);
+        }
     }
 }

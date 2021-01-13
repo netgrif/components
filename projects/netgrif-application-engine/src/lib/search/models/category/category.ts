@@ -221,6 +221,9 @@ export abstract class Category<T> {
      */
     public reset(): void {
         this.clearOperatorSelection();
+        this._operandsFormControls.forEach(fc => {
+            fc.setValue(undefined);
+        });
     }
 
     /**
@@ -303,8 +306,9 @@ export abstract class Category<T> {
             if (newOperator.numberOfOperands > this._operandsFormControls.length) {
                 while (this._operandsFormControls.length < newOperator.numberOfOperands) {
                     const fc = new FormControl();
+                    const currentLength = this._operandsFormControls.length;
                     fc.valueChanges.pipe(debounceTime(300)).subscribe(() => {
-                        this.operandValueChanges(this._operandsFormControls.length);
+                        this.operandValueChanges(currentLength);
                     });
                     this._operandsFormControls.push(fc);
                 }
@@ -330,6 +334,7 @@ export abstract class Category<T> {
         for (let i = 0; i < this.selectedOperator.numberOfOperands; i++) {
             if (!this.isOperandValueSelected(this._operandsFormControls[i].value)) {
                 if (this._generatedPredicate$.getValue()) {
+                    this._generatedPredicate$.next(undefined);
                     this._generatedPredicate$.next(undefined);
                 }
                 return;
