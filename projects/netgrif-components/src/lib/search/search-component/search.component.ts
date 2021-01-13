@@ -17,8 +17,7 @@ import {
 })
 export class SearchComponent extends AbstractSearchComponent {
 
-    constructor(protected _searchService: SearchService,
-                protected _logger: LoggerService) {
-        super(_searchService, _logger);
+    constructor(searchService: SearchService, logger: LoggerService) {
+        super(searchService, logger);
     }
 }
