@@ -233,7 +233,8 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
         ) {
             return false;
         }
-        if (Object.keys(net.permissions).length === 0) {
+        if (Object.keys(net.permissions).filter(role => Object.keys(net.permissions[role])
+            .some(perm => perm === action)).length === 0) {
             return true;
         }
         return Object.keys(net.permissions).some(role =>
