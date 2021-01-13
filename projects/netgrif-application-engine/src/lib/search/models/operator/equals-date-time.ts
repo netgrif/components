@@ -20,6 +20,7 @@ export class EqualsDateTime extends Operator<Moment> {
     }
 
     createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+        this.checkArgumentsCount(args);
         return this.dateTimeRange.createQuery(elasticKeywords, [args[0], args[0]]);
     }
 

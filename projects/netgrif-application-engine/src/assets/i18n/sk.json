@@ -151,7 +151,12 @@
                 "from": "od",
                 "to": "do"
             },
-            "equals": "je"
+            "equals": "je",
+            "notEquals": "je rôzny od",
+            "moreThan": "je viac ako",
+            "lessThan": "je menej ako",
+            "like": "je podobný s",
+            "isNull": "je prázdny"
         },
         "placeholder": {
             "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"

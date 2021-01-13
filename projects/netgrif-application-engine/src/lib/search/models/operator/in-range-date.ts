@@ -23,6 +23,7 @@ export class InRangeDate extends Operator<Moment> {
      * if you want a date time query instead. The two dates must be in ascending order, if not the behavior is undefined.
      */
     createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+        this.checkArgumentsCount(args);
         const arg1 = moment(args[0]);
         this.clearTimeInformation(arg1);
         const arg2 = moment(args[1]);

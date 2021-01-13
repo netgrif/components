@@ -11,6 +11,7 @@ export class Substring extends Operator<string> {
     }
 
     createQuery(elasticKeywords: Array<string>, args: Array<string>): Query {
+        this.checkArgumentsCount(args);
         // TODO IMPROVEMENT 27.4.2020 - we could use regular expressions to search for substrings which would solve the unintuitive
         //  behavior that occurs when we search for strings that contain spaces. We need to escape the input string in a special way
         //  if we choose to do this

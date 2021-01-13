@@ -22,6 +22,7 @@ export class InRangeDateTime extends Operator<Moment> {
      * Operator instead. The two date time objects must be in ascending order, if not the behavior is undefined.
      */
     createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+        this.checkArgumentsCount(args);
         const arg1 = moment(args[0]);
         arg1.milliseconds(0);
         arg1.seconds(0);

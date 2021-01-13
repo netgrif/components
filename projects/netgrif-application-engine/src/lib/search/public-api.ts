@@ -13,6 +13,12 @@ export * from './models/operator/substring';
 export * from './models/operator/equals';
 export * from './models/operator/equals-date';
 export * from './models/operator/in-range-date';
+export * from './models/operator/in-range';
+export * from './models/operator/is-null';
+export * from './models/operator/less-than';
+export * from './models/operator/like';
+export * from './models/operator/more-than';
+export * from './models/operator/not-equals';
 
 export * from './models/category/category';
 export * from './models/category/no-configuration-category';

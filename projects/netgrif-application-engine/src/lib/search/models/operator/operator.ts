@@ -124,9 +124,7 @@ export abstract class Operator<T> {
      * @returns query that wos constructed with the given arguments and keywords. Returns an empty query if no arguments are provided.
      */
     public createQuery(elasticKeywords: Array<string>, args: Array<T>): Query {
-        if (args.length === 0) {
-            return Query.emptyQuery();
-        }
+        this.checkArgumentsCount(args);
         return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
             const escapedValue = Operator.escapeInput(args[0] as unknown as string);
             const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, escapedValue.wasEscaped);
@@ -144,4 +142,16 @@ export abstract class Operator<T> {
      * operator name where user input is expected.
      */
     public abstract getOperatorNameTemplate(): Array<string>;
+
+    /**
+     * Checks whether the provided array contains at leas as many arguments, as is the operators number of operands.
+     * Throws an error if not enough arguments is provided.
+     * @param args an array of potential operands
+     */
+    protected checkArgumentsCount(args: Array<any>): void {
+        if (args.length < this.numberOfOperands) {
+            throw new Error(`At least ${this.numberOfOperands} arguments must be provided to `
+                + `create a query with ${this.numberOfOperands} operands!`);
+        }
+    }
 }

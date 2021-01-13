@@ -151,7 +151,12 @@
                 "from": "von",
                 "to": "bis"
             },
-            "equals": "ist"
+            "equals": "ist",
+            "notEquals": "unterscheidet sich von",
+            "moreThan": "ist größer als",
+            "lessThan": "ist kleiner als",
+            "like": "ist ähnlich wie",
+            "isNull": "ist leer"
         },
         "placeholder": {
             "text": "Suchen oder Suchkategorie auswählen"
