@@ -39,4 +39,8 @@ export abstract class NoConfigurationCategory<T> extends Category<T> {
     getFilteredAutocompleteConfigurationOptions(inputIndex: number): never {
         throw new Error('NoConfigurationCategory has no configuration options!');
     }
+
+    protected isOperandValueSelected(newValue: any): boolean {
+        return !!newValue;
+    }
 }

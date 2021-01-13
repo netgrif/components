@@ -106,7 +106,7 @@ export class CaseDataset extends Category<Datafield> {
 
     public get inputType(): SearchInputType {
         if (!this.hasSelectedDatafields) {
-            throw new Error('Input type of arguments cannot be determined before selecting a data field in during the configuration.');
+            throw new Error('Input type of arguments cannot be determined before selecting a data field during the configuration.');
         }
         return CaseDataset.FieldTypeToInputType(this._selectedDatafields[0].fieldType);
     }
@@ -253,6 +253,29 @@ export class CaseDataset extends Category<Datafield> {
             this._datafieldOptions.get(key).push(value);
         } else {
             this._datafieldOptions.set(key, [value]);
+        }
+    }
+
+    protected isOperandValueSelected(newValue: any): boolean {
+        if (!this.isOperatorSelected()) {
+            return false;
+        }
+        let inputType: SearchInputType;
+        try {
+            inputType = this.inputType;
+        } catch (e) {
+            return false;
+        }
+
+        switch (inputType) {
+            case SearchInputType.NUMBER:
+                return typeof newValue === 'number';
+            case SearchInputType.BOOLEAN:
+                return typeof newValue === 'boolean';
+            case SearchInputType.AUTOCOMPLETE:
+                return !(!newValue || typeof newValue === 'string');
+            default:
+                return !!newValue;
         }
     }
 }

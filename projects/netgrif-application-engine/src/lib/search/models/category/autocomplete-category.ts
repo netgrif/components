@@ -94,4 +94,8 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
             this._optionsMap.set(key, [value]);
         }
     }
+
+    protected isOperandValueSelected(newValue: SearchAutocompleteOption | string): boolean {
+        return !(!newValue || typeof newValue === 'string');
+    }
 }
