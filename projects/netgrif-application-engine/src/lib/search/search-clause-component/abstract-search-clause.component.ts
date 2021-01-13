@@ -2,6 +2,7 @@ import {Input, OnDestroy, OnInit} from '@angular/core';
 import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
 import {Subject} from 'rxjs';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
+import {KeyValue} from '@angular/common';
 
 
 /**
@@ -25,6 +26,8 @@ export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy
     ngOnDestroy(): void {
         this.removeChild$.complete();
     }
+
+    public trackByPredicates = (a: number, b: KeyValue<number, EditableElementaryPredicate>) => b.value;
 
     public getPredicateMap(): Map<number, EditableElementaryPredicate> {
         return this.predicate.getPredicateMap();

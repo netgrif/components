@@ -1,7 +1,7 @@
 <div class="clause-border">
     <div fxLayout="row wrap" fxLayoutAlign="start center">
         <!-- TODO i18n -->
-        <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last">
+        <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last" [ngForTrackBy]="trackByPredicates">
             <nc-search-predicate [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$"></nc-search-predicate>
             <div *ngIf="!last">OR</div>
         </ng-template>
