@@ -1,8 +1,11 @@
 <div>
     <mat-icon>search</mat-icon>
     <div fxLayout="row wrap" fxLayoutAlign="start center">
-        <nc-search-clause [predicate]="testPredicate"></nc-search-clause>
         <!-- TODO i18n -->
-        <button mat-stroked-button>+ AND</button>
+        <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last" [ngForTrackBy]="trackByPredicates">
+            <nc-search-clause [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$"></nc-search-clause>
+            <div *ngIf="!last">AND</div>
+        </ng-template>
+        <button mat-stroked-button (click)="addChildPredicate()">+ AND</button>
     </div>
 </div>

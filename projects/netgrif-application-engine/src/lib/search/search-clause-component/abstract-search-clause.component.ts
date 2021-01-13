@@ -1,8 +1,8 @@
 import {Input, OnDestroy, OnInit} from '@angular/core';
 import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
 import {Subject} from 'rxjs';
-import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {KeyValue} from '@angular/common';
+import {EditablePredicate} from '../models/predicate/editable-predicate';
 
 
 /**
@@ -12,6 +12,8 @@ import {KeyValue} from '@angular/common';
 export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy {
 
     @Input() predicate: EditableClausePredicate;
+    @Input() predicateId: number;
+    @Input() remove$: Subject<number>;
     public removeChild$: Subject<number>;
 
     protected constructor() {
@@ -27,17 +29,20 @@ export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy
         this.removeChild$.complete();
     }
 
-    public trackByPredicates = (a: number, b: KeyValue<number, EditableElementaryPredicate>) => b.value;
+    public trackByPredicates = (a: number, b: KeyValue<number, EditablePredicate>) => b.value;
 
-    public getPredicateMap(): Map<number, EditableElementaryPredicate> {
+    public getPredicateMap(): Map<number, EditablePredicate> {
         return this.predicate.getPredicateMap();
     }
 
     public removeChildAt(id: number): void {
         this.predicate.removePredicate(id);
+        if (this.predicate.getPredicateMap().size === 0) {
+            this.remove$.next(this.predicateId);
+        }
     }
 
     public addChildPredicate(): void {
-        this.predicate.addPredicate();
+        this.predicate.addElementaryPredicate();
     }
 }
