@@ -5,6 +5,7 @@ import {IncrementingCounter} from '../../../utility/incrementing-counter';
 import {OnDestroy} from '@angular/core';
 import {Query} from '../query/query';
 import {EditablePredicate} from './editable-predicate';
+import {Predicate} from './predicate';
 
 
 /**
@@ -13,14 +14,14 @@ import {EditablePredicate} from './editable-predicate';
  */
 export class EditableClausePredicate extends EditablePredicate implements OnDestroy {
 
-    protected _predicates: Map<number, EditablePredicate>;
+    protected _predicates: Map<number, Predicate>;
     protected _childUpdated$: Subject<void>;
     protected _childCounter: IncrementingCounter;
     protected _query: Query;
 
     constructor(protected _operator: BooleanOperator, parentNotifier?: Subject<void>) {
         super(parentNotifier);
-        this._predicates = new Map<number, EditablePredicate>();
+        this._predicates = new Map<number, Predicate>();
         this._childUpdated$ = new Subject<void>();
         this._childCounter = new IncrementingCounter();
         this._query = Query.emptyQuery();
@@ -53,13 +54,26 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         return this.addPredicate(new EditableClausePredicate(operator, this._childUpdated$));
     }
 
+    /**
+     * Generates an id for the new predicate, adds it into the map and updates the query
+     *
+     * If you want to add an editable predicate, use one of the other methods, so that this predicate can react to changes.
+     * @param predicate the new predicate
+     */
+    public addPredicate(predicate: Predicate): number {
+        const id = this._childCounter.next();
+        this._predicates.set(id, predicate);
+        this.updateQueryAndNotify();
+        return id;
+    }
+
     removePredicate(id: number): boolean {
         const r = this._predicates.delete(id);
         this.updateQueryAndNotify();
         return r;
     }
 
-    public getPredicateMap(): Map<number, EditablePredicate> {
+    public getPredicateMap(): Map<number, Predicate> {
         return this._predicates;
     }
 
@@ -85,16 +99,5 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
      */
     protected get queries(): Array<Query> {
         return Array.from(this._predicates.values()).map(p => p.query);
-    }
-
-    /**
-     * Generates an id for the new predicate, adds it into the map and updates the query
-     * @param predicate the new predicate
-     */
-    protected addPredicate(predicate: EditablePredicate): number {
-        const id = this._childCounter.next();
-        this._predicates.set(id, predicate);
-        this.updateQueryAndNotify();
-        return id;
     }
 }

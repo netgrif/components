@@ -1,5 +1,4 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {ClausePredicate} from '../models/predicate/clause-predicate';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
@@ -7,6 +6,9 @@ import {Predicate} from '../models/predicate/predicate';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {PredicateRemovalEvent} from '../models/predicate-removal-event';
+import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
+import {Query} from '../models/query/query';
+import {distinctUntilChanged, map} from 'rxjs/operators';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -21,7 +23,7 @@ export class SearchService implements OnDestroy {
     /**
      * Holds the {@link Predicate} tree root for user search queries.
      */
-    protected _rootPredicate: ClausePredicate;
+    protected _rootPredicate: EditableClausePredicate;
     /**
      * Holds the {@link Filter} that is currently being applied to the view.
      */
@@ -34,6 +36,10 @@ export class SearchService implements OnDestroy {
      * The index of a removed {@link Predicate} is emmited into this stream
      */
     protected _predicateRemoved$: Subject<PredicateRemovalEvent>;
+    /**
+     * The `rootPredicate` uses this stream to notify the search service about changes to the held query
+     */
+    private readonly _predicateQueryChanged$: Subject<void>;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
@@ -41,14 +47,20 @@ export class SearchService implements OnDestroy {
      */
     constructor(baseFilter: Filter) {
         this._baseFilter = baseFilter.clone();
-        this._rootPredicate = new ClausePredicate([], BooleanOperator.AND);
+        this._predicateQueryChanged$ = new Subject<void>();
+        this._rootPredicate = new EditableClausePredicate(BooleanOperator.AND, this._predicateQueryChanged$);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
+
+        this.predicateQueryChanged$.subscribe(() => {
+            this.updateActiveFilter();
+        });
     }
 
     ngOnDestroy(): void {
         this._predicateRemoved$.complete();
         this._activeFilter.complete();
+        this._predicateQueryChanged$.complete();
     }
 
     /**
@@ -88,14 +100,29 @@ export class SearchService implements OnDestroy {
     }
 
     /**
+     * @returns the root predicate of the search service, that can be used to generate search requests with custom queries
+     */
+    public get rootPredicate(): EditableClausePredicate {
+        return this._rootPredicate;
+    }
+
+    /**
+     * @returns an Observable that emits whenever the root predicates query changes
+     */
+    protected get predicateQueryChanged$(): Observable<Query> {
+        return this._predicateQueryChanged$.asObservable().pipe(
+            map( () => this._rootPredicate.query),
+            distinctUntilChanged((prev, curr) => prev && prev.equals(curr))
+        );
+    }
+
+    /**
      * Adds a {@link Predicate} to the Predicate root and updates the active Filter.
      * @param newPredicate Predicate that should be added to the search queries.
      * @returns the index of the added Predicate
      */
     public addPredicate(newPredicate: Predicate): number {
-        const result = this._rootPredicate.addPredicate(newPredicate);
-        this.updateActiveFilter();
-        return result;
+        return this._rootPredicate.addPredicate(newPredicate);
     }
 
     /**
@@ -107,7 +134,6 @@ export class SearchService implements OnDestroy {
     public removePredicate(index: number, clearInput = true): void {
         if (this._rootPredicate.removePredicate(index)) {
             this._predicateRemoved$.next({index, clearInput});
-            this.updateActiveFilter();
         }
     }
 

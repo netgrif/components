@@ -6,7 +6,6 @@ import {
     LoggerService,
     SearchService
 } from '@netgrif/application-engine';
-import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nc-search',
@@ -18,9 +17,8 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class SearchComponent extends AbstractSearchComponent {
 
-    constructor(protected _translate: TranslateService,
-                protected _searchService: SearchService,
+    constructor(protected _searchService: SearchService,
                 protected _logger: LoggerService) {
-        super(_translate, _searchService, _logger);
+        super(_searchService, _logger);
     }
 }
