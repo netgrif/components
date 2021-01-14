@@ -315,7 +315,7 @@ export abstract class Category<T> {
                 while (this._operandsFormControls.length < newOperator.numberOfOperands) {
                     const fc = new FormControl();
                     const currentLength = this._operandsFormControls.length;
-                    fc.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+                    fc.valueChanges.pipe(debounceTime(600)).subscribe(() => {
                         this.operandValueChanges(currentLength);
                     });
                     this._operandsFormControls.push(fc);

@@ -21,7 +21,7 @@ export class AbstractSearchOperandInputComponent {
 
     public get filteredOptions$(): Observable<Array<SearchAutocompleteOption>> {
         if (!this._filteredOptions$) {
-            this._filteredOptions$ = this.filterOptionsFunction(this.inputFormControl.valueChanges.pipe(debounceTime(300)));
+            this._filteredOptions$ = this.filterOptionsFunction(this.inputFormControl.valueChanges.pipe(debounceTime(600)));
         }
         return this._filteredOptions$;
     }
