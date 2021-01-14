@@ -7,7 +7,7 @@ import {Query} from '../query/query';
  * Inequality operator. Will match if the field has a different value than the input.
  * Can be used with keyword fields and different types. We don't recommend using this operator with date and datetime fields
  * as an exact timestamp mismatch would be required.
- * Direct replacement for timestamps doesn't exist but you can use some of the time interval operators instead.
+ * For Date needs use {@link NotEqualsDate} instead.
  */
 export class NotEquals extends Operator<string | number> {
 

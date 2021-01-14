@@ -17,6 +17,19 @@ import {filter, map, startWith, tap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {FormControl} from '@angular/forms';
 import {Category} from '../category';
+import {NotEquals} from '../../operator/not-equals';
+import {MoreThan} from '../../operator/more-than';
+import {LessThan} from '../../operator/less-than';
+import {InRange} from '../../operator/in-range';
+import {IsNull} from '../../operator/is-null';
+import {Like} from '../../operator/like';
+import {NotEqualsDate} from '../../operator/not-equals-date';
+import {MoreThanDate} from '../../operator/more-than-date';
+import {LessThanDate} from '../../operator/less-than-date';
+import {InRangeDate} from '../../operator/in-range-date';
+import {MoreThanDateTime} from '../../operator/more-than-date-time';
+import {LessThanDateTime} from '../../operator/less-than-date-time';
+import {InRangeDateTime} from '../../operator/in-range-date-time';
 
 interface Datafield {
     netId: string;
@@ -116,19 +129,53 @@ export class CaseDataset extends Category<Datafield> {
             return [];
         }
         switch (this._selectedDatafields[0].fieldType) {
-            // TODO 4.5.2020 - Operators should match the options from old frontend
             case 'number':
-                return [this._operators.getOperator(Equals)];
+                return [
+                    this._operators.getOperator(Equals),
+                    this._operators.getOperator(NotEquals),
+                    this._operators.getOperator(MoreThan),
+                    this._operators.getOperator(LessThan),
+                    this._operators.getOperator(InRange),
+                    this._operators.getOperator(IsNull)
+                ];
             case 'boolean':
-                return [this._operators.getOperator(Equals)];
+                return [this._operators.getOperator(Equals), this._operators.getOperator(NotEquals)];
             case 'user':
-                return [this._operators.getOperator(Equals)];
+                // Angular JS frontend used these operators for enumeration, multichoice and file as well
+                return [
+                    this._operators.getOperator(Equals),
+                    this._operators.getOperator(NotEquals),
+                    this._operators.getOperator(IsNull),
+                    this._operators.getOperator(Like)
+                ];
             case 'date':
-                return [this._operators.getOperator(EqualsDate)];
+                return [
+                    this._operators.getOperator(EqualsDate),
+                    this._operators.getOperator(NotEqualsDate),
+                    this._operators.getOperator(MoreThanDate),
+                    this._operators.getOperator(LessThanDate),
+                    this._operators.getOperator(InRangeDate),
+                    this._operators.getOperator(IsNull)
+                ];
             case 'dateTime':
-                return [this._operators.getOperator(EqualsDateTime)];
+                return [
+                    this._operators.getOperator(EqualsDateTime),
+                    this._operators.getOperator(MoreThanDateTime),
+                    this._operators.getOperator(LessThanDateTime),
+                    this._operators.getOperator(InRangeDateTime),
+                    this._operators.getOperator(IsNull)
+                ];
             default:
-                return [this._operators.getOperator(Substring)];
+                return [
+                    this._operators.getOperator(Substring),
+                    this._operators.getOperator(Equals),
+                    this._operators.getOperator(NotEquals),
+                    this._operators.getOperator(MoreThan),
+                    this._operators.getOperator(LessThan),
+                    this._operators.getOperator(InRange),
+                    this._operators.getOperator(IsNull),
+                    this._operators.getOperator(Like)
+                ];
         }
     }
 
@@ -215,8 +262,7 @@ export class CaseDataset extends Category<Datafield> {
 
     filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
         if (!this.hasSelectedDatafields) {
-            // TODO
-            throw new Error('TODO');
+            throw new Error('The category must be fully configured before attempting to get autocomplete options!');
         }
         if (this._selectedDatafields[0].fieldType !== 'user' || this._searchingUsers) {
             return of([]);

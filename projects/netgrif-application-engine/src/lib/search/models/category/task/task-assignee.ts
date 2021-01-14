@@ -8,6 +8,8 @@ import {Observable, of} from 'rxjs';
 import {filter, map, switchMap, tap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
+import {NotEquals} from '../../operator/not-equals';
+import {IsNull} from '../../operator/is-null';
 
 
 export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
@@ -18,7 +20,7 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
 
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['userId'],
-            [_operators.getOperator(Equals)],
+            [_operators.getOperator(Equals), _operators.getOperator(NotEquals), _operators.getOperator(IsNull)],
             `${TaskAssignee._i18n}.name`,
             logger);
     }

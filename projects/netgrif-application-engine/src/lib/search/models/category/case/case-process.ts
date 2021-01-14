@@ -5,6 +5,7 @@ import {Equals} from '../../operator/equals';
 import {BooleanOperator} from '../../boolean-operator';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
+import {NotEquals} from '../../operator/not-equals';
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -12,7 +13,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
-            [_operators.getOperator(Equals)],
+            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
             logger);
     }

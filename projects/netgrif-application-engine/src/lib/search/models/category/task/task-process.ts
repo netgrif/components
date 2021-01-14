@@ -5,6 +5,7 @@ import {Equals} from '../../operator/equals';
 import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
+import {NotEquals} from '../../operator/not-equals';
 
 export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -12,7 +13,7 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
-            [_operators.getOperator(Equals)],
+            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${TaskProcess._i18n}.name`,
             logger);
     }

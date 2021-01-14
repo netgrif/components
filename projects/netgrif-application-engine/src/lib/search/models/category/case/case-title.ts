@@ -3,6 +3,9 @@ import {Substring} from '../../operator/substring';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {SearchInputType} from '../search-input-type';
 import {NoConfigurationCategory} from '../no-configuration-category';
+import {Equals} from '../../operator/equals';
+import {NotEquals} from '../../operator/not-equals';
+import {Like} from '../../operator/like';
 
 export class CaseTitle extends NoConfigurationCategory<string> {
 
@@ -10,7 +13,12 @@ export class CaseTitle extends NoConfigurationCategory<string> {
 
     constructor(protected _operators: OperatorService, logger: LoggerService) {
         super(['title'],
-            [_operators.getOperator(Substring)],
+            [
+                _operators.getOperator(Substring),
+                _operators.getOperator(Equals),
+                _operators.getOperator(NotEquals),
+                _operators.getOperator(Like)
+            ],
             `${CaseTitle._i18n}.name`,
             SearchInputType.TEXT,
             logger);

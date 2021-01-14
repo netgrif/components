@@ -7,6 +7,7 @@ import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
 import {NetTaskPair} from '../net-task-pair';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
+import {NotEquals} from '../../operator/not-equals';
 
 export class CaseTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
 
@@ -17,7 +18,7 @@ export class CaseTask extends NoConfigurationAutocompleteCategory<NetTaskPair> {
     //  extending it for specific details
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['taskIds'],
-            [_operators.getOperator(Equals)],
+            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${CaseTask._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;

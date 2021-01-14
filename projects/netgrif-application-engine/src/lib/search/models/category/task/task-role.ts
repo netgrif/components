@@ -7,6 +7,7 @@ import {Equals} from '../../operator/equals';
 import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
+import {NotEquals} from '../../operator/not-equals';
 
 export class TaskRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
@@ -15,7 +16,7 @@ export class TaskRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['roles'],
-            [_operators.getOperator(Equals)],
+            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${TaskRole._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;

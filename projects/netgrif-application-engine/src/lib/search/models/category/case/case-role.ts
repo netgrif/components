@@ -7,6 +7,7 @@ import {CaseProcess} from './case-process';
 import {BooleanOperator} from '../../boolean-operator';
 import {NetRolePair} from '../net-role-pair';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
+import {NotEquals} from '../../operator/not-equals';
 
 export class CaseRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
@@ -15,7 +16,7 @@ export class CaseRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
 
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['enabledRoles'],
-            [_operators.getOperator(Equals)],
+            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${CaseRole._i18n}.name`,
             logger);
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
