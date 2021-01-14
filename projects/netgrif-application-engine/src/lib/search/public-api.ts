@@ -19,6 +19,10 @@ export * from './models/operator/less-than';
 export * from './models/operator/like';
 export * from './models/operator/more-than';
 export * from './models/operator/not-equals';
+export * from './models/operator/more-than-date';
+export * from './models/operator/less-than-date';
+export * from './models/operator/more-than-date-time';
+export * from './models/operator/less-than-date-time';
 
 export * from './models/category/category';
 export * from './models/category/no-configuration-category';
