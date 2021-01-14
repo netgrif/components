@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {
-    AbstractSearchPredicateComponent, AutocompleteCategory,
+    AbstractSearchPredicateComponent, AutocompleteOptions,
     Category, LoggerService,
     NAE_SEARCH_CATEGORIES,
     OperatorTemplatePartType,
@@ -26,6 +26,6 @@ export class SearchPredicateComponent extends AbstractSearchPredicateComponent {
     }
 
     public filterOptions: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption>> = userInput  => {
-        return (this.selectedCategory as AutocompleteCategory<any>).filterOptions(userInput);
+        return (this.selectedCategory as (Category<any> & AutocompleteOptions)).filterOptions(userInput);
     }
 }

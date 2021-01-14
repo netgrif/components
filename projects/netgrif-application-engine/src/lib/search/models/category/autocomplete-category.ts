@@ -5,13 +5,14 @@ import {SearchInputType} from './search-input-type';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {AutocompleteOptions} from './autocomplete-options';
 
 /**
  * Represents a Search Category whose values are a known set. The value selection is done with an autocomplete field.
  *
  * @typeparam T type of the object that the autocomplete option values use and in turn is used to generate queries
  */
-export abstract class AutocompleteCategory<T> extends Category<T> {
+export abstract class AutocompleteCategory<T> extends Category<T> implements AutocompleteOptions {
 
     /**
      * Autocomplete categories usually require a map to represent mapping of display names

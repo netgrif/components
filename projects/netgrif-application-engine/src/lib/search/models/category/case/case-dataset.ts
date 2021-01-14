@@ -13,7 +13,7 @@ import {Substring} from '../../operator/substring';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {filter, map, startWith, tap} from 'rxjs/operators';
+import {debounceTime, filter, map, startWith, switchMap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {FormControl} from '@angular/forms';
 import {Category} from '../category';
@@ -30,6 +30,7 @@ import {InRangeDate} from '../../operator/in-range-date';
 import {MoreThanDateTime} from '../../operator/more-than-date-time';
 import {LessThanDateTime} from '../../operator/less-than-date-time';
 import {InRangeDateTime} from '../../operator/in-range-date-time';
+import {AutocompleteOptions} from '../autocomplete-options';
 
 interface Datafield {
     netId: string;
@@ -37,7 +38,7 @@ interface Datafield {
     fieldType: string;
 }
 
-export class CaseDataset extends Category<Datafield> {
+export class CaseDataset extends Category<Datafield> implements AutocompleteOptions {
 
     private static readonly _i18n = 'search.category.case.dataset';
     // TODO 4.5.2020 - only button, file and file list fields are truly unsupported, dateTime is implemented but lacks elastic support
@@ -260,24 +261,35 @@ export class CaseDataset extends Category<Datafield> {
         });
     }
 
-    filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption>): Observable<Array<SearchAutocompleteOption>> {
         if (!this.hasSelectedDatafields) {
             throw new Error('The category must be fully configured before attempting to get autocomplete options!');
         }
-        if (this._selectedDatafields[0].fieldType !== 'user' || this._searchingUsers) {
-            return of([]);
+        if (this.inputType !== SearchInputType.AUTOCOMPLETE) {
+            throw new Error('Cannot filter options of non-autocomplete operands');
         }
-        this._searchingUsers = true;
-        // TODO 13.5.2020 - Endpoint searches for substrings in name and surname separately, won't match "Name Surname" string to any result
-        //  User search should possibly be delegated to elastic in the future
-        return this._optionalDependencies.userResourceService.search({fulltext: userInput}).pipe(
-            tap(() => {
-                this._searchingUsers = false;
-            }),
-            filter(page => hasContent(page)),
-            map(users => users.content.map(
-                user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
-            ))
+
+        return userInput.pipe(
+            startWith(''),
+            debounceTime(600),
+            switchMap(input => {
+                if (typeof input === 'string') {
+                    // TODO 13.5.2020 - Endpoint searches for substrings in name and surname separately, won't match "Name Surname" string
+                    //  to any result User search should possibly be delegated to elastic in the future
+                    return this._optionalDependencies.userResourceService.search({fulltext: input}).pipe(
+                        map(page => {
+                            if (hasContent(page)) {
+                                return page.content.map(
+                                    user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
+                                );
+                            }
+                            return [];
+                        })
+                    );
+                } else {
+                    return of([input]);
+                }
+            })
         );
     }
 

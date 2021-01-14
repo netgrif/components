@@ -54,6 +54,7 @@ export * from './models/chips/simple-search-chip';
 export * from './category-factory/optional-dependencies';
 export * from './models/predicate-removal-event';
 export * from './models/category/search-autocomplete-option';
+export * from './models/category/autocomplete-options';
 
 /* Enums */
 export * from './models/boolean-operator';
