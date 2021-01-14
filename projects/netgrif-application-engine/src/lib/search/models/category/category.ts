@@ -323,6 +323,10 @@ export abstract class Category<T> {
             }
 
             this._operandsFormControls$.next(this._operandsFormControls.slice(0, newOperator.numberOfOperands));
+
+            if (newOperator.numberOfOperands === 0) {
+                this._generatedPredicate$.next(this.generatePredicate([]));
+            }
         });
     }
 
@@ -342,7 +346,6 @@ export abstract class Category<T> {
         for (let i = 0; i < this.selectedOperator.numberOfOperands; i++) {
             if (!this.isOperandValueSelected(this._operandsFormControls[i].value)) {
                 if (this._generatedPredicate$.getValue()) {
-                    this._generatedPredicate$.next(undefined);
                     this._generatedPredicate$.next(undefined);
                 }
                 return;
