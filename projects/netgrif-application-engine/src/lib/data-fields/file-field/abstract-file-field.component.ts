@@ -349,6 +349,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._log.debug(`Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.fileForPreview = new Blob([response], {type: 'application/octet-stream'});
                 this.previewSource = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileForPreview));
+            }
+            if (response == null || response instanceof Blob) {
                 this.state.downloading = false;
             }
         }, error => {
