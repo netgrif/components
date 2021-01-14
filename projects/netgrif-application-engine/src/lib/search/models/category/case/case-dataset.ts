@@ -328,4 +328,19 @@ export class CaseDataset extends Category<Datafield> {
                 return !!newValue;
         }
     }
+
+    /**
+     * Performs a transformation of the `FormControl` value before passing it into the selected `Operator` for query generation.
+     * It is mostly useful only for AutocompleteCategories, where the selected value of the FormControl is an object.
+     *
+     * @param value the FormControlValue
+     * @returns If the selected data field has input type `AUTOCOMPLETE` then returns the {@link SearchAutocompleteOption} `value`
+     * attribute. Otherwise performs an identity operation.
+     */
+    protected transformCategoryValue(value: any): Datafield {
+        if (this.inputType === SearchInputType.AUTOCOMPLETE) {
+            return (value as SearchAutocompleteOption).value;
+        }
+        return value;
+    }
 }

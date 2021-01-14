@@ -352,7 +352,7 @@ export abstract class Category<T> {
             }
         }
 
-        this._generatedPredicate$.next(this.generatePredicate(this._operandsFormControls.map(fc => fc.value)));
+        this._generatedPredicate$.next(this.generatePredicate(this._operandsFormControls.map(fc => this.transformCategoryValue(fc.value))));
     }
 
     /**
@@ -360,4 +360,16 @@ export abstract class Category<T> {
      * @returns `true` if the newly selected value is a valid value, `false` otherwise.
      */
     protected abstract isOperandValueSelected(newValue: any): boolean;
+
+    /**
+     * Performs a transformation of the `FormControl` value before passing it into the selected `Operator` for query generation.
+     * It is mostly useful only for AutocompleteCategories, where the selected value of the FormControl is an object.
+     *
+     * The default implementation performs an identity transformation - returns the input.
+     * @param value the FormControlValue
+     * @returns the value used for query generation
+     */
+    protected transformCategoryValue(value: any): T {
+        return value;
+    }
 }

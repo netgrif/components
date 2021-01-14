@@ -98,4 +98,16 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
     protected isOperandValueSelected(newValue: SearchAutocompleteOption | string): boolean {
         return !(!newValue || typeof newValue === 'string');
     }
+
+    /**
+     * Performs a transformation of the `FormControl` value before passing it into the selected `Operator` for query generation.
+     * It is mostly useful only for AutocompleteCategories, where the selected value of the FormControl is an object.
+     *
+     * The default AutocompleteCategory implementation returns the {@link SearchAutocompleteOption} `value` attribute.
+     * @param value the FormControlValue
+     * @returns the value used for query generation
+     */
+    protected transformCategoryValue(value: SearchAutocompleteOption): T {
+        return value.value;
+    }
 }
