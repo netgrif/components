@@ -111,7 +111,7 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
                             data: response
                         });
                     },
-                    error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
+                    error => this._snackBarService.openErrorSnackBar(error)
                 );
         }
     }
