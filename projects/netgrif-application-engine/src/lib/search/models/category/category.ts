@@ -193,7 +193,7 @@ export abstract class Category<T> {
      * @param inputIndex the input index for which the stream of filtered autocomplete configuration options should be returned.
      * @returns the stream of filtered autocomplete configuration options at the given index.
      */
-    public abstract getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption>>;
+    public abstract getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption<unknown>>>;
 
     /**
      * Changes the state of the Category. Category can create queries when an {@link Operator} is selected.

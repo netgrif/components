@@ -12,7 +12,7 @@ import {AutocompleteOptions} from './autocomplete-options';
  *
  * @typeparam T type of the object that the autocomplete option values use and in turn is used to generate queries
  */
-export abstract class AutocompleteCategory<T> extends Category<T> implements AutocompleteOptions {
+export abstract class AutocompleteCategory<T> extends Category<Array<T>> implements AutocompleteOptions {
 
     /**
      * Autocomplete categories usually require a map to represent mapping of display names
@@ -45,7 +45,7 @@ export abstract class AutocompleteCategory<T> extends Category<T> implements Aut
      * creates options with the keys as [text]{@link SearchAutocompleteOption#text}
      * and values as [value]{@link SearchAutocompleteOption#value}.
      */
-    public get options(): Array<SearchAutocompleteOption> {
+    public get options(): Array<SearchAutocompleteOption<Array<T>>> {
         const result = [];
         for (const entry of this._optionsMap.entries()) {
             result.push({text: entry[0], value: entry[1]});
@@ -67,7 +67,9 @@ export abstract class AutocompleteCategory<T> extends Category<T> implements Aut
      * @param userInput user search input
      * @returns options that satisfy the autocomplete condition
      */
-    public filterOptions(userInput: Observable<string | SearchAutocompleteOption>): Observable<Array<SearchAutocompleteOption>> {
+    public filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<T>>>):
+        Observable<Array<SearchAutocompleteOption<Array<T>>>> {
+
         return userInput.pipe(
             startWith(''),
             map(input => {
@@ -96,7 +98,7 @@ export abstract class AutocompleteCategory<T> extends Category<T> implements Aut
         }
     }
 
-    protected isOperandValueSelected(newValue: SearchAutocompleteOption | string): boolean {
+    protected isOperandValueSelected(newValue: SearchAutocompleteOption<Array<T>> | string): boolean {
         return !(!newValue || typeof newValue === 'string');
     }
 
@@ -108,7 +110,7 @@ export abstract class AutocompleteCategory<T> extends Category<T> implements Aut
      * @param value the FormControlValue
      * @returns the value used for query generation
      */
-    protected transformCategoryValue(value: SearchAutocompleteOption): T {
+    protected transformCategoryValue(value: SearchAutocompleteOption<Array<T>>): Array<T> {
         return value.value;
     }
 }

@@ -27,8 +27,10 @@ export * from './models/operator/not-equals-date';
 
 export * from './models/category/category';
 export * from './models/category/no-configuration-category';
-export * from './models/category/no-configuration-autocomplete-category';
 export * from './models/category/autocomplete-category';
+export * from './models/category/no-configuration-autocomplete-category';
+export * from './models/category/net-attribute-autocomplete-category';
+export * from './models/category/case/case-net-attribute-autocomplete-category';
 export * from './models/category/case/case-title';
 export * from './models/category/case/case-visual-id';
 export * from './models/category/case/case-author';
@@ -38,6 +40,7 @@ export * from './models/category/case/case-task';
 export * from './models/category/case/case-creation-date';
 export * from './models/category/case/case-dataset';
 export * from './models/category/case/case-simple-dataset';
+export * from './models/category/task/task-net-attribute-autocomplete-category';
 export * from './models/category/task/task-assignee';
 export * from './models/category/task/task-process';
 export * from './models/category/task/task-role';
@@ -55,6 +58,8 @@ export * from './category-factory/optional-dependencies';
 export * from './models/predicate-removal-event';
 export * from './models/category/search-autocomplete-option';
 export * from './models/category/autocomplete-options';
+export * from './models/category/net-attribute-pair';
+export * from './models/category/name-id-pair';
 
 /* Enums */
 export * from './models/boolean-operator';

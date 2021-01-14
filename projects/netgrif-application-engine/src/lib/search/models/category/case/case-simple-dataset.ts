@@ -83,7 +83,8 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
         const netsQuery = Query.combineQueries(
             this._netIds.map(id => this._processCategory.generatePredicate([id]).query),
-            BooleanOperator.OR);
+            BooleanOperator.OR
+        );
         return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);
     }
 

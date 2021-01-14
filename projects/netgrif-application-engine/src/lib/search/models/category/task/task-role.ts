@@ -1,48 +1,26 @@
-import {NetRolePair} from '../net-role-pair';
-import {TaskProcess} from './task-process';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {Equals} from '../../operator/equals';
-import {Query} from '../../query/query';
-import {BooleanOperator} from '../../boolean-operator';
-import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
+import {TaskNetAttributeAutocompleteCategory} from './task-net-attribute-autocomplete-category';
+import {Net} from '../../../../process/net';
+import {NameIdPair} from '../name-id-pair';
 
-export class TaskRole extends NoConfigurationAutocompleteCategory<NetRolePair> {
+export class TaskRole extends TaskNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.task.role';
-    protected _processCategory: TaskProcess;
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(protected _operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['roles'],
             [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${TaskRole._i18n}.name`,
-            logger);
-        this._processCategory = this._optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;
-        this._processCategory.selectDefaultOperator();
+            logger,
+            optionalDependencies);
     }
 
-    protected createOptions(): void {
-        this._optionalDependencies.taskViewService.allowedNets$.subscribe(allowedNets => {
-            allowedNets.forEach(petriNet => {
-                petriNet.roles.forEach(processRole => {
-                    this.addToMap(processRole.name, {
-                        netId: petriNet.stringId,
-                        roleId: processRole.stringId
-                    });
-                });
-            });
-        });
-    }
-
-    protected generateQuery(userInput: Array<NetRolePair>): Query {
-        const queries = userInput.map(pair => {
-            const roleQuery = this.selectedOperator.createQuery(this.elasticKeywords, [pair.roleId]);
-            const netQuery = this._processCategory.generatePredicate([pair.netId]).query;
-            return Query.combineQueries([roleQuery, netQuery], BooleanOperator.AND);
-        });
-        return Query.combineQueries(queries, BooleanOperator.OR);
+    protected extractAttributes(petriNet: Net): Array<NameIdPair> {
+        return petriNet.roles.map(r => ({id: r.stringId, name: r.name}));
     }
 
     get inputPlaceholder(): string {

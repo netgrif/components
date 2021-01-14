@@ -26,7 +26,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
         });
     }
 
-    protected generateQuery(userInput: Array<string>): Query {
+    protected generateQuery(userInput: Array<Array<string>>): Query {
         const queries = userInput.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
