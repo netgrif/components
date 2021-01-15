@@ -302,14 +302,14 @@ export abstract class Category<T> {
      */
     protected initializeCategory(): void {
         this._operatorFormControl.valueChanges.subscribe((newOperator: Operator<any>) => {
+            this._operandsFormControls.forEach(fc => {
+                fc.setValue(undefined);
+            });
+
             if (!newOperator) {
                 this._operandsFormControls$.next(undefined);
                 return;
             }
-
-            this._operandsFormControls.forEach(fc => {
-                fc.setValue(undefined);
-            });
 
             if (newOperator.numberOfOperands > this._operandsFormControls.length) {
                 while (this._operandsFormControls.length < newOperator.numberOfOperands) {
@@ -337,6 +337,7 @@ export abstract class Category<T> {
      */
     protected operandValueChanges(operandIndex: number): void {
         if (!this.isOperatorSelected()) {
+            this._generatedPredicate$.next(undefined);
             return;
         }
         if (operandIndex >= this.selectedOperator.numberOfOperands) {

@@ -96,6 +96,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             } else if (this._configurationInputs$.getValue().length === 1) {
                 this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE, SearchInputType.OPERATOR]);
             }
+            this._operatorFormControl.setValue(undefined);
         });
 
         this._filteredConfigurationOptions$ = this._datafieldFormControl.valueChanges.pipe(

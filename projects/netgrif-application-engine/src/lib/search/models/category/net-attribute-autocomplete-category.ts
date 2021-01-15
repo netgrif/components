@@ -27,12 +27,14 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
     protected createOptions(): void {
         this.getAllowedNets$().subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
-                this.extractAttributes(petriNet).forEach(pair => {
-                    this.addToMap(pair.name, {
-                        netId: petriNet.stringId,
-                        attributeId: pair.id
+                this.extractAttributes(petriNet)
+                    .filter(pair => pair.name && pair.name.trim().length > 0)
+                    .forEach(pair => {
+                        this.addToMap(pair.name, {
+                            netId: petriNet.stringId,
+                            attributeId: pair.id
+                        });
                     });
-                });
             });
         });
     }
