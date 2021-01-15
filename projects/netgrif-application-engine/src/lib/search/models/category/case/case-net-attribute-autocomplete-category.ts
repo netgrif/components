@@ -21,6 +21,7 @@ export abstract class CaseNetAttributeAutocompleteCategory extends NetAttributeA
                           protected _optionalDependencies: OptionalDependencies) {
         super(elasticKeywords, allowedOperators, translationPath, log);
         this._processCategory = _optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
+        this._processCategory.selectDefaultOperator();
     }
 
     protected getAllowedNets$(): Observable<Array<Net>> {
