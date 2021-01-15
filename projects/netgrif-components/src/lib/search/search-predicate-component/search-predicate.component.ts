@@ -25,7 +25,7 @@ export class SearchPredicateComponent extends AbstractSearchPredicateComponent {
         super(searchCategories, logger);
     }
 
-    public filterOptions: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption>> = userInput  => {
+    public filterOptions: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption<unknown>>> = userInput  => {
         return (this.selectedCategory as (Category<any> & AutocompleteOptions)).filterOptions(userInput);
     }
 }
