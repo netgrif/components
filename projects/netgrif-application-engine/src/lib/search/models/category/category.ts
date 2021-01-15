@@ -308,6 +308,9 @@ export abstract class Category<T> {
 
             if (!newOperator) {
                 this._operandsFormControls$.next(undefined);
+                if (this._operandsFormControls.length === 0) {
+                    this._generatedPredicate$.next(undefined);
+                }
                 return;
             }
 
