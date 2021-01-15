@@ -12,7 +12,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {IsNull} from '../../operator/is-null';
 
 
-export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
+export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.task.assignee';
 
@@ -28,16 +28,13 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
     protected createOptions(): void {
     }
 
-    filterOptions(userInput: Observable<string>): Observable<Array<SearchAutocompleteOption>> {
+    filterOptions(userInput: Observable<string>): Observable<Array<SearchAutocompleteOption<Array<string>>>> {
         return userInput.pipe(
             map(input => {
                 if (this._searchingUsers) {
                     return of([]);
                 }
                 this._searchingUsers = true;
-                // TODO 13.5.2020 - Endpoint searches for substrings in name and surname separately
-                //  and won't match "Name Surname" string to any result
-                //  User search should possibly be delegated to elastic in the future
                 return this._optionalDependencies.userResourceService.search({fulltext: userInput}).pipe(
                     tap(() => {
                         this._searchingUsers = false;
@@ -52,8 +49,8 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<number> {
         );
     }
 
-    protected generateQuery(userInput: Array<number>): Query {
-        return this.selectedOperator.createQuery(this.elasticKeywords, [`${userInput[0]}`]);
+    protected generateQuery(userInput: Array<Array<string>>): Query {
+        return this.selectedOperator.createQuery(this.elasticKeywords, userInput[0]);
     }
 
     get inputPlaceholder(): string {

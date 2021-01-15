@@ -52,7 +52,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected _datafieldFormControl: FormControl;
 
-    protected _filteredConfigurationOptions$: Observable<Array<SearchAutocompleteOption>>;
+    protected _filteredConfigurationOptions$: Observable<Array<SearchAutocompleteOption<string>>>;
 
     protected _datafieldOptions: Map<string, Array<Datafield>>;
 
@@ -218,7 +218,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         }
     }
 
-    getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption>> {
+    getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption<string>>> {
         if (inputIndex !== 0) {
             throw new Error(`Illegal inputIndex '${inputIndex}'. This category doesn't have an autocomplete input at that index!`);
         }
@@ -235,7 +235,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected generateQuery(userInput: Array<unknown>): Query {
         const queries = this._selectedDatafields.map(datafield => {
             const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
-            const netQuery = this._processCategory.generatePredicate([datafield.netId]).query;
+            const netQuery = this._processCategory.generatePredicate([[datafield.netId]]).query;
             return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
         });
         return Query.combineQueries(queries, BooleanOperator.OR);
@@ -261,7 +261,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         });
     }
 
-    filterOptions(userInput: Observable<string | SearchAutocompleteOption>): Observable<Array<SearchAutocompleteOption>> {
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>):
+        Observable<Array<SearchAutocompleteOption<Array<string>>>> {
+
         if (!this.hasSelectedDatafields) {
             throw new Error('The category must be fully configured before attempting to get autocomplete options!');
         }
@@ -349,9 +351,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
      * @returns If the selected data field has input type `AUTOCOMPLETE` then returns the {@link SearchAutocompleteOption} `value`
      * attribute. Otherwise performs an identity operation.
      */
-    protected transformCategoryValue(value: any): Datafield {
+    protected transformCategoryValue(value: any): any {
         if (this.inputType === SearchInputType.AUTOCOMPLETE) {
-            return (value as SearchAutocompleteOption).value;
+            return (value as SearchAutocompleteOption<Array<number>>).value;
         }
         return value;
     }

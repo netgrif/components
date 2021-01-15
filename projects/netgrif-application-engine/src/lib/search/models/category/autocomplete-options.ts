@@ -15,5 +15,5 @@ export interface AutocompleteOptions {
      * @param userInput user search input
      * @returns options that satisfy the autocomplete condition
      */
-    filterOptions(userInput: Observable<string | SearchAutocompleteOption>): Observable<Array<SearchAutocompleteOption>>;
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption<unknown>>): Observable<Array<SearchAutocompleteOption<unknown>>>;
 }

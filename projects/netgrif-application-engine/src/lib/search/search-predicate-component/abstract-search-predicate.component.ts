@@ -65,7 +65,7 @@ export abstract class AbstractSearchPredicateComponent implements OnDestroy {
      * See [_renderSelection()]{@link AbstractSearchPredicateComponent#_renderSelection} for information about the transform function.
      * @param option the {@link SearchAutocompleteOption} object that was selected in the autocomplete list.
      */
-    public renderSelection = (option: SearchAutocompleteOption) => this._renderSelection(option);
+    public renderSelection = (option: SearchAutocompleteOption<unknown>) => this._renderSelection(option);
 
     /**
      * Transforms a {@link SearchAutocompleteOption} object into it's name.
@@ -73,7 +73,7 @@ export abstract class AbstractSearchPredicateComponent implements OnDestroy {
      * @param option the object we want to transform. It might not exist if user input doesn't match any autocomplete option
      * @returns option name if it exists, empty string otherwise
      */
-    protected _renderSelection(option: SearchAutocompleteOption): string {
+    protected _renderSelection(option: SearchAutocompleteOption<unknown>): string {
         return option ? option.text : '';
     }
 

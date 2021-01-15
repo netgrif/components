@@ -13,13 +13,13 @@ export class AbstractSearchOperandInputComponent {
     /**
      * Only if the input is of type [AUTOCOMPLETE{@link SearchInputType#AUTOCOMPLETE}
      */
-    @Input() filterOptionsFunction: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption>>;
+    @Input() filterOptionsFunction: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption<unknown>>>;
 
-    private _filteredOptions$: Observable<Array<SearchAutocompleteOption>>;
+    private _filteredOptions$: Observable<Array<SearchAutocompleteOption<unknown>>>;
 
-    public renderSelection = (selection: SearchAutocompleteOption) => this._renderSelection(selection);
+    public renderSelection = (selection: SearchAutocompleteOption<unknown>) => this._renderSelection(selection);
 
-    public get filteredOptions$(): Observable<Array<SearchAutocompleteOption>> {
+    public get filteredOptions$(): Observable<Array<SearchAutocompleteOption<unknown>>> {
         if (!this._filteredOptions$) {
             this._filteredOptions$ = this.filterOptionsFunction(this.inputFormControl.valueChanges.pipe(debounceTime(600)));
         }
@@ -30,7 +30,7 @@ export class AbstractSearchOperandInputComponent {
      * Autocomplete `displayWith` function
      * @param selection the selected option
      */
-    protected _renderSelection(selection: SearchAutocompleteOption): string {
+    protected _renderSelection(selection: SearchAutocompleteOption<unknown>): string {
         return selection ? selection.text : '';
     }
 }
