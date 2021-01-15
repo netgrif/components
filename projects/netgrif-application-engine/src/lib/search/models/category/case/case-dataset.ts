@@ -277,8 +277,6 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             debounceTime(600),
             switchMap(input => {
                 if (typeof input === 'string') {
-                    // TODO 13.5.2020 - Endpoint searches for substrings in name and surname separately, won't match "Name Surname" string
-                    //  to any result User search should possibly be delegated to elastic in the future
                     return this._optionalDependencies.userResourceService.search({fulltext: input}).pipe(
                         map(page => {
                             if (hasContent(page)) {

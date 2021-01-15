@@ -5,7 +5,7 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {Equals} from '../../operator/equals';
 import {Query} from '../../query/query';
 import {Observable, of} from 'rxjs';
-import {filter, map, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
@@ -15,8 +15,6 @@ import {IsNull} from '../../operator/is-null';
 export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.task.assignee';
-
-    private _searchingUsers = false;
 
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['userId'],
@@ -28,24 +26,28 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
     protected createOptions(): void {
     }
 
-    filterOptions(userInput: Observable<string>): Observable<Array<SearchAutocompleteOption<Array<string>>>> {
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>):
+        Observable<Array<SearchAutocompleteOption<Array<string>>>> {
+
         return userInput.pipe(
-            map(input => {
-                if (this._searchingUsers) {
-                    return of([]);
+            startWith(''),
+            debounceTime(600),
+            switchMap(input => {
+                if (typeof input === 'string') {
+                    return this._optionalDependencies.userResourceService.search({fulltext: input}).pipe(
+                        map(page => {
+                            if (hasContent(page)) {
+                                return page.content.map(
+                                    user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
+                                );
+                            }
+                            return [];
+                        })
+                    );
+                } else {
+                    return of([input]);
                 }
-                this._searchingUsers = true;
-                return this._optionalDependencies.userResourceService.search({fulltext: userInput}).pipe(
-                    tap(() => {
-                        this._searchingUsers = false;
-                    }),
-                    filter(page => hasContent(page)),
-                    map(users => users.content.map(
-                        user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
-                    ))
-                );
-            }),
-            switchMap(o => o)
+            })
         );
     }
 
