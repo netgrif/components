@@ -234,12 +234,27 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateQuery(userInput: Array<unknown>): Query {
-        const queries = this._selectedDatafields.map(datafield => {
-            const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
-            const netQuery = this._processCategory.generatePredicate([[datafield.netId]]).query;
-            return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
-        });
+        const queryGenerationStrategy = this.selectedOperator === this._operators.getOperator(IsNull) ?
+            (d, _) => this.isNullOperatorQueryGenerationStrategy(d) :
+            (d, ui) => this.standardQueryGenerationStrategy(d, ui);
+
+        const queries = this._selectedDatafields.map(datafield => queryGenerationStrategy(datafield, userInput));
         return Query.combineQueries(queries, BooleanOperator.OR);
+    }
+
+    protected standardQueryGenerationStrategy(datafield: Datafield, userInput: Array<unknown>): Query {
+        const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
+        const netQuery = this.generateNetConstraint(datafield);
+        return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
+    }
+
+    protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
+        const constraint = this.generateNetConstraint(datafield);
+        return (this._operators.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.elasticKeywords, constraint);
+    }
+
+    protected generateNetConstraint(datafield: Datafield): Query {
+        return this._processCategory.generatePredicate([[datafield.netId]]).query;
     }
 
     protected createDatafieldOptions(): void {
