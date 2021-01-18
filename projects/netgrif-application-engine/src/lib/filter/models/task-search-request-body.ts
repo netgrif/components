@@ -4,6 +4,8 @@
  * This object is used as part of a {@link Filter} object for [searchTask()]{@link TaskResourceService#searchTask}
  * method in {@link TaskResourceService}.
  */
+import {PetriNetSearchRequest} from './case-search-request-body';
+
 export interface TaskSearchRequestBody {
     /**
      * Returned tasks must have the role with the specified role ID.
@@ -34,7 +36,7 @@ export interface TaskSearchRequestBody {
      *
      * If more than one process ID is specified, the returned tasks must be of one of them.
      */
-    process?: string | Array<string>;
+    process?: PetriNetSearchRequest | Array<PetriNetSearchRequest>;
     /**
      * A full text query on all index fields, that available for full text searching.
      *
