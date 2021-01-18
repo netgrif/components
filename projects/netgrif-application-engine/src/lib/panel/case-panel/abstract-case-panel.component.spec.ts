@@ -27,6 +27,7 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {OverflowService} from '../../header/services/overflow.service';
 import {UserService} from '../../user/services/user.service';
+import {Case} from '../../resources/interface/case';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -82,6 +83,10 @@ describe('AbstractCasePanelComponent', () => {
         expect(component.show(new MouseEvent('type'))).toEqual(false);
     });
 
+    it('should test canDo', () => {
+        expect(component.canDo('delete')).toBeTrue();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -114,15 +119,27 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', 'netid'),
         new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', 'netid'),
     ]);
-    case_ = {
+    case_: Case = {
         stringId: 'string',
         title: 'string',
-        identifier: 'string',
-        version: 'string',
-        initials: 'string',
-        defaultCaseName: 'string',
-        createdDate: [2020, 1, 1, 10, 10],
         author: {email: 'email', fullName: 'fullName'},
+        permissions: {},
+        color: 'color',
+        creationDate: [],
+        lastModified: [],
+        visualId: '',
+        resetArcTokens: {},
+        processIdentifier: '',
+        petriNetId: '',
+        petriNetObjectId: {
+            counter: 0,
+            date: 0,
+            machineIdentifier: 0,
+            processIdentifier: 0,
+            time: 0,
+            timeSecond: 0,
+            timestamp: 0
+        },
         immediateData: [
             {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
             {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
