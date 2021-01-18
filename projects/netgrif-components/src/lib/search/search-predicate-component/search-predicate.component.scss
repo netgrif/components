@@ -3,13 +3,17 @@
     padding: 4px;
 }
 
-.category-select {
-    min-width: 200px;
-}
-
 .argument-placeholder-dimensions {
     margin-left: 1em;
     height: 1.5em;
     width: 6em;
     border-radius: 4px;
+}
+
+.boldText {
+    font-weight: bold;
+}
+
+.category-select {
+    min-width: 200px;
 }

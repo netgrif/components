@@ -26,6 +26,13 @@ export abstract class NoConfigurationAutocompleteCategory<T> extends Autocomplet
         return of([SearchInputType.OPERATOR]);
     }
 
+    /**
+     * @returns No configuration categories are displayed with bold text
+     */
+    get displayBold(): boolean {
+        return true;
+    }
+
     getActiveInputFormControl(inputIndex: number): FormControl {
         if (inputIndex === 0) {
             return this._operatorFormControl;

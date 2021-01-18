@@ -40,6 +40,16 @@ export abstract class AbstractSearchPredicateComponent implements OnDestroy {
         return this._searchCategories;
     }
 
+    public trackByTemplateParts = (a: number, b: OperatorTemplatePart) => this._trackByTemplateParts(a, b);
+
+    /**
+     * Lambda that is used to preserve `this` reference in HTML binding.
+     *
+     * See [_renderSelection()]{@link AbstractSearchPredicateComponent#_renderSelection} for information about the transform function.
+     * @param option the {@link SearchAutocompleteOption} object that was selected in the autocomplete list.
+     */
+    public renderSelection = (option: SearchAutocompleteOption<unknown>) => this._renderSelection(option);
+
     public remove(): void {
         this.remove$.next(this.predicateId);
     }
@@ -57,15 +67,9 @@ export abstract class AbstractSearchPredicateComponent implements OnDestroy {
         }
     }
 
-    public trackByTemplateParts = (a: number, b: OperatorTemplatePart) => this._trackByTemplateParts(a, b);
-
-    /**
-     * Lambda that is used to preserve `this` reference in HTML binding.
-     *
-     * See [_renderSelection()]{@link AbstractSearchPredicateComponent#_renderSelection} for information about the transform function.
-     * @param option the {@link SearchAutocompleteOption} object that was selected in the autocomplete list.
-     */
-    public renderSelection = (option: SearchAutocompleteOption<unknown>) => this._renderSelection(option);
+    public clearCategorySelection(): void {
+        this.categoryChanged(undefined);
+    }
 
     /**
      * Transforms a {@link SearchAutocompleteOption} object into it's name.

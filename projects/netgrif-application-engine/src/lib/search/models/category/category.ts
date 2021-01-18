@@ -270,6 +270,11 @@ export abstract class Category<T> {
     public abstract get inputPlaceholder(): string;
 
     /**
+     * @returns whether the category text should be rendered with bold text when selected
+     */
+    public abstract get displayBold(): boolean;
+
+    /**
      * @returns whether an operator is currently selected or not.
      */
     public isOperatorSelected(): boolean {

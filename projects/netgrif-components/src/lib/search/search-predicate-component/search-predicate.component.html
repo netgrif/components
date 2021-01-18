@@ -6,13 +6,21 @@
             </button>
         </div>
 
-        <mat-form-field>
-            <mat-label>{{'search.category.select' | translate}}</mat-label>
-            <mat-select class="category-select" (selectionChange)="categoryChanged($event.value)">
-                <mat-option *ngFor="let category of searchCategories"
-                            [value]="category">{{category.translationPath | translate}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <div *ngIf="!selectedCategory; then categorySelection else categoryDisplay"></div>
+        <ng-template #categorySelection>
+            <mat-form-field>
+                <mat-label>{{'search.category.select' | translate}}</mat-label>
+                <mat-select class="category-select" (selectionChange)="categoryChanged($event.value)">
+                    <mat-option *ngFor="let category of searchCategories"
+                                [value]="category">{{category.translationPath | translate}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-template>
+        <ng-template #categoryDisplay>
+            <div [ngClass]="{'boldText': selectedCategory.displayBold}" (click)="clearCategorySelection()">
+                {{selectedCategory.translationPath | translate}}
+            </div>
+        </ng-template>
 
         <div *ngIf="selectedCategory" fxLayout="row" fxLayoutAlign="start center">
             <ng-template ngFor let-configurationInput [ngForOf]="selectedCategory.configurationInputs$ | async" let-i="index">
@@ -58,7 +66,8 @@
 
                         <ng-template #argumentsSelection>
                             <div fxLayout="row" fxLayoutAlign="start center" (click)="selectedCategory.clearOperatorSelection()">
-                                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate$ | async" [ngForTrackBy]="trackByTemplateParts">
+                                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate$ | async"
+                                             [ngForTrackBy]="trackByTemplateParts">
                                     <div [ngSwitch]="templatePart.type">
                                         <ng-template [ngSwitchCase]="operatorTemplatePartType.TEXT">
                                             {{templatePart.content | translate}}

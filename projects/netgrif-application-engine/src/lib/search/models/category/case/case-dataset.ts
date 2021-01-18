@@ -181,6 +181,13 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         }
     }
 
+    /**
+     * @returns `CaseDataset` category is not displayed in bold for better readability
+     */
+    get displayBold(): boolean {
+        return false;
+    }
+
     public get hasSelectedDatafields(): boolean {
         return !!this._datafieldFormControl.value && typeof this._datafieldFormControl.value !== 'string';
     }
