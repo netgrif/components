@@ -15,6 +15,8 @@ export class AbstractSearchOperandInputComponent {
      */
     @Input() filterOptionsFunction: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption<unknown>>>;
 
+    protected _inputConfirmed = false;
+
     private _filteredOptions$: Observable<Array<SearchAutocompleteOption<unknown>>>;
 
     public renderSelection = (selection: SearchAutocompleteOption<unknown>) => this._renderSelection(selection);
@@ -24,6 +26,32 @@ export class AbstractSearchOperandInputComponent {
             this._filteredOptions$ = this.filterOptionsFunction(this.inputFormControl.valueChanges.pipe(debounceTime(600)));
         }
         return this._filteredOptions$;
+    }
+
+    public get isInputFilled(): boolean {
+        if (!this._inputConfirmed) {
+            return false;
+        }
+
+        if (this.inputType === SearchInputType.AUTOCOMPLETE) {
+            return !!this.inputFormControl.value
+                && (typeof this.inputFormControl.value !== 'string');
+        }
+        if (this.inputType === SearchInputType.TEXT) {
+            return this.inputFormControl.value !== undefined
+                && this.inputFormControl.value !== null
+                && this.inputFormControl.value.length > 0;
+        }
+        return this.inputFormControl.value !== undefined
+            && this.inputFormControl.value !== null;
+    }
+
+    public confirmInput(): void {
+        this._inputConfirmed = true;
+    }
+
+    public editInput(): void {
+        this._inputConfirmed = false;
     }
 
     /**
