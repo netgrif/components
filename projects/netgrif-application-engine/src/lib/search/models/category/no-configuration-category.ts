@@ -43,11 +43,48 @@ export abstract class NoConfigurationCategory<T> extends Category<T> {
     /**
      * Always throws an error.
      */
+    // @ts-ignore
     getFilteredAutocompleteConfigurationOptions(inputIndex: number): never {
-        throw new Error('NoConfigurationCategory has no configuration options!');
+        this.throwNoConfigurationError();
+    }
+
+    /**
+     * Always throws an error.
+     */
+    // @ts-ignore
+    isAutocompleteConfigurationSelected(inputIndex: number): never {
+        this.throwNoConfigurationError();
+    }
+
+    /**
+     * Always throws an error.
+     */
+    // @ts-ignore
+    isAutocompleteConfigurationDisplayBold(inputIndex: number): never {
+        this.throwNoConfigurationError();
+    }
+
+    /**
+     * Always throws an error.
+     */
+    // @ts-ignore
+    getAutocompleteConfigurationSelectedOptionTranslatePath(inputIndex: number): never {
+        this.throwNoConfigurationError();
+    }
+
+    /**
+     * Always throws an error.
+     */
+    // @ts-ignore
+    clearAutocompleteConfigurationInput(inputIndex: number): never {
+        this.throwNoConfigurationError();
     }
 
     protected isOperandValueSelected(newValue: any): boolean {
         return !!newValue;
+    }
+
+    private throwNoConfigurationError(): never {
+        throw new Error('NoConfigurationCategory has no configuration options!');
     }
 }

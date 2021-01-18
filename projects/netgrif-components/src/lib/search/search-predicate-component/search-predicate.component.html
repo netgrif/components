@@ -26,23 +26,35 @@
             <ng-template ngFor let-configurationInput [ngForOf]="selectedCategory.configurationInputs$ | async" let-i="index">
                 <div [ngSwitch]="configurationInput">
                     <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
-                        <mat-form-field>
-                            <input type="text" matInput
-                                   #autocompleteInput
-                                   #autocompleteTrigger="matAutocompleteTrigger"
-                                   [formControl]="selectedCategory.getActiveInputFormControl(i)"
-                                   [matAutocomplete]="configurationAutocomplete"
-                                   (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">
-                            <mat-autocomplete #configurationAutocomplete="matAutocomplete"
-                                              [displayWith]="renderSelection"
-                                              (optionSelected)="autocompleteInput.blur()">
-                                <mat-option *ngFor="let option of selectedCategory.getFilteredAutocompleteConfigurationOptions(i) | async"
-                                            [value]="option">
-                                    <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
-                                    <span>{{option.text}}</span>
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
+                        <div *ngIf="!selectedCategory.isAutocompleteConfigurationSelected(i); then configurationSelection else configurationDisplay"></div>
+
+                        <ng-template #configurationSelection>
+                            <mat-form-field>
+                                <input type="text" matInput
+                                       #autocompleteInput
+                                       #autocompleteTrigger="matAutocompleteTrigger"
+                                       [formControl]="selectedCategory.getActiveInputFormControl(i)"
+                                       [matAutocomplete]="configurationAutocomplete"
+                                       (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">
+                                <mat-autocomplete #configurationAutocomplete="matAutocomplete"
+                                                  [displayWith]="renderSelection"
+                                                  (optionSelected)="autocompleteInput.blur()">
+                                    <mat-option
+                                        *ngFor="let option of selectedCategory.getFilteredAutocompleteConfigurationOptions(i) | async"
+                                        [value]="option">
+                                        <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
+                                        <span>{{option.text}}</span>
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </ng-template>
+
+                        <ng-template #configurationDisplay>
+                            <div [ngClass]="{'boldText': selectedCategory.isAutocompleteConfigurationDisplayBold(i)}"
+                                 (click)="selectedCategory.clearAutocompleteConfigurationInput(i)">
+                                {{selectedCategory.getAutocompleteConfigurationSelectedOptionTranslatePath(i) | translate}}
+                            </div>
+                        </ng-template>
                     </ng-template>
                     <ng-template [ngSwitchCase]="searchInputType.OPERATOR">
                         <div *ngIf="selectedCategory.isOperatorSelected(); then argumentsSelection; else operatorSelection"></div>

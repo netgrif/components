@@ -227,10 +227,28 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption<string>>> {
-        if (inputIndex !== 0) {
-            throw new Error(`Illegal inputIndex '${inputIndex}'. This category doesn't have an autocomplete input at that index!`);
-        }
+        this.checkAutocompleteConfigurationIndex(inputIndex);
         return this._filteredConfigurationOptions$;
+    }
+
+    isAutocompleteConfigurationSelected(inputIndex: number): boolean {
+        this.checkAutocompleteConfigurationIndex(inputIndex);
+        return !!this._datafieldFormControl.value && (typeof this._datafieldFormControl.value !== 'string');
+    }
+
+    isAutocompleteConfigurationDisplayBold(inputIndex: number): boolean {
+        this.checkAutocompleteConfigurationIndex(inputIndex);
+        return true;
+    }
+
+    getAutocompleteConfigurationSelectedOptionTranslatePath(inputIndex: number): string {
+        this.checkAutocompleteConfigurationIndex(inputIndex);
+        return this._datafieldFormControl.value.text;
+    }
+
+    clearAutocompleteConfigurationInput(inputIndex: number): void {
+        this.checkAutocompleteConfigurationIndex(inputIndex);
+        this._datafieldFormControl.setValue(undefined);
     }
 
     get inputPlaceholder(): string {
@@ -377,5 +395,15 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             return (value as SearchAutocompleteOption<Array<number>>).value;
         }
         return value;
+    }
+
+    /**
+     * Checks whether the input ath the given index is an autocomplete configuration and throws an error if not.
+     * @param index the checked index
+     */
+    private checkAutocompleteConfigurationIndex(index: number): void {
+        if (index !== 0) {
+            throw new Error(`Illegal inputIndex '${index}'. This category doesn't have an autocomplete input at that index!`);
+        }
     }
 }

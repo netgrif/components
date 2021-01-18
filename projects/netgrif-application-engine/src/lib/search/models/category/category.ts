@@ -196,6 +196,30 @@ export abstract class Category<T> {
     public abstract getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption<unknown>>>;
 
     /**
+     * @param inputIndex the input index for which the form control should be returned.
+     * @returns whether the autocomplete configuration at the given index has an option selected.
+     */
+    public abstract isAutocompleteConfigurationSelected(inputIndex: number): boolean;
+
+    /**
+     * @param inputIndex the input index for which the form control should be returned.
+     * @returns whether the autocomplete configuration at the given index should be displayed with bold text.
+     */
+    public abstract isAutocompleteConfigurationDisplayBold(inputIndex: number): boolean;
+
+    /**
+     * @param inputIndex the input index for which the form control should be returned.
+     * @returns te translation path for the selected autocomplete configuration option at the given index
+     */
+    public abstract getAutocompleteConfigurationSelectedOptionTranslatePath(inputIndex: number): string;
+
+    /**
+     * Clears the autocomplete configuration input at the given index
+     * @param inputIndex the input index for which the form control should be returned.
+     */
+    public abstract clearAutocompleteConfigurationInput(inputIndex: number): void;
+
+    /**
      * Changes the state of the Category. Category can create queries when an {@link Operator} is selected.
      *
      * This method is useful if you want to use the Category class as predicate builder.
