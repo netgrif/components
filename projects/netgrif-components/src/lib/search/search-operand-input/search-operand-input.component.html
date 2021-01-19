@@ -3,7 +3,7 @@
 <ng-template #operandSelection>
     <div [ngSwitch]="inputType">
         <ng-template [ngSwitchCase]="searchInputType.TEXT">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
                 <input type="text" matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        (keydown.enter)="$event.target.blur()"
@@ -13,7 +13,7 @@
         </ng-template>
 
         <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
                 <input type="text" matInput autocomplete="off"
                        #autocompleteInput
                        #autocompleteTrigger="matAutocompleteTrigger"
@@ -34,7 +34,7 @@
         </ng-template>
 
         <ng-template [ngSwitchCase]="searchInputType.DATE">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
                 <input matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        [matDatepicker]="searchDatepicker"
@@ -48,7 +48,7 @@
         </ng-template>
 
         <ng-template [ngSwitchCase]="searchInputType.DATE_TIME">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
                 <input matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        [ngxMatDatetimePicker]="searchDateTimepicker"
@@ -70,7 +70,7 @@
         </ng-template>
 
         <ng-template [ngSwitchCase]="searchInputType.NUMBER">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
                 <input type="number" matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        (keydown.enter)="$event.target.blur()"

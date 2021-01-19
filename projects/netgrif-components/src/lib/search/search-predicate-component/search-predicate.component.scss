@@ -26,6 +26,7 @@
     background: #fafafa;
 }
 
-.category-select {
-    min-width: 200px;
+::ng-deep .mat-form-field-wrapper {
+    margin: 0;
+    padding-bottom: 0;
 }

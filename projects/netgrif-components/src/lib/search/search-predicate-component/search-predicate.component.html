@@ -9,9 +9,9 @@
 
         <div *ngIf="!selectedCategory; then categorySelection else categoryDisplay"></div>
         <ng-template #categorySelection>
-            <mat-form-field class="text-margin">
+            <mat-form-field class="text-margin" appearance="outline">
                 <mat-label>{{'search.category.select' | translate}}</mat-label>
-                <mat-select class="category-select" (selectionChange)="categoryChanged($event.value)" #categoryInput>
+                <mat-select (selectionChange)="categoryChanged($event.value)" #categoryInput>
                     <mat-option *ngFor="let category of searchCategories"
                                 [value]="category">{{category.translationPath | translate}}</mat-option>
                 </mat-select>
@@ -32,7 +32,7 @@
                         <div *ngIf="!selectedCategory.isAutocompleteConfigurationSelected(i); then configurationSelection else configurationDisplay"></div>
 
                         <ng-template #configurationSelection>
-                            <mat-form-field class="text-margin">
+                            <mat-form-field class="text-margin" appearance="outline">
                                 <input type="text" matInput
                                        #autocompleteInput
                                        #autocompleteTrigger="matAutocompleteTrigger"
@@ -65,7 +65,7 @@
                         <div *ngIf="selectedCategory.isOperatorSelected(); then argumentsSelection; else operatorSelection"></div>
 
                         <ng-template #operatorSelection>
-                            <mat-form-field>
+                            <mat-form-field appearance="outline">
                                 <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)" #configurationInput>
                                     <mat-option *ngFor="let operator of selectedCategory.allowedOperators" [value]="operator">
                                         <div fxLayout="row" fxLayoutAlign="start center">

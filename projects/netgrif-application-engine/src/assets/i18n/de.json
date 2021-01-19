@@ -143,7 +143,7 @@
                     "placeholder": "Wählen Sie die Aufgabe aus"
                 }
             },
-            "select": "Wählen Sie die Suchkategorie aus"
+            "select": "Suchkategorie"
         },
         "operator": {
             "substring": "enthält Teilzeichenfolge",

@@ -143,7 +143,7 @@
                     "placeholder": "Vyberte úlohu"
                 }
             },
-            "select": "Vyberte kategóriu vyhľadávania"
+            "select": "Kategória vyhľadávania"
         },
         "operator": {
             "substring": "obsahuje podreťazec",
