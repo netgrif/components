@@ -90,14 +90,14 @@
 
 <ng-template #operandDisplay>
     <div [ngSwitch]="inputType" (click)="editInput()" class="boldText">
-        <ng-template [ngSwitchCase]="searchInputType.AUTOCOMPLETE">
+        <div *ngSwitchCase="searchInputType.AUTOCOMPLETE">
             {{inputFormControl.value.text | translate}}
-        </ng-template>
-<!--        <ng-template [ngSwitchCase]="searchInputType.DATE">-->
-<!--            {{inputFormControl.value.text | translate}}-->
-<!--        </ng-template>-->
-        <ng-template *ngSwitchDefault>
+        </div>
+        <div *ngSwitchCase="searchInputType.DATE">
             {{inputFormControl.value}}
-        </ng-template>
+        </div>
+        <div *ngSwitchDefault>
+            {{inputFormControl.value}}
+        </div>
     </div>
 </ng-template>
