@@ -93,7 +93,16 @@ export abstract class Category<T> {
 
                 const parts = this.selectedOperator.getOperatorNameTemplate();
                 const fcs = [...formControls];
-                return parts.map(part => new OperatorTemplatePart(part ? part : fcs.shift(), this._trackByIdGenerator.next()));
+                let first = true;
+                return parts.map(part => {
+                    const template = new OperatorTemplatePart(part ? part : fcs.shift(),
+                        this._trackByIdGenerator.next(),
+                        part ? undefined : first);
+                    if (!part) {
+                        first = false;
+                    }
+                    return template;
+                });
             })
         ).subscribe(template => {
             this._operatorTemplate$.next(template);

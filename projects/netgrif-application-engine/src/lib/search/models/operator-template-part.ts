@@ -14,8 +14,9 @@ export class OperatorTemplatePart {
      * The
      * @param part either the displayed text or a `FormControl` object, that represents the operator template segment.
      * @param id for ngFor trackBy comparison
+     * @param first whether it is the first input in the template
      */
-    constructor(part: string | FormControl, public id: number) {
+    constructor(part: string | FormControl, public id: number, public first = false) {
         this._content = part;
         this._type = typeof part === 'string' ? OperatorTemplatePartType.TEXT : OperatorTemplatePartType.INPUT;
     }

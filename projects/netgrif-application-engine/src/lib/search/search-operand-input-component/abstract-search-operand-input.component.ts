@@ -10,6 +10,7 @@ export class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
 
     @Input() inputFormControl: FormControl;
     @Input() inputType: SearchInputType;
+    @Input() first: boolean;
     /**
      * Only if the input is of type [AUTOCOMPLETE{@link SearchInputType#AUTOCOMPLETE}
      */
@@ -20,6 +21,8 @@ export class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
     private _filteredOptions$: Observable<Array<SearchAutocompleteOption<unknown>>>;
 
     private _autocompleteChange: Subscription;
+
+    private _initialExpansion = true;
 
     public renderSelection = (selection: SearchAutocompleteOption<unknown>) => this._renderSelection(selection);
 
@@ -67,6 +70,12 @@ export class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
     @ViewChild('operandInput')
     public set categoryInput(input: ElementRef<HTMLInputElement>) {
         if (input) {
+            if (!this.first && this._initialExpansion) {
+                this._initialExpansion = false;
+                return;
+            }
+            this._initialExpansion = false;
+
             setTimeout(() => {
                 input.nativeElement.focus();
             });
