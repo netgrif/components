@@ -160,7 +160,9 @@
         },
         "placeholder": {
             "text": "Suchen oder Suchkategorie auswählen"
-        }
+        },
+        "and": "und",
+        "or": "oder"
     },
     "dataField": {
         "validations": {

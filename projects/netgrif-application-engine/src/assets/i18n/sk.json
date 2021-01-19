@@ -160,7 +160,9 @@
         },
         "placeholder": {
             "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"
-        }
+        },
+        "and": "a zároveň",
+        "or": "alebo"
     },
     "dataField": {
         "validations": {
