@@ -38,7 +38,8 @@
                                        #autocompleteTrigger="matAutocompleteTrigger"
                                        [formControl]="selectedCategory.getActiveInputFormControl(i)"
                                        [matAutocomplete]="configurationAutocomplete"
-                                       (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()">
+                                       (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()"
+                                       #configurationInput>
                                 <mat-autocomplete #configurationAutocomplete="matAutocomplete"
                                                   [displayWith]="renderSelection"
                                                   (optionSelected)="autocompleteInput.blur()">
@@ -65,7 +66,7 @@
 
                         <ng-template #operatorSelection>
                             <mat-form-field>
-                                <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)">
+                                <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)" #configurationInput>
                                     <mat-option *ngFor="let operator of selectedCategory.allowedOperators" [value]="operator">
                                         <div fxLayout="row" fxLayoutAlign="start center">
                                             <ng-template ngFor let-namePart [ngForOf]="operator.getOperatorNameTemplate()">

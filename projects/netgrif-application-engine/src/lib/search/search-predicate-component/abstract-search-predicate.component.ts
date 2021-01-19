@@ -1,4 +1,4 @@
-import {AfterViewInit, Inject, Input, OnDestroy, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {Subject, Subscription} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
@@ -20,6 +20,8 @@ export abstract class AbstractSearchPredicateComponent implements AfterViewInit,
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
 
+    @ViewChildren('configurationInput') configurationInputs: QueryList<MatSelect | HTMLInputElement>;
+
     public selectedCategory: Category<any>;
 
     protected _predicateChange: Subscription;
@@ -29,6 +31,23 @@ export abstract class AbstractSearchPredicateComponent implements AfterViewInit,
     protected constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
                           protected _logger: LoggerService) {
         this._searchCategories = searchCategories.map(category => category.duplicate());
+    }
+
+    ngAfterViewInit(): void {
+        this.configurationInputs.changes.subscribe((inputs: QueryList<MatSelect | ElementRef<HTMLInputElement>>) => {
+            if (inputs.length > 0) {
+                setTimeout(() => {
+                    if ((inputs.last as any).nativeElement !== undefined) {
+                        const ref = (inputs.last as ElementRef<HTMLInputElement>);
+                        ref.nativeElement.focus();
+                    } else {
+                        const select = (inputs.last as MatSelect);
+                        select.focus();
+                        select.open();
+                    }
+                });
+            }
+        });
     }
 
     ngOnDestroy(): void {
@@ -41,7 +60,8 @@ export abstract class AbstractSearchPredicateComponent implements AfterViewInit,
         return this._searchCategories;
     }
 
-    @ViewChild('categoryInput') public set categoryInput(input: MatSelect) {
+    @ViewChild('categoryInput')
+    public set categoryInput(input: MatSelect) {
         if (input) {
             setTimeout(() => {
                 input.focus();
