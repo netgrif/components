@@ -19,8 +19,7 @@
                        [formControl]="inputFormControl"
                        [matAutocomplete]="searchAutocomplete"
                        (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()"
-                       (focus)="editInput()"
-                       (blur)="confirmInput()">
+                       (focus)="editInput()">
                 <mat-autocomplete #searchAutocomplete="matAutocomplete"
                                   [displayWith]="renderSelection"
                                   (optionSelected)="autocompleteInput.blur()">

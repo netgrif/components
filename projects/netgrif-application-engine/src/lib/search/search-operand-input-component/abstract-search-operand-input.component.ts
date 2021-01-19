@@ -1,12 +1,12 @@
-import {Input} from '@angular/core';
+import {Input, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {debounceTime} from 'rxjs/operators';
 
 
-export class AbstractSearchOperandInputComponent {
+export class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
 
     @Input() inputFormControl: FormControl;
     @Input() inputType: SearchInputType;
@@ -19,7 +19,25 @@ export class AbstractSearchOperandInputComponent {
 
     private _filteredOptions$: Observable<Array<SearchAutocompleteOption<unknown>>>;
 
+    private _autocompleteChange: Subscription;
+
     public renderSelection = (selection: SearchAutocompleteOption<unknown>) => this._renderSelection(selection);
+
+    ngOnInit(): void {
+        if (this.inputType === SearchInputType.AUTOCOMPLETE) {
+            this._autocompleteChange = this.inputFormControl.valueChanges.subscribe(val => {
+                setTimeout(() => {
+                    this._inputConfirmed = !!val && (typeof val !== 'string');
+                });
+            });
+        }
+    }
+
+    ngOnDestroy(): void {
+        if (this._autocompleteChange && !this._autocompleteChange.closed) {
+            this._autocompleteChange.unsubscribe();
+        }
+    }
 
     public get filteredOptions$(): Observable<Array<SearchAutocompleteOption<unknown>>> {
         if (!this._filteredOptions$) {
