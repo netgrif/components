@@ -69,11 +69,19 @@
                                 <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)" #configurationInput>
                                     <mat-option *ngFor="let operator of selectedCategory.allowedOperators" [value]="operator">
                                         <div fxLayout="row" fxLayoutAlign="start center">
-                                            <ng-template ngFor let-namePart [ngForOf]="operator.getOperatorNameTemplate()">
-                                                <div *ngIf="!!namePart; else operatorInputPlaceholder">{{namePart | translate}}</div>
+                                            <ng-template ngFor let-namePart [ngForOf]="operator.getOperatorNameTemplate()" let-last="last">
+                                                <ng-container [ngTemplateOutlet]="namePart ? operatorInputText : operatorInputPlaceholder"
+                                                              [ngTemplateOutletContext]="{last:last, namePart:namePart}"></ng-container>
                                             </ng-template>
-                                            <ng-template #operatorInputPlaceholder>
-                                                <div class="argument-placeholder-color argument-placeholder-dimensions"></div>
+
+                                            <ng-template #operatorInputText let-last="last" let-namePart="namePart">
+                                                <div [ngClass]="{'argument-right-margin': !last}">
+                                                    {{namePart | translate}}
+                                                </div>
+                                            </ng-template>
+
+                                            <ng-template #operatorInputPlaceholder let-last="last">
+                                                <div class="argument-placeholder-color argument-placeholder-dimensions" [ngClass]="{'argument-right-margin': !last}"></div>
                                             </ng-template>
                                         </div>
                                     </mat-option>
