@@ -1,4 +1,5 @@
-<div class="predicate-body predicate-body-color">
+<div class="predicate-body"
+     [ngClass]="!!selectedCategory && selectedCategory.providesPredicate ? 'predicate-body-color' : 'white-background'">
     <div fxLayout="row" fxLayoutAlign="start stretch">
         <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-icon-button color="warn" (click)="remove()">

@@ -174,6 +174,13 @@ export abstract class Category<T> {
     }
 
     /**
+     * @returns whether the category is fully configured and represents a valid predicate or not
+     */
+    public get providesPredicate(): boolean {
+        return !!this._generatedPredicate$.getValue();
+    }
+
+    /**
      * @returns the set of Elasticsearch keywords that should be queried by queries generated with this category.
      * The method can be overridden if the keywords are not static and change based on some additional selection (eg. Data fields)
      */
