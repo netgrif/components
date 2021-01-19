@@ -11,7 +11,7 @@
         <ng-template #categorySelection>
             <mat-form-field class="text-margin">
                 <mat-label>{{'search.category.select' | translate}}</mat-label>
-                <mat-select class="category-select" (selectionChange)="categoryChanged($event.value)">
+                <mat-select class="category-select" (selectionChange)="categoryChanged($event.value)" #categoryInput>
                     <mat-option *ngFor="let category of searchCategories"
                                 [value]="category">{{category.translationPath | translate}}</mat-option>
                 </mat-select>

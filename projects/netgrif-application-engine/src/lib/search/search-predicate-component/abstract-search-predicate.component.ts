@@ -1,4 +1,4 @@
-import {Inject, Input, OnDestroy} from '@angular/core';
+import {AfterViewInit, Inject, Input, OnDestroy, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {Subject, Subscription} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
@@ -8,12 +8,13 @@ import {OperatorTemplatePart} from '../models/operator-template-part';
 import {ElementaryPredicate} from '../models/predicate/elementary-predicate';
 import {Query} from '../models/query/query';
 import {LoggerService} from '../../logger/services/logger.service';
+import {MatSelect} from '@angular/material/select';
 
 
 /**
  * Is responsible for the interactive creation of a single {@link ElementaryPredicate} object instance.
  */
-export abstract class AbstractSearchPredicateComponent implements OnDestroy {
+export abstract class AbstractSearchPredicateComponent implements AfterViewInit, OnDestroy {
 
     @Input() predicate: EditableElementaryPredicate;
     @Input() predicateId: number;
@@ -38,6 +39,15 @@ export abstract class AbstractSearchPredicateComponent implements OnDestroy {
 
     public get searchCategories(): Array<Category<any>> {
         return this._searchCategories;
+    }
+
+    @ViewChild('categoryInput') public set categoryInput(input: MatSelect) {
+        if (input) {
+            setTimeout(() => {
+                input.focus();
+                input.open();
+            });
+        }
     }
 
     public trackByTemplateParts = (a: number, b: OperatorTemplatePart) => this._trackByTemplateParts(a, b);
