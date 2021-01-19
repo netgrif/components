@@ -146,6 +146,7 @@
             "select": "Search category"
         },
         "operator": {
+            "name": "Operator",
             "substring": "contains substring",
             "inRange": {
                 "from": "from",
@@ -157,8 +158,8 @@
             "like": "is like",
             "isNull": "is empty"
         },
-        "placeholder": {
-            "text": "Type anything to search or select a category"
+        "tooltip": {
+            "text": "Create search query"
         },
         "and": "and",
         "or": "or"

@@ -146,6 +146,7 @@
             "select": "Kategória vyhľadávania"
         },
         "operator": {
+            "name": "Operátor",
             "substring": "obsahuje podreťazec",
             "inRange": {
                 "from": "od",
@@ -158,8 +159,8 @@
             "like": "je podobný s",
             "isNull": "je prázdny"
         },
-        "placeholder": {
-            "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"
+        "tooltip": {
+            "text": "Začať vyhľadávanie"
         },
         "and": "a zároveň",
         "or": "alebo"

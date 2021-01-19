@@ -66,6 +66,7 @@
 
                         <ng-template #operatorSelection>
                             <mat-form-field appearance="outline">
+                                <mat-label>{{'search.operator.name' | translate}}</mat-label>
                                 <mat-select [formControl]="selectedCategory.getActiveInputFormControl(i)" #configurationInput>
                                     <mat-option *ngFor="let operator of selectedCategory.allowedOperators" [value]="operator">
                                         <div fxLayout="row" fxLayoutAlign="start center">

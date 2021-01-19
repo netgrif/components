@@ -146,6 +146,7 @@
             "select": "Suchkategorie"
         },
         "operator": {
+            "name": "Operator",
             "substring": "enthält Teilzeichenfolge",
             "inRange": {
                 "from": "von",
@@ -158,8 +159,8 @@
             "like": "ist ähnlich wie",
             "isNull": "ist leer"
         },
-        "placeholder": {
-            "text": "Suchen oder Suchkategorie auswählen"
+        "tooltip": {
+            "text": "Suchanfrage erstellen"
         },
         "and": "und",
         "or": "oder"

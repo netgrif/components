@@ -1,10 +1,13 @@
-<div>
-    <mat-icon>search</mat-icon>
-    <div fxLayout="row wrap" fxLayoutAlign="start center">
+<div fxLayout="row wrap" fxLayoutAlign="start center">
+    <button mat-icon-button matTooltip="{{'search.tooltip' | translate}}" (click)="addChildPredicate()">
+        <mat-icon>search</mat-icon>
+    </button>
+
+    <ng-template [ngIf]="hasPredicates()">
         <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last" [ngForTrackBy]="trackByPredicates">
             <nc-search-clause [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$" class="clause-margin"></nc-search-clause>
             <div *ngIf="!last" class="button-margin">{{'search.and' | translate | uppercase}}</div>
         </ng-template>
         <button mat-stroked-button (click)="addChildPredicate()" class="button-margin">+ {{'search.and' | translate | uppercase}}</button>
-    </div>
+    </ng-template>
 </div>

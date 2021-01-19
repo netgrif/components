@@ -1,7 +1,7 @@
 import {SearchService} from '../search-service/search.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Subject} from 'rxjs';
-import {OnDestroy, OnInit} from '@angular/core';
+import {OnDestroy} from '@angular/core';
 import {KeyValue} from '@angular/common';
 import {BooleanOperator} from '../models/boolean-operator';
 import {EditablePredicate} from '../models/predicate/editable-predicate';
@@ -17,7 +17,7 @@ import {Predicate} from '../models/predicate/predicate';
  * Default factory methods for [task]{@link defaultTaskSearchCategoriesFactoryMethod} and
  * [case]{@link defaultCaseSearchCategoriesFactoryMethod} search categories exist. See their documentation for more information.
  */
-export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
+export abstract class AbstractSearchComponent implements OnDestroy {
 
     public removeChild$: Subject<number>;
 
@@ -25,10 +25,6 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
                           protected _logger: LoggerService) {
         this.removeChild$ = new Subject<number>();
         this.removeChild$.subscribe(id => this._removeChildAt(id));
-    }
-
-    ngOnInit(): void {
-        this.addChildPredicate();
     }
 
     ngOnDestroy(): void {
@@ -39,6 +35,10 @@ export abstract class AbstractSearchComponent implements OnInit, OnDestroy {
 
     public getPredicateMap(): Map<number, Predicate> {
         return this._searchService.rootPredicate.getPredicateMap();
+    }
+
+    public hasPredicates(): boolean {
+        return this.getPredicateMap().size > 0;
     }
 
     public addChildPredicate(): void {
