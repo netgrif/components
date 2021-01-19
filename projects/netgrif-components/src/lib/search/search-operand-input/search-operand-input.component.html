@@ -89,7 +89,7 @@
 </ng-template>
 
 <ng-template #operandDisplay>
-    <div [ngSwitch]="inputType" (click)="editInput()" class="boldText">
+    <div [ngSwitch]="inputType" (click)="editInput()" class="bold-text">
         <div *ngSwitchCase="searchInputType.AUTOCOMPLETE">
             {{inputFormControl.value.text | translate}}
         </div>

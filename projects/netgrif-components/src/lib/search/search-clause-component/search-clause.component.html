@@ -3,8 +3,8 @@
         <!-- TODO i18n -->
         <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last" [ngForTrackBy]="trackByPredicates">
             <nc-search-predicate [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$"></nc-search-predicate>
-            <div *ngIf="!last"><b>OR</b></div>
+            <div *ngIf="!last" class="button-margin">OR</div>
         </ng-template>
-        <button mat-stroked-button (click)="addChildPredicate()">+ OR</button>
+        <button mat-stroked-button (click)="addChildPredicate()" class="button-margin">+ OR</button>
     </div>
 </div>

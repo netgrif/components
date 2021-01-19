@@ -8,7 +8,7 @@
 
         <div *ngIf="!selectedCategory; then categorySelection else categoryDisplay"></div>
         <ng-template #categorySelection>
-            <mat-form-field>
+            <mat-form-field class="text-margin">
                 <mat-label>{{'search.category.select' | translate}}</mat-label>
                 <mat-select class="category-select" (selectionChange)="categoryChanged($event.value)">
                     <mat-option *ngFor="let category of searchCategories"
@@ -17,7 +17,9 @@
             </mat-form-field>
         </ng-template>
         <ng-template #categoryDisplay>
-            <div [ngClass]="{'boldText': selectedCategory.displayBold}" (click)="clearCategorySelection()">
+            <div fxLayout="row" fxLayoutAlign="start center" class="text-margin"
+                 [ngClass]="{'bold-text': selectedCategory.displayBold}"
+                 (click)="clearCategorySelection()">
                 {{selectedCategory.translationPath | translate}}
             </div>
         </ng-template>
@@ -29,7 +31,7 @@
                         <div *ngIf="!selectedCategory.isAutocompleteConfigurationSelected(i); then configurationSelection else configurationDisplay"></div>
 
                         <ng-template #configurationSelection>
-                            <mat-form-field>
+                            <mat-form-field class="text-margin">
                                 <input type="text" matInput
                                        #autocompleteInput
                                        #autocompleteTrigger="matAutocompleteTrigger"
@@ -50,7 +52,8 @@
                         </ng-template>
 
                         <ng-template #configurationDisplay>
-                            <div [ngClass]="{'boldText': selectedCategory.isAutocompleteConfigurationDisplayBold(i)}"
+                            <div class="text-margin"
+                                 [ngClass]="{'bold-text': selectedCategory.isAutocompleteConfigurationDisplayBold(i)}"
                                  (click)="selectedCategory.clearAutocompleteConfigurationInput(i)">
                                 {{selectedCategory.getAutocompleteConfigurationSelectedOptionTranslatePath(i) | translate}}
                             </div>
@@ -78,15 +81,19 @@
 
                         <ng-template #argumentsSelection>
                             <div fxLayout="row" fxLayoutAlign="start center" (click)="selectedCategory.clearOperatorSelection()">
-                                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate$ | async"
+                                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate$ | async" let-last="last"
                                              [ngForTrackBy]="trackByTemplateParts">
                                     <div [ngSwitch]="templatePart.type">
                                         <ng-template [ngSwitchCase]="operatorTemplatePartType.TEXT">
-                                            {{templatePart.content | translate}}
+                                            <div fxLayout="row" fxLayoutAlign="start center"
+                                                 [ngClass]="{'text-margin': !last}">
+                                                {{templatePart.content | translate}}
+                                            </div>
                                         </ng-template>
 
                                         <ng-template [ngSwitchCase]="operatorTemplatePartType.INPUT">
-                                            <div (click)="$event.stopPropagation()">
+                                            <div [ngClass]="{'text-margin': !last}"
+                                                 (click)="$event.stopPropagation()">
                                                 <nc-search-operand-input [inputFormControl]="templatePart.content"
                                                                          [inputType]="selectedCategory.inputType"
                                                                          [filterOptionsFunction]="filterOptions"></nc-search-operand-input>

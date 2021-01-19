@@ -1,6 +1,6 @@
 .predicate-body {
     border-radius: 4px;
-    padding: 4px;
+    padding: 4px 8px 4px 0;
 }
 
 .argument-placeholder-dimensions {
@@ -10,8 +10,12 @@
     border-radius: 4px;
 }
 
-.boldText {
+.bold-text {
     font-weight: bold;
+}
+
+.text-margin {
+    margin-right: 8px;
 }
 
 .category-select {
