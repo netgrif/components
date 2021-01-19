@@ -20,7 +20,7 @@ export abstract class AbstractSearchPredicateComponent implements AfterViewInit,
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
 
-    @ViewChildren('configurationInput') configurationInputs: QueryList<MatSelect | HTMLInputElement>;
+    @ViewChildren('configurationInput') configurationInputs: QueryList<MatSelect | ElementRef<HTMLInputElement>>;
 
     public selectedCategory: Category<any>;
 

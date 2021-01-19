@@ -7,7 +7,8 @@
                 <input type="text" matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        (keydown.enter)="$event.target.blur()"
-                       (blur)="confirmInput()">
+                       (blur)="confirmInput()"
+                       #operandInput>
             </mat-form-field>
         </ng-template>
 
@@ -19,7 +20,8 @@
                        [formControl]="inputFormControl"
                        [matAutocomplete]="searchAutocomplete"
                        (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()"
-                       (focus)="editInput()">
+                       (focus)="editInput()"
+                       #operandInput>
                 <mat-autocomplete #searchAutocomplete="matAutocomplete"
                                   [displayWith]="renderSelection"
                                   (optionSelected)="autocompleteInput.blur()">
@@ -36,10 +38,10 @@
                 <input matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        [matDatepicker]="searchDatepicker"
-                       (click)="searchDatepicker.open()"
                        (keydown.enter)="searchDatepicker.close()"
-                       (focus)="editInput()"
-                       (blur)="confirmInput()">
+                       (focus)="editInput(); searchDatepicker.open()"
+                       (blur)="confirmInput()"
+                       #operandInput>
                 <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #searchDatepicker></mat-datepicker>
             </mat-form-field>
@@ -50,10 +52,10 @@
                 <input matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        [ngxMatDatetimePicker]="searchDateTimepicker"
-                       (click)="searchDateTimepicker.open()"
                        (keydown.enter)="searchDateTimepicker.close()"
-                       (focus)="editInput()"
-                       (blur)="confirmInput()">
+                       (focus)="editInput(); searchDateTimepicker.open()"
+                       (blur)="confirmInput()"
+                       #operandInput>
                 <mat-datepicker-toggle matPrefix [for]="searchDateTimepicker">
                     <mat-icon matDatepickerToggleIcon>schedule</mat-icon>
                 </mat-datepicker-toggle>
@@ -73,7 +75,8 @@
                        [formControl]="inputFormControl"
                        (keydown.enter)="$event.target.blur()"
                        (focus)="editInput()"
-                       (blur)="confirmInput()">
+                       (blur)="confirmInput()"
+                       #operandInput>
             </mat-form-field>
         </ng-template>
 

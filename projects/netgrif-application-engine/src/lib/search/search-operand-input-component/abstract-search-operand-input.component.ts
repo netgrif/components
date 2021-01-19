@@ -1,4 +1,4 @@
-import {Input, OnDestroy, OnInit} from '@angular/core';
+import {ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
 import {Observable, Subscription} from 'rxjs';
@@ -62,6 +62,15 @@ export class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
         }
         return this.inputFormControl.value !== undefined
             && this.inputFormControl.value !== null;
+    }
+
+    @ViewChild('operandInput')
+    public set categoryInput(input: ElementRef<HTMLInputElement>) {
+        if (input) {
+            setTimeout(() => {
+                input.nativeElement.focus();
+            });
+        }
     }
 
     public confirmInput(): void {
