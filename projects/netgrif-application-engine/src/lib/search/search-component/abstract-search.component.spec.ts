@@ -21,7 +21,7 @@ import {MaterialModule} from '../../material/material.module';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
-    let fixture: ComponentFixture<TestComponent>;
+    let fixture: ComponentFixture<TestSearchComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -40,14 +40,13 @@ describe('AbstractSearchComponent', () => {
             ],
             declarations: [
                 TestSearchComponent,
-                TestComponent,
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.debugElement.children[0].componentInstance;
+        fixture = TestBed.createComponent(TestSearchComponent);
+        component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
@@ -66,18 +65,8 @@ describe('AbstractSearchComponent', () => {
     template: ''
 })
 class TestSearchComponent extends AbstractSearchComponent {
-    constructor(protected _translate: TranslateService,
-                protected _searchService: SearchService,
-                protected _logger: LoggerService,
-                @Optional() protected _searchChipService: SearchChipService) {
-        super(_translate, _searchService, _logger, _searchChipService);
+    constructor(searchService: SearchService,
+                logger: LoggerService) {
+        super(searchService, logger);
     }
-}
-
-@Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-search [searchCategories]="arr"></nae-test-search>'
-})
-class TestComponent {
-    arr = [];
 }

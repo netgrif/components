@@ -6,7 +6,7 @@ import {SearchAutocompleteOption} from '../models/category/search-autocomplete-o
 import {debounceTime} from 'rxjs/operators';
 
 
-export class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
+export abstract class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
 
     @Input() inputFormControl: FormControl;
     @Input() inputType: SearchInputType;
