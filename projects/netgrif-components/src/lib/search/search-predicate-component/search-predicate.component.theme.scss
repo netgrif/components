@@ -3,10 +3,6 @@
 @mixin search-predicate-theme($theme) {
     $primary: map-get($theme, primary);
 
-    .argument-placeholder-color {
-        background: mat-color($primary, 50);
-    }
-
     .predicate-body-color {
         background: mat-color($primary, 50);
     }

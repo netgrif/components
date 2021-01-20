@@ -1,15 +1,34 @@
 import {ConfigurationInput} from '../models/configuration-input';
-import {Input} from '@angular/core';
+import {ElementRef, Input, ViewChild} from '@angular/core';
 import {Category} from '../models/category/category';
 import {OperatorTemplatePart} from '../models/operator-template-part';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {Observable} from 'rxjs';
 import {AutocompleteOptions} from '../models/category/autocomplete-options';
+import {MatSelect} from '@angular/material/select';
 
 export abstract class AbstractSearchConfigurationInputComponent {
 
     @Input() configuration: ConfigurationInput;
     @Input() selectedCategory: Category<any>;
+
+    @ViewChild('configurationInput')
+    public set configurationInput(input: MatSelect | ElementRef<HTMLInputElement>) {
+        // TODO 20.1.2021 BUG - if multiple configuration inputs are displayed at the same time all of them will be focused.
+        //  The same fix as in OperandInputs can be applied here as well.
+        if (input) {
+            setTimeout(() => {
+                if ((input as any).nativeElement !== undefined) {
+                    const ref = (input as ElementRef<HTMLInputElement>);
+                    ref.nativeElement.focus();
+                } else {
+                    const select = (input as MatSelect);
+                    select.focus();
+                    select.open();
+                }
+            });
+        }
+    }
 
     public trackByTemplateParts = (a: number, b: OperatorTemplatePart) => this._trackByTemplateParts(a, b);
 

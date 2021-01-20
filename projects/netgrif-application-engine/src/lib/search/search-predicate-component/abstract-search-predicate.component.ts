@@ -1,10 +1,9 @@
-import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Inject, Input, OnDestroy, ViewChild} from '@angular/core';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {Subject, Subscription} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
-import {OperatorTemplatePart} from '../models/operator-template-part';
 import {ElementaryPredicate} from '../models/predicate/elementary-predicate';
 import {Query} from '../models/query/query';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -14,13 +13,11 @@ import {MatSelect} from '@angular/material/select';
 /**
  * Is responsible for the interactive creation of a single {@link ElementaryPredicate} object instance.
  */
-export abstract class AbstractSearchPredicateComponent implements AfterViewInit, OnDestroy {
+export abstract class AbstractSearchPredicateComponent implements OnDestroy {
 
     @Input() predicate: EditableElementaryPredicate;
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
-
-    @ViewChildren('configurationInput') configurationInputs: QueryList<MatSelect | ElementRef<HTMLInputElement>>;
 
     public selectedCategory: Category<any>;
 
@@ -31,23 +28,6 @@ export abstract class AbstractSearchPredicateComponent implements AfterViewInit,
     protected constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
                           protected _logger: LoggerService) {
         this._searchCategories = searchCategories.map(category => category.duplicate());
-    }
-
-    ngAfterViewInit(): void {
-        this.configurationInputs.changes.subscribe((inputs: QueryList<MatSelect | ElementRef<HTMLInputElement>>) => {
-            if (inputs.length > 0) {
-                setTimeout(() => {
-                    if ((inputs.last as any).nativeElement !== undefined) {
-                        const ref = (inputs.last as ElementRef<HTMLInputElement>);
-                        ref.nativeElement.focus();
-                    } else {
-                        const select = (inputs.last as MatSelect);
-                        select.focus();
-                        select.open();
-                    }
-                });
-            }
-        });
     }
 
     ngOnDestroy(): void {
