@@ -40,48 +40,4 @@ export abstract class NoConfigurationAutocompleteCategory<T> extends Autocomplet
         }
         throw new Error(`Illegal inputIndex '${inputIndex}'. This category has only one configuration input!`);
     }
-
-    /**
-     * Always throws an error.
-     */
-    // @ts-ignore
-    getFilteredAutocompleteConfigurationOptions(inputIndex: number): never {
-        this.throwNoConfigurationError();
-    }
-
-    /**
-     * Always throws an error.
-     */
-    // @ts-ignore
-    isAutocompleteConfigurationSelected(inputIndex: number): never {
-        this.throwNoConfigurationError();
-    }
-
-    /**
-     * Always throws an error.
-     */
-    // @ts-ignore
-    isAutocompleteConfigurationDisplayBold(inputIndex: number): never {
-        this.throwNoConfigurationError();
-    }
-
-    /**
-     * Always throws an error.
-     */
-    // @ts-ignore
-    getAutocompleteConfigurationSelectedOptionTranslatePath(inputIndex: number): never {
-        this.throwNoConfigurationError();
-    }
-
-    /**
-     * Always throws an error.
-     */
-    // @ts-ignore
-    clearAutocompleteConfigurationInput(inputIndex: number): never {
-        this.throwNoConfigurationError();
-    }
-
-    private throwNoConfigurationError(): never {
-        throw new Error('NoConfigurationAutocompleteCategory has no configuration options!');
-    }
 }

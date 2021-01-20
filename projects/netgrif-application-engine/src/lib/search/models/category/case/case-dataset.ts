@@ -45,18 +45,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     // TODO 4.5.2020 - only button, file and file list fields are truly unsupported, dateTime is implemented but lacks elastic support
     protected static DISABLED_TYPES = ['button', 'file', 'dateTime', 'fileList', 'enumeration_map', 'multichoice_map'];
 
-    private _searchingUsers = false;
-
-    protected readonly _DATAFIELD_INPUT: ConfigurationInput =
-        new ConfigurationInput(SearchInputType.AUTOCOMPLETE, 'search.category.case.dataset.placeholder.field');
+    protected readonly _DATAFIELD_INPUT: ConfigurationInput;
 
     protected _processCategory: CaseProcess;
 
     protected _configurationInputs$: BehaviorSubject<Array<ConfigurationInput>>;
-
-    protected _datafieldFormControl: FormControl;
-
-    protected _filteredConfigurationOptions$: Observable<Array<SearchAutocompleteOption<string>>>;
 
     protected _datafieldOptions: Map<string, Array<Datafield>>;
 
@@ -87,14 +80,28 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
 
-        this._configurationInputs$ = new BehaviorSubject<Array<ConfigurationInput>>([this._DATAFIELD_INPUT]);
-
-        this._datafieldFormControl = new FormControl();
-
         this._datafieldOptions = new Map<string, Array<Datafield>>();
         this.createDatafieldOptions();
 
-        this._datafieldFormControl.valueChanges.subscribe(newValue => {
+        this._DATAFIELD_INPUT = new ConfigurationInput(
+            SearchInputType.AUTOCOMPLETE,
+            'search.category.case.dataset.placeholder.field',
+            false,
+            this._datafieldOptions,
+            (mapKeys, newValue) => {
+                return mapKeys.map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
+                    .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue))
+                    .map(mapKey => ({
+                        text: mapKey.title,
+                        value: mapKey.toSerializedForm(),
+                        icon: mapKey.icon
+                    }));
+            }
+        );
+
+        this._configurationInputs$ = new BehaviorSubject<Array<ConfigurationInput>>([this._DATAFIELD_INPUT]);
+
+        this._DATAFIELD_INPUT.valueChanges$().subscribe(newValue => {
             if (newValue === undefined || typeof newValue === 'string') {
                 this._configurationInputs$.next([this._DATAFIELD_INPUT]);
             } else if (this._configurationInputs$.getValue().length === 1) {
@@ -102,21 +109,6 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             }
             this._operatorFormControl.setValue(undefined);
         });
-
-        this._filteredConfigurationOptions$ = this._datafieldFormControl.valueChanges.pipe(
-            startWith(''),
-            filter(newValue => typeof newValue === 'string'),
-            map(newValue => {
-                return Array.from(this._datafieldOptions.keys())
-                    .map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
-                    .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue))
-                    .map(mapKey => ({
-                        text: mapKey.title,
-                        value: mapKey.toSerializedForm(),
-                        icon: mapKey.icon
-                    }));
-            })
-        );
     }
 
     get configurationInputs$(): Observable<Array<ConfigurationInput>> {
@@ -193,16 +185,16 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     public get hasSelectedDatafields(): boolean {
-        return !!this._datafieldFormControl.value && typeof this._datafieldFormControl.value !== 'string';
+        return this._DATAFIELD_INPUT.isOptionSelected;
     }
 
     protected get _selectedDatafields(): Array<Datafield> {
-        return this._datafieldOptions.get(this._datafieldFormControl.value.value);
+        return this._datafieldOptions.get(this._DATAFIELD_INPUT.formControl.value.value);
     }
 
     public reset() {
         super.reset();
-        this._datafieldFormControl.setValue('');
+        this._DATAFIELD_INPUT.clear();
     }
 
     duplicate(): CaseDataset {
@@ -215,44 +207,6 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         } else {
             return this._selectedDatafields.map(datafield => `dataSet.${datafield.fieldId}.value`);
         }
-    }
-
-    getActiveInputFormControl(inputIndex: number): FormControl {
-        if (inputIndex >= this._configurationInputs$.value.length || inputIndex < 0) {
-            throw new Error(`The requested input index '${inputIndex}' is illegal. FormControl can only be obtained for inputs withing the`
-                + ` provided configurationInputs array`);
-        }
-        if (inputIndex === 0) {
-            return this._datafieldFormControl;
-        }
-        if (inputIndex === 1) {
-            return this._operatorFormControl;
-        }
-    }
-
-    getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption<string>>> {
-        this.checkAutocompleteConfigurationIndex(inputIndex);
-        return this._filteredConfigurationOptions$;
-    }
-
-    isAutocompleteConfigurationSelected(inputIndex: number): boolean {
-        this.checkAutocompleteConfigurationIndex(inputIndex);
-        return !!this._datafieldFormControl.value && (typeof this._datafieldFormControl.value !== 'string');
-    }
-
-    isAutocompleteConfigurationDisplayBold(inputIndex: number): boolean {
-        this.checkAutocompleteConfigurationIndex(inputIndex);
-        return true;
-    }
-
-    getAutocompleteConfigurationSelectedOptionTranslatePath(inputIndex: number): string {
-        this.checkAutocompleteConfigurationIndex(inputIndex);
-        return this._datafieldFormControl.value.text;
-    }
-
-    clearAutocompleteConfigurationInput(inputIndex: number): void {
-        this.checkAutocompleteConfigurationIndex(inputIndex);
-        this._datafieldFormControl.setValue(undefined);
     }
 
     get inputPlaceholder(): string {
@@ -343,7 +297,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             this._log.warn(`The provided 'datafieldMapKey' does not exist.`);
             return;
         }
-        this._datafieldFormControl.setValue(this._datafieldOptions.get(datafieldMapKey));
+        this._DATAFIELD_INPUT.formControl.setValue(this._datafieldOptions.get(datafieldMapKey));
         if (selectDefaultOperator) {
             this.selectDefaultOperator();
         }
@@ -399,15 +353,5 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             return (value as SearchAutocompleteOption<Array<number>>).value;
         }
         return value;
-    }
-
-    /**
-     * Checks whether the input ath the given index is an autocomplete configuration and throws an error if not.
-     * @param index the checked index
-     */
-    private checkAutocompleteConfigurationIndex(index: number): void {
-        if (index !== 0) {
-            throw new Error(`Illegal inputIndex '${index}'. This category doesn't have an autocomplete input at that index!`);
-        }
     }
 }

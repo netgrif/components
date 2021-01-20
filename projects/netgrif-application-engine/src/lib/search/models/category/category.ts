@@ -5,7 +5,6 @@ import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
 import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
-import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
@@ -66,7 +65,16 @@ export abstract class Category<T> {
     /**
      * Utility variable that can be used as value for the [configurationInputs$]{@link Category#configurationInputs$} `Observable`.
      */
-    protected readonly _OPERATOR_INPUT: ConfigurationInput = new ConfigurationInput(SearchInputType.OPERATOR, 'search.operator.name');
+    protected readonly _OPERATOR_INPUT: ConfigurationInput = new ConfigurationInput(
+        SearchInputType.OPERATOR,
+        'search.operator.name',
+        false,
+        new Map<string, Array<unknown>>(),
+        () => {
+            throw new Error('ConfigurationInput of type OPERATOR is a placeholder!'
+                + ' Use operator related methods from the Category class instead.');
+        }
+    );
 
     /**
      * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
@@ -200,42 +208,6 @@ export abstract class Category<T> {
         result.push(...this._elasticKeywords);
         return result;
     }
-
-    /**
-     * @param inputIndex the input index for which the form control should be returned.
-     * @returns the FormControl object for the input at the given index.
-     */
-    public abstract getActiveInputFormControl(inputIndex: number): FormControl;
-
-    /**
-     * @param inputIndex the input index for which the stream of filtered autocomplete configuration options should be returned.
-     * @returns the stream of filtered autocomplete configuration options at the given index.
-     */
-    public abstract getFilteredAutocompleteConfigurationOptions(inputIndex: number): Observable<Array<SearchAutocompleteOption<unknown>>>;
-
-    /**
-     * @param inputIndex the input index for which the form control should be returned.
-     * @returns whether the autocomplete configuration at the given index has an option selected.
-     */
-    public abstract isAutocompleteConfigurationSelected(inputIndex: number): boolean;
-
-    /**
-     * @param inputIndex the input index for which the form control should be returned.
-     * @returns whether the autocomplete configuration at the given index should be displayed with bold text.
-     */
-    public abstract isAutocompleteConfigurationDisplayBold(inputIndex: number): boolean;
-
-    /**
-     * @param inputIndex the input index for which the form control should be returned.
-     * @returns te translation path for the selected autocomplete configuration option at the given index
-     */
-    public abstract getAutocompleteConfigurationSelectedOptionTranslatePath(inputIndex: number): string;
-
-    /**
-     * Clears the autocomplete configuration input at the given index
-     * @param inputIndex the input index for which the form control should be returned.
-     */
-    public abstract clearAutocompleteConfigurationInput(inputIndex: number): void;
 
     /**
      * Changes the state of the Category. Category can create queries when an {@link Operator} is selected.
