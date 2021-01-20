@@ -14,12 +14,14 @@ import {Predicate} from '../models/predicate/predicate';
  * The nested Predicates are OR {@link ClausePredicate} instances created by {@link AbstractSearchClauseComponent}.
  *
  * Search categories must be provided by the {@link NAE_SEARCH_CATEGORIES} injection token.
- * Default factory methods for [task]{@link defaultTaskSearchCategoriesFactoryMethod} and
- * [case]{@link defaultCaseSearchCategoriesFactoryMethod} search categories exist. See their documentation for more information.
+ * Default factory methods for [task]{@link defaultTaskSearchCategoriesFactory} and
+ * [case]{@link defaultCaseSearchCategoriesFactory} search categories exist. See their documentation for more information.
  */
 export abstract class AbstractSearchComponent implements OnDestroy {
 
     public removeChild$: Subject<number>;
+
+    public advancedSearchDisplayed = false;
 
     protected constructor(protected _searchService: SearchService,
                           protected _logger: LoggerService) {
@@ -43,6 +45,17 @@ export abstract class AbstractSearchComponent implements OnDestroy {
 
     public addChildPredicate(): void {
         this._searchService.rootPredicate.addClausePredicate(BooleanOperator.OR);
+    }
+
+    public toggleSearchMode(): void {
+        if (this.advancedSearchDisplayed) {
+            this._searchService.clearPredicates();
+        } else {
+            this._searchService.removeFullTextFilter();
+            this.addChildPredicate();
+        }
+
+        this.advancedSearchDisplayed = !this.advancedSearchDisplayed;
     }
 
     protected _removeChildAt(id: number): void {

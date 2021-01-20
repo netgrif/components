@@ -160,7 +160,8 @@
             "isNull": "ist leer"
         },
         "tooltip": {
-            "text": "Suchanfrage erstellen"
+            "toAdvanced": "Wechseln zum erweiterten Suchmodus",
+            "toFullText": "Wechseln zum einfachen Suchmodus"
         },
         "and": "und",
         "or": "oder"

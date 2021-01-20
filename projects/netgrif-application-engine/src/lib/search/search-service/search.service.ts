@@ -138,6 +138,18 @@ export class SearchService implements OnDestroy {
     }
 
     /**
+     * Removes all {@link Predicate} objects that contribute to the search. Updates the active Filter if it was affected.
+     */
+    public clearPredicates(): void {
+        if (this._rootPredicate.getPredicateMap().size > 0) {
+            for (const id of this._rootPredicate.getPredicateMap().keys()) {
+                this.removePredicate(id);
+            }
+            this.updateActiveFilter();
+        }
+    }
+
+    /**
      * Adds a {@link Filter} with the [fullText]{@link CaseSearchRequestBody#fullText} attribute set to the provided value.
      * If full text filter is already set, it will be replaced.
      * @param searchedSubstring value that should be searched on all full text fields

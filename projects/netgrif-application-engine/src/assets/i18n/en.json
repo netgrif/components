@@ -159,7 +159,8 @@
             "isNull": "is empty"
         },
         "tooltip": {
-            "text": "Create search query"
+            "toAdvanced": "Switch to advanced search",
+            "toFullText": "Switch to basic search"
         },
         "and": "and",
         "or": "or"

@@ -1,13 +1,19 @@
 <div fxLayout="row wrap" fxLayoutAlign="start center">
-    <button mat-icon-button matTooltip="{{'search.tooltip' | translate}}" (click)="addChildPredicate()">
-        <mat-icon>search</mat-icon>
+    <button mat-icon-button [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate" (click)="toggleSearchMode()">
+        <mat-icon>find_replace</mat-icon>
     </button>
 
-    <ng-template [ngIf]="hasPredicates()">
+    <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
+
+    <ng-template #advancedSearch>
         <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last" [ngForTrackBy]="trackByPredicates">
             <nc-search-clause [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$" class="clause-margin"></nc-search-clause>
             <div *ngIf="!last" class="button-margin">{{'search.and' | translate | uppercase}}</div>
         </ng-template>
         <button mat-stroked-button (click)="addChildPredicate()" class="button-margin">+ {{'search.and' | translate | uppercase}}</button>
+    </ng-template>
+
+    <ng-template #fullTextSearch>
+        TODO full text search here....
     </ng-template>
 </div>
