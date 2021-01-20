@@ -84,7 +84,7 @@
             <div fxLayout="row">
                 <mat-slide-toggle [formControl]="inputFormControl"
                                   (focus)="editInput()"
-                                  (blur)="confirmInput()"></mat-slide-toggle>
+                                  (toggleChange)="confirmInput()"></mat-slide-toggle>
             </div>
         </ng-template>
     </div>

@@ -86,7 +86,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         this._DATAFIELD_INPUT = new ConfigurationInput(
             SearchInputType.AUTOCOMPLETE,
             'search.category.case.dataset.placeholder.field',
-            false,
+            true,
             this._datafieldOptions,
             (mapKeys, newValue) => {
                 return mapKeys.map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
