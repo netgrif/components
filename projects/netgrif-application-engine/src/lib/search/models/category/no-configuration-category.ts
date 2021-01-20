@@ -4,6 +4,7 @@ import {SearchInputType} from './search-input-type';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Observable, of} from 'rxjs';
 import {FormControl} from '@angular/forms';
+import {ConfigurationInput} from '../configuration-input';
 
 /**
  * A utility class that exists for inheritance by simpler category instances.
@@ -22,8 +23,8 @@ export abstract class NoConfigurationCategory<T> extends Category<T> {
     /**
      * Always returns an array with only the [OPERATOR]{@link SearchInputType#OPERATOR} constant.
      */
-    get configurationInputs$(): Observable<Array<SearchInputType>> {
-        return of([SearchInputType.OPERATOR]);
+    get configurationInputs$(): Observable<Array<ConfigurationInput>> {
+        return of([this._OPERATOR_INPUT]);
     }
 
     /**

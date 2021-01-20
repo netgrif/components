@@ -48,6 +48,7 @@ export * from './models/category/task/task-task';
 
 export * from './models/datafield-map-key';
 export * from './models/operator-template-part';
+export * from './models/configuration-input';
 
 /* Interfaces */
 export * from './models/escape-result';
@@ -78,6 +79,7 @@ export * from './search-component/abstract-search.component';
 export * from './search-clause-component/abstract-search-clause.component';
 export * from './search-predicate-component/abstract-search-predicate.component';
 export * from './search-operand-input-component/abstract-search-operand-input.component';
+export * from './search-configuration-input-component/abstract-search-configuration-input.component';
 
 /* Functions */
 export * from './category-factory/default-categories-factories';

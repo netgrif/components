@@ -9,6 +9,7 @@ import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
+import {ConfigurationInput} from '../configuration-input';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -61,6 +62,11 @@ export abstract class Category<T> {
      * Emits `undefined` if the `Category` is not in such state.
      */
     protected _generatedPredicate$: BehaviorSubject<ElementaryPredicate | undefined>;
+
+    /**
+     * Utility variable that can be used as value for the [configurationInputs$]{@link Category#configurationInputs$} `Observable`.
+     */
+    protected readonly _OPERATOR_INPUT: ConfigurationInput = new ConfigurationInput(SearchInputType.OPERATOR, 'search.operator.name');
 
     /**
      * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
@@ -117,13 +123,9 @@ export abstract class Category<T> {
      *
      * Beware that while most categories always return the same constant it must not always be the case.
      *
-     * Not all [SearchInputTypes]{@link SearchInputType} are supported as configuration inputs.
-     * The GUI can be currently automatically generated only for inputs of type [OPERATOR]{@link SearchInputType#OPERATOR} and
-     * [AUTOCOMPLETE]{@link SearchInputType#AUTOCOMPLETE}.
-     *
      * @returns the required input type for configuration steps of this category
      */
-    public abstract get configurationInputs$(): Observable<Array<SearchInputType>>;
+    public abstract get configurationInputs$(): Observable<Array<ConfigurationInput>>;
 
     /**
      * If you use the `Category` class as a sort of PredicateBuilder, then you want to use the

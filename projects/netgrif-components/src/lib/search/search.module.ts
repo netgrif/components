@@ -7,7 +7,8 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
 import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
 import {SearchClauseComponent} from './search-clause-component/search-clause.component';
 import {SearchPredicateComponent} from './search-predicate-component/search-predicate.component';
-import {SearchOperandInputComponent} from './search-operand-input/search-operand-input.component';
+import {SearchOperandInputComponent} from './search-operand-input-component/search-operand-input.component';
+import {SearchConfigurationInputComponent} from './search-configuration-input-component/search-configuration-input.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import {SearchOperandInputComponent} from './search-operand-input/search-operand
         SearchClauseComponent,
         SearchPredicateComponent,
         SearchOperandInputComponent,
+        SearchConfigurationInputComponent,
     ],
     exports: [
         SearchComponent,
@@ -25,6 +27,7 @@ import {SearchOperandInputComponent} from './search-operand-input/search-operand
         SearchClauseComponent,
         SearchPredicateComponent,
         SearchOperandInputComponent,
+        SearchConfigurationInputComponent,
     ],
     imports: [
         CommonModule,

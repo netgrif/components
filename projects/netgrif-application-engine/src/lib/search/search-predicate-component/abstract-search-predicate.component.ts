@@ -70,8 +70,6 @@ export abstract class AbstractSearchPredicateComponent implements AfterViewInit,
         }
     }
 
-    public trackByTemplateParts = (a: number, b: OperatorTemplatePart) => this._trackByTemplateParts(a, b);
-
     /**
      * Lambda that is used to preserve `this` reference in HTML binding.
      *
@@ -109,15 +107,6 @@ export abstract class AbstractSearchPredicateComponent implements AfterViewInit,
      */
     protected _renderSelection(option: SearchAutocompleteOption<unknown>): string {
         return option ? option.text : '';
-    }
-
-    /**
-     * Function for tracking Template parts in ngFor.
-     * @param index index of the ngFor element
-     * @param item template part
-     */
-    protected _trackByTemplateParts(index: number, item: OperatorTemplatePart): any {
-        return item.id;
     }
 
     /**

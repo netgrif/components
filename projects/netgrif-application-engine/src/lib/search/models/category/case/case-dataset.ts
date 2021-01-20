@@ -31,6 +31,7 @@ import {MoreThanDateTime} from '../../operator/more-than-date-time';
 import {LessThanDateTime} from '../../operator/less-than-date-time';
 import {InRangeDateTime} from '../../operator/in-range-date-time';
 import {AutocompleteOptions} from '../autocomplete-options';
+import {ConfigurationInput} from '../../configuration-input';
 
 interface Datafield {
     netId: string;
@@ -42,13 +43,16 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     private static readonly _i18n = 'search.category.case.dataset';
     // TODO 4.5.2020 - only button, file and file list fields are truly unsupported, dateTime is implemented but lacks elastic support
-    protected static DISABLED_TYPES = ['button', 'file', 'dateTime', 'fileList'];
+    protected static DISABLED_TYPES = ['button', 'file', 'dateTime', 'fileList', 'enumeration_map', 'multichoice_map'];
 
     private _searchingUsers = false;
 
+    protected readonly _DATAFIELD_INPUT: ConfigurationInput =
+        new ConfigurationInput(SearchInputType.AUTOCOMPLETE, 'search.category.case.dataset.placeholder.field');
+
     protected _processCategory: CaseProcess;
 
-    protected _configurationInputs$: BehaviorSubject<Array<SearchInputType>>;
+    protected _configurationInputs$: BehaviorSubject<Array<ConfigurationInput>>;
 
     protected _datafieldFormControl: FormControl;
 
@@ -83,7 +87,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
 
-        this._configurationInputs$ = new BehaviorSubject<Array<SearchInputType>>([SearchInputType.AUTOCOMPLETE]);
+        this._configurationInputs$ = new BehaviorSubject<Array<ConfigurationInput>>([this._DATAFIELD_INPUT]);
 
         this._datafieldFormControl = new FormControl();
 
@@ -92,9 +96,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
         this._datafieldFormControl.valueChanges.subscribe(newValue => {
             if (newValue === undefined || typeof newValue === 'string') {
-                this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE]);
+                this._configurationInputs$.next([this._DATAFIELD_INPUT]);
             } else if (this._configurationInputs$.getValue().length === 1) {
-                this._configurationInputs$.next([SearchInputType.AUTOCOMPLETE, SearchInputType.OPERATOR]);
+                this._configurationInputs$.next([this._DATAFIELD_INPUT, this._OPERATOR_INPUT]);
             }
             this._operatorFormControl.setValue(undefined);
         });
@@ -115,7 +119,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         );
     }
 
-    get configurationInputs$(): Observable<Array<SearchInputType>> {
+    get configurationInputs$(): Observable<Array<ConfigurationInput>> {
         return this._configurationInputs$.asObservable();
     }
 
