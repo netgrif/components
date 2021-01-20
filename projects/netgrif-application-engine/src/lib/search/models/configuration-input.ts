@@ -51,7 +51,7 @@ export class ConfigurationInput {
         return !!this._formControl.value && (typeof this._formControl.value !== 'string');
     }
 
-    public get translatePath(): string {
+    public get selectedOptionTranslatePath(): string {
         return this.isOptionSelected ? this._formControl.value.text : '';
     }
 

@@ -65,16 +65,7 @@ export abstract class Category<T> {
     /**
      * Utility variable that can be used as value for the [configurationInputs$]{@link Category#configurationInputs$} `Observable`.
      */
-    protected readonly _OPERATOR_INPUT: ConfigurationInput = new ConfigurationInput(
-        SearchInputType.OPERATOR,
-        'search.operator.name',
-        false,
-        new Map<string, Array<unknown>>(),
-        () => {
-            throw new Error('ConfigurationInput of type OPERATOR is a placeholder!'
-                + ' Use operator related methods from the Category class instead.');
-        }
-    );
+    protected readonly _OPERATOR_INPUT: ConfigurationInput;
 
     /**
      * The constructor fills the values of all protected fields and then calls the [initializeCategory()]{@link Category#initializeCategory}
@@ -91,7 +82,18 @@ export abstract class Category<T> {
                           public readonly translationPath: string,
                           protected readonly _inputType: SearchInputType,
                           protected _log: LoggerService) {
-        this._operatorFormControl = new FormControl();
+        this._OPERATOR_INPUT = new ConfigurationInput(
+            SearchInputType.OPERATOR,
+            'search.operator.name',
+            false,
+            new Map<string, Array<unknown>>(),
+            () => {
+                throw new Error('ConfigurationInput of type OPERATOR is a placeholder!'
+                    + ' Use operator related methods from the Category class instead.');
+            }
+        );
+
+        this._operatorFormControl = this._OPERATOR_INPUT.formControl;
         this._operandsFormControls$ = new ReplaySubject<Array<FormControl> | undefined>(1);
         this._operatorTemplate$ = new BehaviorSubject<Array<OperatorTemplatePart> | undefined>(undefined);
         this._operandsFormControls = [];

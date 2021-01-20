@@ -4,7 +4,7 @@ import {Category} from '../models/category/category';
 import {OperatorTemplatePart} from '../models/operator-template-part';
 import {SearchAutocompleteOption} from '../models/category/search-autocomplete-option';
 import {Observable} from 'rxjs';
-import {AutocompleteOptions} from 'netgrif-application-engine';
+import {AutocompleteOptions} from '../models/category/autocomplete-options';
 
 export abstract class AbstractSearchConfigurationInputComponent {
 
