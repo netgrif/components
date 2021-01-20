@@ -96,8 +96,7 @@
             {{inputFormControl.value.text | translate}}
         </div>
         <div *ngSwitchCase="searchInputType.DATE">
-<!--    TODO: Moment template date rendering        -->
-            {{inputFormControl.value | date}}
+            {{inputFormControl.value.format(dateFormat)}}
         </div>
         <div *ngSwitchDefault>
             {{inputFormControl.value}}

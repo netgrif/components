@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractSearchOperandInputComponent, SearchInputType} from '@netgrif/application-engine';
+import {AbstractSearchOperandInputComponent, DATE_FORMAT_STRING, SearchInputType} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-search-operand-input',
@@ -10,6 +10,8 @@ export class SearchOperandInputComponent extends AbstractSearchOperandInputCompo
 
     // make enum accessible in HTMl
     public searchInputType = SearchInputType;
+
+    public dateFormat = DATE_FORMAT_STRING;
 
     constructor() {
         super();
