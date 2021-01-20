@@ -152,7 +152,7 @@
                 "from": "von",
                 "to": "bis"
             },
-            "equals": "ist",
+            "equals": "ist genau",
             "notEquals": "unterscheidet sich von",
             "moreThan": "ist größer als",
             "lessThan": "ist kleiner als",

@@ -23,14 +23,14 @@ import {TaskTask} from '../models/category/task/task-task';
  */
 export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     return [
-        factory.get(CaseTitle),
-        factory.get(CaseVisualId),
-        factory.get(CaseAuthor),
-        factory.get(CaseProcess),
-        factory.get(CaseRole),
-        factory.get(CaseTask),
-        factory.get(CaseCreationDate),
         factory.get(CaseDataset),
+        factory.get(CaseTitle),
+        factory.get(CaseCreationDate),
+        factory.get(CaseProcess),
+        factory.get(CaseTask),
+        factory.get(CaseAuthor),
+        factory.get(CaseVisualId),
+        factory.get(CaseRole),
     ];
 }
 
@@ -45,8 +45,8 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
 export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     return [
         factory.get(TaskAssignee),
+        factory.get(TaskTask),
         factory.get(TaskProcess),
         factory.get(TaskRole),
-        factory.get(TaskTask),
     ];
 }

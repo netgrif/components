@@ -152,7 +152,7 @@
                 "from": "od",
                 "to": "do"
             },
-            "equals": "je",
+            "equals": "je presne",
             "notEquals": "je rôzny od",
             "moreThan": "je viac ako",
             "lessThan": "je menej ako",
@@ -163,7 +163,7 @@
             "toAdvanced": "Prepnúť na rozšírené vyhľadávanie",
             "toFullText": "Prepnúť na jednoduché vyhľadávanie"
         },
-        "and": "a zároveň",
+        "and": "a súčasne",
         "or": "alebo"
     },
     "dataField": {
