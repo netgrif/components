@@ -11,7 +11,7 @@ describe('clearTimeInformation', () => {
         expect(dateTime.minutes()).toEqual(50);
         expect(dateTime.hours()).toEqual(7);
         expect(dateTime.date()).toEqual(14);
-        expect(dateTime.month()).toEqual(1);
+        expect(dateTime.month()).toEqual(0); // month is 0 indexed
         expect(dateTime.year()).toEqual(2021);
 
         clearTimeInformation(dateTime);
@@ -21,7 +21,7 @@ describe('clearTimeInformation', () => {
         expect(dateTime.minutes()).toEqual(0);
         expect(dateTime.hours()).toEqual(0);
         expect(dateTime.date()).toEqual(14);
-        expect(dateTime.month()).toEqual(1);
+        expect(dateTime.month()).toEqual(0);
         expect(dateTime.year()).toEqual(2021);
     });
 });

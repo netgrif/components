@@ -17,7 +17,7 @@ describe('MoreThanDate', () => {
         expect(dateTime.minutes()).toEqual(50);
         expect(dateTime.hours()).toEqual(7);
         expect(dateTime.date()).toEqual(14);
-        expect(dateTime.month()).toEqual(1);
+        expect(dateTime.month()).toEqual(0); // month is 0 indexed
         expect(dateTime.year()).toEqual(2021);
 
         dateTime.milliseconds(-1);
@@ -27,7 +27,7 @@ describe('MoreThanDate', () => {
         expect(dateTime.minutes()).toEqual(50);
         expect(dateTime.hours()).toEqual(7);
         expect(dateTime.date()).toEqual(14);
-        expect(dateTime.month()).toEqual(1);
+        expect(dateTime.month()).toEqual(0);
         expect(dateTime.year()).toEqual(2021);
     });
 });

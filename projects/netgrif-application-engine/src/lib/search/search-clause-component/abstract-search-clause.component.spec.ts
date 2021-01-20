@@ -1,22 +1,26 @@
 import {AbstractSearchClauseComponent} from './abstract-search-clause.component';
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {Subject} from 'rxjs';
+import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
+import {BooleanOperator} from '../models/boolean-operator';
 
-describe('SearchClauseComponent', () => {
+describe('AbstractSearchClauseComponent', () => {
     let component: TestSearchClauseComponent;
-    let fixture: ComponentFixture<TestSearchClauseComponent>;
+    let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                TestSearchClauseComponent
+                TestSearchClauseComponent,
+                TestWrapperComponent
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestSearchClauseComponent);
-        component = fixture.componentInstance;
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
     });
 
@@ -36,5 +40,19 @@ describe('SearchClauseComponent', () => {
 class TestSearchClauseComponent extends AbstractSearchClauseComponent {
     constructor() {
         super();
+    }
+}
+
+@Component({
+    selector: 'nae-test-wrapper',
+    template: '<nae-search-clause [predicate]="predicate" [remove$]="remove$" [predicateId]="0"></nae-search-clause>'
+})
+class TestWrapperComponent implements OnDestroy {
+
+    public predicate = new EditableClausePredicate(BooleanOperator.OR);
+    public remove$ = new Subject();
+
+    ngOnDestroy(): void {
+        this.remove$.complete();
     }
 }
