@@ -6,6 +6,8 @@ import {KeyValue} from '@angular/common';
 import {BooleanOperator} from '../models/boolean-operator';
 import {EditablePredicate} from '../models/predicate/editable-predicate';
 import {Predicate} from '../models/predicate/predicate';
+import {FormControl} from '@angular/forms';
+import {debounceTime, filter} from 'rxjs/operators';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -23,10 +25,20 @@ export abstract class AbstractSearchComponent implements OnDestroy {
 
     public advancedSearchDisplayed = false;
 
+    public fullTextFormControl: FormControl;
+
     protected constructor(protected _searchService: SearchService,
                           protected _logger: LoggerService) {
         this.removeChild$ = new Subject<number>();
         this.removeChild$.subscribe(id => this._removeChildAt(id));
+        this.fullTextFormControl = new FormControl();
+
+        this.fullTextFormControl.valueChanges.pipe(
+            debounceTime(600),
+            filter(newValue => !!newValue)
+        ).subscribe(fulltext => {
+            this._searchService.addFullTextFilter(fulltext);
+        });
     }
 
     ngOnDestroy(): void {

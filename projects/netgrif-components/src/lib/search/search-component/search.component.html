@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayoutAlign="start center">
-    <button mat-icon-button [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate" (click)="toggleSearchMode()">
-        <mat-icon>find_replace</mat-icon>
-    </button>
+    <div class="search-icon" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon [inline]="true">search</mat-icon>
+    </div>
 
     <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
 
@@ -14,6 +14,16 @@
     </ng-template>
 
     <ng-template #fullTextSearch>
-        TODO full text search here....
+        <mat-form-field appearance="outline" class="disable-error-margin">
+            <input type="text" matInput
+                   [placeholder]="'search.fullText' | translate"
+                   [formControl]="fullTextFormControl"
+                   (keydown.enter)="$event.target.blur()">
+        </mat-form-field>
     </ng-template>
+
+    <button mat-icon-button class="search-toggle-margin"
+            [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate" (click)="toggleSearchMode()">
+        <mat-icon>youtube_searched_for</mat-icon>
+    </button>
 </div>

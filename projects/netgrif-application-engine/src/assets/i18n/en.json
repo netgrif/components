@@ -162,6 +162,7 @@
             "toAdvanced": "Switch to advanced search",
             "toFullText": "Switch to basic search"
         },
+        "fullText": "Enter searched phrase",
         "and": "and",
         "or": "or"
     },

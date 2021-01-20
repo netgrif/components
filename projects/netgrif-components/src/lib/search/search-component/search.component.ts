@@ -1,16 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {
-    AbstractSearchComponent,
-    DATE_FORMAT,
-    LoggerService,
-    SearchService
-} from '@netgrif/application-engine';
+import {AbstractSearchComponent, DATE_FORMAT, LoggerService, SearchService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     providers: [
         {provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT}
     ]

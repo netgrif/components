@@ -163,6 +163,7 @@
             "toAdvanced": "Wechseln zum erweiterten Suchmodus",
             "toFullText": "Wechseln zum einfachen Suchmodus"
         },
+        "fullText": "Geben Sie den gesuchten Text ein",
         "and": "und",
         "or": "oder"
     },
