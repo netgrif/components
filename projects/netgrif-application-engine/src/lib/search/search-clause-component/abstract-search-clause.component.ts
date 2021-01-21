@@ -1,8 +1,8 @@
 import {Input, OnDestroy, OnInit} from '@angular/core';
-import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
 import {Subject} from 'rxjs';
 import {KeyValue} from '@angular/common';
-import {Predicate} from '../models/predicate/predicate';
+import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
+import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
 
 
 /**
@@ -11,7 +11,7 @@ import {Predicate} from '../models/predicate/predicate';
  */
 export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy {
 
-    @Input() predicate: EditableClausePredicate;
+    @Input() predicate: EditableClausePredicateWithGenerators;
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
     public removeChild$: Subject<number>;
@@ -29,9 +29,9 @@ export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy
         this.removeChild$.complete();
     }
 
-    public trackByPredicates = (a: number, b: KeyValue<number, Predicate>) => b.value;
+    public trackByPredicates = (a: number, b: KeyValue<number, PredicateWithGenerator>) => b.value;
 
-    public getPredicateMap(): Map<number, Predicate> {
+    public getPredicateMap(): Map<number, PredicateWithGenerator> {
         return this.predicate.getPredicateMap();
     }
 

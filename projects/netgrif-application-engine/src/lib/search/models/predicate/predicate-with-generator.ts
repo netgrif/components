@@ -1,6 +1,7 @@
 import {Predicate} from './predicate';
 import {Category} from '../category/category';
 import {Query} from '../query/query';
+import {EditableElementaryPredicate} from './editable-elementary-predicate';
 
 /**
  * A predicate wrapper, that can contain a generator of a Predicate.
@@ -22,6 +23,19 @@ export class PredicateWithGenerator extends Predicate {
 
     get query(): Query {
         return this._predicate.query;
+    }
+
+    /**
+     * Can only be called if the wrapped predicate allows setting of the query.
+     * Throws an error otherwise.
+     * @param query the new query
+     */
+    set query(query: Query) {
+        if (this._predicate instanceof EditableElementaryPredicate) {
+            this._predicate.query = query;
+        } else {
+            throw new Error('The wrapped predicate cannot have its query set');
+        }
     }
 
     /**

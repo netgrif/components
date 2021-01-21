@@ -1,5 +1,4 @@
-import {Inject, Input, OnDestroy, ViewChild} from '@angular/core';
-import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
+import {Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
@@ -8,16 +7,21 @@ import {ElementaryPredicate} from '../models/predicate/elementary-predicate';
 import {Query} from '../models/query/query';
 import {LoggerService} from '../../logger/services/logger.service';
 import {MatSelect} from '@angular/material/select';
+import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
 
 
 /**
  * Is responsible for the interactive creation of a single {@link ElementaryPredicate} object instance.
  */
-export abstract class AbstractSearchPredicateComponent implements OnDestroy {
+export abstract class AbstractSearchPredicateComponent implements OnInit, OnDestroy {
 
-    @Input() predicate: EditableElementaryPredicate;
+    @Input() predicate: PredicateWithGenerator;
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
+    /**
+     * Optional generator with prefilled values. Can be used to add prefilled predicate components to the search GUI.
+     */
+    @Input() generator: Category<any> | undefined;
 
     public selectedCategory: Category<any>;
 
@@ -25,9 +29,25 @@ export abstract class AbstractSearchPredicateComponent implements OnDestroy {
 
     protected _searchCategories: Array<Category<any>>;
 
-    protected constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
+    protected constructor(@Inject(NAE_SEARCH_CATEGORIES) private _naeSearchCategories: Array<Category<any>>,
                           protected _logger: LoggerService) {
-        this._searchCategories = searchCategories.map(category => category.duplicate());
+    }
+
+    ngOnInit() {
+        let found = false;
+        this._searchCategories = this._naeSearchCategories.map(category => {
+            // if the provided generator is the same class as one of the injected search categories
+            if (this.generator && this.generator.constructor === category.constructor) {
+                found = true;
+                return this.generator;
+            }
+            return category.duplicate();
+        });
+
+        if (this.generator && !found) {
+            this._logger.error('Provided predicate generator is not an allowed category from the NAE_SEARCH_CATEGORIES injection token!'
+                + ' Behavior in this case is undefined.');
+        }
     }
 
     ngOnDestroy(): void {

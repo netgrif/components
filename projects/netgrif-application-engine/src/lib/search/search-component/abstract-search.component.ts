@@ -5,9 +5,9 @@ import {OnDestroy} from '@angular/core';
 import {KeyValue} from '@angular/common';
 import {BooleanOperator} from '../models/boolean-operator';
 import {EditablePredicate} from '../models/predicate/editable-predicate';
-import {Predicate} from '../models/predicate/predicate';
 import {FormControl} from '@angular/forms';
 import {debounceTime, filter} from 'rxjs/operators';
+import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -47,7 +47,7 @@ export abstract class AbstractSearchComponent implements OnDestroy {
 
     public trackByPredicates = (a: number, b: KeyValue<number, EditablePredicate>) => b.value;
 
-    public getPredicateMap(): Map<number, Predicate> {
+    public getPredicateMap(): Map<number, PredicateWithGenerator> {
         return this._searchService.rootPredicate.getPredicateMap();
     }
 
