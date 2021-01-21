@@ -37,4 +37,9 @@ export class PredicateWithGenerator extends Predicate {
     get wrappedPredicate(): Predicate {
         return this._predicate;
     }
+
+    show() {
+        super.show();
+        this._predicate.show();
+    }
 }

@@ -199,6 +199,14 @@ export class SearchService implements OnDestroy {
     }
 
     /**
+     * Shows the predicates with the given ids. Skips ids that don't exist.
+     * @param predicateIds the ids of the predicates that should be shown.
+     */
+    public show(predicateIds: Array<number>): void {
+        this._rootPredicate.showPredicates(predicateIds);
+    }
+
+    /**
      * Reads the current query from the predicate tree, combines it with the base Filter and full text Filter (if set)
      * and updates the active Filter.
      */

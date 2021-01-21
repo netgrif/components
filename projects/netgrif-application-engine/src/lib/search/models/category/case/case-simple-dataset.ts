@@ -11,6 +11,8 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationCategory} from '../no-configuration-category';
 import {CaseDataset} from './case-dataset';
+import {DatafieldMapKey} from '../../datafield-map-key';
+import {take} from 'rxjs/operators';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -85,11 +87,20 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     }
 
     /**
+     * Creates a {@link CaseDataset} instance and configures it so, that the query it generates targets
+     * the selected field, uses the default operator and its operands are what the user provided.
+     *
+     * @param fieldType the type of the field that should be targeted by the transformed Category
+     * @param fieldTitle the title of the field that should be targeted by the transformed Category
+     * @param userInput the operands for the queried field
      * @returns a new {@link CaseDataset} configured with the provided values
      */
-    public transformToCaseDataset(): CaseDataset {
+    public transformToCaseDataset(fieldType: string, fieldTitle: string, userInput: Array<any>): CaseDataset {
         const result = this._optionalDependencies.categoryFactory.get(CaseDataset) as CaseDataset;
-
+        result.selectDatafields(DatafieldMapKey.serializedForm(fieldType, fieldTitle));
+        result.operandsFormControls$.pipe(take(1)).subscribe( controls => {
+            userInput.forEach((value, index) => controls[index].setValue(value));
+        });
         return result;
     }
 

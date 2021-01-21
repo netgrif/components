@@ -44,10 +44,8 @@ interface MetaGeneratorConfiguration {
  */
 interface DataGeneratorConfiguration {
     type: HeaderColumnType.IMMEDIATE;
-    petriNetIdentifier: string;
-    fieldIdentifier: string;
     fieldType: string;
-    netStringIds: Array<string>;
+    fieldTitle: string;
     userInput: Array<any>;
 }
 
@@ -124,20 +122,25 @@ export class HeaderSearchService {
      * Pushes all the predicates from the headers into the search interface and clears the header inputs
      */
     protected processModeChange(): void {
+        const addedPredicateIds = [];
         this._columnToConfiguration.forEach(config => {
             this._searchService.removePredicate(config.predicateId);
 
+            let editableCategory;
             if (config.type === HeaderColumnType.META) {
-                const editableCategory = this._typeToCategory.get(config.fieldIdentifier).duplicate();
+                editableCategory = this._typeToCategory.get(config.fieldIdentifier).duplicate();
                 editableCategory.selectDefaultOperator();
                 editableCategory.operandsFormControls$.pipe(take(1)).subscribe( controls => {
                     config.userInput.forEach((value, index) => controls[index].setValue(value));
                 });
-                this._searchService.addGeneratedLeafPredicate(editableCategory);
             } else  {
-
+                const dataset = (this._typeToCategory.get(HeaderColumnType.IMMEDIATE) as CaseSimpleDataset);
+                editableCategory = dataset.transformToCaseDataset(config.fieldType, config.fieldTitle, config.userInput);
             }
+            addedPredicateIds.push(this._searchService.addGeneratedLeafPredicate(editableCategory));
         });
+
+        this._searchService.show(addedPredicateIds);
 
         this._columnToConfiguration.clear();
     }
@@ -192,14 +195,12 @@ export class HeaderSearchService {
     protected processCaseDataSearch(changeDescription: SearchChangeDescription): void {
         this._processService.getNet(changeDescription.petriNetIdentifier).subscribe(net => {
             const config = {
-                petriNetIdentifier: changeDescription.petriNetIdentifier,
-                fieldIdentifier: changeDescription.fieldIdentifier,
                 fieldType: changeDescription.fieldType,
-                netStringIds: [net.stringId],
+                fieldTitle: changeDescription.fieldTitle,
                 userInput: [changeDescription.searchInput]
             };
             const category = this._typeToCategory.get(changeDescription.type) as CaseSimpleDataset;
-            category.configure(config.fieldIdentifier, config.fieldType, config.netStringIds);
+            category.configure(changeDescription.fieldIdentifier, config.fieldType, [net.stringId]);
             const predicate = category.generatePredicate(config.userInput);
             this.addPredicate(changeDescription.columnIdentifier, predicate, {
                 type: HeaderColumnType.IMMEDIATE,

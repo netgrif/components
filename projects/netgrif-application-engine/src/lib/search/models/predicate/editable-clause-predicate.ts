@@ -39,14 +39,21 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         return this._query;
     }
 
+    show() {
+        super.show();
+        this.showAll();
+    }
+
     /**
-     * Sets this predicate and all its sub-predicates to visible.
+     * Shows the predicates with the given ids. Skips ids that don't exist.
+     * @param predicateIds the ids of the predicates that should be shown.
      */
-    public showAll(): void {
-        this.show();
-        for (const p of this._predicates.values()) {
-            p.show();
-        }
+    public showPredicates(predicateIds: Array<number>): void {
+        predicateIds.forEach(id => {
+            if (this._predicates.has(id)) {
+                this._predicates.get(id).show();
+            }
+        });
     }
 
     /**
@@ -111,5 +118,14 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
      */
     protected get queries(): Array<Query> {
         return Array.from(this._predicates.values()).map(p => p.query);
+    }
+
+    /**
+     * Sets this predicate and all its sub-predicates to visible.
+     */
+    protected showAll(): void {
+        for (const p of this._predicates.values()) {
+            p.show();
+        }
     }
 }
