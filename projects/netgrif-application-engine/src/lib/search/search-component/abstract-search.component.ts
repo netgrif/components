@@ -56,7 +56,7 @@ export abstract class AbstractSearchComponent implements OnDestroy {
     }
 
     public addChildPredicate(): void {
-        this._searchService.rootPredicate.addClausePredicate(BooleanOperator.OR);
+        this._searchService.rootPredicate.addNewClausePredicate(BooleanOperator.OR);
     }
 
     public toggleSearchMode(): void {

@@ -42,7 +42,7 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
     /**
      * Adds new child predicate of type {@link EditableElementaryPredicate}
      */
-    addElementaryPredicate(): number {
+    addNewElementaryPredicate(): number {
         return this.addPredicate(new EditableElementaryPredicate(this._childUpdated$));
     }
 
@@ -50,7 +50,7 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
      * Adds new child predicate of type {@link EditableClausePredicate}
      * @param operator the operator of the child clause predicate
      */
-    addClausePredicate(operator: BooleanOperator): number {
+    addNewClausePredicate(operator: BooleanOperator): number {
         return this.addPredicate(new EditableClausePredicate(operator, this._childUpdated$));
     }
 

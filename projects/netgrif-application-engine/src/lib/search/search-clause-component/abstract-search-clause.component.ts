@@ -43,6 +43,6 @@ export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy
     }
 
     public addChildPredicate(): void {
-        this.predicate.addElementaryPredicate();
+        this.predicate.addNewElementaryPredicate();
     }
 }

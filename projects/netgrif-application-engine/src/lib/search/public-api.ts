@@ -7,6 +7,8 @@ export * from './models/predicate/clause-predicate';
 export * from './models/predicate/editable-predicate';
 export * from './models/predicate/editable-elementary-predicate';
 export * from './models/predicate/editable-clause-predicate';
+export * from './models/predicate/predicate-with-generator';
+export * from './models/predicate/editable-clause-predicate-with-generators';
 
 export * from './models/operator/operator';
 export * from './models/operator/substring';
