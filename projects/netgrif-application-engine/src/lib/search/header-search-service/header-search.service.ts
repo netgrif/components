@@ -241,9 +241,9 @@ export class HeaderSearchService {
      * @param clearInput whether the corresponding header search input should be cleared
      */
     protected removePredicate(column: number, clearInput = true): void {
-        const predicateId = this._columnToConfiguration.get(column).predicateId;
-        if (predicateId !== undefined) {
-            this._searchService.removePredicate(predicateId, clearInput);
+        const predicateConfig = this._columnToConfiguration.get(column);
+        if (predicateConfig !== undefined) {
+            this._searchService.removePredicate(predicateConfig.predicateId, clearInput);
             this._columnToConfiguration.delete(column);
         }
     }
