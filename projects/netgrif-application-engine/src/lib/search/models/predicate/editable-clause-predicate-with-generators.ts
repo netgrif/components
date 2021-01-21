@@ -12,6 +12,10 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
         super(operator, parentNotifier, initiallyVisible);
     }
 
+    addNewClausePredicate(operator: BooleanOperator, initiallyVisible = true): number {
+        return this.addPredicate(new EditableClausePredicateWithGenerators(operator, this._childUpdated$, initiallyVisible));
+    }
+
     addPredicate(predicate: Predicate): number {
         return super.addPredicate(new PredicateWithGenerator(predicate));
     }

@@ -51,17 +51,19 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
 
     /**
      * Adds new child predicate of type {@link EditableElementaryPredicate}
+     * @param initiallyVisible whether the new predicate should be initially visible
      */
-    addNewElementaryPredicate(): number {
-        return this.addPredicate(new EditableElementaryPredicate(this._childUpdated$));
+    addNewElementaryPredicate(initiallyVisible = true): number {
+        return this.addPredicate(new EditableElementaryPredicate(this._childUpdated$, initiallyVisible));
     }
 
     /**
      * Adds new child predicate of type {@link EditableClausePredicate}
      * @param operator the operator of the child clause predicate
+     * @param initiallyVisible whether the new predicate should be initially visible
      */
-    addNewClausePredicate(operator: BooleanOperator): number {
-        return this.addPredicate(new EditableClausePredicate(operator, this._childUpdated$));
+    addNewClausePredicate(operator: BooleanOperator, initiallyVisible = true): number {
+        return this.addPredicate(new EditableClausePredicate(operator, this._childUpdated$, initiallyVisible));
     }
 
     /**

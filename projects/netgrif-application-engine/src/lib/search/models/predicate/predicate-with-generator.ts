@@ -29,4 +29,11 @@ export class PredicateWithGenerator extends Predicate {
     get generator(): Category<any> {
         return this._generator;
     }
+
+    /**
+     * @returns the wrapped Predicate
+     */
+    get wrappedPredicate(): Predicate {
+        return this._predicate;
+    }
 }

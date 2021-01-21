@@ -10,6 +10,8 @@ import {Query} from '../models/query/query';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
+import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
+import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -127,6 +129,26 @@ export class SearchService implements OnDestroy {
     }
 
     /**
+     * Adds a new hidden branch of the predicate tree with a singular leaf node containing the provided Query.
+     *
+     * This can be used to add predicates to the search tree (think header search),
+     * which can be made visible and editable in the search GUI later.
+     * @param generator the generator that is in such state, that it generates the Query, that should be added as branch/leaf.
+     * If the generator doesn't currently generate a query a node with an empty query will be added.
+     */
+    public addGeneratedLeafPredicate(generator: Category<any>): number {
+        const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR, false);
+        const branch = this._rootPredicate.getPredicateMap().get(branchId).wrappedPredicate;
+        const leafId = (branch as unknown as EditableClausePredicateWithGenerators).addNewElementaryPredicate();
+        const leaf = (branch as unknown as EditableClausePredicateWithGenerators).getPredicateMap().get(leafId).wrappedPredicate;
+        const generatedPredicate = generator.generatedPredicate;
+        (leaf as unknown as EditableElementaryPredicate).query = generatedPredicate ? generatedPredicate.query : Query.emptyQuery();
+        (branch as unknown as EditableClausePredicateWithGenerators).removePredicate(leafId);
+        const withGenerator = new PredicateWithGenerator(leaf, generator);
+        return (branch as unknown as EditableClausePredicateWithGenerators).addPredicate(withGenerator);
+    }
+
+    /**
      * Removes the {@link Predicate} object from the provided index. If the index is invalid does nothing.
      * Updates the the active Filter if the Predicate tree was affected.
      * @param index index of the Predicate that should be removed
@@ -140,11 +162,15 @@ export class SearchService implements OnDestroy {
 
     /**
      * Removes all {@link Predicate} objects that contribute to the search. Updates the active Filter if it was affected.
+     *
+     * @param clearHidden whether the hidden predicates should be cleared as well
      */
-    public clearPredicates(): void {
+    public clearPredicates(clearHidden = false): void {
         if (this._rootPredicate.getPredicateMap().size > 0) {
-            for (const id of this._rootPredicate.getPredicateMap().keys()) {
-                this.removePredicate(id);
+            for (const [id, predicate] of this._rootPredicate.getPredicateMap().entries()) {
+                if (clearHidden || predicate.isVisible) {
+                    this.removePredicate(id);
+                }
             }
             this.updateActiveFilter();
         }
