@@ -114,7 +114,7 @@ export class SearchService implements OnDestroy {
      */
     protected get predicateQueryChanged$(): Observable<Query> {
         return this._predicateQueryChanged$.asObservable().pipe(
-            map( () => this._rootPredicate.query),
+            map(() => this._rootPredicate.query),
             distinctUntilChanged((prev, curr) => prev && prev.equals(curr))
         );
     }
@@ -142,14 +142,17 @@ export class SearchService implements OnDestroy {
      */
     public addGeneratedLeafPredicate(generator: Category<any>): number {
         const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR, false);
-        const branch = this._rootPredicate.getPredicateMap().get(branchId).wrappedPredicate;
-        const leafId = (branch as unknown as EditableClausePredicateWithGenerators).addNewElementaryPredicate();
-        const leaf = (branch as unknown as EditableClausePredicateWithGenerators).getPredicateMap().get(leafId).wrappedPredicate;
+        const branch = (
+            this._rootPredicate.getPredicateMap().get(branchId).wrappedPredicate as unknown as EditableClausePredicateWithGenerators
+        );
+        const leafId = branch.addNewElementaryPredicate();
+        const leaf = (branch.getPredicateMap().get(leafId).wrappedPredicate as unknown as EditableElementaryPredicate);
         const generatedPredicate = generator.generatedPredicate;
-        (leaf as unknown as EditableElementaryPredicate).query = generatedPredicate ? generatedPredicate.query : Query.emptyQuery();
-        (branch as unknown as EditableClausePredicateWithGenerators).removePredicate(leafId);
+        leaf.query = generatedPredicate ? generatedPredicate.query : Query.emptyQuery();
+        branch.removePredicate(leafId);
         const withGenerator = new PredicateWithGenerator(leaf, generator);
-        return (branch as unknown as EditableClausePredicateWithGenerators).addPredicate(withGenerator);
+        branch.addPredicate(withGenerator);
+        return branchId;
     }
 
     /**
