@@ -10,6 +10,7 @@ import {CaseProcess} from './case-process';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationCategory} from '../no-configuration-category';
+import {CaseDataset} from './case-dataset';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -79,6 +80,19 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         }
     }
 
+    duplicate(): CaseSimpleDataset {
+        return new CaseSimpleDataset(this._operators, this._log, this._optionalDependencies);
+    }
+
+    /**
+     * @returns a new {@link CaseDataset} configured with the provided values
+     */
+    public transformToCaseDataset(): CaseDataset {
+        const result = this._optionalDependencies.categoryFactory.get(CaseDataset) as CaseDataset;
+
+        return result;
+    }
+
     protected generateQuery(userInput: Array<unknown>): Query {
         const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
         const netsQuery = Query.combineQueries(
@@ -86,9 +100,5 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
             BooleanOperator.OR
         );
         return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);
-    }
-
-    duplicate(): CaseSimpleDataset {
-        return new CaseSimpleDataset(this._operators, this._log, this._optionalDependencies);
     }
 }

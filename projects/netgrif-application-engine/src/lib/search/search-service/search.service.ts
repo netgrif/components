@@ -121,11 +121,15 @@ export class SearchService implements OnDestroy {
 
     /**
      * Adds a {@link Predicate} to the Predicate root and updates the active Filter.
+     *
+     * Predicates added this way will not be visible in the search GUI.
+     * If you want to make sure your predicates are visible (and editable)
+     * use the [addGeneratedLeafPredicate()]{@link SearchService#addGeneratedLeafPredicate} method instead.
      * @param newPredicate Predicate that should be added to the search queries.
      * @returns the index of the added Predicate
      */
     public addPredicate(newPredicate: Predicate): number {
-        return this._rootPredicate.addPredicate(newPredicate);
+        return this._rootPredicate.addPredicate(newPredicate, false);
     }
 
     /**

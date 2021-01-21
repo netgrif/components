@@ -16,7 +16,7 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
         return this.addPredicate(new EditableClausePredicateWithGenerators(operator, this._childUpdated$, initiallyVisible));
     }
 
-    addPredicate(predicate: Predicate): number {
+    addPredicate(predicate: Predicate, initiallyVisible = true): number {
         return super.addPredicate(new PredicateWithGenerator(predicate));
     }
 

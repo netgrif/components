@@ -13,10 +13,11 @@ export class PredicateWithGenerator extends Predicate {
      * @param _predicate the wrapped predicate
      * @param _generator the `Category` instance that generates this predicate.
      * If a generator is provided, the predicate is marked as initially hidden.
+     * @param initiallyVisible overrides the initial visibility inferred from the presence/absence of the generator
      */
-    constructor(protected _predicate: Predicate, protected _generator?: Category<any>) {
+    constructor(protected _predicate: Predicate, protected _generator?: Category<any>, initiallyVisible?: boolean) {
         super();
-        this._visible = !_generator;
+        this._visible = initiallyVisible !== undefined ? initiallyVisible : !_generator;
     }
 
     get query(): Query {

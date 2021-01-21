@@ -2,7 +2,7 @@ import {Injectable, Optional} from '@angular/core';
 import {SearchService} from '../search-service/search.service';
 import {AbstractHeaderService} from '../../header/abstract-header-service';
 import {HeaderType} from '../../header/models/header-type';
-import {filter} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 import {HeaderChangeType} from '../../header/models/user-changes/header-change-type';
 import {HeaderMode} from '../../header/models/header-mode';
 import {ModeChangeDescription} from '../../header/models/user-changes/mode-change-description';
@@ -19,14 +19,39 @@ import {Predicate} from '../models/predicate/predicate';
 import {ProcessService} from '../../process/process.service';
 import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
 import {TranslateService} from '@ngx-translate/core';
-import {Moment} from 'moment';
-import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {LoggerService} from '../../logger/services/logger.service';
 
-interface PredicateInfo {
-    predicateIndex: number;
-    chipText: string;
+/**
+ * Holds the Id of the predicate in the {@link SearchService}
+ */
+interface PredicateId {
+    predicateId: number;
 }
+
+/**
+ * Holds the information necessary for the configuration of a {@link Category} class to generate
+ * a predicate for a Meta header field
+ */
+interface MetaGeneratorConfiguration {
+    type: HeaderColumnType.META;
+    fieldIdentifier: string;
+    userInput: Array<any>;
+}
+
+/**
+ * Holds the information necessary for the configuration of a {@link Category} class to generate
+ * a predicate for a Data header field
+ */
+interface DataGeneratorConfiguration {
+    type: HeaderColumnType.IMMEDIATE;
+    petriNetIdentifier: string;
+    fieldIdentifier: string;
+    fieldType: string;
+    netStringIds: Array<string>;
+    userInput: Array<any>;
+}
+
+type HeaderConfiguration = PredicateId & (MetaGeneratorConfiguration | DataGeneratorConfiguration);
 
 /**
  * Acts as an intermediary between the {@link AbstractHeaderService} instances of various types and the {@link SearchService}
@@ -35,7 +60,7 @@ interface PredicateInfo {
 export class HeaderSearchService {
 
     protected _headerService: AbstractHeaderService;
-    protected _columnToPredicate: Map<number, PredicateInfo>;
+    protected _columnToConfiguration: Map<number, HeaderConfiguration>;
     protected _typeToCategory: Map<string, Category<any>>;
 
     constructor(protected _categoryFactory: CategoryFactory,
@@ -43,7 +68,7 @@ export class HeaderSearchService {
                 protected _translate: TranslateService,
                 protected _logger: LoggerService,
                 @Optional() protected _searchService: SearchService) {
-        this._columnToPredicate = new Map<number, PredicateInfo>();
+        this._columnToConfiguration = new Map<number, HeaderConfiguration>();
         this._typeToCategory = new Map<string, Category<any>>();
         [
             {k: CaseMetaField.VISUAL_ID, v: CaseVisualId},
@@ -99,21 +124,22 @@ export class HeaderSearchService {
      * Pushes all the predicates from the headers into the search interface and clears the header inputs
      */
     protected processModeChange(): void {
-        if (this._searchChipService) {
-            this._columnToPredicate.forEach(info => {
-                this._searchChipService.addExistingChip(info.chipText, info.predicateIndex);
-            });
-        } else {
-            const indices = [];
-            this._columnToPredicate.forEach(info => {
-                indices.push(info.predicateIndex);
-            });
-            indices.sort((a: number, b: number) => b - a);
-            indices.forEach(index => {
-                this._searchService.removePredicate(index);
-            });
-        }
-        this._columnToPredicate.clear();
+        this._columnToConfiguration.forEach(config => {
+            this._searchService.removePredicate(config.predicateId);
+
+            if (config.type === HeaderColumnType.META) {
+                const editableCategory = this._typeToCategory.get(config.fieldIdentifier).duplicate();
+                editableCategory.selectDefaultOperator();
+                editableCategory.operandsFormControls$.pipe(take(1)).subscribe( controls => {
+                    config.userInput.forEach((value, index) => controls[index].setValue(value));
+                });
+                this._searchService.addGeneratedLeafPredicate(editableCategory);
+            } else  {
+
+            }
+        });
+
+        this._columnToConfiguration.clear();
     }
 
     /**
@@ -147,9 +173,16 @@ export class HeaderSearchService {
      * @param changeDescription the change object that should be resolved
      */
     protected processCaseMetaSearch(changeDescription: SearchChangeDescription): void {
-        const category = this._typeToCategory.get(changeDescription.fieldIdentifier);
-        const predicate = category.generatePredicate([changeDescription.searchInput]);
-        this.addPredicate(changeDescription.columnIdentifier, predicate, this.createChipText(changeDescription, category));
+        const config = {
+            fieldIdentifier: changeDescription.fieldIdentifier,
+            userInput: [changeDescription.searchInput]
+        };
+        const category = this._typeToCategory.get(config.fieldIdentifier);
+        const predicate = category.generatePredicate(config.userInput);
+        this.addPredicate(changeDescription.columnIdentifier, predicate, {
+            type: HeaderColumnType.META,
+            ...config
+        });
     }
 
     /**
@@ -158,10 +191,20 @@ export class HeaderSearchService {
      */
     protected processCaseDataSearch(changeDescription: SearchChangeDescription): void {
         this._processService.getNet(changeDescription.petriNetIdentifier).subscribe(net => {
+            const config = {
+                petriNetIdentifier: changeDescription.petriNetIdentifier,
+                fieldIdentifier: changeDescription.fieldIdentifier,
+                fieldType: changeDescription.fieldType,
+                netStringIds: [net.stringId],
+                userInput: [changeDescription.searchInput]
+            };
             const category = this._typeToCategory.get(changeDescription.type) as CaseSimpleDataset;
-            category.configure(changeDescription.fieldIdentifier, changeDescription.fieldType, [net.stringId]);
-            const predicate = category.generatePredicate([changeDescription.searchInput]);
-            this.addPredicate(changeDescription.columnIdentifier, predicate, this.createChipText(changeDescription, category));
+            category.configure(config.fieldIdentifier, config.fieldType, config.netStringIds);
+            const predicate = category.generatePredicate(config.userInput);
+            this.addPredicate(changeDescription.columnIdentifier, predicate, {
+                type: HeaderColumnType.IMMEDIATE,
+                ...config
+            });
         });
     }
 
@@ -176,36 +219,19 @@ export class HeaderSearchService {
     }
 
     /**
-     * Returns the text that should be displayed by the chip that corresponds to the search change
-     * @param changeDescription the change object that generates the predicate that should be described by the chip text
-     * @param category the search category of the generated predicate
-     */
-    protected createChipText(changeDescription: SearchChangeDescription, category: Category<any>): string {
-        let result = `${this._translate.instant(category.translationPath)}: `;
-        if (changeDescription.type === HeaderColumnType.IMMEDIATE) {
-            result += `${changeDescription.fieldTitle}: `;
-        }
-        if (changeDescription.fieldType === 'date') {
-            result += (changeDescription.searchInput as Moment).format(DATE_FORMAT_STRING);
-        } else if (changeDescription.fieldType === 'dateTime') {
-            result += (changeDescription.searchInput as Moment).format(DATE_TIME_FORMAT_STRING);
-        } else {
-            result += changeDescription.searchInput;
-        }
-        return result;
-    }
-
-    /**
      * Updates a Predicate for a given column.
      * Removes an existing predicate for this column if it exists and adds the new Predicate.
      * @param column the index of the header column
      * @param predicate the Predicate that should be added
-     * @param chipText the text that should be displayed by a chip representing the predicate
+     * @param configuration data necessary for the configuration of the {@link Category} that generates the added predicate
      */
-    protected addPredicate(column: number, predicate: Predicate, chipText: string): void {
-        this.removePredicate(column, !this._columnToPredicate.has(column));
-        const predicateIndex = this._searchService.addPredicate(predicate);
-        this._columnToPredicate.set(column, {predicateIndex, chipText});
+    protected addPredicate(column: number,
+                           predicate: Predicate,
+                           configuration: MetaGeneratorConfiguration | DataGeneratorConfiguration): void {
+
+        this.removePredicate(column, !this._columnToConfiguration.has(column));
+        const predicateId = this._searchService.addPredicate(predicate);
+        this._columnToConfiguration.set(column, {predicateId, ...configuration});
     }
 
     /**
@@ -214,33 +240,21 @@ export class HeaderSearchService {
      * @param clearInput whether the corresponding header search input should be cleared
      */
     protected removePredicate(column: number, clearInput = true): void {
-        const predicateInfo = this._columnToPredicate.get(column);
-        if (predicateInfo !== undefined) {
-            this._searchService.removePredicate(predicateInfo.predicateIndex, clearInput);
-            this._columnToPredicate.delete(column);
+        const predicateId = this._columnToConfiguration.get(column).predicateId;
+        if (predicateId !== undefined) {
+            this._searchService.removePredicate(predicateId, clearInput);
+            this._columnToConfiguration.delete(column);
         }
     }
 
     /**
-     * Handles the removal of a {@link Predicate} from the {@link SearchService} by shifting
-     * any affected indices referenced by the header search
-     * @param removedIndex the index of the removed {@link Predicate}
+     * @param removedId the id of the removed {@link Predicate}
      * @param clearInput whether the corresponding header search input should be cleared
      */
-    protected handlePredicateRemoval(removedIndex: number, clearInput = true): void {
-        let columnToRemove;
-        this._columnToPredicate.forEach((info, columnNumber) => {
-            if (info.predicateIndex === removedIndex) {
-                columnToRemove = columnNumber;
-                if (this._headerService && clearInput) {
-                    this._headerService.clearHeaderSearch(columnNumber);
-                }
-            } else if (info.predicateIndex > removedIndex) {
-                info.predicateIndex -= 1;
-            }
-        });
-        if (columnToRemove !== undefined) {
-            this._columnToPredicate.delete(columnToRemove);
+    protected handlePredicateRemoval(removedId: number, clearInput = true): void {
+        if (this._headerService && clearInput) {
+            this._headerService.clearHeaderSearch(removedId);
         }
+        this._columnToConfiguration.delete(removedId);
     }
 }
