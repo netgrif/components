@@ -8,7 +8,6 @@ import {
     defaultCaseSearchCategoriesFactory,
     NAE_SEARCH_CATEGORIES,
     NAE_VIEW_ID_SEGMENT,
-    SearchChipService,
     SearchService,
     SimpleFilter,
     ViewIdService,
@@ -31,7 +30,6 @@ const searchServiceFactory = () => {
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         CategoryFactory,
-        SearchChipService,
         ConfigCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},

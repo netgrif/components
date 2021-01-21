@@ -1,12 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, Optional} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractSearchComponent} from './abstract-search.component';
-import {TranslateService} from '@ngx-translate/core';
 import {SearchService} from '../search-service/search.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {SearchChipService} from '../search-chip-service/search-chip.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {ConfigurationService} from '../../configuration/configuration.service';

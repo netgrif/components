@@ -3,7 +3,6 @@ import {
     AbstractCaseView,
     Case,
     CaseViewService,
-    SearchChipService,
     SearchService,
     SimpleFilter,
     AllNetsCaseViewServiceFactory,
@@ -27,7 +26,6 @@ const searchServiceFactory = () => {
     styleUrls: ['./case-view.component.scss'],
     providers: [
         CategoryFactory,
-        SearchChipService,
         AllNetsCaseViewServiceFactory,
         OverflowService,
         {   provide: SearchService,

@@ -7,7 +7,6 @@ import {
     SearchService,
     SimpleFilter,
     TabbedCaseView,
-    SearchChipService,
     AllNetsCaseViewServiceFactory, ViewIdService, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory, CategoryFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
@@ -26,7 +25,6 @@ const searchServiceFactory = () => {
     styleUrls: ['./tabbed-case-view.component.scss'],
     providers: [
         CategoryFactory,
-        SearchChipService,
         AllNetsCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},

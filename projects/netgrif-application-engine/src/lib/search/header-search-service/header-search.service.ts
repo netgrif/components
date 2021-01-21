@@ -18,7 +18,6 @@ import {CaseTitle} from '../models/category/case/case-title';
 import {Predicate} from '../models/predicate/predicate';
 import {ProcessService} from '../../process/process.service';
 import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
-import {SearchChipService} from '../search-chip-service/search-chip.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Moment} from 'moment';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
@@ -43,8 +42,7 @@ export class HeaderSearchService {
                 protected _processService: ProcessService,
                 protected _translate: TranslateService,
                 protected _logger: LoggerService,
-                @Optional() protected _searchService: SearchService,
-                @Optional() protected _searchChipService: SearchChipService) {
+                @Optional() protected _searchService: SearchService) {
         this._columnToPredicate = new Map<number, PredicateInfo>();
         this._typeToCategory = new Map<string, Category<any>>();
         [
