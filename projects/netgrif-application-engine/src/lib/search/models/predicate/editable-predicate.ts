@@ -8,8 +8,8 @@ export abstract class EditablePredicate extends Predicate {
 
     protected _parentNotifier: Subject<void>;
 
-    protected constructor(parentNotifier?: Subject<void>) {
-        super();
+    protected constructor(parentNotifier?: Subject<void>, initiallyVisible = true) {
+        super(initiallyVisible);
         this._parentNotifier = parentNotifier;
     }
 

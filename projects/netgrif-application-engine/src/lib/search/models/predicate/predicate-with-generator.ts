@@ -9,11 +9,10 @@ import {Query} from '../query/query';
  */
 export class PredicateWithGenerator extends Predicate {
 
-    protected _visible: boolean;
-
     /**
      * @param _predicate the wrapped predicate
-     * @param _generator the `Category` instance that generates this predicate
+     * @param _generator the `Category` instance that generates this predicate.
+     * If a generator is provided, the predicate is marked as initially hidden.
      */
     constructor(protected _predicate: Predicate, protected _generator?: Category<any>) {
         super();
@@ -25,26 +24,9 @@ export class PredicateWithGenerator extends Predicate {
     }
 
     /**
-     * Whether this predicate should be displayed in the search GUI.
-     *
-     * If no generator is provided, then the predicate is visible.
-     * If a generator is provided, then the predicate is hidden and can be made visible later.
-     */
-    get isVisible(): boolean {
-        return this._visible;
-    }
-
-    /**
      * @returns the Category that generates the predicate, or `undefined` if none was provided during the creation of this instance.
      */
     get generator(): Category<any> {
         return this._generator;
-    }
-
-    /**
-     * Makes the predicate visible
-     */
-    public show(): void {
-        this._visible = true;
     }
 }

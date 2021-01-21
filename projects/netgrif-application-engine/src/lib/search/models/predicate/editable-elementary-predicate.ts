@@ -10,8 +10,8 @@ export class EditableElementaryPredicate extends EditablePredicate {
 
     protected _query: Query;
 
-    constructor(parentNotifier?: Subject<void>) {
-        super(parentNotifier);
+    constructor(parentNotifier?: Subject<void>, initiallyVisible = true) {
+        super(parentNotifier, initiallyVisible);
         this._query = Query.emptyQuery();
     }
 

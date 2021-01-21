@@ -6,9 +6,10 @@ import {Predicate} from '../models/predicate/predicate';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {PredicateRemovalEvent} from '../models/predicate-removal-event';
-import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
 import {Query} from '../models/query/query';
 import {distinctUntilChanged, map} from 'rxjs/operators';
+import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
+import {Category} from '../models/category/category';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -23,7 +24,7 @@ export class SearchService implements OnDestroy {
     /**
      * Holds the {@link Predicate} tree root for user search queries.
      */
-    protected _rootPredicate: EditableClausePredicate;
+    protected _rootPredicate: EditableClausePredicateWithGenerators;
     /**
      * Holds the {@link Filter} that is currently being applied to the view.
      */
@@ -48,7 +49,7 @@ export class SearchService implements OnDestroy {
     constructor(baseFilter: Filter) {
         this._baseFilter = baseFilter.clone();
         this._predicateQueryChanged$ = new Subject<void>();
-        this._rootPredicate = new EditableClausePredicate(BooleanOperator.AND, this._predicateQueryChanged$);
+        this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
 
@@ -102,7 +103,7 @@ export class SearchService implements OnDestroy {
     /**
      * @returns the root predicate of the search service, that can be used to generate search requests with custom queries
      */
-    public get rootPredicate(): EditableClausePredicate {
+    public get rootPredicate(): EditableClausePredicateWithGenerators {
         return this._rootPredicate;
     }
 
@@ -154,15 +155,15 @@ export class SearchService implements OnDestroy {
      * If full text filter is already set, it will be replaced.
      * @param searchedSubstring value that should be searched on all full text fields
      */
-    public addFullTextFilter(searchedSubstring: string): void {
+    public setFullTextFilter(searchedSubstring: string): void {
         this._fullTextFilter = new SimpleFilter('', this._baseFilter.type, {fullText: searchedSubstring});
         this.updateActiveFilter();
     }
 
     /**
-     * Clears the full text filter.
+     * Clears the full text filter (if set). If the full text filter is not set, does nothing.
      */
-    public removeFullTextFilter(): void {
+    public clearFullTextFilter(): void {
         this._fullTextFilter = undefined;
         this.updateActiveFilter();
     }

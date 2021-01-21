@@ -37,7 +37,7 @@ export abstract class AbstractSearchComponent implements OnDestroy {
             debounceTime(600),
             filter(newValue => !!newValue)
         ).subscribe(fulltext => {
-            this._searchService.addFullTextFilter(fulltext);
+            this._searchService.setFullTextFilter(fulltext);
         });
     }
 
@@ -63,7 +63,7 @@ export abstract class AbstractSearchComponent implements OnDestroy {
         if (this.advancedSearchDisplayed) {
             this._searchService.clearPredicates();
         } else {
-            this._searchService.removeFullTextFilter();
+            this._searchService.clearFullTextFilter();
             this.addChildPredicate();
         }
 
