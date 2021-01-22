@@ -4,7 +4,6 @@ import {CaseTitle} from '../models/category/case/case-title';
 import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseProcess} from '../models/category/case/case-process';
-import {CaseRole} from '../models/category/case/case-role';
 import {CaseTask} from '../models/category/case/case-task';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import {CaseDataset} from '../models/category/case/case-dataset';
@@ -18,8 +17,8 @@ import {TaskTask} from '../models/category/task/task-task';
  *
  * Depends on {@link CategoryFactory}.
  *
- * @returns an Array containing the default case search categories: {@link CaseTitle}, {@link CaseVisualId}, {@link CaseAuthor},
- * {@link CaseProcess}, {@link CaseRole}, {@link CaseTask}, {@link CaseCreationDate}, {@link CaseDataset}
+ * @returns an Array containing the default case search categories: {@link CaseDataset}, {@link CaseTitle}, {@link CaseCreationDate},
+ * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor} and {@link CaseVisualId}
  */
 export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     return [
@@ -30,7 +29,6 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
         factory.get(CaseTask),
         factory.get(CaseAuthor),
         factory.get(CaseVisualId),
-        factory.get(CaseRole),
     ];
 }
 
@@ -39,8 +37,8 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
  *
  * Depends on {@link CategoryFactory}.
  *
- * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskProcess}, {@link TaskRole},
- * {@link TaskTask}
+ * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask}, {@link TaskProcess}
+ * and {@link TaskRole}
  */
 export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     return [
