@@ -1,6 +1,7 @@
 /*
  * Public API Surface of netgrif-application-engine
  */
+export * from './commons/schema';
 
 /* MODULES */
 export * from './lib/material/material.module';
