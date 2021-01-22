@@ -1,6 +1,6 @@
 import {Input} from '@angular/core';
 import {CaseTreeService} from '../case-tree.service';
-import {CaseTreeNode} from '../model/CaseTreeNode';
+import {CaseTreeNode} from '../model/case-tree-node';
 
 export abstract class AbstractAddChildNodeComponent {
 

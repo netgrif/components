@@ -1,3 +1,46 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10850/tab/release-report-all-issues"></a>
+## 4.5.0 - Orange Bubble (22.12.2020)
+### Bug fixes
+* [NAE-1163](https://netgrif.atlassian.net/browse/NAE-1163) - Calling actions on invalid data field
+
+### Improvements
+* [NAE-1178](https://netgrif.atlassian.net/browse/NAE-1178) - Cancel and finish error changed fields propagation
+
+### Features
+* [NAE-1168](https://netgrif.atlassian.net/browse/NAE-1168) - Task ref representation
+* [NAE-1172](https://netgrif.atlassian.net/browse/NAE-1172) - Frontend control from process actions
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10826/tab/release-report-all-issues"></a>
+## 4.4.0 - Olive Nickel (14.12.2020)
+### Bug fixes
+* [NAE-1143](https://netgrif.atlassian.net/browse/NAE-1143) - Login form doesn't stretch properly
+* [NAE-1072](https://netgrif.atlassian.net/browse/NAE-1072) - SignUpService bad URL resolution
+* [NAE-1085](https://netgrif.atlassian.net/browse/NAE-1085) - getNets never emits with empty argument
+* [NAE-1089](https://netgrif.atlassian.net/browse/NAE-1089) - Task ref changed field calls get data
+* [NAE-1111](https://netgrif.atlassian.net/browse/NAE-1111) - Bad text field validation
+* [NAE-1123](https://netgrif.atlassian.net/browse/NAE-1123) - Translate all snackbar messages
+* [NAE-1134](https://netgrif.atlassian.net/browse/NAE-1134) - No tab notification emitted in edge case
+* [NAE-1135](https://netgrif.atlassian.net/browse/NAE-1135) - SetData on Finish task
+* [NAE-1067](https://netgrif.atlassian.net/browse/NAE-1067) - Prompt dialog irrelevant button press
+
+### Improvements
+* [NAE-1091](https://netgrif.atlassian.net/browse/NAE-1091) - Required of visible fields
+* [NAE-932](https://netgrif.atlassian.net/browse/NAE-932) - TaskRef behaviour
+* [NAE-1063](https://netgrif.atlassian.net/browse/NAE-1063) - Display only the newest process version in create case
+* [NAE-1088](https://netgrif.atlassian.net/browse/NAE-1088) - Improve overridability of resource services
+* [NAE-1132](https://netgrif.atlassian.net/browse/NAE-1132) - Individual button control in login component
+* [NAE-1145](https://netgrif.atlassian.net/browse/NAE-1145) - Improve overrability of tasks services
+* [NAE-1148](https://netgrif.atlassian.net/browse/NAE-1148) - Clickable stepper
+
+### Features
+* [NAE-1141](https://netgrif.atlassian.net/browse/NAE-1141) - GDPR and terms and conditions
+* [NAE-1009](https://netgrif.atlassian.net/browse/NAE-1009) - Group view schematic
+* [NAE-1019](https://netgrif.atlassian.net/browse/NAE-1019) - Currency view for number field
+* [NAE-1098](https://netgrif.atlassian.net/browse/NAE-1098) - Horizontal scrollbar view
+* [NAE-1110](https://netgrif.atlassian.net/browse/NAE-1110) - Configurable invalid data policy
+* [NAE-1112](https://netgrif.atlassian.net/browse/NAE-1112) - Sort search autocomplete
+* [NAE-1093](https://netgrif.atlassian.net/browse/NAE-1093) - Stepper component for enumeration field
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10832/tab/release-report-all-issues"></a>
 ## 4.3.1 - Green Nickel (13.11.2020)
 ### Bug fixes

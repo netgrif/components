@@ -149,11 +149,11 @@ export class ProcessService implements OnDestroy {
         return this._netUpdate.asObservable();
     }
 
-    public hasLoadNets(identifiers: Array<string>): boolean {
-        return identifiers.every(identifier => this.hasLoadNet(identifier));
+    public areNetsLoaded(identifiers: Array<string>): boolean {
+        return identifiers.every(identifier => this.isNetLoaded(identifier));
     }
 
-    public hasLoadNet(identifier: string): boolean {
+    public isNetLoaded(identifier: string): boolean {
         return !!this._nets[identifier];
     }
 

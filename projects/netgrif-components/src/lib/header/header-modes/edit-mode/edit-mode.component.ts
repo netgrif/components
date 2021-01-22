@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractEditModeComponent, LoggerService, SnackBarService} from '@netgrif/application-engine';
+import {AbstractEditModeComponent, LoggerService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-edit-mode',

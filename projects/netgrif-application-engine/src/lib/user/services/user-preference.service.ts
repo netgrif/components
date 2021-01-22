@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Preferences} from '../models/preferences';
+import {Preferences} from '../../resources/interface/preferences';
 import {UserService} from './user.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Observable, Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {NextGroupService} from '../../groups/services/next-group.service';
 
 @Injectable({
     providedIn: 'root'
@@ -20,8 +19,7 @@ export class UserPreferenceService {
                 protected _userResourceService: UserResourceService,
                 protected _logger: LoggerService,
                 protected _snackbar: SnackBarService,
-                protected _translate: TranslateService,
-                protected _groupService: NextGroupService) {
+                protected _translate: TranslateService) {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
 
