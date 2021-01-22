@@ -1,15 +1,15 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
-import {updateAppModule} from '../../../_utility/view-utility-functions';
+import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../../../_commons/view-class-info';
 import {ImportToAdd} from '../../../../_commons/import-to-add';
-import {CreateViewArguments} from '../../models/create-view-arguments';
+import {CreateTaskViewArguments} from '../../models/create-task-view-arguments';
 
 
-export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedView, addViewToService: boolean): Rule {
+export function createTaskView(tree: Tree, args: CreateTaskViewArguments & TabbedView, addViewToService: boolean): Rule {
     const projectInfo = getProjectInfo(tree);
     const view = new ViewClassInfo(
         args.path,
@@ -24,7 +24,8 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
-        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
+        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
+        isDefaultTabbedTaskView: !!args.isDefaultTabbedTaskView
     };
 
     const commonPathPrefix = './views/task-view/files/';
@@ -33,6 +34,7 @@ export function createTaskView(tree: Tree, args: CreateViewArguments & TabbedVie
     if (!!args.isTabbed) {
         rules.push(createFilesFromTemplates(`${commonPathPrefix}tabbed`, destinationPath, templateParams));
     } else {
+        Object.assign(templateParams, {viewIdSegment: getViewIdSegmentFromPath(args.path)});
         rules.push(createFilesFromTemplates(`${commonPathPrefix}simple`, destinationPath, templateParams));
     }
 

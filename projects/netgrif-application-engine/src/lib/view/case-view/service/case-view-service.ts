@@ -22,6 +22,7 @@ import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emi
 import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
 import {UserService} from '../../../user/services/user.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
+import {PermissionType} from '../../../process/permissions';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
@@ -171,7 +172,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
         this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
             {
                 allowedNets$: this.allowedNets$.pipe(
-                    map(net => net.filter(n => this.canDo('create', n)))
+                    map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
                 )
             }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);

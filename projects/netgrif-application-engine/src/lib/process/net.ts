@@ -4,6 +4,7 @@ import {ImmediateData} from '../resources/interface/immediate-data';
 import Transition from './transition';
 import Transaction from './transaction';
 import NetRole from './netRole';
+import {Permissions} from './permissions';
 /**
  * @ignore
  */
@@ -59,7 +60,7 @@ export class Net {
     /**
      * @ignore
      */
-    private _permissions: object;
+    private _permissions: Permissions;
     /**
      * @ignore
      */
@@ -174,11 +175,11 @@ export class Net {
         this._roles = value;
     }
 
-    get permissions(): object {
+    get permissions(): Permissions {
         return this._permissions;
     }
 
-    set permissions(value: object) {
+    set permissions(value: Permissions) {
         this._permissions = value;
     }
 }

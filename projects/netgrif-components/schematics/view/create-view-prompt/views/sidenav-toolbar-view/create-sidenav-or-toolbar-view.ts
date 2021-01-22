@@ -1,7 +1,7 @@
 import {chain, Rule, Tree} from '@angular-devkit/schematics';
 import {strings} from '@angular-devkit/core';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
-import {updateAppModule} from '../../../_utility/view-utility-functions';
+import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {SidenavPromptOptions} from '../../models/sidenav-prompt-options';
 import {addViewToNaeJson} from '../../../_utility/add-view-to-nae-json';
@@ -35,7 +35,8 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             isToolbar,
             drawerType,
             configName: projectInfo.projectNameClassified,
-            configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
+            configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
+            viewIdSegment: getViewIdSegmentFromPath(sidenavOptions.createViewArguments.path)
         }));
     updateAppModule(tree, view.className, view.fileImportPath, []);
 

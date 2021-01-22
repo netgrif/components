@@ -9,6 +9,7 @@ import {
     SearchService,
     SimpleFilter,
     TabbedCaseView,
+    ViewIdService,
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -32,6 +33,7 @@ const searchServiceFactory = () => {
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
             deps: [ConfigCaseViewServiceFactory]},
+        ViewIdService,
     ]
 })
 export class <%= classify(className) %>Component extends TabbedCaseView implements AfterViewInit {

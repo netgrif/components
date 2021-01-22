@@ -5,11 +5,11 @@ import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {CaseMetaField} from './case-menta-enum';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
-import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
 import {Subscription} from 'rxjs';
 import {OverflowService} from '../services/overflow.service';
+import {ViewIdService} from '../../user/services/view-id.service';
 
 
 @Injectable()
@@ -18,11 +18,11 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
 
     constructor(protected _caseViewService: CaseViewService,
                 preferences: UserPreferenceService,
-                viewService: ViewService,
+                @Optional() viewIdService: ViewIdService,
                 logger: LoggerService,
                 @Optional() protected overflowService: OverflowService,
                 @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
-        super(HeaderType.CASE, preferences, viewService, logger);
+        super(HeaderType.CASE, preferences, viewIdService, logger);
         this.subAllowedNets = _caseViewService.allowedNets$.subscribe(allowedNets => {
             this.setAllowedNets(allowedNets);
             if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {

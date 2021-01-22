@@ -9,7 +9,7 @@ import {
 } from '../../../../_utility/utility-functions';
 import {EmbeddedView, TabViewParams} from '../../models/params-interfaces';
 import {strings} from '@angular-devkit/core';
-import {updateAppModule} from '../../../_utility/view-utility-functions';
+import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabContentTemplate} from '../../models/tab-content-template';
 import {ImportToAdd} from '../../../../_commons/import-to-add';
@@ -44,7 +44,7 @@ export function createTabView(
 
     if (!!params.defaultTaskView) {
         processEmbeddedView(params.defaultTaskView, tabViews, view, args.path,
-            viewCounterStart, tree, createViewFunctionRef);
+            viewCounterStart, tree, createViewFunctionRef, true);
         viewCounterStart++;
     }
 
@@ -79,7 +79,8 @@ export function createTabView(
         imports: tabViews.tabViewImports,
         dasherize: strings.dasherize,
         classify: strings.classify,
-        modulePath: createRelativePath(view.fileImportPath, './app.module')
+        modulePath: createRelativePath(view.fileImportPath, './app.module'),
+        viewIdSegment: getViewIdSegmentFromPath(args.path)
     }));
 
     updateAppModule(tree, view.className, view.fileImportPath, [
@@ -128,7 +129,8 @@ function processEmbeddedView(embeddedView: EmbeddedView,
                              hostViewPath: string,
                              viewNumber: number,
                              tree: Tree,
-                             createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
+                             createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
+                             isDefaultTabbedTaskView: boolean = false
 ): void {
     let tabTemplate: TabContentTemplate;
     if (embeddedView.component !== undefined) {
@@ -139,7 +141,8 @@ function processEmbeddedView(embeddedView: EmbeddedView,
             hostClassName,
             `${hostViewPath}/content/${viewNumber}`,
             tree,
-            createViewFunctionRef);
+            createViewFunctionRef,
+            isDefaultTabbedTaskView);
     } else {
         throw new SchematicsException('TabView content must contain either a \'component\' or a \'view\' attribute');
     }
@@ -190,7 +193,8 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
                                 hostClassName: ViewClassInfo,
                                 newViewPath: string,
                                 tree: Tree,
-                                createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule
+                                createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
+                                isDefaultTabbedTaskView: boolean = false
 ): TabContentTemplate {
     if (!embeddedView.view) {
         throw new SchematicsException('processEmbeddedNewView can\'t be called with EmbeddedView object' +
@@ -207,7 +211,8 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
         layoutParams: embeddedView.view.params,
         componentName: embeddedView.view.componentName,
         isTabbed: true,
-        access: 'private' as 'private'
+        access: 'private' as 'private',
+        isDefaultTabbedTaskView
     };
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));
