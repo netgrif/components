@@ -89,12 +89,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             this._datafieldOptions,
             (mapKeys, newValue) => {
                 return mapKeys.map(serializedMapKey => DatafieldMapKey.parse(serializedMapKey))
-                    .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue))
-                    .map(mapKey => ({
-                        text: mapKey.title,
-                        value: mapKey.toSerializedForm(),
-                        icon: mapKey.icon
-                    }));
+                    .filter(mapKey => mapKey.title.toLocaleLowerCase().startsWith(newValue));
             }
         );
 
@@ -296,7 +291,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             this._log.warn(`The provided 'datafieldMapKey' does not exist.`);
             return;
         }
-        this._DATAFIELD_INPUT.formControl.setValue(this._datafieldOptions.get(datafieldMapKey));
+        this._DATAFIELD_INPUT.formControl.setValue(DatafieldMapKey.parse(datafieldMapKey));
         if (selectDefaultOperator) {
             this.selectDefaultOperator();
         }
