@@ -39,6 +39,7 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
             // if the provided generator is the same class as one of the injected search categories
             if (this.generator && this.generator.constructor === category.constructor) {
                 found = true;
+                this.selectedCategory = this.generator;
                 return this.generator;
             }
             return category.duplicate();
