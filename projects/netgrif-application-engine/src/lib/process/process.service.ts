@@ -35,6 +35,7 @@ export class ProcessService implements OnDestroy {
     ngOnDestroy(): void {
         this._netsSubject.complete();
         this._netUpdate.complete();
+        Array.from(this._requestCache.values()).forEach(net => net.complete());
     }
 
     /**

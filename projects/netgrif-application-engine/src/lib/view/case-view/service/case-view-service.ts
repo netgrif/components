@@ -85,6 +85,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._loading$.complete();
         this._nextPage$.complete();
     }

@@ -1,4 +1,4 @@
-import {Injector, Input, OnInit} from '@angular/core';
+import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {TabContent} from '../interfaces';
 import {TabView} from '../classes/tab-view';
 import {ViewService} from '../../routing/view-service/view.service';
@@ -10,7 +10,7 @@ import {ReplaySubject} from 'rxjs';
  *
  * See {@link TabView} for the class that holds the logic for this view.
  */
-export abstract class AbstractTabViewComponent implements OnInit {
+export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
 
     /**
      * Tabs that are opened initially in the view
@@ -37,6 +37,10 @@ export abstract class AbstractTabViewComponent implements OnInit {
 
     ngOnInit(): void {
         this.tabView = new TabView(this._viewService, this._logger, this.initialTabs, this._injector);
+    }
+
+    ngOnDestroy(): void {
+        this.tabView.openedTabs.forEach(tab => tab.destroy());
     }
 
     badgeHidden(tab: TabContent) {

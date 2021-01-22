@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from 'rxjs';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Pagination} from '../../resources/interface/pagination';
@@ -33,7 +33,7 @@ interface RoleObject {
  * Performs paged loading users from backend for [UserAssignComponent]{@link AbstractUserAssignComponent}.
  */
 @Injectable()
-export class UserListService {
+export class UserListService implements OnDestroy {
 
     /**
      * UserValue array stream, that represents users loading from backend.
@@ -113,6 +113,13 @@ export class UserListService {
         this._users$ = usersMap.pipe(
             map(v => Object.values(v) as UserListItem[]),
         );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._updateProgress$.complete();
+        this._usersReload$.complete();
+        this._nextPage$.complete();
     }
 
     public get loading(): boolean {

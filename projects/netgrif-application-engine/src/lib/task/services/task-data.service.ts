@@ -22,6 +22,7 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
+import {take} from 'rxjs/operators';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -62,6 +63,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._updateSuccess$.complete();
         this._changedFields$.complete();
         this._dataReloadSubscription.unsubscribe();
+        this._safeTask.dataGroups.forEach(group => group.fields.forEach(field => field.destroy()));
     }
 
     /**
@@ -123,7 +125,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         const gottenTaskId = this._safeTask.stringId;
         this._taskState.startLoading(gottenTaskId);
 
-        this._taskResourceService.getData(this._safeTask.stringId).subscribe(dataGroups => {
+        this._taskResourceService.getData(this._safeTask.stringId).pipe(take(1)).subscribe(dataGroups => {
             if (!this.isTaskRelevant(gottenTaskId)) {
                 this._log.debug('current task changed before the get data response could be received, discarding...');
                 this._taskState.stopLoading(gottenTaskId);
@@ -227,7 +229,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskState.startLoading(setTaskId);
         this._taskState.startUpdating(setTaskId);
 
-        this._taskResourceService.setData(this._safeTask.stringId, body).subscribe(response => {
+        this._taskResourceService.setData(this._safeTask.stringId, body).pipe(take(1)).subscribe(response => {
             if (!this.isTaskRelevant(setTaskId)) {
                 this._log.debug('current task changed before the set data response could be received, discarding...');
                 this._taskState.stopLoading(setTaskId);

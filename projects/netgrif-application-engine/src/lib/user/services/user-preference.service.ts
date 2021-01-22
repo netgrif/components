@@ -1,19 +1,20 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Preferences} from '../../resources/interface/preferences';
 import {UserService} from './user.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserPreferenceService {
+export class UserPreferenceService implements OnDestroy {
 
     protected _preferences: Preferences;
     protected _preferencesChanged$: Subject<void>;
+    protected _sub: Subscription;
 
     constructor(protected _userService: UserService,
                 protected _userResourceService: UserResourceService,
@@ -23,7 +24,7 @@ export class UserPreferenceService {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
 
-        this._userService.user$.subscribe(loggedUser => {
+        this._sub = this._userService.user$.subscribe(loggedUser => {
             if (loggedUser.id !== '') {
                 this._userResourceService.getPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();
@@ -36,6 +37,11 @@ export class UserPreferenceService {
                 this._preferencesChanged$.next();
             }
         });
+    }
+
+    ngOnDestroy(): void {
+        this._sub.unsubscribe();
+        this._preferencesChanged$.complete();
     }
 
     public setTaskFilters(viewId: string, value: Array<string>): void {

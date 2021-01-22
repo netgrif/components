@@ -1,4 +1,4 @@
-import {Input, OnInit} from '@angular/core';
+import {Input, OnDestroy, OnInit} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -23,7 +23,7 @@ export interface WorkflowPanelContent {
     uploaded: DateTimeField;
 }
 
-export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBinding implements OnInit {
+export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBinding implements OnInit, OnDestroy {
 
     @Input() public workflow: Net;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
@@ -43,6 +43,10 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
     ngOnInit(): void {
         super.ngOnInit();
         this.panelContent = this.createPanelContent();
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
     }
 
     public show(event: MouseEvent): boolean {
