@@ -3,7 +3,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, Inject} from '@angular/core';
-import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {AbstractOptionSelectorComponent} from './abstract-option-selector.component';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';

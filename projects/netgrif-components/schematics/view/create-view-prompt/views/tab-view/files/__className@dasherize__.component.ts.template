@@ -1,11 +1,17 @@
-import { Component} from '@angular/core';
+import {Component} from '@angular/core';
+import {NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/application-engine';
 <% for(imp of imports) { %>import { <%= imp.className %> } from '<%= imp.fileImportPath %>';
 <% } %>
 
 @Component({
-  selector: '<%= prefix %>-<%= dasherize(className) %>',
-  templateUrl: './<%= dasherize(className) %>.component.html',
-  styleUrls: ['./<%= dasherize(className) %>.component.scss']
+    selector: '<%= prefix %>-<%= dasherize(className) %>',
+    templateUrl: './<%= dasherize(className) %>.component.html',
+    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
+    providers: [
+        {   provide: NAE_VIEW_ID_SEGMENT,
+            useValue: '<%= viewIdSegment %>'},
+        ViewIdService,
+    ]
 })
 export class <%= classify(className) %>Component {
 
