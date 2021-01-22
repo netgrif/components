@@ -36,10 +36,10 @@ export class MockUserPreferenceService {
         return undefined;
     }
 
-    public setDrawerWidth(drawerWidth: number): void {
+    set drawerWidth(drawerWidth: number) {
     }
 
-    public getDrawerWidth(): number {
+    get drawerWidth(): number {
         return undefined;
     }
 

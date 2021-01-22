@@ -4,12 +4,13 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {View, Views} from '../../configuration/interfaces/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {BehaviorSubject, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
+import {AbstractNavigationResizableDrawerComponent} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
 
 export interface NavigationNode {
     name: string;
@@ -19,13 +20,11 @@ export interface NavigationNode {
     level?: number;
 }
 
-export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestroy {
+export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
-    @Input() public contentWidth: BehaviorSubject<number>;
-    public width: number;
     protected subRouter: Subscription;
 
     treeControl: NestedTreeControl<NavigationNode>;
@@ -38,6 +37,7 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
                           protected _roleGuard: RoleGuardService,
                           protected _authorityGuard: AuthorityGuardService,
                           protected _groupGuard: GroupGuardService) {
+        super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
         this.dataSource.data = this.resolveNavigationNodes(_config.getConfigurationSubtree(['views']), '');
@@ -45,6 +45,7 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
     }
 
     ngOnInit(): void {
+        super.ngOnInit();
         if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
             this.subRouter = this._router.events.subscribe((event) => {
                 if (event instanceof NavigationEnd && this.routerChange) {
@@ -60,9 +61,6 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
                 this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
             }
             this.resolveLevels(this.dataSource.data);
-        }
-        if (!!this.contentWidth) {
-            this.contentWidth.subscribe(newWidth => this.width = newWidth);
         }
     }
 

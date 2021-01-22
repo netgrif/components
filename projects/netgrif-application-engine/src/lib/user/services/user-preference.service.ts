@@ -9,6 +9,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {NextGroupService} from '../../groups/services/next-group.service';
 import {debounceTime} from 'rxjs/operators';
 
+const DRAWER_DEFAULT_WIDTH = 200;
+const DRAWER_DEBOUNCE = 1000;
+
 @Injectable({
     providedIn: 'root'
 })
@@ -42,9 +45,9 @@ export class UserPreferenceService {
         });
 
         this._drawerWidthChanged$.asObservable().pipe(
-            debounceTime(1000)
+            debounceTime(DRAWER_DEBOUNCE)
         ).subscribe(newWidth => {
-            this.setDrawerWidth(newWidth);
+            this.drawerWidth = newWidth;
         });
     }
 
@@ -84,12 +87,12 @@ export class UserPreferenceService {
         return this._preferences.locale;
     }
 
-    public setDrawerWidth(drawerWidth: number): void {
+    set drawerWidth(drawerWidth: number) {
         this._preferences.drawerWidth = drawerWidth;
         this._savePreferences();
     }
 
-    public getDrawerWidth(): number {
+    get drawerWidth(): number {
         return this._preferences.drawerWidth;
     }
 
@@ -110,7 +113,7 @@ export class UserPreferenceService {
 
     protected _emptyPreferences(): Preferences {
         return {
-            drawerWidth: 200,
+            drawerWidth: DRAWER_DEFAULT_WIDTH,
             headers: {},
             caseFilters: {},
             taskFilters: {}

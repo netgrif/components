@@ -8,6 +8,9 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 import {ResizeEvent} from 'angular-resizable-element';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
 
+const DRAWER_DEFAULT_MIN_WIDTH = 200;
+const DRAWER_MAX_WIDTH = 450;
+
 export abstract class AbstractNavigationDrawerComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
@@ -41,7 +44,11 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         this._fixed = true;
         this.opened = true;
         this.quickPanelItems = ['language', 'settings', 'logout'];
-        this.contentWidth = new BehaviorSubject<number>(200);
+        if (this.userPreferenceService.drawerWidth !== undefined) {
+            this.contentWidth = new BehaviorSubject<number>(this.userPreferenceService.drawerWidth);
+        } else {
+            this.contentWidth = new BehaviorSubject<number>(DRAWER_DEFAULT_MIN_WIDTH);
+        }
     }
 
     ngOnInit(): void {
@@ -58,7 +65,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         });
         this.opened = this._config.opened;
         this.userPreferenceService.preferencesChanged$.subscribe(() => {
-            this.width = this.userPreferenceService.getDrawerWidth();
+            this.width = this.userPreferenceService.drawerWidth;
             this.contentWidth.next(this.width);
         });
         // this.width = this.userPreferenceService.getDrawerWidth();
@@ -135,10 +142,10 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     }
 
     onResizeEvent(event: ResizeEvent): void {
-        if (event.rectangle.width > 450) {
-            this.width = 450;
-        } else if (event.rectangle.width < 200) {
-            this.width = 200;
+        if (event.rectangle.width > DRAWER_MAX_WIDTH) {
+            this.width = DRAWER_MAX_WIDTH;
+        } else if (event.rectangle.width < DRAWER_DEFAULT_MIN_WIDTH) {
+            this.width = DRAWER_DEFAULT_MIN_WIDTH;
         } else {
             this.width = event.rectangle.width;
         }
