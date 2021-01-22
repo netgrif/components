@@ -1,22 +1,9 @@
-
-/**
- * Object from Backend
- */
 export interface ProcessRole {
-    /**
-     * Process ID - Process Mongo ID
-     *
-     * ***Example:*** 5e43f69c0a975a7f87551089
-     */
     stringId: string;
-    /**
-     * Process Name
-     *
-     * ***Example:*** Klient
-     */
-    name?: string;
-    /**
-     * Process Description
-     */
+    name: string;
     description?: string;
+    importId: string;
+    netImportId?: string;
+    netVersion?: string;
+    netStringId?: string;
 }

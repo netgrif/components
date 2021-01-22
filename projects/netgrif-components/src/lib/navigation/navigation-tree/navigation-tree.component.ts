@@ -1,6 +1,13 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {AbstractNavigationTreeComponent, ConfigurationService} from '@netgrif/application-engine';
+import {
+    AbstractNavigationTreeComponent, AuthorityGuardService,
+    ConfigurationService,
+    LoggerService,
+    RoleGuardService,
+    UserService,
+    GroupGuardService
+} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-navigation-tree',
@@ -9,7 +16,13 @@ import {AbstractNavigationTreeComponent, ConfigurationService} from '@netgrif/ap
 })
 export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
 
-    constructor(protected _config: ConfigurationService, protected _router: Router) {
-        super(_config, _router);
+    constructor(config: ConfigurationService,
+                router: Router,
+                log: LoggerService,
+                userService: UserService,
+                roleGuard: RoleGuardService,
+                authorityGuard: AuthorityGuardService,
+                groupGuard: GroupGuardService) {
+        super(config, router, log, userService, roleGuard, authorityGuard, groupGuard);
     }
 }

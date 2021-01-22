@@ -1,10 +1,14 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
-    ConfigTaskViewServiceFactory, NextGroupService,
+    ConfigTaskViewServiceFactory,
+    NextGroupService,
     SearchService,
     SimpleFilter,
-    TaskViewService
+    TaskSearchCaseQuery,
+    TaskViewService,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService,
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
@@ -15,7 +19,11 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
 };
 
 const searchServiceFactory = (nextGroupService: NextGroupService) => {
-    return new SearchService(SimpleFilter.fromTaskQuery({case: {id: nextGroupService.groupOfUser.stringId}}));
+    const groupIds: Array<TaskSearchCaseQuery> = [];
+    nextGroupService.groupOfUser.forEach(group => {
+       groupIds.push({id: group.stringId});
+    });
+    return new SearchService(SimpleFilter.fromTaskQuery({case: groupIds}));
 };
 
 @Component({
@@ -31,6 +39,9 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},
+        {   provide: NAE_VIEW_ID_SEGMENT,
+            useValue: '<%= viewIdSegment %>'},
+        ViewIdService,
     ]
 })
 export class <%= classify(className) %>Component extends AbstractTaskView implements AfterViewInit {

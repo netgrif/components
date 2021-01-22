@@ -521,6 +521,72 @@
                 }
             }
         },
+        "demo-navigation-test-access": {
+            "component": {
+                "class": "NavigationExampleComponent",
+                "from": "./doc/navigation-example/navigation-example.component"
+            },
+            "access": "private",
+            "navigation": {
+                "title": "NavTest"
+            },
+            "routing": {
+                "path": "navigation-test"
+            },
+            "children": {
+                "role-check-deprecated": {
+                    "component": {
+                        "class": "ButtonsNavComponent",
+                        "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                    },
+                    "access": {
+                        "role": "new_model.Role"
+                    },
+                    "navigation": {
+                        "title": "role check deprecated",
+                        "icon": "account_circle"
+                    },
+                    "routing": {
+                        "path": "one/one-one"
+                    }
+                },
+                "role-check": {
+                    "component": {
+                        "class": "ButtonsNavComponent",
+                        "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                    },
+                    "access": {
+                        "role": {
+                            "processId": "new_model",
+                            "roleId": "role"
+                        }
+                    },
+                    "navigation": {
+                        "title": "role check",
+                        "icon": "account_circle"
+                    },
+                    "routing": {
+                        "path": "one/one-two"
+                    }
+                },
+                "authority-check": {
+                    "component": {
+                        "class": "ButtonsNavComponent",
+                        "from": "./doc/navigation-example/buttons-nav/buttons-nav.component"
+                    },
+                    "access": {
+                        "authority": "ROLE_ADMIN"
+                    },
+                    "navigation": {
+                        "title": "authority check",
+                        "icon": "account_circle"
+                    },
+                    "routing": {
+                        "path": "two"
+                    }
+                }
+            }
+        },
         "dashboard": {
             "layout": {
                 "name": "dashboard",

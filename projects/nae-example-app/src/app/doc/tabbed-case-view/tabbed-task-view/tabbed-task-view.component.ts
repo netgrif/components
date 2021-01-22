@@ -6,7 +6,8 @@ import {
     SearchService,
     TabbedTaskView,
     tabbedTaskViewServiceFactory,
-    TaskViewService
+    TaskViewService,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -33,7 +34,8 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         {
             provide: BOOLEAN_VALUE_LABEL_ENABLED,
             useValue: true
-        }
+        },
+        {   provide: ViewIdService, useValue: null}
     ]
 })
 export class TabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {

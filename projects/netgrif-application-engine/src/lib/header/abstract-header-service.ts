@@ -1,7 +1,7 @@
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {HeaderState, HeaderStateInterface} from './header-state';
-import {OnDestroy} from '@angular/core';
+import {OnDestroy, Optional} from '@angular/core';
 import {SortChangeDescription} from './models/user-changes/sort-change-description';
 import {SearchChangeDescription} from './models/user-changes/search-change-description';
 import {HeaderChange} from './models/user-changes/header-change';
@@ -10,11 +10,12 @@ import {HeaderType} from './models/header-type';
 import {HeaderMode} from './models/header-mode';
 import {HeaderColumn, HeaderColumnType} from './models/header-column';
 import {UserPreferenceService} from '../user/services/user-preference.service';
-import {ViewService} from '../routing/view-service/view.service';
 import {LoggerService} from '../logger/services/logger.service';
 import {LoadingEmitter} from '../utility/loading-emitter';
 import {SortDirection} from '@angular/material/sort';
 import {HeaderChangeType} from './models/user-changes/header-change-type';
+import {ViewIdService} from '../user/services/view-id.service';
+import {Net} from '../process/net';
 
 export abstract class AbstractHeaderService implements OnDestroy {
 
@@ -31,16 +32,21 @@ export abstract class AbstractHeaderService implements OnDestroy {
     public loading: LoadingEmitter;
     public fieldsGroup: Array<FieldsGroup>;
 
-    protected constructor(private _headerType: HeaderType,
-                          private _preferences: UserPreferenceService,
-                          private _viewService: ViewService,
-                          private _logger: LoggerService) {
+    protected constructor(protected _headerType: HeaderType,
+                          protected _preferences: UserPreferenceService,
+                          @Optional() private _viewIdService: ViewIdService,
+                          protected _logger: LoggerService) {
         this.loading = new LoadingEmitter(true);
         this._headerChange$ = new Subject<HeaderChange>();
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this._headerColumnCount$ = new BehaviorSubject<number>(AbstractHeaderService.DEFAULT_HEADER_COUNT);
         this._responsiveHeaders$ = new BehaviorSubject<boolean>(AbstractHeaderService.DEFAULT_HEADER_RESPONSIVITY);
         this._clearHeaderSearch$ = new Subject<number>();
+
+        if (this._viewIdService === null) {
+            this._logger.warn('Header service could not inject ViewIdService! User preferences won\'t be loaded or saved!');
+        }
+
         this.initializeHeaderState();
     }
 
@@ -101,10 +107,6 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     get initDefaultHeaders(): Array<string> {
         return this._initDefaultHeaders;
-    }
-
-    private static uniqueNetFieldID(netId: string, fieldId: string): string {
-        return `${netId}-${fieldId}`;
     }
 
     private initializeHeaderState(): void {
@@ -183,6 +185,37 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this.fieldsGroup.push(...fieldsGroups);
     }
 
+    public setTaskAllowedNets(allowedNets: Array<Net>) {
+        /* TODO by simply replacing the select options with new object, we don't loose the old references.
+             Columns with headers from nets that are no longer allowed should have their value cleared.
+             Columns with valid values that are not metadata should have their selection remapped to the new objects.
+         */
+
+        const fieldsGroups: Array<FieldsGroup> = [];
+        allowedNets.forEach(allowedNet => {
+            const fieldsGroup: FieldsGroup = {
+                groupTitle: allowedNet.title,
+                fields: []
+            };
+            const existing = new Set();
+            allowedNet.transitions.forEach(trans => {
+                trans.immediateData.forEach(data => {
+                    if (!existing.has(data.stringId)) {
+                        existing.add(data.stringId);
+                        fieldsGroup.fields.push(
+                            new HeaderColumn(HeaderColumnType.IMMEDIATE, data.stringId,
+                                data.title, data.type, allowedNet.identifier)
+                        );
+                    }
+                });
+            });
+            fieldsGroups.push(fieldsGroup);
+        });
+
+        this.fieldsGroup.splice(1, this.fieldsGroup.length - 1);
+        this.fieldsGroup.push(...fieldsGroups);
+    }
+
     /**
      * If this view has som headers stored in it's preferences attempts to load them.
      * If the preferences contain nonexistent headers they will be skipped.
@@ -191,7 +224,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * It is the responsibility of the child class to call it at an appropriate moment.
      */
     protected loadHeadersFromPreferences(): void {
-        const viewId = this._viewService.getViewId();
+        const viewId = this.getViewId();
         if (!viewId) {
             return;
         }
@@ -314,7 +347,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerState.restoreLastMode();
         this.saveNewState();
         const change = this.modeChangeAfterEdit();
-        const viewId = this._viewService.getViewId();
+        const viewId = this.getViewId();
         if (!!viewId) {
             const headers = this.headerState.selectedHeaders;
             this._preferences.setHeaders(viewId, headers.map(header => !!header ? header.uniqueId : ''));
@@ -387,6 +420,16 @@ export abstract class AbstractHeaderService implements OnDestroy {
      */
     public clearHeaderSearch(columnIndex: number): void {
         this._clearHeaderSearch$.next(columnIndex);
+    }
+
+    /**
+     * @returns the Id of the view, if the ViewIdService was injected. Returns `undefined` if the service was not injected.
+     */
+    protected getViewId(): string | undefined {
+        if (this._viewIdService) {
+            return this._viewIdService.viewId;
+        }
+        return undefined;
     }
 
     protected abstract saveState();

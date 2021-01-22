@@ -5,7 +5,7 @@ import {User} from '../../../user/models/user';
 
 export class MockAuthenticationService extends AuthenticationService {
     login(credentials: Credentials): Observable<User> {
-        return of(new User('id', 'mail', 'name', 'surname', ['ADMIN'], [{id: 'id', name: 'id'}]));
+        return of(new User('id', 'mail', 'name', 'surname', ['ADMIN'], [{stringId: 'id', name: 'id', importId: 'id'}]));
     }
 
     logout(): Observable<object> {

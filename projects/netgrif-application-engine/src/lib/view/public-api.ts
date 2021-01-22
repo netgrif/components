@@ -4,7 +4,9 @@ export * from './case-view/models/case-page-load-request-result';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
 export * from './task-view/models/task-page-load-request-result';
-export * from './tree-case-view/tree-component/model/CaseTreeNode';
+export * from './tree-case-view/tree-component/model/case-tree-node';
+export * from './tree-case-view/tree-component/model/case-tree-path';
+export * from './tree-case-view/tree-component/model/expansion-tree';
 
 /* ENUMS */
 export * from './tree-case-view/model/tree-petriflow-identifiers';
