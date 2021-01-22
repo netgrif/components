@@ -22,7 +22,9 @@ export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy
     }
 
     ngOnInit(): void {
-        this.addChildPredicate();
+        if (this.getPredicateMap().size === 0) {
+            this.addChildPredicate();
+        }
     }
 
     ngOnDestroy(): void {
@@ -32,7 +34,15 @@ export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy
     public trackByPredicates = (a: number, b: KeyValue<number, PredicateWithGenerator>) => b.value;
 
     public getPredicateMap(): Map<number, PredicateWithGenerator> {
-        return this.predicate.getPredicateMap();
+        const map = new Map<number, PredicateWithGenerator>();
+
+        for (const [key, value] of this.predicate.getPredicateMap().entries()) {
+            if (value.isVisible) {
+                map.set(key, value);
+            }
+        }
+
+        return map;
     }
 
     public removeChildAt(id: number): void {

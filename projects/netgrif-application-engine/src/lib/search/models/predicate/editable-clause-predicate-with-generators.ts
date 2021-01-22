@@ -17,7 +17,15 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
     }
 
     addPredicate(predicate: Predicate, initiallyVisible = true): number {
-        return super.addPredicate(new PredicateWithGenerator(predicate));
+        return super.addPredicate(new PredicateWithGenerator(predicate, undefined, initiallyVisible));
+    }
+
+    /**
+     * Adds a pre-wrapped predicate without wrapping it
+     * @param predicate the pre-wrapped predicate
+     */
+    addPredicateWithGenerator(predicate: PredicateWithGenerator): number {
+        return super.addPredicate(predicate);
     }
 
     getPredicateMap(): Map<number, PredicateWithGenerator> {

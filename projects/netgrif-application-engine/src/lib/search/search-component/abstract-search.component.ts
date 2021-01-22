@@ -7,7 +7,7 @@ import {BooleanOperator} from '../models/boolean-operator';
 import {EditablePredicate} from '../models/predicate/editable-predicate';
 import {FormControl} from '@angular/forms';
 import {debounceTime, filter} from 'rxjs/operators';
-import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
+import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -47,8 +47,16 @@ export abstract class AbstractSearchComponent implements OnDestroy {
 
     public trackByPredicates = (a: number, b: KeyValue<number, EditablePredicate>) => b.value;
 
-    public getPredicateMap(): Map<number, PredicateWithGenerator> {
-        return this._searchService.rootPredicate.getPredicateMap();
+    public getPredicateMap(): Map<number, EditableClausePredicateWithGenerators> {
+        const map = new Map<number, EditableClausePredicateWithGenerators>();
+
+        for (const [key, value] of this._searchService.rootPredicate.getPredicateMap().entries()) {
+            if (value.isVisible) {
+                map.set(key, value.wrappedPredicate as EditableClausePredicateWithGenerators);
+            }
+        }
+
+        return map;
     }
 
     public hasPredicates(): boolean {
@@ -64,7 +72,9 @@ export abstract class AbstractSearchComponent implements OnDestroy {
             this._searchService.clearPredicates();
         } else {
             this._searchService.clearFullTextFilter();
-            this.addChildPredicate();
+            if (!this._searchService.hasVisiblePredicates) {
+                this.addChildPredicate();
+            }
         }
 
         this.advancedSearchDisplayed = !this.advancedSearchDisplayed;

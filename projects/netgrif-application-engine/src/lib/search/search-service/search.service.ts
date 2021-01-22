@@ -89,6 +89,19 @@ export class SearchService implements OnDestroy {
     }
 
     /**
+     * @returns `true` if any visible predicates are applied.
+     * Returns `false` if there are no predicates, or if there are only hidden predicates applied
+     */
+    public get hasVisiblePredicates(): boolean {
+        for (const predicate of this._rootPredicate.getPredicateMap().values()) {
+            if (predicate.isVisible) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @returns a copy of the base filter
      */
     public get baseFilter(): Filter {
@@ -151,7 +164,7 @@ export class SearchService implements OnDestroy {
         leaf.query = generatedPredicate ? generatedPredicate.query : Query.emptyQuery();
         branch.removePredicate(leafId);
         const withGenerator = new PredicateWithGenerator(leaf, generator);
-        branch.addPredicate(withGenerator);
+        branch.addPredicateWithGenerator(withGenerator);
         return branchId;
     }
 
