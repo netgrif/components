@@ -1,22 +1,25 @@
 import {AbstractSearchOperandInputComponent} from './abstract-search-operand-input.component';
 import {Component} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormControl} from '@angular/forms';
+import {SearchInputType} from '../models/category/search-input-type';
 
 describe('AbstractSearchOperandInputComponent', () => {
     let component: TestSearchOperandInputComponent;
-    let fixture: ComponentFixture<TestSearchOperandInputComponent>;
+    let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                TestSearchOperandInputComponent
+                TestSearchOperandInputComponent,
+                TestWrapperComponent
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestSearchOperandInputComponent);
-        component = fixture.componentInstance;
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
     });
 
@@ -37,4 +40,15 @@ class TestSearchOperandInputComponent extends AbstractSearchOperandInputComponen
     constructor() {
         super();
     }
+}
+
+@Component({
+    selector: 'nae-test-wrapper',
+    template: '<nae-search-operand-input [inputFormControl]="formControl" [inputType]="searchInputType.TEXT" [first]="true">' +
+        '</nae-search-operand-input>'
+})
+class TestWrapperComponent {
+
+    formControl = new FormControl();
+    searchInputType = SearchInputType;
 }
