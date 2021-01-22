@@ -188,7 +188,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected get _selectedDatafields(): Array<Datafield> {
-        return this._datafieldOptions.get(this._DATAFIELD_INPUT.formControl.value.value);
+        return this._DATAFIELD_INPUT.formControl.value;
     }
 
     public reset() {
