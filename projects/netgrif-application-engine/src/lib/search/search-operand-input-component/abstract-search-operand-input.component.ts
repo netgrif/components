@@ -34,6 +34,10 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
                 });
             });
         }
+
+        if (this.isInputValueSet()) {
+            this._inputConfirmed = true;
+        }
     }
 
     ngOnDestroy(): void {
@@ -54,17 +58,7 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
             return false;
         }
 
-        if (this.inputType === SearchInputType.AUTOCOMPLETE) {
-            return !!this.inputFormControl.value
-                && (typeof this.inputFormControl.value !== 'string');
-        }
-        if (this.inputType === SearchInputType.TEXT) {
-            return this.inputFormControl.value !== undefined
-                && this.inputFormControl.value !== null
-                && this.inputFormControl.value.length > 0;
-        }
-        return this.inputFormControl.value !== undefined
-            && this.inputFormControl.value !== null;
+        return this.isInputValueSet();
     }
 
     @ViewChild('operandInput')
@@ -76,9 +70,11 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
             }
             this._initialExpansion = false;
 
-            setTimeout(() => {
-                input.nativeElement.focus();
-            });
+            if (!this.isInputFilled) {
+                setTimeout(() => {
+                    input.nativeElement.focus();
+                });
+            }
         }
     }
 
@@ -96,5 +92,19 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
      */
     protected _renderSelection(selection: SearchAutocompleteOption<unknown>): string {
         return selection ? selection.text : '';
+    }
+
+    protected isInputValueSet(): boolean {
+        if (this.inputType === SearchInputType.AUTOCOMPLETE) {
+            return !!this.inputFormControl.value
+                && (typeof this.inputFormControl.value !== 'string');
+        }
+        if (this.inputType === SearchInputType.TEXT) {
+            return this.inputFormControl.value !== undefined
+                && this.inputFormControl.value !== null
+                && this.inputFormControl.value.length > 0;
+        }
+        return this.inputFormControl.value !== undefined
+            && this.inputFormControl.value !== null;
     }
 }

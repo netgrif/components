@@ -116,6 +116,14 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         return CaseDataset.FieldTypeToInputType(this._selectedDatafields[0].fieldType);
     }
 
+    /**
+     * The allowed operators are dependant on the selected data field.
+     *
+     * Beware that if you want to change the order of the allowed operators, then you must also update the
+     * [selectDefaultOperator()]{@link Category#selectDefaultOperator} method, so that default operator for each data field type matches
+     * the default operator of the {@link CaseSimpleDataset} search category. Otherwise the transition of header search into the search GUI
+     * won't work properly.
+     */
     public get allowedOperators(): Array<Operator<any>> {
         if (!this.hasSelectedDatafields) {
             return [];
