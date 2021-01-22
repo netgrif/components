@@ -238,6 +238,29 @@ export abstract class Category<T> {
     }
 
     /**
+     * Changes the state of the Category and generates a query if all necessary operands were set.
+     *
+     * If you are using the category as a builder. Consider using the [generatePredicate()]{@link Category#generatePredicate}
+     * method instead.
+     *
+     * @param userInput values entered by the user. The length of the array should match the
+     * [arity]{@link Operator#_numberOfOperands} of the selected Operator.
+     */
+    public setOperands(userInput: Array<T>): void {
+        const range = Math.min(userInput.length, this._operandsFormControls.length);
+        if (range < userInput.length) {
+            this._log.warn(`${userInput.length} operands are being set, but only ${range} inputs are available!`
+                + ' Extra operands will be ignored.');
+        }
+        for (let i = 0; i < range; i++) {
+            this._operandsFormControls[i].setValue(userInput[i]);
+        }
+        if (range !== 0) {
+            this.operandValueChanges(range - 1);
+        }
+    }
+
+    /**
      * Resets the state of the Category, deselecting any selected category and removing other state
      * information if the Category defines them.
      *

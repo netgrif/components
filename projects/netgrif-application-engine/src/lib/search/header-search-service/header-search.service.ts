@@ -130,9 +130,7 @@ export class HeaderSearchService {
             if (config.type === HeaderColumnType.META) {
                 editableCategory = this._typeToCategory.get(config.fieldIdentifier).duplicate();
                 editableCategory.selectDefaultOperator();
-                editableCategory.operandsFormControls$.pipe(take(1)).subscribe( controls => {
-                    config.userInput.forEach((value, index) => controls[index].setValue(value));
-                });
+                editableCategory.setOperands(config.userInput);
             } else  {
                 const dataset = (this._typeToCategory.get(HeaderColumnType.IMMEDIATE) as CaseSimpleDataset);
                 editableCategory = dataset.transformToCaseDataset(config.fieldType, config.fieldTitle, config.userInput);

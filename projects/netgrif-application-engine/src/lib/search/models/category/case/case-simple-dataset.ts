@@ -98,9 +98,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     public transformToCaseDataset(fieldType: string, fieldTitle: string, userInput: Array<any>): CaseDataset {
         const result = this._optionalDependencies.categoryFactory.get(CaseDataset) as CaseDataset;
         result.selectDatafields(DatafieldMapKey.serializedForm(fieldType, fieldTitle));
-        result.operandsFormControls$.pipe(take(1)).subscribe( controls => {
-            userInput.forEach((value, index) => controls[index].setValue(value));
-        });
+        result.setOperands(userInput);
         return result;
     }
 
