@@ -7,7 +7,7 @@ import {ElementaryPredicate} from '../models/predicate/elementary-predicate';
 import {Query} from '../models/query/query';
 import {LoggerService} from '../../logger/services/logger.service';
 import {MatSelect} from '@angular/material/select';
-import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
+import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 
 
 /**
@@ -15,7 +15,7 @@ import {PredicateWithGenerator} from '../models/predicate/predicate-with-generat
  */
 export abstract class AbstractSearchPredicateComponent implements OnInit, OnDestroy {
 
-    @Input() predicate: PredicateWithGenerator;
+    @Input() predicate: EditableElementaryPredicate;
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
     /**
@@ -23,7 +23,7 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
      */
     @Input() generator: Category<any> | undefined;
 
-    public selectedCategory: Category<any>;
+    protected _selectedCategory: Category<any>;
 
     protected _predicateChange: Subscription;
 
@@ -39,7 +39,7 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
             // if the provided generator is the same class as one of the injected search categories
             if (this.generator && this.generator.constructor === category.constructor) {
                 found = true;
-                this.selectedCategory = this.generator;
+                this.categoryChanged(this.generator);
                 return this.generator;
             }
             return category.duplicate();
@@ -71,6 +71,14 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
         }
     }
 
+    public get selectedCategory(): Category<any> {
+        return this._selectedCategory;
+    }
+
+    public set selectedCategory(newCategory: Category<any>) {
+        this.categoryChanged(newCategory);
+    }
+
     /**
      * Lambda that is used to preserve `this` reference in HTML binding.
      *
@@ -87,7 +95,7 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
         if (this.selectedCategory !== undefined) {
             this.selectedCategory.reset();
         }
-        this.selectedCategory = newCategory;
+        this._selectedCategory = newCategory;
         if (newCategory !== undefined) {
             if (this._predicateChange) {
                 this._predicateChange.unsubscribe();
