@@ -1,6 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {AbstractSearchComponent, DATE_FORMAT, LoggerService, SearchService} from '@netgrif/application-engine';
+import {AbstractSearchComponent, DATE_FORMAT, DialogService, LoggerService, SearchService} from '@netgrif/application-engine';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nc-search',
@@ -13,7 +14,7 @@ import {AbstractSearchComponent, DATE_FORMAT, LoggerService, SearchService} from
 })
 export class SearchComponent extends AbstractSearchComponent {
 
-    constructor(searchService: SearchService, logger: LoggerService) {
-        super(searchService, logger);
+    constructor(searchService: SearchService, logger: LoggerService, dialogService: DialogService, translate: TranslateService) {
+        super(searchService, logger, dialogService, translate);
     }
 }

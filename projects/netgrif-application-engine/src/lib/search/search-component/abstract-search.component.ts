@@ -8,6 +8,8 @@ import {EditablePredicate} from '../models/predicate/editable-predicate';
 import {FormControl} from '@angular/forms';
 import {debounceTime, filter} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
+import {DialogService} from '../../dialog/services/dialog.service';
+import {TranslateService} from '@ngx-translate/core';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -28,7 +30,9 @@ export abstract class AbstractSearchComponent implements OnDestroy {
     public fullTextFormControl: FormControl;
 
     protected constructor(protected _searchService: SearchService,
-                          protected _logger: LoggerService) {
+                          protected _logger: LoggerService,
+                          protected _dialogService: DialogService,
+                          protected _translate: TranslateService) {
         this.removeChild$ = new Subject<number>();
         this.removeChild$.subscribe(id => this._removeChildAt(id));
         this.fullTextFormControl = new FormControl();
@@ -81,7 +85,7 @@ export abstract class AbstractSearchComponent implements OnDestroy {
     }
 
     public showHelp(): void {
-
+        this._dialogService.openAlertDialog(this._translate.instant('search.help.title'), this._translate.instant('search.help.text'));
     }
 
     protected _removeChildAt(id: number): void {
