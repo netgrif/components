@@ -36,6 +36,5 @@ export class PieChartCardComponent extends AbstractCustomCard implements OnInit 
             this.single.push(new DashboardSingleData(bucket.key, bucket.doc_count));
         });
         this.single = [...this.single];
-        console.log(this.single);
     }
 }
