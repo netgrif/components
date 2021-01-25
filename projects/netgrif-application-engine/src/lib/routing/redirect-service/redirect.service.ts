@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Router, UrlSegment} from '@angular/router';
 import {LoggerService} from '../../logger/services/logger.service';
-import {Views} from '../../configuration/interfaces/schema';
+import {Views} from '../../../commons/schema';
 import {ConfigurationService} from '../../configuration/configuration.service';
 
 @Injectable({

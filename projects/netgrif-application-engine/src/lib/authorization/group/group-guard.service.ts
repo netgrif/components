@@ -6,7 +6,7 @@ import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {UserService} from '../../user/services/user.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {View} from '../../configuration/interfaces/schema';
+import {View} from '../../../commons/schema';
 import {NextGroupService} from '../../groups/services/next-group.service';
 
 @Injectable({
