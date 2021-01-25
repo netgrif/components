@@ -16,6 +16,8 @@ import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resou
 import {TestCaseSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
+import {TranslateService} from '@ngx-translate/core';
+import {DialogService} from '../../dialog/services/dialog.service';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -64,7 +66,9 @@ describe('AbstractSearchComponent', () => {
 })
 class TestSearchComponent extends AbstractSearchComponent {
     constructor(searchService: SearchService,
-                logger: LoggerService) {
-        super(searchService, logger);
+                logger: LoggerService,
+                dialogService: DialogService,
+                translate: TranslateService) {
+        super(searchService, logger, dialogService, translate);
     }
 }
