@@ -26,4 +26,10 @@
             [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate" (click)="toggleSearchMode()">
         <mat-icon>youtube_searched_for</mat-icon>
     </button>
+
+    <ng-template [ngIf]="advancedSearchDisplayed">
+        <button mat-icon-button class="search-toggle-margin" [matTooltip]="'search.tooltip.help' | translate" (click)="showHelp()">
+            <mat-icon>help</mat-icon>
+        </button>
+    </ng-template>
 </div>

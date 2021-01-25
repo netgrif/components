@@ -80,6 +80,10 @@ export abstract class AbstractSearchComponent implements OnDestroy {
         this.advancedSearchDisplayed = !this.advancedSearchDisplayed;
     }
 
+    public showHelp(): void {
+
+    }
+
     protected _removeChildAt(id: number): void {
         this._searchService.rootPredicate.removePredicate(id);
         if (this.getPredicateMap().size === 0) {
