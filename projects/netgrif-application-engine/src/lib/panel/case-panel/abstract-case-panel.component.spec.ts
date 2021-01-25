@@ -26,6 +26,7 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {OverflowService} from '../../header/services/overflow.service';
+import {UserService} from '../../user/services/user.service';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -93,8 +94,9 @@ describe('AbstractCasePanelComponent', () => {
 class TestCasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                protected _log: LoggerService, @Optional() protected overflowService: OverflowService) {
-        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService);
+                protected _log: LoggerService, @Optional() protected overflowService: OverflowService,
+                protected _userService: UserService) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService, _userService);
     }
 }
 
