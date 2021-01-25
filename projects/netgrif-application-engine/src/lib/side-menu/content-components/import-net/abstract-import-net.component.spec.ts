@@ -5,7 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {Observable, of, Subject} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
-import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {SideMenuControl} from '../../models/side-menu-control';

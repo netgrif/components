@@ -20,6 +20,13 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {
+    TestTaskSearchServiceFactory,
+    TestTaskViewFactory
+} from '../../utility/tests/test-factory-methods';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {ConfigTaskViewServiceFactory} from '../../view/task-view/service/factory/config-task-view-service-factory';
+import {SearchService} from '../../search/search-service/search.service';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -36,6 +43,16 @@ describe('TaskHeaderService', () => {
             ],
             providers: [
                 TaskHeaderService,
+                ConfigTaskViewServiceFactory,
+                {
+                    provide: TaskViewService,
+                    useFactory: TestTaskViewFactory,
+                    deps: [ConfigTaskViewServiceFactory]
+                },
+                {
+                    provide: SearchService,
+                    useFactory: TestTaskSearchServiceFactory
+                },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

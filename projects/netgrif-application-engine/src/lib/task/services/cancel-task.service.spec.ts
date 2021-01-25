@@ -78,13 +78,7 @@ describe('CancelTaskService', () => {
                 email: 'mail',
                 name: '',
                 surname: '',
-                state: '',
-                authorities: [],
-                userProcessRoles: [],
-                processRoles: [],
-                groups: [],
-                fullName: '',
-                registered: true
+                fullName: ''
             },
             roles: {
                 role: 'perform'

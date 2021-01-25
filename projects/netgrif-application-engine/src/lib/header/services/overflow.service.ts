@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {ViewService} from '../../routing/view-service/view.service';
+import {Injectable, Optional} from '@angular/core';
+import {ViewIdService} from '../../user/services/view-id.service';
 
 interface OverflowState {
     overflowMode: boolean;
@@ -17,7 +17,7 @@ export class OverflowService {
     private _columnCount: number;
     private _state: OverflowState;
 
-    constructor(protected viewService: ViewService) {
+    constructor(@Optional() private _viewIdService: ViewIdService) {
         this._overflowMode = this.initializeItem('overflowMode', false) === 'true';
         this._columnCount = this.checkIsNan(this.initializeItem('columnCount', this.DEFAULT_COLUMN_COUNT), this.DEFAULT_COLUMN_COUNT);
         this._columnWidth = this.checkIsNan(this.initializeItem('columnWidth', this.DEFAULT_COLUMN_WIDTH), this.DEFAULT_COLUMN_WIDTH);
@@ -56,10 +56,12 @@ export class OverflowService {
     }
 
     public saveNewState(): void {
-        const id = this.viewService.getViewId();
-        localStorage.setItem(id + '-overflowMode', this._overflowMode + '');
-        localStorage.setItem(id + '-columnCount', this._columnCount + '');
-        localStorage.setItem(id + '-columnWidth', this._columnWidth + '');
+        const viewId = this.getViewId();
+        if (viewId) {
+            localStorage.setItem(viewId + '-overflowMode', this._overflowMode + '');
+            localStorage.setItem(viewId + '-columnCount', this._columnCount + '');
+            localStorage.setItem(viewId + '-columnWidth', this._columnWidth + '');
+        }
         this._state = undefined;
     }
 
@@ -71,7 +73,12 @@ export class OverflowService {
     }
 
     protected initializeItem(id: string, defaultValue) {
-        const item = localStorage.getItem(this.viewService.getViewId() + '-' + id);
+        const viewId = this.getViewId();
+        if (!viewId) {
+            return defaultValue;
+        }
+
+        const item = localStorage.getItem(viewId + '-' + id);
         if (item !== undefined) {
             return item;
         } else {
@@ -81,5 +88,15 @@ export class OverflowService {
 
     protected checkIsNan(item, defaultValue) {
         return isNaN(parseInt(item, 10)) ? defaultValue : parseInt(item, 10);
+    }
+
+    /**
+     * @returns the Id of the view, if the ViewIdService was injected. Returns `undefined` if the service was not injected.
+     */
+    protected getViewId(): string | undefined {
+        if (this._viewIdService) {
+            return this._viewIdService.viewId;
+        }
+        return undefined;
     }
 }

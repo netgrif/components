@@ -2,7 +2,7 @@ import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {HttpParams} from '@angular/common/http';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {CaseTreeNode} from './model/CaseTreeNode';
+import {CaseTreeNode} from './model/case-tree-node';
 import {TreeCaseViewService} from '../tree-case-view.service';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
@@ -11,7 +11,7 @@ import {Case} from '../../../resources/interface/case';
 import {ProcessService} from '../../../process/process.service';
 import {SideMenuService} from '../../../side-menu/services/side-menu.service';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
-import {Observable, of, ReplaySubject, Subject, Subscription} from 'rxjs';
+import {forkJoin, Observable, of, ReplaySubject, Subject, Subscription, throwError} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {tap} from 'rxjs/operators';
@@ -24,6 +24,9 @@ import {CaseGetRequestBody} from '../../../resources/interface/case-get-request-
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {NAE_OPTION_SELECTOR_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {CaseTreePath} from './model/case-tree-path';
+import {ExpansionTree} from './model/expansion-tree';
+import {ResultWithAfterActions} from '../../../utility/result-with-after-actions';
 
 /**
  * An internal helper object, that is used to return two values from a function.
@@ -49,6 +52,14 @@ export class CaseTreeService implements OnDestroy {
     private _treeRootLoaded$: ReplaySubject<boolean>;
     private _rootNode: CaseTreeNode;
     private _showRoot: boolean;
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
+     */
+    private _isEagerLoaded = false;
     /**
      * string id of the case, that is currently being reloaded, `undefined` if no case is currently being reloaded
      */
@@ -133,6 +144,30 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
+     */
+    public get isEagerLoaded(): boolean {
+        return this._isEagerLoaded;
+    }
+
+    /**
+     * Weather the tree is eager loaded or not.
+     *
+     * Defaults to `false`.
+     *
+     * It is not recommended to eager load large trees as each node sends a separate backend request to load its data.
+     *
+     * @param eager the new setting for eager loading
+     */
+    public set isEagerLoaded(eager: boolean) {
+        this._isEagerLoaded = eager;
+    }
+
+    /**
      * Loads and populates the topmost level of the tree.
      *
      * The displayed cases are determined by this object's [rootFilter]{@link CaseTreeService#rootFilter}.
@@ -165,11 +200,12 @@ export class CaseTreeService implements OnDestroy {
      * Adds the loaded tree root to the display based on the setting.
      * @param showRoot whether the root of the tree should be displayed in the tree or not.
      * If the root is not displayed it's children will be displayed on the first level.
+     * @returns an Observable that emits when the tree finishes initialization.
      */
-    public initializeTree(showRoot: boolean): void {
+    public initializeTree(showRoot: boolean): Observable<void> {
         if (!this._rootNode) {
             this._logger.error('Set a Filter before initializing the case tree');
-            return;
+            return throwError(new Error('Set a Filter before initializing the case tree'));
         }
 
         this._showRoot = showRoot;
@@ -178,11 +214,22 @@ export class CaseTreeService implements OnDestroy {
             this.dataSource.data = [this._rootNode];
         } else {
             this.dataSource.data = this._rootNode.children;
-            this.expandNode(this._rootNode);
         }
 
-        this.refreshTree();
-
+        let ret: Observable<void>;
+        if (!showRoot || this._isEagerLoaded) {
+            const result = new ReplaySubject<void>(1);
+            ret = result.asObservable();
+            this.expandNode(this._rootNode).subscribe(() => {
+                this.refreshTree();
+                result.next();
+                result.complete();
+            });
+        } else {
+            this.refreshTree();
+            ret = ofVoid();
+        }
+        return ret;
     }
 
     /**
@@ -208,27 +255,48 @@ export class CaseTreeService implements OnDestroy {
     /**
      * Expands the target node in the tree and reloads it's children if they are marked as dirty
      * @param node the {@link CaseTreeNode} that should be expanded
-     * @returns emits `true` if the node is expanded and `false` if not
+     * @returns emits `true` if the node is expanded and `false` if not. If the expansion causes more node expansions
+     * (e.g. eager loaded tree) then, the Observable emits after all the subtree expansions complete.
      */
     protected expandNode(node: CaseTreeNode): Observable<boolean> {
+        this._logger.debug('Requesting expansion of tree node', node.toLoggableForm());
+
         if (node.loadingChildren.isActive) {
+            this._logger.debug('Node requested for expansion is loading. Expansion canceled.');
             return of(false);
         }
 
         if (!node.dirtyChildren) {
+            this._logger.debug('Node requested for expansion has clean children. Simple expansion.');
             this.treeControl.expand(node);
             return of(true);
         }
 
         const ret = new ReplaySubject<boolean>(1);
         this.updateNodeChildren(node).subscribe(() => {
+            this._logger.debug('Node requested for expansion with dirty children had its children reloaded.');
             if (node.children.length > 0) {
+                this._logger.debug('Node expanded.', node.toLoggableForm());
                 this.treeControl.expand(node);
+                if (this._isEagerLoaded) {
+                    this._logger.debug(`Eager loading children of tree node with case id '${node.case.stringId}'`);
+                    const innerObservables = node.children.map(childNode => this.expandNode(childNode));
+                    // forkJoin doesn't emit with 0 input observables
+                    innerObservables.push(of(true));
+                    forkJoin(innerObservables).subscribe(() => {
+                        ret.next(true);
+                        ret.complete();
+                    });
+                } else {
+                    ret.next(true);
+                    ret.complete();
+                }
+            } else {
+                ret.next(false);
+                ret.complete();
             }
-            ret.next(node.children.length > 0);
-            ret.complete();
         });
-        return ret;
+        return ret.asObservable();
     }
 
     /**
@@ -282,10 +350,10 @@ export class CaseTreeService implements OnDestroy {
         const requestBody = this.createChildRequestBody(node);
         if (!requestBody) {
             this._logger.error('Cannot create filter to find children of the given node', node.case);
-            return;
+            return throwError(new Error('Cannot create filter to find children of the given node'));
         }
 
-        const done = new Subject<void>();
+        const done = new ReplaySubject<void>(1);
 
         let params: HttpParams = new HttpParams();
         params = params.set('page', `${pageNumber}`).set('sort', 'creationDate,asc');
@@ -357,8 +425,10 @@ export class CaseTreeService implements OnDestroy {
      * Adds a child to the root node.
      *
      * Useful if you are using the layout where the root node is hidden.
+     * @returns emits `true` if the child was successfully added, `false` if not
      */
-    public addRootChildNode(): void {
+    public addRootChildNode(): Observable<boolean> {
+        const ret = new ReplaySubject<boolean>(1);
         this.addChildNode(this._rootNode).subscribe(added => {
             if (added) {
                 if (!this._showRoot && this._treeDataSource.data.length === 0) {
@@ -366,7 +436,10 @@ export class CaseTreeService implements OnDestroy {
                     this.refreshTree();
                 }
             }
+            ret.next(added);
+            ret.complete();
         });
+        return ret;
     }
 
     /**
@@ -374,7 +447,6 @@ export class CaseTreeService implements OnDestroy {
      * @returns emits `true` if the child was successfully added, `false` if not
      */
     public addChildNode(clickedNode: CaseTreeNode): Observable<boolean> {
-        const ret = new ReplaySubject<boolean>(1);
         clickedNode.addingNode.on();
         const caseRefField = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
 
@@ -384,6 +456,7 @@ export class CaseTreeService implements OnDestroy {
             return of(false);
         }
 
+        const ret = new ReplaySubject<boolean>(1);
         const childTitleImmediate = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILD_NODE_TITLE);
         const childTitle = childTitleImmediate ? childTitleImmediate.value : this._translateService.instant('caseTree.newNodeDefaultName');
 
@@ -443,11 +516,12 @@ export class CaseTreeService implements OnDestroy {
      * @param operationResult the result of the operation will be emitted into this stream when the operation completes
      */
     protected updateTreeAfterChildAdd(clickedNode: CaseTreeNode, newCaseRefValue: Array<string>, operationResult: Subject<boolean>): void {
-        this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(() => {
+        this.updateNodeChildrenFromChangedFields(clickedNode, newCaseRefValue).subscribe(result => {
             clickedNode.addingNode.off();
             this.expandNode(clickedNode).subscribe(expandSuccess => {
                 if (expandSuccess) {
                     this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
+                    result.executeAfterActions();
                 }
                 operationResult.next(true);
                 operationResult.complete();
@@ -480,6 +554,71 @@ export class CaseTreeService implements OnDestroy {
         });
 
         this.deselectNodeIfDescendantOf(node);
+    }
+
+    /**
+     * Expands all nodes in the tree dictated by the argument.
+     *
+     * @param path nodes that should be expanded along with their path from the root node
+     */
+    public expandPath(path: CaseTreePath): void {
+        if (this.dataSource.data.length === 0) {
+            return;
+        }
+        let rootNode = this.dataSource.data[0];
+        while (rootNode.parent !== undefined) {
+            rootNode = rootNode.parent;
+        }
+        this.expandLevel([rootNode], this.convertPathToExpansionTree(path));
+    }
+
+    /**
+     * Transforms a {@Link CaseTreePath} object into an {@link ExpansionTree} object.
+     * The result has all the common paths merged into single branches of the resulting tree structure.
+     *
+     * @param paths nodes that should be expanded along with their path from the root node
+     * @returns an {@link ExpansionTree} equivalent to the provided {@link CaseTreePath}
+     */
+    protected convertPathToExpansionTree(paths: CaseTreePath): ExpansionTree {
+        const result = {};
+        Object.values(paths).forEach(path => {
+            let currentNode = result;
+            path.forEach(nodeId => {
+                if (currentNode[nodeId] === undefined) {
+                    currentNode[nodeId] = {};
+                }
+                currentNode = currentNode[nodeId];
+            });
+        });
+        return result;
+    }
+
+    /**
+     * Recursively expands all nodes from the provided array of nodes, that appear in the top level of the {@link ExpansionTree} object.
+     *
+     * @param levelNodes nodes from which the expansion should start
+     * @param targets a tree structure representing the nodes that are to be expanded recursively.
+     * The top level nodes are expanded first, from the provided `levelNodes`.
+     */
+    protected expandLevel(levelNodes: Array<CaseTreeNode>, targets: ExpansionTree): void {
+        const desiredIds = new Set(Object.keys(targets));
+        if (desiredIds.size === 0) {
+            return;
+        }
+
+        levelNodes.forEach(n => {
+            const node = n;
+            if (!desiredIds.has(node.case.stringId)) {
+                return; // continue
+            }
+            this.expandNode(node).subscribe(success => {
+                if (!success) {
+                    this._logger.debug('Could not expand tree node with ID: ' + node.case.stringId);
+                    return;
+                }
+                this.expandLevel(node.children, targets[node.case.stringId]);
+            });
+        });
     }
 
     /**
@@ -522,7 +661,7 @@ export class CaseTreeService implements OnDestroy {
      * @param newCaseRefValue the new value of the case ref field
      */
     private performCaseRefCall(caseId: string, newCaseRefValue: Array<string>): Observable<Array<string> | undefined> {
-        const result$ = new Subject<Array<string>>();
+        const result$ = new ReplaySubject<Array<string>>(1);
 
         this._taskResourceService.getTasks(SimpleFilter.fromTaskQuery({
             case: {id: caseId},
@@ -584,17 +723,20 @@ export class CaseTreeService implements OnDestroy {
      *
      * @param affectedNode node that had it's children changed
      * @param newCaseRefValue new value of the caseRef field returned by backend
-     * @returns an `Observable` that emits once the update completes (either successfully or not)
+     * @returns an `Observable` that emits an object with the [result]{@link ResultWithAfterActions#result} attribute set to `true` if
+     * the update completes successfully and `false` otherwise.
      */
     private updateNodeChildrenFromChangedFields(affectedNode: CaseTreeNode,
-                                                newCaseRefValue: Array<string>): Observable<void> {
+                                                newCaseRefValue: Array<string>): Observable<ResultWithAfterActions<boolean>> {
         const caseRefField = getImmediateData(affectedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
         const newChildren = new Set<string>();
         newCaseRefValue.forEach(id => newChildren.add(id));
 
         let numberOfMissingChildren = 0;
         for (let i = 0; i < caseRefField.value.length && numberOfMissingChildren < 2; i++) {
-            numberOfMissingChildren += !newChildren.has(caseRefField.value[i]) ? 1 : 0;
+            if (!newChildren.has(caseRefField.value[i])) {
+                numberOfMissingChildren++;
+            }
         }
 
         const exactlyOneChildAdded = caseRefField.value.length + 1 === newCaseRefValue.length
@@ -607,7 +749,7 @@ export class CaseTreeService implements OnDestroy {
             caseRefField.value = newCaseRefValue;
             this._treeControl.collapseDescendants(affectedNode);
             affectedNode.dirtyChildren = true;
-            return ofVoid();
+            return of(new ResultWithAfterActions(true));
         }
 
         if (exactlyOneChildAdded) {
@@ -618,29 +760,36 @@ export class CaseTreeService implements OnDestroy {
     }
 
     /**
-     * Adds a new child node to the `affectedNode` by adding the last net from the `newCaseRefValue`
-     * @param affectedNode the node in the tree that had a child added
+     * Adds a new child node to the `affectedNode` by adding the last Case from the `newCaseRefValue`
+     * @param affectedNode the node in the tree that had a child added - the parent node
      * @param caseRefField the case ref field of the affected node
      * @param newCaseRefValue the new value of the case ref field in the node
-     * @returns an `Observable` that emits when add operation completes (either successfully or not)
+     * @returns an `Observable` that emits `true` if a node was successfully added, `false` otherwise.
      */
     protected processChildNodeAdd(affectedNode: CaseTreeNode,
                                   caseRefField: ImmediateData,
-                                  newCaseRefValue: Array<string>): Observable<void> {
-        const result$ = new Subject<void>();
+                                  newCaseRefValue: Array<string>): Observable<ResultWithAfterActions<boolean>> {
+        const result$ = new ReplaySubject<ResultWithAfterActions<boolean>>(1);
 
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
             if (childCase) {
-                this.pushChildToTree(affectedNode, childCase);
+                this._logger.debug('Pushing child node to tree', {childCase, affectedNode: affectedNode.toLoggableForm()});
+                const childNode = this.pushChildToTree(affectedNode, childCase);
+                result$.next(new ResultWithAfterActions(true, [() => {
+                    if (this._isEagerLoaded) {
+                        this._logger.debug('Eagerly expanding a newly added node.', childNode.toLoggableForm());
+                        this.expandNode(childNode);
+                    }
+                }]));
             } else {
                 this._logger.error('New child case was not found, illegal state', childCase);
+                result$.next(new ResultWithAfterActions(false));
             }
-            result$.next();
             result$.complete();
         }, error => {
-            this._logger.error('Child node case could not be found', error);
-            result$.next();
+            this._logger.error('New child node case could not be found', error);
+            result$.next(new ResultWithAfterActions(false));
             result$.complete();
         });
 
@@ -649,12 +798,15 @@ export class CaseTreeService implements OnDestroy {
 
     /**
      * Adds a new child node to the target parent node.
-     * @param parentNode the nodes whose child shoulc be added
+     * @param parentNode the nodes whose child should be added
      * @param childCase the child case
+     * @returns the newly added node
      */
-    protected pushChildToTree(parentNode: CaseTreeNode, childCase: Case): void {
-        parentNode.children.push(new CaseTreeNode(childCase, parentNode));
+    protected pushChildToTree(parentNode: CaseTreeNode, childCase: Case): CaseTreeNode {
+        const childNode = new CaseTreeNode(childCase, parentNode);
+        parentNode.children.push(childNode);
         this.refreshTree();
+        return childNode;
     }
 
     /**
@@ -662,16 +814,16 @@ export class CaseTreeService implements OnDestroy {
      * @param affectedNode the node in the tree that had it's child removed
      * @param caseRefField the case ref field of the affected node
      * @param newCaseRefValues the new value of the case ref field in the node
-     * @returns an `Observable` that emits when add operation completes (either successfully or not)
+     * @returns an `Observable` that emits `true` when the remove operation completes.
      */
     protected processChildNodeRemove(affectedNode: CaseTreeNode,
                                      caseRefField: ImmediateData,
-                                     newCaseRefValues: Set<string>): Observable<void> {
+                                     newCaseRefValues: Set<string>): Observable<ResultWithAfterActions<boolean>> {
         const index = caseRefField.value.findIndex(it => !newCaseRefValues.has(it));
         caseRefField.value.splice(index, 1);
         affectedNode.children.splice(index, 1);
         this.refreshTree();
-        return ofVoid();
+        return of(new ResultWithAfterActions(true));
     }
 
     /**

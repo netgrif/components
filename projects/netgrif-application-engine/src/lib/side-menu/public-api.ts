@@ -6,8 +6,8 @@ export * from './side-menu-container/abstract-side-menu-container.component';
 
 /* SERVICES */
 export * from './services/side-menu.service';
-export * from './side-menu-injection-token.module';
-export * from './net-version-visible-injection-token.module';
+export * from './side-menu-injection-token';
+export * from './net-version-visible-injection-token';
 
 /* MODELS */
 export * from './models/side-menu-control';

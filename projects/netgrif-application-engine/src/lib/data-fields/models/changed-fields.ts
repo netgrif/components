@@ -16,7 +16,15 @@ import {Behavior} from './behavior';
  *  it might be better if some parent element gave only the relevant changes to each task
  */
 export interface ChangedFields {
-    [key: string]: Change;
+    /**
+     * `StringId` of the `Task` that "owns" the requested frontend actions
+     */
+    frontendActionsOwner?: string;
+
+    /**
+     * Has type `Change` unless it is `frontendActionsOwner` in which case the type is `string`
+     */
+    [key: string]: Change | any;
 }
 
 export interface Change {
@@ -26,6 +34,12 @@ export interface Change {
     behavior?: {
         [key: string]: Behavior
     };
-
     [key: string]: any;
 }
+
+/**
+ * A prototype implementation of frontend actions.
+ *
+ * The specifics are subject to change.
+ */
+export type FrontendActions = Change;

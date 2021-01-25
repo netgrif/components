@@ -1,7 +1,6 @@
 import {TabContent, TabLabel} from '../interfaces';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Type} from '@angular/core';
-import {FixedIdViewService} from '../../routing/view-service/fixed-id-view.service';
 import {BehaviorSubject} from 'rxjs';
 
 /**
@@ -49,11 +48,6 @@ export class OpenedTab implements TabContent {
      * See [TabGroup.initializeTab()]{@link TabView#initializeTab} for more information.
      */
     public isTabInitialized = false;
-    /**
-     * This tab's ViewService instance that provides it with its own unique view ID.
-     * It is only present for tabs that are defined in the initial array in application's config.
-     */
-    public tabViewService?: FixedIdViewService;
     /**
      * The stream that is injected into each tab and is used to inform that tab whenever it is selected or deselected
      */

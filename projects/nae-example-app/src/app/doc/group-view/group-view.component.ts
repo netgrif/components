@@ -3,7 +3,7 @@ import {
     AbstractTaskView,
     ConfigTaskViewServiceFactory, NextGroupService,
     SearchService,
-    SimpleFilter,
+    SimpleFilter, TaskSearchCaseQuery,
     TaskViewService
 } from 'netgrif-application-engine';
 import {
@@ -15,7 +15,11 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
 };
 
 const searchServiceFactory = (nextGroupService: NextGroupService) => {
-    return new SearchService(SimpleFilter.fromTaskQuery({case: {id: nextGroupService.groupOfUser.stringId}}));
+    const groupIds: Array<TaskSearchCaseQuery> = [];
+    nextGroupService.groupOfUser.forEach(group => {
+       groupIds.push({id: group.stringId});
+    });
+    return new SearchService(SimpleFilter.fromTaskQuery({case: groupIds}));
 };
 
 @Component({

@@ -1,22 +1,13 @@
-import {
-    AfterViewInit,
-    Output,
-    Input,
-    OnDestroy,
-    OnInit,
-    EventEmitter,
-    Type, Injector,
-} from '@angular/core';
+import {AfterViewInit, EventEmitter, Input, OnDestroy, OnInit, Output, Type} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
-import {Observable, Subject, Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {filter, map, take} from 'rxjs/operators';
 import {HeaderColumn} from '../../header/models/header-column';
-import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
@@ -34,8 +25,11 @@ import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
 import {DisableButtonFuntions} from './models/disable-functions';
 import {Task} from '../../resources/interface/task';
+import {ChangedFields} from '../../data-fields/models/changed-fields';
+import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
+import {TranslateService} from '@ngx-translate/core';
 
-export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding implements OnInit, AfterViewInit, OnDestroy {
+export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
     /**
      * @ignore
@@ -61,7 +55,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     protected _subOperationClose: Subscription;
     protected _subOperationReload: Subscription;
     protected _subPanelUpdate: Subscription;
-    protected _taskDisableButtonFuntions: DisableButtonFuntions;
+    protected _taskDisableButtonFunctions: DisableButtonFuntions;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -78,21 +72,15 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
-                          protected _parentInjector: Injector) {
-        super();
+                          protected _translate: TranslateService) {
+        super(_translate);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
-        this._subTaskData = _taskDataService.changedFields$.subscribe(changedFields => {
+        this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
+            changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
             this._taskPanelData.changedFields.next(changedFields);
-            if (this._taskContentService.task) {
-                Object.keys(changedFields).forEach(value => {
-                    if (changedFields[value].type === 'taskRef' && this._taskContentService.task.user !== undefined) {
-                        this._taskDataService.initializeTaskDataFields(new Subject<boolean>(), true);
-                    }
-                });
-            }
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
             this.expand();
@@ -103,7 +91,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
         this._subOperationReload = _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
         });
-        this._taskDisableButtonFuntions = {
+        this._taskDisableButtonFunctions = {
             finish: (t: Task) => false,
             assign: (t: Task) => false,
             delegate: (t: Task) => false,
@@ -111,7 +99,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
             cancel: (t: Task) => false,
         };
         if (_disableFunctions) {
-             Object.assign(this._taskDisableButtonFuntions, _disableFunctions);
+            Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
         }
     }
 
@@ -267,7 +255,12 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     }
 
     public canDisable(type: string): boolean {
-        return this._taskDisableButtonFuntions[type]({...this._taskContentService.task});
+        let disable = false;
+        if (!!this.taskPanelData && !!this.taskPanelData.task) {
+            disable = disable || !!this._taskState.isLoading(this.taskPanelData.task.stringId) ||
+                !!this._taskState.isUpdating(this.taskPanelData.task.stringId);
+        }
+        return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
@@ -297,7 +290,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithHeaderBinding 
     }
 
     protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
-        this._log.warn('Immediate data in task panel headers are currently not supported');
+        if (this._taskContentService.task && this._taskContentService.task.immediateData) {
+            const immediate = this._taskContentService.task.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
+            return this.parseImmediateValue(immediate);
+        }
         return {value: '', icon: ''};
     }
 

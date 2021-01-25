@@ -146,7 +146,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this._log.debug(
                     `Files [${this.dataField.stringId}] were successfully uploaded`
                 );
-                this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                if (Object.keys((response as ChangedFieldContainer).changedFields).length !== 0 ||
+                    (response as ChangedFieldContainer).changedFields.constructor !== Object) {
+                    this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                }
                 this.state.completed = true;
                 this.state.error = false;
                 this.state.uploading = false;

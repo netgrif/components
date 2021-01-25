@@ -25,6 +25,7 @@ import {
     TaskViewService
 } from '@netgrif/application-engine';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'nc-task-panel',
@@ -60,13 +61,14 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 protected _taskDataService: TaskDataService,
                 protected _assignPolicyService: AssignPolicyService,
                 protected _callChain: CallChainService,
+                protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions,
                 @Optional() @Inject(BOOLEAN_VALUE_LABEL_ENABLED) protected isEnabled: boolean,
                 protected _parentInjector: Injector) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _parentInjector);
+            _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _translate);
     }
 
     protected createContentPortal(): void {

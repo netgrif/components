@@ -7,7 +7,10 @@ import {
     TaskEventNotification,
     TaskViewService,
     Task,
-    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS
+    NAE_DEFAULT_HEADERS,
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService,
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -48,9 +51,15 @@ const disableButtonsFactory = () => {
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},
-        {provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+        {   provide: NAE_DEFAULT_HEADERS, useValue: [
+                'meta-case', 'meta-title', 'meta-priority', 'meta-priority',
+                'meta-user', 'all_data-number', 'all_data-text'
+            ]},
+        {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
             useFactory: disableButtonsFactory
-        }
+        },
+        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'task'},
+        ViewIdService
     ]
 })
 export class TaskViewComponent extends AbstractTaskView implements AfterViewInit {
