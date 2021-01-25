@@ -15,7 +15,8 @@
                 "reset": "auth/reset",
                 "recover": "/auth/recover"
             },
-            "sessionBearer": "X-Auth-Token"
+            "sessionBearer": "X-Auth-Token",
+            "jwtBearer": "X-Jwt-Token"
         },
         "resources": [
             {
