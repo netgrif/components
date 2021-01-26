@@ -5,7 +5,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AbstractNavigationDrawerComponent} from './abstract-navigation-drawer.component';
@@ -21,6 +20,7 @@ import {
 } from 'netgrif-application-engine';
 import {MockUserPreferenceService} from '../../utility/tests/mocks/mock-user-preference.service';
 import {ResizableModule} from 'angular-resizable-element';
+import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
 
 describe('AbstractNavigationDrawerComponent', () => {
     let component: TestDrawerComponent;
@@ -42,7 +42,7 @@ describe('AbstractNavigationDrawerComponent', () => {
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: UserPreferenceService, useClass: MockUserPreferenceService}
