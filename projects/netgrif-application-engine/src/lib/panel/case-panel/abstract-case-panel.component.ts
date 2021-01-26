@@ -82,15 +82,21 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     public canDo(action): boolean {
         if (!this.case_
             || !this.case_.permissions
+            || !this.case_.users
             || !action
             || !(this.case_.permissions instanceof Object)
+            || !(this.case_.users instanceof Object)
         ) {
             return false;
         }
-        if (Object.keys(this.case_.permissions).length === 0) {
+        if (Object.keys(this.case_.permissions).length === 0 && Object.keys(this.case_.users).length === 0) {
             return true;
         }
-        return Object.keys(this.case_.permissions).some(role =>
+
+        const result = Object.keys(this.case_.users).some(user =>
+            !!this.case_.users ? !!this.case_.users[user][action] : false
+        );
+        return result || Object.keys(this.case_.permissions).some(role =>
             this._userService.hasRoleById(role) ? !!this.case_.permissions[role][action] : false
         );
     }

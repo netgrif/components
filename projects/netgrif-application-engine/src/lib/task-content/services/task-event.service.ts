@@ -129,7 +129,7 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
         }
 
         const result = Object.keys(this._task.users).some(user =>
-            !!this._task.users ? !!this._task.users[user][action] : false
+            !!this._task.users ? !!this._task.users[user][action] : true
         );
 
         return result || Object.keys(this._task.roles).some(role =>
