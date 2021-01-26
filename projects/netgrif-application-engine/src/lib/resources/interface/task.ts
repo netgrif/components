@@ -36,6 +36,11 @@ export interface Task {
      *    }
      */
     roles: object;
+    users: {
+        [k: number]: {
+            [k: string]: boolean
+        }
+    };
     startDate: NaeDate;
     finishDate: NaeDate;
     /**
