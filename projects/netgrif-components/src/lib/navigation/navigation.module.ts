@@ -9,6 +9,7 @@ import {NavigationRailComponent} from './navigation-rail/navigation-rail.compone
 import {NavigationTreeComponent} from './navigation-tree/navigation-tree.component';
 import {UserComponentModule} from '../user/user.module';
 import {QuickPanelComponentModule} from './quick-panel/quick-panel.module';
+import {ResizableModule} from 'angular-resizable-element';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {QuickPanelComponentModule} from './quick-panel/quick-panel.module';
         FlexLayoutModule,
         QuickPanelComponentModule,
         TranslateLibModule,
-        UserComponentModule
+        UserComponentModule,
+        ResizableModule
     ],
     exports: [
         NavigationDrawerComponent,

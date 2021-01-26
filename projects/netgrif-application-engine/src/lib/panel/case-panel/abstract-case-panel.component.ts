@@ -1,10 +1,9 @@
 import {Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
-import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
+import {toMoment} from '../../resources/types/nae-date-type';
 import {HeaderColumn} from '../../header/models/header-column';
-import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
-import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
+import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
@@ -13,6 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OverflowService} from '../../header/services/overflow.service';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
+import {UserService} from '../../user/services/user.service';
 import {take} from 'rxjs/operators';
 
 
@@ -29,7 +29,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
 
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                          protected _log: LoggerService, protected _overflowService: OverflowService) {
+                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService) {
         super(_translateService);
     }
 
@@ -78,5 +78,21 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
 
     public getMinWidth() {
         return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
+    }
+
+    public canDo(action): boolean {
+        if (!this.case_
+            || !this.case_.permissions
+            || !action
+            || !(this.case_.permissions instanceof Object)
+        ) {
+            return false;
+        }
+        if (Object.keys(this.case_.permissions).length === 0) {
+            return true;
+        }
+        return Object.keys(this.case_.permissions).some(role =>
+            this._userService.hasRoleById(role) ? !!this.case_.permissions[role][action] : false
+        );
     }
 }

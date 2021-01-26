@@ -116,6 +116,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (this._safeTask.dataSize > 0 && !force) {
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.next(true);
+            this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
             return;
         }
         if (force) {
