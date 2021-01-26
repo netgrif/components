@@ -1,6 +1,6 @@
 import {ConfigurationService} from '../../configuration/configuration.service';
 
-export class TestConfigurationService extends ConfigurationService {
+export class TestLoggingConfigurationService extends ConfigurationService {
     constructor() {
         super({
             extends: 'nae-default',
@@ -397,6 +397,7 @@ export class TestConfigurationService extends ConfigurationService {
             ],
             services: {
                 log: {
+                    level: 'ALL',
                     logWithDate: true,
                     serializeExtraParams: true,
                     includeLogLevel: true,
