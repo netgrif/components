@@ -39,7 +39,6 @@ describe('AbstractSearchPredicateComponent', () => {
                 CategoryFactory,
                 {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
