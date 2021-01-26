@@ -4,6 +4,7 @@ import {TabView} from '../classes/tab-view';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ReplaySubject} from 'rxjs';
+import {take} from 'rxjs/operators';
 
 /**
  * Component that renders a tab view.
@@ -46,11 +47,13 @@ export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
     badgeHidden(tab: TabContent) {
         const stream$ = new ReplaySubject<boolean>(1);
         if (tab.label && tab.label.count) {
-            tab.label.count.subscribe(() => {
+            tab.label.count.pipe(take(1)).subscribe(() => {
                 stream$.next(false);
+                stream$.complete();
             });
         } else {
             stream$.next(true);
+            stream$.complete();
         }
         return stream$;
     }
@@ -58,12 +61,14 @@ export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
     badgeCount(tab: TabContent) {
         const stream$ = new ReplaySubject<string>(1);
         if (tab.label && tab.label.count) {
-            tab.label.count.subscribe(count => {
+            tab.label.count.pipe(take(1)).subscribe(count => {
                 stream$.next( count + '');
                 this.setOffset((count + '').length);
+                stream$.complete();
             });
         } else {
             stream$.next('0');
+            stream$.complete();
         }
         return stream$;
     }
