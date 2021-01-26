@@ -2,7 +2,7 @@ import {Injectable, Optional} from '@angular/core';
 import {SearchService} from '../search-service/search.service';
 import {AbstractHeaderService} from '../../header/abstract-header-service';
 import {HeaderType} from '../../header/models/header-type';
-import {filter, take} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 import {HeaderChangeType} from '../../header/models/user-changes/header-change-type';
 import {HeaderMode} from '../../header/models/header-mode';
 import {ModeChangeDescription} from '../../header/models/user-changes/mode-change-description';

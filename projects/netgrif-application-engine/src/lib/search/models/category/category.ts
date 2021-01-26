@@ -360,7 +360,8 @@ export abstract class Category<T> {
             });
 
             if (!newOperator) {
-                this._operandsFormControls$.next(undefined);
+                // undefined is next-ed into the stream. Marked as code smell by sonar when explicitly stated
+                this._operandsFormControls$.next();
                 if (this._operandsFormControls.length === 0) {
                     this._generatedPredicate$.next(undefined);
                 }

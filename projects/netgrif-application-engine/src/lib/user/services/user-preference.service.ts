@@ -6,7 +6,6 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Observable, Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {NextGroupService} from '../../groups/services/next-group.service';
 import {debounceTime} from 'rxjs/operators';
 
 const DRAWER_DEFAULT_WIDTH = 200;
