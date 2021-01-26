@@ -10,6 +10,7 @@ import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
 import {MaterialModule, SnackBarModule, TranslateLibModule} from '@netgrif/application-engine';
 import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
 import {TaskContentComponentModule} from '../task-content/task-content.module';
+import { PublicWorkflowPanelComponent } from './public-workflow-panel/public-workflow-panel.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import {TaskContentComponentModule} from '../task-content/task-content.module';
         CasePanelComponent,
         WorkflowPanelComponent,
         TaskListComponent,
+        PublicWorkflowPanelComponent,
     ],
     imports: [
         CommonModule,
@@ -35,6 +37,7 @@ import {TaskContentComponentModule} from '../task-content/task-content.module';
         CasePanelComponent,
         WorkflowPanelComponent,
         TaskListComponent,
+        PublicWorkflowPanelComponent,
     ]
 })
 export class PanelComponentModule {

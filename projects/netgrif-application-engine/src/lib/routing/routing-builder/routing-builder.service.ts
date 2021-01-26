@@ -2,7 +2,7 @@ import {Injectable, Type} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ViewService} from '../view-service/view.service';
 import {Route, Router} from '@angular/router';
-import {View} from '../../configuration/interfaces/schema';
+import {View} from '../../../commons/schema';
 import {AuthenticationGuardService} from '../../authentication/services/guard/authentication-guard.service';
 import {ViewClassInfo} from '../../../commons/view-class-info';
 import {classify} from '../../../commons/angular-cli-devkit-core-strings';

@@ -71,5 +71,5 @@ class TestComponent {
         stringId: '',
         title: '',
         visualId: '',
-        immediateData: []}, undefined);
+        immediateData: [], permissions: {}}, undefined);
 }

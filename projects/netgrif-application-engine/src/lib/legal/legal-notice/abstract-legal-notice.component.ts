@@ -1,6 +1,6 @@
 import {Input} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Services} from '../../configuration/interfaces/schema';
+import {Services} from '../../../commons/schema';
 
 export abstract class AbstractLegalNoticeComponent {
 
