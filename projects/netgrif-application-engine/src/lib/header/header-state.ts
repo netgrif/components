@@ -1,6 +1,5 @@
 import {HeaderMode} from './models/header-mode';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {OnDestroy} from '@angular/core';
 import {HeaderColumn} from './models/header-column';
 
 
@@ -16,7 +15,7 @@ export interface HeaderStateInterface {
 /**
  * Keeps the current state of the header
  */
-export class HeaderState implements OnDestroy, HeaderStateInterface {
+export class HeaderState implements HeaderStateInterface {
 
     public mode: HeaderMode = HeaderMode.SORT;
 
@@ -63,9 +62,5 @@ export class HeaderState implements OnDestroy, HeaderStateInterface {
             restoreLastState: this.restoreLastState,
             restoreLastMode: this.restoreLastMode
         };
-    }
-
-    ngOnDestroy(): void {
-        this._selectedHeaders$.complete();
     }
 }

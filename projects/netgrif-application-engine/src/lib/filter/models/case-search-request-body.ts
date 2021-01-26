@@ -11,7 +11,7 @@ export interface CaseSearchRequestBody {
      * Returned cases are instances of the specified PetriNet.
      * If more than one PetriNet is specified, the returned cases are instances of one of them.
      */
-    petriNet?: PetriNetSearchRequest | Array<PetriNetSearchRequest>;
+    process?: PetriNetSearchRequest | Array<PetriNetSearchRequest>;
     // TODO BUG 17.4.2020 - Needs investigation, backend has these attributes declared in CaseSearchRequest class but
     //  ElasticCaseService doesn't appear to use them
     // processIdentifier?: string | Array<string>;

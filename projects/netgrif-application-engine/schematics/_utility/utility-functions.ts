@@ -16,7 +16,7 @@ import {FileData} from './models/file-data';
 import {FileSystemNode} from './models/file-system-node';
 import {ProjectInfo} from './models/project-info';
 import {addSymbolToDecoratorMetadata} from './modified-library-functions';
-import {NetgrifApplicationEngine} from '../../../netgrif-application-engine/src/lib/configuration/interfaces/schema';
+import {NetgrifApplicationEngine} from '../_commons/schema';
 
 
 export function getProjectInfo(tree: Tree): ProjectInfo {
