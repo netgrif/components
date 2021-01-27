@@ -63,7 +63,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._updateSuccess$.complete();
         this._changedFields$.complete();
         this._dataReloadSubscription.unsubscribe();
-        this._safeTask.dataGroups.forEach(group => group.fields.forEach(field => field.destroy()));
+        if (this._safeTask.dataGroups) {
+            this._safeTask.dataGroups.forEach(group => {
+                if (group && group.fields) {
+                    group.fields.forEach(field => field.destroy());
+                }
+            });
+        }
     }
 
     /**
