@@ -12,6 +12,7 @@ import NetRole from '../../../process/netRole';
 import Transaction from '../../../process/transaction';
 import Transition from '../../../process/transition';
 import {HttpParams} from '@angular/common/http';
+import RolesAndPermissions from '../../../process/rolesAndPermissions';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +66,7 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}/roles
      */
-    public getPetriNetRoles(netId: string, params?: Params): Observable<Array<NetRole>> {
+    public getPetriNetRoles(netId: string, params?: Params): Observable<RolesAndPermissions> {
         return this._resourceProvider.get$('public/petrinet/' + netId + '/roles', this.SERVER_URL, params)
             .pipe(map(r => this.changeType(r, 'processRoles')));
     }
