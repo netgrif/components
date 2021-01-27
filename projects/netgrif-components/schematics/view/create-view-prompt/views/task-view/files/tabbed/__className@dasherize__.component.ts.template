@@ -1,0 +1,47 @@
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {
+    ArrayTaskViewServiceFactory,
+    InjectedTabbedTaskViewData,
+    NAE_TAB_DATA,
+    SearchService,
+    TabbedTaskView,
+    TaskViewService,
+    tabbedTaskViewServiceFactory,
+    ViewIdService,
+} from '@netgrif/application-engine';
+import {
+    HeaderComponent,
+} from '@netgrif/components';
+
+const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
+    return new SearchService(injectedTabData.baseFilter);
+};
+
+@Component({
+    selector: '<%= prefix %>-<%= dasherize(className) %>',
+    templateUrl: './<%= dasherize(className) %>.component.html',
+    styleUrls: ['./<%= dasherize(className) %>.component.scss'],
+    providers: [
+        ArrayTaskViewServiceFactory,
+        {   provide: SearchService,
+            useFactory: searchServiceFactory,
+            deps: [NAE_TAB_DATA]},
+        {   provide: TaskViewService,
+            useFactory: tabbedTaskViewServiceFactory,
+            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(isDefaultTabbedTaskView) { %>
+        {   provide: ViewIdService, useValue: null},<% } else { %>
+        ViewIdService,<% } %>
+    ]
+})
+export class <%= classify(className) %>Component extends TabbedTaskView implements AfterViewInit {
+
+    @ViewChild('header') public taskHeaderComponent: HeaderComponent;
+
+    constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewData) {
+        super(taskViewService, injectedTabData);
+    }
+
+    ngAfterViewInit(): void {
+        this.initializeHeader(this.taskHeaderComponent);
+    }
+}

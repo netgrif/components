@@ -7,7 +7,6 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {catchError, map, tap} from 'rxjs/operators';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
-import {fakeAsync} from '@angular/core/testing';
 
 @Injectable({
     providedIn: 'root'

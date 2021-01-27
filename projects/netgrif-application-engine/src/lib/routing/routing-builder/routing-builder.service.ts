@@ -2,13 +2,14 @@ import {Injectable, Type} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ViewService} from '../view-service/view.service';
 import {Route, Router} from '@angular/router';
-import {View} from '../../configuration/interfaces/schema';
+import {View} from '../../../commons/schema';
 import {AuthenticationGuardService} from '../../authentication/services/guard/authentication-guard.service';
 import {ViewClassInfo} from '../../../commons/view-class-info';
 import {classify} from '../../../commons/angular-cli-devkit-core-strings';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
+import {GroupGuardService} from '../../authorization/group/group-guard.service';
 
 
 /**
@@ -62,6 +63,9 @@ export class RoutingBuilderService {
         }
         if (view.access.hasOwnProperty('authority')) {
             route['canActivate'].push(AuthorityGuardService);
+        }
+        if (view.access.hasOwnProperty('group')) {
+            route['canActivate'].push(GroupGuardService);
         }
         if (!!view.children) {
             route['children'] = [];

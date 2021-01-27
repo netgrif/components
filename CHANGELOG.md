@@ -1,3 +1,15 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10850/tab/release-report-all-issues"></a>
+## 4.5.0 - Orange Bubble (22.12.2020)
+### Bug fixes
+* [NAE-1163](https://netgrif.atlassian.net/browse/NAE-1163) - Calling actions on invalid data field
+
+### Improvements
+* [NAE-1178](https://netgrif.atlassian.net/browse/NAE-1178) - Cancel and finish error changed fields propagation
+
+### Features
+* [NAE-1168](https://netgrif.atlassian.net/browse/NAE-1168) - Task ref representation
+* [NAE-1172](https://netgrif.atlassian.net/browse/NAE-1172) - Frontend control from process actions
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10826/tab/release-report-all-issues"></a>
 ## 4.4.0 - Olive Nickel (14.12.2020)
 ### Bug fixes

@@ -7,6 +7,10 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Observable, Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {NextGroupService} from '../../groups/services/next-group.service';
+import {debounceTime} from 'rxjs/operators';
+
+const DRAWER_DEFAULT_WIDTH = 200;
+const DRAWER_DEBOUNCE = 1000;
 
 @Injectable({
     providedIn: 'root'
@@ -15,15 +19,16 @@ export class UserPreferenceService {
 
     protected _preferences: Preferences;
     protected _preferencesChanged$: Subject<void>;
+    public _drawerWidthChanged$: Subject<number>;
 
     constructor(protected _userService: UserService,
                 protected _userResourceService: UserResourceService,
                 protected _logger: LoggerService,
                 protected _snackbar: SnackBarService,
-                protected _translate: TranslateService,
-                protected _groupService: NextGroupService) {
+                protected _translate: TranslateService) {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
+        this._drawerWidthChanged$ = new Subject<number>();
 
         this._userService.user$.subscribe(loggedUser => {
             if (loggedUser.id !== '') {
@@ -37,6 +42,12 @@ export class UserPreferenceService {
                 this._preferences = this._emptyPreferences();
                 this._preferencesChanged$.next();
             }
+        });
+
+        this._drawerWidthChanged$.asObservable().pipe(
+            debounceTime(DRAWER_DEBOUNCE)
+        ).subscribe(newWidth => {
+            this.drawerWidth = newWidth;
         });
     }
 
@@ -76,6 +87,15 @@ export class UserPreferenceService {
         return this._preferences.locale;
     }
 
+    set drawerWidth(drawerWidth: number) {
+        this._preferences.drawerWidth = drawerWidth;
+        this._savePreferences();
+    }
+
+    get drawerWidth(): number {
+        return this._preferences.drawerWidth;
+    }
+
     public get preferencesChanged$(): Observable<void> {
         return this._preferencesChanged$.asObservable();
     }
@@ -93,6 +113,7 @@ export class UserPreferenceService {
 
     protected _emptyPreferences(): Preferences {
         return {
+            drawerWidth: DRAWER_DEFAULT_WIDTH,
             headers: {},
             caseFilters: {},
             taskFilters: {}
