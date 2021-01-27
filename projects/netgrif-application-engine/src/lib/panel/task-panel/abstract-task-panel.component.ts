@@ -299,6 +299,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._sub.unsubscribe();
         this._subTaskEvent.unsubscribe();
         this._subTaskData.unsubscribe();
@@ -306,5 +307,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subOperationClose.unsubscribe();
         this._subOperationReload.unsubscribe();
         this._subPanelUpdate.unsubscribe();
+        this.taskEvent.complete();
     }
 }

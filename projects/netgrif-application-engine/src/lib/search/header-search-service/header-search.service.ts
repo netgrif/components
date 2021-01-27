@@ -1,4 +1,4 @@
-import {Injectable, Optional} from '@angular/core';
+import {Injectable, OnDestroy, Optional} from '@angular/core';
 import {SearchService} from '../search-service/search.service';
 import {AbstractHeaderService} from '../../header/abstract-header-service';
 import {HeaderType} from '../../header/models/header-type';
@@ -20,6 +20,7 @@ import {ProcessService} from '../../process/process.service';
 import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
 import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
+import {Subscription} from 'rxjs';
 
 /**
  * Holds the Id of the predicate in the {@link SearchService}
@@ -55,11 +56,13 @@ type HeaderConfiguration = PredicateId & (MetaGeneratorConfiguration | DataGener
  * Acts as an intermediary between the {@link AbstractHeaderService} instances of various types and the {@link SearchService}
  */
 @Injectable()
-export class HeaderSearchService {
+export class HeaderSearchService implements OnDestroy {
 
     protected _headerService: AbstractHeaderService;
     protected _columnToConfiguration: Map<number, HeaderConfiguration>;
     protected _typeToCategory: Map<string, Category<any>>;
+    protected _headerSub: Subscription;
+    protected _searchSub: Subscription;
 
     constructor(protected _categoryFactory: CategoryFactory,
                 protected _processService: ProcessService,
@@ -77,6 +80,15 @@ export class HeaderSearchService {
             this._typeToCategory.set(pair.k, this._categoryFactory.getWithDefaultOperator(pair.v));
         });
         this._typeToCategory.set(HeaderColumnType.IMMEDIATE, this._categoryFactory.get(CaseSimpleDataset));
+    }
+
+    ngOnDestroy(): void {
+        if (this._headerSub) {
+            this._headerSub.unsubscribe();
+        }
+        if (this._searchSub) {
+            this._searchSub.unsubscribe();
+        }
     }
 
     public set headerService(headerService: AbstractHeaderService) {
@@ -105,7 +117,7 @@ export class HeaderSearchService {
             return;
         }
 
-        this._headerService.headerChange$
+        this._headerSub = this._headerService.headerChange$
             .pipe(filter(change => change.changeType === HeaderChangeType.SEARCH || change.changeType === HeaderChangeType.MODE_CHANGED))
             .subscribe(change => {
                 if (change.changeType === HeaderChangeType.SEARCH) {
@@ -115,7 +127,8 @@ export class HeaderSearchService {
                 }
             });
 
-        this._searchService.predicateRemoved$.subscribe(event => this.handlePredicateRemoval(event.index, event.clearInput));
+        this._searchSub =
+            this._searchService.predicateRemoved$.subscribe(event => this.handlePredicateRemoval(event.index, event.clearInput));
     }
 
     /**

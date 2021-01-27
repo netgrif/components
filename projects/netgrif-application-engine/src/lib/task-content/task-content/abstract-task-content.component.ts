@@ -15,7 +15,7 @@ import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {LoadingEmitter} from '../../utility/loading-emitter';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 export abstract class AbstractTaskContentComponent implements OnDestroy {
@@ -75,6 +75,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * The data fields that are currently displayed
      */
     protected _dataSource$: BehaviorSubject<Array<DatafieldGridLayoutElement>>;
+    protected _subTaskContent: Subscription;
+    protected _subTaskEvent: Subscription;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
@@ -87,7 +89,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             return data.length !== 0;
         }));
 
-        this.taskContentService.$shouldCreate.subscribe(data => {
+        this._subTaskContent = this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
                 this.computeDefaultAlignment();
                 this.formCols = this.getNumberOfFormColumns();
@@ -99,7 +101,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         });
         if (this._taskEventService !== null) {
             this.taskEvent = new EventEmitter<TaskEventNotification>();
-            _taskEventService.taskEventNotifications$.subscribe(event => {
+            this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
                 this.taskEvent.emit(event);
             });
         }
@@ -108,6 +110,13 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     ngOnDestroy(): void {
         this.loading$.complete();
         this._dataSource$.complete();
+        this._subTaskContent.unsubscribe();
+        if (this.taskEvent) {
+            this.taskEvent.complete();
+        }
+        if (this._subTaskEvent) {
+            this._subTaskEvent.unsubscribe();
+        }
     }
 
     public get taskId(): string {

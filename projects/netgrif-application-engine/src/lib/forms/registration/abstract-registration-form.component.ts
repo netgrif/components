@@ -7,12 +7,12 @@ import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TranslateService} from '@ngx-translate/core';
-import {Input} from '@angular/core';
+import {Input, OnDestroy} from '@angular/core';
 
 /**
  * Holds the logic of the `RegistrationFormComponent`.
  */
-export abstract class AbstractRegistrationFormComponent extends AbstractRegistrationComponent {
+export abstract class AbstractRegistrationFormComponent extends AbstractRegistrationComponent implements OnDestroy {
 
     @Input() public displayLegalNotice = true;
 
@@ -27,6 +27,10 @@ export abstract class AbstractRegistrationFormComponent extends AbstractRegistra
             password: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]],
             confirmPassword: ['', [Validators.required, Validators.minLength(this.MIN_PASSWORD_LENGTH)]]
         }, {validator: passwordValidator});
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
     }
 
     protected createRequestBody(): UserRegistrationRequest {
