@@ -3,7 +3,7 @@ import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
-import {tap} from 'rxjs/operators';
+import {take, tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
@@ -170,7 +170,7 @@ export class UserService implements OnDestroy {
     }
 
     public loadPublicUser(): void {
-        this._userResource.getPublicLoggedUser().subscribe((user: UserResource) => {
+        this._userResource.getPublicLoggedUser().pipe(take(1)).subscribe((user: UserResource) => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
                 this._user = this._userTransform.transform(backendUser);

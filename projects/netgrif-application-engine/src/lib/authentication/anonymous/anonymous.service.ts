@@ -47,6 +47,7 @@ export class AnonymousService implements OnDestroy {
 
     ngOnDestroy(): void {
         localStorage.removeItem(this._jwtHeader);
+        this._tokenSet.complete();
     }
 
     private resolveStorage(storage: string): any {
