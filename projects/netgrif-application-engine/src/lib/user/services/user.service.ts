@@ -3,7 +3,7 @@ import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ProcessRole} from '../../resources/interface/process-role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
-import {tap} from 'rxjs/operators';
+import {take, tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
@@ -11,6 +11,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {UserResource} from '../../resources/interface/user-resource';
+import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,12 +22,14 @@ export class UserService implements OnDestroy {
     protected _userChange$: ReplaySubject<User>;
     protected _loginCalled: boolean;
     protected _subAuth: Subscription;
+    private _publicLoadCalled: boolean;
 
     constructor(protected _authService: AuthenticationService,
                 protected _userResource: UserResourceService,
                 protected _userTransform: UserTransformer,
                 protected _log: LoggerService,
-                protected _session: SessionService) {
+                protected _session: SessionService,
+                protected _anonymousService: AnonymousService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
@@ -39,6 +42,13 @@ export class UserService implements OnDestroy {
                     this.publishUserChange();
                 }
             });
+        });
+        this._anonymousService.tokenSet.subscribe(token => {
+            if (token) {
+                this.loadPublicUser();
+            } else {
+                this.clearPublicUser();
+            }
         });
     }
 
@@ -143,7 +153,7 @@ export class UserService implements OnDestroy {
     }
 
     protected loadUser(): void {
-        this._userResource.getLoggedUser().subscribe((user: UserResource) => {
+        this._userResource.getLoggedUser().pipe(take(1)).subscribe((user: UserResource) => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
                 this._user = this._userTransform.transform(backendUser);
@@ -159,8 +169,24 @@ export class UserService implements OnDestroy {
         });
     }
 
+    public loadPublicUser(): void {
+        this._userResource.getPublicLoggedUser().pipe(take(1)).subscribe((user: UserResource) => {
+            if (user) {
+                const backendUser = {...user, id: user.id.toString()};
+                this._user = this._userTransform.transform(backendUser);
+            }
+        }, error => {
+            this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
+            this._publicLoadCalled = false;
+        });
+    }
+
+    public clearPublicUser() {
+        this._user = this.emptyUser();
+    }
+
+
     protected publishUserChange(): void {
         this._userChange$.next(this.user);
     }
-
 }

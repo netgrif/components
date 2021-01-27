@@ -4,6 +4,7 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DialogService} from '../../dialog/services/dialog.service';
+import {take} from 'rxjs/operators';
 
 export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComponent {
 
@@ -41,7 +42,7 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
             const dialogRef = this._dialogService.openConfirmDialog(this.dataField.component.properties.dialogTitle,
                 this.dataField.component.properties.dialogText, this._translate.instant('dialog.close'),
                 this._translate.instant('dialog.submit'));
-            dialogRef.afterClosed().subscribe(result => {
+            dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
                 if (result && result.confirmed) {
                     this.formControl.setValue(this.formControl.value + 1);
                 }

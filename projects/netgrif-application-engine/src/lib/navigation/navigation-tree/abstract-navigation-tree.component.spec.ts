@@ -24,6 +24,7 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {UserTransformer} from '../../authentication/models/user.transformer';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {User} from '../../user/models/user';
+import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
 
 describe('AbstractNavigationTreeComponent', () => {
@@ -379,8 +380,9 @@ class TestUserService extends UserService {
                 userResource: UserResourceService,
                 userTransform: UserTransformer,
                 log: LoggerService,
-                session: SessionService) {
-        super(authService, userResource, userTransform, log, session);
+                session: SessionService,
+                anonymousService: AnonymousService) {
+        super(authService, userResource, userTransform, log, session, anonymousService);
     }
 
     public setUser(user: User) {

@@ -1,4 +1,4 @@
-import {EventEmitter, Input, Output} from '@angular/core';
+import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormSubmitEvent, HasForm} from '../has-form';
 import {FormGroup} from '@angular/forms';
 import {MessageResource} from '../../resources/interface/message-resource';
@@ -8,11 +8,12 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import {take} from 'rxjs/operators';
 
 /**
  * Holds the logic that is shared between `RegistrationFormComponent` and `ForgottenPasswordFormComponent`.
  */
-export abstract class AbstractRegistrationComponent implements HasForm {
+export abstract class AbstractRegistrationComponent implements HasForm, OnDestroy {
 
     protected readonly MIN_PASSWORD_LENGTH = 8;
 
@@ -44,6 +45,13 @@ export abstract class AbstractRegistrationComponent implements HasForm {
         this.loadingToken = new LoadingEmitter(true);
     }
 
+    ngOnDestroy(): void {
+        this.formSubmit.complete();
+        this.register.complete();
+        this.invalidToken.complete();
+        this.loadingToken.complete();
+    }
+
     @Input()
     set token(token: string) {
         this._token = token;
@@ -52,7 +60,7 @@ export abstract class AbstractRegistrationComponent implements HasForm {
             return;
         }
         this.loadingToken.on();
-        this._signupService.verify(this._token).subscribe(message => {
+        this._signupService.verify(this._token).pipe(take(1)).subscribe(message => {
             this._log.info('Token ' + this._token + ' has been successfully verified');
             if (message.success) {
                 this.userEmail = message.success;
@@ -87,7 +95,7 @@ export abstract class AbstractRegistrationComponent implements HasForm {
             return;
         }
         request.token = this._token;
-        this.callRegistration(request).subscribe(message => {
+        this.callRegistration(request).pipe(take(1)).subscribe(message => {
             this.register.emit(message);
         }, error => {
             this.register.emit({error});

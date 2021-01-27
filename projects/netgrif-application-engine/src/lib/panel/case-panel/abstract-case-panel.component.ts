@@ -13,6 +13,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {OverflowService} from '../../header/services/overflow.service';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {UserService} from '../../user/services/user.service';
+import {take} from 'rxjs/operators';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -59,7 +60,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     }
 
     public deleteCase() {
-        this._caseResourceService.deleteCase(this.case_.stringId).subscribe(data => {
+        this._caseResourceService.deleteCase(this.case_.stringId).pipe(take(1)).subscribe(data => {
             if (data.success) {
                 this._caseViewService.reload();
             } else if (data.error) {
