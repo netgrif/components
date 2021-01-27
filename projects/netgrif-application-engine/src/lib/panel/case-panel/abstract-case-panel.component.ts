@@ -83,14 +83,12 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     public canDo(action): boolean {
         if (!this.case_
             || !this.case_.permissions
-            || !this.case_.users
             || !action
             || !(this.case_.permissions instanceof Object)
-            || !(this.case_.users instanceof Object)
         ) {
             return false;
         }
-        if (Object.keys(this.case_.permissions).length === 0 && Object.keys(this.case_.users).length === 0) {
+        if (Object.keys(this.case_.permissions).length === 0) {
             return true;
         }
 
