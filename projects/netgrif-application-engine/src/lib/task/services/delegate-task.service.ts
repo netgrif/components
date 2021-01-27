@@ -64,10 +64,13 @@ export class DelegateTaskService extends TaskHandlingService {
         }
         this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
             {
-                roles: this._safeTask.roles,
+                roles: Object.keys(this._safeTask.roles).filter(role =>
+                    this._safeTask.roles[role]['assigned'] !== undefined && this._safeTask.roles[role]['assigned']),
                 value: !this._safeTask.user ? undefined : new UserValue(
                     this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
-                )
+                ),
+                negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
+                    this._safeTask.roles[role]['assigned'] !== undefined && !this._safeTask.roles[role]['assigned'])
             } as UserListInjectedData).onClose.subscribe(event => {
             this._log.debug('Delegate sidemenu event:' + event);
             if (event.data !== undefined) {
