@@ -7,6 +7,7 @@ import {ConfigurationService} from '../configuration/configuration.service';
 import {AuthenticationMethodService} from './services/authentication-method.service';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-spinner';
+import {AnonymousAuthenticationInterceptor} from './services/anonymous-authentication-interceptor';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-s
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: AnonymousAuthenticationInterceptor, multi: true},
         {provide: AuthenticationMethodService, useFactory: authenticationServiceFactory, deps: [ConfigurationService, HttpClient]},
         // AuthenticationEffects
     ],

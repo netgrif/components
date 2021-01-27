@@ -1,19 +1,26 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Preferences} from '../../resources/interface/preferences';
 import {UserService} from './user.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import {NextGroupService} from '../../groups/services/next-group.service';
+import {debounceTime} from 'rxjs/operators';
+
+const DRAWER_DEFAULT_WIDTH = 200;
+const DRAWER_DEBOUNCE = 1000;
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserPreferenceService {
+export class UserPreferenceService implements OnDestroy {
 
     protected _preferences: Preferences;
     protected _preferencesChanged$: Subject<void>;
+    protected _sub: Subscription;
+    public _drawerWidthChanged$: Subject<number>;
 
     constructor(protected _userService: UserService,
                 protected _userResourceService: UserResourceService,
@@ -22,8 +29,9 @@ export class UserPreferenceService {
                 protected _translate: TranslateService) {
         this._preferences = this._emptyPreferences();
         this._preferencesChanged$ = new Subject<void>();
+        this._drawerWidthChanged$ = new Subject<number>();
 
-        this._userService.user$.subscribe(loggedUser => {
+        this._sub = this._userService.user$.subscribe(loggedUser => {
             if (loggedUser.id !== '') {
                 this._userResourceService.getPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();
@@ -36,6 +44,17 @@ export class UserPreferenceService {
                 this._preferencesChanged$.next();
             }
         });
+
+        this._drawerWidthChanged$.asObservable().pipe(
+            debounceTime(DRAWER_DEBOUNCE)
+        ).subscribe(newWidth => {
+            this.drawerWidth = newWidth;
+        });
+    }
+
+    ngOnDestroy(): void {
+        this._sub.unsubscribe();
+        this._preferencesChanged$.complete();
     }
 
     public setTaskFilters(viewId: string, value: Array<string>): void {
@@ -74,6 +93,15 @@ export class UserPreferenceService {
         return this._preferences.locale;
     }
 
+    set drawerWidth(drawerWidth: number) {
+        this._preferences.drawerWidth = drawerWidth;
+        this._savePreferences();
+    }
+
+    get drawerWidth(): number {
+        return this._preferences.drawerWidth;
+    }
+
     public get preferencesChanged$(): Observable<void> {
         return this._preferencesChanged$.asObservable();
     }
@@ -91,6 +119,7 @@ export class UserPreferenceService {
 
     protected _emptyPreferences(): Preferences {
         return {
+            drawerWidth: DRAWER_DEFAULT_WIDTH,
             headers: {},
             caseFilters: {},
             taskFilters: {}

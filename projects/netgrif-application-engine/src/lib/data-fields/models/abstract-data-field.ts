@@ -252,6 +252,14 @@ export abstract class DataField<T> {
         return this._value.asObservable();
     }
 
+    public destroy(): void {
+        this._value.complete();
+        this._previousValue.complete();
+        this._update.complete();
+        this._touch.complete();
+        this._block.complete();
+    }
+
     public registerFormControl(formControl: FormControl): void {
         formControl.setValidators(this.resolveFormControlValidators());
         formControl.valueChanges.pipe(

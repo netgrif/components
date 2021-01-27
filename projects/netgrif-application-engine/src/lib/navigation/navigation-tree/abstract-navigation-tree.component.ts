@@ -1,7 +1,7 @@
 import {Input, OnDestroy, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {View, Views} from '../../configuration/interfaces/schema';
+import {View, Views} from '../../../commons/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {Subscription} from 'rxjs';
@@ -10,6 +10,7 @@ import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
+import {AbstractNavigationResizableDrawerComponent} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
 
 export interface NavigationNode {
     name: string;
@@ -19,7 +20,7 @@ export interface NavigationNode {
     level?: number;
 }
 
-export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestroy {
+export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
@@ -36,6 +37,7 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
                           protected _roleGuard: RoleGuardService,
                           protected _authorityGuard: AuthorityGuardService,
                           protected _groupGuard: GroupGuardService) {
+        super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
         this.dataSource.data = this.resolveNavigationNodes(_config.getConfigurationSubtree(['views']), '');
@@ -43,6 +45,7 @@ export abstract class AbstractNavigationTreeComponent implements OnInit, OnDestr
     }
 
     ngOnInit(): void {
+        super.ngOnInit();
         if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
             this.subRouter = this._router.events.subscribe((event) => {
                 if (event instanceof NavigationEnd && this.routerChange) {

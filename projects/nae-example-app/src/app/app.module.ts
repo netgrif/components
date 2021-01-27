@@ -83,6 +83,9 @@ import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { ResetPasswordFormComponent } from './doc/forms/reset-password-form/reset-password-form.component';
+import { PublicTaskViewComponent } from './doc/public-task-view/public-task-view.component';
+import { PublicWorkflowViewComponent } from './doc/public-workflow-view/public-workflow-view.component';
+import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import { GroupViewComponent } from './doc/group-view/group-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -124,6 +127,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         UserInviteComponent,
         ExamplePortalCardComponent,
         ResetPasswordFormComponent,
+        PublicTaskViewComponent,
+        PublicWorkflowViewComponent,
+        PublicResolverComponent,
         GroupViewComponent,
     ],
     imports: [
@@ -205,6 +211,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         TreeViewExampleComponent,
         ExamplePortalCardComponent,
         ResetPasswordFormComponent,
+        PublicTaskViewComponent,
+        PublicWorkflowViewComponent,
+        PublicResolverComponent,
         GroupViewComponent
     ],
     providers: [{
