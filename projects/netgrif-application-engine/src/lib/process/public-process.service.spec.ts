@@ -1,4 +1,4 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import {PublicProcessService} from './public-process.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -12,26 +12,17 @@ import {ProcessService} from './process.service';
 import {LoggerService} from '../logger/services/logger.service';
 
 describe('PublicProcessService', () => {
-    let service: PublicProcessService;
+  let service: PublicProcessService;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule,
-                NoopAnimationsModule
-            ],
-            providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                ProcessService
-            ]
-        });
-        service = TestBed.inject(PublicProcessService);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, NoopAnimationsModule],
+        providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
     });
+    service = TestBed.inject(PublicProcessService);
+  });
 
-    it('should be created', () => {
-        expect(service).toBeTruthy();
-    });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });
-
-
