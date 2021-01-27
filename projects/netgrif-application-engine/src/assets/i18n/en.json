@@ -155,6 +155,7 @@
             "equals": "is exactly",
             "notEquals": "is different from",
             "moreThan": "is more than",
+            "lessThan": "is less than",
             "like": "is like",
             "isNull": "is empty"
         },
