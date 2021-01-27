@@ -20,6 +20,10 @@ import {ElementaryPredicate} from '../../../search/models/predicate/elementary-p
 import {Query} from '../../../search/models/query/query';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
+import {Net} from '../../../process/net';
+import {UserService} from '../../../user/services/user.service';
+import {MockUserService} from '../../../utility/tests/mocks/mock-user.service';
+import {User} from '../../../user/models/user';
 
 const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
     return factory.create('cases');
@@ -33,6 +37,7 @@ describe('CaseViewService', () => {
     let service: CaseViewService;
     let caseService: MyResources;
     let searchService: SearchService;
+    let userService: UserService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,6 +49,7 @@ describe('CaseViewService', () => {
             ],
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},
+                {provide: UserService, useClass: MockUserService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 ConfigCaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -61,10 +67,41 @@ describe('CaseViewService', () => {
         service = TestBed.inject(CaseViewService);
         caseService = TestBed.inject(CaseResourceService) as unknown as MyResources;
         searchService = TestBed.inject(SearchService);
+        userService = TestBed.inject(UserService);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    it('should test canDo', () => {
+        const net = new Net( {
+            identifier: '',
+            stringId: '',
+            immediateData: [],
+            author: {email: '', fullName: ''},
+            createdDate: [],
+            defaultCaseName: '',
+            initials: '',
+            version: '',
+            title: ''
+        });
+        net.permissions = {};
+        expect(service.canDo('create', net)).toBeTrue();
+
+        (userService as unknown as MockUserService).user =
+            new User('', '', '', '', [], [{stringId: '12454sdasd', name: '', importId: ''}]);
+        net.permissions = {'12454sdasd': {create: true}};
+        expect(service.canDo('create', net)).toBeTrue();
+
+        net.permissions = {'12454sdasd': {create: false}};
+        expect(service.canDo('create', net)).toBeFalse();
+
+        (userService as unknown as MockUserService).user =
+            new User('', '', '', '', [],
+                [{stringId: '12454sdasd', name: '', importId: ''}, {stringId: '12454sddasdasd', name: '', importId: ''}]);
+        net.permissions = {'12454sdasd': {create: false}, '12454sddasdasd': {create: true}};
+        expect(service.canDo('create', net)).toBeFalse();
     });
 
     it('should load cases', done => {

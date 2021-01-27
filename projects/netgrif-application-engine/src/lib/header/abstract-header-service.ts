@@ -376,6 +376,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._clearHeaderSearch$.complete();
         this._headerColumnCount$.complete();
         this._responsiveHeaders$.complete();
+        this.loading.complete();
     }
 
     /**

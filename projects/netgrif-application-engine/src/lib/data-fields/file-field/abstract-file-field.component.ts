@@ -20,6 +20,7 @@ import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {BehaviorSubject} from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
+import {take} from 'rxjs/operators';
 
 export interface FileState {
     progress: number;
@@ -292,7 +293,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
 
-        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).subscribe(response => {
+        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 this.dataField.value = {};
                 this.formControl.setValue('');

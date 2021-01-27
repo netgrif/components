@@ -20,6 +20,7 @@ export abstract class AbstractTaskView extends ViewWithHeaders implements OnDest
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         this.changedFields$.complete();
     }
 }

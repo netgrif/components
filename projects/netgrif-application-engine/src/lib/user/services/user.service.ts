@@ -153,7 +153,7 @@ export class UserService implements OnDestroy {
     }
 
     protected loadUser(): void {
-        this._userResource.getLoggedUser().subscribe((user: UserResource) => {
+        this._userResource.getLoggedUser().pipe(take(1)).subscribe((user: UserResource) => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
                 this._user = this._userTransform.transform(backendUser);

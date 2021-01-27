@@ -96,7 +96,7 @@ export class FinishTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(finishedTaskId);
 
-        this._taskResourceService.finishTask(this._safeTask.stringId).subscribe(eventOutcome => {
+        this._taskResourceService.finishTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(finishedTaskId);
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
