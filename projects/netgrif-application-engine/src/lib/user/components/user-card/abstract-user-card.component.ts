@@ -1,13 +1,16 @@
-import {AfterViewInit, Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../../models/user';
 import {UserService} from '../../services/user.service';
 import {TooltipPosition} from '@angular/material/tooltip';
 import {Subscription} from 'rxjs';
+import {
+    AbstractNavigationResizableDrawerComponent
+} from '../../../navigation/navigation-drawer/abstract-navigation-resizable-drawer.component';
 
 export type Mode = 'full' | 'horizontal' | 'vertical' | 'icon';
 export type IconStyle = 'large' | 'small';
 
-export abstract class AbstractUserCardComponent implements OnInit, OnDestroy {
+export abstract class AbstractUserCardComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
     @Input() public user: User;
     @Input() public mode: Mode = 'horizontal';
@@ -17,10 +20,11 @@ export abstract class AbstractUserCardComponent implements OnInit, OnDestroy {
     protected subUser: Subscription;
 
     constructor(protected _injector: Injector) {
-
+        super();
     }
 
     ngOnInit(): void {
+        super.ngOnInit();
         if (!this.user) {
             const userService: UserService = this._injector.get(UserService);
             if (userService) {
@@ -34,6 +38,10 @@ export abstract class AbstractUserCardComponent implements OnInit, OnDestroy {
         if (this.subUser) {
             this.subUser.unsubscribe();
         }
+    }
+
+    userBannerExists(): boolean {
+        return this.user && this.user['banner'];
     }
 
     get userBanner(): string {

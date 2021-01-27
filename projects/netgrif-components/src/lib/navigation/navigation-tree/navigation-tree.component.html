@@ -1,4 +1,4 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree-dimension">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [style.width.px]="width">
 
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" [routerLink]="node.url" routerLinkActive="active-navigation-route"

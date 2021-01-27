@@ -22,6 +22,7 @@ import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emi
 import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
 import {UserService} from '../../../user/services/user.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
+import {PermissionType} from '../../../process/permissions';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
@@ -169,7 +170,11 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     public createNewCase(): Observable<Case> {
         const myCase = new Subject<Case>();
         this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
-            {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
+            {
+                allowedNets$: this.allowedNets$.pipe(
+                    map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
+                )
+            }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.reload();
@@ -219,5 +224,22 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
 
     public hasAuthority(authority: Array<string> | string): boolean {
         return this._user.hasAuthority(authority);
+    }
+
+    public canDo(action: string, net: Net): boolean {
+        if (!net
+            || !net.permissions
+            || !action
+            || !(net.permissions instanceof Object)
+        ) {
+            return false;
+        }
+        if (Object.keys(net.permissions).filter(role => Object.keys(net.permissions[role])
+            .some(perm => perm === action)).length === 0) {
+            return true;
+        }
+        return Object.keys(net.permissions).some(role =>
+            this._user.hasRoleById(role) ? !!net.permissions[role][action] : false
+        );
     }
 }

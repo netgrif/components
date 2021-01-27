@@ -4,11 +4,12 @@ import {HeaderType} from '../models/header-type';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {TaskMetaField} from './task-meta-enum';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
-import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {Subscription} from 'rxjs';
 import {NAE_DEFAULT_HEADERS} from '../models/default-headers-token';
+import {ViewIdService} from '../../user/services/view-id.service';
+
 
 
 @Injectable()
@@ -17,10 +18,10 @@ export class TaskHeaderService extends AbstractHeaderService implements OnDestro
 
     constructor(protected _taskViewService: TaskViewService,
                 preferences: UserPreferenceService,
-                viewService: ViewService,
+                @Optional() viewIdService: ViewIdService,
                 logger: LoggerService,
                 @Optional() @Inject(NAE_DEFAULT_HEADERS) naeDefaultHeaders: Array<string>) {
-        super(HeaderType.TASK, preferences, viewService, logger);
+        super(HeaderType.TASK, preferences, viewIdService, logger);
         this.subAllowedNets = _taskViewService.allowedNets$.subscribe(allowedNets => {
             this.setTaskAllowedNets(allowedNets);
             if (naeDefaultHeaders && Array.isArray(naeDefaultHeaders) && naeDefaultHeaders.length > 0) {
