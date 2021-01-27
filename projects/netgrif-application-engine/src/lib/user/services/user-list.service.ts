@@ -67,6 +67,10 @@ export class UserListService implements OnDestroy {
      * Roles that should be applied to the request
      */
     public rolesQuery: Array<string>;
+    /**
+     * negative Roles that should be applied to the request
+     */
+    public negativeRolesQuery: Array<string>;
     private _updateProgress$: LoadingEmitter;
     private _usersReload$: Subject<void>;
 
@@ -98,6 +102,7 @@ export class UserListService implements OnDestroy {
         this._clear = false;
         this._searchQuery = '';
         this.rolesQuery = new Array<string>();
+        this.negativeRolesQuery = new Array<string>();
 
         const usersMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -157,7 +162,8 @@ export class UserListService implements OnDestroy {
         let params: HttpParams = new HttpParams();
         params = this.addPageParams(params, page);
         this._loading$.on();
-        return this._resources.search({fulltext: this._searchQuery, roles: this.rolesQuery}, params).pipe(
+        return this._resources.search(
+            {fulltext: this._searchQuery, roles: this.rolesQuery, negativeRoles: this.negativeRolesQuery}, params).pipe(
             catchError(err => {
                 this._log.error('Loading users has failed on page ' + this._pagination.number, err);
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});

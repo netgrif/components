@@ -4,6 +4,7 @@ import {TaskLayout} from './task-layout';
 import {NaeDate} from '../types/nae-date-type';
 import {UserResourceSmall} from './user-resource-small';
 import {ImmediateData} from './immediate-data';
+import {AssignedUserPolicy} from './assigned-user-policy';
 
 /**
  * Object from Backend
@@ -65,4 +66,5 @@ export interface Task {
     cancelTitle?: string;
     delegateTitle?: string;
     immediateData?: Array<ImmediateData>;
+    assignedUserPolicy?: AssignedUserPolicy;
 }
