@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {NullStorage} from '../null-storage';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map, take, tap} from 'rxjs/operators';
 import {MessageResource} from '../../../resources/interface/message-resource';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
 
@@ -138,7 +138,7 @@ export class SessionService implements OnDestroy {
         if (token) {
             token = this.resolveToken(token);
             this.sessionToken = token;
-            this.verify(token).subscribe(ver => {
+            this.verify(token).pipe(take(1)).subscribe(ver => {
                 this._log.debug('Token ' + token + ' verified status: ' + ver);
             });
         } else {

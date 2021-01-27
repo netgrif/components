@@ -77,6 +77,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
     ngOnDestroy(): void {
         this.subBreakpoint.unsubscribe();
+        this.openedChange.complete();
     }
 
     get config() {

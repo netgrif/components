@@ -1,7 +1,7 @@
-import {AfterViewInit, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 
-export abstract class AbstractPanelComponent implements OnInit, AfterViewInit {
+export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy {
 
     @Input() expansionDisabled = false;
     @Input() preventExpand = false;
@@ -18,7 +18,9 @@ export abstract class AbstractPanelComponent implements OnInit, AfterViewInit {
     protected constructor() {
     }
 
-    ngOnInit() {
+    ngOnDestroy(): void {
+        this.stopLoading.complete();
+        this.getExpansionPanelRef.complete();
     }
 
     ngAfterViewInit() {
