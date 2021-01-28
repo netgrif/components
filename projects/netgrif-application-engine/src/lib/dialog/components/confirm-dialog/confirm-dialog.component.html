@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{data.title}}</h1>
 
-<div mat-dialog-content class="dialog-container dialog-content-margin">{{data.content}}</div>
+<div mat-dialog-content class="dialog-container dialog-content-margin" [innerHTML]="parsedContent"></div>
 
 <mat-dialog-actions fxLayoutAlign="end">
     <button mat-button color="warn" (click)="onClose(false)">{{data.negativeLabel}}</button>

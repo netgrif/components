@@ -1,0 +1,16 @@
+<nc-app-panel [panelHeader]="header" [preventExpand]="true">
+    <ng-template #header>
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
+            <div *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
+                 [fxHide.lt-xl]="i >= 4 && responsiveBody"
+                 [fxHide.lt-lg]="i >= 3 && responsiveBody"
+                 [fxHide.lt-md]="i >= 2 && responsiveBody"
+                 [fxHide.lt-sm]="i >= 1 && responsiveBody">
+                <mat-icon class="workflow-panel-icon panel-primary-icon"
+                          *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
+                {{field.value}}
+            </div>
+        </div>
+        <div fxFlex="5"></div>
+    </ng-template>
+</nc-app-panel>

@@ -1,33 +1,35 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {Observable, ReplaySubject, Subscription} from 'rxjs';
-import {Role} from '../models/role';
+import {ProcessRole} from '../../resources/interface/process-role';
 import {User} from '../models/user';
 import {Credentials} from '../../authentication/models/credentials';
-import {User as UserResource} from '../../resources/interface/user';
-import {User as AuthUser} from '../../authentication/models/user';
-import {tap} from 'rxjs/operators';
+import {take, tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
 import {LoggerService} from '../../logger/services/logger.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {SessionService} from '../../authentication/session/services/session.service';
+import {UserResource} from '../../resources/interface/user-resource';
+import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService implements OnDestroy {
 
-    private _user: User;
-    private _userChange$: ReplaySubject<User>;
-    private _loginCalled: boolean;
-    private _subAuth: Subscription;
+    protected _user: User;
+    protected _userChange$: ReplaySubject<User>;
+    protected _loginCalled: boolean;
+    protected _subAuth: Subscription;
+    private _publicLoadCalled: boolean;
 
-    constructor(private _authService: AuthenticationService,
-                private _userResource: UserResourceService,
-                private _userTransform: UserTransformer,
-                private _log: LoggerService,
-                private _session: SessionService) {
+    constructor(protected _authService: AuthenticationService,
+                protected _userResource: UserResourceService,
+                protected _userTransform: UserTransformer,
+                protected _log: LoggerService,
+                protected _session: SessionService,
+                protected _anonymousService: AnonymousService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
         this._userChange$ = new ReplaySubject<User>(1);
@@ -40,6 +42,13 @@ export class UserService implements OnDestroy {
                     this.publishUserChange();
                 }
             });
+        });
+        this._anonymousService.tokenSet.subscribe(token => {
+            if (token) {
+                this.loadPublicUser();
+            } else {
+                this.clearPublicUser();
+            }
         });
     }
 
@@ -73,18 +82,46 @@ export class UserService implements OnDestroy {
         }
     }
 
-    public hasRole(role: Role): boolean {
+    public hasRole(role: ProcessRole): boolean {
         if (!role || !this._user.roles) {
             return false;
         }
         return this._user.roles.some(r => r === role);
     }
 
-    public hasRoleById(role: string): boolean {
-        if (!role || !this._user.roles) {
+    /**
+     * Checks whether the user has role with a specific stringId
+     * @param roleStringId ID of the role we want to check
+     */
+    public hasRoleById(roleStringId: string): boolean {
+        if (!roleStringId || !this._user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.id === role);
+        return this._user.roles.some(r => r.stringId === roleStringId);
+    }
+
+    /**
+     * Checks whether the user has role with the specified identifier in a process with the specified identifier (any version)
+     * @param roleIdentifier identifier (import ID) of the role we want to check
+     * @param netIdentifier identifier (import ID) of the process the role is defined in
+     */
+    public hasRoleByIdentifier(roleIdentifier: string, netIdentifier: string): boolean {
+        if (!roleIdentifier || !netIdentifier || !this._user.roles) {
+            return false;
+        }
+        return this._user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
+    }
+
+    /**
+     * Checks whether the user has role with the specified name in a process with the specified identifier (any version)
+     * @param roleName name of the role we want to check
+     * @param netIdentifier identifier (import ID) of the process the role is defined in
+     */
+    public hasRoleByName(roleName: string, netIdentifier: string): boolean {
+        if (!roleName || !netIdentifier || !this._user.roles) {
+            return false;
+        }
+        return this._user.roles.some(r => r.netImportId === netIdentifier && r.name === roleName);
     }
 
     public login(credentials: Credentials): Observable<User> {
@@ -111,15 +148,15 @@ export class UserService implements OnDestroy {
         this.loadUser();
     }
 
-    private emptyUser() {
+    protected emptyUser() {
         return new User('', '', '', '', [], [], [], []);
     }
 
-    private loadUser(): void {
-        this._userResource.getLoggedUser().subscribe((user: UserResource) => {
+    protected loadUser(): void {
+        this._userResource.getLoggedUser().pipe(take(1)).subscribe((user: UserResource) => {
             if (user) {
                 const backendUser = {...user, id: user.id.toString()};
-                this._user = this._userTransform.transform(backendUser as AuthUser);
+                this._user = this._userTransform.transform(backendUser);
                 this.publishUserChange();
             }
         }, error => {
@@ -132,8 +169,24 @@ export class UserService implements OnDestroy {
         });
     }
 
-    private publishUserChange(): void {
-        this._userChange$.next(this.user);
+    public loadPublicUser(): void {
+        this._userResource.getPublicLoggedUser().pipe(take(1)).subscribe((user: UserResource) => {
+            if (user) {
+                const backendUser = {...user, id: user.id.toString()};
+                this._user = this._userTransform.transform(backendUser);
+            }
+        }, error => {
+            this._log.error('Loading logged user has failed! Initialisation has not be completed successfully!', error);
+            this._publicLoadCalled = false;
+        });
     }
 
+    public clearPublicUser() {
+        this._user = this.emptyUser();
+    }
+
+
+    protected publishUserChange(): void {
+        this._userChange$.next(this.user);
+    }
 }

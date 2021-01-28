@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild} from '@angular/core';
+import {EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
 import {Observable} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -10,7 +10,7 @@ import {TabbedVirtualScrollComponent} from '../abstract/tabbed-virtual-scroll.co
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 
-export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements OnInit {
+export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
     @Input() tasks$: Observable<Array<TaskPanelData>>;
     @Input() loading$: Observable<boolean>;
@@ -31,7 +31,9 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
         this.taskEvent = new EventEmitter<TaskEventNotification>();
     }
 
-    ngOnInit() {
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.taskEvent.complete();
     }
 
     public trackBy(idx: number, item: TaskPanelData): any {

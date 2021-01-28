@@ -26,6 +26,8 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {OverflowService} from '../../header/services/overflow.service';
+import {UserService} from '../../user/services/user.service';
+import {Case} from '../../resources/interface/case';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -81,6 +83,10 @@ describe('AbstractCasePanelComponent', () => {
         expect(component.show(new MouseEvent('type'))).toEqual(false);
     });
 
+    it('should test canDo', () => {
+        expect(component.canDo('delete')).toBeTrue();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -93,8 +99,9 @@ describe('AbstractCasePanelComponent', () => {
 class TestCasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                protected _log: LoggerService, @Optional() protected overflowService: OverflowService) {
-        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService);
+                protected _log: LoggerService, @Optional() protected overflowService: OverflowService,
+                protected _userService: UserService) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService, _userService);
     }
 }
 
@@ -112,15 +119,27 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', 'netid'),
         new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', 'netid'),
     ]);
-    case_ = {
+    case_: Case = {
         stringId: 'string',
         title: 'string',
-        identifier: 'string',
-        version: 'string',
-        initials: 'string',
-        defaultCaseName: 'string',
-        createdDate: [2020, 1, 1, 10, 10],
         author: {email: 'email', fullName: 'fullName'},
+        permissions: {},
+        color: 'color',
+        creationDate: [],
+        lastModified: [],
+        visualId: '',
+        resetArcTokens: {},
+        processIdentifier: '',
+        petriNetId: '',
+        petriNetObjectId: {
+            counter: 0,
+            date: 0,
+            machineIdentifier: 0,
+            processIdentifier: 0,
+            time: 0,
+            timeSecond: 0,
+            timestamp: 0
+        },
         immediateData: [
             {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
             {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},

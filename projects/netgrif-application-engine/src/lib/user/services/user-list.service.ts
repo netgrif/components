@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from 'rxjs';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Pagination} from '../../resources/interface/pagination';
@@ -8,11 +8,11 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
-import {User} from '../../resources/interface/user';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {Page} from '../../resources/interface/page';
+import {UserResource} from '../../resources/interface/user-resource';
 
-export interface UserListItem extends User {
+export interface UserListItem extends UserResource {
     selected: boolean;
     roles: Set<string>;
 
@@ -33,7 +33,7 @@ interface RoleObject {
  * Performs paged loading users from backend for [UserAssignComponent]{@link AbstractUserAssignComponent}.
  */
 @Injectable()
-export class UserListService {
+export class UserListService implements OnDestroy {
 
     /**
      * UserValue array stream, that represents users loading from backend.
@@ -67,6 +67,10 @@ export class UserListService {
      * Roles that should be applied to the request
      */
     public rolesQuery: Array<string>;
+    /**
+     * negative Roles that should be applied to the request
+     */
+    public negativeRolesQuery: Array<string>;
     private _updateProgress$: LoadingEmitter;
     private _usersReload$: Subject<void>;
 
@@ -98,6 +102,7 @@ export class UserListService {
         this._clear = false;
         this._searchQuery = '';
         this.rolesQuery = new Array<string>();
+        this.negativeRolesQuery = new Array<string>();
 
         const usersMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -113,6 +118,13 @@ export class UserListService {
         this._users$ = usersMap.pipe(
             map(v => Object.values(v) as UserListItem[]),
         );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._updateProgress$.complete();
+        this._usersReload$.complete();
+        this._nextPage$.complete();
     }
 
     public get loading(): boolean {
@@ -150,7 +162,8 @@ export class UserListService {
         let params: HttpParams = new HttpParams();
         params = this.addPageParams(params, page);
         this._loading$.on();
-        return this._resources.search({fulltext: this._searchQuery, roles: this.rolesQuery}, params).pipe(
+        return this._resources.search(
+            {fulltext: this._searchQuery, roles: this.rolesQuery, negativeRoles: this.negativeRolesQuery}, params).pipe(
             catchError(err => {
                 this._log.error('Loading users has failed on page ' + this._pagination.number, err);
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
@@ -158,14 +171,13 @@ export class UserListService {
             tap(u => this._endOfData = !Array.isArray(u.content) ||
                 (Array.isArray(u.content) && u.content.length === 0) ||
                 u.pagination.number === u.pagination.totalPages),
-            map(users => (Array.isArray(users.content) ? users : {...users, content: []}) as Page<User>),
+            map(users => (Array.isArray(users.content) ? users : {...users, content: []}) as Page<UserResource>),
             map(users => {
                 this._pagination = users.pagination;
                 return users.content.reduce((acc, curr) => {
                     const item = curr as UserListItem;
                     item.roles = new Set<string>(curr.processRoles.map(pr => pr.stringId));
                     item.processRoles = undefined;
-                    item.userProcessRoles = undefined;
                     item.selected = false;
                     item.toggle = function() {
                         this.selected = !this.selected;

@@ -3,7 +3,7 @@
  *
  * See {@link AutocompleteCategory}.
  */
-export interface SearchAutocompleteOption {
+export interface SearchAutocompleteOption<T> {
     /**
      * Text that is displayed to the user
      */
@@ -11,7 +11,7 @@ export interface SearchAutocompleteOption {
     /**
      * Value of the option, that is used to generate the queries.
      */
-    value: any;
+    value: T;
     /**
      * The Material design icon that should be displayed next to the option. No icon will be displayed if no icon is provided.
      *

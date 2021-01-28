@@ -22,8 +22,8 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
 
     @Input() public headerService: AbstractHeaderService;
 
-    constructor(protected _translate: TranslateService,
-                protected _log: LoggerService) {
+    protected constructor(protected _translate: TranslateService,
+                          protected _log: LoggerService) {
         super();
     }
 
@@ -88,8 +88,7 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
 
     private checkImmediateTitle(option: HeaderColumn): boolean {
         if (option.title === undefined || option.title === '') {
-            this._log.warn('Immediate field in column [' + option.uniqueId +
-                '] does not have a title');
+            this._log.warn('Immediate field in column [' + option.uniqueId + '] does not have a title');
             return false;
         }
         return true;

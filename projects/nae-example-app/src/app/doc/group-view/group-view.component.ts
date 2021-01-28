@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
-    AbstractTaskView,
-    ConfigTaskViewServiceFactory, NextGroupService,
+    AbstractTaskView, CategoryFactory,
+    ConfigTaskViewServiceFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
     SearchService,
-    SimpleFilter,
+    SimpleFilter, TaskSearchCaseQuery,
     TaskViewService
 } from 'netgrif-application-engine';
 import {
@@ -15,7 +15,11 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
 };
 
 const searchServiceFactory = (nextGroupService: NextGroupService) => {
-    return new SearchService(SimpleFilter.fromTaskQuery({case: {id: nextGroupService.groupOfUser.stringId}}));
+    const groupIds: Array<TaskSearchCaseQuery> = [];
+    nextGroupService.groupOfUser.forEach(group => {
+       groupIds.push({id: group.stringId});
+    });
+    return new SearchService(SimpleFilter.fromTaskQuery({case: groupIds}));
 };
 
 @Component({
@@ -23,6 +27,7 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
     templateUrl: './group-view.component.html',
     styleUrls: ['./group-view.component.scss'],
     providers: [
+        CategoryFactory,
         ConfigTaskViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory,
@@ -31,6 +36,7 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
 export class GroupViewComponent extends AbstractTaskView implements AfterViewInit {

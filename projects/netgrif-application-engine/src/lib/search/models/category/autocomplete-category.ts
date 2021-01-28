@@ -3,14 +3,16 @@ import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SearchInputType} from './search-input-type';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {AutocompleteOptions} from './autocomplete-options';
 
 /**
  * Represents a Search Category whose values are a known set. The value selection is done with an autocomplete field.
  *
  * @typeparam T type of the object that the autocomplete option values use and in turn is used to generate queries
  */
-export abstract class AutocompleteCategory<T> extends Category<T> {
+export abstract class AutocompleteCategory<T> extends Category<Array<T>> implements AutocompleteOptions {
 
     /**
      * Autocomplete categories usually require a map to represent mapping of display names
@@ -43,7 +45,7 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
      * creates options with the keys as [text]{@link SearchAutocompleteOption#text}
      * and values as [value]{@link SearchAutocompleteOption#value}.
      */
-    public get options(): Array<SearchAutocompleteOption> {
+    public get options(): Array<SearchAutocompleteOption<Array<T>>> {
         const result = [];
         for (const entry of this._optionsMap.entries()) {
             result.push({text: entry[0], value: entry[1]});
@@ -65,9 +67,21 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
      * @param userInput user search input
      * @returns options that satisfy the autocomplete condition
      */
-    public filterOptions(userInput: string): Observable<Array<SearchAutocompleteOption>> {
-        const value = userInput.toLocaleLowerCase();
-        return of(this.options.filter(option => option.text.toLocaleLowerCase().startsWith(value)));
+    public filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<T>>>):
+        Observable<Array<SearchAutocompleteOption<Array<T>>>> {
+
+        return userInput.pipe(
+            startWith(''),
+            map(input => {
+                let value;
+                if (typeof input === 'string') {
+                    value = input.toLocaleLowerCase();
+                } else {
+                    value = input.text;
+                }
+                return this.options.filter(option => option.text.toLocaleLowerCase().startsWith(value));
+            })
+        );
     }
 
     /**
@@ -84,5 +98,19 @@ export abstract class AutocompleteCategory<T> extends Category<T> {
         }
     }
 
+    protected isOperandValueSelected(newValue: SearchAutocompleteOption<Array<T>> | string): boolean {
+        return !(!newValue || typeof newValue === 'string');
+    }
 
+    /**
+     * Performs a transformation of the `FormControl` value before passing it into the selected `Operator` for query generation.
+     * It is mostly useful only for AutocompleteCategories, where the selected value of the FormControl is an object.
+     *
+     * The default AutocompleteCategory implementation returns the {@link SearchAutocompleteOption} `value` attribute.
+     * @param value the FormControlValue
+     * @returns the value used for query generation
+     */
+    protected transformCategoryValue(value: SearchAutocompleteOption<Array<T>>): Array<T> {
+        return value.value;
+    }
 }

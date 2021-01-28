@@ -2,7 +2,7 @@ import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {UserListInjectedData} from './model/user-list-injected-data';
-import {Role} from '../../../user/models/role';
+import {ProcessRole} from '../../../resources/interface/process-role';
 
 /**
  * Is the main - parent component of the entire user assignment in the side menu.
@@ -28,9 +28,9 @@ export abstract class AbstractUserAssignComponent {
 
     /**
      * Inject and set data send from [UserFieldComponent]{@link AbstractUserFieldComponent} if the user is preselected.
-     * @param _sideMenuControl Contains [Roles]{@link Role} and [UserValue]{@link UserValue}.
+     * @param _sideMenuControl Contains [Roles]{@link ProcessRole} and [UserValue]{@link UserValue}.
      */
-    constructor(protected _sideMenuControl: SideMenuControl) {
+    protected constructor(protected _sideMenuControl: SideMenuControl) {
         if (this._sideMenuControl.data) {
             this.injectedData = this._sideMenuControl.data as UserListInjectedData;
         }
@@ -43,8 +43,12 @@ export abstract class AbstractUserAssignComponent {
         return this.injectedData ? this.injectedData.value : undefined;
     }
 
-    public get roles(): Array<Role> {
+    public get roles(): Array<string> | Array<ProcessRole> {
         return this.injectedData ? this.injectedData.roles : [];
+    }
+
+    public get negativeRoles(): Array<string> | Array<ProcessRole> {
+        return this.injectedData ? this.injectedData.negativeRoles : [];
     }
 
     /**

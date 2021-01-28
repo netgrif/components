@@ -25,6 +25,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {DomSanitizer} from '@angular/platform-browser';
 
 describe('AbstractFileFieldComponent', () => {
     let component: TestFileComponent;
@@ -84,8 +85,9 @@ class TestFileComponent extends AbstractFileFieldComponent {
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                sanitizer: DomSanitizer,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(taskResourceService, log, snackbar, translate, informAboutInvalidData);
+        super(taskResourceService, log, snackbar, translate, informAboutInvalidData, sanitizer);
     }
 }
 

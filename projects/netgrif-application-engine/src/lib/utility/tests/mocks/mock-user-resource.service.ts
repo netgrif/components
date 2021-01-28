@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {Preferences} from '../../../user/models/preferences';
+import {Preferences} from '../../../resources/interface/preferences';
 import {MessageResource} from '../../../resources/interface/message-resource';
-import {User} from '../../../user/models/user';
+import {UserResource} from '../../../resources/interface/user-resource';
 
 @Injectable()
 export class MockUserResourceService {
@@ -20,8 +20,9 @@ export class MockUserResourceService {
         return of({success: ''});
     }
 
-    public getLoggedUser(): Observable<User> {
-        return of(new User('id', '', '', '', [], [], [], []));
+    public getLoggedUser(): Observable<UserResource> {
+        return of({email: 'mail', id: 'id', name: 'name', surname: 'surname', fullName: 'name surname',
+            groups: [], authorities: [], nextGroups: [], processRoles: []});
     }
 
     // methods not yet mocked by this mock

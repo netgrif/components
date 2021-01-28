@@ -2,13 +2,14 @@ import {Injectable, Type} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ViewService} from '../view-service/view.service';
 import {Route, Router} from '@angular/router';
-import {View} from '../../configuration/interfaces/schema';
+import {View} from '../../../commons/schema';
 import {AuthenticationGuardService} from '../../authentication/services/guard/authentication-guard.service';
 import {ViewClassInfo} from '../../../commons/view-class-info';
 import {classify} from '../../../commons/angular-cli-devkit-core-strings';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
+import {GroupGuardService} from '../../authorization/group/group-guard.service';
 
 
 /**
@@ -50,40 +51,26 @@ export class RoutingBuilderService {
         if (view.routing.match !== undefined && view.routing.match) {
             route['pathMatch'] = 'full';
         }
-        // TODO 26.5.2020 - Finer granularity for view access control
-        if (view.access === 'private') {
-            route['canActivate'] = [AuthenticationGuardService];
+        route['canActivate'] = [];
+        if (view.access === 'private'
+            || view.access.hasOwnProperty('role')
+            || view.access.hasOwnProperty('group')
+            || view.access.hasOwnProperty('authority')) {
+            route['canActivate'].push(AuthenticationGuardService);
         }
         if (view.access.hasOwnProperty('role')) {
-            if (!route['canActivate']) {
-                route['canActivate'] = [AuthenticationGuardService];
-            }
-            if (!route['canActivate'].includes(AuthenticationGuardService)) {
-                route['canActivate'].push(AuthenticationGuardService);
-            }
             route['canActivate'].push(RoleGuardService);
         }
-        if (view.access.hasOwnProperty('group')) {
-            if (!route['canActivate']) {
-                route['canActivate'] = [AuthenticationGuardService];
-            }
-            if (!route['canActivate'].includes(AuthenticationGuardService)) {
-                route['canActivate'].push(AuthenticationGuardService);
-            }
-            route['canActivate'].push();
-        }
         if (view.access.hasOwnProperty('authority')) {
-            if (!route['canActivate']) {
-                route['canActivate'] = [AuthenticationGuardService];
-            }
-            if (!route['canActivate'].includes(AuthenticationGuardService)) {
-                route['canActivate'].push(AuthenticationGuardService);
-            }
             route['canActivate'].push(AuthorityGuardService);
+        }
+        if (view.access.hasOwnProperty('group')) {
+            route['canActivate'].push(GroupGuardService);
         }
         if (!!view.children) {
             route['children'] = [];
             Object.entries(view.children).forEach(([configPathSegment, childView]) => {
+                // TODO check if routes are constructed correctly regarding empty route segments
                 const childRoute = this.constructRouteObject(childView, `${configPath}/${configPathSegment}`);
                 if (childRoute !== undefined) {
                     route['children'].push(childRoute);

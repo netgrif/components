@@ -1,10 +1,9 @@
 import {Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
-import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
+import {toMoment} from '../../resources/types/nae-date-type';
 import {HeaderColumn} from '../../header/models/header-column';
-import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
-import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
+import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
@@ -12,9 +11,12 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OverflowService} from '../../header/services/overflow.service';
+import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
+import {UserService} from '../../user/services/user.service';
+import {take} from 'rxjs/operators';
 
 
-export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding {
+export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
 
     @Input() public case_: Case;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
@@ -27,8 +29,8 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
 
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                          protected _log: LoggerService, protected _overflowService: OverflowService) {
-        super();
+                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService) {
+        super(_translateService);
     }
 
     public show(event: MouseEvent): boolean {
@@ -54,34 +56,11 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
 
     protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
         const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
-        if (immediate && immediate.value !== undefined) {
-            switch (immediate.type) {
-                case 'date':
-                    return {value: toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING), icon: 'event'};
-                case 'dateTime':
-                    return {value: toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING), icon: 'event'};
-                case 'enumeration':
-                    return {value: immediate.value.defaultValue, icon: undefined};
-                case 'multichoice':
-                    return {value: immediate.value.map(it => it.defaultValue).join(', '), icon: undefined};
-                case 'file':
-                    return {value: immediate.value, icon: 'insert_drive_file'};
-                case 'user':
-                    return {value: immediate.value.fullName, icon: 'account_circle'};
-                case 'boolean':
-                    return {value: this._translateService.instant('dataField.values.boolean.' + immediate.value), icon: undefined};
-                default:
-                    // TODO 8.4.2020 - File field value rendering once file field works
-                    // TODO 8.4.2020 - User field value rendering once user field works
-                    return {value: immediate.value, icon: undefined};
-            }
-        } else {
-            return {value: '', icon: ''};
-        }
+        return this.parseImmediateValue(immediate);
     }
 
     public deleteCase() {
-        this._caseResourceService.deleteCase(this.case_.stringId).subscribe(data => {
+        this._caseResourceService.deleteCase(this.case_.stringId).pipe(take(1)).subscribe(data => {
             if (data.success) {
                 this._caseViewService.reload();
             } else if (data.error) {
@@ -99,5 +78,25 @@ export abstract class AbstractCasePanelComponent extends PanelWithHeaderBinding 
 
     public getMinWidth() {
         return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
+    }
+
+    public canDo(action): boolean {
+        if (!this.case_
+            || !this.case_.permissions
+            || !action
+            || !(this.case_.permissions instanceof Object)
+        ) {
+            return false;
+        }
+        if (Object.keys(this.case_.permissions).length === 0) {
+            return true;
+        }
+
+        const result = Object.keys(this.case_.users).some(user =>
+            !!this.case_.users ? !!this.case_.users[user][action] : false
+        );
+        return result || Object.keys(this.case_.permissions).some(role =>
+            this._userService.hasRoleById(role) ? !!this.case_.permissions[role][action] : false
+        );
     }
 }

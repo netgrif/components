@@ -3,10 +3,14 @@ import {
     AbstractCaseView,
     Case,
     CaseViewService,
+    CategoryFactory,
     ConfigCaseViewServiceFactory,
-    SearchChipService,
+    defaultCaseSearchCategoriesFactory,
+    NAE_SEARCH_CATEGORIES,
+    NAE_VIEW_ID_SEGMENT,
     SearchService,
-    SimpleFilter
+    SimpleFilter,
+    ViewIdService,
 } from '@netgrif/application-engine';
 import {
     HeaderComponent
@@ -25,13 +29,17 @@ const searchServiceFactory = () => {
     templateUrl: './<%= dasherize(className) %>.component.html',
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
-        SearchChipService,
+        CategoryFactory,
         ConfigCaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
             deps: [ConfigCaseViewServiceFactory]},
+        {   provide: NAE_VIEW_ID_SEGMENT,
+            useValue: '<%= viewIdSegment %>'},
+        ViewIdService,
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
 })
 export class <%= classify(className) %>Component extends AbstractCaseView implements AfterViewInit {

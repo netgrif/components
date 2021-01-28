@@ -15,6 +15,7 @@ import {SelectedCaseService} from './selected-case.service';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
+import {take} from 'rxjs/operators';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -67,7 +68,7 @@ export class CancelTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(canceledTaskId);
 
-        this._taskResourceService.cancelTask(this._safeTask.stringId).subscribe(eventOutcome => {
+        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(canceledTaskId);
 
             if (!this.isTaskRelevant(canceledTaskId)) {

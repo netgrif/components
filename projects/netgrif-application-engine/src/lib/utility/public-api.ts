@@ -9,6 +9,8 @@ export * from './service/spinner-overlay.service';
 export * from './incrementing-counter';
 export * from './array-to-observable';
 export * from './process-message-response';
+export * from './result-with-after-actions';
+export * from './clear-time-information';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';
@@ -18,6 +20,8 @@ export * from './tests/mocks/mock-authentication-method-service';
 export * from './tests/mocks/mock-sign-up.service';
 export * from './tests/utility/create-mock-task';
 export * from './tests/utility/create-mock-case';
+export * from './tests/utility/create-mock-immediate-data';
+export * from './tests/utility/create-mock-page';
 export * from './tests/search-category-mock-dependencies';
 export * from './tests/test-config';
 export * from './tests/test-factory-methods';

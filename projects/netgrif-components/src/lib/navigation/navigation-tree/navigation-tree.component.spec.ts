@@ -1,8 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {NavigationTreeComponent} from './navigation-tree.component';
 import {CommonModule} from '@angular/common';
-import {ConfigurationService, MaterialModule, TestConfigurationService, TranslateLibModule} from '@netgrif/application-engine';
+import {
+    ConfigurationService,
+    MaterialModule,
+    TestConfigurationService,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    MockAuthenticationMethodService,
+    AuthenticationModule
+} from '@netgrif/application-engine';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';
@@ -18,7 +25,8 @@ describe('NavigationTreeComponent', () => {
         TestBed.configureTestingModule({
             declarations: [NavigationTreeComponent],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ],
             imports: [
                 CommonModule,
@@ -29,7 +37,9 @@ describe('NavigationTreeComponent', () => {
                 UserComponentModule,
                 RouterTestingModule.withRoutes([]),
                 HttpClientTestingModule,
-                TranslateLibModule, NoopAnimationsModule
+                TranslateLibModule,
+                NoopAnimationsModule,
+                AuthenticationModule,
             ]
         })
             .compileComponents();

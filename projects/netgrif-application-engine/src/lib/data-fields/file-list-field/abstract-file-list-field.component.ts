@@ -9,6 +9,7 @@ import {FileListField, FileListFieldValidation} from './models/file-list-field';
 import {FileFieldValue} from '../file-field/models/file-field-value';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {take} from 'rxjs/operators';
 
 export interface FilesState {
     progress: number;
@@ -146,7 +147,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this._log.debug(
                     `Files [${this.dataField.stringId}] were successfully uploaded`
                 );
-                this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                if (Object.keys((response as ChangedFieldContainer).changedFields).length !== 0 ||
+                    (response as ChangedFieldContainer).changedFields.constructor !== Object) {
+                    this.dataField.emitChangedFields(response as ChangedFieldContainer);
+                }
                 this.state.completed = true;
                 this.state.error = false;
                 this.state.uploading = false;
@@ -228,7 +232,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             return;
         }
 
-        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId, fileName).subscribe(response => {
+        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId, fileName).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
                 if (this.dataField.value.namesPaths) {

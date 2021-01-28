@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {MatSelectionListChange} from '@angular/material/list';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
-import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';

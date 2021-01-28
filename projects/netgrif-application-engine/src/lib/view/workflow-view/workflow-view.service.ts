@@ -95,6 +95,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._loading$.complete();
         this._nextPage$.complete();
     }

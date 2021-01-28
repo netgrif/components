@@ -6,6 +6,11 @@ export * from './engine-endpoint/petri-net-resource.service';
 export * from './engine-endpoint/user-resource.service';
 export * from './engine-endpoint/dashboard-resource.service';
 
+/* PUBLIC SERVICES */
+export * from './engine-endpoint/public/public-case-resource.service';
+export * from './engine-endpoint/public/public-petri-net-resource.service';
+export * from './engine-endpoint/public/public-task-resource.service';
+
 export * from './interface/author';
 export * from './interface/immediate-data';
 export * from './interface/response-data';
@@ -14,7 +19,6 @@ export * from './interface/message-resource';
 export * from './interface/task';
 export * from './interface/count';
 export * from './interface/petri-net-object-id';
-export * from './interface/user-task';
 export * from './interface/data-groups';
 export * from './interface/petri-net-reference';
 export * from './interface/fields';
@@ -33,6 +37,9 @@ export * from './interface/event-outcome';
 export * from './interface/group';
 export * from './interface/petri-net-request-body';
 export * from './interface/page';
+export * from './interface/preferences';
+export * from './interface/user-resource-small';
+export * from './interface/user-resource';
 
 export * from './types/nae-date-type';
 

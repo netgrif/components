@@ -14,6 +14,7 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
+import {take} from 'rxjs/operators';
 
 
 /**
@@ -60,7 +61,7 @@ export class AssignTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(assignedTaskId);
 
-        this._taskResourceService.assignTask(this._safeTask.stringId).subscribe(eventOutcome => {
+        this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(assignedTaskId);
             if (!this.isTaskRelevant(assignedTaskId)) {
                 this._log.debug('current task changed before the assign response could be received, discarding...');

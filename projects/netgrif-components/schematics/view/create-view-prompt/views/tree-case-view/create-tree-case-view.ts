@@ -3,7 +3,7 @@ import {CreateViewArguments} from '../../models/create-view-arguments';
 import {createFilesFromTemplates, createRelativePath, getProjectInfo} from '../../../../_utility/utility-functions';
 import {ViewClassInfo} from '../../../../_commons/view-class-info';
 import {strings} from '@angular-devkit/core';
-import {updateAppModule} from '../../../_utility/view-utility-functions';
+import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
 import {ImportToAdd} from '../../../../_commons/import-to-add';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 
@@ -27,7 +27,8 @@ export function createTreeCaseView(tree: Tree, args: CreateViewArguments, addVie
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
         configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
-        filterId
+        filterId,
+        viewIdSegment: getViewIdSegmentFromPath(args.path)
     }));
 
     updateAppModule(tree, view.className, view.fileImportPath, [
