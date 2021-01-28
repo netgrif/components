@@ -113,6 +113,10 @@ export interface Case {
      * **Example:** {}
      */
     permissions: Permissions;
+    /**
+     * **Example:** {}
+     */
+    users?: Permissions;
 }
 
 
