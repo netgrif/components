@@ -5,17 +5,29 @@ import {CaseSearchComponent} from './search-component/case-search/case-search.co
 import {TaskSearchComponent} from './search-component/task-search/task-search.component';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {SearchClauseComponent} from './search-clause-component/search-clause.component';
+import {SearchPredicateComponent} from './search-predicate-component/search-predicate.component';
+import {SearchOperandInputComponent} from './search-operand-input-component/search-operand-input.component';
+import {SearchConfigurationInputComponent} from './search-configuration-input-component/search-configuration-input.component';
 
 @NgModule({
     declarations: [
         SearchComponent,
         CaseSearchComponent,
         TaskSearchComponent,
+        SearchClauseComponent,
+        SearchPredicateComponent,
+        SearchOperandInputComponent,
+        SearchConfigurationInputComponent,
     ],
     exports: [
         SearchComponent,
         CaseSearchComponent,
         TaskSearchComponent,
+        SearchClauseComponent,
+        SearchPredicateComponent,
+        SearchOperandInputComponent,
+        SearchConfigurationInputComponent,
     ],
     imports: [
         CommonModule,
