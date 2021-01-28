@@ -127,7 +127,12 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
         ) {
             return false;
         }
-        return Object.keys(this._task.roles).some(role =>
+
+        const result = Object.keys(this._task.users).some(user =>
+            !!this._task.users ? !!this._task.users[user][action] : true
+        );
+
+        return result || Object.keys(this._task.roles).some(role =>
             this._userService.hasRoleById(role) ? !!this._task.roles[role][action] : false
         );
     }

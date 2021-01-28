@@ -39,7 +39,8 @@ export class PanelsComponent implements OnInit {
             resetArcTokens: null,
             stringId: null,
             petriNetId: null,
-            permissions: {}
+            permissions: {},
+            users: {}
         };
         this.workflow = {
             stringId: 'ID',
