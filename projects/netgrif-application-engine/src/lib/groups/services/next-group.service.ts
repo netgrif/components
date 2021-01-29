@@ -14,12 +14,12 @@ import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 })
 export class NextGroupService {
 
-    private _groupOfUser: BehaviorSubject<Case>;
+    private _groupOfUser: BehaviorSubject<Array<Case>>;
 
     constructor(protected processService: ProcessService,
                 protected caseService: CaseResourceService,
                 protected userService: UserService) {
-        this._groupOfUser = new BehaviorSubject<Case>(undefined);
+        this._groupOfUser = new BehaviorSubject<Array<Case>>([]);
 
         userService.user$.pipe(
             switchMap(user => {
@@ -38,12 +38,12 @@ export class NextGroupService {
                     );
             })
         ).subscribe(groups => {
-            const myGroup = groups.find(g => g.author.email === this.userService.user.email);
+            const myGroup = groups.filter(g => g.author.email === this.userService.user.email);
             this._groupOfUser.next(myGroup);
         });
     }
 
-    get groupOfUser(): Case {
+    get groupOfUser(): Array<Case> {
         return this._groupOfUser.getValue();
     }
 }

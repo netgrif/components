@@ -4,7 +4,12 @@ import 'hammerjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
 import {LoggerService} from '../../logger/services/logger.service';
-import {Subscription} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import {ResizeEvent} from 'angular-resizable-element';
+import {UserPreferenceService} from '../../user/services/user-preference.service';
+
+const DRAWER_DEFAULT_MIN_WIDTH = 200;
+const DRAWER_MAX_WIDTH = 450;
 
 export abstract class AbstractNavigationDrawerComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -23,17 +28,27 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     protected _fixed: boolean;
     protected subBreakpoint: Subscription;
 
+    public width: number;
+    public contentWidth: BehaviorSubject<number>;
+
     protected _config = {
         mode: 'over',
         opened: false,
         disableClose: false
     };
 
-    constructor(protected breakpoint: BreakpointObserver, protected _log: LoggerService) {
+    constructor(protected breakpoint: BreakpointObserver,
+                protected _log: LoggerService,
+                protected userPreferenceService: UserPreferenceService) {
         this.openedChange = new EventEmitter<boolean>();
         this._fixed = true;
         this.opened = true;
         this.quickPanelItems = ['language', 'settings', 'logout'];
+        if (this.userPreferenceService.drawerWidth !== undefined) {
+            this.contentWidth = new BehaviorSubject<number>(this.userPreferenceService.drawerWidth);
+        } else {
+            this.contentWidth = new BehaviorSubject<number>(DRAWER_DEFAULT_MIN_WIDTH);
+        }
     }
 
     ngOnInit(): void {
@@ -49,6 +64,11 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
             }
         });
         this.opened = this._config.opened;
+        this.userPreferenceService.preferencesChanged$.subscribe(() => {
+            this.width = this.userPreferenceService.drawerWidth;
+            this.contentWidth.next(this.width);
+        });
+        // this.width = this.userPreferenceService.getDrawerWidth();
     }
 
     ngAfterViewInit(): void {
@@ -57,6 +77,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
     ngOnDestroy(): void {
         this.subBreakpoint.unsubscribe();
+        this.openedChange.complete();
     }
 
     get config() {
@@ -119,5 +140,17 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         if (this.breakpoint.isMatched('(max-width: 959.99px)')) {
             this._sideNav.close();
         }
+    }
+
+    onResizeEvent(event: ResizeEvent): void {
+        if (event.rectangle.width > DRAWER_MAX_WIDTH) {
+            this.width = DRAWER_MAX_WIDTH;
+        } else if (event.rectangle.width < DRAWER_DEFAULT_MIN_WIDTH) {
+            this.width = DRAWER_DEFAULT_MIN_WIDTH;
+        } else {
+            this.width = event.rectangle.width;
+        }
+        this.userPreferenceService._drawerWidthChanged$.next(this.width);
+        this.contentWidth.next(this.width);
     }
 }

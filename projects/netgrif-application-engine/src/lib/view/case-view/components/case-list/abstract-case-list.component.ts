@@ -1,4 +1,12 @@
-import {AfterViewInit, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild} from '@angular/core';
+import {
+    EventEmitter,
+    Inject,
+    Input,
+    OnDestroy,
+    Optional,
+    Output,
+    ViewChild
+} from '@angular/core';
 import {CaseViewService} from '../../service/case-view-service';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {Observable} from 'rxjs';
@@ -9,7 +17,7 @@ import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-vi
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
 
-export abstract class AbstractCaseListComponent extends TabbedVirtualScrollComponent implements OnInit, AfterViewInit {
+export abstract class AbstractCaseListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
@@ -32,10 +40,9 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
         this.caseClick = new EventEmitter<Case>();
     }
 
-    ngOnInit(): void {
-    }
-
-    ngAfterViewInit(): void {
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.caseClick.complete();
     }
 
     public trackBy(i): any {

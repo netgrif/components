@@ -1,4 +1,3 @@
-import {Category} from '../category';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {Query} from '../../query/query';
@@ -10,6 +9,9 @@ import {Substring} from '../../operator/substring';
 import {CaseProcess} from './case-process';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {BooleanOperator} from '../../boolean-operator';
+import {NoConfigurationCategory} from '../no-configuration-category';
+import {CaseDataset} from './case-dataset';
+import {DatafieldMapKey} from '../../datafield-map-key';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -18,7 +20,7 @@ import {BooleanOperator} from '../../boolean-operator';
  *
  * See [configure]{@link CaseSimpleDataset#configure} for more information.
  */
-export class CaseSimpleDataset extends Category<string> {
+export class CaseSimpleDataset extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.dataset';
 
@@ -29,13 +31,13 @@ export class CaseSimpleDataset extends Category<string> {
     protected _processCategory: CaseProcess;
 
     constructor(protected _operators: OperatorService,
-                protected _logger: LoggerService,
+                logger: LoggerService,
                 protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
             `${CaseSimpleDataset._i18n}.name`,
             undefined,
-            _logger);
+            logger);
 
         this._processCategory = _optionalDependencies.categoryFactory.getWithDefaultOperator(CaseProcess) as CaseProcess;
     }
@@ -46,7 +48,7 @@ export class CaseSimpleDataset extends Category<string> {
 
     public configure(fieldId: string, fieldType: string, netIds: Array<string>): void {
         if (!fieldId || !fieldType || !netIds || netIds.length === 0) {
-            this._logger.error('CaseSimpleDataset must be configured with defined values and a non-empty array');
+            this._log.error('CaseSimpleDataset must be configured with defined values and a non-empty array');
             return;
         }
         this._fieldId = fieldId;
@@ -62,7 +64,7 @@ export class CaseSimpleDataset extends Category<string> {
         }
     }
 
-    protected get selectedOperator(): Operator<any> {
+    public get selectedOperator(): Operator<any> {
         switch (this._fieldType) {
             case 'number':
                 return this._operators.getOperator(Equals);
@@ -79,12 +81,32 @@ export class CaseSimpleDataset extends Category<string> {
         }
     }
 
+    duplicate(): CaseSimpleDataset {
+        return new CaseSimpleDataset(this._operators, this._log, this._optionalDependencies);
+    }
+
+    /**
+     * Creates a {@link CaseDataset} instance and configures it so, that the query it generates targets
+     * the selected field, uses the default operator and its operands are what the user provided.
+     *
+     * @param fieldType the type of the field that should be targeted by the transformed Category
+     * @param fieldTitle the title of the field that should be targeted by the transformed Category
+     * @param userInput the operands for the queried field
+     * @returns a new {@link CaseDataset} configured with the provided values
+     */
+    public transformToCaseDataset(fieldType: string, fieldTitle: string, userInput: Array<any>): CaseDataset {
+        const result = this._optionalDependencies.categoryFactory.get(CaseDataset) as CaseDataset;
+        result.selectDatafields(DatafieldMapKey.serializedForm(fieldType, fieldTitle));
+        result.setOperands(userInput);
+        return result;
+    }
+
     protected generateQuery(userInput: Array<unknown>): Query {
         const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
         const netsQuery = Query.combineQueries(
-            this._netIds.map(id => this._processCategory.generatePredicate([id]).query),
-            BooleanOperator.OR);
+            this._netIds.map(id => this._processCategory.generatePredicate([[id]]).query),
+            BooleanOperator.OR
+        );
         return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);
     }
-
 }

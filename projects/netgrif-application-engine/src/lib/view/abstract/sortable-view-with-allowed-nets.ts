@@ -21,6 +21,7 @@ export abstract class SortableViewWithAllowedNets extends SortableView implement
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._allowedNets$.complete();
         this.subAllowedNets.unsubscribe();
     }

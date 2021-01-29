@@ -3,11 +3,12 @@ import {
     AbstractCaseView,
     Case,
     CaseViewService,
-    SearchChipService,
     SearchService,
     SimpleFilter,
     AllNetsCaseViewServiceFactory,
-    OverflowService
+    OverflowService,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService, CategoryFactory, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -24,7 +25,7 @@ const searchServiceFactory = () => {
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss'],
     providers: [
-        SearchChipService,
+        CategoryFactory,
         AllNetsCaseViewServiceFactory,
         OverflowService,
         {   provide: SearchService,
@@ -32,6 +33,9 @@ const searchServiceFactory = () => {
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
             deps: [AllNetsCaseViewServiceFactory]},
+        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'case'},
+        ViewIdService,
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
 })
 export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {

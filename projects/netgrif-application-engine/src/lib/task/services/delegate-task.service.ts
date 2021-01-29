@@ -19,6 +19,7 @@ import {createTaskEventNotification} from '../../task-content/model/task-event-n
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {TaskDataService} from './task-data.service';
+import {take} from 'rxjs/operators';
 
 
 /**
@@ -63,10 +64,13 @@ export class DelegateTaskService extends TaskHandlingService {
         }
         this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
             {
-                roles: this._safeTask.roles,
+                roles: Object.keys(this._safeTask.roles).filter(role =>
+                    this._safeTask.roles[role]['assigned'] !== undefined && this._safeTask.roles[role]['assigned']),
                 value: !this._safeTask.user ? undefined : new UserValue(
                     this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
-                )
+                ),
+                negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
+                    this._safeTask.roles[role]['assigned'] !== undefined && !this._safeTask.roles[role]['assigned'])
             } as UserListInjectedData).onClose.subscribe(event => {
             this._log.debug('Delegate sidemenu event:' + event);
             if (event.data !== undefined) {
@@ -77,7 +81,7 @@ export class DelegateTaskService extends TaskHandlingService {
 
                 this._taskState.startLoading(delegatedTaskId);
 
-                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).subscribe(eventOutcome => {
+                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).pipe(take(1)).subscribe(eventOutcome => {
                     this._taskState.stopLoading(delegatedTaskId);
                     if (!this.isTaskRelevant(delegatedTaskId)) {
                         this._log.debug('current task changed before the delegate response could be received, discarding...');

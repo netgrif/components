@@ -6,7 +6,7 @@ import {TaskResourceService} from '../../../resources/engine-endpoint/task-resou
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {Net} from '../../../process/net';
@@ -43,6 +43,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
     protected _closeTab$: ReplaySubject<void>;
     protected _subInitiallyOpen: Subscription;
     protected _subCloseTask: Subscription;
+    protected _subSearch: Subscription;
 
     private readonly _initializing: boolean = true;
 
@@ -79,7 +80,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
 
         this._initializing = false;
 
-        this._searchService.activeFilter$.subscribe(() => {
+        this._subSearch = this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
 
@@ -148,12 +149,14 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._changedFields$.complete();
         this._requestedPage$.complete();
         this._panelUpdate$.complete();
         this._closeTab$.complete();
         this._subInitiallyOpen.unsubscribe();
         this._subCloseTask.unsubscribe();
+        this._subSearch.unsubscribe();
     }
 
     public get tasks$(): Observable<Array<TaskPanelData>> {
@@ -196,10 +199,10 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         let request: Observable<Page<Task>>;
         if (requestContext.filter.bodyContainsQuery() || this._preferredEndpoint === TaskEndpoint.ELASTIC) {
             request = timer(200).pipe(
-                switchMap(() => this._taskService.searchTask(requestContext.filter, params))
+                switchMap(() => this._taskService.searchTask(requestContext.filter, params).pipe(take(1)))
             );
         } else {
-            request = this._taskService.getTasks(requestContext.filter, params);
+            request = this._taskService.getTasks(requestContext.filter, params).pipe(take(1));
         }
         return request.pipe(
             catchError(err => {

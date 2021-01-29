@@ -8,7 +8,7 @@ import {
     getAppModule,
     getProjectInfo
 } from '../../../../_utility/utility-functions';
-import {updateAppModule} from '../../../_utility/view-utility-functions';
+import {getViewIdSegmentFromPath, updateAppModule} from '../../../_utility/view-utility-functions';
 import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {TabbedView} from '../../models/tabbed-view';
 import {ViewClassInfo} from '../../../../_commons/view-class-info';
@@ -40,6 +40,7 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
     if (!!args.isTabbed) {
         rules.push(createFilesFromTemplates(`${commonPathPrefix}tabbed`, destinationPath, templateParams));
     } else {
+        Object.assign(templateParams, {viewIdSegment: getViewIdSegmentFromPath(args.path)});
         rules.push(createFilesFromTemplates(`${commonPathPrefix}simple`, destinationPath, templateParams));
     }
 

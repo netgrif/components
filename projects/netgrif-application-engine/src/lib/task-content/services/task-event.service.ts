@@ -75,7 +75,9 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
         return !!this._task
             && !!this._task.user
             && this._userComparator.compareUsers(this._task.user)
-            && this.canDo('delegate');
+            && this.canDo('delegate')
+            && ((this._task.assignedUserPolicy === undefined || this._task.assignedUserPolicy.reassign === undefined)
+            || this._task.assignedUserPolicy.reassign);
     }
 
     /**
@@ -87,9 +89,11 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
                 (
                     !!this._task.user
                     && this._userComparator.compareUsers(this._task.user)
+                    && ((this._task.assignedUserPolicy === undefined || this._task.assignedUserPolicy.cancel === undefined)
+                        || this._task.assignedUserPolicy.cancel)
                 ) || (
                     !!this._task.user
-                    && this.canDo('perform')
+                    && this.canDo('cancel')
                 )
             );
     }
@@ -123,7 +127,12 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
         ) {
             return false;
         }
-        return Object.keys(this._task.roles).some(role =>
+
+        const result = Object.keys(this._task.users).some(user =>
+            !!this._task.users ? !!this._task.users[user][action] : true
+        );
+
+        return result || Object.keys(this._task.roles).some(role =>
             this._userService.hasRoleById(role) ? !!this._task.roles[role][action] : false
         );
     }

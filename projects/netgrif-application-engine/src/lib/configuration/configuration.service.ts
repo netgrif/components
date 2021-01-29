@@ -1,4 +1,4 @@
-import {NetgrifApplicationEngine, Services, View, Views} from './interfaces/schema';
+import {NetgrifApplicationEngine, Services, View, Views} from '../../commons/schema';
 import {Observable, of} from 'rxjs';
 
 export abstract class ConfigurationService {
@@ -26,27 +26,15 @@ export abstract class ConfigurationService {
      * @return requested configuration if it exists. `undefined` otherwise.
      */
     public getViewByPath(viewConfigPath: string): View | undefined {
-        const pathFragments = viewConfigPath.split('/');
-
-        const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
-        if (!config.views) {
-            return undefined;
+        const viewPathSegments = viewConfigPath.split('/');
+        const configTreePathSegments = ['views'];
+        for (let i = 0; i < viewPathSegments.length; i++) {
+            if (i > 0) {
+                configTreePathSegments.push('children');
+            }
+            configTreePathSegments.push(viewPathSegments[i]);
         }
-        let views = config.views;
-        for (let i = 0; i < pathFragments.length; i++) {
-            const pathFragment = pathFragments[i];
-            const view = views[pathFragment];
-            if (!view) {
-                return undefined;
-            }
-            if (i === pathFragments.length - 1) {
-                return view;
-            }
-            if (!view.children) {
-                return undefined;
-            }
-            views = view.children;
-        }
+        return this.getConfigurationSubtree(configTreePathSegments);
     }
 
     /**

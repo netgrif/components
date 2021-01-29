@@ -22,7 +22,7 @@ export class TreeViewExampleComponent {
         let params: HttpParams = new HttpParams();
         params = params.set('sort', 'creationDateSortable,asc');
         this._caseResource.searchCases(
-            new SimpleFilter('', FilterType.CASE, {petriNet: {identifier: 'tree_test'}, query: '(title:root)'}), params)
+            new SimpleFilter('', FilterType.CASE, {process: {identifier: 'tree_test'}, query: '(title:root)'}), params)
             .subscribe(page => {
                 if (page && page.content && Array.isArray(page.content) && page.content.length > 0) {
                     this.filter = new SimpleFilter('id', FilterType.CASE, {

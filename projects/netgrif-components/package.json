@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "4.6.0",
+    "version": "5.0.0",
     "description": "Netgrif Application Engine Angular components",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -25,7 +25,8 @@
         "Martin Miklovič <miklovic@netgrif.com>",
         "Daniel Vaník <vanik@netgrif.com>",
         "Lukáš Rezák <rezak@netgrif.com>",
-        "Jozef Daxner <daxner@netgrif.com>"
+        "Jozef Daxner <daxner@netgrif.com>",
+        "Štefan Renczés <renczes@netgrif.com>"
     ],
     "peerDependencies": {
         "@angular-material-components/datetime-picker": "^2.0.2",
@@ -58,7 +59,7 @@
         "natural-orderby": "^2.0.3",
         "rxjs": "^6.6.0",
         "zone.js": "~0.10.2",
-        "@netgrif/application-engine": "~4.6.0"
+        "@netgrif/application-engine": "5.0.0"
     },
     "publishConfig": {
         "registry": "https://nexus.netgrif.com/repository/npm-private/"

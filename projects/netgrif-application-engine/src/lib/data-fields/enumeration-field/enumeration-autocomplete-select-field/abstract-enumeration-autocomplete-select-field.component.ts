@@ -1,4 +1,4 @@
-import {ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -6,7 +6,7 @@ import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} fro
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 
-export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implements OnInit {
+export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implements OnInit, OnDestroy {
 
     @Input() enumerationField: EnumerationField;
     @Input() formControlRef: FormControl;
@@ -23,6 +23,10 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
             startWith(''),
             map(value => this._filter(value))
         );
+    }
+
+    ngOnDestroy(): void {
+        this.filteredOptions = undefined;
     }
 
     /**

@@ -34,5 +34,7 @@ export function createMockCase(stringId: string = 'stringId',
         resetArcTokens: {},
         stringId,
         petriNetId,
+        permissions: {},
+        users: {}
     };
 }

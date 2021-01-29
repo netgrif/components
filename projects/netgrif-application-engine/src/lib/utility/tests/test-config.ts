@@ -397,7 +397,6 @@ export class TestConfigurationService extends ConfigurationService {
             ],
             services: {
                 log: {
-                    level: 'ALL',
                     logWithDate: true,
                     serializeExtraParams: true,
                     includeLogLevel: true,

@@ -4,7 +4,7 @@ import {StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
-import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token.module';
+import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
 import {NewCaseInjectionData} from './model/new-case-injection-data';
@@ -96,7 +96,7 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         if (this.titleFormControl.valid) {
             const newCase = {
                 title: this.titleFormControl.value,
-                color: 'black',
+                color: 'panel-primary-icon',
                 netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
             };
 
@@ -111,7 +111,7 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
                             data: response
                         });
                     },
-                    error => this._snackBarService.openErrorSnackBar(error)
+                    error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
                 );
         }
     }

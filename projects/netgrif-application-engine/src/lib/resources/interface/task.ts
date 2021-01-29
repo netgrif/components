@@ -1,8 +1,11 @@
-import {UserTask} from './user-task';
 import {DataGroup} from './data-groups';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskLayout} from './task-layout';
 import {NaeDate} from '../types/nae-date-type';
+import {UserResourceSmall} from './user-resource-small';
+import {ImmediateData} from './immediate-data';
+import {AssignedUserPolicy} from './assigned-user-policy';
+import {UsersRef} from './users-ref';
 
 /**
  * Object from Backend
@@ -24,9 +27,9 @@ export interface Task {
     caseColor: string;
     caseTitle: string;
     /**
-     * See [UserTask]{@link UserTask#}
+     * See [UserSmall]{@link UserResourceSmall#}
      */
-    user: UserTask;
+    user: UserResourceSmall;
     /**
      * ***Example:***
      *
@@ -56,6 +59,7 @@ export interface Task {
      */
     dataGroups: DataGroup[];
     _links: object;
+    users?: UsersRef;
     dataSize?: number;
     icon?: string;
     priority?: number;
@@ -63,4 +67,6 @@ export interface Task {
     finishTitle?: string;
     cancelTitle?: string;
     delegateTitle?: string;
+    immediateData?: Array<ImmediateData>;
+    assignedUserPolicy?: AssignedUserPolicy;
 }

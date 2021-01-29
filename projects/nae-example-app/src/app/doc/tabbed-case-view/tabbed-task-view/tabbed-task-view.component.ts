@@ -1,12 +1,13 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    ArrayTaskViewServiceFactory, BOOLEAN_VALUE_LABEL_ENABLED,
-    InjectedTabbedTaskViewData,
+    ArrayTaskViewServiceFactory, BOOLEAN_VALUE_LABEL_ENABLED, CategoryFactory, defaultTaskSearchCategoriesFactory,
+    InjectedTabbedTaskViewData, NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SearchService,
     TabbedTaskView,
     tabbedTaskViewServiceFactory,
-    TaskViewService
+    TaskViewService,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -19,6 +20,7 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     templateUrl: './tabbed-task-view.component.html',
     styleUrls: ['./tabbed-task-view.component.scss'],
     providers: [
+        CategoryFactory,
         ArrayTaskViewServiceFactory,
         {
             provide: SearchService,
@@ -33,7 +35,9 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         {
             provide: BOOLEAN_VALUE_LABEL_ENABLED,
             useValue: true
-        }
+        },
+        {   provide: ViewIdService, useValue: null},
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
 export class TabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {

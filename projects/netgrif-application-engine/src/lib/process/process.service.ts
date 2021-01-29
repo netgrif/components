@@ -5,8 +5,8 @@ import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-re
 import {LoggerService} from '../logger/services/logger.service';
 import Transition from './transition';
 import Transaction from './transaction';
-import NetRole from './netRole';
 import {catchError, map, tap} from 'rxjs/operators';
+import RolesAndPermissions from './rolesAndPermissions';
 
 export interface NetCache {
     [k: string]: Net;
@@ -35,6 +35,7 @@ export class ProcessService implements OnDestroy {
     ngOnDestroy(): void {
         this._netsSubject.complete();
         this._netUpdate.complete();
+        Array.from(this._requestCache.values()).forEach(net => net.complete());
     }
 
     /**
@@ -118,7 +119,8 @@ export class ProcessService implements OnDestroy {
             }).subscribe(values => {
                 net.transitions = values.transitions;
                 net.transactions = values.transactions;
-                net.roles = values.roles;
+                net.roles = values.roles.processRoles;
+                net.permissions = values.roles.permissions;
                 this._nets[net.identifier] = net;
                 this.publishUpdate(net);
             }, error => {
@@ -149,11 +151,11 @@ export class ProcessService implements OnDestroy {
         return this._netUpdate.asObservable();
     }
 
-    public hasLoadNets(identifiers: Array<string>): boolean {
-        return identifiers.every(identifier => this.hasLoadNet(identifier));
+    public areNetsLoaded(identifiers: Array<string>): boolean {
+        return identifiers.every(identifier => this.isNetLoaded(identifier));
     }
 
-    public hasLoadNet(identifier: string): boolean {
+    public isNetLoaded(identifier: string): boolean {
         return !!this._nets[identifier];
     }
 
@@ -173,7 +175,8 @@ export class ProcessService implements OnDestroy {
                 this._nets[net.identifier] = new Net(net);
                 this._nets[net.identifier].transitions = values.transitions;
                 this._nets[net.identifier].transactions = values.transactions;
-                this._nets[net.identifier].roles = values.roles;
+                this._nets[net.identifier].roles = values.roles.processRoles;
+                this._nets[net.identifier].permissions = values.roles.permissions;
                 returnNet.next(this._nets[net.identifier]);
                 returnNet.complete();
             }, error => {
@@ -231,16 +234,10 @@ export class ProcessService implements OnDestroy {
         );
     }
 
-    protected loadRoles(id: string): Observable<Array<NetRole>> {
+    protected loadRoles(id: string): Observable<RolesAndPermissions> {
         return this._petriNetResource.getPetriNetRoles(id).pipe(
-            map(roles => {
-                if (roles instanceof Array) {
-                    return roles;
-                }
-                return [];
-            }),
-            tap(roles => {
-                if (roles.length === 0) {
+            tap(rolesAndPerm => {
+                if (rolesAndPerm.processRoles.length === 0) {
                     this._log.info('Roles reference of net ' + id + ' were not found!');
                 }
             }),
