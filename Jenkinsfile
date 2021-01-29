@@ -240,27 +240,27 @@ pipeline {
                 packageJson = readJSON(file: 'package.json')
             }
             echo 'Uploading NC test reports via sshPublisher'
-            sshPublisher(
-                publishers: [
-                    sshPublisherDesc(
-                        configName: 'developer.netgrif.com',
-                        transfers: [
-                            sshTransfer(
-                                cleanRemote: true,
-                                excludes: '',
-                                execCommand: '',
-                                execTimeout: 120000,
-                                flatten: false,
-                                makeEmptyDirs: false,
-                                noDefaultExcludes: false,
-                                patternSeparator: '[, ]+',
-                                remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/nc/coverage",
-                                remoteDirectorySDF: false,
-                                removePrefix: 'coverage/netgrif-components',
-                                sourceFiles: 'coverage/netgrif-components/**')],
-                        usePromotionTimestamp: false,
-                        useWorkspaceInPromotion: false,
-                        verbose: true)])
+//             sshPublisher(
+//                 publishers: [
+//                     sshPublisherDesc(
+//                         configName: 'developer.netgrif.com',
+//                         transfers: [
+//                             sshTransfer(
+//                                 cleanRemote: true,
+//                                 excludes: '',
+//                                 execCommand: '',
+//                                 execTimeout: 120000,
+//                                 flatten: false,
+//                                 makeEmptyDirs: false,
+//                                 noDefaultExcludes: false,
+//                                 patternSeparator: '[, ]+',
+//                                 remoteDirectory: "/var/www/html/developer/projects/engine-frontend/${packageJson['version']}/nc/coverage",
+//                                 remoteDirectorySDF: false,
+//                                 removePrefix: 'coverage/netgrif-components',
+//                                 sourceFiles: 'coverage/netgrif-components/**')],
+//                         usePromotionTimestamp: false,
+//                         useWorkspaceInPromotion: false,
+//                         verbose: true)])
         }
     }
 
@@ -311,7 +311,7 @@ pipeline {
         //          message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
 
         junit 'coverage/netgrif-application-engine/JUNITX-test-report.xml'
-        junit 'coverage/netgrif-components/JUNITX-test-report.xml'
+//         junit 'coverage/netgrif-components/JUNITX-test-report.xml'
     }
 
     success {
