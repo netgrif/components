@@ -104,7 +104,7 @@ pipeline {
             stage('Doc NC') {
                 steps {
                     echo 'Generating documentation'
-                    sh 'compodoc -c projects/netgrif-components/.compodocrc.json"'
+                    sh 'compodoc -c projects/netgrif-components/.compodocrc.json'
                 }
             }
         }
