@@ -599,4 +599,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected createGridAreasString(grid: Array<Array<string>>): string {
         return grid.map(row => row.join(' ')).join(' | ');
     }
+
+    public trackByFn(index, item) {
+        return item.id;
+    }
 }
