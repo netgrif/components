@@ -154,7 +154,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
      * @returns the routeSegment for the provided view, or undefined if none is specified
      */
     protected getNodeRouteSegment(view: View): string {
-        return !view.routing && !view.routing.path ? undefined : view.routing.path;
+        return !!view.routing && !!view.routing.path ? view.routing.path : undefined;
     }
 
     /**
