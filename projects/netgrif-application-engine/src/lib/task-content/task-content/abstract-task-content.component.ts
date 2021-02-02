@@ -600,7 +600,14 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         return grid.map(row => row.join(' ')).join(' | ');
     }
 
-    public trackByFn(index, item) {
-        return item.id;
+    public trackByFn(index: number, element: DatafieldGridLayoutElement) {
+        switch (element.type) {
+            case TaskElementType.BLANK:
+                return element.gridAreaId;
+            case TaskElementType.DATA_GROUP_TITLE:
+                return element.title;
+            default:
+                return element.item.stringId;
+        }
     }
 }
