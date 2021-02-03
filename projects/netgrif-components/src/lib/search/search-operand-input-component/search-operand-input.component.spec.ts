@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchOperandInputComponent} from './search-operand-input.component';
 import {Component} from '@angular/core';
 import {MaterialModule, SearchInputType} from '@netgrif/application-engine';
@@ -10,7 +10,7 @@ describe('SearchOperandInputComponent', () => {
     let component: SearchOperandInputComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,

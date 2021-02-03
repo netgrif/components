@@ -1,5 +1,5 @@
 import {AbstractRoleAssignment} from './abstract-role-assignment';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
@@ -24,7 +24,7 @@ describe('AbstractRoleAssignment', () => {
     let component: TestRoleAssignmentComponent;
     let fixture: ComponentFixture<TestRoleAssignmentComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,

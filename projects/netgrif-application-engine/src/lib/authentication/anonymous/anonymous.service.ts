@@ -1,7 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {NullStorage} from '../session/null-storage';
-import {UserService} from '../../user/services/user.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 
@@ -11,11 +10,11 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class AnonymousService implements OnDestroy {
 
     public static readonly JWT_BEARER_HEADER_DEFAULT = 'X-Jwt-Token';
-    private readonly _jwtHeader: string;
-    private _storage: Storage;
-    private _tokenSet: BehaviorSubject<boolean>;
+    protected readonly _jwtHeader: string;
+    protected _storage: Storage;
+    protected _tokenSet: BehaviorSubject<boolean>;
 
-    constructor(private _config: ConfigurationService) {
+    constructor(protected _config: ConfigurationService) {
         this._jwtHeader = this._config.get().providers.auth.jwtBearer ?
             this._config.get().providers.auth.jwtBearer : AnonymousService.JWT_BEARER_HEADER_DEFAULT;
         this._storage = this.resolveStorage(this._config.get().providers.auth['local']);
@@ -50,7 +49,7 @@ export class AnonymousService implements OnDestroy {
         this._tokenSet.complete();
     }
 
-    private resolveStorage(storage: string): any {
+    protected resolveStorage(storage: string): any {
         switch (storage) {
             case 'local':
                 return localStorage;
