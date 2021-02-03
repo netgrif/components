@@ -2,7 +2,6 @@ import {AutocompleteCategory} from './autocomplete-category';
 import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Observable, of} from 'rxjs';
-import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
 import {ConfigurationInput} from '../configuration-input';
 

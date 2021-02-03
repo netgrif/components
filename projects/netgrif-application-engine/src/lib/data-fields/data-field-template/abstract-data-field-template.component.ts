@@ -1,5 +1,4 @@
 import {ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {ResizedEvent} from 'angular-resize-event';
 import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
