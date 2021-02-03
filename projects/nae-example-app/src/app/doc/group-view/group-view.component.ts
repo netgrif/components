@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
-    AbstractTaskView,
-    ConfigTaskViewServiceFactory, NextGroupService,
+    AbstractTaskView, CategoryFactory,
+    ConfigTaskViewServiceFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
     SearchService,
     SimpleFilter, TaskSearchCaseQuery,
     TaskViewService
@@ -27,6 +27,7 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
     templateUrl: './group-view.component.html',
     styleUrls: ['./group-view.component.scss'],
     providers: [
+        CategoryFactory,
         ConfigTaskViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory,
@@ -35,6 +36,7 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [ConfigTaskViewServiceFactory]},
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
 export class GroupViewComponent extends AbstractTaskView implements AfterViewInit {

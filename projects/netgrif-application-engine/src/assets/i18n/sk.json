@@ -142,11 +142,35 @@
                     "name": "Úloha",
                     "placeholder": "Vyberte úlohu"
                 }
-            }
+            },
+            "select": "Kategória vyhľadávania"
         },
-        "placeholder": {
-            "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"
-        }
+        "operator": {
+            "name": "Operátor",
+            "substring": "obsahuje podreťazec",
+            "inRange": {
+                "from": "od",
+                "to": "do"
+            },
+            "equals": "je presne",
+            "notEquals": "je rôzny od",
+            "moreThan": "je viac ako",
+            "lessThan": "je menej ako",
+            "like": "je podobný s",
+            "isNull": "je prázdny"
+        },
+        "tooltip": {
+            "toAdvanced": "Prepnúť na rozšírené vyhľadávanie",
+            "toFullText": "Prepnúť na jednoduché vyhľadávanie",
+            "help": "Nápoveda"
+        },
+        "help": {
+            "title": "Nápoveda pre rozšírené vyhľadávanie",
+            "text": "Rozšírené vyhľadávanie slúži na zostavenie komplikovanejších požiadaviek na vyhľadávanie. Na začiatku zvoľte kategóriu vyhľadávania. Kategória vyhľadávania učruje, podľa čoho má váš dopyt vyhľadávať. Niektoré kategórie, ako napríklad \"Dáta prípadu\" vyžadujú dodatočnú konfiguráciu. Po zvolení kategórie je nutné zvoliť operátor vyhľadávania. Operátor rozhoduje o tom, akým spôsobom sa hľadá zhoda s hľadaným výtazom a dátami. Operátorom je možné hľadať napríklad presnú zhodu, alebo hodnotu z rozsahu. Nakoniec je nutné zadať hľadanú hodnotu. Dopyty je možné kombinovať pomocou kľúčových slov A SÚČASNE a ALEBO. Dopyty kombinované slovom ALEBO nájdu výsledky, spĺňajúce aspoň jednu z podmienok. Dopyty kombinované slovom A SÚČASNE nájdu výsledky spĺňajúce všetky podmienky."
+        },
+        "fullText": "Zadajte hľadaný text",
+        "and": "a súčasne",
+        "or": "alebo"
     },
     "dataField": {
         "validations": {

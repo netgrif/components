@@ -19,9 +19,10 @@ export class ClausePredicate extends Predicate {
     /**
      * @param predicates Predicates that should be combined into one
      * @param _operator Operator that is used to combine the predicates
+     * @param initiallyVisible whether the predicate should be initially displayed or not
      */
-    constructor(predicates: Array<Predicate>, protected _operator: BooleanOperator) {
-        super();
+    constructor(predicates: Array<Predicate>, protected _operator: BooleanOperator, initiallyVisible = true) {
+        super(initiallyVisible);
         this._predicates = [];
         this._predicates.push(...predicates);
         this.updateQuery();
@@ -56,6 +57,14 @@ export class ClausePredicate extends Predicate {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Sets this predicate and all its sub-predicates to visible.
+     */
+    public showAll(): void {
+        this.show();
+        this._predicates.forEach(p => p.show());
     }
 
     /**

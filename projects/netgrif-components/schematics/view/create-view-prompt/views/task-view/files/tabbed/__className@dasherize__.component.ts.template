@@ -1,12 +1,15 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     ArrayTaskViewServiceFactory,
+    CategoryFactory,
+    defaultTaskSearchCategoriesFactory,
     InjectedTabbedTaskViewData,
+    NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SearchService,
     TabbedTaskView,
-    TaskViewService,
     tabbedTaskViewServiceFactory,
+    TaskViewService,
     ViewIdService,
 } from '@netgrif/application-engine';
 import {
@@ -22,6 +25,7 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     templateUrl: './<%= dasherize(className) %>.component.html',
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
+        CategoryFactory,
         ArrayTaskViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory,
@@ -31,6 +35,7 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
             deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(isDefaultTabbedTaskView) { %>
         {   provide: ViewIdService, useValue: null},<% } else { %>
         ViewIdService,<% } %>
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
 export class <%= classify(className) %>Component extends TabbedTaskView implements AfterViewInit {
