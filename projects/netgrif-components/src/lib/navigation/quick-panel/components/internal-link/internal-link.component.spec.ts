@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {InternalLinkComponent} from './internal-link.component';
 import {MaterialModule} from '@netgrif/application-engine';
@@ -10,7 +10,7 @@ describe('InternalLinkComponent', () => {
     let component: InternalLinkComponent;
     let fixture: ComponentFixture<InternalLinkComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [InternalLinkComponent],
             imports: [

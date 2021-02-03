@@ -6,7 +6,7 @@ describe('DialogExampleComponent', () => {
   let component: DialogExampleComponent;
   let fixture: ComponentFixture<DialogExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DialogExampleComponent ]
     })

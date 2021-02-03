@@ -6,7 +6,7 @@ describe('ToolbarExampleComponent', () => {
   let component: ToolbarExampleComponent;
   let fixture: ComponentFixture<ToolbarExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ToolbarExampleComponent ]
     })

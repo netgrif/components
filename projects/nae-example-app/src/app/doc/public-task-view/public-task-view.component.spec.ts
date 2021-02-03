@@ -6,7 +6,7 @@ describe('PublicTaskViewComponent', () => {
   let component: PublicTaskViewComponent;
   let fixture: ComponentFixture<PublicTaskViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PublicTaskViewComponent ]
     })

@@ -6,7 +6,7 @@ describe('PublicWorkflowViewComponent', () => {
   let component: PublicWorkflowViewComponent;
   let fixture: ComponentFixture<PublicWorkflowViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PublicWorkflowViewComponent ]
     })

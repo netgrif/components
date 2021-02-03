@@ -6,7 +6,7 @@ describe('ButtonsNavComponent', () => {
   let component: ButtonsNavComponent;
   let fixture: ComponentFixture<ButtonsNavComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ButtonsNavComponent ]
     })

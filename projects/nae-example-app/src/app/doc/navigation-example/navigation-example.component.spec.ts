@@ -6,7 +6,7 @@ describe('NavigationExampleComponent', () => {
   let component: NavigationExampleComponent;
   let fixture: ComponentFixture<NavigationExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NavigationExampleComponent ]
     })

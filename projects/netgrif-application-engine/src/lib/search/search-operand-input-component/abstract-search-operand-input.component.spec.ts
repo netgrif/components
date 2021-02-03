@@ -1,6 +1,6 @@
 import {AbstractSearchOperandInputComponent} from './abstract-search-operand-input.component';
 import {Component} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
 
@@ -8,7 +8,7 @@ describe('AbstractSearchOperandInputComponent', () => {
     let component: TestSearchOperandInputComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 TestSearchOperandInputComponent,

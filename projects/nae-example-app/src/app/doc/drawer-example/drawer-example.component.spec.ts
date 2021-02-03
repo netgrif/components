@@ -6,7 +6,7 @@ describe('DrawerControlsComponent', () => {
   let component: DrawerExampleComponent;
   let fixture: ComponentFixture<DrawerExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DrawerExampleComponent ]
     })

@@ -6,7 +6,7 @@ describe('SnackBarExampleComponent', () => {
   let component: SnackBarExampleComponent;
   let fixture: ComponentFixture<SnackBarExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SnackBarExampleComponent ]
     })

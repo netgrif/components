@@ -6,7 +6,7 @@ describe('ReactiveTextFieldComponent', () => {
   let component: ReactiveTextFieldComponent;
   let fixture: ComponentFixture<ReactiveTextFieldComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ReactiveTextFieldComponent ]
     })

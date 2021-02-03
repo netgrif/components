@@ -6,7 +6,7 @@ describe('CaseViewComponent', () => {
   let component: TabbedCaseViewComponent;
   let fixture: ComponentFixture<TabbedCaseViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TabbedCaseViewComponent ]
     })

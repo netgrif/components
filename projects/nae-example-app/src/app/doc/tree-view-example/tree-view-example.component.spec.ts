@@ -6,7 +6,7 @@ describe('TreeViewExampleComponent', () => {
   let component: TreeViewExampleComponent;
   let fixture: ComponentFixture<TreeViewExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TreeViewExampleComponent ]
     })

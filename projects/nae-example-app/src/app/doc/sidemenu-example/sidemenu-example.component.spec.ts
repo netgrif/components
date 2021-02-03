@@ -6,7 +6,7 @@ describe('SidemenuExampleComponent', () => {
   let component: SidemenuExampleComponent;
   let fixture: ComponentFixture<SidemenuExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SidemenuExampleComponent ]
     })

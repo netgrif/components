@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -19,7 +19,7 @@ describe('AbstractAuthenticationOverlay', () => {
     let component: TestAuthenticationOverlayComponent;
     let fixture: ComponentFixture<TestAuthenticationOverlayComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestAuthenticationOverlayComponent],
             imports: [

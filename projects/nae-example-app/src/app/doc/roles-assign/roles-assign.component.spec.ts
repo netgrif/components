@@ -6,7 +6,7 @@ describe('RolesAssignComponent', () => {
   let component: RolesAssignComponent;
   let fixture: ComponentFixture<RolesAssignComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RolesAssignComponent ]
     })

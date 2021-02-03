@@ -6,7 +6,7 @@ describe('PublicResolverComponent', () => {
   let component: PublicResolvercomponent;
   let fixture: ComponentFixture<PublicResolvercomponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PublicResolvercomponent ]
     })

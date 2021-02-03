@@ -12,6 +12,7 @@ package-lock.json
 
 # dependencies
 /node_modules
+/projects/netgrif-application-engine/node_modules
 
 # profiling files
 chrome-profiler-events*.json

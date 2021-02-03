@@ -9,7 +9,7 @@ describe('<%= classify(className) %>Component', () => {
     let component: <%= classify(className) %>Component;
     let fixture: ComponentFixture<<%= classify(className) %>Component>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [TreeCaseViewComponentModule, NoopAnimationsModule],
             providers: [

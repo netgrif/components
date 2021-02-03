@@ -6,7 +6,7 @@ describe('TaskViewComponent', () => {
   let component: TabbedTaskViewComponent;
   let fixture: ComponentFixture<TabbedTaskViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TabbedTaskViewComponent ]
     })

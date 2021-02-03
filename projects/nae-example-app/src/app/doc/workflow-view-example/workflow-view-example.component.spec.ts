@@ -6,7 +6,7 @@ describe('WorkflowsViewExampleComponent', () => {
   let component: WorkflowViewExampleComponent;
   let fixture: ComponentFixture<WorkflowViewExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WorkflowViewExampleComponent ]
     })

@@ -6,7 +6,7 @@ describe('HeadersComponent', () => {
   let component: HeadersComponent;
   let fixture: ComponentFixture<HeadersComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ HeadersComponent ]
     })

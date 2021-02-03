@@ -6,7 +6,7 @@ describe('RailControlsComponent', () => {
   let component: RailExampleComponent;
   let fixture: ComponentFixture<RailExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RailExampleComponent ]
     })

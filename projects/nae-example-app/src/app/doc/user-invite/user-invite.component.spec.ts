@@ -6,7 +6,7 @@ describe('UserInviteComponent', () => {
   let component: UserInviteComponent;
   let fixture: ComponentFixture<UserInviteComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UserInviteComponent ]
     })

@@ -6,7 +6,7 @@ describe('FilterRepositoryExampleComponent', () => {
   let component: FilterRepositoryExampleComponent;
   let fixture: ComponentFixture<FilterRepositoryExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FilterRepositoryExampleComponent ]
     })

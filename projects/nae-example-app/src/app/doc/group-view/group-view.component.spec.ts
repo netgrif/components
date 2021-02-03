@@ -19,7 +19,7 @@ describe('GroupViewGroupViewComponent', () => {
     let component: GroupViewComponent;
     let fixture: ComponentFixture<GroupViewComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
