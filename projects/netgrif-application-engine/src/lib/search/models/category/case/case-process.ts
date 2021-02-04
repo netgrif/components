@@ -11,19 +11,37 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.case.process';
 
+    protected _uniqueOptionsMap: Map<string, Set<string>>;
+
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processIdentifier'],
             [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
             logger);
+        this._uniqueOptionsMap = new Map<string, Set<string>>();
     }
 
     protected createOptions(): void {
         this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
-                this.addToMap(petriNet.title, petriNet.identifier);
+                if (this.isUniqueOption(petriNet.title, petriNet.identifier)) {
+                    this.addToMap(petriNet.title, petriNet.identifier);
+                }
             });
         });
+    }
+
+    protected isUniqueOption(key: string, value: string): boolean {
+        if (!this._uniqueOptionsMap.has(key)) {
+            this._uniqueOptionsMap.set(key, new Set<string>([value]));
+            return true;
+        }
+        if (this._uniqueOptionsMap.get(key).has(value)) {
+            return false;
+        } else {
+            this._uniqueOptionsMap.get(key).add(value);
+            return true;
+        }
     }
 
     protected generateQuery(userInput: Array<Array<string>>): Query {
