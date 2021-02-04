@@ -21,6 +21,7 @@
             "allow-pascal-case"
         ],
         "no-string-literal": false,
-        "no-input-rename": false
+        "no-input-rename": false,
+        "no-redundant-jsdoc": false
     }
 }

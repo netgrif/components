@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -26,7 +26,7 @@ describe('AbstractDatetimeFieldComponent', () => {
     let component: TestDateTimeFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
 import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
@@ -60,7 +60,7 @@ describe('AbtsractTaskPanelComponent', () => {
     let fixture: ComponentFixture<TestWrapperComponent>;
     let assignSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const mockAssignPolicyService = {
             performAssignPolicy: () => {}
         };

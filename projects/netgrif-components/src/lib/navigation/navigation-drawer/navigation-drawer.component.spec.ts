@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NavigationDrawerComponent} from './navigation-drawer.component';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -29,7 +29,7 @@ describe('NavigationDrawerComponent', () => {
     let component: NavigationDrawerComponent;
     let fixture: ComponentFixture<NavigationDrawerComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [NavigationDrawerComponent, NavigationTreeComponent],
             imports: [

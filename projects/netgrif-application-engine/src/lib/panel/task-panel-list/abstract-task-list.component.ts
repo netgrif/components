@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild} from '@angular/core';
+import {EventEmitter, Inject, Input, OnDestroy, Optional, Output, ViewChild} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
 import {Observable} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';

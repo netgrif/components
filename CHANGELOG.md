@@ -1,3 +1,17 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10861/tab/release-report-all-issues"></a>
+## 5.0.1 - Teal Brass (04.02.2021)
+### Bug fixes
+* [NAE-1170](https://netgrif.atlassian.net/browse/NAE-1170) - Lost of focus on forms
+* [NAE-1218](https://netgrif.atlassian.net/browse/NAE-1218) - Bad import on scss search theme
+* [NAE-1219](https://netgrif.atlassian.net/browse/NAE-1219) - NavigationTreeComponent path of undefined error
+* [NAE-1223](https://netgrif.atlassian.net/browse/NAE-1223) - Fix tests and lint warnings
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10732/tab/release-report-all-issues"></a>
 ## 5.0.0 - Silver Steel (28.02.2021)
 ### Bug fixes

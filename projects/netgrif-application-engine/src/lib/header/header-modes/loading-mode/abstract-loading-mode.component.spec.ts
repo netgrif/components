@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -29,7 +29,7 @@ describe('AbstractLoadingModeComponent', () => {
     let component: TestLoadModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestLoadModeComponent, TestWrapperComponent],
             imports: [

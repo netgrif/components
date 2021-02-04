@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FilterSelectorComponent} from './filter-selector.component';
 import {SideMenuFilterSelectorComponentModule} from './side-menu-filter-selector-component.module';
 import {Observable} from 'rxjs';
@@ -23,7 +23,7 @@ describe('FilterSelectorComponent', () => {
     let sideMenuSpy: jasmine.Spy;
     let sideMenuCloseSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SideMenuFilterSelectorComponentModule,

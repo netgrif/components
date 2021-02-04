@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 
 export abstract class AbstractNavigationRailComponent implements OnDestroy {
