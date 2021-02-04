@@ -31,7 +31,7 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
                     .filter(pair => pair.name && pair.name.trim().length > 0)
                     .forEach(pair => {
                         this.addToMap(pair.name, {
-                            netId: petriNet.stringId,
+                            netId: this.getPetriNetIdentifier(petriNet),
                             attributeId: pair.id
                         });
                     });
@@ -63,6 +63,17 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
      *  Currently it can be either the {@link CaseProcess} or the {@link TaskProcess} category class.
      */
     protected abstract getProcessCategory(): Category<Array<string>>;
+
+    /**
+     * This method should return the appropriate identifier of a PetriNet.
+     *
+     * Categories that query cases should use process identifier.
+     *
+     * Categories that query tasks should use stringId.
+     *
+     * @param net PetriNet whose identifier should be extracted
+     */
+    protected abstract getPetriNetIdentifier(net: Net): string;
 
     /**
      * Generates the query as a combination of the selected attribute pairs.

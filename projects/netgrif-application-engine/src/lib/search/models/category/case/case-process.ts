@@ -12,7 +12,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     private static readonly _i18n = 'search.category.case.process';
 
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
-        super(['processId'],
+        super(['processIdentifier'],
             [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
             logger);
@@ -21,7 +21,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     protected createOptions(): void {
         this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
-                this.addToMap(petriNet.title, petriNet.stringId);
+                this.addToMap(petriNet.title, petriNet.identifier);
             });
         });
     }

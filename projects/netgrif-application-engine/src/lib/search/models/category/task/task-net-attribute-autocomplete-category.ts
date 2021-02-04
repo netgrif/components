@@ -30,4 +30,8 @@ export abstract class TaskNetAttributeAutocompleteCategory extends NetAttributeA
     protected getProcessCategory(): Category<Array<string>> {
         return this._processCategory;
     }
+
+    protected getPetriNetIdentifier(net: Net): string {
+        return net.stringId;
+    }
 }
