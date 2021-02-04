@@ -31,6 +31,12 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
         });
     }
 
+    /**
+     * Checks whether the provided option is unique and updates the list of unique options with it.
+     * @param key autocomplete option key
+     * @param value autocomplete option value
+     * @returns `true` if the option has not yet been checked as unique. `false` if the option has been checked before.
+     */
     protected isUniqueOption(key: string, value: string): boolean {
         if (!this._uniqueOptionsMap.has(key)) {
             this._uniqueOptionsMap.set(key, new Set<string>([value]));
