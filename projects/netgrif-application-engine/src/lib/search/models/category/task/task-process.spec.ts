@@ -11,13 +11,13 @@ describe('TaskProcess', () => {
         operatorService = new OperatorService();
     });
 
-    beforeEach(() => {
+    beforeEach( waitForAsync(() => {
         category = new TaskProcess(operatorService, null, createMockDependencies());
-    });
-
-    it('should create an instance', waitForAsync(() => {
-        expect(category).toBeTruthy();
     }));
+
+    it('should create an instance', () => {
+        expect(category).toBeTruthy();
+    });
 
     it('should select default operator', () => {
         expect(category.selectDefaultOperator()).toBeUndefined();
