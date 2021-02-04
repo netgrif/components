@@ -86,6 +86,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             }
             const routeSegment = this.getNodeRouteSegment(view);
 
+            if (routeSegment === undefined) {
+                throw new Error('Route segment doesnt exist in view ' + parentUrl + '/' + viewKey + ' !');
+            }
+
             if  (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
                 return; // continue
             }
@@ -154,7 +158,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
      * @returns the routeSegment for the provided view, or undefined if none is specified
      */
     protected getNodeRouteSegment(view: View): string {
-        return !view.routing && !view.routing.path ? undefined : view.routing.path;
+        return !!view.routing && (typeof view.routing.path === 'string') ? view.routing.path : undefined;
     }
 
     /**

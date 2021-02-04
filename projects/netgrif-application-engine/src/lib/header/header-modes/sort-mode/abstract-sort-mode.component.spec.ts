@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {MatSortModule} from '@angular/material/sort';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -27,7 +27,7 @@ describe('AbstractSortModeComponent', () => {
     let fixture: ComponentFixture<TestWrapperComponent>;
     let headerSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 FlexModule,

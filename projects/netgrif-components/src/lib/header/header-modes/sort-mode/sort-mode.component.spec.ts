@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SortModeComponent} from './sort-mode.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {Component} from '@angular/core';
@@ -28,7 +28,7 @@ describe('SortModeComponent', () => {
     let component: SortModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 FlexModule,

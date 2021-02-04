@@ -1,5 +1,5 @@
 import {Observable, Subject} from 'rxjs';
-import {OnDestroy, OnInit} from '@angular/core';
+import {OnDestroy} from '@angular/core';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskViewService} from './service/task-view.service';

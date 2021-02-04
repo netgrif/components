@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublicWorkflowPanelComponent } from './public-workflow-panel.component';
 import {
@@ -13,7 +13,6 @@ import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {WorkflowPanelComponent} from '../workflow-panel/workflow-panel.component';
 import {PanelComponent} from '../panel.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';
@@ -22,7 +21,7 @@ describe('PublicWorkflowPanelComponent', () => {
   let component: PublicWorkflowPanelComponent;
   let fixture: ComponentFixture<PublicTestWrapperComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
         imports: [
             MaterialModule,

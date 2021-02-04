@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AbstractSearchPredicateComponent} from './abstract-search-predicate.component';
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
@@ -24,7 +24,7 @@ describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,

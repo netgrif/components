@@ -1,4 +1,4 @@
-import {Inject, Input, OnInit, Optional} from '@angular/core';
+import {Input, OnInit} from '@angular/core';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {AbstractNumberFieldComponent} from '../abstract-number-field.component';
 import {TranslateService} from '@ngx-translate/core';

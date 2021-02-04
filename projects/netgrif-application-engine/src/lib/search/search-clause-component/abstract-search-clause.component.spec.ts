@@ -1,6 +1,6 @@
 import {AbstractSearchClauseComponent} from './abstract-search-clause.component';
 import {Component, OnDestroy} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Subject} from 'rxjs';
 import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
 import {BooleanOperator} from '../models/boolean-operator';
@@ -9,7 +9,7 @@ describe('AbstractSearchClauseComponent', () => {
     let component: TestSearchClauseComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 TestSearchClauseComponent,
