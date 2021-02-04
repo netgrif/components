@@ -16,6 +16,7 @@ import {createTaskEventNotification} from '../../task-content/model/task-event-n
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -34,6 +35,7 @@ export class CancelTaskService extends TaskHandlingService {
                 protected _taskDataService: TaskDataService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
+                @Optional() protected _taskViewService: TaskViewService,
                 _taskContentService: TaskContentService) {
         super(_taskContentService, _selectedCaseService);
     }
@@ -64,13 +66,30 @@ export class CancelTaskService extends TaskHandlingService {
             )) {
             this.sendNotification(false);
             afterAction.next(false);
+            afterAction.complete();
             return;
         }
-        this._taskState.startLoading(canceledTaskId);
 
+        if (this._taskViewService !== null && !this._taskViewService.allowMultiOpen) {
+            const sub = new Subject<void>();
+            if (!this._taskViewService.isEmptyQueue()) {
+                this._taskViewService.popQueue().subscribe(() => {
+                    this._taskState.startLoading(canceledTaskId);
+                    this.cancelRequest(afterAction, canceledTaskId);
+                });
+                this.addToQueue(sub, afterAction);
+                return;
+            }
+            this.addToQueue(sub, afterAction);
+        }
+
+        this._taskState.startLoading(canceledTaskId);
+        this.cancelRequest(afterAction, canceledTaskId);
+    }
+
+    protected cancelRequest(afterAction = new Subject<boolean>(), canceledTaskId: string) {
         this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(canceledTaskId);
-
             if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel response could be received, discarding...');
                 return;
@@ -82,6 +101,7 @@ export class CancelTaskService extends TaskHandlingService {
                 this._taskOperations.reload();
                 this.sendNotification(true);
                 afterAction.next(true);
+                afterAction.complete();
             } else if (eventOutcome.error !== undefined) {
                 if (eventOutcome.error !== '') {
                     this._snackBar.openErrorSnackBar(eventOutcome.error);
@@ -89,6 +109,7 @@ export class CancelTaskService extends TaskHandlingService {
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this.sendNotification(false);
                 afterAction.next(false);
+                afterAction.complete();
             }
         }, error => {
             this._taskState.stopLoading(canceledTaskId);
@@ -103,6 +124,7 @@ export class CancelTaskService extends TaskHandlingService {
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.sendNotification(false);
             afterAction.next(false);
+            afterAction.complete();
         });
     }
 
@@ -112,5 +134,13 @@ export class CancelTaskService extends TaskHandlingService {
      */
     protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.CANCEL, success));
+    }
+
+    protected addToQueue(sub: Subject<void>, afterAction: Subject<boolean>) {
+        this._taskViewService.addToQueue(sub);
+        afterAction.asObservable().subscribe(bool => {
+            sub.next();
+            sub.complete();
+        });
     }
 }

@@ -1,5 +1,5 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {Subject} from 'rxjs';
+import {ReplaySubject, Subject} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -15,6 +15,7 @@ import {createTaskEventNotification} from '../../task-content/model/task-event-n
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 
 
 /**
@@ -32,6 +33,7 @@ export class AssignTaskService extends TaskHandlingService {
                 protected _taskDataService: TaskDataService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
+                @Optional() protected _taskViewService: TaskViewService,
                 _taskContentService: TaskContentService) {
         super(_taskContentService, _selectedCaseService);
     }
@@ -59,8 +61,24 @@ export class AssignTaskService extends TaskHandlingService {
             this.completeSuccess(afterAction);
             return;
         }
-        this._taskState.startLoading(assignedTaskId);
 
+        if (this._taskViewService !== null && !this._taskViewService.allowMultiOpen) {
+            const sub = new Subject<void>();
+            if (!this._taskViewService.isEmptyQueue()) {
+                this._taskViewService.popQueue().subscribe(() => {
+                    this._taskState.startLoading(assignedTaskId);
+                    this.assignRequest(afterAction, assignedTaskId);
+                });
+                this.addToQueue(sub, afterAction);
+                return;
+            }
+            this.addToQueue(sub, afterAction);
+        }
+        this._taskState.startLoading(assignedTaskId);
+        this.assignRequest(afterAction, assignedTaskId);
+    }
+
+    protected assignRequest(afterAction = new Subject<boolean>(), assignedTaskId: string) {
         this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(assignedTaskId);
             if (!this.isTaskRelevant(assignedTaskId)) {
@@ -109,5 +127,13 @@ export class AssignTaskService extends TaskHandlingService {
      */
     protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.ASSIGN, success));
+    }
+
+    protected addToQueue(sub: Subject<void>, afterAction: Subject<boolean>) {
+        this._taskViewService.addToQueue(sub);
+        afterAction.asObservable().subscribe(bool => {
+            sub.next();
+            sub.complete();
+        });
     }
 }
