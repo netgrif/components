@@ -1,4 +1,4 @@
-import {Subject} from 'rxjs';
+import {ReplaySubject} from 'rxjs';
 
 export class Queue<T> {
     _store: T[] = [];
@@ -13,13 +13,13 @@ export class Queue<T> {
     }
 }
 
-export class SubjectQueue extends Queue<Subject<void>> {
+export class ReplaySubjectQueue extends Queue<ReplaySubject<boolean>> {
     removeCompleted(): void {
         if (this.isEmpty()) {
             return;
         }
         for (let i = this._store.length - 1; i >= 0; i--) {
-            if (this._store[i].closed) {
+            if (this._store[i].isStopped) {
                 this._store.splice(i, 1);
             }
         }

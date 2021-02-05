@@ -1,5 +1,5 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {Subject} from 'rxjs';
+import {ReplaySubject, Subject} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
@@ -70,24 +70,24 @@ export class CancelTaskService extends TaskHandlingService {
             return;
         }
 
+        const sub = new ReplaySubject<boolean>();
         if (this._taskViewService !== null && !this._taskViewService.allowMultiOpen) {
-            const sub = new Subject<void>();
             if (!this._taskViewService.isEmptyQueue()) {
                 this._taskViewService.popQueue().subscribe(() => {
                     this._taskState.startLoading(canceledTaskId);
-                    this.cancelRequest(afterAction, canceledTaskId);
+                    this.cancelRequest(afterAction, canceledTaskId, sub);
                 });
-                this.addToQueue(sub, afterAction);
+                this._taskViewService.addToQueue(sub);
                 return;
             }
-            this.addToQueue(sub, afterAction);
+            this._taskViewService.addToQueue(sub);
         }
 
         this._taskState.startLoading(canceledTaskId);
-        this.cancelRequest(afterAction, canceledTaskId);
+        this.cancelRequest(afterAction, canceledTaskId, sub);
     }
 
-    protected cancelRequest(afterAction = new Subject<boolean>(), canceledTaskId: string) {
+    protected cancelRequest(afterAction = new Subject<boolean>(), canceledTaskId: string, queueAction = new Subject<boolean>()) {
         this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(canceledTaskId);
             if (!this.isTaskRelevant(canceledTaskId)) {
@@ -99,17 +99,13 @@ export class CancelTaskService extends TaskHandlingService {
                 this._taskContentService.updateStateData(eventOutcome);
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this._taskOperations.reload();
-                this.sendNotification(true);
-                afterAction.next(true);
-                afterAction.complete();
+                this.completeActions(afterAction, queueAction, true);
             } else if (eventOutcome.error !== undefined) {
                 if (eventOutcome.error !== '') {
                     this._snackBar.openErrorSnackBar(eventOutcome.error);
                 }
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
-                this.sendNotification(false);
-                afterAction.next(false);
-                afterAction.complete();
+                this.completeActions(afterAction, queueAction, false);
             }
         }, error => {
             this._taskState.stopLoading(canceledTaskId);
@@ -122,10 +118,20 @@ export class CancelTaskService extends TaskHandlingService {
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.sendNotification(false);
-            afterAction.next(false);
-            afterAction.complete();
+            this.completeActions(afterAction, queueAction, false);
         });
+    }
+
+    /**
+     * @ignore
+     * complete all action streams and send notification with selected boolean
+     */
+    protected completeActions(afterAction: Subject<boolean>, queueAction: Subject<boolean>, bool: boolean): void {
+        this.sendNotification(bool);
+        afterAction.next(bool);
+        afterAction.complete();
+        queueAction.next(bool);
+        queueAction.complete();
     }
 
     /**
@@ -134,13 +140,5 @@ export class CancelTaskService extends TaskHandlingService {
      */
     protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.CANCEL, success));
-    }
-
-    protected addToQueue(sub: Subject<void>, afterAction: Subject<boolean>) {
-        this._taskViewService.addToQueue(sub);
-        afterAction.asObservable().subscribe(bool => {
-            sub.next();
-            sub.complete();
-        });
     }
 }

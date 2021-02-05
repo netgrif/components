@@ -62,23 +62,23 @@ export class AssignTaskService extends TaskHandlingService {
             return;
         }
 
+        const sub = new ReplaySubject<boolean>();
         if (this._taskViewService !== null && !this._taskViewService.allowMultiOpen) {
-            const sub = new Subject<void>();
             if (!this._taskViewService.isEmptyQueue()) {
                 this._taskViewService.popQueue().subscribe(() => {
                     this._taskState.startLoading(assignedTaskId);
-                    this.assignRequest(afterAction, assignedTaskId);
+                    this.assignRequest(afterAction, assignedTaskId, sub);
                 });
-                this.addToQueue(sub, afterAction);
+                this._taskViewService.addToQueue(sub);
                 return;
             }
-            this.addToQueue(sub, afterAction);
+            this._taskViewService.addToQueue(sub);
         }
         this._taskState.startLoading(assignedTaskId);
-        this.assignRequest(afterAction, assignedTaskId);
+        this.assignRequest(afterAction, assignedTaskId, sub);
     }
 
-    protected assignRequest(afterAction = new Subject<boolean>(), assignedTaskId: string) {
+    protected assignRequest(afterAction = new Subject<boolean>(), assignedTaskId: string, queueAction = new Subject<boolean>()) {
         this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(assignedTaskId);
             if (!this.isTaskRelevant(assignedTaskId)) {
@@ -89,11 +89,11 @@ export class AssignTaskService extends TaskHandlingService {
             if (eventOutcome.success) {
                 this._taskContentService.updateStateData(eventOutcome);
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
-                this.completeSuccess(afterAction);
+                this._taskOperations.reload();
+                this.completeActions(afterAction, queueAction, true);
             } else if (eventOutcome.error) {
                 this._snackBar.openErrorSnackBar(eventOutcome.error);
-                this.sendNotification(false);
-                afterAction.next(false);
+                this.completeActions(afterAction, queueAction, false);
             }
         }, error => {
             this._taskState.stopLoading(assignedTaskId);
@@ -106,8 +106,7 @@ export class AssignTaskService extends TaskHandlingService {
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
              ${this._taskContentService.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.sendNotification(false);
-            afterAction.next(false);
+            this.completeActions(afterAction, queueAction, false);
         });
     }
 
@@ -119,6 +118,19 @@ export class AssignTaskService extends TaskHandlingService {
         this._taskOperations.reload();
         this.sendNotification(true);
         afterAction.next(true);
+        afterAction.complete();
+    }
+
+    /**
+     * @ignore
+     * complete all action streams and send notification with selected boolean
+     */
+    protected completeActions(afterAction: Subject<boolean>, queueAction: Subject<boolean>, bool: boolean): void {
+        this.sendNotification(bool);
+        afterAction.next(bool);
+        afterAction.complete();
+        queueAction.next(bool);
+        queueAction.complete();
     }
 
     /**
@@ -127,13 +139,5 @@ export class AssignTaskService extends TaskHandlingService {
      */
     protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.ASSIGN, success));
-    }
-
-    protected addToQueue(sub: Subject<void>, afterAction: Subject<boolean>) {
-        this._taskViewService.addToQueue(sub);
-        afterAction.asObservable().subscribe(bool => {
-            sub.next();
-            sub.complete();
-        });
     }
 }

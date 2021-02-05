@@ -24,7 +24,7 @@ import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
-import {Queue, SubjectQueue} from '../models/queue';
+import {ReplaySubjectQueue} from '../models/queue';
 
 
 @Injectable()
@@ -46,7 +46,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
 
     // Serializing assign after cancel
     protected _allowMultiOpen: boolean;
-    protected _assignCancelQueue: SubjectQueue;
+    protected _assignCancelQueue: ReplaySubjectQueue;
 
     private readonly _initializing: boolean = true;
 
@@ -62,7 +62,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                 initiallyOpenOneTask: Observable<boolean> = of(true),
                 closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
         super(allowedNets);
-        this._assignCancelQueue = new SubjectQueue();
+        this._assignCancelQueue = new ReplaySubjectQueue();
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
@@ -200,7 +200,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         return this._allowMultiOpen;
     }
 
-    public addToQueue(obs: Subject<void>): void {
+    public addToQueue(obs: ReplaySubject<boolean>): void {
         this._assignCancelQueue.push(obs);
     }
 
@@ -209,7 +209,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         return this._assignCancelQueue.isEmpty();
     }
 
-    public popQueue(): Observable<void> {
+    public popQueue(): Observable<boolean> {
         return this._assignCancelQueue.pop().asObservable();
     }
 
