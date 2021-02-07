@@ -27,8 +27,8 @@
             </mat-form-field>
         </div>
         <div fxLayout="row" [fxLayoutAlign]="getButtonsFxLayoutAlign()" fxLayoutAlign.xs="center" class="margin-top-4">
-            <button mat-stroked-button *ngIf="showForgottenPasswordButton && !showSignUpButton" (click)="resetEmit()" color="primary" class="margin-left-40">{{ 'forms.login.reset' | translate}}</button>
-            <button mat-stroked-button *ngIf="showSignUpButton" (click)="signUpEmit()" color="primary" class="margin-left-40">{{ 'forms.login.sign' | translate}}</button>
+            <button mat-stroked-button type="button" *ngIf="showForgottenPasswordButton && !showSignUpButton" (click)="resetEmit()" color="primary" class="margin-left-40">{{ 'forms.login.reset' | translate}}</button>
+            <button mat-stroked-button type="button" *ngIf="showSignUpButton" (click)="signUpEmit()" color="primary" class="margin-left-40">{{ 'forms.login.sign' | translate}}</button>
             <button color="primary" type="submit" mat-raised-button fxLayout="row" fxLayoutAlign="center center">
                 <mat-spinner *ngIf="loading | async"
                              mode="indeterminate"
