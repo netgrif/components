@@ -1,3 +1,16 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10863/tab/release-report-all-issues"></a>
+## 5.0.2 - Navy Lead (07.02.2021)
+### Bug fixes
+* [NAE-1230](https://netgrif.atlassian.net/browse/NAE-1230) - TrackBy function on fields not working correctly with taskRef changes
+* [NAE-1229](https://netgrif.atlassian.net/browse/NAE-1229) - On wrong credentials undefined user is propagated
+* [NAE-1231](https://netgrif.atlassian.net/browse/NAE-1231) - Enter key on login form does not trigger login action
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10861/tab/release-report-all-issues"></a>
 ## 5.0.1 - Teal Brass (04.02.2021)
 ### Bug fixes

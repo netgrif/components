@@ -166,6 +166,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.next(true);
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
+            this._taskContentService.$shouldCreateCounter.next(this._taskContentService.$shouldCreateCounter.getValue() + 1);
         }, (error: HttpErrorResponse) => {
             this._taskState.stopLoading(gottenTaskId);
             this._log.debug('getting task data failed', error);
