@@ -88,7 +88,7 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      * @param event - event containing the new width of this Component
      */
     public evaluateTemplateCondition(): boolean {
-        this._showLargeLayout.value = this.container && this.container.nativeElement &&
+        this._showLargeLayout.value = !!this.container && !!this.container.nativeElement &&
             this.container.nativeElement.offsetWidth  >= this.layoutChangeWidthBreakpoint && this.evaluateTemplate();
         return this._showLargeLayout.value;
     }
