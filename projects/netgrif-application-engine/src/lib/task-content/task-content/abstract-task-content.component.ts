@@ -599,4 +599,17 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected createGridAreasString(grid: Array<Array<string>>): string {
         return grid.map(row => row.join(' ')).join(' | ');
     }
+
+    public trackByFn = (index: number, element: DatafieldGridLayoutElement) => this.trackByDatafields(index, element);
+
+    protected trackByDatafields(index: number, element: DatafieldGridLayoutElement) {
+        switch (element.type) {
+            case TaskElementType.BLANK:
+                return element.gridAreaId + '-' + this.taskContentService.$shouldCreateCounter.getValue();
+            case TaskElementType.DATA_GROUP_TITLE:
+                return element.title + '-' + this.taskContentService.$shouldCreateCounter.getValue();
+            default:
+                return element.item.stringId + '-' + this.taskContentService.$shouldCreateCounter.getValue();
+        }
+    }
 }

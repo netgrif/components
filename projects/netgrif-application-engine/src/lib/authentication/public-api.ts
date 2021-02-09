@@ -11,6 +11,7 @@ export * from './authentication.module';
 export * from './authentication.factory';
 
 /* SERVICES */
+export * from './anonymous/anonymous.service';
 
 /* COMPONENTS */
 export * from './components/abstract-authentication-overlay';

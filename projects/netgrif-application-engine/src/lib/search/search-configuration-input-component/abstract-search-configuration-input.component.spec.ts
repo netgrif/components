@@ -1,12 +1,12 @@
 import {AbstractSearchConfigurationInputComponent} from './abstract-search-configuration-input.component';
 import {Component} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 describe('AbstractSearchConfigurationInputComponent', () => {
     let component: TestSearchConfigurationInputComponent;
     let fixture: ComponentFixture<TestSearchConfigurationInputComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 TestSearchConfigurationInputComponent

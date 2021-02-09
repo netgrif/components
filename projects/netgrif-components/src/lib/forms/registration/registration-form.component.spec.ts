@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RegistrationFormComponent} from './registration-form.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -17,7 +17,7 @@ describe('RegistrationPanelComponent', () => {
     let component: RegistrationFormComponent;
     let fixture: ComponentFixture<RegistrationFormComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

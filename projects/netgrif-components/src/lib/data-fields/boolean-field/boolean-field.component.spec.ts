@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {BooleanFieldComponent} from './boolean-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
@@ -24,7 +24,7 @@ describe('BooleanFieldComponent', () => {
     let component: BooleanFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

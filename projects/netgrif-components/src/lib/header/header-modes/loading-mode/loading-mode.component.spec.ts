@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LoadingModeComponent} from './loading-mode.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -31,7 +31,7 @@ describe('LoadingModeComponent', () => {
     let component: LoadingModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [LoadingModeComponent, TestWrapperComponent],
             imports: [

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case-list.component';
 import {
     AuthenticationMethodService,
@@ -31,7 +31,7 @@ describe('CaseListComponent', () => {
     let component: CaseListComponent;
     let fixture: ComponentFixture<CaseListComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,

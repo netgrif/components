@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {DateTimeFieldComponent} from './date-time-field.component';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
@@ -28,7 +28,7 @@ describe('DatetimeFieldComponent', () => {
     let component: DateTimeFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
