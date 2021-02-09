@@ -31,7 +31,7 @@ export class UserPreferenceService implements OnDestroy {
         this._drawerWidthChanged$ = new Subject<number>();
 
         this._sub = this._userService.user$.subscribe(loggedUser => {
-            if (loggedUser.id !== '') {
+            if (loggedUser && loggedUser.id !== '') {
                 this._userResourceService.getPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();
                         Object.assign(this._preferences, prefs);

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchConfigurationInputComponent} from './search-configuration-input.component';
 import {Component} from '@angular/core';
 import {SearchComponentModule} from '../search.module';
@@ -19,7 +19,7 @@ describe('SearchConfigurationInputComponent', () => {
     let component: SearchConfigurationInputComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,
