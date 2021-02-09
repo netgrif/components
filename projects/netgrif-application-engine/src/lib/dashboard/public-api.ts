@@ -22,6 +22,4 @@ export * from './cards/iframe-card/abstract-iframe-card';
 export * from './cards/custom-card/abstract-custom-card';
 export * from './dashboard-content/abstract-dashboard-content';
 
-/* SERVICES */
-export * from '../resources/engine-endpoint/dashboard-resource.service';
 

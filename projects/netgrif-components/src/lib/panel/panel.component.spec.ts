@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PanelComponent} from './panel.component';
 import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
@@ -12,7 +12,7 @@ describe('PanelComponent', () => {
     let component: PanelComponent;
     let fixture: ComponentFixture<PanelComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

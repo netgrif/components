@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
@@ -61,7 +61,7 @@ describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const mockAssignPolicyService = {
             performAssignPolicy: () => {
             }

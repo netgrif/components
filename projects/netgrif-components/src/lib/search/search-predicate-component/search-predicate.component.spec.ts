@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchPredicateComponent} from './search-predicate.component';
 import {Component, OnDestroy} from '@angular/core';
 import {
@@ -18,7 +18,7 @@ describe('SearchPredicateComponent', () => {
     let component: SearchPredicateComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,

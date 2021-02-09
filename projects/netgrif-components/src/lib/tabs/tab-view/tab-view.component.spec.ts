@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TabViewComponent} from './tab-view.component';
 import {TabCreationDetectorComponent} from '../tab-creation-detector/tab-creation-detector.component';
 import {Component, NgModule} from '@angular/core';
@@ -25,7 +25,7 @@ describe('TabViewComponent', () => {
     let component: TabViewComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,

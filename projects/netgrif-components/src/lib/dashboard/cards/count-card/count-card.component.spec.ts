@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CountCardComponent} from './count-card.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {Component} from '@angular/core';
@@ -12,7 +12,7 @@ describe('CountCardComponent', () => {
     let component: CountCardComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MatCardModule, FlexLayoutModule, MatProgressSpinnerModule, NoopAnimationsModule],
             declarations: [CountCardComponent, TestWrapperComponent],

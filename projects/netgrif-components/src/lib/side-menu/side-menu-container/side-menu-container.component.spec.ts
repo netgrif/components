@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SideMenuContainerComponent} from './side-menu-container.component';
 import {CommonModule} from '@angular/common';
@@ -12,7 +12,7 @@ describe('SideMenuContainerComponent', () => {
     let fixture: ComponentFixture<SideMenuContainerComponent>;
     let service: SideMenuService;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
