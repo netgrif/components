@@ -1,25 +1,29 @@
 interface InnerNode extends GuiMetaAttribute {
     operator: 'AND' | 'OR' | 'NOT'; // univerzalna negacia sa vyuziva v custom queries na projektoch
+    // NOT unarny operator
     subQueries: Array<InnerNode | LeafNode>;
 }
 
 interface LeafNode extends GuiMetaAttribute {
     // niektore attributes su len pre cases, niektore len pre tasks a niektore spolocne
-    attribute: 'authorEmail' | 'authorName' | 'authorId' | 'processIdentifier' | 'processId' | 'transitionId' | 'roleId' | 'title'
+    attribute: 'authorEmail' | 'authorName' | 'authorId' | 'processIdentifier'
+        | 'processId'
+        | 'transitionId' | 'roleId' | 'caseTitle'
         | 'visualId' | 'fulltext' | 'groupId' | 'caseId' | 'assigneeId' | 'fieldId';
     attributeArguments?: {
         filedId: string;
-        fieldType: string; // po uprave elastic mappingu je nutne vediet aky index sa ma dopytovat
+        processIdentifier: string;
     };
     // synonyma pre lessThan - fewerThan, greaterThan - moreThan?
     // zvlast operator na isNull a zvlast na isEmpty?
     // treba zabezpecit, aby equals spravne matchoval elasticove hodnoty nech nenajde match ak sa vyhladava nieco co ma so skutocnou
     // hodnotou len neprazdny prienik ale match to nie je - mozno cez operator umoznit jedno aj druhe spravanie
-    operator: 'equals' | 'inRange' | 'isNull' | 'lessThan' | 'fuzzy' | 'greaterThan' | 'notEquals' | 'substring' | 'lessThanOrEqual'
+    operator: 'equals' | 'inRange' | 'isNull' | 'lessThan' | 'fuzzy' | 'greaterThan'
+        | 'notEquals' | 'substring' | 'lessThanOrEqual'
         | 'greaterThanOrEqual';
     // mozno chceme skratit resp. umoznit skratku args?
-    // ako chceme reprezentovat datumy?
     // stara syntax umoznovala vypisanie viacerych hodnot na reprezentaciu viacerych queries. Chceme podobne spravanie zachovat? - implicitne musia byt OR quries, lebo AND nedavaju zmysel
+    // datum ako ISO-8601
     arguments: Array<string> | Array<number> | Array<boolean>;
 }
 
@@ -40,22 +44,6 @@ interface Filter {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const f: Filter = {
     type: 'case',
     body: {
@@ -65,10 +53,6 @@ const f: Filter = {
             operator: 'equals',
             arguments: ['kovar@netgrif.com']
         }, {
-            attribute: 'processIdentifier',
-            operator: 'equals',
-            arguments: ['new_model']
-        }, {
             operator: 'NOT',
             subQueries: [{
                 operator: 'OR',
@@ -76,7 +60,7 @@ const f: Filter = {
                     attribute: 'fieldId',
                     attributeArguments: {
                         filedId: 'text_0',
-                        fieldType: 'text'
+                        processIdentifier: 'new_model'
                     },
                     operator: 'equals',
                     arguments: ['world']
@@ -84,7 +68,7 @@ const f: Filter = {
                     attribute: 'fieldId',
                     attributeArguments: {
                         filedId: 'number_0',
-                        fieldType: 'number'
+                        processIdentifier: 'new_model'
                     },
                     operator: 'inRange',
                     arguments: [5, 10]
