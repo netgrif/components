@@ -25,8 +25,8 @@ import {
     TestTaskViewFactory
 } from '../../utility/tests/test-factory-methods';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {ConfigTaskViewServiceFactory} from '../../view/task-view/service/factory/config-task-view-service-factory';
 import {SearchService} from '../../search/search-service/search.service';
+import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -43,11 +43,11 @@ describe('TaskHeaderService', () => {
             ],
             providers: [
                 TaskHeaderService,
-                ConfigTaskViewServiceFactory,
+                TaskViewServiceFactory,
                 {
                     provide: TaskViewService,
                     useFactory: TestTaskViewFactory,
-                    deps: [ConfigTaskViewServiceFactory]
+                    deps: [TaskViewServiceFactory]
                 },
                 {
                     provide: SearchService,

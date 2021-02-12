@@ -7,7 +7,7 @@ import {
     AuthenticationService,
     CaseViewService,
     CategoryFactory,
-    ConfigCaseViewServiceFactory,
+    CaseViewServiceFactory,
     ConfigurationService,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -32,7 +32,7 @@ describe('CaseSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 CategoryFactory,
                 {
                     provide: SearchService,
@@ -41,7 +41,7 @@ describe('CaseSearchComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

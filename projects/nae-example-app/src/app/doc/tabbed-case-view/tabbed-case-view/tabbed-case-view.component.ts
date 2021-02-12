@@ -7,12 +7,14 @@ import {
     SearchService,
     SimpleFilter,
     TabbedCaseView,
-    AllNetsCaseViewServiceFactory, ViewIdService, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory, CategoryFactory
+    CaseViewServiceFactory,
+    ViewIdService, NAE_SEARCH_CATEGORIES,
+    defaultCaseSearchCategoriesFactory, CategoryFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => {
-    return factory.create();
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.createWithAllNets();
 };
 
 const searchServiceFactory = () => {
@@ -25,12 +27,12 @@ const searchServiceFactory = () => {
     styleUrls: ['./tabbed-case-view.component.scss'],
     providers: [
         CategoryFactory,
-        AllNetsCaseViewServiceFactory,
+        CaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
-            deps: [AllNetsCaseViewServiceFactory]},
+            deps: [CaseViewServiceFactory]},
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ]

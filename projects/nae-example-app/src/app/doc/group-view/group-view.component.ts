@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView, CategoryFactory,
-    ConfigTaskViewServiceFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
+    TaskViewServiceFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
     SearchService,
     SimpleFilter, TaskSearchCaseQuery,
     TaskViewService
@@ -10,8 +10,8 @@ import {
     HeaderComponent,
 } from 'netgrif-components';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('group-view');
+const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
+    return factory.createFromConfig('group-view');
 };
 
 const searchServiceFactory = (nextGroupService: NextGroupService) => {
@@ -28,14 +28,14 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
     styleUrls: ['./group-view.component.scss'],
     providers: [
         CategoryFactory,
-        ConfigTaskViewServiceFactory,
+        TaskViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory,
             deps: [NextGroupService]
         },
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]},
+            deps: [TaskViewServiceFactory]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })

@@ -12,7 +12,6 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
@@ -32,6 +31,7 @@ import {ModeChangeDescription} from '../models/user-changes/mode-change-descript
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -49,7 +49,7 @@ describe('CaseHeaderService', () => {
             ],
             providers: [
                 CaseHeaderService,
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
@@ -58,7 +58,7 @@ describe('CaseHeaderService', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
