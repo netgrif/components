@@ -17,6 +17,7 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Input() allowMultiOpen = true;
+    @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
      */

@@ -1,21 +1,32 @@
 <nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
               (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
-            <span fxLayoutAlign="start center" fxFlex>
-                <mat-icon class="task-panel-icon panel-primary-icon">
-                    {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
-                <span>{{firstFeaturedValue}}</span>
-            </span>
-            <span *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" class="panel-header-padding">
+            <div fxFlex class="text-column-div">
+                <span class="text-column-margin" fxLayoutAlign="start center">
+                    <mat-icon class="task-panel-icon panel-primary-icon">
+                        {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
+                    <span [ngClass]="{
+                                     'text-column-ellipsis': textEllipsis,
+                                     'text-column-word-wrap': !textEllipsis
+                              }">{{firstFeaturedValue}}</span>
+                </span>
+            </div>
+            <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
+                  class="text-column-div"
                   [fxHide.lt-xl]="i >= 3 && responsiveBody"
                   [fxHide.lt-lg]="i >= 2 && responsiveBody"
                   [fxHide.lt-md]="i >= 1 && responsiveBody"
                   [fxHide.lt-sm]="i >= 0 && responsiveBody">
-                <mat-icon class="task-panel-icon panel-primary-icon"
-                          *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
-                {{field.value}}
-            </span>
+                <span class="text-column-margin" fxLayoutAlign="start center">
+                    <mat-icon class="task-panel-icon panel-primary-icon"
+                              *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
+                    <span [ngClass]="{
+                                 'text-column-ellipsis': textEllipsis,
+                                 'text-column-word-wrap': !textEllipsis
+                              }">{{field.value}}</span>
+                </span>
+            </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
             <button mat-icon-button (click)="preventPanelOpen($event)" *ngIf="!isLoading" [matMenuTriggerFor]="menu">

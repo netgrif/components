@@ -41,6 +41,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
      */
