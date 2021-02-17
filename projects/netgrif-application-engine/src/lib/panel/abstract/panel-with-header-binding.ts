@@ -6,7 +6,7 @@ import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column'
 export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
-    public featuredFieldsValues: Array<{ value: string, icon: string }> = [];
+    public featuredFieldsValues: Array<{ value: string, icon: string, type: string }> = [];
     protected _lastSelectedHeaders: Array<HeaderColumn>;
     protected sub: Subscription;
 
@@ -38,7 +38,7 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
 
     protected getFeaturedValue(selectedHeader: HeaderColumn) {
         if (!selectedHeader) {
-            return {value: '', icon: ''};
+            return {value: '', icon: '', type: ''};
         }
         if (selectedHeader.type === HeaderColumnType.META) {
             return this.getFeaturedMetaValue(selectedHeader);
@@ -46,7 +46,7 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
         if (selectedHeader.type === HeaderColumnType.IMMEDIATE) {
             return this.getFeaturedImmediateValue(selectedHeader);
         }
-        return {value: '', icon: ''};
+        return {value: '', icon: '', type: ''};
     }
 
     protected abstract getFeaturedMetaValue(selectedHeader: HeaderColumn);
