@@ -13,7 +13,7 @@ import {SearchIndex} from '../models/search-index';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchKeywordResolverService {
+export class SearchIndexResolverService {
   constructor() { }
 
     /**

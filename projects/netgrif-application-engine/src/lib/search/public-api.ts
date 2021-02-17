@@ -73,7 +73,7 @@ export * from './search-service/search.service';
 export * from './operator-service/operator.service';
 export * from './category-factory/category-factory';
 export * from './header-search-service/header-search.service';
-export * from './search-keyword-resolver-service/search-keyword-resolver.service';
+export * from './search-keyword-resolver-service/search-index-resolver.service';
 
 /* Components */
 export * from './search-component/abstract-search.component';
