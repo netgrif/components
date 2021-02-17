@@ -31,6 +31,7 @@ import {LessThanDateTime} from '../../operator/less-than-date-time';
 import {InRangeDateTime} from '../../operator/in-range-date-time';
 import {AutocompleteOptions} from '../autocomplete-options';
 import {ConfigurationInput} from '../../configuration-input';
+import {SearchIndex} from '../../search-index';
 
 interface Datafield {
     netId: string;
@@ -41,8 +42,7 @@ interface Datafield {
 export class CaseDataset extends Category<Datafield> implements AutocompleteOptions {
 
     private static readonly _i18n = 'search.category.case.dataset';
-    // TODO 4.5.2020 - only button, file and file list fields are truly unsupported, dateTime is implemented but lacks elastic support
-    protected static DISABLED_TYPES = ['button', 'file', 'dateTime', 'fileList', 'enumeration_map', 'multichoice_map'];
+    protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef'];
 
     protected readonly _DATAFIELD_INPUT: ConfigurationInput;
 
@@ -207,7 +207,25 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         if (!this.hasSelectedDatafields) {
             return [];
         } else {
-            return this._selectedDatafields.map(datafield => `dataSet.${datafield.fieldId}.value`);
+            return this._selectedDatafields.map(datafield => this.resolveElasticKeyword(datafield));
+        }
+    }
+
+    protected resolveElasticKeyword(datafield: Datafield): string {
+        const resolver = this._optionalDependencies.searchIndexResolver;
+        switch (datafield.fieldType) {
+            case 'number':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.NUMBER);
+            case 'date':
+            case 'dateTime':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.TIMESTAMP);
+            case 'boolean':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.BOOLEAN);
+            case 'file':
+            case 'fileList':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME);
+            default:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT);
         }
     }
 
@@ -252,10 +270,19 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                             && !CaseDataset.DISABLED_TYPES.includes(immediateData.type);
                     })
                     .forEach(immediateData => {
-                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
+                        let type = immediateData.type;
+
+                        // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
+                        if (type === 'enumeration_map') {
+                            type = 'enumeration';
+                        } else if (type === 'multichoice_map') {
+                            type = 'multichoice';
+                        }
+
+                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(type, immediateData.title), {
                             netId: petriNet.stringId,
                             fieldId: immediateData.stringId,
-                            fieldType: immediateData.type,
+                            fieldType: type,
                         });
                     });
             });
