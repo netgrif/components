@@ -66,12 +66,14 @@ export * from './models/category/name-id-pair';
 export * from './models/boolean-operator';
 export * from './models/category/search-input-type';
 export * from './models/operator-template-part-type';
+export * from './models/search-index';
 
 /* Services */
 export * from './search-service/search.service';
 export * from './operator-service/operator.service';
 export * from './category-factory/category-factory';
 export * from './header-search-service/header-search.service';
+export * from './search-keyword-resolver-service/search-keyword-resolver.service';
 
 /* Components */
 export * from './search-component/abstract-search.component';
