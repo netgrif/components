@@ -57,15 +57,15 @@ export abstract class AbstractSearchComponent implements OnDestroy {
     public trackByPredicates = (a: number, b: KeyValue<number, EditablePredicate>) => b.value;
 
     public getPredicateMap(): Map<number, EditableClausePredicateWithGenerators> {
-        const map = new Map<number, EditableClausePredicateWithGenerators>();
+        const predicateMap = new Map<number, EditableClausePredicateWithGenerators>();
 
         for (const [key, value] of this._searchService.rootPredicate.getPredicateMap().entries()) {
             if (value.isVisible) {
-                map.set(key, value.wrappedPredicate as EditableClausePredicateWithGenerators);
+                predicateMap.set(key, value.wrappedPredicate as EditableClausePredicateWithGenerators);
             }
         }
 
-        return map;
+        return predicateMap;
     }
 
     public hasPredicates(): boolean {
