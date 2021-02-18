@@ -11,7 +11,8 @@
             <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType">
                 <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'">
                     <mat-label>{{header.title | translate}}</mat-label>
-                    <input matInput [matDatepicker]="datepicker"
+                    <input matInput autocomplete="off"
+                           [matDatepicker]="datepicker"
                            [formControl]="formControls[i]"
                            [placeholder]="'headers.date' | translate"
                            (click)="datepicker.open()"
@@ -21,7 +22,8 @@
                 </mat-form-field>
                 <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'dateTime'">
                     <mat-label>{{header.title | translate}}</mat-label>
-                    <input matInput [ngxMatDatetimePicker]="datetimepicker"
+                    <input matInput autocomplete="off"
+                           [ngxMatDatetimePicker]="datetimepicker"
                            [formControl]="formControls[i]"
                            [placeholder]="'headers.dateTime' | translate"
                            (click)="datetimepicker.open()"
