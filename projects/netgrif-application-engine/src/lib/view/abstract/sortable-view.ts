@@ -69,9 +69,9 @@ export abstract class SortableView implements OnDestroy {
                     return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.TIMESTAMP);
                 case 'user':
                 case 'userList':
-                    return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.FULL_NAME);
+                    return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.FULL_NAME, true);
                 default:
-                    return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.FULLTEXT);
+                    return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.FULLTEXT, true);
             }
         }
     }

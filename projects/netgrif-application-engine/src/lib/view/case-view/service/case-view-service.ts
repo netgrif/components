@@ -201,7 +201,9 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     protected getMetaFieldSortId(): string {
         switch (this._lastHeaderSearchState.fieldIdentifier) {
             case CaseMetaField.TITLE:
-                return 'titleSortable';
+                return 'title.keyword';
+            case CaseMetaField.VISUAL_ID:
+                return 'visualId.keyword';
             case CaseMetaField.CREATION_DATE:
                 return 'creationDateSortable';
             default:
