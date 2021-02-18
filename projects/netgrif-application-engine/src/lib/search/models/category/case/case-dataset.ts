@@ -32,6 +32,7 @@ import {InRangeDateTime} from '../../operator/in-range-date-time';
 import {AutocompleteOptions} from '../autocomplete-options';
 import {ConfigurationInput} from '../../configuration-input';
 import {SearchIndex} from '../../search-index';
+import {Type} from '@angular/core';
 
 interface Datafield {
     netId: string;
@@ -222,12 +223,14 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                 return resolver.getIndex(datafield.fieldId, SearchIndex.BOOLEAN);
             case 'file':
             case 'fileList':
-                return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME);
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
             case 'user':
             case 'userList':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
             default:
-                return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT);
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
         }
     }
 
@@ -239,7 +242,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateQuery(userInput: Array<unknown>): Query {
-        const queryGenerationStrategy = this.selectedOperator === this._operators.getOperator(IsNull) ?
+        const queryGenerationStrategy = this.isSelectedOperator(IsNull) ?
             (d, _) => this.isNullOperatorQueryGenerationStrategy(d) :
             (d, ui) => this.standardQueryGenerationStrategy(d, ui);
 
@@ -384,5 +387,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             return (value as SearchAutocompleteOption<Array<number>>).value;
         }
         return value;
+    }
+
+    protected isSelectedOperator(operatorClass: Type<any>): boolean {
+        return this.selectedOperator === this._operators.getOperator(operatorClass);
     }
 }
