@@ -41,15 +41,16 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         switch (selectedHeader.fieldIdentifier) {
             case CaseMetaField.VISUAL_ID:
-                return {value: this.case_.visualId, icon: undefined};
+                return {value: this.case_.visualId, icon: undefined, type: 'meta'};
             case CaseMetaField.TITLE:
-                return {value: this.case_.title, icon: undefined};
+                return {value: this.case_.title, icon: undefined, type: 'meta'};
             case CaseMetaField.AUTHOR:
-                return {value: this.case_.author.fullName, icon: 'account_circle'};
+                return {value: this.case_.author.fullName, icon: 'account_circle', type: 'meta'};
             case CaseMetaField.CREATION_DATE:
                 return {
                     value: toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING),
-                    icon: 'event'
+                    icon: 'event',
+                    type: 'meta'
                 };
         }
     }
