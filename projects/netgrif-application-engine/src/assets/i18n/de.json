@@ -255,6 +255,7 @@
     "headers": {
         "newHeader": "Kopfzeile auswählen",
         "date": "Datum auswählen",
+        "dateTime": "Datum und Uhrzeit asuwählen",
         "selectUser": "Benutzer auswählen",
         "caseMeta": {
             "visualID": "Visuelle ID",
