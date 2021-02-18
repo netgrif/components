@@ -76,6 +76,10 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
             case 'fileList':
                 this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FILE_NAME);
                 break;
+            case 'user':
+            case 'userList':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.USER_ID);
+                break;
             default:
                 this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FULLTEXT);
         }

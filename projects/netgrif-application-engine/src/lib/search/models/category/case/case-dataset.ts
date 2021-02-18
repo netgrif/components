@@ -139,14 +139,16 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operators.getOperator(IsNull)
                 ];
             case 'boolean':
-                return [this._operators.getOperator(Equals), this._operators.getOperator(NotEquals)];
+                return [
+                    this._operators.getOperator(Equals),
+                    this._operators.getOperator(NotEquals)
+                ];
             case 'user':
-                // Angular JS frontend used these operators for enumeration, multichoice and file as well
+            case 'userList':
                 return [
                     this._operators.getOperator(Equals),
                     this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(IsNull),
-                    this._operators.getOperator(Like)
+                    this._operators.getOperator(IsNull)
                 ];
             case 'date':
                 return [
@@ -170,9 +172,6 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operators.getOperator(Substring),
                     this._operators.getOperator(Equals),
                     this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(MoreThan),
-                    this._operators.getOperator(LessThan),
-                    this._operators.getOperator(InRange),
                     this._operators.getOperator(IsNull),
                     this._operators.getOperator(Like)
                 ];
@@ -224,6 +223,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             case 'file':
             case 'fileList':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME);
+            case 'user':
+            case 'userList':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
             default:
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT);
         }

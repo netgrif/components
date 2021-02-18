@@ -1,5 +1,10 @@
 import {Component} from '@angular/core';
-import {AbstractSearchOperandInputComponent, DATE_FORMAT_STRING, SearchInputType} from '@netgrif/application-engine';
+import {
+    AbstractSearchOperandInputComponent,
+    DATE_FORMAT_STRING,
+    DATE_TIME_FORMAT_STRING,
+    SearchInputType
+} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-search-operand-input',
@@ -12,6 +17,7 @@ export class SearchOperandInputComponent extends AbstractSearchOperandInputCompo
     public searchInputType = SearchInputType;
 
     public dateFormat = DATE_FORMAT_STRING;
+    public dateTimeFormat = DATE_TIME_FORMAT_STRING;
 
     constructor() {
         super();

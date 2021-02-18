@@ -98,6 +98,9 @@
         <div *ngSwitchCase="searchInputType.DATE">
             {{inputFormControl.value.format(dateFormat)}}
         </div>
+        <div *ngSwitchCase="searchInputType.DATE_TIME">
+            {{inputFormControl.value.format(dateTimeFormat)}}
+        </div>
         <div *ngSwitchDefault>
             {{inputFormControl.value}}
         </div>
