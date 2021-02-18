@@ -18,7 +18,6 @@ import {CaseResourceService} from '../../resources/engine-endpoint/case-resource
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
-import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
 import {SearchService} from '../../search/search-service/search.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -28,6 +27,7 @@ import {SignUpService} from '../../authentication/sign-up/services/sign-up.servi
 import {OverflowService} from '../../header/services/overflow.service';
 import {UserService} from '../../user/services/user.service';
 import {Case} from '../../resources/interface/case';
+import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -52,9 +52,9 @@ describe('AbstractCasePanelComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

@@ -8,7 +8,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
-    ArrayTaskViewServiceFactory,
+    TaskViewServiceFactory,
     AssignPolicy,
     AssignPolicyService,
     AssignTaskService,
@@ -16,7 +16,7 @@ import {
     AuthenticationService,
     CancelTaskService,
     ChangedFields,
-    ConfigurationService,
+    ConfigurationService, createMockTask,
     DataFocusPolicy,
     DataFocusPolicyService,
     DelegateTaskService,
@@ -31,7 +31,6 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     NAE_TASK_OPERATIONS,
-    noNetsTaskViewServiceFactory,
     SearchService,
     SideMenuService,
     SingleTaskContentService,
@@ -49,7 +48,8 @@ import {
     TestConfigurationService,
     TestTaskSearchServiceFactory,
     TranslateLibModule,
-    UserResourceService
+    UserResourceService,
+    TestTaskViewFactory
 } from '@netgrif/application-engine';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -80,15 +80,15 @@ describe('TaskPanelComponent', () => {
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                ArrayTaskViewServiceFactory,
+                TaskViewServiceFactory,
                 SideMenuService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: TaskViewService,
-                    useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]
+                    useFactory: TestTaskViewFactory,
+                    deps: [TaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyTaskResources},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -143,29 +143,7 @@ describe('TaskPanelComponent', () => {
 })
 class TestWrapperComponent {
     taskPanel: TaskPanelData = {
-        task: {
-            caseId: 'string',
-            transitionId: 'string',
-            title: 'string',
-            caseColor: 'string',
-            caseTitle: 'string',
-            user: undefined,
-            roles: {},
-            users: {},
-            startDate: undefined,
-            finishDate: undefined,
-            assignPolicy: AssignPolicy.manual,
-            dataFocusPolicy: DataFocusPolicy.manual,
-            finishPolicy: FinishPolicy.manual,
-            stringId: 'string',
-            layout: {
-                offset: 0,
-                cols: undefined,
-                rows: undefined
-            },
-            dataGroups: [],
-            _links: {}
-        },
+        task: createMockTask(),
         changedFields: new Subject<ChangedFields>(),
         initiallyExpanded: false
     };

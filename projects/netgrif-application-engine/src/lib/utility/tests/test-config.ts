@@ -223,7 +223,10 @@ export class TestConfigurationService extends ConfigurationService {
                 },
                 task: {
                     layout: {
-                        name: 'emptyView'
+                        name: 'emptyView',
+                        params: {
+                            allowedNets: []
+                        }
                     },
                     access: 'private',
                     navigation: {
