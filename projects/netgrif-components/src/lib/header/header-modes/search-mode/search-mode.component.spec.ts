@@ -32,6 +32,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 
 
 describe('SearchModeComponent', () => {
@@ -54,6 +55,7 @@ describe('SearchModeComponent', () => {
                 HttpClientTestingModule,
                 TranslateLibModule,
                 MaterialModule,
+                NgxMatDatetimePickerModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
