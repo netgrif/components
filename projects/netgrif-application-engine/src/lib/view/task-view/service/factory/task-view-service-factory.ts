@@ -17,6 +17,7 @@ import {switchMap} from 'rxjs/operators';
 import {PetriNetResourceService} from '../../../../resources/engine-endpoint/petri-net-resource.service';
 import {Net} from '../../../../process/net';
 import {InjectedTabbedTaskViewData} from '../../models/injected-tabbed-task-view-data';
+import {SearchIndexResolverService} from '../../../../search/search-keyword-resolver-service/search-index-resolver.service';
 
 /**
  * Convenience method that can be used as a factory for tabbed task views.
@@ -42,6 +43,7 @@ export class TaskViewServiceFactory {
                 protected _petriNetResource: PetriNetResourceService,
                 protected _userComparator: UserComparatorService,
                 protected _log: LoggerService,
+                protected _resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected _preferredEndpoint: TaskEndpoint) {
     }
 
@@ -72,6 +74,7 @@ export class TaskViewServiceFactory {
                 this._log,
                 this._userComparator,
                 this._preferredEndpoint !== null ? this._preferredEndpoint : undefined,
+                this._resolver,
                 nets,
                 initiallyOpenOneTask,
                 closeTaskTabOnNoTasks
@@ -99,6 +102,7 @@ export class TaskViewServiceFactory {
             this._log,
             this._userComparator,
             this._preferredEndpoint !== null ? this._preferredEndpoint : undefined,
+            this._resolver,
             this._processService.getNets(allowedNetsIds),
             initiallyOpenOneTask,
             closeTaskTabOnNoTasks
@@ -115,6 +119,7 @@ export class TaskViewServiceFactory {
             this._log,
             this._userComparator,
             this._preferredEndpoint !== null ? this._preferredEndpoint : undefined,
+            this._resolver,
             this._petriNetResource.getAll().pipe(
                 switchMap(nets => {
                     if (nets && Array.isArray(nets)) {
@@ -140,6 +145,7 @@ export class TaskViewServiceFactory {
             this._log,
             this._userComparator,
             this._preferredEndpoint !== null ? this._preferredEndpoint : undefined,
+            this._resolver,
             nets,
             initiallyOpenOneTask,
             closeTaskTabOnNoTasks

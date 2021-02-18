@@ -15,6 +15,7 @@ import {Observable, of} from 'rxjs';
 import {PetriNetResourceService} from '../../../../resources/engine-endpoint/petri-net-resource.service';
 import {CaseViewParams} from '../../models/case-view-params';
 import {Net} from '../../../../process/net';
+import {SearchIndexResolverService} from '../../../../search/search-keyword-resolver-service/search-index-resolver.service';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link CaseViewService} dependencies.
@@ -36,6 +37,7 @@ export class CaseViewServiceFactory {
                 protected _translate: TranslateService,
                 protected _user: UserService,
                 protected _petriNetResource: PetriNetResourceService,
+                protected _resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
     }
 
@@ -62,7 +64,8 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
-            this._newCaseComponent
+            this._newCaseComponent,
+            this._resolver
         );
     }
 
@@ -82,7 +85,8 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
-            this._newCaseComponent
+            this._newCaseComponent,
+            this._resolver
         );
     }
 
@@ -111,7 +115,9 @@ export class CaseViewServiceFactory {
                 this._searchService,
                 this._translate,
                 this._user,
-                this._newCaseComponent);
+                this._newCaseComponent,
+                this._resolver
+            );
         } else {
             throw new Error(`Can't load configuration for view with webPath: '${webViewPath}'`);
         }
@@ -133,7 +139,8 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
-            this._newCaseComponent
+            this._newCaseComponent,
+            this._resolver
         );
     }
 }
