@@ -1,3 +1,14 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10866/tab/release-report-all-issues"></a>
+## 5.0.4 - Gray Titanium (19.02.2021)
+### Bug fixes
+* [NAE-1243](https://netgrif.atlassian.net/browse/NAE-1243) - Clearing fulltext input doesn't clear fulltext search
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10864/tab/release-report-all-issues"></a>
 ## 5.0.3 - Aqua Copper (09.02.2021)
 ### Bug fixes
