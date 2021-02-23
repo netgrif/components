@@ -287,11 +287,18 @@ export abstract class DataField<T> {
             return;
         }
         this._initialized$.next(false);
-        this._updateSubscription.unsubscribe();
-        this._blockSubscription.unsubscribe();
-        this._touchSubscription.unsubscribe();
-        this._formControlValueSubscription.unsubscribe();
-        this._myValueSubscription.unsubscribe();
+        const subs = [
+            this._updateSubscription,
+            this._blockSubscription,
+            this._touchSubscription,
+            this._formControlValueSubscription,
+            this._myValueSubscription
+        ];
+        for (const sub of subs) {
+            if (sub) {
+                sub.unsubscribe();
+            }
+        }
     }
 
     protected updateFormControlState(formControl: FormControl): void {
