@@ -1,5 +1,5 @@
 import {Behavior} from './behavior';
-import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
@@ -65,6 +65,9 @@ export abstract class DataField<T> {
      * All fields are touched before a task is finished to check their validity.
      */
     protected _touch: Subject<boolean>;
+    protected _updateSubscription: Subscription;
+    protected _blockSubscription: Subscription;
+    protected _touchSubscription: Subscription;
     /**
      * @ignore
      * Appearance of dataFields, possible values - outline, standard, fill, legacy
@@ -83,6 +86,7 @@ export abstract class DataField<T> {
      * Flag that is set during reverting
      */
     private _reverting = false;
+
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -283,25 +287,40 @@ export abstract class DataField<T> {
 
     public updateFormControlState(formControl: FormControl): void {
         formControl.setValue(this.value);
-        this._update.subscribe(() => {
+        this.subscribeToInnerSubjects(formControl);
+        this.update();
+    }
+
+    protected subscribeToInnerSubjects(formControl: FormControl) {
+        if (this._updateSubscription !== undefined) {
+            this._updateSubscription.unsubscribe();
+        }
+        this._updateSubscription = this._update.subscribe(() => {
             this.validRequired = this.calculateValidity(true, formControl);
             this.valid = this.calculateValidity(false, formControl);
         });
-        this._block.subscribe(bool => {
+
+        if (this._blockSubscription !== undefined) {
+            this._blockSubscription.unsubscribe();
+        }
+        this._blockSubscription = this._block.subscribe(bool => {
             if (bool) {
                 formControl.disable();
             } else {
                 this.disabled ? formControl.disable() : formControl.enable();
             }
         });
-        this._touch.subscribe(bool => {
+
+        if (this._touchSubscription !== undefined) {
+            this._touchSubscription.unsubscribe();
+        }
+        this._touchSubscription = this._touch.subscribe(bool => {
             if (bool) {
                 formControl.markAsTouched();
             } else {
                 formControl.markAsUntouched();
             }
         });
-        this.update();
     }
 
     /**
