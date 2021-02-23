@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
@@ -26,6 +26,8 @@ import {GridLayout} from '../../utility/grid-layout/model/grid-element';
 import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
+import {FieldTypeResource} from '../model/field-type-resource';
+import {TaskElementType} from '../model/task-content-element-type';
 
 describe('AbstractTaskContentComponent', () => {
     let component: TestTaskContentComponent;
@@ -273,6 +275,77 @@ describe('AbstractTaskContentComponent', () => {
             expect(grid[1][3].startsWith('xblank')).toBeTrue();
             expect(grid[2][1].startsWith('xblank')).toBeTrue();
         });
+    });
+
+    describe('with async datafield rendering', () => {
+
+        beforeEach(waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports,
+                providers: [
+                    ...providers,
+                    {provide: NAE_ASYNC_RENDERING_CONFIGURATION, useValue: {batchSize: 1, batchDelay: 100, numberOfPlaceholders: 1}}
+                ],
+                declarations: [TestTaskContentComponent]
+            })
+                .compileComponents();
+
+            fixture = TestBed.createComponent(TestTaskContentComponent);
+            component = fixture.componentInstance;
+            fixture.detectChanges();
+
+            taskContentService = TestBed.inject(TaskContentService);
+            taskContentService.task = createMockTask();
+        }));
+
+        it('should create', () => {
+            expect(component).toBeTruthy();
+        });
+
+        it('async rendering should work', fakeAsync(() => {
+            expect(component.dataSource).toEqual([]);
+            expect(component.gridAreas).toBeUndefined();
+
+            component.computeLayoutData([
+                createDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 1}),
+                        createField(true, {x: 1, y: 0, rows: 1, cols: 1}),
+                        createField(true, {x: 2, y: 0, rows: 1, cols: 1}),
+                        createField(true, {x: 3, y: 0, rows: 1, cols: 1})],
+                    '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
+            ]);
+
+            expect(component.dataSource).toBeTruthy();
+            expect(Array.isArray(component.dataSource)).toBeTrue();
+
+            expect(component.dataSource.length).toEqual(2);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(3);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[2].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(4);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[3].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(4);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
+
+        }));
     });
 
     afterEach(() => {
