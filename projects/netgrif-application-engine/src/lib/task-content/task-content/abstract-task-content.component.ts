@@ -24,7 +24,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
     readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;
     readonly DEFAULT_ASYNC_RENDERING_CONFIGURATION: AsyncRenderingConfiguration = {
-        batchSize: 10,
+        batchSize: 4,
         batchDelay: 200
     };
 
