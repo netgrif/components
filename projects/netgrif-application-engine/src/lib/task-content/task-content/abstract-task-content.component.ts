@@ -8,7 +8,7 @@ import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
 import {DataGroup, DataGroupAlignment} from '../../resources/interface/data-groups';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
-import {TaskContentElementType, TaskElementType} from '../model/task-content-element-type';
+import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridData} from '../model/grid-data';
 import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
@@ -135,7 +135,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             this._subTaskEvent.unsubscribe();
         }
         if (this._asyncRenderTimeout !== undefined) {
-            clearTimeout(this._asyncRenderTimeout);
+            window.clearTimeout(this._asyncRenderTimeout);
         }
     }
 
@@ -286,7 +286,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
         this._dataSource$.next(fieldsInCurrentIteration);
         if (this._asyncRenderingConfig.batchSize * iteration < gridElements.length) {
-            this._asyncRenderTimeout = setTimeout(() => {
+            this._asyncRenderTimeout = window.setTimeout(() => {
                 this.spreadFieldRenderingOverTime(gridElements, iteration + 1);
             }, this._asyncRenderingConfig.batchDelay);
         }
