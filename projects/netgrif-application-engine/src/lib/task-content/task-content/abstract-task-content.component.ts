@@ -26,7 +26,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_ASYNC_RENDERING_CONFIGURATION: AsyncRenderingConfiguration = {
         batchSize: 4,
         batchDelay: 200,
-        numberOfPlaceholders: 4
+        numberOfPlaceholders: 4,
+        enableAsyncRendering: true
     };
 
     /**
@@ -270,15 +271,20 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     }
 
     protected spreadFieldRenderingOverTime(gridElements: Array<DatafieldGridLayoutElement>, iteration = 1) {
+        if (!this._asyncRenderingConfig.enableAsyncRendering) {
+            this._dataSource$.next(gridElements);
+            return;
+        }
+
         this._asyncRenderTimeout = undefined;
-        const fieldInCurrentIteration = gridElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
+        const fieldsInCurrentIteration = gridElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
         const placeholdersInCurrentIteration = gridElements.slice(iteration * this._asyncRenderingConfig.batchSize,
             iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
 
-        fieldInCurrentIteration.push(
+        fieldsInCurrentIteration.push(
             ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
 
-        this._dataSource$.next(fieldInCurrentIteration);
+        this._dataSource$.next(fieldsInCurrentIteration);
         if (this._asyncRenderingConfig.batchSize * iteration < gridElements.length) {
             this._asyncRenderTimeout = setTimeout(() => {
                 this.spreadFieldRenderingOverTime(gridElements, iteration + 1);
