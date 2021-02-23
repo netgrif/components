@@ -8,7 +8,7 @@ import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {TaskContentService} from '../services/task-content.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {Component, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {AbstractTaskContentComponent} from './abstract-task-content.component';
 import {FieldConverterService} from '../services/field-converter.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
@@ -25,6 +25,7 @@ import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridLayout} from '../../utility/grid-layout/model/grid-element';
 import {TemplateAppearance} from '../../data-fields/models/template-appearance';
 import {MaterialAppearance} from '../../data-fields/models/material-appearance';
+import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 
 describe('AbstractTaskContentComponent', () => {
     let component: TestTaskComponent;
@@ -317,7 +318,8 @@ class TestTaskComponent extends AbstractTaskContentComponent {
                 public taskContentService: TaskContentService,
                 protected _paperView: PaperViewService,
                 protected _logger: LoggerService,
-                @Optional() protected _taskEventService: TaskEventService) {
-        super(_fieldConverter, taskContentService, _paperView, _logger, _taskEventService);
+                @Optional() protected _taskEventService: TaskEventService,
+                @Optional() @Inject(NAE_ASYNC_RENDERING_CONFIGURATION) config) {
+        super(_fieldConverter, taskContentService, _paperView, _logger, _taskEventService, config);
     }
 }

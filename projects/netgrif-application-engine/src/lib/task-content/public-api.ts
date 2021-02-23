@@ -13,6 +13,7 @@ export * from './model/field-type-resource';
 export * from './model/task-content-element-type';
 export * from './model/grid-data';
 export * from './model/datafield-grid-layout-element';
+export * from './model/async-rendering-configuration-injection-token';
 
 /* MODULES */
 export * from './task-content/abstract-task-content.component';

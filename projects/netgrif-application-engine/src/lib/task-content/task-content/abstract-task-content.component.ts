@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
@@ -8,7 +8,7 @@ import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
 import {DataGroup, DataGroupAlignment} from '../../resources/interface/data-groups';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
-import {TaskElementType} from '../model/task-content-element-type';
+import {TaskContentElementType, TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridData} from '../model/grid-data';
 import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
@@ -17,10 +17,12 @@ import {FieldTypeResource} from '../model/field-type-resource';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 
 export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
     readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;
+    readonly DEFAULT_NUMBER_OF_FIELD_IN_RENDERING_ITERATION = 10;
 
     /**
      * Indicates whether data is being loaded from backend, or if it is being processed.
@@ -77,12 +79,18 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected _dataSource$: BehaviorSubject<Array<DatafieldGridLayoutElement>>;
     protected _subTaskContent: Subscription;
     protected _subTaskEvent: Subscription;
+    protected _numberOfFieldsInRenderingIteration: number;
+    protected _asyncRenderTimeout: number;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
                           protected _paperView: PaperViewService,
                           protected _logger: LoggerService,
-                          protected _taskEventService: TaskEventService = null) {
+                          @Optional() protected _taskEventService: TaskEventService = null,
+                          @Optional() @Inject(NAE_ASYNC_RENDERING_CONFIGURATION) asyncRenderingConfiguration: number = null) {
+        this._numberOfFieldsInRenderingIteration = asyncRenderingConfiguration === null ?
+            this.DEFAULT_NUMBER_OF_FIELD_IN_RENDERING_ITERATION : asyncRenderingConfiguration;
+
         this.loading$ = new LoadingEmitter(true);
         this._dataSource$ = new BehaviorSubject<Array<DatafieldGridLayoutElement>>([]);
         this.hasDataToDisplay$ = this._dataSource$.pipe(map(data => {
@@ -116,6 +124,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
         if (this._subTaskEvent) {
             this._subTaskEvent.unsubscribe();
+        }
+        if (this._asyncRenderTimeout !== undefined) {
+            clearTimeout(this._asyncRenderTimeout);
         }
     }
 
@@ -246,8 +257,25 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         });
 
         this.fillEmptySpace(gridData);
-        this._dataSource$.next(gridData.gridElements);
+        this.spreadFieldRenderingOverTime(gridData.gridElements);
         this.gridAreas = this.createGridAreasString(gridData.grid);
+    }
+
+    protected spreadFieldRenderingOverTime(gridElements: Array<DatafieldGridLayoutElement>, iteration = 1) {
+        this._asyncRenderTimeout = undefined;
+        const fieldInCurrentIteration = gridElements.slice(0, iteration * this._numberOfFieldsInRenderingIteration);
+        const placeholdersInCurrentIteration = gridElements.slice(iteration * this._numberOfFieldsInRenderingIteration,
+            (iteration + 1) * this._numberOfFieldsInRenderingIteration);
+
+        fieldInCurrentIteration.push(
+            ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
+
+        this._dataSource$.next(fieldInCurrentIteration);
+        if (this._numberOfFieldsInRenderingIteration * iteration < gridElements.length) {
+            this._asyncRenderTimeout = setTimeout(() => {
+                this.spreadFieldRenderingOverTime(gridElements, iteration + 1);
+            });
+        }
     }
 
     /**
@@ -260,8 +288,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         const result = dataGroups.map(group => {
             const g = {...group};
             g.fields = g.fields.filter(field => !field.behavior.hidden
-                                                && !field.behavior.forbidden
-                                                && this._fieldConverter.resolveType(field) !== FieldTypeResource.TASK_REF);
+                && !field.behavior.forbidden
+                && this._fieldConverter.resolveType(field) !== FieldTypeResource.TASK_REF);
             return g;
         });
 
