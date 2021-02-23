@@ -11,3 +11,11 @@
 .min-row-height {
     min-height: 105px;
 }
+
+.loader {
+    background: #7f7f7f;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    margin: 4px;
+    border-radius: 4px;
+}

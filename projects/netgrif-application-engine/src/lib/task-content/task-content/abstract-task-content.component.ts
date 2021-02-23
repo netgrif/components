@@ -18,11 +18,15 @@ import {LoadingEmitter} from '../../utility/loading-emitter';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
+import {AsyncRenderingConfiguration} from '../model/async-rendering-configuration';
 
 export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
     readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;
-    readonly DEFAULT_NUMBER_OF_FIELD_IN_RENDERING_ITERATION = 10;
+    readonly DEFAULT_ASYNC_RENDERING_CONFIGURATION: AsyncRenderingConfiguration = {
+        batchSize: 10,
+        batchDelay: 200
+    };
 
     /**
      * Indicates whether data is being loaded from backend, or if it is being processed.
@@ -79,7 +83,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected _dataSource$: BehaviorSubject<Array<DatafieldGridLayoutElement>>;
     protected _subTaskContent: Subscription;
     protected _subTaskEvent: Subscription;
-    protected _numberOfFieldsInRenderingIteration: number;
+    protected _asyncRenderingConfig: AsyncRenderingConfiguration;
     protected _asyncRenderTimeout: number;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
@@ -87,9 +91,12 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                           protected _paperView: PaperViewService,
                           protected _logger: LoggerService,
                           @Optional() protected _taskEventService: TaskEventService = null,
-                          @Optional() @Inject(NAE_ASYNC_RENDERING_CONFIGURATION) asyncRenderingConfiguration: number = null) {
-        this._numberOfFieldsInRenderingIteration = asyncRenderingConfiguration === null ?
-            this.DEFAULT_NUMBER_OF_FIELD_IN_RENDERING_ITERATION : asyncRenderingConfiguration;
+                          @Optional() @Inject(NAE_ASYNC_RENDERING_CONFIGURATION)
+                              asyncRenderingConfiguration: AsyncRenderingConfiguration = null) {
+        this._asyncRenderingConfig = {...this.DEFAULT_ASYNC_RENDERING_CONFIGURATION};
+        if (asyncRenderingConfiguration !== null) {
+            Object.assign(this._asyncRenderingConfig, asyncRenderingConfiguration);
+        }
 
         this.loading$ = new LoadingEmitter(true);
         this._dataSource$ = new BehaviorSubject<Array<DatafieldGridLayoutElement>>([]);
@@ -263,18 +270,18 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
     protected spreadFieldRenderingOverTime(gridElements: Array<DatafieldGridLayoutElement>, iteration = 1) {
         this._asyncRenderTimeout = undefined;
-        const fieldInCurrentIteration = gridElements.slice(0, iteration * this._numberOfFieldsInRenderingIteration);
-        const placeholdersInCurrentIteration = gridElements.slice(iteration * this._numberOfFieldsInRenderingIteration,
-            (iteration + 1) * this._numberOfFieldsInRenderingIteration);
+        const fieldInCurrentIteration = gridElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
+        const placeholdersInCurrentIteration = gridElements.slice(iteration * this._asyncRenderingConfig.batchSize,
+            (iteration + 1) * this._asyncRenderingConfig.batchSize);
 
         fieldInCurrentIteration.push(
             ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
 
         this._dataSource$.next(fieldInCurrentIteration);
-        if (this._numberOfFieldsInRenderingIteration * iteration < gridElements.length) {
+        if (this._asyncRenderingConfig.batchSize * iteration < gridElements.length) {
             this._asyncRenderTimeout = setTimeout(() => {
                 this.spreadFieldRenderingOverTime(gridElements, iteration + 1);
-            });
+            }, this._asyncRenderingConfig.batchDelay);
         }
     }
 
@@ -634,6 +641,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         switch (element.type) {
             case TaskElementType.BLANK:
                 return element.gridAreaId + '-' + this.taskContentService.$shouldCreateCounter.getValue();
+            case TaskElementType.LOADER:
+                return element.gridAreaId + '-L-' + this.taskContentService.$shouldCreateCounter.getValue();
             case TaskElementType.DATA_GROUP_TITLE:
                 return element.title + '-' + this.taskContentService.$shouldCreateCounter.getValue();
             default:
