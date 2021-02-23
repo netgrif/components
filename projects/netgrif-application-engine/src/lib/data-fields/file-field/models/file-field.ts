@@ -97,13 +97,11 @@ export class FileField extends DataField<FileFieldValue> {
     public registerFormControl(formControl: FormControl): void {
         formControl.setValue(!this.value || !this.value.name ? '' : this.value.name);
         this.updateFormControlState(formControl);
-        this.initialized = true;
         this._initialized$.next(true);
-        this._initialized$.complete();
         this.changed = false;
     }
 
-    public updateFormControlState(formControl: FormControl): void {
+    protected updateFormControlState(formControl: FormControl): void {
         this.subscribeToInnerSubjects(formControl);
         this.update();
     }

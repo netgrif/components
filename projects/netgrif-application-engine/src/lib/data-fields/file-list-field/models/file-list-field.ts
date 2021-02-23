@@ -66,13 +66,11 @@ export class FileListField extends DataField<FileListFieldValue> {
             return namePath['name'];
         }).join('/'));
         this.updateFormControlState(formControl);
-        this.initialized = true;
         this._initialized$.next(true);
-        this._initialized$.complete();
         this.changed = false;
     }
 
-    public updateFormControlState(formControl: FormControl): void {
+    protected updateFormControlState(formControl: FormControl): void {
         this.subscribeToInnerSubjects(formControl);
         this.update();
     }

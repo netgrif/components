@@ -24,18 +24,11 @@ export abstract class DataField<T> {
     protected _previousValue: BehaviorSubject<T>;
     /**
      * @ignore
-     * Whether the data field Model object was initialized.
-     *
-     * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
-     */
-    private _initialized: boolean;
-    /**
-     * @ignore
      * Whether the data field Model object was initialized, we push that info into stream
      *
      * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
      */
-    protected _initialized$: ReplaySubject<true>;
+    protected _initialized$: BehaviorSubject<boolean>;
     /**
      * @ignore
      * Whether the field fulfills all of it's validators.
@@ -68,6 +61,8 @@ export abstract class DataField<T> {
     protected _updateSubscription: Subscription;
     protected _blockSubscription: Subscription;
     protected _touchSubscription: Subscription;
+    protected _formControlValueSubscription: Subscription;
+    protected _myValueSubscription: Subscription;
     /**
      * @ignore
      * Appearance of dataFields, possible values - outline, standard, fill, legacy
@@ -102,8 +97,7 @@ export abstract class DataField<T> {
                           private _description?: string, private _layout?: Layout, private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
-        this._initialized$ = new ReplaySubject<true>(1);
-        this._initialized = false;
+        this._initialized$ = new BehaviorSubject<boolean>(false);
         this._valid = true;
         this._changed = false;
         this._update = new Subject<void>();
@@ -186,15 +180,11 @@ export abstract class DataField<T> {
         return !!this._behavior.visible && !this._behavior.editable;
     }
 
-    set initialized(set: boolean) {
-        this._initialized = set;
-    }
-
     get initialized(): boolean {
-        return this._initialized;
+        return this._initialized$.value;
     }
 
-    get initialized$(): Observable<true> {
+    get initialized$(): Observable<boolean> {
         return this._initialized$.asObservable();
     }
 
@@ -262,47 +252,60 @@ export abstract class DataField<T> {
         this._update.complete();
         this._touch.complete();
         this._block.complete();
+        this._initialized$.complete();
     }
 
     public registerFormControl(formControl: FormControl): void {
+        if (this.initialized) {
+            throw new Error('Data field can be initialized only once!'
+                + ' Disconnect the previous form control before initializing the data field again!');
+        }
+
         formControl.setValidators(this.resolveFormControlValidators());
-        formControl.valueChanges.pipe(
+
+        this._formControlValueSubscription = formControl.valueChanges.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
             this._valid = this._determineFormControlValidity(formControl);
             this.value = newValue;
         });
-        this._value.pipe(
+
+        this._myValueSubscription = this._value.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
             this._valid = this._determineFormControlValidity(formControl);
             formControl.setValue(newValue);
         });
+
         this.updateFormControlState(formControl);
-        this._initialized = true;
         this._initialized$.next(true);
-        this._initialized$.complete();
         this._changed = false;
     }
 
-    public updateFormControlState(formControl: FormControl): void {
+    public disconnectFormControl(): void {
+        if (!this.initialized) {
+            return;
+        }
+        this._initialized$.next(false);
+        this._updateSubscription.unsubscribe();
+        this._blockSubscription.unsubscribe();
+        this._touchSubscription.unsubscribe();
+        this._formControlValueSubscription.unsubscribe();
+        this._myValueSubscription.unsubscribe();
+    }
+
+    protected updateFormControlState(formControl: FormControl): void {
         formControl.setValue(this.value);
         this.subscribeToInnerSubjects(formControl);
         this.update();
     }
 
     protected subscribeToInnerSubjects(formControl: FormControl) {
-        if (this._updateSubscription !== undefined) {
-            this._updateSubscription.unsubscribe();
-        }
         this._updateSubscription = this._update.subscribe(() => {
             this.validRequired = this.calculateValidity(true, formControl);
             this.valid = this.calculateValidity(false, formControl);
         });
 
-        if (this._blockSubscription !== undefined) {
-            this._blockSubscription.unsubscribe();
-        }
         this._blockSubscription = this._block.subscribe(bool => {
             if (bool) {
                 formControl.disable();
@@ -311,9 +314,6 @@ export abstract class DataField<T> {
             }
         });
 
-        if (this._touchSubscription !== undefined) {
-            this._touchSubscription.unsubscribe();
-        }
         this._touchSubscription = this._touch.subscribe(bool => {
             if (bool) {
                 formControl.markAsTouched();
