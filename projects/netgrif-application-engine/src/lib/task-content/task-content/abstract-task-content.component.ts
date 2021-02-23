@@ -25,7 +25,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;
     readonly DEFAULT_ASYNC_RENDERING_CONFIGURATION: AsyncRenderingConfiguration = {
         batchSize: 4,
-        batchDelay: 200
+        batchDelay: 200,
+        numberOfPlaceholders: 4
     };
 
     /**
@@ -272,7 +273,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         this._asyncRenderTimeout = undefined;
         const fieldInCurrentIteration = gridElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
         const placeholdersInCurrentIteration = gridElements.slice(iteration * this._asyncRenderingConfig.batchSize,
-            (iteration + 1) * this._asyncRenderingConfig.batchSize);
+            iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
 
         fieldInCurrentIteration.push(
             ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
