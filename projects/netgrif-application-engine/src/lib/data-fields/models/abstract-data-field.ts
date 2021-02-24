@@ -1,5 +1,5 @@
 import {Behavior} from './behavior';
-import {BehaviorSubject, Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
 import {distinctUntilChanged} from 'rxjs/operators';
