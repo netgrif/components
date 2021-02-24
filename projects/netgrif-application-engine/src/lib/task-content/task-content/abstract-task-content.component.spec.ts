@@ -28,6 +28,7 @@ import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {TaskElementType} from '../model/task-content-element-type';
+import {ButtonField} from '../../data-fields/button-field/models/button-field';
 
 describe('AbstractTaskContentComponent', () => {
     let component: TestTaskContentComponent;
@@ -346,6 +347,79 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
 
         }));
+
+        it('async rendering should persist existing fields', fakeAsync(() => {
+            expect(component.dataSource).toEqual([]);
+            expect(component.gridAreas).toBeUndefined();
+
+            component.computeLayoutData([
+                createDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 1}, 'bool1'),
+                        createField(true, {x: 1, y: 0, rows: 1, cols: 1}, 'bool2'),
+                        createField(true, {x: 2, y: 0, rows: 1, cols: 1}, 'bool3'),
+                        createField(true, {x: 3, y: 0, rows: 1, cols: 1}, 'bool4')],
+                    '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
+            ]);
+
+            expect(component.dataSource).toBeTruthy();
+            expect(Array.isArray(component.dataSource)).toBeTrue();
+
+            expect(component.dataSource.length).toEqual(2);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(3);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[2].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(4);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[3].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(4);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            component.computeLayoutData([
+                createDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 1}, 'bool1'),
+                        createField(true, {x: 1, y: 0, rows: 1, cols: 1}, 'bool2'),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 2}, 'btn1', false),
+                        createField(true, {x: 2, y: 1, rows: 1, cols: 2}, 'btn2', false),
+                        createField(true, {x: 2, y: 0, rows: 1, cols: 1}, 'bool3'),
+                        createField(true, {x: 3, y: 0, rows: 1, cols: 1}, 'bool4')],
+                    '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
+            ]);
+
+            expect(component.dataSource.length).toEqual(6);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[4].type).toEqual(FieldTypeResource.BUTTON);
+            expect(component.dataSource[5].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(6);
+            expect(component.dataSource[0].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource[4].type).toEqual(FieldTypeResource.BUTTON);
+            expect(component.dataSource[5].type).toEqual(FieldTypeResource.BUTTON);
+        }));
     });
 
     afterEach(() => {
@@ -374,7 +448,10 @@ function createDataGroup(fields: Array<DataField<unknown>>,
 
 const counter = new IncrementingCounter();
 
-function createField(visible = true, layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0}): BooleanField {
+function createField(visible = true,
+                     layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0},
+                     stringId?: string,
+                     booleanField = true): BooleanField | ButtonField {
     const b = visible ? {visible: true} : {hidden: true};
     const l = {
         ...layout,
@@ -382,7 +459,11 @@ function createField(visible = true, layout: GridLayout = {x: 0, y: 0, rows: 0, 
         appearance: MaterialAppearance.OUTLINE,
         offset: 0
     };
-    return new BooleanField('f' + counter.next(), 'title', false, b, '', '', l);
+    if (booleanField) {
+        return new BooleanField(!!stringId ? stringId : 'f' + counter.next(), 'title', false, b, '', '', l);
+    } else {
+        return new ButtonField(!!stringId ? stringId : 'f' + counter.next(), 'title', b, 0, '', '', l);
+    }
 }
 
 function transformStringToGrid(gridString: string): Array<Array<string>> {
