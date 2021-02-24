@@ -42,15 +42,17 @@ export class ProcessService implements OnDestroy {
      * Get process nets according to provided identifiers.
      * If any of the requested processes is not loaded it will be loaded from a server and save for later.
      * @param identifiers Array of identifiers of requested processes. See [Net]{@link Net}
+     * @param forceLoad when set to `true` cached processes will be ignored and a backend request will always be made
+     * (unless another is already pending)
      * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
      * If any of the processes failed to load it is skipped from the result.
      */
-    public getNets(identifiers: Array<string>): Observable<Array<Net>> {
+    public getNets(identifiers: Array<string>, forceLoad = false): Observable<Array<Net>> {
         if (identifiers.length === 0) {
             return of([]);
         }
         return forkJoin(identifiers.map(i => {
-            return this.getNet(i);
+            return this.getNet(i, forceLoad);
         })).pipe(
             map(nets => nets.filter(n => !!n)),
             tap(nets => {
@@ -66,10 +68,12 @@ export class ProcessService implements OnDestroy {
     /**
      * Get process net by identifier.
      * @param identifier Identifier of the requested process. See [Net]{@link Net}
+     * @param forceLoad when set to `true` cached processes will be ignored and a backend request will always be made
+     * (unless another is already pending)
      * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
      */
-    public getNet(identifier: string): Observable<Net> {
-        if (this._nets[identifier]) {
+    public getNet(identifier: string, forceLoad = false): Observable<Net> {
+        if (!forceLoad && this._nets[identifier]) {
             return of(this._nets[identifier]);
         }
         if (this._requestCache.has(identifier)) {

@@ -1,6 +1,7 @@
 /* INTERFACES */
 export * from './case-view/models/case-view-params';
 export * from './case-view/models/case-page-load-request-result';
+export * from './case-view/models/new-case-configuration';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
 export * from './task-view/models/task-page-load-request-result';
@@ -25,6 +26,7 @@ export * from './abstract/sortable-view-with-allowed-nets';
 export * from './abstract/page-load-request-context';
 
 /* INJECTION TOKENS */
+export * from './case-view/models/new-case-configuration-injection-token';
 export * from './task-view/models/injection-token-task-endpoint';
 export * from './workflow-view/models/injection-token-workflow-service';
 

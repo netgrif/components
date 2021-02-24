@@ -23,15 +23,23 @@ import {CasePageLoadRequestResult} from '../models/case-page-load-request-result
 import {UserService} from '../../../user/services/user.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {PermissionType} from '../../../process/permissions';
+import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injection-token';
+import {NewCaseConfiguration} from '../models/new-case-configuration';
+import {ProcessService} from '../../../process/process.service';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
+
+    readonly DEFAULT_NEW_CASE_CONFIGURATION: NewCaseConfiguration = {
+        useCachedProcesses: true
+    };
 
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
     protected _nextPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
+    protected _newCaseConfiguration: NewCaseConfiguration;
 
     constructor(allowedNets: Observable<Array<Net>>,
                 protected _sideMenuService: SideMenuService,
@@ -41,8 +49,14 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
                 protected _searchService: SearchService,
                 protected _translate: TranslateService,
                 protected _user: UserService,
-                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
+                protected _processService: ProcessService,
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration) {
         super(allowedNets);
+        this._newCaseConfiguration = {...this.DEFAULT_NEW_CASE_CONFIGURATION};
+        if (newCaseConfig !== null) {
+            Object.assign(this._newCaseConfiguration, newCaseConfig);
+        }
         this._loading$ = new LoadingWithFilterEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
@@ -170,12 +184,9 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
 
     public createNewCase(): Observable<Case> {
         const myCase = new Subject<Case>();
-        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
-            {
-                allowedNets$: this.allowedNets$.pipe(
-                    map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
-                )
-            }).onClose.subscribe($event => {
+        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
+            allowedNets$: this.getNewCaseAllowedNets()
+        }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.reload();
@@ -184,6 +195,20 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
             myCase.complete();
         });
         return myCase.asObservable();
+    }
+
+    protected getNewCaseAllowedNets(): Observable<Array<Net>> {
+        if (this._newCaseConfiguration.useCachedProcesses) {
+            return this.allowedNets$.pipe(
+                map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
+            );
+        } else {
+            return this.allowedNets$.pipe(
+                mergeMap(allowedNets => {
+                    return this._processService.getNets(allowedNets.map(net => net.identifier), true);
+                })
+            );
+        }
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
