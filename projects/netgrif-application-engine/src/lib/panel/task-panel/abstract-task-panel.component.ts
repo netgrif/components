@@ -36,11 +36,17 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
      * Set by an @Input() on a setter function, that also resolves featured fields.
      */
     protected _taskPanelData: TaskPanelData;
+    protected _forceLoadDataOnOpen = false;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input()
+    set forceLoadDataOnOpen(force: boolean) {
+        this._forceLoadDataOnOpen = force;
+        this._assignPolicyService.forced = force;
+    }
     /**
      * Emits notifications about task events
      */
@@ -99,7 +105,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             cancel: (t: Task) => false,
         };
         if (_disableFunctions) {
-            Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
+             Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
         }
     }
 
@@ -257,8 +263,9 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     public canDisable(type: string): boolean {
         let disable = false;
         if (!!this.taskPanelData && !!this.taskPanelData.task) {
-            disable = disable || !!this._taskState.isLoading(this.taskPanelData.task.stringId) ||
-                !!this._taskState.isUpdating(this.taskPanelData.task.stringId);
+            disable = disable
+                || !!this._taskState.isLoading(this.taskPanelData.task.stringId)
+                || !!this._taskState.isUpdating(this.taskPanelData.task.stringId);
         }
         return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
     }

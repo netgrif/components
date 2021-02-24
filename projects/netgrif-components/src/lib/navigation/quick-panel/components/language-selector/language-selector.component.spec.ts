@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {LanguageSelectorComponent} from './language-selector.component';
 import {CommonModule} from '@angular/common';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -22,7 +22,7 @@ describe('LanguageSelectorComponent', () => {
     let component: LanguageSelectorComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,

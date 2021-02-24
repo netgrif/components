@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
@@ -12,7 +12,7 @@ describe('AbstractDashboardContentComponent', () => {
     let component: TestDashboardContentComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MatGridListModule, NoopAnimationsModule],
             declarations: [TestDashboardContentComponent, TestWrapperComponent],

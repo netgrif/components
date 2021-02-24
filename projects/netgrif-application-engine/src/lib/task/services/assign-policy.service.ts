@@ -17,6 +17,8 @@ import {Subject} from 'rxjs';
 @Injectable()
 export class AssignPolicyService extends TaskHandlingService {
 
+    private _isForced = false;
+
     constructor(protected _taskDataService: TaskDataService,
                 protected _assignTaskService: AssignTaskService,
                 protected _cancelTaskService: CancelTaskService,
@@ -25,6 +27,14 @@ export class AssignPolicyService extends TaskHandlingService {
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 taskContentService: TaskContentService) {
         super(taskContentService);
+    }
+
+    get forced() {
+        return this._isForced;
+    }
+
+    set forced(bool: boolean) {
+        this._isForced = bool;
     }
 
     /**
@@ -79,6 +89,7 @@ export class AssignPolicyService extends TaskHandlingService {
     protected afterAssignOpenPolicy(assignSuccess: boolean, afterAction: Subject<boolean>): void {
         if (!assignSuccess) {
             afterAction.next(false);
+            afterAction.complete();
             return;
         }
 
@@ -88,8 +99,10 @@ export class AssignPolicyService extends TaskHandlingService {
                     this._finishPolicyService.performFinishPolicy(afterAction);
                 } else {
                     afterAction.next(false);
+                    afterAction.complete();
                 }
-            })
+            }),
+            this._isForced
         );
     }
 
@@ -103,6 +116,7 @@ export class AssignPolicyService extends TaskHandlingService {
             this._callchain.create((requestSuccess) => {
                 this._taskOperations.close();
                 afterAction.next(requestSuccess);
+                afterAction.complete();
             })
         );
     }
@@ -117,6 +131,7 @@ export class AssignPolicyService extends TaskHandlingService {
             this.manualAssignOpenedPolicy(afterAction);
         } else {
             afterAction.next(false);
+            afterAction.complete();
         }
     }
 
@@ -137,8 +152,10 @@ export class AssignPolicyService extends TaskHandlingService {
                     this._finishPolicyService.performFinishPolicy(afterAction);
                 } else {
                     afterAction.next(false);
+                    afterAction.complete();
                 }
-            })
+            }),
+            this._isForced
         );
     }
 }

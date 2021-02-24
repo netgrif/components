@@ -1,4 +1,4 @@
-// import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+// import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 //
 // import {WarningSnackBarComponent} from './warning-snack-bar.component';
 // import {MaterialModule} from '../../../material/material.module';
@@ -7,7 +7,7 @@
 //     // let component: WarningSnackBarComponent;
 //     // let fixture: ComponentFixture<WarningSnackBarComponent>;
 //     //
-//     // beforeEach(async(() => {
+//     // beforeEach(waitForAsync(() => {
 //     //     TestBed.configureTestingModule({
 //     //         imports: [MaterialModule],
 //     //         declarations: [WarningSnackBarComponent]

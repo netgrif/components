@@ -6,7 +6,6 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {NextGroupService} from '../../groups/services/next-group.service';
 import {debounceTime} from 'rxjs/operators';
 
 const DRAWER_DEFAULT_WIDTH = 200;
@@ -32,7 +31,7 @@ export class UserPreferenceService implements OnDestroy {
         this._drawerWidthChanged$ = new Subject<number>();
 
         this._sub = this._userService.user$.subscribe(loggedUser => {
-            if (loggedUser.id !== '') {
+            if (loggedUser && loggedUser.id !== '') {
                 this._userResourceService.getPreferences().subscribe(prefs => {
                         this._preferences = this._emptyPreferences();
                         Object.assign(this._preferences, prefs);

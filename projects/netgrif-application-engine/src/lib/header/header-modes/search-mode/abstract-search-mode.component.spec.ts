@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {MatInputModule} from '@angular/material/input';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {MatSortModule} from '@angular/material/sort';
@@ -37,7 +37,7 @@ describe('AbstractSearchModeComponent', () => {
     let fixture: ComponentFixture<TestWrapperComponent>;
     let headerSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 FlexModule,

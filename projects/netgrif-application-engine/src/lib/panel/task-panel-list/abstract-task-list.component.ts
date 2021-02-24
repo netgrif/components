@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild} from '@angular/core';
+import {EventEmitter, Inject, Input, OnDestroy, Optional, Output, ViewChild} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
 import {Observable} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -12,11 +12,22 @@ import {InjectedTabData} from '../../tabs/interfaces';
 
 export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
+    protected _allowMultiOpen = true;
     @Input() tasks$: Observable<Array<TaskPanelData>>;
     @Input() loading$: Observable<boolean>;
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
-    @Input() allowMultiOpen = true;
+    @Input() forceLoadDataOnOpen = false;
+    @Input()
+    set allowMultiOpen(bool: boolean) {
+        this._allowMultiOpen = bool;
+        this._taskViewService.allowMultiOpen = bool;
+    }
+
+    get allowMultiOpen() {
+        return this._allowMultiOpen;
+    }
+
     /**
      * Emits notifications about task events
      */

@@ -1,7 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchComponent} from './search.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component} from '@angular/core';
 import {SearchComponentModule} from '../search.module';
 import {
     AuthenticationMethodService,
@@ -20,9 +19,9 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SearchComponent', () => {
     let component: SearchComponent;
-    let fixture: ComponentFixture<TestComponent>;
+    let fixture: ComponentFixture<SearchComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
@@ -37,17 +36,14 @@ describe('SearchComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: SearchService, useFactory: TestCaseSearchServiceFactory}
-            ],
-            declarations: [
-                TestComponent,
             ]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.debugElement.children[0].componentInstance;
+        fixture = TestBed.createComponent(SearchComponent);
+        component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
@@ -59,11 +55,3 @@ describe('SearchComponent', () => {
         TestBed.resetTestingModule();
     });
 });
-
-@Component({
-    selector: 'nc-test-wrapper',
-    template: '<nc-search [searchCategories]="arr"></nc-search>'
-})
-class TestComponent {
-    arr = [];
-}

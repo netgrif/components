@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TextareaFieldComponent} from './textarea-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AngularResizedEventModule} from 'angular-resize-event';
@@ -24,7 +24,7 @@ describe('TextareaFieldComponent', () => {
     let component: TextareaFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {EnumerationListFieldComponent} from './enumeration-list-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
@@ -12,7 +12,7 @@ describe('EnumerationListFieldComponent', () => {
     let component: EnumerationListFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

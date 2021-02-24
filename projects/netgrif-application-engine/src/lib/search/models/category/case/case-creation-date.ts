@@ -1,17 +1,27 @@
-import {Category} from '../category';
 import {Moment} from 'moment';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {EqualsDate} from '../../operator/equals-date';
 import {SearchInputType} from '../search-input-type';
+import {NoConfigurationCategory} from '../no-configuration-category';
+import {NotEqualsDate} from '../../operator/not-equals-date';
+import {MoreThanDate} from '../../operator/more-than-date';
+import {LessThanDate} from '../../operator/less-than-date';
+import {InRangeDate} from '../../operator/in-range-date';
 
-export class CaseCreationDate extends Category<Moment> {
+export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
     private static readonly _i18n = 'search.category.case.creationDate';
 
-    constructor(operators: OperatorService, logger: LoggerService) {
+    constructor(protected _operators: OperatorService, logger: LoggerService) {
         super(['creationDateSortable'],
-            [operators.getOperator(EqualsDate)],
+            [
+                _operators.getOperator(EqualsDate),
+                _operators.getOperator(NotEqualsDate),
+                _operators.getOperator(MoreThanDate),
+                _operators.getOperator(LessThanDate),
+                _operators.getOperator(InRangeDate)
+            ],
             `${CaseCreationDate._i18n}.name`,
             SearchInputType.DATE,
             logger);
@@ -19,5 +29,9 @@ export class CaseCreationDate extends Category<Moment> {
 
     get inputPlaceholder(): string {
         return `${CaseCreationDate._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseCreationDate {
+        return new CaseCreationDate(this._operators, this._log);
     }
 }

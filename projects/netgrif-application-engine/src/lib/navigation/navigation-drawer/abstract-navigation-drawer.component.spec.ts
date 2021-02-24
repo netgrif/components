@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -12,21 +12,21 @@ import {BreakpointObserver} from '@angular/cdk/layout';
 import {LoggerService} from '../../logger/services/logger.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
-import {
-    AuthenticationMethodService,
-    AuthenticationService,
-    MockAuthenticationMethodService,
-    MockAuthenticationService, MockUserResourceService, UserResourceService
-} from 'netgrif-application-engine';
 import {MockUserPreferenceService} from '../../utility/tests/mocks/mock-user-preference.service';
 import {ResizableModule} from 'angular-resizable-element';
 import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 
 describe('AbstractNavigationDrawerComponent', () => {
     let component: TestDrawerComponent;
     let fixture: ComponentFixture<TestDrawerComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestDrawerComponent],
             imports: [

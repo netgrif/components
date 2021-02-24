@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, Injector, OnInit} from '@angular/core';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -23,7 +23,7 @@ describe('AbstractTabCreationDetectorComponent', () => {
     let component: TestTabComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

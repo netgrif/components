@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FieldComponentResolverComponent} from './field-component-resolver.component';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {
@@ -16,7 +16,7 @@ describe('FieldComponentResolverComponent', () => {
     let component: FieldComponentResolverComponent;
     let fixture: ComponentFixture<TestComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [DataFieldsComponentModule],
             declarations: [TestComponent, FieldComponentResolverComponent],

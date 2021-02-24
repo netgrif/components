@@ -1,3 +1,67 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10863/tab/release-report-all-issues"></a>
+## 5.0.2 - Navy Lead (07.02.2021)
+### Bug fixes
+* [NAE-1230](https://netgrif.atlassian.net/browse/NAE-1230) - TrackBy function on fields not working correctly with taskRef changes
+* [NAE-1229](https://netgrif.atlassian.net/browse/NAE-1229) - On wrong credentials undefined user is propagated
+* [NAE-1231](https://netgrif.atlassian.net/browse/NAE-1231) - Enter key on login form does not trigger login action
+
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10861/tab/release-report-all-issues"></a>
+## 5.0.1 - Teal Brass (04.02.2021)
+### Bug fixes
+* [NAE-1170](https://netgrif.atlassian.net/browse/NAE-1170) - Lost of focus on forms
+* [NAE-1218](https://netgrif.atlassian.net/browse/NAE-1218) - Bad import on scss search theme
+* [NAE-1219](https://netgrif.atlassian.net/browse/NAE-1219) - NavigationTreeComponent path of undefined error
+* [NAE-1223](https://netgrif.atlassian.net/browse/NAE-1223) - Fix tests and lint warnings
+
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10732/tab/release-report-all-issues"></a>
+## 5.0.0 - Silver Steel (28.02.2021)
+### Bug fixes
+* [NAE-1174](https://netgrif.atlassian.net/browse/NAE-1174) - Boolean field isn't aligned at edge case layout
+* [NAE-1179](https://netgrif.atlassian.net/browse/NAE-1179) - getViewByPath broken
+* [NAE-1176](https://netgrif.atlassian.net/browse/NAE-1176) - Date picker dont have min and max value
+* [NAE-1177](https://netgrif.atlassian.net/browse/NAE-1177) - Dialog new line dont working
+* [NAE-1187](https://netgrif.atlassian.net/browse/NAE-1187) - NumberValidation Inrange nevie spracovat desatinne cisla
+* [NAE-1210](https://netgrif.atlassian.net/browse/NAE-1210) - Column search is not working correctly with advanced search component
+
+### Improvements
+* [NAE-1147](https://netgrif.atlassian.net/browse/NAE-1147) - Auto-generated navigation
+* [NAE-1149](https://netgrif.atlassian.net/browse/NAE-1149) - Immediate task data
+* [NAE-1092](https://netgrif.atlassian.net/browse/NAE-1092) - Zjednotenie názvov atribútov filtrov
+* [NAE-1106](https://netgrif.atlassian.net/browse/NAE-1106) - User resizable navigation drawer
+* [NAE-1120](https://netgrif.atlassian.net/browse/NAE-1120) - Upgrade to Angular 10 and enable Ivy
+* [NAE-1152](https://netgrif.atlassian.net/browse/NAE-1152) - Don't load resources from external servers
+* [NAE-1184](https://netgrif.atlassian.net/browse/NAE-1184) - Disable task event buttons on loading and update state
+
+### Features
+* [NAE-1159](https://netgrif.atlassian.net/browse/NAE-1159) - Eager loaded tree
+* [NAE-1054](https://netgrif.atlassian.net/browse/NAE-1054) - Public view
+* [NAE-1115](https://netgrif.atlassian.net/browse/NAE-1115) - User list on task instead of roles
+* [NAE-1119](https://netgrif.atlassian.net/browse/NAE-1119) - Constructor and destructor as process meta-data
+* [NAE-1164](https://netgrif.atlassian.net/browse/NAE-1164) - GroupGuard
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10851/tab/release-report-all-issues"></a>
+## 4.6.0 - Green Silver (20.01.2021)
+### Bug fixes
+* [NAE-1202](https://netgrif.atlassian.net/browse/NAE-1202) - Bug in ChangedFieldTree
+
+### Improvements
+* [NAE-1109](https://netgrif.atlassian.net/browse/NAE-1109) - Task ref set data propagation
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10850/tab/release-report-all-issues"></a>
 ## 4.5.0 - Orange Bubble (22.12.2020)
 ### Bug fixes

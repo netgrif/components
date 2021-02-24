@@ -122,6 +122,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (this._safeTask.dataSize > 0 && !force) {
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.next(true);
+            afterAction.complete();
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
             return;
         }
@@ -165,7 +166,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             this._taskState.stopLoading(gottenTaskId);
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.next(true);
+            afterAction.complete();
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
+            this._taskContentService.$shouldCreateCounter.next(this._taskContentService.$shouldCreateCounter.getValue() + 1);
         }, (error: HttpErrorResponse) => {
             this._taskState.stopLoading(gottenTaskId);
             this._log.debug('getting task data failed', error);
@@ -184,6 +187,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             }
             this.sendNotification(TaskEvent.GET_DATA, false);
             afterAction.next(false);
+            afterAction.complete();
         });
     }
 
@@ -216,6 +220,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         if (this._taskState.isUpdating(setTaskId)) {
             afterAction.next(true);
+            afterAction.complete();
             return;
         }
 
@@ -230,6 +235,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (Object.keys(body).length === 0) {
             this.sendNotification(TaskEvent.SET_DATA, true);
             afterAction.next(true);
+            afterAction.complete();
             return;
         }
 
@@ -330,6 +336,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
         this.sendNotification(TaskEvent.SET_DATA, result);
         afterAction.next(result);
+        afterAction.complete();
     }
 
     /**
