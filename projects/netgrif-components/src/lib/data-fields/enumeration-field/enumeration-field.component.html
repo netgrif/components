@@ -6,6 +6,11 @@
 
 <ng-template #enumFieldTemplate let-showLargeLayout="showLargeLayout">
     <div [ngSwitch]="dataField.getType()">
+        <nc-enumeration-autocomplete-dynamic-field *ngSwitchCase="'autocomplete_dynamic'"
+                                                  [showLargeLayout]="showLargeLayout"
+                                                  [enumerationField]="dataField"
+                                                  [formControlRef]="formControl">
+        </nc-enumeration-autocomplete-dynamic-field>
         <nc-enumeration-autocomplete-select-field *ngSwitchCase="'autocomplete'"
                                                   [showLargeLayout]="showLargeLayout"
                                                   [enumerationField]="dataField"

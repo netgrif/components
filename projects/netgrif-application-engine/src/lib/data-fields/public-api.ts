@@ -46,6 +46,7 @@ export * from './date-time-field/models/date-time-field';
 export * from './button-field/models/button-field';
 export * from './date-field/models/custom-date-adapter';
 export * from './task-ref-field/model/task-ref-field';
+export * from './enumeration-field/models/dynamic-enumeration-field';
 
 /* Interfaces */
 export * from './models/changed-fields';

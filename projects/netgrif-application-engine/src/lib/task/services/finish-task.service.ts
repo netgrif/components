@@ -52,11 +52,12 @@ export class FinishTaskService extends TaskHandlingService {
     public validateDataAndFinish(afterAction = new Subject<boolean>()): void {
         if (this._safeTask.dataSize <= 0) {
             this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
-                if (this._safeTask.dataSize <= 0 || this._taskContentService.validateTaskData()) {
+                if (this._safeTask.dataSize <= 0 ||
+                    (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData())) {
                     this.sendFinishTaskRequest(afterAction);
                 }
             }));
-        } else if (this._taskContentService.validateTaskData()) {
+        } else if (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData()) {
             const finishedTaskId = this._safeTask.stringId;
             this._taskDataService.updateTaskDataFields(this._callChain.create(success => {
                 if (success) {
