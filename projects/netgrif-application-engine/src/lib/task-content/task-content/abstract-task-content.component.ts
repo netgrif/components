@@ -266,28 +266,50 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         });
 
         this.fillEmptySpace(gridData);
-        this.spreadFieldRenderingOverTime(gridData.gridElements);
+        this.renderFields(gridData.gridElements);
         this.gridAreas = this.createGridAreasString(gridData.grid);
     }
 
-    protected spreadFieldRenderingOverTime(gridElements: Array<DatafieldGridLayoutElement>, iteration = 1) {
+    protected renderFields(gridElements: Array<DatafieldGridLayoutElement>) {
         if (!this._asyncRenderingConfig.enableAsyncRendering) {
             this._dataSource$.next(gridElements);
             return;
         }
 
+        const currentElements = this._dataSource$.value;
+        const currentTrackByIds = new Set<string>();
+        currentElements.forEach((element, index) => {
+            currentTrackByIds.add(this.trackByDatafields(index, element));
+        });
+
+        const keptElements = [];
+        const newElements = [];
+        gridElements.forEach((element, index) => {
+            if (currentTrackByIds.has(this.trackByDatafields(index, element))) {
+                keptElements.push(element);
+            } else {
+                newElements.push(element);
+            }
+        });
+
+        this.spreadFieldRenderingOverTime(keptElements, newElements);
+    }
+
+    protected spreadFieldRenderingOverTime(keptElements: Array<DatafieldGridLayoutElement>,
+                                           newElements: Array<DatafieldGridLayoutElement>,
+                                           iteration = 1) {
         this._asyncRenderTimeout = undefined;
-        const fieldsInCurrentIteration = gridElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
-        const placeholdersInCurrentIteration = gridElements.slice(iteration * this._asyncRenderingConfig.batchSize,
+        const fieldsInCurrentIteration = newElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
+        const placeholdersInCurrentIteration = newElements.slice(iteration * this._asyncRenderingConfig.batchSize,
             iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
 
         fieldsInCurrentIteration.push(
             ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
 
-        this._dataSource$.next(fieldsInCurrentIteration);
-        if (this._asyncRenderingConfig.batchSize * iteration < gridElements.length) {
+        this._dataSource$.next([...keptElements, ...fieldsInCurrentIteration]);
+        if (this._asyncRenderingConfig.batchSize * iteration < newElements.length) {
             this._asyncRenderTimeout = window.setTimeout(() => {
-                this.spreadFieldRenderingOverTime(gridElements, iteration + 1);
+                this.spreadFieldRenderingOverTime(keptElements, newElements, iteration + 1);
             }, this._asyncRenderingConfig.batchDelay);
         }
     }
