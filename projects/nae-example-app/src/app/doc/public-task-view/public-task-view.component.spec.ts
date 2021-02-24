@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublicTaskViewComponent } from './public-task-view.component';
 
@@ -6,7 +6,7 @@ describe('PublicTaskViewComponent', () => {
   let component: PublicTaskViewComponent;
   let fixture: ComponentFixture<PublicTaskViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PublicTaskViewComponent ]
     })

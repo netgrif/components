@@ -17,6 +17,8 @@ import {Subject} from 'rxjs';
 @Injectable()
 export class AssignPolicyService extends TaskHandlingService {
 
+    private _isForced = false;
+
     constructor(protected _taskDataService: TaskDataService,
                 protected _assignTaskService: AssignTaskService,
                 protected _cancelTaskService: CancelTaskService,
@@ -25,6 +27,14 @@ export class AssignPolicyService extends TaskHandlingService {
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 taskContentService: TaskContentService) {
         super(taskContentService);
+    }
+
+    get forced() {
+        return this._isForced;
+    }
+
+    set forced(bool: boolean) {
+        this._isForced = bool;
     }
 
     /**
@@ -91,7 +101,8 @@ export class AssignPolicyService extends TaskHandlingService {
                     afterAction.next(false);
                     afterAction.complete();
                 }
-            })
+            }),
+            this._isForced
         );
     }
 
@@ -143,7 +154,8 @@ export class AssignPolicyService extends TaskHandlingService {
                     afterAction.next(false);
                     afterAction.complete();
                 }
-            })
+            }),
+            this._isForced
         );
     }
 }

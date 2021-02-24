@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {EnumerationAutocompleteSelectFieldComponent} from './enumeration-autocomplete-select-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
@@ -12,7 +12,7 @@ describe('EnumerationAutocompleteSelectFieldComponent', () => {
     let component: EnumerationAutocompleteSelectFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

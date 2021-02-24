@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PreviewDialogComponent} from './preview-dialog.component';
 import {
@@ -22,7 +22,7 @@ describe('PreviewDialogComponent', () => {
     let component: PreviewDialogComponent;
     let fixture: ComponentFixture<PreviewDialogComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
