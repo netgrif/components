@@ -36,11 +36,17 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
      * Set by an @Input() on a setter function, that also resolves featured fields.
      */
     protected _taskPanelData: TaskPanelData;
+    protected _forceLoadDataOnOpen = false;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input()
+    set forceLoadDataOnOpen(force: boolean) {
+        this._forceLoadDataOnOpen = force;
+        this._assignPolicyService.forced = force;
+    }
     /**
      * Emits notifications about task events
      */
