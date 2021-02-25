@@ -21,7 +21,7 @@
     <mat-step [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
         <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
         <mat-form-field>
-            <input matInput placeholder="Title" [formControl]="titleFormControl" required (keyup.enter)="nextStep()">
+            <input matInput placeholder="Title" autocomplete="off" [formControl]="titleFormControl" required (keyup.enter)="nextStep()">
         </mat-form-field>
         <div>
             <button mat-button (click)="stepper1.reset()">{{'side-menu.new-case.reset' | translate}}</button>
@@ -33,7 +33,7 @@
     <mat-step [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
         <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
         <mat-form-field>
-            <input matInput placeholder="Title" [formControl]="titleFormControl" required (keyup.enter)="nextStep()">
+            <input matInput placeholder="Title" autocomplete="off" [formControl]="titleFormControl" required (keyup.enter)="nextStep()">
         </mat-form-field>
         <div>
             <button mat-button (click)="stepper2.reset()">{{'side-menu.new-case.reset' | translate}}</button>
@@ -41,3 +41,6 @@
         </div>
     </mat-step>
 </mat-vertical-stepper>
+<div *ngIf="(notInitialized$ | async)" fxLayout="row" fxLayoutAlign="center center">
+    <mat-spinner class="spinner-margin"></mat-spinner>
+</div>
