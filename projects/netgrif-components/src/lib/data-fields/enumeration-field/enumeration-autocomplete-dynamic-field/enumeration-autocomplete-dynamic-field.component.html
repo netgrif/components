@@ -9,9 +9,20 @@
            [matAutocomplete]="auto"
            (keyup)="change()">
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (click)="change()">
-            {{option.value}}
+
+        <mat-option *ngIf="enumerationField.loading" class="is-loading" fxLayoutAlign="center center">
+            <mat-spinner diameter="30"></mat-spinner>
         </mat-option>
+
+        <mat-option disabled *ngIf="(filteredOptions | async)?.length === 0 && !enumerationField.loading">
+            {{ 'dataField.dynamicEnum.noData' | translate }}
+        </mat-option>
+
+        <ng-container *ngIf="!enumerationField.loading">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (click)="change()">
+                {{option.value}}
+            </mat-option>
+        </ng-container>
     </mat-autocomplete>
     <mat-hint>{{enumerationField.description}}</mat-hint>
     <mat-error *ngIf="enumerationField.isInvalid(formControlRef)">{{buildErrorMessage()}}</mat-error>

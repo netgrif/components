@@ -23,6 +23,7 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {take} from 'rxjs/operators';
+import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -149,7 +150,14 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     group.fields.forEach(field => {
                         field.valueChanges().subscribe(() => {
                             if (this.wasFieldUpdated(field)) {
-                                this.updateTaskDataFields();
+                                if (field instanceof DynamicEnumerationField) {
+                                    field.loading = true;
+                                    this.updateTaskDataFields(this._afterActionFactory.create(bool => {
+                                        field.loading = false;
+                                    }));
+                                } else {
+                                    this.updateTaskDataFields();
+                                }
                             }
                         });
                         if (field instanceof FileField || field instanceof FileListField) {
