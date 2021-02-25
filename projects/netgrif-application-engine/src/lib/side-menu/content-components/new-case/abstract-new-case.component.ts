@@ -1,8 +1,8 @@
-import {Inject, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Inject, OnDestroy, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {combineLatest, Observable, Subject} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
@@ -19,7 +19,7 @@ interface Form {
     version?: string;
 }
 
-export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
+export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
@@ -28,55 +28,68 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         {value: 'panel-primary-icon', viewValue: 'Primary'},
         {value: 'panel-accent-icon', viewValue: 'Accent'},
     ];
-    options: Array<Form> = [];
-    filteredOptions: Observable<Array<Form>>;
-    processOne: Promise<boolean>;
-    injectedData: NewCaseInjectionData;
+    filteredOptions$: Observable<Array<Form>>;
+    optionsLength$: Subject<number>;
     @ViewChild('toolbar') toolbar: MatToolbar;
 
     @ViewChild('stepper1') stepper1;
     @ViewChild('stepper2') stepper2;
 
-    constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
-                protected _formBuilder: FormBuilder,
-                protected _snackBarService: SnackBarService,
-                protected _caseResourceService: CaseResourceService,
-                protected _hotkeysService: HotkeysService,
-                protected _translate: TranslateService) {
-        if (this._sideMenuControl.data) {
-            this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
-        }
-        this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
-            this.nextStep();
-            return false;
-        }));
-    }
+    protected _options$: Observable<Array<Form>>;
+    protected _injectedData: NewCaseInjectionData;
 
-    ngOnInit() {
-        if (!this.injectedData) {
+    protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
+                          protected _formBuilder: FormBuilder,
+                          protected _snackBarService: SnackBarService,
+                          protected _caseResourceService: CaseResourceService,
+                          protected _hotkeysService: HotkeysService,
+                          protected _translate: TranslateService) {
+        if (this._sideMenuControl.data) {
+            this._injectedData = this._sideMenuControl.data as NewCaseInjectionData;
+        }
+        if (!this._injectedData) {
             this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.new-case.noNets'));
             this._sideMenuControl.close({
                 opened: false
             });
         }
+        this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
+            this.nextStep();
+            return false;
+        }));
 
-        this.injectedData.allowedNets$.subscribe(allowedNets => {
-            this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}));
-        });
+        this.optionsLength$ = new Subject();
 
-        if (!this._sideMenuControl.allVersionEnabled) {
-            this.removeOldVersions();
-        }
+        this._options$ = this._injectedData.allowedNets$.pipe(
+            map(nets => nets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}))),
+            map(nets => {
+                if (!this._sideMenuControl.allVersionEnabled) {
+                    return this.removeOldVersions(nets);
+                } else {
+                    return nets;
+                }
+            }),
+            tap(options => {
+                this.optionsLength$.next(options.length);
+            })
+        );
 
-        this.filteredOptions = this.processFormControl.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => typeof value === 'string' ? value : value.viewValue),
-                map(name => name ? this._filter(name) : this.options.slice()),
-                tap(() => this.options.length === 1 ? this.processFormControl.setValue(this.options[0]) : undefined)
-            );
+        this.filteredOptions$ = combineLatest([this._options$, this.processFormControl.valueChanges.pipe(startWith(''))]).pipe(
+            map(sources => {
+                const options = sources[0];
+                const input = typeof sources[1] === 'string' ? sources[1] : sources[1].viewValue;
+                return input ? this._filter(input, options) : options.slice();
+            }),
+            tap(filteredOptions => {
+                if (filteredOptions.length === 1) {
+                    this.processFormControl.setValue(filteredOptions[0], {emitEvent: false});
+                }
+            })
+        );
+    }
 
-        this.processOne = Promise.resolve(this.options.length === 1);
+    ngOnDestroy(): void {
+        this.optionsLength$.complete();
     }
 
     public stepChange($event: StepperSelectionEvent): void {
@@ -91,13 +104,12 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         return process && process.viewValue ? process.viewValue : '';
     }
 
-
     public createNewCase(): void {
         if (this.titleFormControl.valid) {
             const newCase = {
                 title: this.titleFormControl.value,
                 color: 'panel-primary-icon',
-                netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
+                netId: this.processFormControl.value.value
             };
 
             this._caseResourceService.createCase(newCase)
@@ -118,21 +130,15 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
 
     /**
      * Function to filter out matchless options without accent and case-sensitive differences
-     * @param  value to compare matching options
+     * @param value to compare matching options
+     * @param options that should be filtered
      * @return  return matched options
      */
-    protected _filter(value: string): Form[] {
+    protected _filter(value: string, options: Array<Form>): Form[] {
         const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-        return this.options.filter(option => option.viewValue.toLowerCase().normalize('NFD')
+        return options.filter(option => option.viewValue.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        this.filteredOptions = this.processFormControl.get('processFormControl').valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value))
-        );
     }
 
     nextStep() {
@@ -175,8 +181,8 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         }
 
         const caze = this._translate.instant('side-menu.new-case.case');
-        const name = this.options.length === 1 ? this.options[0].viewValue : this.processFormControl.value.viewValue;
-        const title = caze + '-' + name;
+        const name = typeof this.processFormControl.value === 'string' ? undefined : this.processFormControl.value.viewValue;
+        const title = name === undefined ? caze : caze + ' - ' + name;
         if (title.length > size) {
             const tmp = title.slice(0, size);
             return tmp + '...';
@@ -184,9 +190,9 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         return title;
     }
 
-    private removeOldVersions() {
-        const tempNets = Object.assign([], this.options);
-        const petriNetIds = new Set(this.options.map(form => form.value));
+    private removeOldVersions(options: Array<Form>): Array<Form> {
+        const tempNets = Object.assign([], options);
+        const petriNetIds = new Set(options.map(form => form.value));
         const newestNets = new Array<Form>();
 
         for (const value of petriNetIds) {
@@ -198,6 +204,6 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
             }
             newestNets.push(current);
         }
-        this.options = Object.assign([], newestNets);
+        return newestNets;
     }
 }
