@@ -11,7 +11,7 @@
     <mat-spinner *ngIf="enumerationField.loading" matSuffix diameter="30"></mat-spinner>
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
 
-        <mat-option disabled *ngIf="(filteredOptions | async)?.length === 0 && !enumerationField.loading" fxLayoutAlign="center center">
+        <mat-option disabled *ngIf="(filteredOptions | async)?.length === 0 && !enumerationField.loading && enumerationField.value && enumerationField.value.length > 0" fxLayoutAlign="center center">
             {{ 'dataField.dynamicEnum.noData' | translate }}
         </mat-option>
 

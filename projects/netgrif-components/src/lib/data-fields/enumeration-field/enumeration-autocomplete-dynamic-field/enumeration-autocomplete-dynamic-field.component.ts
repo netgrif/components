@@ -1,64 +1,17 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {
-    DynamicEnumerationField, EnumerationFieldValidation,
-    EnumerationFieldValue, WrappedBoolean
+    AbstractEnumerationAutocompleteDynamicFieldComponent
 } from '@netgrif/application-engine';
-import {FormControl} from '@angular/forms';
-import {Observable, of} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'nc-enumeration-autocomplete-dynamic-field',
   templateUrl: './enumeration-autocomplete-dynamic-field.component.html',
   styleUrls: ['./enumeration-autocomplete-dynamic-field.component.scss']
 })
-export class EnumerationAutocompleteDynamicFieldComponent implements OnInit, OnDestroy {
-
-    @Input() enumerationField: DynamicEnumerationField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
-    @ViewChild('input') text: ElementRef;
-
-    filteredOptions: Observable<EnumerationFieldValue[]>;
+export class EnumerationAutocompleteDynamicFieldComponent extends AbstractEnumerationAutocompleteDynamicFieldComponent {
 
     constructor(protected _translate: TranslateService) {
+        super(_translate);
     }
-
-    ngOnInit() {
-        this.filteredOptions = this.formControlRef.valueChanges.pipe(
-            startWith(''),
-            map(() => this.enumerationField.choices)
-        );
-
-        this.enumerationField.choicesChange$.subscribe(() => {
-            this.filteredOptions = of(this.enumerationField.choices);
-        });
-    }
-
-    ngOnDestroy(): void {
-        this.filteredOptions = undefined;
-    }
-
-    change() {
-        if (this.text.nativeElement.value !== undefined) {
-            this.filteredOptions = of(this.enumerationField.choices);
-        }
-    }
-
-    public renderSelection = (key) => {
-        if (key !== undefined && key !== '' && key !== null) {
-            if (this.enumerationField.choices.find(choice => choice.key === key)) {
-                return this.enumerationField.choices.find(choice => choice.key === key).value;
-            }
-        }
-        return key;
-    }
-
-    public buildErrorMessage() {
-        if (this.formControlRef.hasError(EnumerationFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
-        }
-    }
-
 }
