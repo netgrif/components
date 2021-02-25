@@ -1,0 +1,11 @@
+<div>
+    <div *ngFor="let option of enumerationField.choices; let i = index">
+        <div class="enum-icon-item enum-icon-item-row">
+            <mat-icon>home</mat-icon>
+            <span fxFlex class="enum-icon-text">{{option.value}}</span>
+            <mat-icon>arrow_forward</mat-icon>
+        </div>
+        <mat-divider class="enum-icon-divider" *ngIf="i !== enumerationField.choices.length - 1"></mat-divider>
+    </div>
+</div>
+
