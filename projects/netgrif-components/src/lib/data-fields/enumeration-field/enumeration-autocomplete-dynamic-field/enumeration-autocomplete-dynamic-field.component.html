@@ -8,13 +8,10 @@
            [formControl]="formControlRef"
            [matAutocomplete]="auto"
            (keyup)="change()">
+    <mat-spinner *ngIf="enumerationField.loading" matSuffix diameter="30"></mat-spinner>
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
 
-        <mat-option *ngIf="enumerationField.loading" class="is-loading" fxLayoutAlign="center center">
-            <mat-spinner diameter="30"></mat-spinner>
-        </mat-option>
-
-        <mat-option disabled *ngIf="(filteredOptions | async)?.length === 0 && !enumerationField.loading">
+        <mat-option disabled *ngIf="(filteredOptions | async)?.length === 0 && !enumerationField.loading" fxLayoutAlign="center center">
             {{ 'dataField.dynamicEnum.noData' | translate }}
         </mat-option>
 
