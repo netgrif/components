@@ -26,6 +26,7 @@ import {PermissionType} from '../../../process/permissions';
 import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injection-token';
 import {NewCaseConfiguration} from '../models/new-case-configuration';
 import {ProcessService} from '../../../process/process.service';
+import {PetriNetReference} from '../../../resources/interface/petri-net-reference';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
@@ -197,7 +198,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
         return myCase.asObservable();
     }
 
-    protected getNewCaseAllowedNets(): Observable<Array<Net>> {
+    protected getNewCaseAllowedNets(): Observable<Array<PetriNetReference>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this.allowedNets$.pipe(
                 map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
@@ -205,7 +206,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
         } else {
             return this.allowedNets$.pipe(
                 switchMap(allowedNets => {
-                    return this._processService.getNets(allowedNets.map(net => net.identifier), true).pipe(
+                    return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
                         map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
                     );
                 })

@@ -7,6 +7,7 @@ import Transition from './transition';
 import Transaction from './transaction';
 import {catchError, map, tap} from 'rxjs/operators';
 import RolesAndPermissions from './rolesAndPermissions';
+import {PetriNetReference} from '../resources/interface/petri-net-reference';
 
 export interface NetCache {
     [k: string]: Net;
@@ -24,24 +25,27 @@ export class ProcessService implements OnDestroy {
     protected _netsSubject: Subject<NetCache>;
     protected _netUpdate: Subject<Net>;
     protected _requestCache: Map<string, ReplaySubject<Net>>;
+    protected _referenceRequestCache: Map<string, ReplaySubject<PetriNetReference>>;
 
     constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
         this._nets = {};
         this._netsSubject = new Subject<NetCache>();
         this._netUpdate = new Subject<Net>();
         this._requestCache = new Map<string, ReplaySubject<Net>>();
+        this._referenceRequestCache = new Map<string, ReplaySubject<PetriNetReference>>();
     }
 
     ngOnDestroy(): void {
         this._netsSubject.complete();
         this._netUpdate.complete();
         Array.from(this._requestCache.values()).forEach(net => net.complete());
+        Array.from(this._referenceRequestCache.values()).forEach(net => net.complete());
     }
 
     /**
      * Get process nets according to provided identifiers.
-     * If any of the requested processes is not loaded it will be loaded from a server and save for later.
-     * @param identifiers Array of identifiers of requested processes. See [Net]{@link Net}
+     * If any of the requested processes is not cached it will be loaded from the server and saved for later.
+     * @param identifiers Array of identifiers of requested processes. See {@link Net}
      * @param forceLoad when set to `true` cached processes will be ignored and a backend request will always be made
      * (unless another is already pending)
      * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
@@ -67,7 +71,7 @@ export class ProcessService implements OnDestroy {
 
     /**
      * Get process net by identifier.
-     * @param identifier Identifier of the requested process. See [Net]{@link Net}
+     * @param identifier Identifier of the requested process. See {@link Net}
      * @param forceLoad when set to `true` cached processes will be ignored and a backend request will always be made
      * (unless another is already pending)
      * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
@@ -90,6 +94,51 @@ export class ProcessService implements OnDestroy {
                 }
                 if (net) {
                     this.publishUpdate(net);
+                }
+            })
+        );
+    }
+
+    /**
+     * Get process net referencess according to provided identifiers.
+     *
+     * `PetriNetReferences` are not cached.
+     * Each call will result in a new backend request unless a request for the same net is already pending.
+     * @param identifiers Array of identifiers of requested processes. See {@link Net}
+     * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
+     * If any of the processes failed to load it is skipped from the result.
+     */
+    public getNetReferences(identifiers: Array<string>): Observable<Array<PetriNetReference>> {
+        if (identifiers.length === 0) {
+            return of([]);
+        }
+        return forkJoin(identifiers.map(i => {
+            return this.getNetReference(i);
+        })).pipe(
+            map(references => references.filter(r => !!r))
+        );
+    }
+
+    /**
+     * Get process net reference by identifier.
+     *
+     * `PetriNetReferences` are not cached.
+     * Each call will result in a new backend request unless a request for the same net is already pending.
+     * @param identifier Identifier of the requested process. See {@link Net}
+     * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
+     */
+    public getNetReference(identifier: string): Observable<PetriNetReference> {
+        if (this._referenceRequestCache.has(identifier)) {
+            return this._referenceRequestCache.get(identifier).asObservable();
+        }
+        this._referenceRequestCache.set(identifier, new ReplaySubject<PetriNetReference>(1));
+        return this.loadNetReference(identifier).pipe(
+            tap(reference => {
+                const s = this._referenceRequestCache.get(identifier);
+                if (s) {
+                    s.next(reference);
+                    s.complete();
+                    this._referenceRequestCache.delete(identifier);
                 }
             })
         );
@@ -165,8 +214,8 @@ export class ProcessService implements OnDestroy {
 
     protected loadNet(id: string): Observable<Net> {
         const returnNet = new Subject<Net>();
-        this._petriNetResource.getOne(id, '^').subscribe(net => {
-            if (!net.stringId) {
+        this.loadNetReference(id).subscribe(net => {
+            if (net === null) {
                 returnNet.next(null);
                 returnNet.complete();
                 return;
@@ -189,13 +238,22 @@ export class ProcessService implements OnDestroy {
                 returnNet.complete();
                 // throw error;
             });
-        }, error => {
-            this._log.error('Failed to load Petri nets', error);
-            returnNet.next(null);
-            returnNet.complete();
-            // throw error;
         });
         return returnNet.asObservable();
+    }
+
+    protected loadNetReference(id: string): Observable<PetriNetReference> {
+        const returnReference = new Subject<PetriNetReference>();
+        this._petriNetResource.getOne(id, '^').subscribe(reference => {
+            returnReference.next(!reference.stringId ? null : reference);
+            returnReference.complete();
+            return;
+        }, error => {
+            this._log.error('Failed to load Petri net', error);
+            returnReference.next(null);
+            returnReference.complete();
+        });
+        return returnReference.asObservable();
     }
 
     protected loadTransitions(id: string): Observable<Array<Transition>> {
