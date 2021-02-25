@@ -1,8 +1,8 @@
 import {Inject, OnDestroy, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {StepperSelectionEvent} from '@angular/cdk/stepper';
-import {map, startWith, tap} from 'rxjs/operators';
-import {combineLatest, Observable, Subject} from 'rxjs';
+import {map, startWith, take, tap} from 'rxjs/operators';
+import {combineLatest, Observable, ReplaySubject} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
@@ -29,7 +29,6 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         {value: 'panel-accent-icon', viewValue: 'Accent'},
     ];
     filteredOptions$: Observable<Array<Form>>;
-    optionsLength$: Subject<number>;
     @ViewChild('toolbar') toolbar: MatToolbar;
 
     @ViewChild('stepper1') stepper1;
@@ -37,6 +36,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     protected _options$: Observable<Array<Form>>;
     protected _injectedData: NewCaseInjectionData;
+    protected _hasMultipleNets$: ReplaySubject<boolean>;
 
     protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                           protected _formBuilder: FormBuilder,
@@ -48,17 +48,14 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             this._injectedData = this._sideMenuControl.data as NewCaseInjectionData;
         }
         if (!this._injectedData) {
-            this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.new-case.noNets'));
-            this._sideMenuControl.close({
-                opened: false
-            });
+            this.closeNoNets();
         }
         this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
             this.nextStep();
             return false;
         }));
 
-        this.optionsLength$ = new Subject();
+        this._hasMultipleNets$ = new ReplaySubject(1);
 
         this._options$ = this._injectedData.allowedNets$.pipe(
             map(nets => nets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}))),
@@ -70,7 +67,10 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                 }
             }),
             tap(options => {
-                this.optionsLength$.next(options.length);
+                if (options.length === 0) {
+                    this.closeNoNets();
+                }
+                this._hasMultipleNets$.next(options.length > 1);
             })
         );
 
@@ -86,10 +86,18 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                 }
             })
         );
+
+        // the GUI is made visible once the options are resolved, and the options resolve once the GUI subscribes,
+        // to break the loop we subscribe for the first time here
+        this.filteredOptions$.pipe(take(1)).subscribe(() => {});
     }
 
     ngOnDestroy(): void {
-        this.optionsLength$.complete();
+        this._hasMultipleNets$.complete();
+    }
+
+    public get hasMultipleNets$(): Observable<boolean> {
+        return this._hasMultipleNets$.asObservable();
     }
 
     public stepChange($event: StepperSelectionEvent): void {
@@ -139,6 +147,13 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
         return options.filter(option => option.viewValue.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
+    }
+
+    protected closeNoNets() {
+        this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.new-case.noNets'));
+        this._sideMenuControl.close({
+            opened: false
+        });
     }
 
     nextStep() {
