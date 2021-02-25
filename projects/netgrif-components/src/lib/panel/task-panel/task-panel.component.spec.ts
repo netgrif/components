@@ -16,7 +16,7 @@ import {
     AuthenticationService,
     CancelTaskService,
     ChangedFields,
-    ConfigurationService,
+    ConfigurationService, createMockTask,
     DataFocusPolicy,
     DataFocusPolicyService,
     DelegateTaskService,
@@ -143,29 +143,7 @@ describe('TaskPanelComponent', () => {
 })
 class TestWrapperComponent {
     taskPanel: TaskPanelData = {
-        task: {
-            caseId: 'string',
-            transitionId: 'string',
-            title: 'string',
-            caseColor: 'string',
-            caseTitle: 'string',
-            user: undefined,
-            roles: {},
-            users: {},
-            startDate: undefined,
-            finishDate: undefined,
-            assignPolicy: AssignPolicy.manual,
-            dataFocusPolicy: DataFocusPolicy.manual,
-            finishPolicy: FinishPolicy.manual,
-            stringId: 'string',
-            layout: {
-                offset: 0,
-                cols: undefined,
-                rows: undefined
-            },
-            dataGroups: [],
-            _links: {}
-        },
+        task: createMockTask(),
         changedFields: new Subject<ChangedFields>(),
         initiallyExpanded: false
     };
