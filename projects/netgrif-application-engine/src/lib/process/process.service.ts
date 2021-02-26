@@ -79,11 +79,14 @@ export class ProcessService implements OnDestroy {
      */
     public getNet(identifier: string, forceLoad = false): Observable<Net> {
         if (!forceLoad && this._nets[identifier]) {
+            this._log.debug(`returning net '${identifier}' from cache`);
             return of(this._nets[identifier]);
         }
         if (this._requestCache.has(identifier)) {
+            this._log.debug(`returning net '${identifier}' from pending requests`);
             return this._requestCache.get(identifier).asObservable();
         }
+        this._log.debug(`retrieving net '${identifier}' from backend`);
         this._requestCache.set(identifier, new ReplaySubject<Net>(1));
         return this.loadNet(identifier).pipe(
             tap(net => {
@@ -231,13 +234,15 @@ export class ProcessService implements OnDestroy {
     }
 
     protected loadNet(id: string): Observable<Net> {
-        const returnNet = new Subject<Net>();
+        const returnNet = new ReplaySubject<Net>(1);
         this.loadNetReference(id).subscribe(net => {
             if (net === null) {
+                this._log.debug(`loadNetReference for net '${id}' returned null`);
                 returnNet.next(null);
                 returnNet.complete();
                 return;
             }
+            this._log.debug(`loading net '${id}' transitions, transactions and roles`);
             forkJoin({
                 transitions: this.loadTransitions(net.stringId),
                 transactions: this.loadTransactions(net.stringId),
@@ -261,7 +266,7 @@ export class ProcessService implements OnDestroy {
     }
 
     protected loadNetReference(id: string): Observable<PetriNetReference> {
-        const returnReference = new Subject<PetriNetReference>();
+        const returnReference = new ReplaySubject<PetriNetReference>(1);
         this._petriNetResource.getOne(id, '^').subscribe(reference => {
             returnReference.next(!reference.stringId ? null : reference);
             returnReference.complete();

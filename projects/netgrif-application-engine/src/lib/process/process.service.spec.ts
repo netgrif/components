@@ -4,12 +4,15 @@ import {ProcessService} from './process.service';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
 import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource.service';
-import {of, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoggerService} from '../logger/services/logger.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
+import RolesAndPermissions from './rolesAndPermissions';
+import Transaction from './transaction';
+import Transition from './transition';
 
 describe('ProcessService', () => {
     let service: ProcessService;
@@ -40,30 +43,38 @@ describe('ProcessService', () => {
 
     it('should call one net', () => {
         const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
-        service.getNet('true').subscribe();
+        service.getNet('correct').subscribe();
         expect(getOneSpy).toHaveBeenCalled();
     });
 
     it('should call more nets', () => {
         const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
-        service.getNets(['true', 'false']).subscribe();
+        service.getNets(['correct', 'emptySecondaries']).subscribe();
         expect(getOneSpy).toHaveBeenCalledTimes(2);
     });
 
-    it('get petri net errors', () => {
-        service.getNet('false').subscribe();
+    it('get petri net errors - net without transitions/transactions/roles', () => {
+        service.getNet('emptySecondaries', true).subscribe();
         expect(logInfoSpy).toHaveBeenCalled();
+    });
 
-        service.getNet('error1').subscribe();
+    it('get petri net errors - roles fail to load', () => {
+        service.getNet('errorOnRoles', true).subscribe();
         expect(logSpy).toHaveBeenCalled();
+    });
 
-        service.getNet('error2').subscribe();
+    it('get petri net errors - transactions fail to load', () => {
+        service.getNet('errorOnTransactions', true).subscribe();
         expect(logSpy).toHaveBeenCalled();
+    });
 
-        service.getNet('error3').subscribe();
+    it('get petri net errors - transitions fail to load', () => {
+        service.getNet('errorOnTransitions', true).subscribe();
         expect(logSpy).toHaveBeenCalled();
+    });
 
-        service.getNet('err').subscribe();
+    it('get petri net errors - net "err"', () => {
+        service.getNet('err', true).subscribe();
         expect(logSpy).toHaveBeenCalled();
     });
 
@@ -82,11 +93,11 @@ describe('ProcessService', () => {
 
 class MyPetriNetResource {
     getOne(identifier, version) {
-        if (identifier === 'true' ||
-            identifier === 'false' ||
-            identifier === 'error1' ||
-            identifier === 'error2' ||
-            identifier === 'error3') {
+        if (identifier === 'correct' ||
+            identifier === 'emptySecondaries' ||
+            identifier === 'errorOnRoles' ||
+            identifier === 'errorOnTransactions' ||
+            identifier === 'errorOnTransitions') {
             return of({
                 stringId: identifier,
                 title: 'string',
@@ -105,11 +116,16 @@ class MyPetriNetResource {
         }
     }
 
-    getPetriNetTransitions(identifier) {
-        if (identifier === 'true') {
+    getPetriNetTransitions(identifier): Observable<Array<Transition>> {
+        if (identifier === 'correct') {
+            return of([{
+                stringId: 't1',
+                title: '',
+                petriNetId: 'petriNetId',
+                immediateData: []
+            }]);
+        } else if (identifier === 'emptySecondaries' || identifier === 'errorOnRoles' || identifier === 'errorOnTransactions') {
             return of([]);
-        } else if (identifier === 'false' || identifier === 'error1' || identifier === 'error2') {
-            return of({});
         } else {
             return of({error: 'error'}).pipe(map(res => {
                 throw throwError(res);
@@ -117,11 +133,14 @@ class MyPetriNetResource {
         }
     }
 
-    getPetriNetTransactions(identifier) {
-        if (identifier === 'true') {
+    getPetriNetTransactions(identifier): Observable<Array<Transaction>> {
+        if (identifier === 'correct') {
+            return of([{
+                transitions: [],
+                title: ''
+            }]);
+        } else if (identifier === 'emptySecondaries' || identifier === 'errorOnRoles') {
             return of([]);
-        } else if (identifier === 'false' || identifier === 'error1') {
-            return of({});
         } else {
             return of({error: 'error'}).pipe(map(res => {
                 throw throwError(res);
@@ -129,11 +148,17 @@ class MyPetriNetResource {
         }
     }
 
-    getPetriNetRoles(identifier) {
-        if (identifier === 'true') {
-            return of([]);
-        } else if (identifier === 'false') {
-            return of({});
+    getPetriNetRoles(identifier): Observable<RolesAndPermissions> {
+        if (identifier === 'correct') {
+            return of({
+                processRoles: [{stringId: 'roleId', name: 'role'}],
+                permissions: {}
+            });
+        } else if (identifier === 'emptySecondaries') {
+            return of({
+                processRoles: [],
+                permissions: {}
+            });
         } else {
             return of({error: 'error'}).pipe(map(res => {
                 throw throwError(res);
