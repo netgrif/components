@@ -5,9 +5,10 @@ import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-re
 import {LoggerService} from '../logger/services/logger.service';
 import Transition from './transition';
 import Transaction from './transaction';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import RolesAndPermissions from './rolesAndPermissions';
 import {PetriNetReference} from '../resources/interface/petri-net-reference';
+import {PetriNetReferenceWithPermissions} from './petri-net-reference-with-permissions';
 
 export interface NetCache {
     [k: string]: Net;
@@ -25,14 +26,14 @@ export class ProcessService implements OnDestroy {
     protected _netsSubject: Subject<NetCache>;
     protected _netUpdate: Subject<Net>;
     protected _requestCache: Map<string, ReplaySubject<Net>>;
-    protected _referenceRequestCache: Map<string, ReplaySubject<PetriNetReference>>;
+    protected _referenceRequestCache: Map<string, ReplaySubject<PetriNetReferenceWithPermissions>>;
 
     constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
         this._nets = {};
         this._netsSubject = new Subject<NetCache>();
         this._netUpdate = new Subject<Net>();
         this._requestCache = new Map<string, ReplaySubject<Net>>();
-        this._referenceRequestCache = new Map<string, ReplaySubject<PetriNetReference>>();
+        this._referenceRequestCache = new Map<string, ReplaySubject<PetriNetReferenceWithPermissions>>();
     }
 
     ngOnDestroy(): void {
@@ -108,7 +109,7 @@ export class ProcessService implements OnDestroy {
      * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
      * If any of the processes failed to load it is skipped from the result.
      */
-    public getNetReferences(identifiers: Array<string>): Observable<Array<PetriNetReference>> {
+    public getNetReferences(identifiers: Array<string>): Observable<Array<PetriNetReferenceWithPermissions>> {
         if (identifiers.length === 0) {
             return of([]);
         }
@@ -127,12 +128,29 @@ export class ProcessService implements OnDestroy {
      * @param identifier Identifier of the requested process. See {@link Net}
      * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
      */
-    public getNetReference(identifier: string): Observable<PetriNetReference> {
+    public getNetReference(identifier: string): Observable<PetriNetReferenceWithPermissions> {
         if (this._referenceRequestCache.has(identifier)) {
             return this._referenceRequestCache.get(identifier).asObservable();
         }
-        this._referenceRequestCache.set(identifier, new ReplaySubject<PetriNetReference>(1));
+        this._referenceRequestCache.set(identifier, new ReplaySubject<PetriNetReferenceWithPermissions>(1));
         return this.loadNetReference(identifier).pipe(
+            switchMap(ref => {
+                if (ref !== null) {
+                    return forkJoin({net: of(ref), roles: this.loadRoles(ref.stringId)});
+                } else {
+                    return of({net: ref, roles: undefined});
+                }
+            }),
+            map(result => {
+                if (result.net === null) {
+                    return null;
+                }
+                return {
+                    ...result.net,
+                    roles: result.roles.processRoles,
+                    permissions: result.roles.permissions
+                };
+            }),
             tap(reference => {
                 const s = this._referenceRequestCache.get(identifier);
                 if (s) {
