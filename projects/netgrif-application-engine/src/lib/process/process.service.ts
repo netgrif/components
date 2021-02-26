@@ -275,7 +275,7 @@ export class ProcessService implements OnDestroy {
     }
 
     protected loadTransitions(id: string): Observable<Array<Transition>> {
-        return this._petriNetResource.getPetriNetTranstions(id).pipe(
+        return this._petriNetResource.getPetriNetTransitions(id).pipe(
             map(trans => {
                 if (trans instanceof Array) {
                     return trans;

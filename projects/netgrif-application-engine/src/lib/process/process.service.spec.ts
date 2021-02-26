@@ -105,7 +105,7 @@ class MyPetriNetResource {
         }
     }
 
-    getPetriNetTranstions(identifier) {
+    getPetriNetTransitions(identifier) {
         if (identifier === 'true') {
             return of([]);
         } else if (identifier === 'false' || identifier === 'error1' || identifier === 'error2') {
