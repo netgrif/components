@@ -6,6 +6,7 @@ export abstract class ConfigurationService {
     private readonly _dataFieldConfiguration: Services['dataFields'];
 
     protected constructor(protected configuration: NetgrifApplicationEngine) {
+        this.resolveEndpointURLs();
         this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields']);
     }
 
@@ -123,6 +124,44 @@ export abstract class ConfigurationService {
             return undefined;
         }
         return {...this._dataFieldConfiguration};
+    }
+
+    /**
+     * Resolves the URL addresses of backend endpoints based on the provided configuration.
+     *
+     * If the URLs begin with either `http://`, or `https://` the provided URL will be used.
+     *
+     * If not, then the URLs are considered to be relative to the location of the frontend application and it's URL will be used
+     * as the base path. `/api` is appended automatically.
+     */
+    protected resolveEndpointURLs() {
+        this.configuration.providers.auth.address = this.resolveURL(this.configuration.providers.auth.address);
+        if (Array.isArray(this.configuration.providers.resources)) {
+            this.configuration.providers.resources.forEach(resource => {
+                resource.address = this.resolveURL(resource.address);
+            });
+        } else {
+            this.configuration.providers.resources.address = this.resolveURL(this.configuration.providers.resources.address);
+        }
+    }
+
+    /**
+     * Resolves a single URL address.
+     *
+     * If the URL begins with either `http://`, or `https://` the provided URL will be used.
+     *
+     * If not, then the URL is considered to be relative to the location of the frontend application and it's URL will be used
+     * as the base path. `/api` is appended automatically.
+     *
+     * @param configURL value from the configuration file
+     * @returns the resolved URL
+     */
+    protected resolveURL(configURL: string): string {
+        if (configURL.startsWith('http://') || configURL.startsWith('https://')) {
+            return configURL;
+        } else {
+            return location.origin + '/api' + configURL;
+        }
     }
 
     private getView(searched: string, view: View): Array<string> {
