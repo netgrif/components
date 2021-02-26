@@ -135,12 +135,25 @@ export abstract class ConfigurationService {
      * as the base path. `/api` is appended automatically.
      */
     protected resolveEndpointURLs() {
+        if (this.configuration?.providers?.auth?.address === undefined) {
+            throw new Error(`'provider.auth.address' is a required property and must be present in the configuration!`);
+        }
         this.configuration.providers.auth.address = this.resolveURL(this.configuration.providers.auth.address);
+
+        if (this.configuration?.providers?.resources === undefined) {
+            throw new Error(`'provider.resources' is a required property and must be present in the configuration!`);
+        }
         if (Array.isArray(this.configuration.providers.resources)) {
             this.configuration.providers.resources.forEach(resource => {
+                if (resource?.address === undefined) {
+                    throw new Error(`Resources defined in 'provider.resources' must define an address property!`);
+                }
                 resource.address = this.resolveURL(resource.address);
             });
         } else {
+            if (this.configuration?.providers?.resources?.address === undefined) {
+                throw new Error(`Resources defined in 'provider.resources' must define an address property!`);
+            }
             this.configuration.providers.resources.address = this.resolveURL(this.configuration.providers.resources.address);
         }
     }
