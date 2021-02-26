@@ -54,27 +54,27 @@ describe('ProcessService', () => {
     });
 
     it('get petri net errors - net without transitions/transactions/roles', () => {
-        service.getNet('emptySecondaries', true).subscribe();
+        service.getNet('emptySecondaries').subscribe();
         expect(logInfoSpy).toHaveBeenCalled();
     });
 
     it('get petri net errors - roles fail to load', () => {
-        service.getNet('errorOnRoles', true).subscribe();
+        service.getNet('errorOnRoles').subscribe();
         expect(logSpy).toHaveBeenCalled();
     });
 
     it('get petri net errors - transactions fail to load', () => {
-        service.getNet('errorOnTransactions', true).subscribe();
+        service.getNet('errorOnTransactions').subscribe();
         expect(logSpy).toHaveBeenCalled();
     });
 
     it('get petri net errors - transitions fail to load', () => {
-        service.getNet('errorOnTransitions', true).subscribe();
+        service.getNet('errorOnTransitions').subscribe();
         expect(logSpy).toHaveBeenCalled();
     });
 
-    it('get petri net errors - net "err"', () => {
-        service.getNet('err', true).subscribe();
+    it('get petri net errors - net fails to load', () => {
+        service.getNet('err').subscribe();
         expect(logSpy).toHaveBeenCalled();
     });
 
@@ -84,6 +84,65 @@ describe('ProcessService', () => {
             expect(result).toEqual([]);
             done();
         });
+    });
+
+    it('second request should return cached net', (done) => {
+        const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
+        service.getNet('correct').subscribe(net => {
+            service.getNet('correct').subscribe(net2 => {
+                expect(getOneSpy).toHaveBeenCalledTimes(1);
+                expect(net === net2).toBeTrue();
+                done();
+            });
+        });
+    });
+
+    it('force should bypass net cache', (done) => {
+        const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
+        service.getNet('correct').subscribe(net => {
+            service.getNet('correct', true).subscribe(net2 => {
+                expect(getOneSpy).toHaveBeenCalledTimes(2);
+                expect(net === net2).toBeFalse();
+                done();
+            });
+        });
+    });
+
+    it('getNetReference should load net with only roles and permissions', (done) => {
+        service.getNetReference('correct').subscribe(result => {
+            expect(result).toBeTruthy();
+            expect(Array.isArray(result.roles)).toBeTrue();
+            expect(result.roles.length > 0).toBeTrue();
+            done();
+        });
+    });
+
+    it('should call more net references', () => {
+        const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
+        service.getNetReferences(['correct', 'emptySecondaries']).subscribe();
+        expect(getOneSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('getNetReferences should emit with empty argument', (done) => {
+        service.getNetReferences([]).subscribe(result => {
+            expect(result).toEqual([]);
+            done();
+        });
+    });
+
+    it('get petri net reference errors - net without transitions/transactions/roles', () => {
+        service.getNetReference('emptySecondaries').subscribe();
+        expect(logInfoSpy).toHaveBeenCalled();
+    });
+
+    it('get petri net reference errors - roles fail to load', () => {
+        service.getNetReference('errorOnRoles').subscribe();
+        expect(logSpy).toHaveBeenCalled();
+    });
+
+    it('get petri net reference errors - net fails to load', () => {
+        service.getNetReference('err').subscribe();
+        expect(logSpy).toHaveBeenCalled();
     });
 
     afterEach(() => {
@@ -101,7 +160,7 @@ class MyPetriNetResource {
             return of({
                 stringId: identifier,
                 title: 'string',
-                identifier: 'string',
+                identifier,
                 version: 'string',
                 initials: 'string',
                 defaultCaseName: 'string',
