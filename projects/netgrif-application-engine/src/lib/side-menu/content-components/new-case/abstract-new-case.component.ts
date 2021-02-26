@@ -1,8 +1,8 @@
 import {Inject, OnDestroy, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {StepperSelectionEvent} from '@angular/cdk/stepper';
-import {map, startWith, take, tap} from 'rxjs/operators';
-import {BehaviorSubject, combineLatest, Observable, ReplaySubject} from 'rxjs';
+import {map, startWith, tap} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, Observable, ReplaySubject, Subscription} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
@@ -34,10 +34,11 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     @ViewChild('stepper1') stepper1;
     @ViewChild('stepper2') stepper2;
 
-    protected _options$: Observable<Array<Form>>;
+    protected _options$: ReplaySubject<Array<Form>>;
     protected _injectedData: NewCaseInjectionData;
     protected _hasMultipleNets$: ReplaySubject<boolean>;
     protected _notInitialized$: BehaviorSubject<boolean>;
+    private _allowedNetsSubscription: Subscription;
 
     protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                           protected _formBuilder: FormBuilder,
@@ -58,8 +59,9 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
         this._hasMultipleNets$ = new ReplaySubject(1);
         this._notInitialized$ = new BehaviorSubject<boolean>(true);
+        this._options$ = new ReplaySubject(1);
 
-        this._options$ = this._injectedData.allowedNets$.pipe(
+        this._allowedNetsSubscription = this._injectedData.allowedNets$.pipe(
             map(nets => nets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}))),
             map(nets => {
                 if (!this._sideMenuControl.allVersionEnabled) {
@@ -74,7 +76,13 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                 }
                 this._hasMultipleNets$.next(options.length > 1);
             })
-        );
+        ).subscribe(options => {
+            this._options$.next(options);
+            if (!this._notInitialized$.closed) {
+                this._notInitialized$.next(false);
+                this._notInitialized$.complete();
+            }
+        });
 
         this.filteredOptions$ = combineLatest([this._options$, this.processFormControl.valueChanges.pipe(startWith(''))]).pipe(
             map(sources => {
@@ -88,17 +96,11 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                 }
             })
         );
-
-        // the GUI is made visible once the options are resolved, and the options resolve once the GUI subscribes,
-        // to break the loop we subscribe for the first time here
-        this.filteredOptions$.pipe(take(1)).subscribe(() => {
-            this._notInitialized$.next(false);
-            this._notInitialized$.complete();
-        });
     }
 
     ngOnDestroy(): void {
         this._hasMultipleNets$.complete();
+        this._allowedNetsSubscription.unsubscribe();
     }
 
     public get hasMultipleNets$(): Observable<boolean> {
