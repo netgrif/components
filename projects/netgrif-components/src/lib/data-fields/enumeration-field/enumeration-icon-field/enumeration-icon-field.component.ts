@@ -1,22 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {EnumerationField, WrappedBoolean} from '@netgrif/application-engine';
-import {FormControl} from '@angular/forms';
+import {Component} from '@angular/core';
+import {AbstractEnumerationIconFieldComponent} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-enumeration-icon-field',
     templateUrl: './enumeration-icon-field.component.html',
     styleUrls: ['./enumeration-icon-field.component.scss']
 })
-export class EnumerationIconFieldComponent implements OnInit {
-
-    @Input() enumerationField: EnumerationField;
-    @Input() formControlRef: FormControl;
-    @Input() showLargeLayout: WrappedBoolean;
+export class EnumerationIconFieldComponent extends AbstractEnumerationIconFieldComponent {
 
     constructor() {
+        super();
     }
-
-    ngOnInit(): void {
-    }
-
 }

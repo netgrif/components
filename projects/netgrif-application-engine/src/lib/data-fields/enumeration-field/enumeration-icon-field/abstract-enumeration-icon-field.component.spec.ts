@@ -1,20 +1,17 @@
+import { AbstractEnumerationIconFieldComponent } from './abstract-enumeration-icon-field.component';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-
-import { EnumerationIconFieldComponent } from './enumeration-icon-field.component';
+import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
+import {EnumerationField} from '../models/enumeration-field';
 import {FormControl} from '@angular/forms';
-import {
-    MaterialModule,
-    TranslateLibModule,
-    WrappedBoolean,
-    EnumerationField
-} from '@netgrif/application-engine';
 
-describe('EnumerationIconFieldComponent', () => {
-    let component: EnumerationIconFieldComponent;
+describe('AbstractEnumerationIconFieldComponent', () => {
+    let component: TestEnumSelectComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(waitForAsync(() => {
@@ -27,7 +24,7 @@ describe('EnumerationIconFieldComponent', () => {
                 HttpClientTestingModule,
                 NoopAnimationsModule
             ],
-            declarations: [ EnumerationIconFieldComponent, TestWrapperComponent],
+            declarations: [TestEnumSelectComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
@@ -46,9 +43,19 @@ describe('EnumerationIconFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nc-test-wrapper',
-    template: '<nc-enumeration-icon-field [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</nc-enumeration-icon-field>'
+    selector: 'nae-test-enum-select',
+    template: ''
+})
+class TestEnumSelectComponent extends AbstractEnumerationIconFieldComponent {
+    constructor() {
+        super();
+    }
+}
+
+@Component({
+    selector: 'nae-test-wrapper',
+    template: '<nae-test-enum-select [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</nae-test-enum-select>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
@@ -61,4 +68,3 @@ class TestWrapperComponent {
     }, undefined, undefined, undefined, undefined, undefined, {name: 'icon'});
     form = new FormControl();
 }
-

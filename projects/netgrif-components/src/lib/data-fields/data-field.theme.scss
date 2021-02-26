@@ -57,5 +57,9 @@
     .enum-icon-item:hover {
         color: mat-color($primary) !important;
     }
+
+    .enum-icon-item-active {
+        color: mat-color($primary) !important;
+    }
 }
 
