@@ -167,7 +167,7 @@ export class PublicTaskResourceService extends TaskResourceService {
     // {{baseUrl}}/api/task/:id/file/:field         - for file field
     // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
     public downloadFile(taskId: string, fieldId: string, name?: string): Observable<ProviderProgress | Blob> {
-        const url = !!name ? 'public/task/' + taskId + '/file/' + fieldId + '/' + name : 'public/task/' + taskId + '/file/' + fieldId;
+        const url = !!name ? `public/task/${taskId}/file/${fieldId}/${name}` : `public/task/${taskId}/file/${fieldId}`;
         return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
             map(event => {
                 switch (event.type) {
@@ -191,7 +191,7 @@ export class PublicTaskResourceService extends TaskResourceService {
     // {{baseUrl}}/api/task/:id/files/:field    - for file list field
     public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
         Observable<ProviderProgress | ChangedFieldContainer> {
-        const url = !multipleFiles ? 'public/task/' + taskId + '/file/' + fieldId : 'public/task/' + taskId + '/files/' + fieldId;
+        const url = !multipleFiles ? `public/task/${taskId}/file/${fieldId}` : `public/task/${taskId}/files/${fieldId}`;
         return this._resourceProvider.postWithEvent$<ChangedFieldContainer>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
@@ -212,7 +212,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * DELETE
      */
     public deleteFile(taskId: string, fieldId: string, name?: string): Observable<MessageResource> {
-        const url = !!name ? 'public/task/' + taskId + '/file/' + fieldId + '/' + name : 'public/task/' + taskId + '/file/' + fieldId;
+        const url = !!name ? `public/task/${taskId}/file/${fieldId}/${name}` : `public/task/${taskId}/file/${fieldId}`;
         return this._resourceProvider.delete$(url, this.SERVER_URL).pipe(
             map(r => this.changeType(r, undefined))
         );
