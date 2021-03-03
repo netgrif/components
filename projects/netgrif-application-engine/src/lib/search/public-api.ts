@@ -77,6 +77,8 @@ export * from './search-keyword-resolver-service/search-index-resolver.service';
 
 /* Components */
 export * from './search-component/abstract-search.component';
+export * from './fulltext-search-component/abstract-fulltext-search.component';
+export * from './advanced-search-component/abstract-advanced-search.component';
 export * from './search-clause-component/abstract-search-clause.component';
 export * from './search-predicate-component/abstract-search-predicate.component';
 export * from './search-operand-input-component/abstract-search-operand-input.component';
