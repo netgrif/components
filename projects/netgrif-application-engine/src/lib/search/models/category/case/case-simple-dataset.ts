@@ -12,6 +12,7 @@ import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationCategory} from '../no-configuration-category';
 import {CaseDataset} from './case-dataset';
 import {DatafieldMapKey} from '../../datafield-map-key';
+import {SearchIndex} from '../../search-index';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -27,6 +28,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     protected _fieldId: string;
     protected _fieldType: string;
     protected _netIds: Array<string>;
+    protected _elasticKeyword: string;
 
     protected _processCategory: CaseProcess;
 
@@ -54,13 +56,40 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         this._fieldId = fieldId;
         this._fieldType = fieldType;
         this._netIds = netIds;
+        this.resolveElasticKeyword();
+    }
+
+    protected resolveElasticKeyword(): void {
+        const resolver = this._optionalDependencies.searchIndexResolver;
+        switch (this._fieldType) {
+            case 'number':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.NUMBER);
+                break;
+            case 'date':
+            case 'dateTime':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.TIMESTAMP);
+                break;
+            case 'boolean':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.BOOLEAN);
+                break;
+            case 'file':
+            case 'fileList':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FILE_NAME);
+                break;
+            case 'user':
+            case 'userList':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.USER_ID);
+                break;
+            default:
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FULLTEXT);
+        }
     }
 
     protected get elasticKeywords(): Array<string> {
         if (!this._fieldId) {
             return [];
         } else {
-            return [`dataSet.${this._fieldId}.value`];
+            return [this._elasticKeyword];
         }
     }
 

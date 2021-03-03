@@ -31,6 +31,8 @@ import {LessThanDateTime} from '../../operator/less-than-date-time';
 import {InRangeDateTime} from '../../operator/in-range-date-time';
 import {AutocompleteOptions} from '../autocomplete-options';
 import {ConfigurationInput} from '../../configuration-input';
+import {SearchIndex} from '../../search-index';
+import {Type} from '@angular/core';
 
 interface Datafield {
     netId: string;
@@ -41,8 +43,7 @@ interface Datafield {
 export class CaseDataset extends Category<Datafield> implements AutocompleteOptions {
 
     private static readonly _i18n = 'search.category.case.dataset';
-    // TODO 4.5.2020 - only button, file and file list fields are truly unsupported, dateTime is implemented but lacks elastic support
-    protected static DISABLED_TYPES = ['button', 'file', 'dateTime', 'fileList', 'enumeration_map', 'multichoice_map'];
+    protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef'];
 
     protected readonly _DATAFIELD_INPUT: ConfigurationInput;
 
@@ -139,14 +140,16 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operators.getOperator(IsNull)
                 ];
             case 'boolean':
-                return [this._operators.getOperator(Equals), this._operators.getOperator(NotEquals)];
+                return [
+                    this._operators.getOperator(Equals),
+                    this._operators.getOperator(NotEquals)
+                ];
             case 'user':
-                // Angular JS frontend used these operators for enumeration, multichoice and file as well
+            case 'userList':
                 return [
                     this._operators.getOperator(Equals),
                     this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(IsNull),
-                    this._operators.getOperator(Like)
+                    this._operators.getOperator(IsNull)
                 ];
             case 'date':
                 return [
@@ -170,9 +173,6 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operators.getOperator(Substring),
                     this._operators.getOperator(Equals),
                     this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(MoreThan),
-                    this._operators.getOperator(LessThan),
-                    this._operators.getOperator(InRange),
                     this._operators.getOperator(IsNull),
                     this._operators.getOperator(Like)
                 ];
@@ -207,7 +207,30 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         if (!this.hasSelectedDatafields) {
             return [];
         } else {
-            return this._selectedDatafields.map(datafield => `dataSet.${datafield.fieldId}.value`);
+            return this._selectedDatafields.map(datafield => this.resolveElasticKeyword(datafield));
+        }
+    }
+
+    protected resolveElasticKeyword(datafield: Datafield): string {
+        const resolver = this._optionalDependencies.searchIndexResolver;
+        switch (datafield.fieldType) {
+            case 'number':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.NUMBER);
+            case 'date':
+            case 'dateTime':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.TIMESTAMP);
+            case 'boolean':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.BOOLEAN);
+            case 'file':
+            case 'fileList':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
+            case 'user':
+            case 'userList':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
+            default:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
         }
     }
 
@@ -219,7 +242,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateQuery(userInput: Array<unknown>): Query {
-        const queryGenerationStrategy = this.selectedOperator === this._operators.getOperator(IsNull) ?
+        const queryGenerationStrategy = this.isSelectedOperator(IsNull) ?
             (d, _) => this.isNullOperatorQueryGenerationStrategy(d) :
             (d, ui) => this.standardQueryGenerationStrategy(d, ui);
 
@@ -252,10 +275,19 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                             && !CaseDataset.DISABLED_TYPES.includes(immediateData.type);
                     })
                     .forEach(immediateData => {
-                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
+                        let type = immediateData.type;
+
+                        // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
+                        if (type === 'enumeration_map') {
+                            type = 'enumeration';
+                        } else if (type === 'multichoice_map') {
+                            type = 'multichoice';
+                        }
+
+                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(type, immediateData.title), {
                             netId: petriNet.stringId,
                             fieldId: immediateData.stringId,
-                            fieldType: immediateData.type,
+                            fieldType: type,
                         });
                     });
             });
@@ -355,5 +387,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             return (value as SearchAutocompleteOption<Array<number>>).value;
         }
         return value;
+    }
+
+    protected isSelectedOperator(operatorClass: Type<any>): boolean {
+        return this.selectedOperator === this._operators.getOperator(operatorClass);
     }
 }

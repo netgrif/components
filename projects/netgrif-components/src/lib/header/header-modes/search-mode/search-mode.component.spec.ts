@@ -9,7 +9,7 @@ import {
     AuthenticationService,
     CaseHeaderService,
     CaseViewService,
-    ConfigCaseViewServiceFactory,
+    CaseViewServiceFactory,
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
@@ -32,6 +32,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 
 
 describe('SearchModeComponent', () => {
@@ -54,10 +55,11 @@ describe('SearchModeComponent', () => {
                 HttpClientTestingModule,
                 TranslateLibModule,
                 MaterialModule,
+                NgxMatDatetimePickerModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
@@ -66,7 +68,7 @@ describe('SearchModeComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

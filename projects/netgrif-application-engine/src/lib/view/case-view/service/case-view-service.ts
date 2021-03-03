@@ -23,6 +23,7 @@ import {CasePageLoadRequestResult} from '../models/case-page-load-request-result
 import {UserService} from '../../../user/services/user.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {PermissionType} from '../../../process/permissions';
+import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
@@ -41,8 +42,9 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
                 protected _searchService: SearchService,
                 protected _translate: TranslateService,
                 protected _user: UserService,
-                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
-        super(allowedNets);
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
+                resolver: SearchIndexResolverService) {
+        super(allowedNets, resolver);
         this._loading$ = new LoadingWithFilterEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
@@ -199,7 +201,9 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     protected getMetaFieldSortId(): string {
         switch (this._lastHeaderSearchState.fieldIdentifier) {
             case CaseMetaField.TITLE:
-                return 'titleSortable';
+                return 'title.keyword';
+            case CaseMetaField.VISUAL_ID:
+                return 'visualId.keyword';
             case CaseMetaField.CREATION_DATE:
                 return 'creationDateSortable';
             default:

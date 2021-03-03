@@ -24,6 +24,7 @@ import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
+import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 
 
 @Injectable()
@@ -55,10 +56,11 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint,
+                resolver: SearchIndexResolverService,
                 allowedNets: Observable<Array<Net>> = of([]),
                 initiallyOpenOneTask: Observable<boolean> = of(true),
                 closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
-        super(allowedNets);
+        super(allowedNets, resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();

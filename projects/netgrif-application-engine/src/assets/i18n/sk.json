@@ -255,6 +255,7 @@
     "headers": {
         "newHeader": "Zvoľte novú hlavičku",
         "date": "Zvoľte dátum",
+        "dateTime": "Zvoľte dátum a čas",
         "selectUser": "Vyberte používateľa",
         "caseMeta": {
             "visualID": "Vizuálne ID",

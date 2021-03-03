@@ -9,7 +9,7 @@ import {
     AuthenticationService,
     CaseHeaderService,
     CaseViewService,
-    ConfigCaseViewServiceFactory,
+    CaseViewServiceFactory,
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
@@ -44,7 +44,7 @@ describe('EditModeComponent', () => {
             ],
             providers: [
                 CaseHeaderService,
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
@@ -53,7 +53,7 @@ describe('EditModeComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

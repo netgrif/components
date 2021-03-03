@@ -269,7 +269,8 @@ export abstract class AbstractHeaderService implements OnDestroy {
                     columnType: header.type,
                     fieldIdentifier: header.fieldIdentifier,
                     petriNetIdentifier: header.petriNetIdentifier,
-                    columnIdentifier: columnIndex
+                    columnIdentifier: columnIndex,
+                    fieldType: header.fieldType
                 };
                 header.sortDirection = direction;
                 foundFirstMatch = true;

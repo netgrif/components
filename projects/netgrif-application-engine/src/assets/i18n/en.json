@@ -255,6 +255,7 @@
     "headers": {
         "newHeader": "Select new header",
         "date": "Choose a date",
+        "dateTime": "Choose a date and time",
         "selectUser": "Choose a user",
         "caseMeta": {
             "visualID": "Visual ID",
