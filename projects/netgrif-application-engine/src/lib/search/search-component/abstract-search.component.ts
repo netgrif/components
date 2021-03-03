@@ -32,9 +32,6 @@ export abstract class AbstractSearchComponent {
             this._searchService.clearPredicates();
         } else {
             this._searchService.clearFullTextFilter();
-            // if (!this._searchService.hasVisiblePredicates) {
-            //     this.addChildPredicate();
-            // }
         }
 
         this.advancedSearchDisplayed = !this.advancedSearchDisplayed;

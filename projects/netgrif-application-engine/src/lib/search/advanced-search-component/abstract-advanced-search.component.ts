@@ -3,16 +3,28 @@ import {SearchService} from '../search-service/search.service';
 import {KeyValue} from '@angular/common';
 import {EditablePredicate} from '../models/predicate/editable-predicate';
 import {Subject} from 'rxjs';
-import {OnDestroy} from '@angular/core';
+import {AfterViewInit, OnDestroy} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
+import {
+    AdvancedSearchComponentInitializationService
+} from '../advanced-search-component-initialization-service/advanced-search-component-initialization.service';
 
-export class AbstractAdvancedSearchComponent implements OnDestroy {
+export class AbstractAdvancedSearchComponent implements AfterViewInit, OnDestroy {
 
     public removeChild$: Subject<number>;
 
-    protected constructor(protected _searchService: SearchService) {
+    protected constructor(protected _searchService: SearchService,
+                          protected _initializationService: AdvancedSearchComponentInitializationService) {
         this.removeChild$ = new Subject<number>();
         this.removeChild$.subscribe(id => this._removeChildAt(id));
+
+        if (!this._searchService.hasVisiblePredicates) {
+            this.addChildPredicate();
+        }
+    }
+
+    ngAfterViewInit(): void {
+        this._initializationService.completeInitialization();
     }
 
     ngOnDestroy(): void {

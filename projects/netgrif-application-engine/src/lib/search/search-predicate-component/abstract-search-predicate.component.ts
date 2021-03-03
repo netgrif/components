@@ -8,6 +8,9 @@ import {Query} from '../models/query/query';
 import {LoggerService} from '../../logger/services/logger.service';
 import {MatSelect} from '@angular/material/select';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
+import {
+    AdvancedSearchComponentInitializationService
+} from '../advanced-search-component-initialization-service/advanced-search-component-initialization.service';
 
 
 /**
@@ -30,7 +33,8 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
     protected _searchCategories: Array<Category<any>>;
 
     protected constructor(@Inject(NAE_SEARCH_CATEGORIES) private _naeSearchCategories: Array<Category<any>>,
-                          protected _logger: LoggerService) {
+                          protected _logger: LoggerService,
+                          protected _initializationService: AdvancedSearchComponentInitializationService) {
     }
 
     ngOnInit() {
@@ -63,7 +67,7 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
 
     @ViewChild('categoryInput')
     public set categoryInput(input: MatSelect) {
-        if (input) {
+        if (input && this._initializationService.isInitialized) {
             setTimeout(() => {
                 input.focus();
                 input.open();
