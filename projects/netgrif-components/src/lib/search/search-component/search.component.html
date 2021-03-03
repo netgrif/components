@@ -6,20 +6,11 @@
     <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
 
     <ng-template #advancedSearch>
-        <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last" [ngForTrackBy]="trackByPredicates">
-            <nc-search-clause [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$" class="clause-margin"></nc-search-clause>
-            <div *ngIf="!last" class="button-margin">{{'search.and' | translate | uppercase}}</div>
-        </ng-template>
-        <button mat-stroked-button (click)="addChildPredicate()" class="button-margin">+ {{'search.and' | translate | uppercase}}</button>
+        <nc-advanced-search></nc-advanced-search>
     </ng-template>
 
     <ng-template #fullTextSearch>
-        <mat-form-field appearance="outline" class="disable-error-margin">
-            <input type="text" matInput
-                   [placeholder]="'search.fullText' | translate"
-                   [formControl]="fullTextFormControl"
-                   (keydown.enter)="$event.target.blur()">
-        </mat-form-field>
+        <nc-fulltext-search></nc-fulltext-search>
     </ng-template>
 
     <button mat-icon-button class="search-toggle-margin"

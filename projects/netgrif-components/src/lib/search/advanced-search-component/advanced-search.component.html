@@ -1,1 +1,5 @@
-<p>advanced-search works!</p>
+<ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last" [ngForTrackBy]="trackByPredicates">
+    <nc-search-clause [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$" class="clause-margin"></nc-search-clause>
+    <div *ngIf="!last" class="button-margin">{{'search.and' | translate | uppercase}}</div>
+</ng-template>
+<button mat-stroked-button (click)="addChildPredicate()" class="button-margin">+ {{'search.and' | translate | uppercase}}</button>

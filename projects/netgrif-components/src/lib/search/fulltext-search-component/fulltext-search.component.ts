@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractFulltextSearchComponent} from '@netgrif/application-engine';
+import {AbstractFulltextSearchComponent, SearchService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-fulltext-search',
@@ -8,8 +8,8 @@ import {AbstractFulltextSearchComponent} from '@netgrif/application-engine';
 })
 export class FulltextSearchComponent extends AbstractFulltextSearchComponent {
 
-    constructor() {
-        super();
+    constructor(searchService: SearchService) {
+        super(searchService);
     }
 
 }

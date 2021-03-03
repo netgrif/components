@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractAdvancedSearchComponent} from '@netgrif/application-engine';
+import {AbstractAdvancedSearchComponent, SearchService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-advanced-search',
@@ -8,8 +8,8 @@ import {AbstractAdvancedSearchComponent} from '@netgrif/application-engine';
 })
 export class AdvancedSearchComponent extends AbstractAdvancedSearchComponent {
 
-    constructor() {
-        super();
+    constructor(searchService: SearchService) {
+        super(searchService);
     }
 
 }
