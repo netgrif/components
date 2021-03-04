@@ -16,6 +16,9 @@ import {SearchMode} from '../models/component-configuration/search-mode';
  * Search categories must be provided by the {@link NAE_SEARCH_CATEGORIES} injection token.
  * Default factory methods for [task]{@link defaultTaskSearchCategoriesFactory} and
  * [case]{@link defaultCaseSearchCategoriesFactory} search categories exist. See their documentation for more information.
+ *
+ * The search component's visuals can be configured either by the {@link NAE_SEARCH_COMPONENT_CONFIGURATION} injection token,
+ * or by the appropriate component inputs. The injection token configuration takes precedence over the inputs if both are present.
  */
 export abstract class AbstractSearchComponent implements SearchComponentConfiguration, OnInit {
 

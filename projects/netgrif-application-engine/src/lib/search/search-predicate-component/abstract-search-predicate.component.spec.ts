@@ -19,6 +19,9 @@ import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
+import {
+    AdvancedSearchComponentInitializationService
+} from '../advanced-search-component-initialization-service/advanced-search-component-initialization.service';
 
 describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
@@ -49,7 +52,7 @@ describe('AbstractSearchPredicateComponent', () => {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory
                 },
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
             ]
         }).compileComponents();
     }));
@@ -75,14 +78,16 @@ describe('AbstractSearchPredicateComponent', () => {
 })
 class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
     constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
-                logger: LoggerService) {
-        super(searchCategories, logger);
+                logger: LoggerService,
+                initializationService: AdvancedSearchComponentInitializationService) {
+        super(searchCategories, logger, initializationService);
     }
 }
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></nae-search-predicate>'
+    template: '<nae-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></nae-search-predicate>',
+    providers: [AdvancedSearchComponentInitializationService]
 })
 class TestWrapperComponent implements OnDestroy {
 
