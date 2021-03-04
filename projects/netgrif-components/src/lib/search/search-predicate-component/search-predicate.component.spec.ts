@@ -4,10 +4,20 @@ import {Component, OnDestroy} from '@angular/core';
 import {
     AuthenticationMethodService,
     CaseViewService,
-    CategoryFactory, CaseViewServiceFactory, ConfigurationService,
+    CategoryFactory,
+    CaseViewServiceFactory,
+    ConfigurationService,
     defaultCaseSearchCategoriesFactory,
-    EditableElementaryPredicate, MaterialModule, MockAuthenticationMethodService,
-    NAE_SEARCH_CATEGORIES, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory, TestConfigurationService, TranslateLibModule
+    EditableElementaryPredicate,
+    MaterialModule,
+    MockAuthenticationMethodService,
+    NAE_SEARCH_CATEGORIES,
+    SearchService,
+    TestCaseSearchServiceFactory,
+    TestCaseViewFactory,
+    TestConfigurationService,
+    TranslateLibModule,
+    AdvancedSearchComponentInitializationService
 } from '@netgrif/application-engine';
 import {Subject} from 'rxjs';
 import {SearchComponentModule} from '../search.module';
@@ -45,6 +55,7 @@ describe('SearchPredicateComponent', () => {
                     useFactory: TestCaseSearchServiceFactory
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                AdvancedSearchComponentInitializationService
             ]
         })
             .compileComponents();

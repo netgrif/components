@@ -1,5 +1,16 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AdvancedSearchComponent} from './advanced-search.component';
+import {
+    CategoryFactory, ConfigurationService,
+    defaultCaseSearchCategoriesFactory,
+    MaterialModule,
+    NAE_SEARCH_CATEGORIES,
+    SearchService,
+    TestCaseSearchServiceFactory, TestConfigurationService
+} from 'netgrif-application-engine';
+import {SearchComponentModule} from '../search.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AdvancedSearchComponent', () => {
     let component: AdvancedSearchComponent;
@@ -7,7 +18,17 @@ describe('AdvancedSearchComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [AdvancedSearchComponent]
+            imports: [
+                MaterialModule,
+                SearchComponentModule,
+                NoopAnimationsModule,
+                HttpClientTestingModule,
+            ],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: SearchService, useFactory: TestCaseSearchServiceFactory},
+                {provide: NAE_SEARCH_CATEGORIES, useValue: []}
+            ]
         })
             .compileComponents();
     });

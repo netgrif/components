@@ -52,7 +52,8 @@ describe('AbstractSearchPredicateComponent', () => {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory
                 },
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                AdvancedSearchComponentInitializationService
             ]
         }).compileComponents();
     }));
@@ -86,8 +87,7 @@ class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
 
 @Component({
     selector: 'nae-test-wrapper',
-    template: '<nae-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></nae-search-predicate>',
-    providers: [AdvancedSearchComponentInitializationService]
+    template: '<nae-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></nae-search-predicate>'
 })
 class TestWrapperComponent implements OnDestroy {
 

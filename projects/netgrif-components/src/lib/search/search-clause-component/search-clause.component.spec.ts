@@ -11,7 +11,7 @@ import {
     EditableClausePredicate,
     MaterialModule, MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory, TestConfigurationService,
-    TranslateLibModule
+    TranslateLibModule, AdvancedSearchComponentInitializationService
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -46,6 +46,7 @@ describe('SearchClauseComponent', () => {
                     useFactory: TestCaseSearchServiceFactory
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                AdvancedSearchComponentInitializationService
             ]
         }).compileComponents();
     }));
