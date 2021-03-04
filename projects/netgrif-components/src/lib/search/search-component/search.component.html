@@ -1,5 +1,5 @@
 <div fxLayout="row wrap" fxLayoutAlign="start center">
-    <div class="search-icon" fxLayout="row" fxLayoutAlign="start center">
+    <div class="search-icon" fxLayout="row" fxLayoutAlign="start center" *ngIf="showSearchIcon">
         <mat-icon [inline]="true">search</mat-icon>
     </div>
 
@@ -13,12 +13,13 @@
         <nc-fulltext-search></nc-fulltext-search>
     </ng-template>
 
-    <button mat-icon-button class="search-toggle-margin"
-            [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate" (click)="toggleSearchMode()">
+    <button mat-icon-button class="search-toggle-margin" *ngIf="showSearchToggleButton"
+            [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate"
+            (click)="toggleSearchMode()">
         <mat-icon>youtube_searched_for</mat-icon>
     </button>
 
-    <ng-template [ngIf]="advancedSearchDisplayed">
+    <ng-template [ngIf]="advancedSearchDisplayed && showAdvancedSearchHelp">
         <button mat-icon-button class="search-toggle-margin" [matTooltip]="'search.tooltip.help' | translate" (click)="showHelp()">
             <mat-icon>help</mat-icon>
         </button>

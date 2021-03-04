@@ -3,7 +3,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
-import {Inject, Input, Optional} from '@angular/core';
+import {Inject, Input, OnInit, Optional} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
 
@@ -17,9 +17,9 @@ import {SearchMode} from '../models/component-configuration/search-mode';
  * Default factory methods for [task]{@link defaultTaskSearchCategoriesFactory} and
  * [case]{@link defaultCaseSearchCategoriesFactory} search categories exist. See their documentation for more information.
  */
-export abstract class AbstractSearchComponent implements SearchComponentConfiguration {
+export abstract class AbstractSearchComponent implements SearchComponentConfiguration, OnInit {
 
-    public advancedSearchDisplayed = false;
+    public advancedSearchDisplayed;
 
     private _showSearchIcon = true;
     private _showSearchToggleButton = true;
@@ -35,6 +35,10 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
         if (this._configuration === null) {
             this._configuration = {};
         }
+    }
+
+    ngOnInit(): void {
+        this.advancedSearchDisplayed = this.initialSearchMode === SearchMode.ADVANCED;
     }
 
     get showSearchIcon(): boolean {
