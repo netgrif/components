@@ -2,6 +2,10 @@ import {SearchService} from '../search-service/search.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
+import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
+import {Inject, Input, Optional} from '@angular/core';
+import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
+import {SearchMode} from '../models/component-configuration/search-mode';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -13,14 +17,64 @@ import {TranslateService} from '@ngx-translate/core';
  * Default factory methods for [task]{@link defaultTaskSearchCategoriesFactory} and
  * [case]{@link defaultCaseSearchCategoriesFactory} search categories exist. See their documentation for more information.
  */
-export abstract class AbstractSearchComponent {
+export abstract class AbstractSearchComponent implements SearchComponentConfiguration {
 
     public advancedSearchDisplayed = false;
+
+    private _showSearchIcon = true;
+    private _showSearchToggleButton = true;
+    private _showAdvancedSearchHelp = true;
+    private _showSaveFilterButton = true;
+    private _initialSearchMode = SearchMode.FULLTEXT;
 
     protected constructor(protected _searchService: SearchService,
                           protected _logger: LoggerService,
                           protected _dialogService: DialogService,
-                          protected _translate: TranslateService) {
+                          protected _translate: TranslateService,
+                          @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration) {
+        if (this._configuration === null) {
+            this._configuration = {};
+        }
+    }
+
+    get showSearchIcon(): boolean {
+        return this._configuration.showSearchIcon ?? this._showSearchIcon;
+    }
+
+    @Input() set showSearchIcon(value: boolean) {
+        this._showSearchIcon = value;
+    }
+
+    get showAdvancedSearchHelp(): boolean {
+        return this._configuration.showAdvancedSearchHelp ?? this._showAdvancedSearchHelp;
+    }
+
+    @Input() set showAdvancedSearchHelp(value: boolean) {
+        this._showAdvancedSearchHelp = value;
+    }
+
+    get showSaveFilterButton(): boolean {
+        return this._configuration.showSaveFilterButton ?? this._showSaveFilterButton;
+    }
+
+    @Input() set showSaveFilterButton(value: boolean) {
+        this._showSaveFilterButton = value;
+    }
+
+    get initialSearchMode(): SearchMode {
+        return this._configuration.initialSearchMode ?? this._initialSearchMode;
+    }
+
+    @Input() set initialSearchMode(value: SearchMode) {
+        this._initialSearchMode = value;
+    }
+
+    get showSearchToggleButton(): boolean {
+        return this._configuration.showSearchToggleButton ?? this._showSearchToggleButton;
+    }
+
+    @Input() set showSearchToggleButton(value: boolean) {
+        this._showSearchToggleButton = value;
     }
 
     public hasPredicates(): boolean {
