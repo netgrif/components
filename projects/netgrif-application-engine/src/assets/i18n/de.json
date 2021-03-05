@@ -257,6 +257,7 @@
         "date": "Datum auswählen",
         "selectUser": "Benutzer auswählen",
         "caseMeta": {
+            "mongoID": "Fall ID",
             "visualID": "Visuelle ID",
             "title": "Fallname",
             "author": "Fallautor",
@@ -264,6 +265,8 @@
         },
         "taskMeta": {
             "case": "Fall",
+            "caseID": "Fall ID",
+            "taskID": "Aufgabe ID",
             "priority": "Priorität",
             "user": "Zugewiesener/in",
             "assignDate": "Zugewieserungsdatum"
@@ -271,6 +274,7 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
+            "netId": "Prozess ID",
             "creationDate": "Hochladungsdatum",
             "title": "Prozessname",
             "author": "Prozessautor"

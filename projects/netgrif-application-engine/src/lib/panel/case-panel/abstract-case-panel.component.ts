@@ -40,6 +40,8 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
         switch (selectedHeader.fieldIdentifier) {
+            case CaseMetaField.MONGO_ID:
+                return {value: this.case_.stringId, icon: undefined};
             case CaseMetaField.VISUAL_ID:
                 return {value: this.case_.visualId, icon: undefined};
             case CaseMetaField.TITLE:
