@@ -7,9 +7,11 @@ import {
     LoggerService,
     SearchService,
     NAE_SEARCH_COMPONENT_CONFIGURATION,
-    SearchComponentConfiguration
+    NAE_SAVE_FILTER_COMPONENT,
+    SearchComponentConfiguration, SideMenuService
 } from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
+import {ComponentType} from '@angular/cdk/portal';
 
 @Component({
     selector: 'nc-search',
@@ -26,7 +28,9 @@ export class SearchComponent extends AbstractSearchComponent {
                 logger: LoggerService,
                 dialogService: DialogService,
                 translate: TranslateService,
-                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration) {
-        super(searchService, logger, dialogService, translate, configuration);
+                sideMenuService: SideMenuService,
+                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
+                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) sideMenuComponent: ComponentType<unknown>) {
+        super(searchService, logger, dialogService, translate, sideMenuService, configuration, sideMenuComponent);
     }
 }

@@ -6,6 +6,10 @@ import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configurat
 import {Inject, Input, OnInit, Optional} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {SideMenuSize} from '../../side-menu/models/side-menu-size';
+import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/injection-tokens';
+import {ComponentType} from '@angular/cdk/portal';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -34,7 +38,9 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _logger: LoggerService,
                           protected _dialogService: DialogService,
                           protected _translate: TranslateService,
-                          @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration) {
+                          protected _sideMenuService: SideMenuService,
+                          @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
+                          @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _sideMenuComponent: ComponentType<unknown>) {
         if (this._configuration === null) {
             this._configuration = {};
         }
@@ -100,5 +106,11 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
 
     public showHelp(): void {
         this._dialogService.openAlertDialog(this._translate.instant('search.help.title'), this._translate.instant('search.help.text'));
+    }
+
+    public saveFilter(): void {
+        this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
+            filter: this._searchService.activeFilter
+        });
     }
 }

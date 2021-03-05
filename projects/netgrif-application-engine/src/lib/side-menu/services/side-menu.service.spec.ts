@@ -1,5 +1,4 @@
 import {TestBed} from '@angular/core/testing';
-
 import {SideMenuService} from './side-menu.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -15,6 +14,11 @@ describe('SideMenuService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    it('should error without template', () => {
+        expect(service.open(undefined)).toThrowError();
+        expect(service.open(null)).toThrowError();
     });
 
     afterEach(() => {
