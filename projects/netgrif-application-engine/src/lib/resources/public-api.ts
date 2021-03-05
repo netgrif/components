@@ -5,6 +5,7 @@ export * from './engine-endpoint/task-resource.service';
 export * from './engine-endpoint/petri-net-resource.service';
 export * from './engine-endpoint/user-resource.service';
 export * from './engine-endpoint/dashboard-resource.service';
+export * from './engine-endpoint/filter-resource.service';
 
 /* PUBLIC SERVICES */
 export * from './engine-endpoint/public/public-case-resource.service';
@@ -40,6 +41,7 @@ export * from './interface/page';
 export * from './interface/preferences';
 export * from './interface/user-resource-small';
 export * from './interface/user-resource';
+export * from './interface/create-filter-body';
 
 export * from './types/nae-date-type';
 
