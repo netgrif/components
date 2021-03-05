@@ -1,5 +1,6 @@
 /* SERVICES */
 export * from './filter.repository';
+export * from './user-filters.service';
 
 /* CLASSES */
 export * from './models/filter';
