@@ -10,18 +10,19 @@ import {OptionalDependencies} from '../../search/category-factory/optional-depen
 
 const opService = new OperatorService();
 
-export const createMockDependencies: (allowedNets$: Observable<Array<Net>) => OptionalDependencies = (allowedNets$: Observable<Array<Net>> = of([])) => {
-    const mockCaseView = {allowedNets$} as CaseViewService;
-    const mockTaskView = {allowedNets$} as TaskViewService;
-    const mockUserResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService;
-    const searchIndexResolver = new SearchIndexResolverService();
+export const createMockDependencies: (allowedNets$: Observable<Array<Net>>) => OptionalDependencies =
+    (allowedNets$: Observable<Array<Net>> = of([])) => {
+        const mockCaseView = {allowedNets$} as CaseViewService;
+        const mockTaskView = {allowedNets$} as TaskViewService;
+        const mockUserResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService;
+        const searchIndexResolver = new SearchIndexResolverService();
 
-    return {
-        categoryFactory: new CategoryFactory(opService, null,
-            searchIndexResolver, mockCaseView, mockTaskView, mockUserResourceService),
-        searchIndexResolver,
-        userResourceService: mockUserResourceService,
-        caseViewService: mockCaseView,
-        taskViewService: mockTaskView,
+        return {
+            categoryFactory: new CategoryFactory(opService, null,
+                searchIndexResolver, mockCaseView, mockTaskView, mockUserResourceService),
+            searchIndexResolver,
+            userResourceService: mockUserResourceService,
+            caseViewService: mockCaseView,
+            taskViewService: mockTaskView,
+        };
     };
-};
