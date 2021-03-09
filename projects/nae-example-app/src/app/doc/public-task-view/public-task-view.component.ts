@@ -6,7 +6,6 @@ import {
     CaseResourceService,
     PublicCaseResourceService,
     PublicTaskResourceService,
-    ConfigTaskViewServiceFactory,
     SearchService,
     PublicProcessService,
     ProcessService,
@@ -23,13 +22,17 @@ import {
     AuthenticationService,
     PublicUrlResolverService,
     publicSearchServiceFactory,
-    publicFactoryResolver
+    publicFactoryResolver, ArrayTaskViewServiceFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('demo-public-view');
+const localTaskViewServiceFactory = (factory: ArrayTaskViewServiceFactory, route: ActivatedRoute) => {
+    const array = [];
+    if (route.snapshot.paramMap.get('petriNetId') !== null) {
+        array.push(route.snapshot.paramMap.get('petriNetId'));
+    }
+    return factory.create(array);
 };
 
 const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
@@ -67,7 +70,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
     templateUrl: './public-task-view.component.html',
     styleUrls: ['./public-task-view.component.scss'],
     providers: [
-        ConfigTaskViewServiceFactory,
+        ArrayTaskViewServiceFactory,
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
@@ -94,7 +97,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         {
             provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]
+            deps: [ArrayTaskViewServiceFactory, ActivatedRoute]
         },
     ]
 })
