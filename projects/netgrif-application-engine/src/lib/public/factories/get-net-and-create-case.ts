@@ -14,7 +14,8 @@ export const getNetAndCreateCase = (router: Router,
     process.getNet(route.snapshot.paramMap.get('petriNetId')).pipe(mergeMap(net => {
         if (net) {
             const newCase = {
-                title: translate.instant('side-menu.new-case.case'),
+                title: (net.defaultCaseName !== undefined && net.defaultCaseName !== '') ?
+                    net.defaultCaseName : translate.instant('side-menu.new-case.case'),
                 color: 'panel-primary-icon',
                 netId: net.stringId
             };
