@@ -52,6 +52,9 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
     }
 
     protected generateQuery(userInput: Array<Array<string>>): Query {
+        if (this.selectedOperator.numberOfOperands !== 1) {
+            throw new Error('Only unary operators are currently supported by the TaskAssignee implementation');
+        }
         return this.selectedOperator.createQuery(this.elasticKeywords, userInput[0]);
     }
 
