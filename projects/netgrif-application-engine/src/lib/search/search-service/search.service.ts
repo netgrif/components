@@ -12,6 +12,7 @@ import {EditableClausePredicateWithGenerators} from '../models/predicate/editabl
 import {Category} from '../models/category/category';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
+import {GeneratorMetadata} from '../models/category/generator-metadata';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -243,5 +244,9 @@ export class SearchService implements OnDestroy {
         } else {
             this._activeFilter.next(this._baseFilter.clone());
         }
+    }
+
+    public createPredicateGeneratorMetadata(): GeneratorMetadata | undefined {
+        return this._rootPredicate.createGeneratorMetadata();
     }
 }

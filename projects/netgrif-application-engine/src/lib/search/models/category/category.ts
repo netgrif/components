@@ -454,7 +454,7 @@ export abstract class Category<T> {
      */
     protected createMetadataConfiguration(): CategoryMetadataConfiguration {
         return {
-            OPERATOR_METADATA: this.selectedOperator.serialize()
+            [Category.OPERATOR_METADATA]: this.selectedOperator.serialize()
         };
     }
 

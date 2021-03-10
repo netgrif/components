@@ -19,6 +19,14 @@ export class PredicateWithGenerator extends Predicate {
     constructor(protected _predicate: Predicate, protected _generator?: Category<any>, initiallyVisible?: boolean) {
         super();
         this._visible = initiallyVisible !== undefined ? initiallyVisible : !_generator;
+        this._metadataGenerator = () => {
+            if (!this._generator) {
+                return this._predicate.createGeneratorMetadata();
+            } else {
+                // TODO
+                throw new Error('TODO');
+            }
+        };
     }
 
     get query(): Query {
