@@ -53,6 +53,13 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
             this._logger.error('Provided predicate generator is not an allowed category from the NAE_SEARCH_CATEGORIES injection token!'
                 + ' Behavior in this case is undefined.');
         }
+
+        this.predicate.setMetadataGenerator(() => {
+            if (!!this._selectedCategory) {
+                return this._selectedCategory.createMetadata();
+            }
+            return undefined;
+        });
     }
 
     ngOnDestroy(): void {

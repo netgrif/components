@@ -13,9 +13,12 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
         this._metadataGenerator = () => {
             const result = [];
             for (const predicate of this._predicates.values()) {
-                result.push(predicate.createGeneratorMetadata());
+                const metadata = predicate.createGeneratorMetadata();
+                if (metadata !== undefined) {
+                    result.push(metadata);
+                }
             }
-            return result;
+            return result.length > 0 ? result : undefined;
         };
     }
 

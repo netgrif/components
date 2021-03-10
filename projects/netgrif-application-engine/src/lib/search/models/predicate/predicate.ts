@@ -10,7 +10,7 @@ import {GeneratorMetadata} from '../category/generator-metadata';
 export abstract class Predicate {
 
     protected _visible: boolean;
-    protected _metadataGenerator: () => GeneratorMetadata;
+    protected _metadataGenerator: () => GeneratorMetadata | undefined;
 
     /**
      * @param initiallyVisible whether the predicate should be initially displayed or not
@@ -42,11 +42,15 @@ export abstract class Predicate {
         this._visible = true;
     }
 
-    public setMetadataGenerator(metadataGenerator: () => GeneratorMetadata) {
+    public setMetadataGenerator(metadataGenerator: () => GeneratorMetadata | undefined) {
         this._metadataGenerator = metadataGenerator;
     }
 
-    public createGeneratorMetadata(): GeneratorMetadata {
+    /**
+     * @returns an object containing the necessary information for the reconstruction of the entire predicate tree in serializable form.
+     * Returns `undefined` if the predicate tree rooted at this node is incomplete and would evaluate into an empty filter.
+     */
+    public createGeneratorMetadata(): GeneratorMetadata | undefined {
         return this._metadataGenerator();
     }
 }
