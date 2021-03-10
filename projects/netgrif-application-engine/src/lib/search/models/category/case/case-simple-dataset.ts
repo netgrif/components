@@ -13,6 +13,7 @@ import {NoConfigurationCategory} from '../no-configuration-category';
 import {CaseDataset} from './case-dataset';
 import {DatafieldMapKey} from '../../datafield-map-key';
 import {SearchIndex} from '../../search-index';
+import {Categories} from '../categories';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -137,5 +138,9 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
             BooleanOperator.OR
         );
         return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.CASE_SIMPLE_DATASET;
     }
 }

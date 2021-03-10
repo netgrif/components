@@ -6,6 +6,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {TaskNetAttributeAutocompleteCategory} from './task-net-attribute-autocomplete-category';
 import {Net} from '../../../../process/net';
 import {NameIdPair} from '../name-id-pair';
+import {Categories} from '../categories';
 
 export class TaskRole extends TaskNetAttributeAutocompleteCategory {
 
@@ -29,5 +30,9 @@ export class TaskRole extends TaskNetAttributeAutocompleteCategory {
 
     duplicate(): TaskRole {
         return new TaskRole(this._operators, this._log, this._optionalDependencies);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.TASK_ROLE;
     }
 }

@@ -6,6 +6,7 @@ import {Query} from '../../query/query';
 import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
+import {Categories} from '../categories';
 
 export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -41,5 +42,9 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
     duplicate(): TaskProcess {
         return new TaskProcess(this._operators, this._log, this._optionalDependencies);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.TASK_PROCESS;
     }
 }

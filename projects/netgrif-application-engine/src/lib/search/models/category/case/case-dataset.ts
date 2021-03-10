@@ -33,6 +33,7 @@ import {AutocompleteOptions} from '../autocomplete-options';
 import {ConfigurationInput} from '../../configuration-input';
 import {SearchIndex} from '../../search-index';
 import {Type} from '@angular/core';
+import {Categories} from '../categories';
 
 interface Datafield {
     netIdentifier: string;
@@ -391,5 +392,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected isSelectedOperator(operatorClass: Type<any>): boolean {
         return this.selectedOperator === this._operators.getOperator(operatorClass);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.CASE_DATASET;
     }
 }

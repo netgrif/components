@@ -8,6 +8,7 @@ import {NotEqualsDate} from '../../operator/not-equals-date';
 import {MoreThanDate} from '../../operator/more-than-date';
 import {LessThanDate} from '../../operator/less-than-date';
 import {InRangeDate} from '../../operator/in-range-date';
+import {Categories} from '../categories';
 
 export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
@@ -33,5 +34,9 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
     duplicate(): CaseCreationDate {
         return new CaseCreationDate(this._operators, this._log);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.CASE_CREATION_DATE;
     }
 }

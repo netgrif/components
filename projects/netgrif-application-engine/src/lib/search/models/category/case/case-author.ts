@@ -5,6 +5,7 @@ import {SearchInputType} from '../search-input-type';
 import {NoConfigurationCategory} from '../no-configuration-category';
 import {Equals} from '../../operator/equals';
 import {NotEquals} from '../../operator/not-equals';
+import {Categories} from '../categories';
 
 export class CaseAuthor extends NoConfigurationCategory<string> {
 
@@ -24,5 +25,9 @@ export class CaseAuthor extends NoConfigurationCategory<string> {
 
     duplicate(): CaseAuthor {
         return new CaseAuthor(this._operators, this._log);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.CASE_AUTHOR;
     }
 }

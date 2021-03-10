@@ -6,6 +6,7 @@ import {NoConfigurationCategory} from '../no-configuration-category';
 import {Equals} from '../../operator/equals';
 import {NotEquals} from '../../operator/not-equals';
 import {Like} from '../../operator/like';
+import {Categories} from '../categories';
 
 export class CaseTitle extends NoConfigurationCategory<string> {
 
@@ -30,5 +31,9 @@ export class CaseTitle extends NoConfigurationCategory<string> {
 
     duplicate(): CaseTitle {
         return new CaseTitle(this._operators, this._log);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.CASE_TITLE;
     }
 }

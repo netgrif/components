@@ -4,6 +4,7 @@ import {Query} from '../query/query';
 import {MoreThan} from './more-than';
 import moment, {Moment} from 'moment';
 import {clearTimeInformation} from '../../../utility/clear-time-information';
+import {Operators} from './operators';
 
 /**
  * A strict greater than operator for Date fields
@@ -28,5 +29,9 @@ export class MoreThanDate extends Operator<Moment> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.moreThan', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.MORE_THAN_DATE;
     }
 }

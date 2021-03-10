@@ -6,6 +6,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {NameIdPair} from '../name-id-pair';
 import {Net} from '../../../../process/net';
 import {CaseNetAttributeAutocompleteCategory} from './case-net-attribute-autocomplete-category';
+import {Categories} from '../categories';
 
 export class CaseTask extends CaseNetAttributeAutocompleteCategory {
 
@@ -29,5 +30,9 @@ export class CaseTask extends CaseNetAttributeAutocompleteCategory {
 
     duplicate(): CaseTask {
         return new CaseTask(this._operators, this._log, this._optionalDependencies);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.CASE_TASK;
     }
 }

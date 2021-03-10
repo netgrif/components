@@ -10,6 +10,7 @@ import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {IsNull} from '../../operator/is-null';
+import {Categories} from '../categories';
 
 
 export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
@@ -64,5 +65,9 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
 
     duplicate(): TaskAssignee {
         return new TaskAssignee(this._operators, this._log, this._optionalDependencies);
+    }
+
+    protected serialize(): Categories | string {
+        return Categories.TASK_ASSIGNEE;
     }
 }

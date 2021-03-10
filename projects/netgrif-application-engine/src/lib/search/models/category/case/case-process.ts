@@ -6,6 +6,7 @@ import {BooleanOperator} from '../../boolean-operator';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
+import {Categories} from '../categories';
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -65,5 +66,8 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     duplicate(): CaseProcess {
         return new CaseProcess(this._operators, this._log, this._optionalDependencies);
+    }
+    protected serialize(): Categories | string {
+        return Categories.CASE_PROCESS;
     }
 }
