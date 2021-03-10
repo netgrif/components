@@ -9,6 +9,8 @@ import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
 import {ConfigurationInput} from '../configuration-input';
+import {CategoryGeneratorMetadata, CategoryMetadataConfiguration} from './generator-metadata';
+import {Categories} from './categories';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -28,6 +30,11 @@ import {ConfigurationInput} from '../configuration-input';
  * @typeparam T type of objects the category expects to generate queries from
  */
 export abstract class Category<T> {
+
+    /**
+     * The {@link CategoryMetadataConfiguration} key for this Category's {@link Operator}
+     */
+    protected static readonly OPERATOR_METADATA = 'operator';
 
     /**
      * Contains the `FormControl` object that is used to drive the operator selection.
@@ -345,6 +352,27 @@ export abstract class Category<T> {
     public abstract duplicate(): Category<T>;
 
     /**
+     * Provides the necessary information for the serialisation of this category's state.
+     *
+     * Not every state must be preservable. The default library implementation supports only the preservation of the final state when the
+     * Category is generating a predicate object.
+     *
+     * @returns an object containing all the necessary information for the reconstruction of this category's state,
+     * barring information about allowed nets. Returns `undefined` if the category is not in a state that generates a predicate.
+     * See [providesPredicate()]{@link Category#providesPredicate}.
+     */
+    public createMetadata(): CategoryGeneratorMetadata | undefined {
+        if (!this.providesPredicate) {
+            return undefined;
+        }
+        return {
+            category: this.serialize(),
+            configuration: this.createMetadataConfiguration(),
+            values: this.createMetadataValues()
+        };
+    }
+
+    /**
      * This method is calle in the constructor. Apart from calling this method, the constructor only creates instances to fill the protected
      * fields of this class.
      *
@@ -411,6 +439,37 @@ export abstract class Category<T> {
         }
 
         this._generatedPredicate$.next(this.generatePredicate(this._operandsFormControls.map(fc => this.transformCategoryValue(fc.value))));
+    }
+
+    /**
+     * @returns the category class in a serializable form
+     */
+    protected abstract serialize(): Categories | string;
+
+    /**
+     * The default implementation serializes only the operator.
+     * If the category contains additional configuration, this method must be extended.
+     *
+     * @returns an object containing all the necessary information for the reconstruction of the configuration of this category instance
+     */
+    protected createMetadataConfiguration(): CategoryMetadataConfiguration {
+        return {
+            OPERATOR_METADATA: this.selectedOperator.serialize()
+        };
+    }
+
+    /**
+     * The default implementation returns the value of all operand form control objects up to the current number of operands.
+     * If the values used by this category are not serializable, this method must be overridden.
+     *
+     * @returns an array containing values input by the user in a serializable form
+     */
+    protected createMetadataValues(): Array<unknown> {
+        const result = [];
+        for (let i = 0; i < this.selectedOperator.numberOfOperands; i++) {
+            result.push(this._operandsFormControls[i].value);
+        }
+        return result;
     }
 
     /**

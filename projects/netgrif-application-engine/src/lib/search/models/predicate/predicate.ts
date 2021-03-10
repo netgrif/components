@@ -1,4 +1,5 @@
 import {Query} from '../query/query';
+import {GeneratorMetadata} from '../category/generator-metadata';
 
 /**
  * Building block of search queries. Represents any node in a tree of predicates, that are combined with {@link BooleanOperator}s to create
@@ -9,12 +10,16 @@ import {Query} from '../query/query';
 export abstract class Predicate {
 
     protected _visible: boolean;
+    protected _metadataGenerator: () => GeneratorMetadata;
 
     /**
      * @param initiallyVisible whether the predicate should be initially displayed or not
      */
     protected constructor(initiallyVisible = true) {
         this._visible = !!initiallyVisible;
+        this._metadataGenerator = () => {
+            throw new Error('This predicate has no metadata generator registered!');
+        };
     }
 
     /**
@@ -35,5 +40,13 @@ export abstract class Predicate {
      */
     public show(): void {
         this._visible = true;
+    }
+
+    public setMetadataGenerator(metadataGenerator: () => GeneratorMetadata) {
+        this._metadataGenerator = metadataGenerator;
+    }
+
+    public createGeneratorMetadata(): GeneratorMetadata {
+        return this._metadataGenerator();
     }
 }

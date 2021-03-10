@@ -61,14 +61,17 @@ export * from './models/category/search-autocomplete-option';
 export * from './models/category/autocomplete-options';
 export * from './models/category/net-attribute-pair';
 export * from './models/category/name-id-pair';
+export * from './models/category/generator-metadata';
 export * from './models/component-configuration/search-component-configuration';
 
 /* Enums */
 export * from './models/boolean-operator';
 export * from './models/category/search-input-type';
+export * from './models/category/categories';
 export * from './models/operator-template-part-type';
 export * from './models/search-index';
 export * from './models/component-configuration/search-mode';
+export * from './models/operator/operators';
 
 /* Services */
 export * from './search-service/search.service';

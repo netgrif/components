@@ -10,6 +10,13 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
 
     constructor(operator: BooleanOperator, parentNotifier?: Subject<void>, initiallyVisible = true) {
         super(operator, parentNotifier, initiallyVisible);
+        this._metadataGenerator = () => {
+            const result = [];
+            for (const predicate of this._predicates.values()) {
+                result.push(predicate.createGeneratorMetadata());
+            }
+            return result;
+        };
     }
 
     addNewClausePredicate(operator: BooleanOperator, initiallyVisible = true): number {
