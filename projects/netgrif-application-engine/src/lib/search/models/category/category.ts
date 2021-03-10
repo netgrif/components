@@ -460,16 +460,27 @@ export abstract class Category<T> {
 
     /**
      * The default implementation returns the value of all operand form control objects up to the current number of operands.
-     * If the values used by this category are not serializable, this method must be overridden.
+     * To serialize value of each operand the [serializeOperandValue()]{@link Category#serializeOperandValue} method is used.
+     *
+     * If the values used by this category are not serializable, then either this method, or the `serializeOperandValue` method,
+     * must be overridden.
      *
      * @returns an array containing values input by the user in a serializable form
      */
     protected createMetadataValues(): Array<unknown> {
         const result = [];
         for (let i = 0; i < this.selectedOperator.numberOfOperands; i++) {
-            result.push(this._operandsFormControls[i].value);
+            result.push(this.serializeOperandValue(this._operandsFormControls[i]));
         }
         return result;
+    }
+
+    /**
+     * @param valueFormControl FormControl object of one operand
+     * @returns the value of the operand in a serialized form. The default implementation returns the FormControls `value` attribute.
+     */
+    protected serializeOperandValue(valueFormControl: FormControl): unknown {
+        return valueFormControl.value;
     }
 
     /**

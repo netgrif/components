@@ -34,6 +34,8 @@ import {ConfigurationInput} from '../../configuration-input';
 import {SearchIndex} from '../../search-index';
 import {Type} from '@angular/core';
 import {Categories} from '../categories';
+import {FormControl} from '@angular/forms';
+import {Moment} from 'moment';
 
 interface Datafield {
     netIdentifier: string;
@@ -396,5 +398,17 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected serialize(): Categories | string {
         return Categories.CASE_DATASET;
+    }
+
+    protected serializeOperandValue(valueFormControl: FormControl): unknown {
+        switch (this.inputType) {
+            case SearchInputType.AUTOCOMPLETE:
+                return (valueFormControl.value as SearchAutocompleteOption<unknown>).text;
+            case SearchInputType.DATE:
+            case SearchInputType.DATE_TIME:
+                return (valueFormControl.value as Moment).valueOf();
+            default:
+                return super.serializeOperandValue(valueFormControl);
+        }
     }
 }

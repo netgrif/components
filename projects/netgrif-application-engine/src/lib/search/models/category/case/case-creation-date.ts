@@ -9,6 +9,7 @@ import {MoreThanDate} from '../../operator/more-than-date';
 import {LessThanDate} from '../../operator/less-than-date';
 import {InRangeDate} from '../../operator/in-range-date';
 import {Categories} from '../categories';
+import {FormControl} from '@angular/forms';
 
 export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
@@ -38,5 +39,9 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
     protected serialize(): Categories | string {
         return Categories.CASE_CREATION_DATE;
+    }
+
+    protected serializeOperandValue(valueFormControl: FormControl): unknown {
+        return valueFormControl.value.valueOf();
     }
 }

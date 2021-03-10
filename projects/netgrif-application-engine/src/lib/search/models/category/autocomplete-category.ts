@@ -6,6 +6,7 @@ import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AutocompleteOptions} from './autocomplete-options';
+import {FormControl} from '@angular/forms';
 
 /**
  * Represents a Search Category whose values are a known set. The value selection is done with an autocomplete field.
@@ -112,5 +113,9 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
      */
     protected transformCategoryValue(value: SearchAutocompleteOption<Array<T>>): Array<T> {
         return value.value;
+    }
+
+    protected serializeOperandValue(valueFormControl: FormControl): unknown {
+        return (valueFormControl.value as SearchAutocompleteOption<unknown>).text;
     }
 }
