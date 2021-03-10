@@ -36,6 +36,7 @@ import {Type} from '@angular/core';
 import {Categories} from '../categories';
 import {FormControl} from '@angular/forms';
 import {Moment} from 'moment';
+import {CategoryMetadataConfiguration} from '../generator-metadata';
 
 interface Datafield {
     netIdentifier: string;
@@ -47,6 +48,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     private static readonly _i18n = 'search.category.case.dataset';
     protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef'];
+    protected static readonly DATAFIELD_METADATA = 'datafield';
 
     protected readonly _DATAFIELD_INPUT: ConfigurationInput;
 
@@ -410,5 +412,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             default:
                 return super.serializeOperandValue(valueFormControl);
         }
+    }
+
+    protected createMetadataConfiguration(): CategoryMetadataConfiguration {
+        const config = super.createMetadataConfiguration();
+        config[CaseDataset.DATAFIELD_METADATA] = (this._DATAFIELD_INPUT.formControl.value as DatafieldMapKey).toSerializedForm();
+        return config;
     }
 }
