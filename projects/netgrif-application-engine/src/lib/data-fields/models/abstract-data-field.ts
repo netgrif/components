@@ -60,6 +60,12 @@ export abstract class DataField<T> {
     protected _block: Subject<boolean>;
     /**
      * @ignore
+     * When a `true` value is there, the data field is disabled.
+     * When a `false` value is received, data field is disabled/enabled based on it's behavior.
+     */
+    protected _blocked: boolean;
+    /**
+     * @ignore
      * Data field subscribes this stream. Sets the state of the data field to "touched" or "untouched" (`true`/`false`).
      * Validity of the data field is not checked in an "untouched" state.
      * All fields are touched before a task is finished to check their validity.
@@ -286,11 +292,16 @@ export abstract class DataField<T> {
         this._update.subscribe(() => {
             this.validRequired = this.calculateValidity(true, formControl);
             this.valid = this.calculateValidity(false, formControl);
+            if (!this._blocked) {
+                this.disabled ? formControl.disable() : formControl.enable();
+            }
         });
         this._block.subscribe(bool => {
             if (bool) {
+                this._blocked = true;
                 formControl.disable();
             } else {
+                this._blocked = false;
                 this.disabled ? formControl.disable() : formControl.enable();
             }
         });
@@ -386,10 +397,9 @@ export abstract class DataField<T> {
     }
 
     protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
+        const isDisabled = formControl.disabled;
         if (forValidRequired) {
             formControl.enable();
-        } else if (this.disabled) {
-            formControl.disable();
         }
         formControl.clearValidators();
         if (forValidRequired) {
@@ -398,7 +408,9 @@ export abstract class DataField<T> {
             formControl.setValidators(this.resolveFormControlValidators());
         }
         formControl.updateValueAndValidity();
-        return this._determineFormControlValidity(formControl);
+        const validity = this._determineFormControlValidity(formControl);
+        isDisabled ? formControl.disable() : formControl.enable();
+        return validity;
     }
 
     public isInvalid(formControl: FormControl): boolean {
