@@ -27,7 +27,8 @@ export abstract class AbstractSaveFilterComponent {
     }
 
     public save() {
-        this._filterService.save(this._injectedData.filter, this.titleFormControl.value, this.descriptionFormControl.value)
+        this._filterService.save(this._injectedData.filter, this._injectedData.searchMetadata,
+            this.titleFormControl.value, this.descriptionFormControl.value)
             .subscribe(success => {
                 if (success) {
                     // TODO i18n

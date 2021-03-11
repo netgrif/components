@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {MergedFilter} from './models/merged-filter';
 import {MergeOperator} from './models/merge-operator';
 import {FilterType} from './models/filter-type';
+import {SearchMetadata} from '../resources/interface/create-filter-body';
 
 /**
  * Service that manages filters created by users of the application.
@@ -18,7 +19,7 @@ export class UserFiltersService {
     constructor(protected _filterResourceService: FilterResourceService) {
     }
 
-    public save(filter: Filter, title: string, description?: string): Observable<boolean> {
+    public save(filter: Filter, searchMetadata: SearchMetadata, title: string, description?: string): Observable<boolean> {
         return this._filterResourceService.saveFilter({
             title,
             description,
@@ -26,6 +27,7 @@ export class UserFiltersService {
             mergeOperator: filter instanceof MergedFilter ? filter.operator : MergeOperator.AND,
             caseFilterBodies: filter.type === FilterType.CASE ? filter.getRequestBody() : undefined,
             taskFilterBodies: filter.type === FilterType.TASK ? filter.getRequestBody() : undefined,
+            searchMetadata
         }).pipe(map(r => r.success !== undefined));
     }
 }

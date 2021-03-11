@@ -2,6 +2,7 @@ import {FilterType} from '../../filter/models/filter-type';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
 import {TaskSearchRequestBody} from '../../filter/models/task-search-request-body';
+import {GeneratorMetadata} from '../../search/models/category/generator-metadata';
 
 export interface CreateFilterBody {
     /**
@@ -40,4 +41,24 @@ export interface CreateFilterBody {
      * The filters are combined with the specified [mergeOperator]{@link CreateFilterBody#mergeOperator}.
      */
     taskFilterBodies?: Array<TaskSearchRequestBody> | TaskSearchRequestBody;
+    /**
+     * Data required for the reconstruction of the advanced search GUI.
+     */
+    searchMetadata: SearchMetadata;
+}
+
+/**
+ * Data required for the reconstruction of the advanced search GUI.
+ */
+export interface SearchMetadata {
+    /**
+     * Identifiers of the Petri Nets that are used to populate the autocomplete search categories.
+     */
+    allowedNets: Array<string>;
+    /**
+     * Data required for the reconstruction of the advanced search GUI predicates.
+     * The data is used to create {@link Category} instances, that are then used by the {@link SearchService}
+     * as generators populating the search service with predicates and in turn populating the search GUI.
+     */
+    generatorMetadata: GeneratorMetadata;
 }
