@@ -63,6 +63,7 @@ export * from './models/category/net-attribute-pair';
 export * from './models/category/name-id-pair';
 export * from './models/category/generator-metadata';
 export * from './models/component-configuration/search-component-configuration';
+export * from './models/base-filter';
 
 /* Enums */
 export * from './models/boolean-operator';
@@ -96,3 +97,4 @@ export * from './category-factory/default-categories-factories';
 /* Tokens */
 export * from './category-factory/search-categories-injection-token';
 export * from './models/component-configuration/search-component-configuration-injection-token';
+export * from './models/base-filter-injection-token';

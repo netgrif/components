@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
@@ -12,8 +12,9 @@ import {EditableClausePredicateWithGenerators} from '../models/predicate/editabl
 import {Category} from '../models/category/category';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
-import {FilterType} from '../../filter/models/filter-type';
 import {GeneratorMetadata} from '../models/category/generator-metadata';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
+import {BaseFilter} from '../models/base-filter';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -50,14 +51,14 @@ export class SearchService implements OnDestroy {
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
      * @param baseFilter Filter that should be applied to the view when no searching is being performed.
-     * @param type
+     * Injected trough the {@link NAE_BASE_FILTER} injection token.
      */
-    constructor(baseFilter: Filter | Observable<Filter>, type: FilterType = FilterType.CASE) {
-        if (baseFilter instanceof Filter) {
-            this._baseFilter = baseFilter.clone();
-        } else if (baseFilter instanceof Observable) {
-            this._baseFilter = new SimpleFilter('', type, {process: {identifier: '__EMPTY__'}});
-            this.subFilter = baseFilter.subscribe((filter) => {
+    constructor(@Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
+        if (baseFilter.filter instanceof Filter) {
+            this._baseFilter = baseFilter.filter.clone();
+        } else if (baseFilter.filter instanceof Observable) {
+            this._baseFilter = new SimpleFilter('', baseFilter.filterType, {process: {identifier: '__EMPTY__'}});
+            this.subFilter = baseFilter.filter.subscribe((filter) => {
                 this._baseFilter = filter.clone();
                 this.updateActiveFilter();
             });
