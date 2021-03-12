@@ -4,6 +4,7 @@ import {
     CategoryFactory,
     TaskViewServiceFactory,
     defaultTaskSearchCategoriesFactory,
+    NAE_BASE_FILTER,
     NAE_SEARCH_CATEGORIES,
     NAE_VIEW_ID_SEGMENT,
     SearchService,
@@ -19,8 +20,10 @@ const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
     return factory.createFromConfig('<%= viewPath %>');
 };
 
-const searchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyTaskFilter());
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyTaskFilter()
+    };
 };
 
 @Component({
@@ -30,8 +33,9 @@ const searchServiceFactory = () => {
     providers: [
         CategoryFactory,
         TaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
+        SearchService,
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory},
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [TaskViewServiceFactory]},

@@ -4,6 +4,7 @@ import {
     CategoryFactory,
     ConfigTaskViewServiceFactory,
     defaultTaskSearchCategoriesFactory,
+    NAE_BASE_FILTER,
     NAE_SEARCH_CATEGORIES,
     NAE_VIEW_ID_SEGMENT,
     NextGroupService,
@@ -21,12 +22,14 @@ const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
     return factory.create('<%= viewPath %>');
 };
 
-const searchServiceFactory = (nextGroupService: NextGroupService) => {
+const baseFilterFactory = (nextGroupService: NextGroupService) => {
     const groupIds: Array<TaskSearchCaseQuery> = [];
     nextGroupService.groupOfUser.forEach(group => {
        groupIds.push({id: group.stringId});
     });
-    return new SearchService(SimpleFilter.fromTaskQuery({case: groupIds}));
+    return {
+        filter: SimpleFilter.fromTaskQuery({case: groupIds})
+    };
 };
 
 @Component({
@@ -36,8 +39,9 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
     providers: [
         CategoryFactory,
         ConfigTaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory,
+        SearchService,
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
             deps: [NextGroupService]
         },
         {   provide: TaskViewService,
