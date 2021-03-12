@@ -7,12 +7,14 @@ import {
     TabbedTaskView,
     tabbedTaskViewServiceFactory,
     TaskViewService,
-    ViewIdService
+    ViewIdService, NAE_BASE_FILTER
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
-    return new SearchService(injectedTabData.baseFilter);
+const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
+    return {
+        filter: injectedTabData.baseFilter
+    };
 };
 
 @Component({
@@ -22,9 +24,10 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     providers: [
         CategoryFactory,
         TaskViewServiceFactory,
+        SearchService,
         {
-            provide: SearchService,
-            useFactory: searchServiceFactory,
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
             deps: [NAE_TAB_DATA]
         },
         {

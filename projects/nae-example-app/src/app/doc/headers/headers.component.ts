@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {
     CaseViewService,
     CaseViewServiceFactory,
-    FilterType,
+    FilterType, NAE_BASE_FILTER,
     SearchService,
     SimpleFilter,
     TaskViewService
@@ -12,9 +12,10 @@ const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
     return factory.createFromConfig('case');
 };
 
-const searchServiceFactory = () => {
-    // TODO load/use base filter somehow
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyCaseFilter()
+    };
 };
 
 @Component({
@@ -24,14 +25,15 @@ const searchServiceFactory = () => {
     providers: [
         TaskViewService,
         CaseViewServiceFactory,
+        SearchService,
         {
             provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
             deps: [CaseViewServiceFactory]
         },
         {
-            provide: SearchService,
-            useFactory: searchServiceFactory
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory
         },
     ],
 })

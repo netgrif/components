@@ -4,7 +4,7 @@ import {
     TaskViewServiceFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
     SearchService,
     SimpleFilter, TaskSearchCaseQuery,
-    TaskViewService
+    TaskViewService, NAE_BASE_FILTER
 } from 'netgrif-application-engine';
 import {
     HeaderComponent,
@@ -14,12 +14,14 @@ const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
     return factory.createFromConfig('group-view');
 };
 
-const searchServiceFactory = (nextGroupService: NextGroupService) => {
+const baseFilterFactory = (nextGroupService: NextGroupService) => {
     const groupIds: Array<TaskSearchCaseQuery> = [];
     nextGroupService.groupOfUser.forEach(group => {
-       groupIds.push({id: group.stringId});
+        groupIds.push({id: group.stringId});
     });
-    return new SearchService(SimpleFilter.fromTaskQuery({case: groupIds}));
+    return {
+        filter: SimpleFilter.fromTaskQuery({case: groupIds})
+    };
 };
 
 @Component({
@@ -29,13 +31,17 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
     providers: [
         CategoryFactory,
         TaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory,
+        SearchService,
+        {
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
             deps: [NextGroupService]
         },
-        {   provide: TaskViewService,
+        {
+            provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
-            deps: [TaskViewServiceFactory]},
+            deps: [TaskViewServiceFactory]
+        },
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })

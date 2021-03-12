@@ -11,7 +11,7 @@ import {
     NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
     NAE_VIEW_ID_SEGMENT,
     ViewIdService,
-    CategoryFactory, NAE_SEARCH_CATEGORIES, defaultTaskSearchCategoriesFactory
+    CategoryFactory, NAE_SEARCH_CATEGORIES, defaultTaskSearchCategoriesFactory, NAE_BASE_FILTER
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -19,9 +19,10 @@ const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
     return factory.createFromConfig('case');
 };
 
-const searchServiceFactory = () => {
-    // TODO load/use base filter somehow
-    return new SearchService(SimpleFilter.emptyTaskFilter());
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyTaskFilter()
+    };
 };
 
 const disableButtonsFactory = () => {
@@ -48,8 +49,9 @@ const disableButtonsFactory = () => {
     providers: [
         CategoryFactory,
         TaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
+        SearchService,
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory},
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
             deps: [TaskViewServiceFactory]},

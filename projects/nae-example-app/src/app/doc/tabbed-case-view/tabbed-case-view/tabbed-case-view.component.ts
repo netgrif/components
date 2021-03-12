@@ -13,7 +13,7 @@ import {
     SimpleFilter,
     TabbedCaseView,
     CaseViewServiceFactory,
-    ViewIdService
+    ViewIdService, NAE_BASE_FILTER
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
@@ -22,12 +22,15 @@ const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
     return factory.createWithAllNets();
 };
 
-const searchServiceFactory = () => {
+const baseFilterFactory = () => {
     const filter = new Subject<Filter>();
     setTimeout(() => {
         filter.next(SimpleFilter.emptyCaseFilter());
     }, 1000);
-    return new SearchService(filter.asObservable(), FilterType.CASE);
+    return {
+        filter: filter.asObservable(),
+        filterType: FilterType.CASE
+    };
 };
 
 @Component({
@@ -37,8 +40,9 @@ const searchServiceFactory = () => {
     providers: [
         CategoryFactory,
         CaseViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
+        SearchService,
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
             deps: [CaseViewServiceFactory]},

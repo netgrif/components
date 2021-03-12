@@ -22,8 +22,8 @@ import {
     FieldConverterService,
     AuthenticationService,
     PublicUrlResolverService,
-    publicSearchServiceFactory,
-    publicFactoryResolver
+    publicBaseFilterFactory,
+    publicFactoryResolver,
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -34,7 +34,7 @@ const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
 
 const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
                               caseResourceService: CaseResourceService, snackBarService: SnackBarService) => {
-    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService);
+    return publicBaseFilterFactory(router, route, process, caseResourceService, snackBarService);
 };
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
