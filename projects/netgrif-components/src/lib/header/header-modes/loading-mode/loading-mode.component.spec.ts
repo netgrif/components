@@ -15,9 +15,8 @@ import {
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
-    MockUserResourceService,
-    SearchService,
-    TestCaseSearchServiceFactory,
+    MockUserResourceService, NAE_BASE_FILTER,
+    SearchService, TestCaseBaseFilterProvider,
     TestCaseViewFactory,
     TestConfigurationService,
     TestViewService,
@@ -47,9 +46,10 @@ describe('LoadingModeComponent', () => {
                 CaseHeaderService,
                 CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {
                     provide: CaseViewService,

@@ -9,8 +9,8 @@ import {
     CategoryFactory, CaseViewServiceFactory,
     ConfigurationInput,
     ConfigurationService, MockAuthenticationMethodService,
-    SearchInputType, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory,
-    TestConfigurationService
+    SearchInputType, SearchService, TestCaseViewFactory,
+    TestConfigurationService, NAE_BASE_FILTER, TestCaseBaseFilterProvider
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -38,9 +38,10 @@ describe('SearchConfigurationInputComponent', () => {
                     deps: [CaseViewServiceFactory]
                 },
                 CaseViewServiceFactory,
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]

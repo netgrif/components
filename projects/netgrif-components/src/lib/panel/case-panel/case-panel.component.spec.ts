@@ -8,7 +8,14 @@ import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CaseMetaField, HeaderColumn, HeaderColumnType, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {
+    CaseMetaField,
+    HeaderColumn,
+    HeaderColumnType,
+    MaterialModule,
+    NAE_BASE_FILTER, TestCaseBaseFilterProvider,
+    TranslateLibModule
+} from '@netgrif/application-engine';
 import {
     TestConfigurationService,
     ConfigurationService,
@@ -16,7 +23,6 @@ import {
     TestCaseViewFactory,
     CaseViewServiceFactory,
     SearchService,
-    TestCaseSearchServiceFactory,
     AuthenticationMethodService,
     MockAuthenticationMethodService
 } from '@netgrif/application-engine';
@@ -44,9 +50,10 @@ describe('CasePanelComponent', () => {
                     deps: [CaseViewServiceFactory]
                 },
                 CaseViewServiceFactory,
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ],

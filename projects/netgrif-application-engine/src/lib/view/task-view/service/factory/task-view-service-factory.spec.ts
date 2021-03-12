@@ -17,9 +17,10 @@ import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/m
 import {AuthenticationService} from '../../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
 import {SearchService} from '../../../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory} from '../../../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
+import {NAE_BASE_FILTER} from '../../../../search/models/base-filter-injection-token';
+import {TestTaskBaseFilterProvider} from '../../../../utility/tests/test-factory-methods';
 
 describe('TaskViewServiceFactory', () => {
     let service: TaskViewServiceFactory;
@@ -44,9 +45,10 @@ describe('TaskViewServiceFactory', () => {
                 LoggerService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestTaskSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
                 },
                 {
                     provide: ConfigurationService,

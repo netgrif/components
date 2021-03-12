@@ -6,11 +6,10 @@ import {
     CaseViewService,
     CaseViewServiceFactory,
     ConfigurationService,
-    FilterType,
     MaterialModule,
-    MockAuthenticationMethodService,
+    MockAuthenticationMethodService, NAE_BASE_FILTER,
     SearchService,
-    SimpleFilter,
+    TestCaseBaseFilterProvider,
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/application-engine';
@@ -21,10 +20,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
     return factory.createFromConfig('cases');
-};
-
-const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
 };
 
 describe('CaseListComponent', () => {
@@ -50,10 +45,11 @@ describe('CaseListComponent', () => {
                     useFactory: localCaseViewServiceFactory,
                     deps: [CaseViewServiceFactory]
                 },
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: searchServiceFactory
-                }
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
             ],
             declarations: [CaseListComponent]
         })

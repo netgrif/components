@@ -13,11 +13,10 @@ import {
     MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES,
     SearchService,
-    TestCaseSearchServiceFactory,
     TestCaseViewFactory,
     TestConfigurationService,
     TranslateLibModule,
-    AdvancedSearchComponentInitializationService
+    AdvancedSearchComponentInitializationService, NAE_BASE_FILTER, TestCaseBaseFilterProvider
 } from '@netgrif/application-engine';
 import {Subject} from 'rxjs';
 import {SearchComponentModule} from '../search.module';
@@ -50,9 +49,10 @@ describe('SearchPredicateComponent', () => {
                     deps: [CaseViewServiceFactory]
                 },
                 CaseViewServiceFactory,
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 AdvancedSearchComponentInitializationService

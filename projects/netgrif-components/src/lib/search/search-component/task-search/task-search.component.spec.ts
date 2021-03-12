@@ -12,9 +12,8 @@ import {
     SearchService,
     TaskViewService,
     TestConfigurationService,
-    TestTaskSearchServiceFactory,
     TestTaskViewFactory,
-    UserResourceService
+    UserResourceService, NAE_BASE_FILTER, TestTaskBaseFilterProvider
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -33,9 +32,10 @@ describe('TaskSearchComponent', () => {
             providers: [
                 TaskViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestTaskSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
                 },
                 {
                     provide: TaskViewService,

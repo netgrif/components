@@ -6,7 +6,7 @@ import {CategoryFactory} from './category-factory';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../search-service/search.service';
@@ -14,6 +14,7 @@ import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 
 describe('Default search categories factory methods', () => {
     let testService: TestService;
@@ -33,7 +34,11 @@ describe('Default search categories factory methods', () => {
                     {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
                     {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [CaseViewServiceFactory]},
-                    {provide: SearchService, useFactory: TestCaseSearchServiceFactory},
+                    SearchService,
+                    {
+                        provide: NAE_BASE_FILTER,
+                        useFactory: TestCaseBaseFilterProvider
+                    },
                     {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
                 ]
             });

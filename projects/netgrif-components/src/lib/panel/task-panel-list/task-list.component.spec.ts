@@ -22,9 +22,8 @@ import {
     TaskResourceService,
     TaskViewService,
     TestConfigurationService,
-    TestTaskSearchServiceFactory,
     UserResourceService,
-    TestTaskViewFactory
+    TestTaskViewFactory, NAE_BASE_FILTER, TestTaskBaseFilterProvider
 } from '@netgrif/application-engine';
 import {RouterTestingModule} from '@angular/router/testing';
 import {PanelComponentModule} from '../panel.module';
@@ -52,9 +51,10 @@ describe('TaskListComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestTaskSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
                 },
                 {
                     provide: ConfigurationService,

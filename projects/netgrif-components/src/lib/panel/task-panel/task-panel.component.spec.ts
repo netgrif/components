@@ -46,10 +46,9 @@ import {
     TaskResourceService,
     TaskViewService,
     TestConfigurationService,
-    TestTaskSearchServiceFactory,
     TranslateLibModule,
     UserResourceService,
-    TestTaskViewFactory
+    TestTaskViewFactory, NAE_BASE_FILTER, TestTaskBaseFilterProvider
 } from '@netgrif/application-engine';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -92,7 +91,11 @@ describe('TaskPanelComponent', () => {
                 },
                 {provide: TaskResourceService, useClass: MyTaskResources},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
+                },
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 TaskDataService,
                 TaskEventService,

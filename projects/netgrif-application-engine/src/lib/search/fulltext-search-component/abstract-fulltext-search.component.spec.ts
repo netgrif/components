@@ -5,7 +5,8 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {TestCaseSearchServiceFactory} from '../../utility/tests/test-factory-methods';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
+import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
 
 describe('AbstractFulltextSearchComponent', () => {
     let component: TestFulltextSearchComponent;
@@ -19,7 +20,11 @@ describe('AbstractFulltextSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
-                {provide: SearchService, useFactory: TestCaseSearchServiceFactory}
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
             ],
             declarations: [
                 TestFulltextSearchComponent,

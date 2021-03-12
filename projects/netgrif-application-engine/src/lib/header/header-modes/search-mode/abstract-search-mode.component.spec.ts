@@ -13,7 +13,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {SearchService} from '../../../search/search-service/search.service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
@@ -24,6 +24,7 @@ import {UserResourceService} from '../../../resources/engine-endpoint/user-resou
 import {ViewService} from '../../../routing/view-service/view.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {CaseViewServiceFactory} from '../../../view/case-view/service/factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 
 describe('AbstractSearchModeComponent', () => {
     let component: TestSeaarchModeComponent;
@@ -43,9 +44,12 @@ describe('AbstractSearchModeComponent', () => {
             ],
             providers: [
                 CaseViewServiceFactory,
+                SearchService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {   provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory},
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
                 {   provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
                     deps: [CaseViewServiceFactory]},

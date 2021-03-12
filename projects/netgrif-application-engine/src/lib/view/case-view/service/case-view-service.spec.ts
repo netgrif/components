@@ -24,13 +24,11 @@ import {UserService} from '../../../user/services/user.service';
 import {MockUserService} from '../../../utility/tests/mocks/mock-user.service';
 import {User} from '../../../user/models/user';
 import {CaseViewServiceFactory} from './factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
+import {TestCaseBaseFilterProvider} from '../../../utility/tests/test-factory-methods';
 
 const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
     return factory.createFromConfig('cases');
-};
-
-const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
 };
 
 describe('CaseViewService', () => {
@@ -58,10 +56,11 @@ describe('CaseViewService', () => {
                     useFactory: localCaseViewServiceFactory,
                     deps: [CaseViewServiceFactory]
                 },
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: searchServiceFactory
-                }
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
             ]
         });
         service = TestBed.inject(CaseViewService);

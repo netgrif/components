@@ -13,7 +13,6 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
-import {TestCaseSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateService} from '@ngx-translate/core';
@@ -23,6 +22,8 @@ import {SearchComponentConfiguration} from '../models/component-configuration/se
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/injection-tokens';
 import {ComponentType} from '@angular/cdk/portal';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
+import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -41,7 +42,11 @@ describe('AbstractSearchComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestCaseSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
                 {provide: NAE_SEARCH_COMPONENT_CONFIGURATION, useValue: {showSearchIcon: false}}
             ],
             declarations: [

@@ -8,9 +8,8 @@ import {
     ConfigurationService,
     MaterialModule,
     MockAuthenticationService,
-    MockUserResourceService,
-    SearchService,
-    TestCaseSearchServiceFactory,
+    MockUserResourceService, NAE_BASE_FILTER,
+    SearchService, TestCaseBaseFilterProvider,
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
@@ -35,7 +34,11 @@ describe('SearchComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestCaseSearchServiceFactory}
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
             ]
         })
             .compileComponents();

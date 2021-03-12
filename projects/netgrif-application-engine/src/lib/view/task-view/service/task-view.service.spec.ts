@@ -9,7 +9,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {Observable, of} from 'rxjs';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory, TestTaskViewFactory} from '../../../utility/tests/test-factory-methods';
+import {TestTaskBaseFilterProvider, TestTaskViewFactory} from '../../../utility/tests/test-factory-methods';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
@@ -29,6 +29,7 @@ import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {TaskViewServiceFactory} from './factory/task-view-service-factory';
+import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -55,7 +56,11 @@ describe('TaskViewService', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
+                },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
             ],
             declarations: []

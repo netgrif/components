@@ -2,10 +2,10 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AdvancedSearchComponent} from './advanced-search.component';
 import {
     ConfigurationService,
-    MaterialModule,
+    MaterialModule, NAE_BASE_FILTER,
     NAE_SEARCH_CATEGORIES,
-    SearchService,
-    TestCaseSearchServiceFactory, TestConfigurationService
+    SearchService, TestCaseBaseFilterProvider,
+    TestConfigurationService, TestTaskBaseFilterProvider
 } from 'netgrif-application-engine';
 import {SearchComponentModule} from '../search.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -25,7 +25,11 @@ describe('AdvancedSearchComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: SearchService, useFactory: TestCaseSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
                 {provide: NAE_SEARCH_CATEGORIES, useValue: []}
             ]
         })

@@ -10,7 +10,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {Subject} from 'rxjs';
 import {MaterialModule} from '../../material/material.module';
@@ -22,6 +22,7 @@ import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-
 import {
     AdvancedSearchComponentInitializationService
 } from '../advanced-search-component-initialization-service/advanced-search-component-initialization.service';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 
 describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
@@ -48,9 +49,10 @@ describe('AbstractSearchPredicateComponent', () => {
                     deps: [CaseViewServiceFactory]
                 },
                 CaseViewServiceFactory,
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 AdvancedSearchComponentInitializationService

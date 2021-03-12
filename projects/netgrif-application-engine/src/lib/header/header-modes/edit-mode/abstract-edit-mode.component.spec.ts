@@ -14,7 +14,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {SearchService} from '../../../search/search-service/search.service';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
@@ -26,6 +26,7 @@ import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock
 import {RouterTestingModule} from '@angular/router/testing';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {CaseViewServiceFactory} from '../../../view/case-view/service/factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 
 describe('AbstractEditModeComponent', () => {
     let component: TestEditModeComponent;
@@ -48,9 +49,10 @@ describe('AbstractEditModeComponent', () => {
                 CaseHeaderService,
                 CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {
                     provide: CaseViewService,

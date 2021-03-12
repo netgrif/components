@@ -11,6 +11,8 @@ import {AuthenticationMethodService} from '../../../../authentication/services/a
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
+import {NAE_BASE_FILTER} from '../../../../search/models/base-filter-injection-token';
+import {TestCaseBaseFilterProvider} from '../../../../utility/tests/test-factory-methods';
 
 describe('CaseViewServiceFactory', () => {
     let service: CaseViewServiceFactory;
@@ -23,7 +25,11 @@ describe('CaseViewServiceFactory', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                {provide: SearchService, useFactory: () => new SearchService(SimpleFilter.empty(FilterType.CASE))},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
                 CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},

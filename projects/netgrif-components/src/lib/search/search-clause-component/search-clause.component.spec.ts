@@ -6,11 +6,22 @@ import {Component, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';
 import {
     AuthenticationMethodService,
-    BooleanOperator, CaseViewService,
-    CategoryFactory, CaseViewServiceFactory, ConfigurationService, defaultCaseSearchCategoriesFactory,
-    MaterialModule, MockAuthenticationMethodService,
-    NAE_SEARCH_CATEGORIES, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory, TestConfigurationService,
-    TranslateLibModule, AdvancedSearchComponentInitializationService, EditableClausePredicateWithGenerators
+    BooleanOperator,
+    CaseViewService,
+    CategoryFactory,
+    CaseViewServiceFactory,
+    ConfigurationService,
+    defaultCaseSearchCategoriesFactory,
+    MaterialModule,
+    MockAuthenticationMethodService,
+    NAE_SEARCH_CATEGORIES,
+    SearchService,
+    TestCaseViewFactory,
+    TestConfigurationService,
+    TranslateLibModule,
+    AdvancedSearchComponentInitializationService,
+    EditableClausePredicateWithGenerators,
+    NAE_BASE_FILTER, TestCaseBaseFilterProvider
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -40,9 +51,10 @@ describe('SearchClauseComponent', () => {
                     deps: [CaseViewServiceFactory]
                 },
                 CaseViewServiceFactory,
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 AdvancedSearchComponentInitializationService

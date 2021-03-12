@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 import {SearchService} from './search.service';
-import {SimpleFilter} from '../../filter/models/simple-filter';
-import {FilterType} from '../../filter/models/filter-type';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {CaseTitle} from '../models/category/case/case-title';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
+import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
 
 describe('SearchService', () => {
     let service: SearchService;
@@ -21,7 +21,11 @@ describe('SearchService', () => {
             ],
             providers: [
                 CategoryFactory,
-                {provide: SearchService, useValue: new SearchService(SimpleFilter.empty(FilterType.CASE))},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         });

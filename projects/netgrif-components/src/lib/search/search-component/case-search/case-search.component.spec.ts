@@ -13,10 +13,9 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     SearchService,
-    TestCaseSearchServiceFactory,
     TestCaseViewFactory,
     TestConfigurationService,
-    UserResourceService
+    UserResourceService, NAE_BASE_FILTER, TestCaseBaseFilterProvider
 } from '@netgrif/application-engine';
 import {SearchComponentModule} from '../../search.module';
 
@@ -34,9 +33,10 @@ describe('CaseSearchComponent', () => {
             providers: [
                 CaseViewServiceFactory,
                 CategoryFactory,
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {
                     provide: CaseViewService,

@@ -6,13 +6,14 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../search-service/search.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 
 describe('HeaderSearchService', () => {
     let service: HeaderSearchService;
@@ -29,7 +30,11 @@ describe('HeaderSearchService', () => {
                 HeaderSearchService,
                 CategoryFactory,
                 CaseViewServiceFactory,
-                {provide: SearchService, useFactory: TestCaseSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [CaseViewServiceFactory]}

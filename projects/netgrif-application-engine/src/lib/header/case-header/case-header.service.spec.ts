@@ -5,7 +5,7 @@ import {HeaderMode} from '../models/header-mode';
 import {SearchChangeDescription} from '../models/user-changes/search-change-description';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -32,6 +32,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -51,9 +52,10 @@ describe('CaseHeaderService', () => {
                 CaseHeaderService,
                 CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {
                     provide: CaseViewService,

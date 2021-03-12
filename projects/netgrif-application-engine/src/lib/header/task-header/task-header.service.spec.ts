@@ -21,12 +21,13 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {
-    TestTaskSearchServiceFactory,
+    TestTaskBaseFilterProvider,
     TestTaskViewFactory
 } from '../../utility/tests/test-factory-methods';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {SearchService} from '../../search/search-service/search.service';
 import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -49,9 +50,10 @@ describe('TaskHeaderService', () => {
                     useFactory: TestTaskViewFactory,
                     deps: [TaskViewServiceFactory]
                 },
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestTaskSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

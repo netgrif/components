@@ -17,7 +17,7 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory, TestTaskViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestTaskBaseFilterProvider, TestTaskViewFactory} from '../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
@@ -26,6 +26,7 @@ import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
 import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 
 
 describe('AbstractTaskListComponent', () => {
@@ -49,7 +50,11 @@ describe('AbstractTaskListComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
+                },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: TaskViewService,
