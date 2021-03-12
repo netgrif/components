@@ -7,6 +7,7 @@ import {CategoryFactory} from '../../search/category-factory/category-factory';
 import {Net} from '../../process/net';
 import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {OptionalDependencies} from '../../search/category-factory/optional-dependencies';
+import {CategoryResolverService} from '../../search/category-factory/category-resolver.service';
 
 const opService = new OperatorService();
 
@@ -18,8 +19,15 @@ export const createMockDependencies: (allowedNets$: Observable<Array<Net>>) => O
         const searchIndexResolver = new SearchIndexResolverService();
 
         return {
-            categoryFactory: new CategoryFactory(opService, null,
-                searchIndexResolver, mockCaseView, mockTaskView, mockUserResourceService),
+            categoryFactory: new CategoryFactory(
+                opService,
+                null,
+                searchIndexResolver,
+                new CategoryResolverService(),
+                mockCaseView,
+                mockTaskView,
+                mockUserResourceService
+            ),
             searchIndexResolver,
             userResourceService: mockUserResourceService,
             caseViewService: mockCaseView,

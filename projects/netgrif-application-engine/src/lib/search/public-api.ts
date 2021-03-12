@@ -78,6 +78,7 @@ export * from './models/operator/operators';
 export * from './search-service/search.service';
 export * from './operator-service/operator.service';
 export * from './category-factory/category-factory';
+export * from './category-factory/category-resolver.service';
 export * from './header-search-service/header-search.service';
 export * from './search-keyword-resolver-service/search-index-resolver.service';
 export * from './advanced-search-component-initialization-service/advanced-search-component-initialization.service';

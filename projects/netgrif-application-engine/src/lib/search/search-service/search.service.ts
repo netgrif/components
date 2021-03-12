@@ -1,4 +1,4 @@
-import {Inject, Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
@@ -12,9 +12,11 @@ import {EditableClausePredicateWithGenerators} from '../models/predicate/editabl
 import {Category} from '../models/category/category';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
-import {GeneratorMetadata} from '../models/category/generator-metadata';
+import {CategoryGeneratorMetadata, GeneratorMetadata} from '../models/category/generator-metadata';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {BaseFilter} from '../models/base-filter';
+import {LoggerService} from '../../logger/services/logger.service';
+import {CategoryFactory} from '../category-factory/category-factory';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -50,10 +52,15 @@ export class SearchService implements OnDestroy {
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
+     * @param _log {@link LoggerService}
+     * @param _categoryFactory a {@link CategoryFactory} instance. This dependency is optional.
+     * It is required if we want to load predicate filter from saved metadata
      * @param baseFilter Filter that should be applied to the view when no searching is being performed.
      * Injected trough the {@link NAE_BASE_FILTER} injection token.
      */
-    constructor(@Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
+    constructor(protected _log: LoggerService,
+                @Optional() protected _categoryFactory: CategoryFactory,
+                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
         if (baseFilter.filter instanceof Filter) {
             this._baseFilter = baseFilter.filter.clone();
         } else if (baseFilter.filter instanceof Observable) {
@@ -261,7 +268,30 @@ export class SearchService implements OnDestroy {
         }
     }
 
-    public createPredicateGeneratorMetadata(): GeneratorMetadata | undefined {
-        return this._rootPredicate.createGeneratorMetadata();
+    public createPredicateGeneratorMetadata(): Array<Array<CategoryGeneratorMetadata>> | undefined {
+        return this._rootPredicate.createGeneratorMetadata() as Array<Array<CategoryGeneratorMetadata>>;
+    }
+
+    /**
+     * Replaces the current predicate filter by the one corresponding to the provided generator metadata.
+     *
+     * The {@link CategoryFactory} instance must be provided for this service if we want to use this method. Logs an error and does nothing.
+     *
+     * @param metadata
+     */
+    public populatePredicateFromGeneratorMetadata(metadata: Array<Array<CategoryGeneratorMetadata>>) {
+        if (this._categoryFactory === null) {
+            this._log.error('A CategoryFactory instance must be provided for the SearchService'
+                + ' if you want to reconstruct a predicate filter from saved metadata');
+            return;
+        }
+
+        this.clearPredicates(true);
+
+        for (const clause of metadata) {
+            for (const predicate of clause) {
+                const generator = this._categoryFactory.getFromMetadata(predicate);
+            }
+        }
     }
 }
