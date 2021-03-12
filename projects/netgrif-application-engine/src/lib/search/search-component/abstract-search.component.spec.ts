@@ -20,6 +20,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/injection-tokens';
+import {ComponentType} from '@angular/cdk/portal';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -77,7 +80,9 @@ class TestSearchComponent extends AbstractSearchComponent {
                 logger: LoggerService,
                 dialogService: DialogService,
                 translate: TranslateService,
-                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration) {
-        super(searchService, logger, dialogService, translate, configuration);
+                sideMenuService: SideMenuService,
+                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
+                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) sideMenuComponent: ComponentType<unknown>) {
+        super(searchService, logger, dialogService, translate, sideMenuService, configuration, sideMenuComponent);
     }
 }

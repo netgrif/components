@@ -16,11 +16,6 @@ describe('SideMenuService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should error without template', () => {
-        expect(service.open(undefined)).toThrowError();
-        expect(service.open(null)).toThrowError();
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });

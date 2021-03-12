@@ -2,6 +2,7 @@ import {TaskProcess} from './task-process';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {waitForAsync} from '@angular/core/testing';
+import {of} from 'rxjs';
 
 describe('TaskProcess', () => {
     let operatorService: OperatorService;
@@ -12,7 +13,7 @@ describe('TaskProcess', () => {
     });
 
     beforeEach( waitForAsync(() => {
-        category = new TaskProcess(operatorService, null, createMockDependencies());
+        category = new TaskProcess(operatorService, null, createMockDependencies(of([])));
     }));
 
     it('should create an instance', () => {
