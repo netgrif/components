@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    AllNetsCaseViewServiceFactory,
     CaseViewService,
     CategoryFactory,
     defaultCaseSearchCategoriesFactory,
+    Filter,
     FilterType,
     InjectedTabbedCaseViewData,
     LoggerService,
@@ -13,8 +13,7 @@ import {
     SimpleFilter,
     TabbedCaseView,
     CaseViewServiceFactory,
-    ViewIdService, NAE_SEARCH_CATEGORIES,
-    defaultCaseSearchCategoriesFactory, CategoryFactory, Filter
+    ViewIdService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
