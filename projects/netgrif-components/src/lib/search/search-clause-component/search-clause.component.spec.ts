@@ -8,10 +8,9 @@ import {
     AuthenticationMethodService,
     BooleanOperator, CaseViewService,
     CategoryFactory, CaseViewServiceFactory, ConfigurationService, defaultCaseSearchCategoriesFactory,
-    EditableClausePredicate,
     MaterialModule, MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory, TestConfigurationService,
-    TranslateLibModule, AdvancedSearchComponentInitializationService
+    TranslateLibModule, AdvancedSearchComponentInitializationService, EditableClausePredicateWithGenerators
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -72,7 +71,7 @@ describe('SearchClauseComponent', () => {
 })
 class TestWrapperComponent implements OnDestroy {
 
-    public predicate = new EditableClausePredicate(BooleanOperator.OR);
+    public predicate = new EditableClausePredicateWithGenerators(BooleanOperator.OR);
     public remove$ = new Subject();
 
     ngOnDestroy(): void {
