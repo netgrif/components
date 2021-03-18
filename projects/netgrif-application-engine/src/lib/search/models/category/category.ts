@@ -228,6 +228,16 @@ export abstract class Category<T> {
     }
 
     /**
+     * @returns the arity of the selected operator. Throws an error if no operator is selected.
+     */
+    protected get selectedOperatorArity(): number {
+        if (!this.isOperatorSelected()) {
+            throw new Error('An operator mus be selected before its arity can be resolved!');
+        }
+        return this.selectedOperator.numberOfOperands;
+    }
+
+    /**
      * Changes the state of the Category. Category can create queries when an {@link Operator} is selected.
      *
      * This method is useful if you want to use the Category class as predicate builder.
@@ -373,6 +383,16 @@ export abstract class Category<T> {
     }
 
     /**
+     * Restores the saved state contained in the provided metadata.
+     *
+     * @param metadata the metadata created by calling the [createMetadata()]{@link Category#createMetadata} method
+     */
+    public loadFromMetadata(metadata: CategoryGeneratorMetadata): void {
+        this.loadConfigurationFromMetadata(metadata.configuration);
+        this.loadValuesFromMetadata(metadata.values);
+    }
+
+    /**
      * This method is calle in the constructor. Apart from calling this method, the constructor only creates instances to fill the protected
      * fields of this class.
      *
@@ -425,11 +445,11 @@ export abstract class Category<T> {
             this._generatedPredicate$.next(undefined);
             return;
         }
-        if (operandIndex >= this.selectedOperator.numberOfOperands) {
+        if (operandIndex >= this.selectedOperatorArity) {
             return;
         }
 
-        for (let i = 0; i < this.selectedOperator.numberOfOperands; i++) {
+        for (let i = 0; i < this.selectedOperatorArity; i++) {
             if (!this.isOperandValueSelected(this._operandsFormControls[i].value)) {
                 if (this._generatedPredicate$.getValue()) {
                     this._generatedPredicate$.next(undefined);
@@ -469,7 +489,7 @@ export abstract class Category<T> {
      */
     protected createMetadataValues(): Array<unknown> {
         const result = [];
-        for (let i = 0; i < this.selectedOperator.numberOfOperands; i++) {
+        for (let i = 0; i < this.selectedOperatorArity; i++) {
             result.push(this.serializeOperandValue(this._operandsFormControls[i]));
         }
         return result;
@@ -481,6 +501,53 @@ export abstract class Category<T> {
      */
     protected serializeOperandValue(valueFormControl: FormControl): unknown {
         return valueFormControl.value;
+    }
+
+    /**
+     * Restored the saved configuration from the metadata created by the
+     * [createMetadataConfiguration()]{@link Category#createMetadataConfiguration} method.
+     *
+     * The default implementation restores only the saved operator.
+     *
+     * If the Category overrides the serialization method, it must override this method as well.
+     *
+     * @param configuration the serialized configuration
+     */
+    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): void {
+        // TODO
+    }
+
+    /**
+     * The default implementation sets the provided values into this Category's operand form controls.
+     *
+     * An operator must be set before calling this method! Otherwise an error will be thrown.
+     *
+     * If the number of values doesn't match the arity of the selected operator an error will be thrown!
+     *
+     * If this Category overrides the [serializeOperandValue()]{@link Category#serializeOperandValue}, it must also
+     * override its deserialization counterpart - [deserializeOperandValue()]{@link #Category#deserializeOperandValue}!
+     *
+     * @param values the serialized values that should be loaded into this Category instance
+     */
+    protected loadValuesFromMetadata(values: Array<unknown>): void {
+        if (!this.isOperatorSelected()) {
+            throw new Error('An operator must be selected before Category values can be resolved from metadata!');
+        }
+        if (this.selectedOperatorArity !== values.length) {
+            throw new Error(`The arity of the selected operator (${this.selectedOperatorArity
+            }) doesn't match the number of the provided values (${values.length})!`);
+        }
+        for (let i = 0; i < this.selectedOperatorArity; i++) {
+            this._operandsFormControls[i].setValue(this.deserializeOperandValue(values[i]));
+        }
+    }
+
+    /**
+     * @param value the serialized output of the [serializeOperandValue()]{@link Category#serializeOperandValue} method
+     * @returns the deserialized value, that can be set as FormControl value
+     */
+    protected deserializeOperandValue(value: unknown): unknown {
+        return value;
     }
 
     /**
