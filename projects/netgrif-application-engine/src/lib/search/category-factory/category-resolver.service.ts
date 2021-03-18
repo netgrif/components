@@ -16,7 +16,7 @@ import {TaskRole} from '../models/category/task/task-role';
 import {TaskTask} from '../models/category/task/task-task';
 
 /**
- * A service that resolves a {@link Categories} (or custom string) into a concrete {@link Category} implementation class.
+ * A service that resolves {@link Categories} (or custom string) into a concrete {@link Category} implementation class.
  */
 @Injectable({
     providedIn: 'root'
@@ -68,7 +68,7 @@ export class CategoryResolverService {
      *
      * If you implement any custom {@link Category} classes, you should override this method to resolve them after serialization.
      *
-     * @param category
+     * @param category the serialized string provided by your [Category.serialize()]{@link Category#serialize} implementation
      * @returns `undefined`
      */
     protected toCustomClass(category: string): Type<Category<any>> | undefined {

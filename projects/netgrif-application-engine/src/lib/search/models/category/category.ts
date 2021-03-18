@@ -11,6 +11,8 @@ import {IncrementingCounter} from '../../../utility/incrementing-counter';
 import {ConfigurationInput} from '../configuration-input';
 import {CategoryGeneratorMetadata, CategoryMetadataConfiguration} from './generator-metadata';
 import {Categories} from './categories';
+import {OperatorService} from '../../operator-service/operator.service';
+import {Operators} from '../operator/operators';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -83,12 +85,14 @@ export abstract class Category<T> {
      * @param translationPath path to the translation string
      * @param _inputType input field type that should be used to enter operator arguments for this category
      * @param _log used to record information about incorrect use of this class
+     * @param _operatorService used to resolve serialized operators during deserialization
      */
     protected constructor(protected readonly _elasticKeywords: Array<string>,
                           protected readonly _allowedOperators: Array<Operator<any>>,
                           public readonly translationPath: string,
                           protected readonly _inputType: SearchInputType,
-                          protected _log: LoggerService) {
+                          protected _log: LoggerService,
+                          protected _operatorService: OperatorService) {
         this._OPERATOR_INPUT = new ConfigurationInput(
             SearchInputType.OPERATOR,
             'search.operator.name',
@@ -514,7 +518,8 @@ export abstract class Category<T> {
      * @param configuration the serialized configuration
      */
     protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): void {
-        // TODO
+        const resolvedOperator = this._operatorService.getFromMetadata(configuration[Category.OPERATOR_METADATA] as Operators | string);
+        this.selectOperator(this.allowedOperators.findIndex(op => op === resolvedOperator));
     }
 
     /**
