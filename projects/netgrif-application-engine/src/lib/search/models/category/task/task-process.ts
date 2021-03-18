@@ -12,11 +12,12 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.task.process';
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
-            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${TaskProcess._i18n}.name`,
-            logger);
+            logger,
+            operators);
     }
 
     protected createOptions(): void {
@@ -41,7 +42,7 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
     }
 
     duplicate(): TaskProcess {
-        return new TaskProcess(this._operators, this._log, this._optionalDependencies);
+        return new TaskProcess(this._operatorService, this._log, this._optionalDependencies);
     }
 
     protected serialize(): Categories | string {

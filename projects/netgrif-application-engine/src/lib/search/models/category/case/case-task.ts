@@ -12,11 +12,12 @@ export class CaseTask extends CaseNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.case.task';
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['taskIds'],
-            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseTask._i18n}.name`,
             logger,
+            operators,
             optionalDependencies);
     }
 
@@ -29,7 +30,7 @@ export class CaseTask extends CaseNetAttributeAutocompleteCategory {
     }
 
     duplicate(): CaseTask {
-        return new CaseTask(this._operators, this._log, this._optionalDependencies);
+        return new CaseTask(this._operatorService, this._log, this._optionalDependencies);
     }
 
     protected serialize(): Categories | string {

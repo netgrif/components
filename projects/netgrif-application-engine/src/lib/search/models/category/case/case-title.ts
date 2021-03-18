@@ -12,17 +12,18 @@ export class CaseTitle extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.title';
 
-    constructor(protected _operators: OperatorService, logger: LoggerService) {
+    constructor(operators: OperatorService, logger: LoggerService) {
         super(['title'],
             [
-                _operators.getOperator(Substring),
-                _operators.getOperator(Equals),
-                _operators.getOperator(NotEquals),
-                _operators.getOperator(Like)
+                operators.getOperator(Substring),
+                operators.getOperator(Equals),
+                operators.getOperator(NotEquals),
+                operators.getOperator(Like)
             ],
             `${CaseTitle._i18n}.name`,
             SearchInputType.TEXT,
-            logger);
+            logger,
+            operators);
     }
 
     get inputPlaceholder(): string {
@@ -30,7 +31,7 @@ export class CaseTitle extends NoConfigurationCategory<string> {
     }
 
     duplicate(): CaseTitle {
-        return new CaseTitle(this._operators, this._log);
+        return new CaseTitle(this._operatorService, this._log);
     }
 
     protected serialize(): Categories | string {

@@ -11,12 +11,13 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.visualId';
 
-    constructor(protected _operators: OperatorService, logger: LoggerService) {
+    constructor(operators: OperatorService, logger: LoggerService) {
         super(['visualId'],
-            [_operators.getOperator(Substring), _operators.getOperator(Equals), _operators.getOperator(NotEquals)],
+            [operators.getOperator(Substring), operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseVisualId._i18n}.name`,
             SearchInputType.TEXT,
-            logger);
+            logger,
+            operators);
     }
 
     get inputPlaceholder(): string {
@@ -24,7 +25,7 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
     }
 
     duplicate(): CaseVisualId {
-        return new CaseVisualId(this._operators, this._log);
+        return new CaseVisualId(this._operatorService, this._log);
     }
 
     protected serialize(): Categories | string {

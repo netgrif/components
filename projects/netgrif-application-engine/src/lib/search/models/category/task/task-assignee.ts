@@ -17,11 +17,12 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.task.assignee';
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['userId'],
-            [_operators.getOperator(Equals), _operators.getOperator(NotEquals), _operators.getOperator(IsNull)],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals), operators.getOperator(IsNull)],
             `${TaskAssignee._i18n}.name`,
-            logger);
+            logger,
+            operators);
     }
 
     protected createOptions(): void {
@@ -64,7 +65,7 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
     }
 
     duplicate(): TaskAssignee {
-        return new TaskAssignee(this._operators, this._log, this._optionalDependencies);
+        return new TaskAssignee(this._operatorService, this._log, this._optionalDependencies);
     }
 
     protected serialize(): Categories | string {

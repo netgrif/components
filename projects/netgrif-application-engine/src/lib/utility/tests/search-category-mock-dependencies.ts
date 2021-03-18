@@ -8,8 +8,10 @@ import {Net} from '../../process/net';
 import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {OptionalDependencies} from '../../search/category-factory/optional-dependencies';
 import {CategoryResolverService} from '../../search/category-factory/category-resolver.service';
+import {OperatorResolverService} from '../../search/operator-service/operator-resolver.service';
 
-const opService = new OperatorService();
+const opResolver = new OperatorResolverService();
+const opService = new OperatorService(opResolver);
 
 export const createMockDependencies: (allowedNets$: Observable<Array<Net>>) => OptionalDependencies =
     (allowedNets$: Observable<Array<Net>> = of([])) => {

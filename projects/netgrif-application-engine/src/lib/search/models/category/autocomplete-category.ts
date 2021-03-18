@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AutocompleteOptions} from './autocomplete-options';
 import {FormControl} from '@angular/forms';
+import {OperatorService} from '../../operator-service/operator.service';
 
 /**
  * Represents a Search Category whose values are a known set. The value selection is done with an autocomplete field.
@@ -29,8 +30,9 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
     protected constructor(elasticKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
-                          log: LoggerService) {
-        super(elasticKeywords, allowedOperators, translationPath, SearchInputType.AUTOCOMPLETE, log);
+                          log: LoggerService,
+                          operatorService: OperatorService) {
+        super(elasticKeywords, allowedOperators, translationPath, SearchInputType.AUTOCOMPLETE, log, operatorService);
         this._optionsMap = new Map<string, Array<T>>();
         // timeout is used to bypass javascript object initialization bugs.
         // Injected properties of inherited classes were not set in the function call.

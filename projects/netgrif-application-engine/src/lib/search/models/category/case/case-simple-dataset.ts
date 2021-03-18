@@ -33,14 +33,15 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
 
     protected _processCategory: CaseProcess;
 
-    constructor(protected _operators: OperatorService,
+    constructor(operators: OperatorService,
                 logger: LoggerService,
                 protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
             `${CaseSimpleDataset._i18n}.name`,
             undefined,
-            logger);
+            logger,
+            operators);
 
         this._processCategory = _optionalDependencies.categoryFactory.getWithDefaultOperator(CaseProcess) as CaseProcess;
     }
@@ -97,22 +98,22 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     public get selectedOperator(): Operator<any> {
         switch (this._fieldType) {
             case 'number':
-                return this._operators.getOperator(Equals);
+                return this._operatorService.getOperator(Equals);
             case 'boolean':
-                return this._operators.getOperator(Equals);
+                return this._operatorService.getOperator(Equals);
             case 'user':
-                return this._operators.getOperator(Equals);
+                return this._operatorService.getOperator(Equals);
             case 'date':
-                return this._operators.getOperator(EqualsDate);
+                return this._operatorService.getOperator(EqualsDate);
             case 'dateTime':
-                return this._operators.getOperator(EqualsDateTime);
+                return this._operatorService.getOperator(EqualsDateTime);
             default:
-                return this._operators.getOperator(Substring);
+                return this._operatorService.getOperator(Substring);
         }
     }
 
     duplicate(): CaseSimpleDataset {
-        return new CaseSimpleDataset(this._operators, this._log, this._optionalDependencies);
+        return new CaseSimpleDataset(this._operatorService, this._log, this._optionalDependencies);
     }
 
     /**

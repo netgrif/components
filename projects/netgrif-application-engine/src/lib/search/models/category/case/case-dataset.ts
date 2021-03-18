@@ -75,12 +75,13 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         }
     }
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
             `${CaseDataset._i18n}.name`,
             undefined,
-            logger);
+            logger,
+            operators);
 
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
@@ -137,49 +138,49 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         switch (this._selectedDatafields[0].fieldType) {
             case 'number':
                 return [
-                    this._operators.getOperator(Equals),
-                    this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(MoreThan),
-                    this._operators.getOperator(LessThan),
-                    this._operators.getOperator(InRange),
-                    this._operators.getOperator(IsNull)
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(MoreThan),
+                    this._operatorService.getOperator(LessThan),
+                    this._operatorService.getOperator(InRange),
+                    this._operatorService.getOperator(IsNull)
                 ];
             case 'boolean':
                 return [
-                    this._operators.getOperator(Equals),
-                    this._operators.getOperator(NotEquals)
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals)
                 ];
             case 'user':
             case 'userList':
                 return [
-                    this._operators.getOperator(Equals),
-                    this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(IsNull)
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(IsNull)
                 ];
             case 'date':
                 return [
-                    this._operators.getOperator(EqualsDate),
-                    this._operators.getOperator(NotEqualsDate),
-                    this._operators.getOperator(MoreThanDate),
-                    this._operators.getOperator(LessThanDate),
-                    this._operators.getOperator(InRangeDate),
-                    this._operators.getOperator(IsNull)
+                    this._operatorService.getOperator(EqualsDate),
+                    this._operatorService.getOperator(NotEqualsDate),
+                    this._operatorService.getOperator(MoreThanDate),
+                    this._operatorService.getOperator(LessThanDate),
+                    this._operatorService.getOperator(InRangeDate),
+                    this._operatorService.getOperator(IsNull)
                 ];
             case 'dateTime':
                 return [
-                    this._operators.getOperator(EqualsDateTime),
-                    this._operators.getOperator(MoreThanDateTime),
-                    this._operators.getOperator(LessThanDateTime),
-                    this._operators.getOperator(InRangeDateTime),
-                    this._operators.getOperator(IsNull)
+                    this._operatorService.getOperator(EqualsDateTime),
+                    this._operatorService.getOperator(MoreThanDateTime),
+                    this._operatorService.getOperator(LessThanDateTime),
+                    this._operatorService.getOperator(InRangeDateTime),
+                    this._operatorService.getOperator(IsNull)
                 ];
             default:
                 return [
-                    this._operators.getOperator(Substring),
-                    this._operators.getOperator(Equals),
-                    this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(IsNull),
-                    this._operators.getOperator(Like)
+                    this._operatorService.getOperator(Substring),
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(IsNull),
+                    this._operatorService.getOperator(Like)
                 ];
         }
     }
@@ -205,7 +206,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     duplicate(): CaseDataset {
-        return new CaseDataset(this._operators, this._log, this._optionalDependencies);
+        return new CaseDataset(this._operatorService, this._log, this._optionalDependencies);
     }
 
     protected get elasticKeywords(): Array<string> {
@@ -263,7 +264,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
         const constraint = this.generateNetConstraint(datafield);
-        return (this._operators.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.elasticKeywords, constraint);
+        return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.elasticKeywords, constraint);
     }
 
     protected generateNetConstraint(datafield: Datafield): Query {
@@ -395,7 +396,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected isSelectedOperator(operatorClass: Type<any>): boolean {
-        return this.selectedOperator === this._operators.getOperator(operatorClass);
+        return this.selectedOperator === this._operatorService.getOperator(operatorClass);
     }
 
     protected serialize(): Categories | string {

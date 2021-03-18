@@ -12,11 +12,12 @@ export class CaseRole extends CaseNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.case.role';
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['enabledRoles'],
-            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseRole._i18n}.name`,
             logger,
+            operators,
             optionalDependencies);
     }
 
@@ -29,7 +30,7 @@ export class CaseRole extends CaseNetAttributeAutocompleteCategory {
     }
 
     duplicate(): CaseRole {
-        return new CaseRole(this._operators, this._log, this._optionalDependencies);
+        return new CaseRole(this._operatorService, this._log, this._optionalDependencies);
     }
 
     protected serialize(): Categories | string {

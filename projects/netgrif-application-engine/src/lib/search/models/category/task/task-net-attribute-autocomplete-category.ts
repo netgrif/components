@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {Net} from '../../../../process/net';
 import {Category} from '../category';
 import {TaskProcess} from './task-process';
+import {OperatorService} from '../../../operator-service/operator.service';
 
 /**
  * Utility class with the same use as its parent but witch Task search specific methods implemented.
@@ -17,8 +18,9 @@ export abstract class TaskNetAttributeAutocompleteCategory extends NetAttributeA
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
                           log: LoggerService,
+                          operatorService: OperatorService,
                           protected _optionalDependencies: OptionalDependencies) {
-        super(elasticKeywords, allowedOperators, translationPath, log);
+        super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
         this._processCategory = _optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;
         this._processCategory.selectDefaultOperator();
     }

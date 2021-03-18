@@ -14,11 +14,12 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     protected _uniqueOptionsMap: Map<string, Set<string>>;
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processIdentifier'],
-            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
-            logger);
+            logger,
+            operators);
         this._uniqueOptionsMap = new Map<string, Set<string>>();
     }
 
@@ -65,7 +66,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     }
 
     duplicate(): CaseProcess {
-        return new CaseProcess(this._operators, this._log, this._optionalDependencies);
+        return new CaseProcess(this._operatorService, this._log, this._optionalDependencies);
     }
     protected serialize(): Categories | string {
         return Categories.CASE_PROCESS;

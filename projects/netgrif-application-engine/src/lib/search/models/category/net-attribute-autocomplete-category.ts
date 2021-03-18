@@ -8,6 +8,7 @@ import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {Category} from './category';
 import {Observable} from 'rxjs';
+import {OperatorService} from '../../operator-service/operator.service';
 
 /**
  * A utility class for autocomplete search categories that are net specific, such as searching by roles, or tasks.
@@ -19,8 +20,9 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
     protected constructor(elasticKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
-                          log: LoggerService) {
-        super(elasticKeywords, allowedOperators, translationPath, log);
+                          log: LoggerService,
+                          operatorService: OperatorService) {
+        super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
     }
 
     protected createOptions(): void {
