@@ -3,13 +3,14 @@ import {createMockDependencies} from '../../../../utility/tests/search-category-
 import {OperatorService} from '../../../operator-service/operator.service';
 import {waitForAsync} from '@angular/core/testing';
 import {of} from 'rxjs';
+import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 
 describe('TaskProcess', () => {
     let operatorService: OperatorService;
     let category: TaskProcess;
 
     beforeAll(() => {
-        operatorService = new OperatorService();
+        operatorService = new OperatorService(new OperatorResolverService());
     });
 
     beforeEach( waitForAsync(() => {

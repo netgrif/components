@@ -6,6 +6,7 @@ import {of, ReplaySubject} from 'rxjs';
 import {Net} from '../../../../process/net';
 import {createMockNet} from '../../../../utility/tests/utility/create-mock-net';
 import {take} from 'rxjs/operators';
+import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 
 describe('CaseProcess', () => {
     let operatorService: OperatorService;
@@ -13,7 +14,7 @@ describe('CaseProcess', () => {
     let allowedNets$: ReplaySubject<Array<Net>>;
 
     beforeAll(() => {
-        operatorService = new OperatorService();
+        operatorService = new OperatorService(new OperatorResolverService());
     });
 
     beforeEach(waitForAsync(() => {
