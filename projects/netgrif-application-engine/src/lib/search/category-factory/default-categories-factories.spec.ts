@@ -6,7 +6,12 @@ import {CategoryFactory} from './category-factory';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {
+    TestCaseBaseFilterProvider,
+    TestCaseViewFactory,
+    TestTaskBaseFilterProvider,
+    TestTaskViewFactory
+} from '../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../search-service/search.service';
@@ -15,6 +20,8 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
 
 describe('Default search categories factory methods', () => {
     let testService: TestService;
@@ -64,13 +71,20 @@ describe('Default search categories factory methods', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    HttpClientTestingModule
+                    HttpClientTestingModule,
+                    MaterialModule,
+                    TranslateLibModule
                 ],
                 providers: [
                     TestService,
                     CategoryFactory,
+                    TaskViewServiceFactory,
+                    SearchService,
                     {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
-                    {provide: ConfigurationService, useClass: TestConfigurationService}
+                    {provide: ConfigurationService, useClass: TestConfigurationService},
+                    {provide: TaskViewService, useFactory: TestTaskViewFactory, deps: [TaskViewServiceFactory]},
+                    {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                    {provide: NAE_BASE_FILTER, useFactory: TestTaskBaseFilterProvider},
                 ]
             });
             testService = TestBed.inject(TestService);
