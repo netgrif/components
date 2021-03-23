@@ -23,6 +23,7 @@ export * from './tests/utility/create-mock-case';
 export * from './tests/utility/create-mock-immediate-data';
 export * from './tests/utility/create-mock-page';
 export * from './tests/utility/create-mock-net';
+export * from './tests/utility/configure-category';
 export * from './tests/search-category-mock-dependencies';
 export * from './tests/test-config';
 export * from './tests/test-factory-methods';
