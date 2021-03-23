@@ -24,6 +24,8 @@ import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emi
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {SortableView} from '../../abstract/sortable-view';
+import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
+import {TaskViewConfiguration} from '../models/task-view-configuration';
 
 
 @Injectable()
@@ -54,10 +56,9 @@ export class TaskViewService extends SortableView implements OnDestroy {
                 protected _searchService: SearchService,
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
-                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint,
                 resolver: SearchIndexResolverService,
-                initiallyOpenOneTask: Observable<boolean> = of(true),
-                closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
+                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
+                @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
         super(resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
@@ -74,9 +75,7 @@ export class TaskViewService extends SortableView implements OnDestroy {
         );
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
-        if (this._preferredEndpoint === undefined || this._preferredEndpoint === null) {
-            this._preferredEndpoint = TaskEndpoint.MONGO;
-        }
+        this._preferredEndpoint = taskViewConfig?.preferredEndpoint ?? (this._preferredEndpoint ?? TaskEndpoint.MONGO);
 
         this._initializing = false;
 
@@ -139,11 +138,11 @@ export class TaskViewService extends SortableView implements OnDestroy {
             }),
             tap(v => this._panelUpdate$.next(v)));
 
-        this._subInitiallyOpen = initiallyOpenOneTask.subscribe(bool => {
+        this._subInitiallyOpen = (taskViewConfig?.initiallyOpenOneTask ?? of(true)).subscribe(bool => {
             this._initiallyOpenOneTask = bool;
         });
 
-        this._subCloseTask = closeTaskTabOnNoTasks.subscribe(bool => {
+        this._subCloseTask = (taskViewConfig?.closeTaskTabOnNoTasks ?? of(true)).subscribe(bool => {
             this._closeTaskTabOnNoTasks = bool;
         });
     }

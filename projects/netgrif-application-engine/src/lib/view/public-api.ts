@@ -4,6 +4,7 @@ export * from './case-view/models/case-page-load-request-result';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
 export * from './task-view/models/task-page-load-request-result';
+export * from './task-view/models/task-view-configuration';
 export * from './tree-case-view/tree-component/model/case-tree-node';
 export * from './tree-case-view/tree-component/model/case-tree-path';
 export * from './tree-case-view/tree-component/model/expansion-tree';
@@ -25,6 +26,7 @@ export * from './abstract/page-load-request-context';
 
 /* INJECTION TOKENS */
 export * from './task-view/models/injection-token-task-endpoint';
+export * from './task-view/models/task-view-configuration-injection-token';
 export * from './workflow-view/models/injection-token-workflow-service';
 
 /* SERVICES */
