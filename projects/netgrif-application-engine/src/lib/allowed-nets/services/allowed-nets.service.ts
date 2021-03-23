@@ -1,16 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Injectable, OnDestroy} from '@angular/core';
+import {Observable, ReplaySubject, Subscription} from 'rxjs';
 import {ProcessService} from '../../process/process.service';
 import {Net} from '../../process/net';
-import {map, share, switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 
 /**
  * This service holds the information about the allowed nets for a specific view.
  */
 @Injectable()
-export class AllowedNetsService {
+export class AllowedNetsService implements OnDestroy {
 
-    private readonly _allowedNets$: Observable<Array<Net>>;
+    protected _allowedNets$: ReplaySubject<Array<Net>>;
+    private subAllowedNets: Subscription;
 
     /**
      * The service converts identifiers to {@link Net} objects on its own.
@@ -21,14 +22,21 @@ export class AllowedNetsService {
      * @param _processService process service
      */
     constructor(allowedNetIdentifiers$: Observable<Array<string>>, protected _processService: ProcessService) {
-        this._allowedNets$ = allowedNetIdentifiers$.pipe(
+        this._allowedNets$ = new ReplaySubject<Array<Net>>(1);
+        this.subAllowedNets = allowedNetIdentifiers$.pipe(
             map(identifiers => this._processService.getNets(identifiers)),
-            switchMap(nets => nets),
-            share()
-        );
+            switchMap(nets => nets)
+        ).subscribe(nets => {
+            this._allowedNets$.next(nets);
+        });
     }
 
     public get allowedNets$(): Observable<Array<Net>> {
-        return this._allowedNets$;
+        return this._allowedNets$.asObservable();
+    }
+
+    ngOnDestroy(): void {
+        this._allowedNets$.complete();
+        this.subAllowedNets.unsubscribe();
     }
 }
