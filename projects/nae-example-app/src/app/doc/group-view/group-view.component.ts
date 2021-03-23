@@ -1,16 +1,16 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView, CategoryFactory,
-    TaskViewServiceFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
+    defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
     SearchService,
     SimpleFilter, TaskSearchCaseQuery,
-    TaskViewService, NAE_BASE_FILTER
+    TaskViewService, NAE_BASE_FILTER, AllowedNetsService, AllowedNetsServiceFactory
 } from 'netgrif-application-engine';
 import {
     HeaderComponent,
 } from 'netgrif-components';
 
-const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('group-view');
 };
 
@@ -30,7 +30,7 @@ const baseFilterFactory = (nextGroupService: NextGroupService) => {
     styleUrls: ['./group-view.component.scss'],
     providers: [
         CategoryFactory,
-        TaskViewServiceFactory,
+        TaskViewService,
         SearchService,
         {
             provide: NAE_BASE_FILTER,
@@ -38,9 +38,9 @@ const baseFilterFactory = (nextGroupService: NextGroupService) => {
             deps: [NextGroupService]
         },
         {
-            provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [TaskViewServiceFactory]
+            provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]
         },
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]

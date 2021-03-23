@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
-    TaskViewServiceFactory,
     SearchService,
     SimpleFilter,
     TaskEventNotification,
@@ -11,11 +10,16 @@ import {
     NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
     NAE_VIEW_ID_SEGMENT,
     ViewIdService,
-    CategoryFactory, NAE_SEARCH_CATEGORIES, defaultTaskSearchCategoriesFactory, NAE_BASE_FILTER
+    CategoryFactory,
+    NAE_SEARCH_CATEGORIES,
+    defaultTaskSearchCategoriesFactory,
+    NAE_BASE_FILTER,
+    AllowedNetsService,
+    AllowedNetsServiceFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('case');
 };
 
@@ -48,13 +52,13 @@ const disableButtonsFactory = () => {
     styleUrls: ['./task-view.component.scss'],
     providers: [
         CategoryFactory,
-        TaskViewServiceFactory,
+        TaskViewService,
         SearchService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
-        {   provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [TaskViewServiceFactory]},
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
         {   provide: NAE_DEFAULT_HEADERS, useValue: [
                 'meta-case', 'meta-title', 'meta-priority', 'meta-priority',
                 'meta-user', 'all_data-number', 'all_data-text'

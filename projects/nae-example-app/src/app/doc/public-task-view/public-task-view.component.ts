@@ -6,7 +6,6 @@ import {
     CaseResourceService,
     PublicCaseResourceService,
     PublicTaskResourceService,
-    TaskViewServiceFactory,
     SearchService,
     PublicProcessService,
     ProcessService,
@@ -23,12 +22,12 @@ import {
     AuthenticationService,
     PublicUrlResolverService,
     publicBaseFilterFactory,
-    publicFactoryResolver,
+    publicFactoryResolver, AllowedNetsService, AllowedNetsServiceFactory,
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
 
-const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('demo-public-view');
 };
 
@@ -67,7 +66,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
     templateUrl: './public-task-view.component.html',
     styleUrls: ['./public-task-view.component.scss'],
     providers: [
-        TaskViewServiceFactory,
+        TaskViewService,
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
@@ -92,9 +91,9 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
             deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService]
         },
         {
-            provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [TaskViewServiceFactory]
+            provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]
         },
     ]
 })

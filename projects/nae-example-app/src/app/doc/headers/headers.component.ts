@@ -1,14 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {
-    CaseViewService,
-    CaseViewServiceFactory,
-    FilterType, NAE_BASE_FILTER,
+    AllowedNetsService, AllowedNetsServiceFactory,
+    NAE_BASE_FILTER,
     SearchService,
     SimpleFilter,
     TaskViewService
 } from '@netgrif/application-engine';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('case');
 };
 
@@ -24,16 +23,15 @@ const baseFilterFactory = () => {
     styleUrls: ['./headers.component.scss'],
     providers: [
         TaskViewService,
-        CaseViewServiceFactory,
         SearchService,
-        {
-            provide: CaseViewService,
-            useFactory: localCaseViewServiceFactory,
-            deps: [CaseViewServiceFactory]
-        },
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory
+        },
+        {
+            provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]
         },
     ],
 })

@@ -1,20 +1,36 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    TaskViewServiceFactory, BOOLEAN_VALUE_LABEL_ENABLED, CategoryFactory, defaultTaskSearchCategoriesFactory,
-    InjectedTabbedTaskViewData, NAE_SEARCH_CATEGORIES,
+    BOOLEAN_VALUE_LABEL_ENABLED,
+    CategoryFactory,
+    defaultTaskSearchCategoriesFactory,
+    InjectedTabbedTaskViewData,
+    NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SearchService,
     TabbedTaskView,
-    tabbedTaskViewServiceFactory,
     TaskViewService,
-    ViewIdService, NAE_BASE_FILTER
+    ViewIdService,
+    NAE_BASE_FILTER,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    tabbedAllowedNetsServiceFactory,
+    NAE_TASK_VIEW_CONFIGURATION
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
+import {of} from 'rxjs';
 
 const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     return {
         filter: injectedTabData.baseFilter
     };
+};
+
+const localTaskViewConfigFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
+    if (injectedTabData?.initiallyOpenOneTask !== undefined) {
+        return {initiallyOpenOneTask: of(injectedTabData.initiallyOpenOneTask)};
+    } else {
+        return {};
+    }
 };
 
 @Component({
@@ -23,7 +39,7 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     styleUrls: ['./tabbed-task-view.component.scss'],
     providers: [
         CategoryFactory,
-        TaskViewServiceFactory,
+        TaskViewService,
         SearchService,
         {
             provide: NAE_BASE_FILTER,
@@ -31,15 +47,18 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
             deps: [NAE_TAB_DATA]
         },
         {
-            provide: TaskViewService,
-            useFactory: tabbedTaskViewServiceFactory,
-            deps: [TaskViewServiceFactory, NAE_TAB_DATA]
+            provide: AllowedNetsService,
+            useFactory: tabbedAllowedNetsServiceFactory,
+            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]
         },
         {
             provide: BOOLEAN_VALUE_LABEL_ENABLED,
             useValue: true
         },
         {   provide: ViewIdService, useValue: null},
+        {   provide: NAE_TASK_VIEW_CONFIGURATION,
+            useFactory: localTaskViewConfigFactory,
+            deps: [NAE_TAB_DATA]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
