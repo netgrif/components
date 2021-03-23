@@ -542,17 +542,16 @@ export abstract class Category<T> {
             throw new Error(`The arity of the selected operator (${this.selectedOperatorArity
             }) doesn't match the number of the provided values (${values.length})!`);
         }
-        for (let i = 0; i < this.selectedOperatorArity; i++) {
-            this._operandsFormControls[i].setValue(this.deserializeOperandValue(values[i]));
-        }
+        const deserializedValues = values.map(v => this.deserializeOperandValue(v));
+        this.setOperands(deserializedValues);
     }
 
     /**
      * @param value the serialized output of the [serializeOperandValue()]{@link Category#serializeOperandValue} method
      * @returns the deserialized value, that can be set as FormControl value
      */
-    protected deserializeOperandValue(value: unknown): unknown {
-        return value;
+    protected deserializeOperandValue(value: unknown): T {
+        return value as T;
     }
 
     /**

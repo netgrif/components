@@ -10,7 +10,7 @@ describe('CaseAuthor', () => {
     let category: CaseAuthor;
     let operatorService: OperatorService;
 
-    beforeEach( () => {
+    beforeEach(() => {
         operatorService = new OperatorService(new OperatorResolverService());
         category = new CaseAuthor(operatorService, null);
     });
@@ -41,6 +41,7 @@ describe('CaseAuthor', () => {
         deserialized.loadFromMetadata(metadata);
         expect(deserialized.isOperatorSelected()).toBeTrue();
         expect(deserialized.providesPredicate).toBeTrue();
+
         const deserializedMetadata = deserialized.createMetadata();
         expect(deserializedMetadata).toBeTruthy();
         expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
