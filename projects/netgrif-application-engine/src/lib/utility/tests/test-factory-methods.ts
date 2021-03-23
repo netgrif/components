@@ -10,6 +10,10 @@ export const TestTaskViewAllowedNetsFactory = (factory: AllowedNetsServiceFactor
     return factory.createFromConfig('task');
 };
 
+export const TestNoAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
+    return factory.createFromArray([]);
+};
+
 export const TestCaseBaseFilterProvider: () => BaseFilter = () => {
     return {
         filter: SimpleFilter.emptyCaseFilter()

@@ -27,8 +27,9 @@ import {SignUpService} from '../../authentication/sign-up/services/sign-up.servi
 import {OverflowService} from '../../header/services/overflow.service';
 import {UserService} from '../../user/services/user.service';
 import {Case} from '../../resources/interface/case';
-import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -49,13 +50,8 @@ describe('AbstractCasePanelComponent', () => {
                 LoggerService,
                 TranslateService,
                 CaseResourceService,
+                CaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewAllowedNetsFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
@@ -63,7 +59,8 @@ describe('AbstractCasePanelComponent', () => {
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                SignUpService
+                SignUpService,
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 TestCasePanelComponent,

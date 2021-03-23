@@ -7,6 +7,8 @@ import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {TestConfigurationService} from '../../utility/tests/test-config';
 
 describe('AbstractFulltextSearchComponent', () => {
     let component: TestFulltextSearchComponent;
@@ -25,6 +27,7 @@ describe('AbstractFulltextSearchComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
+                {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [
                 TestFulltextSearchComponent,

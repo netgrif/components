@@ -12,7 +12,7 @@ import {EditableClausePredicateWithGenerators} from '../models/predicate/editabl
 import {Category} from '../models/category/category';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
-import {CategoryGeneratorMetadata, GeneratorMetadata} from '../models/category/generator-metadata';
+import {CategoryGeneratorMetadata} from '../models/category/generator-metadata';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {BaseFilter} from '../models/base-filter';
 import {LoggerService} from '../../logger/services/logger.service';

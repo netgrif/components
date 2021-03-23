@@ -12,16 +12,14 @@ import {
     TestTaskBaseFilterProvider,
     TestTaskViewAllowedNetsFactory
 } from '../../utility/tests/test-factory-methods';
-import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../search-service/search.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
-import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('Default search categories factory methods', () => {
     let testService: TestService;
@@ -37,16 +35,15 @@ describe('Default search categories factory methods', () => {
                 providers: [
                     TestService,
                     CategoryFactory,
-                    CaseViewServiceFactory,
                     {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
-                    {provide: CaseViewService, useFactory: TestCaseViewAllowedNetsFactory, deps: [CaseViewServiceFactory]},
                     SearchService,
                     {
                         provide: NAE_BASE_FILTER,
                         useFactory: TestCaseBaseFilterProvider
                     },
-                    {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
+                    {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                    {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
                 ]
             });
             testService = TestBed.inject(TestService);
@@ -78,13 +75,12 @@ describe('Default search categories factory methods', () => {
                 providers: [
                     TestService,
                     CategoryFactory,
-                    TaskViewServiceFactory,
                     SearchService,
                     {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
-                    {provide: TaskViewService, useFactory: TestTaskViewAllowedNetsFactory, deps: [TaskViewServiceFactory]},
                     {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                     {provide: NAE_BASE_FILTER, useFactory: TestTaskBaseFilterProvider},
+                    {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
                 ]
             });
             testService = TestBed.inject(TestService);

@@ -7,7 +7,12 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
-import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
+import {
+    TestCaseBaseFilterProvider,
+    TestNoAllowedNetsFactory,
+} from '../../utility/tests/test-factory-methods';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('SearchService', () => {
     let service: SearchService;
@@ -26,7 +31,8 @@ describe('SearchService', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         });
         service = TestBed.inject(SearchService);

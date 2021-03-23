@@ -22,8 +22,9 @@ import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-re
 import {TestViewService} from '../../../utility/tests/test-view-service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {CaseViewServiceFactory} from '../../../view/case-view/service/factory/case-view-service-factory';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbstractLoadingModeComponent', () => {
     let component: TestLoadModeComponent;
@@ -43,22 +44,18 @@ describe('AbstractLoadingModeComponent', () => {
             ],
             providers: [
                 CaseHeaderService,
-                CaseViewServiceFactory,
+                CaseViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewAllowedNetsFactory,
-                    deps: [CaseViewServiceFactory]
-                },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         }).compileComponents();
     }));

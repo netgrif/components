@@ -26,8 +26,9 @@ import {
 } from '../../utility/tests/test-factory-methods';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -44,12 +45,7 @@ describe('TaskHeaderService', () => {
             ],
             providers: [
                 TaskHeaderService,
-                TaskViewServiceFactory,
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewAllowedNetsFactory,
-                    deps: [TaskViewServiceFactory]
-                },
+                TaskViewService,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
@@ -60,6 +56,7 @@ describe('TaskHeaderService', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {

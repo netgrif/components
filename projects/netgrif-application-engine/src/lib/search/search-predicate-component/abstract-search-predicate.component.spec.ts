@@ -9,8 +9,10 @@ import {CategoryFactory} from '../category-factory/category-factory';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
+import {
+    TestCaseBaseFilterProvider,
+    TestNoAllowedNetsFactory
+} from '../../utility/tests/test-factory-methods';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {Subject} from 'rxjs';
 import {MaterialModule} from '../../material/material.module';
@@ -18,11 +20,12 @@ import {SearchService} from '../search-service/search.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
-import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 import {
     AdvancedSearchComponentInitializationService
 } from '../advanced-search-component-initialization-service/advanced-search-component-initialization.service';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
@@ -43,19 +46,14 @@ describe('AbstractSearchPredicateComponent', () => {
                 CategoryFactory,
                 {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewAllowedNetsFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                AdvancedSearchComponentInitializationService
+                AdvancedSearchComponentInitializationService,
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         }).compileComponents();
     }));

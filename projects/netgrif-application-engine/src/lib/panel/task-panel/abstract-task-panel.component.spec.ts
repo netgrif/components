@@ -50,8 +50,9 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {TranslateService} from '@ngx-translate/core';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -75,16 +76,11 @@ describe('AbtsractTaskPanelComponent', () => {
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                TaskViewServiceFactory,
+                TaskViewService,
                 SideMenuService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewAllowedNetsFactory,
-                    deps: [TaskViewServiceFactory]
-                },
                 {provide: TaskResourceService, useClass: MyTaskResources},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 SearchService,
@@ -104,6 +100,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 TestTaskPanelComponent,

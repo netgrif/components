@@ -25,8 +25,9 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 
 describe('AbstractTaskListComponent', () => {
@@ -46,7 +47,7 @@ describe('AbstractTaskListComponent', () => {
             ],
             declarations: [TestTaskListComponent, TestWrapperComponent],
             providers: [
-                TaskViewServiceFactory,
+                TaskViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -56,12 +57,8 @@ describe('AbstractTaskListComponent', () => {
                     useFactory: TestTaskBaseFilterProvider
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewAllowedNetsFactory,
-                    deps: [TaskViewServiceFactory]
-                },
                 {provide: TaskResourceService, useClass: MyResources},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         })
             .compileComponents();

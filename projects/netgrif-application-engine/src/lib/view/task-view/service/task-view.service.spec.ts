@@ -28,8 +28,9 @@ import {Page} from '../../../resources/interface/page';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
-import {TaskViewServiceFactory} from './factory/task-view-service-factory';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -46,12 +47,7 @@ describe('TaskViewService', () => {
                 SnackBarModule
             ],
             providers: [
-                TaskViewServiceFactory,
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewAllowedNetsFactory,
-                    deps: [TaskViewServiceFactory]
-                },
+                TaskViewService,
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -61,7 +57,8 @@ describe('TaskViewService', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestTaskBaseFilterProvider
                 },
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: []
         }).overrideModule(BrowserDynamicTestingModule, {
