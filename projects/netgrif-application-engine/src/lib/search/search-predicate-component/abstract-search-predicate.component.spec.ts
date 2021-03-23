@@ -10,7 +10,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {Subject} from 'rxjs';
 import {MaterialModule} from '../../material/material.module';
@@ -45,7 +45,7 @@ describe('AbstractSearchPredicateComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
+                    useFactory: TestCaseViewAllowedNetsFactory,
                     deps: [CaseViewServiceFactory]
                 },
                 CaseViewServiceFactory,

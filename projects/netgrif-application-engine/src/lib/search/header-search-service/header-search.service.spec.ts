@@ -6,7 +6,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../search-service/search.service';
@@ -37,7 +37,7 @@ describe('HeaderSearchService', () => {
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [CaseViewServiceFactory]}
+                {provide: CaseViewService, useFactory: TestCaseViewAllowedNetsFactory, deps: [CaseViewServiceFactory]}
             ]
         });
         service = TestBed.inject(HeaderSearchService);

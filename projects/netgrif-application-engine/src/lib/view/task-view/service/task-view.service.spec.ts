@@ -9,7 +9,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {Observable, of} from 'rxjs';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../../../search/search-service/search.service';
-import {TestTaskBaseFilterProvider, TestTaskViewFactory} from '../../../utility/tests/test-factory-methods';
+import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
@@ -49,7 +49,7 @@ describe('TaskViewService', () => {
                 TaskViewServiceFactory,
                 {
                     provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
+                    useFactory: TestTaskViewAllowedNetsFactory,
                     deps: [TaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyResources},

@@ -9,6 +9,7 @@ import {BooleanOperator} from '../boolean-operator';
 import {Category} from './category';
 import {Observable} from 'rxjs';
 import {OperatorService} from '../../operator-service/operator.service';
+import {OptionalDependencies} from '../../category-factory/optional-dependencies';
 
 /**
  * A utility class for autocomplete search categories that are net specific, such as searching by roles, or tasks.
@@ -21,12 +22,13 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
                           log: LoggerService,
-                          operatorService: OperatorService) {
+                          operatorService: OperatorService,
+                          protected _optionalDependencies: OptionalDependencies) {
         super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
     }
 
     protected createOptions(): void {
-        this.getAllowedNets$().subscribe(allowedNets => {
+        this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 this.extractAttributes(petriNet)
                     .filter(pair => pair.name && pair.name.trim().length > 0)
@@ -39,14 +41,6 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
             });
         });
     }
-
-    /**
-     * This method should provide the allowed nets that are processed to create the options of this category.
-     *
-     * Since this class aims to be a universal implementation and allowed nets are provided in either the
-     * {@Link CaseViewService}, or the {@link TaskViewService}, we must demand the source from a subclass.
-     */
-    protected abstract getAllowedNets$(): Observable<Array<Net>>;
 
     /**
      * This method should extract the relevant attribute display names and ids.

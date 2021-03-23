@@ -21,7 +21,6 @@ export * from './task-view/tabbed-task-view';
 
 export * from './abstract/view-with-headers';
 export * from './abstract/sortable-view';
-export * from './abstract/sortable-view-with-allowed-nets';
 export * from './abstract/page-load-request-context';
 
 /* INJECTION TOKENS */
@@ -30,10 +29,8 @@ export * from './workflow-view/models/injection-token-workflow-service';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';
-export * from './case-view/service/factory/case-view-service-factory';
 
 export * from './task-view/service/task-view.service';
-export * from './task-view/service/factory/task-view-service-factory';
 
 export * from './workflow-view/workflow-view.service';
 

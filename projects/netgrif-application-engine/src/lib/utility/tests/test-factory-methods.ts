@@ -1,13 +1,12 @@
 import {SimpleFilter} from '../../filter/models/simple-filter';
-import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
 import {BaseFilter} from '../../search/models/base-filter';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
-export const TestCaseViewFactory = (factory: CaseViewServiceFactory) => {
+export const TestCaseViewAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('cases');
 };
 
-export const TestTaskViewFactory = (factory: TaskViewServiceFactory) => {
+export const TestTaskViewAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('task');
 };
 

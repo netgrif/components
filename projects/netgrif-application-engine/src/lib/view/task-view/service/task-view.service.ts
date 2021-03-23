@@ -8,8 +8,6 @@ import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
-import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
-import {Net} from '../../../process/net';
 import {Pagination} from '../../../resources/interface/pagination';
 import {Task} from '../../../resources/interface/task';
 import {SearchService} from '../../../search/search-service/search.service';
@@ -25,10 +23,11 @@ import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {SortableView} from '../../abstract/sortable-view';
 
 
 @Injectable()
-export class TaskViewService extends SortableViewWithAllowedNets implements OnDestroy {
+export class TaskViewService extends SortableView implements OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFields>;
@@ -57,10 +56,9 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                 private _userComparator: UserComparatorService,
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint,
                 resolver: SearchIndexResolverService,
-                allowedNets: Observable<Array<Net>> = of([]),
                 initiallyOpenOneTask: Observable<boolean> = of(true),
                 closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
-        super(allowedNets, resolver);
+        super(resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();

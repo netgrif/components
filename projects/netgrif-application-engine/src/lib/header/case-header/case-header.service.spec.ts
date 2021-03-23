@@ -5,7 +5,7 @@ import {HeaderMode} from '../models/header-mode';
 import {SearchChangeDescription} from '../models/user-changes/search-change-description';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -59,7 +59,7 @@ describe('CaseHeaderService', () => {
                 },
                 {
                     provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
+                    useFactory: TestCaseViewAllowedNetsFactory,
                     deps: [CaseViewServiceFactory]
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

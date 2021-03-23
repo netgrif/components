@@ -21,7 +21,7 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
     }
 
     protected createOptions(): void {
-        this._optionalDependencies.taskViewService.allowedNets$.subscribe(allowedNets => {
+        this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 this.addToMap(petriNet.title, petriNet.stringId);
             });

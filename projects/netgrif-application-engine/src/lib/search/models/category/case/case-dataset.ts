@@ -272,7 +272,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected createDatafieldOptions(): void {
-        this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
+        this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.immediateData
                     .filter(immediateData => {

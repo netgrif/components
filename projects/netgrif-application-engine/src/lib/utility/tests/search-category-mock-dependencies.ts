@@ -1,7 +1,5 @@
 import {OperatorService} from '../../search/operator-service/operator.service';
 import {Observable, of} from 'rxjs';
-import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {CategoryFactory} from '../../search/category-factory/category-factory';
 import {Net} from '../../process/net';
@@ -9,16 +7,16 @@ import {SearchIndexResolverService} from '../../search/search-keyword-resolver-s
 import {OptionalDependencies} from '../../search/category-factory/optional-dependencies';
 import {CategoryResolverService} from '../../search/category-factory/category-resolver.service';
 import {OperatorResolverService} from '../../search/operator-service/operator-resolver.service';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 
 const opResolver = new OperatorResolverService();
 const opService = new OperatorService(opResolver);
 
 export const createMockDependencies: (allowedNets$: Observable<Array<Net>>) => OptionalDependencies =
     (allowedNets$: Observable<Array<Net>> = of([])) => {
-        const mockCaseView = {allowedNets$} as CaseViewService;
-        const mockTaskView = {allowedNets$} as TaskViewService;
         const mockUserResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService;
         const searchIndexResolver = new SearchIndexResolverService();
+        const allowedNetsService = {allowedNets$} as AllowedNetsService;
 
         return {
             categoryFactory: new CategoryFactory(
@@ -26,13 +24,11 @@ export const createMockDependencies: (allowedNets$: Observable<Array<Net>>) => O
                 null,
                 searchIndexResolver,
                 new CategoryResolverService(),
-                mockCaseView,
-                mockTaskView,
+                allowedNetsService,
                 mockUserResourceService
             ),
             searchIndexResolver,
             userResourceService: mockUserResourceService,
-            caseViewService: mockCaseView,
-            taskViewService: mockTaskView,
+            allowedNetsService
         };
     };

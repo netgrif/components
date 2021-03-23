@@ -8,9 +8,9 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
     TestCaseBaseFilterProvider,
-    TestCaseViewFactory,
+    TestCaseViewAllowedNetsFactory,
     TestTaskBaseFilterProvider,
-    TestTaskViewFactory
+    TestTaskViewAllowedNetsFactory
 } from '../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {MaterialModule} from '../../material/material.module';
@@ -40,7 +40,7 @@ describe('Default search categories factory methods', () => {
                     CaseViewServiceFactory,
                     {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
-                    {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [CaseViewServiceFactory]},
+                    {provide: CaseViewService, useFactory: TestCaseViewAllowedNetsFactory, deps: [CaseViewServiceFactory]},
                     SearchService,
                     {
                         provide: NAE_BASE_FILTER,
@@ -82,7 +82,7 @@ describe('Default search categories factory methods', () => {
                     SearchService,
                     {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
-                    {provide: TaskViewService, useFactory: TestTaskViewFactory, deps: [TaskViewServiceFactory]},
+                    {provide: TaskViewService, useFactory: TestTaskViewAllowedNetsFactory, deps: [TaskViewServiceFactory]},
                     {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                     {provide: NAE_BASE_FILTER, useFactory: TestTaskBaseFilterProvider},
                 ]

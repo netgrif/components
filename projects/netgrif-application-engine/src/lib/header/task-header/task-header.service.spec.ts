@@ -22,7 +22,7 @@ import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {
     TestTaskBaseFilterProvider,
-    TestTaskViewFactory
+    TestTaskViewAllowedNetsFactory
 } from '../../utility/tests/test-factory-methods';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {SearchService} from '../../search/search-service/search.service';
@@ -47,7 +47,7 @@ describe('TaskHeaderService', () => {
                 TaskViewServiceFactory,
                 {
                     provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
+                    useFactory: TestTaskViewAllowedNetsFactory,
                     deps: [TaskViewServiceFactory]
                 },
                 SearchService,

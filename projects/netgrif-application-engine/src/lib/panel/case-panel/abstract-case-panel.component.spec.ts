@@ -17,7 +17,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {SearchService} from '../../search/search-service/search.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -52,7 +52,7 @@ describe('AbstractCasePanelComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
+                    useFactory: TestCaseViewAllowedNetsFactory,
                     deps: [CaseViewServiceFactory]
                 },
                 CaseViewServiceFactory,

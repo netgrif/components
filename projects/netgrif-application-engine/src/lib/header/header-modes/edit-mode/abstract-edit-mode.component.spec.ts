@@ -14,7 +14,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {SearchService} from '../../../search/search-service/search.service';
-import {TestCaseBaseFilterProvider, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
@@ -56,7 +56,7 @@ describe('AbstractEditModeComponent', () => {
                 },
                 {
                     provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
+                    useFactory: TestCaseViewAllowedNetsFactory,
                     deps: [CaseViewServiceFactory]
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

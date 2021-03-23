@@ -12,7 +12,6 @@ import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, concatMap, filter, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
-import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
 import {NAE_NEW_CASE_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
@@ -24,9 +23,11 @@ import {UserService} from '../../../user/services/user.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {PermissionType} from '../../../process/permissions';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
+import {SortableView} from '../../abstract/sortable-view';
 
 @Injectable()
-export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
+export class CaseViewService extends SortableView implements OnDestroy {
 
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
@@ -34,7 +35,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     protected _endOfData: boolean;
     protected _pagination: Pagination;
 
-    constructor(allowedNets: Observable<Array<Net>>,
+    constructor(protected _allowedNetsService: AllowedNetsService,
                 protected _sideMenuService: SideMenuService,
                 protected _caseResourceService: CaseResourceService,
                 protected _log: LoggerService,
@@ -44,7 +45,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
                 protected _user: UserService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
                 resolver: SearchIndexResolverService) {
-        super(allowedNets, resolver);
+        super(resolver);
         this._loading$ = new LoadingWithFilterEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
@@ -174,7 +175,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
         const myCase = new Subject<Case>();
         this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
             {
-                allowedNets$: this.allowedNets$.pipe(
+                allowedNets$: this._allowedNetsService.allowedNets$.pipe(
                     map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
                 )
             }).onClose.subscribe($event => {

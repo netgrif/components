@@ -17,7 +17,7 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestTaskBaseFilterProvider, TestTaskViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
@@ -58,7 +58,7 @@ describe('AbstractTaskListComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
+                    useFactory: TestTaskViewAllowedNetsFactory,
                     deps: [TaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyResources},

@@ -3,7 +3,6 @@ import {Operator} from '../../operator/operator';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {CaseProcess} from './case-process';
-import {Observable} from 'rxjs';
 import {Net} from '../../../../process/net';
 import {Category} from '../category';
 import {OperatorService} from '../../../operator-service/operator.service';
@@ -20,14 +19,10 @@ export abstract class CaseNetAttributeAutocompleteCategory extends NetAttributeA
                           translationPath: string,
                           log: LoggerService,
                           operatorService: OperatorService,
-                          protected _optionalDependencies: OptionalDependencies) {
-        super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
-        this._processCategory = _optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
+                          optionalDependencies: OptionalDependencies) {
+        super(elasticKeywords, allowedOperators, translationPath, log, operatorService, optionalDependencies);
+        this._processCategory = optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
-    }
-
-    protected getAllowedNets$(): Observable<Array<Net>> {
-        return this._optionalDependencies.caseViewService.allowedNets$;
     }
 
     protected getProcessCategory(): Category<Array<string>> {

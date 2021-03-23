@@ -2,13 +2,12 @@ import {Injectable, Optional, Type} from '@angular/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OperatorService} from '../operator-service/operator.service';
 import {Category} from '../models/category/category';
-import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {OptionalDependencies} from './optional-dependencies';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {SearchIndexResolverService} from '../search-keyword-resolver-service/search-index-resolver.service';
 import {CategoryGeneratorMetadata} from '../models/category/generator-metadata';
 import {CategoryResolverService} from './category-resolver.service';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 
 /**
  * Can be used to generate {@link Category} class instances.
@@ -27,14 +26,12 @@ export class CategoryFactory {
                 protected _log: LoggerService,
                 protected _searchIndexResolverService: SearchIndexResolverService,
                 protected _categoryResolver: CategoryResolverService,
-                @Optional() protected _caseViewService: CaseViewService,
-                @Optional() protected _taskViewService: TaskViewService,
+                protected _allowedNetsService: AllowedNetsService,
                 @Optional() protected _userResourceService: UserResourceService) {
         this._optionalDependencies = {
             categoryFactory: this,
             searchIndexResolver: this._searchIndexResolverService,
-            caseViewService: this._caseViewService,
-            taskViewService: this._taskViewService,
+            allowedNetsService: this._allowedNetsService,
             userResourceService: this._userResourceService,
         };
     }

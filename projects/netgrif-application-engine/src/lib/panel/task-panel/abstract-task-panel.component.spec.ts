@@ -33,7 +33,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestTaskBaseFilterProvider, TestTaskViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
@@ -82,7 +82,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
+                    useFactory: TestTaskViewAllowedNetsFactory,
                     deps: [TaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyTaskResources},
