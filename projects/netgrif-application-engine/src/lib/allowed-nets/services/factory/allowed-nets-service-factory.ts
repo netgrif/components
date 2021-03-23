@@ -18,7 +18,7 @@ import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injecte
  */
 export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                 tabData: InjectedTabbedTaskViewData): AllowedNetsService {
-    return factory.createFromArray(tabData.allowedNets ?? []);
+    return factory.createFromArray(tabData?.allowedNets ?? []);
 }
 
 /**
