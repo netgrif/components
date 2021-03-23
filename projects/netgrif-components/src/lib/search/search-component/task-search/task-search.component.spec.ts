@@ -4,16 +4,18 @@ import {SearchComponentModule} from '../../search.module';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    TaskViewServiceFactory,
     ConfigurationService,
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     SearchService,
-    TaskViewService,
     TestConfigurationService,
-    TestTaskViewFactory,
-    UserResourceService, NAE_BASE_FILTER, TestTaskBaseFilterProvider
+    UserResourceService,
+    NAE_BASE_FILTER,
+    TestTaskBaseFilterProvider,
+    AllowedNetsService,
+    TestNoAllowedNetsFactory,
+    AllowedNetsServiceFactory
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -30,21 +32,16 @@ describe('TaskSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
-                TaskViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestTaskBaseFilterProvider
                 },
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
-                    deps: [TaskViewServiceFactory]
-                },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         })
             .compileComponents();

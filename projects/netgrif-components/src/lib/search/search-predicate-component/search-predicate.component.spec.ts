@@ -3,9 +3,7 @@ import {SearchPredicateComponent} from './search-predicate.component';
 import {Component, OnDestroy} from '@angular/core';
 import {
     AuthenticationMethodService,
-    CaseViewService,
     CategoryFactory,
-    CaseViewServiceFactory,
     ConfigurationService,
     defaultCaseSearchCategoriesFactory,
     EditableElementaryPredicate,
@@ -13,10 +11,14 @@ import {
     MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES,
     SearchService,
-    TestCaseViewFactory,
     TestConfigurationService,
     TranslateLibModule,
-    AdvancedSearchComponentInitializationService, NAE_BASE_FILTER, TestCaseBaseFilterProvider
+    AdvancedSearchComponentInitializationService,
+    NAE_BASE_FILTER,
+    TestCaseBaseFilterProvider,
+    AllowedNetsService,
+    TestNoAllowedNetsFactory,
+    AllowedNetsServiceFactory
 } from '@netgrif/application-engine';
 import {Subject} from 'rxjs';
 import {SearchComponentModule} from '../search.module';
@@ -43,19 +45,14 @@ describe('SearchPredicateComponent', () => {
                 CategoryFactory,
                 {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                AdvancedSearchComponentInitializationService
+                AdvancedSearchComponentInitializationService,
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         })
             .compileComponents();

@@ -1,15 +1,15 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case-list.component';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
     CaseResourceService,
     CaseViewService,
-    CaseViewServiceFactory,
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService, NAE_BASE_FILTER,
     SearchService,
-    TestCaseBaseFilterProvider,
+    TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/application-engine';
@@ -18,9 +18,6 @@ import {of} from 'rxjs';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
-    return factory.createFromConfig('cases');
-};
 
 describe('CaseListComponent', () => {
     let component: CaseListComponent;
@@ -39,17 +36,13 @@ describe('CaseListComponent', () => {
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                CaseViewServiceFactory,
-                {
-                    provide: CaseViewService,
-                    useFactory: localCaseViewServiceFactory,
-                    deps: [CaseViewServiceFactory]
-                },
+                CaseViewService,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [CaseListComponent]
         })

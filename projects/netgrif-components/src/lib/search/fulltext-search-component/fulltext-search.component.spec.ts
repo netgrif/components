@@ -1,10 +1,11 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FulltextSearchComponent} from './fulltext-search.component';
 import {
+    ConfigurationService,
     MaterialModule,
     NAE_BASE_FILTER,
     SearchService,
-    TestCaseBaseFilterProvider
+    TestCaseBaseFilterProvider, TestConfigurationService
 } from 'netgrif-application-engine';
 import {SearchComponentModule} from '../search.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -28,6 +29,7 @@ describe('FulltextSearchComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
+                {provide: ConfigurationService, useClass: TestConfigurationService}
             ]
         })
             .compileComponents();

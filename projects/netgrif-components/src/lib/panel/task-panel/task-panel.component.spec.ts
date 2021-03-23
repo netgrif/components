@@ -8,7 +8,6 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
-    TaskViewServiceFactory,
     AssignPolicy,
     AssignPolicyService,
     AssignTaskService,
@@ -48,7 +47,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
-    TestTaskViewFactory, NAE_BASE_FILTER, TestTaskBaseFilterProvider
+    NAE_BASE_FILTER, TestTaskBaseFilterProvider, AllowedNetsService, TestTaskViewAllowedNetsFactory, AllowedNetsServiceFactory
 } from '@netgrif/application-engine';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -79,16 +78,11 @@ describe('TaskPanelComponent', () => {
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                TaskViewServiceFactory,
+                TaskViewService,
                 SideMenuService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
-                    deps: [TaskViewServiceFactory]
-                },
                 {provide: TaskResourceService, useClass: MyTaskResources},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 SearchService,
@@ -108,6 +102,7 @@ describe('TaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 PanelComponent,

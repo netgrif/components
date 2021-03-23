@@ -9,19 +9,18 @@ import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
     CaseMetaField,
     HeaderColumn,
     HeaderColumnType,
     MaterialModule,
-    NAE_BASE_FILTER, TestCaseBaseFilterProvider,
+    NAE_BASE_FILTER, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
     TranslateLibModule
 } from '@netgrif/application-engine';
 import {
     TestConfigurationService,
     ConfigurationService,
     CaseViewService,
-    TestCaseViewFactory,
-    CaseViewServiceFactory,
     SearchService,
     AuthenticationMethodService,
     MockAuthenticationMethodService
@@ -44,18 +43,14 @@ describe('CasePanelComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
+                CaseViewService,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [CasePanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA]

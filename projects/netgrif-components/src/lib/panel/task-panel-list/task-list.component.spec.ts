@@ -7,7 +7,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {
-    TaskViewServiceFactory,
     AssignPolicy,
     AuthenticationMethodService,
     AuthenticationService,
@@ -23,7 +22,7 @@ import {
     TaskViewService,
     TestConfigurationService,
     UserResourceService,
-    TestTaskViewFactory, NAE_BASE_FILTER, TestTaskBaseFilterProvider
+    NAE_BASE_FILTER, TestTaskBaseFilterProvider, AllowedNetsService, TestTaskViewAllowedNetsFactory, AllowedNetsServiceFactory
 } from '@netgrif/application-engine';
 import {RouterTestingModule} from '@angular/router/testing';
 import {PanelComponentModule} from '../panel.module';
@@ -47,7 +46,7 @@ describe('TaskListComponent', () => {
             ],
             declarations: [TestWrapperComponent],
             providers: [
-                TaskViewServiceFactory,
+                TaskViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -60,12 +59,8 @@ describe('TaskListComponent', () => {
                     provide: ConfigurationService,
                     useClass: TestConfigurationService
                 },
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
-                    deps: [TaskViewServiceFactory]
-                },
                 {provide: TaskResourceService, useClass: MyResources},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         })
             .compileComponents();

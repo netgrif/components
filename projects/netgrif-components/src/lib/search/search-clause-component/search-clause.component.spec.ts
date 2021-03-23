@@ -7,21 +7,18 @@ import {Subject} from 'rxjs';
 import {
     AuthenticationMethodService,
     BooleanOperator,
-    CaseViewService,
     CategoryFactory,
-    CaseViewServiceFactory,
     ConfigurationService,
     defaultCaseSearchCategoriesFactory,
     MaterialModule,
     MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES,
     SearchService,
-    TestCaseViewFactory,
     TestConfigurationService,
     TranslateLibModule,
     AdvancedSearchComponentInitializationService,
     EditableClausePredicateWithGenerators,
-    NAE_BASE_FILTER, TestCaseBaseFilterProvider
+    NAE_BASE_FILTER, TestCaseBaseFilterProvider, AllowedNetsService, AllowedNetsServiceFactory, TestNoAllowedNetsFactory
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -45,19 +42,14 @@ describe('SearchClauseComponent', () => {
                 CategoryFactory,
                 {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                AdvancedSearchComponentInitializationService
+                AdvancedSearchComponentInitializationService,
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         }).compileComponents();
     }));

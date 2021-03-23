@@ -5,18 +5,17 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
     AuthenticationService,
     CaseHeaderService,
     CaseViewService,
-    CaseViewServiceFactory,
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService, NAE_BASE_FILTER,
-    SearchService, TestCaseBaseFilterProvider,
-    TestCaseViewFactory,
+    SearchService, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TestViewService,
     TranslateLibModule,
@@ -58,23 +57,19 @@ describe('SearchModeComponent', () => {
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                CaseViewServiceFactory,
+                CaseViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
-                },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                CaseHeaderService
+                CaseHeaderService,
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [SearchModeComponent, TestWrapperComponent],
         })

@@ -4,13 +4,21 @@ import {Component} from '@angular/core';
 import {SearchComponentModule} from '../search.module';
 import {
     AuthenticationMethodService,
-    CaseTitle, CaseViewService,
+    CaseTitle,
+    CaseViewService,
     Category,
-    CategoryFactory, CaseViewServiceFactory,
+    CategoryFactory,
     ConfigurationInput,
-    ConfigurationService, MockAuthenticationMethodService,
-    SearchInputType, SearchService, TestCaseViewFactory,
-    TestConfigurationService, NAE_BASE_FILTER, TestCaseBaseFilterProvider
+    ConfigurationService,
+    MockAuthenticationMethodService,
+    SearchInputType,
+    SearchService,
+    TestConfigurationService,
+    NAE_BASE_FILTER,
+    TestCaseBaseFilterProvider,
+    AllowedNetsService,
+    TestNoAllowedNetsFactory,
+    AllowedNetsServiceFactory
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -32,18 +40,13 @@ describe('SearchConfigurationInputComponent', () => {
             providers: [
                 CategoryFactory,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         })
             .compileComponents();
