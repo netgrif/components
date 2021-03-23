@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
     CaseViewService,
     CategoryFactory,
-    CaseViewServiceFactory,
     defaultCaseSearchCategoriesFactory,
     InjectedTabbedCaseViewData,
     LoggerService,
@@ -16,7 +17,7 @@ import {
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromArray([]);
 };
 
@@ -32,13 +33,13 @@ const baseFilterFactory = () => {
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         CategoryFactory,
-        CaseViewServiceFactory,
+        CaseViewService,
         SearchService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
-        {   provide: CaseViewService,
-            useFactory: localCaseViewServiceFactory,
-            deps: [CaseViewServiceFactory]},
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ]

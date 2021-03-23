@@ -8,6 +8,18 @@ import {ConfigurationService} from '../../../configuration/configuration.service
 import {CaseViewParams} from '../../../view/case-view/models/case-view-params';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {TaskViewParams} from '../../../view/task-view/models/task-view-params';
+import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injected-tabbed-task-view-data';
+
+
+/**
+ * Convenience method that can be used as a allowed nets factory for tabbed task views.
+ * If no allowed nets are provided in the injected data then an {@link AllowedNetsService} with no allowed nets is created.
+ * It has a dependency on this class and {@link NAE_TAB_DATA} injection token.
+ */
+export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
+                                                tabData: InjectedTabbedTaskViewData): AllowedNetsService {
+    return factory.createFromArray(tabData.allowedNets ?? []);
+}
 
 /**
  * Simplifies the creation of {@link AllowedNetsService} instances
