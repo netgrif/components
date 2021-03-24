@@ -47,6 +47,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._forceLoadDataOnOpen = force;
         this._assignPolicyService.forced = force;
     }
+    @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
      */
