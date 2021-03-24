@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -15,7 +15,7 @@ describe('TextFieldComponent', () => {
     let component: TextFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, AngularResizedEventModule, NoopAnimationsModule,
                 CovalentModule, TranslateLibModule, HttpClientTestingModule],

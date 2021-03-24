@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchClauseComponent} from './search-clause.component';
 import {SearchComponentModule} from '../search.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -7,7 +7,7 @@ import {Subject} from 'rxjs';
 import {
     AuthenticationMethodService,
     BooleanOperator, CaseViewService,
-    CategoryFactory, ConfigCaseViewServiceFactory, ConfigurationService, defaultCaseSearchCategoriesFactory,
+    CategoryFactory, CaseViewServiceFactory, ConfigurationService, defaultCaseSearchCategoriesFactory,
     EditableClausePredicate,
     MaterialModule, MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory, TestConfigurationService,
@@ -19,7 +19,7 @@ describe('SearchClauseComponent', () => {
     let component: SearchClauseComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,
@@ -38,9 +38,9 @@ describe('SearchClauseComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

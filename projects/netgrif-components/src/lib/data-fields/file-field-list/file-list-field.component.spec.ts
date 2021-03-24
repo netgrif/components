@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {FileListFieldComponent} from './file-list-field.component';
 import {AngularResizedEventModule} from 'angular-resize-event';
@@ -28,7 +28,7 @@ describe('FileListFieldComponent', () => {
     let component: FileListFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LoadingModeComponent} from './loading-mode.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -10,7 +10,7 @@ import {
     AuthenticationService,
     CaseHeaderService,
     CaseViewService,
-    ConfigCaseViewServiceFactory,
+    CaseViewServiceFactory,
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
@@ -31,7 +31,7 @@ describe('LoadingModeComponent', () => {
     let component: LoadingModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [LoadingModeComponent, TestWrapperComponent],
             imports: [
@@ -45,7 +45,7 @@ describe('LoadingModeComponent', () => {
             ],
             providers: [
                 CaseHeaderService,
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
@@ -54,7 +54,7 @@ describe('LoadingModeComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},

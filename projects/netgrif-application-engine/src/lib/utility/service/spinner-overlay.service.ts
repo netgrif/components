@@ -1,6 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
-import {Subject, Subscription} from 'rxjs';
+import {Subject} from 'rxjs';
 import {map, scan} from 'rxjs/operators';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {MatSpinner} from '@angular/material/progress-spinner';

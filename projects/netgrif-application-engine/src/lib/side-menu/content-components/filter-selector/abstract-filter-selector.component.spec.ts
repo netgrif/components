@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Observable} from 'rxjs';
@@ -25,7 +25,7 @@ describe('AbstractFilterSelectorComponent', () => {
     let sideMenuSpy: jasmine.Spy;
     let sideMenuCloseSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
@@ -60,8 +60,8 @@ describe('AbstractFilterSelectorComponent', () => {
 
     it('should test functions', () => {
         component.filterFilters('');
-        component.caseFilterSelected({option: {selected: undefined}} as MatSelectionListChange);
-        component.taskFilterSelected({option: {selected: undefined}} as MatSelectionListChange);
+        component.caseFilterSelected({options: [{selected: undefined}]} as MatSelectionListChange);
+        component.taskFilterSelected({options: [{selected: undefined}]} as MatSelectionListChange);
 
         component.filterSelected(new SimpleFilter('', FilterType.TASK, {}));
         expect(sideMenuSpy).toHaveBeenCalled();

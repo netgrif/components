@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublicResolvercomponent } from './public-resolver.component';
 
@@ -6,7 +6,7 @@ describe('PublicResolverComponent', () => {
   let component: PublicResolvercomponent;
   let fixture: ComponentFixture<PublicResolvercomponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PublicResolvercomponent ]
     })

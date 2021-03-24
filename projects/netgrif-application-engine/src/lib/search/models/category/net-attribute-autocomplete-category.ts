@@ -1,6 +1,5 @@
 import {NoConfigurationAutocompleteCategory} from './no-configuration-autocomplete-category';
 import {NetAttributePair} from './net-attribute-pair';
-import {CaseProcess} from './case/case-process';
 import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Net} from '../../../process/net';

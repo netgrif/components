@@ -1,6 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {DataGroup} from '../../resources/interface/data-groups';
-import {Observable, ReplaySubject, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject, timer} from 'rxjs';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
@@ -27,6 +27,7 @@ export abstract class TaskContentService implements OnDestroy {
     private static readonly VALIDATE_FRONTEND_ACTION = 'validate';
 
     $shouldCreate: ReplaySubject<DataGroup[]>;
+    $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
 
@@ -35,6 +36,7 @@ export abstract class TaskContentService implements OnDestroy {
                           protected _translate: TranslateService,
                           protected _logger: LoggerService) {
         this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
+        this.$shouldCreateCounter = new BehaviorSubject<number>(0);
         this._task = undefined;
         this._taskDataReloadRequest$ = new Subject<FrontendActions>();
     }

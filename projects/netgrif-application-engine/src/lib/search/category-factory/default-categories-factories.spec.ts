@@ -7,13 +7,13 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
-import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../search-service/search.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 
 describe('Default search categories factory methods', () => {
     let testService: TestService;
@@ -29,10 +29,10 @@ describe('Default search categories factory methods', () => {
                 providers: [
                     TestService,
                     CategoryFactory,
-                    ConfigCaseViewServiceFactory,
+                    CaseViewServiceFactory,
                     {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                     {provide: ConfigurationService, useClass: TestConfigurationService},
-                    {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [ConfigCaseViewServiceFactory]},
+                    {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [CaseViewServiceFactory]},
                     {provide: SearchService, useFactory: TestCaseSearchServiceFactory},
                     {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
                 ]

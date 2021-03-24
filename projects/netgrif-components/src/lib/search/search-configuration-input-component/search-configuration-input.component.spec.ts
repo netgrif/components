@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchConfigurationInputComponent} from './search-configuration-input.component';
 import {Component} from '@angular/core';
 import {SearchComponentModule} from '../search.module';
@@ -6,7 +6,7 @@ import {
     AuthenticationMethodService,
     CaseTitle, CaseViewService,
     Category,
-    CategoryFactory, ConfigCaseViewServiceFactory,
+    CategoryFactory, CaseViewServiceFactory,
     ConfigurationInput,
     ConfigurationService, MockAuthenticationMethodService,
     SearchInputType, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory,
@@ -19,7 +19,7 @@ describe('SearchConfigurationInputComponent', () => {
     let component: SearchConfigurationInputComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,
@@ -35,9 +35,9 @@ describe('SearchConfigurationInputComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

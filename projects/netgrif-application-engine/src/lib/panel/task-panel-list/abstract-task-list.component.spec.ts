@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
@@ -10,10 +10,6 @@ import {AbstractTaskListComponent} from './abstract-task-list.component';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {MaterialModule} from '../../material/material.module';
-import {
-    ArrayTaskViewServiceFactory,
-    noNetsTaskViewServiceFactory
-} from '../../view/task-view/service/factory/array-task-view-service-factory';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
@@ -21,7 +17,7 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
+import {TestTaskSearchServiceFactory, TestTaskViewFactory} from '../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
@@ -29,13 +25,14 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
+import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
 
 
 describe('AbstractTaskListComponent', () => {
     let component: TestTaskListComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MatExpansionModule,
@@ -48,7 +45,7 @@ describe('AbstractTaskListComponent', () => {
             ],
             declarations: [TestTaskListComponent, TestWrapperComponent],
             providers: [
-                ArrayTaskViewServiceFactory,
+                TaskViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -56,8 +53,8 @@ describe('AbstractTaskListComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {
                     provide: TaskViewService,
-                    useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]
+                    useFactory: TestTaskViewFactory,
+                    deps: [TaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyResources},
             ]

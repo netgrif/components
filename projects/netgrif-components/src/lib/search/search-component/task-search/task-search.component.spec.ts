@@ -1,10 +1,10 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskSearchComponent} from './task-search.component';
 import {SearchComponentModule} from '../../search.module';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    ConfigTaskViewServiceFactory,
+    TaskViewServiceFactory,
     ConfigurationService,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -23,7 +23,7 @@ describe('TaskSearchComponent', () => {
     let component: TaskSearchComponent;
     let fixture: ComponentFixture<TaskSearchComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,
@@ -31,7 +31,7 @@ describe('TaskSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
-                ConfigTaskViewServiceFactory,
+                TaskViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
@@ -40,7 +40,7 @@ describe('TaskSearchComponent', () => {
                 {
                     provide: TaskViewService,
                     useFactory: TestTaskViewFactory,
-                    deps: [ConfigTaskViewServiceFactory]
+                    deps: [TaskViewServiceFactory]
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

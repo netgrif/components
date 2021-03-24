@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskListComponent} from './task-list.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
@@ -7,7 +7,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {
-    ArrayTaskViewServiceFactory,
+    TaskViewServiceFactory,
     AssignPolicy,
     AuthenticationMethodService,
     AuthenticationService,
@@ -18,13 +18,13 @@ import {
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    noNetsTaskViewServiceFactory,
     SearchService,
     TaskResourceService,
     TaskViewService,
     TestConfigurationService,
     TestTaskSearchServiceFactory,
-    UserResourceService
+    UserResourceService,
+    TestTaskViewFactory
 } from '@netgrif/application-engine';
 import {RouterTestingModule} from '@angular/router/testing';
 import {PanelComponentModule} from '../panel.module';
@@ -34,7 +34,7 @@ describe('TaskListComponent', () => {
     let component: TaskListComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MatExpansionModule,
@@ -48,7 +48,7 @@ describe('TaskListComponent', () => {
             ],
             declarations: [TestWrapperComponent],
             providers: [
-                ArrayTaskViewServiceFactory,
+                TaskViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -62,8 +62,8 @@ describe('TaskListComponent', () => {
                 },
                 {
                     provide: TaskViewService,
-                    useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]
+                    useFactory: TestTaskViewFactory,
+                    deps: [TaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyResources},
             ]

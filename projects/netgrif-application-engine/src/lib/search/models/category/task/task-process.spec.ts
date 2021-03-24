@@ -11,8 +11,8 @@ describe('TaskProcess', () => {
         operatorService = new OperatorService();
     });
 
-    beforeEach( waitForAsync(() => {
-        category = new TaskProcess(operatorService, null, createMockDependencies());
+    beforeEach( waitForAsync(async () => {
+        category = await new TaskProcess(operatorService, null, createMockDependencies());
     }));
 
     it('should create an instance', () => {

@@ -1,10 +1,10 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchPredicateComponent} from './search-predicate.component';
 import {Component, OnDestroy} from '@angular/core';
 import {
     AuthenticationMethodService,
     CaseViewService,
-    CategoryFactory, ConfigCaseViewServiceFactory, ConfigurationService,
+    CategoryFactory, CaseViewServiceFactory, ConfigurationService,
     defaultCaseSearchCategoriesFactory,
     EditableElementaryPredicate, MaterialModule, MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory, TestConfigurationService, TranslateLibModule
@@ -18,7 +18,7 @@ describe('SearchPredicateComponent', () => {
     let component: SearchPredicateComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,
@@ -37,9 +37,9 @@ describe('SearchPredicateComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

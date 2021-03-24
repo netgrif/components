@@ -8,7 +8,6 @@ import {PetriNetReference} from '../../interface/petri-net-reference';
 import {map} from 'rxjs/operators';
 import {PetriNetRequestBody} from '../../interface/petri-net-request-body';
 import {Page} from '../../interface/page';
-import NetRole from '../../../process/netRole';
 import Transaction from '../../../process/transaction';
 import Transition from '../../../process/transition';
 import {HttpParams} from '@angular/common/http';

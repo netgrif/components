@@ -1,5 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CasePanelComponent} from './case-panel.component';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
@@ -15,7 +14,7 @@ import {
     ConfigurationService,
     CaseViewService,
     TestCaseViewFactory,
-    ConfigCaseViewServiceFactory,
+    CaseViewServiceFactory,
     SearchService,
     TestCaseSearchServiceFactory,
     AuthenticationMethodService,
@@ -26,7 +25,7 @@ describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
@@ -42,9 +41,9 @@ describe('CasePanelComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

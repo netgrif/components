@@ -16,9 +16,9 @@ describe('CaseProcess', () => {
         operatorService = new OperatorService();
     });
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(waitForAsync(async () => {
         allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        category = new CaseProcess(operatorService, null, createMockDependencies(allowedNets$));
+        category = await new CaseProcess(operatorService, null, createMockDependencies(allowedNets$));
     }));
 
     it('should create an instance', () => {

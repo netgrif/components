@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseSearchComponent} from './case-search.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -7,7 +7,7 @@ import {
     AuthenticationService,
     CaseViewService,
     CategoryFactory,
-    ConfigCaseViewServiceFactory,
+    CaseViewServiceFactory,
     ConfigurationService,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -24,7 +24,7 @@ describe('CaseSearchComponent', () => {
     let component: CaseSearchComponent;
     let fixture: ComponentFixture<CaseSearchComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,
@@ -32,7 +32,7 @@ describe('CaseSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 CategoryFactory,
                 {
                     provide: SearchService,
@@ -41,7 +41,7 @@ describe('CaseSearchComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
