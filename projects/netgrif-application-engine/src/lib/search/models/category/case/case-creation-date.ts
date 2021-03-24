@@ -47,7 +47,7 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
         return valueFormControl.value.valueOf();
     }
 
-    protected deserializeOperandValue(value: unknown): moment.Moment {
+    protected deserializeOperandValue(value: string): Moment {
         return moment(value);
     }
 }

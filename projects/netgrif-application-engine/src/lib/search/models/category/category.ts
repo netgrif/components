@@ -549,9 +549,11 @@ export abstract class Category<T> {
     /**
      * @param value the serialized output of the [serializeOperandValue()]{@link Category#serializeOperandValue} method
      * @returns the deserialized value, that can be set as FormControl value
+     *
+     * This method may throw na error if the value cannot be deserialized.
      */
-    protected deserializeOperandValue(value: unknown): T {
-        return value as T;
+    protected deserializeOperandValue(value: unknown): any {
+        return value;
     }
 
     /**

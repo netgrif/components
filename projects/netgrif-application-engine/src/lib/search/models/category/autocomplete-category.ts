@@ -51,7 +51,7 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
     public get options(): Array<SearchAutocompleteOption<Array<T>>> {
         const result = [];
         for (const entry of this._optionsMap.entries()) {
-            result.push({text: entry[0], value: entry[1]});
+            result.push(this.createSearchAutocompleteOption(entry[0], entry[1]));
         }
         return result;
     }
@@ -119,5 +119,24 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
 
     protected serializeOperandValue(valueFormControl: FormControl): unknown {
         return (valueFormControl.value as SearchAutocompleteOption<unknown>).text;
+    }
+
+    /**
+     * @param text the serialized output of the [serializeOperandValue()]{@link Category#serializeOperandValue} method
+     * @returns the deserialized value, that can be set as FormControl value
+     *
+     * This method throws na error if the serialized value is not one of the autocomplete options.
+     */
+    protected deserializeOperandValue(text: string): SearchAutocompleteOption<Array<T>> {
+        const value = this._optionsMap.get(text);
+        if (value === undefined) {
+            throw new Error(`The serialized autocomplete value '${value
+            }' does not map to any autocomplete options and cannot be deserialized!`);
+        }
+        return this.createSearchAutocompleteOption(text, value);
+    }
+
+    protected createSearchAutocompleteOption(text: string, value: Array<T>): SearchAutocompleteOption<Array<T>> {
+        return {text, value};
     }
 }
