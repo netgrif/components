@@ -7,7 +7,6 @@ import {TranslateLibModule} from '../../../../translate/translate-lib.module';
 import {CaseResourceService} from '../../../../resources/engine-endpoint/case-resource.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';
-import {ConfigCaseViewServiceFactory} from '../../service/factory/config-case-view-service-factory';
 import {CaseViewService} from '../../service/case-view-service';
 import {SearchService} from '../../../../search/search-service/search.service';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
@@ -19,9 +18,10 @@ import {AuthenticationMethodService} from '../../../../authentication/services/a
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
+import {CaseViewServiceFactory} from '../../service/factory/case-view-service-factory';
 
-const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('cases');
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.createFromConfig('cases');
 };
 
 const searchServiceFactory = () => {
@@ -44,11 +44,11 @@ describe('AbstractCaseListComponent', () => {
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: CaseViewService,
                     useFactory: localCaseViewServiceFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {
                     provide: SearchService,

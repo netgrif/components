@@ -1,7 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {TaskDataService} from './task-data.service';
 import {TaskRequestStateService} from './task-request-state.service';
-import {TranslateModule} from '@ngx-translate/core';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -16,9 +15,11 @@ import {UnlimitedTaskContentService} from '../../task-content/services/unlimited
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
+    let taskContentService: TaskContentService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -40,10 +41,25 @@ describe('TaskDataService', () => {
             ]
         });
         service = TestBed.inject(TaskDataService);
+        taskContentService = TestBed.inject(TaskContentService);
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    // NAE-1222
+    it('should be destroyed with no task set', () => {
+        expect(service).toBeTruthy();
+        expect(service.ngOnDestroy()).toBeUndefined(); // undefined is the default return value
+    });
+
+    // NAE-1222
+    it('should be destroyed with task set', () => {
+        expect(service).toBeTruthy();
+        expect(taskContentService).toBeTruthy();
+        taskContentService.task = createMockTask();
+        expect(service.ngOnDestroy()).toBeUndefined();
     });
 
     afterEach(() => {

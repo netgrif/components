@@ -20,11 +20,12 @@
                   [fxHide.lt-sm]="i >= 0 && responsiveBody">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="task-panel-icon panel-primary-icon"
-                              *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
+                              *ngIf="!!field.icon && !!field.value && field.type !== 'button'">{{field.icon}}</mat-icon>
+                    <button *ngIf="field.type === 'button'" mat-flat-button color="primary">{{field.value}}</button>
                     <span [ngClass]="{
                                  'text-column-ellipsis': textEllipsis,
                                  'text-column-word-wrap': !textEllipsis
-                              }">{{field.value}}</span>
+                              }">{{field.type === 'button' ? '' : field.value }}</span>
                 </span>
             </div>
         </div>
