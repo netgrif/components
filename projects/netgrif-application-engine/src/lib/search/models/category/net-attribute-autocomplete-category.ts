@@ -7,7 +7,7 @@ import {NameIdPair} from './name-id-pair';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {Category} from './category';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
 
@@ -18,6 +18,8 @@ import {OptionalDependencies} from '../../category-factory/optional-dependencies
  */
 export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAutocompleteCategory<NetAttributePair> {
 
+    private _allowedNetsSub: Subscription;
+
     protected constructor(elasticKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
@@ -27,8 +29,16 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
         super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
     }
 
+    destroy() {
+        super.destroy();
+        if (!this._allowedNetsSub.closed) {
+            this._allowedNetsSub.unsubscribe();
+        }
+    }
+
     protected createOptions(): void {
-        this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+        this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+            this._optionsMap.clear();
             allowedNets.forEach(petriNet => {
                 this.extractAttributes(petriNet)
                     .filter(pair => pair.name && pair.name.trim().length > 0)
@@ -39,6 +49,7 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
                         });
                     });
             });
+            this.updateOptions();
         });
     }
 

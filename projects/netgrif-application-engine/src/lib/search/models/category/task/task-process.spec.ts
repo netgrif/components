@@ -33,4 +33,8 @@ describe('TaskProcess', () => {
         expect(predicate.query.isEmpty).toBeFalse();
         expect(predicate.query.value).toContain('OR');
     });
+
+    afterEach(() => {
+        category.destroy();
+    });
 });

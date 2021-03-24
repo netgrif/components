@@ -2,7 +2,7 @@ import {CaseProcess} from './case-process';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
 import {waitForAsync} from '@angular/core/testing';
-import {of, ReplaySubject} from 'rxjs';
+import {ReplaySubject, Subject} from 'rxjs';
 import {Net} from '../../../../process/net';
 import {createMockNet} from '../../../../utility/tests/utility/create-mock-net';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
@@ -10,6 +10,7 @@ import {configureCategory} from '../../../../utility/tests/utility/configure-cat
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
+import {filter} from 'rxjs/operators';
 
 describe('CaseProcess', () => {
     let operatorService: OperatorService;
@@ -130,7 +131,42 @@ describe('CaseProcess', () => {
         expect(deserializedMetadata.values).toEqual(metadata.values);
     });
 
+    it('should filter options on input change and on nets change', (done) => {
+        allowedNets$.next([
+            createMockNet('', 'AA', 'AA'),
+            createMockNet('', 'BB', 'BB'),
+        ]);
+        const userInput$ = new Subject<string>();
+        let attempt = 0;
+        category.filterOptions(userInput$.asObservable()).pipe(filter(o => o.length > 0)).subscribe(options => {
+            switch (attempt) {
+                case 0: // no input
+                    expect(Array.isArray(options)).toBeTrue();
+                    expect(options.length).toBe(2);
+                    userInput$.next('A');
+                    break;
+                case 1: // 'A'
+                    expect(Array.isArray(options)).toBeTrue();
+                    expect(options.length).toBe(1);
+                    allowedNets$.next([
+                        createMockNet('', 'AA', 'AA'),
+                        createMockNet('', 'BB', 'BB'),
+                        createMockNet('', 'AB', 'AB'),
+                    ]);
+                    break;
+                case 2: // 'A' new nets
+                    expect(Array.isArray(options)).toBeTrue();
+                    expect(options.length).toBe(2);
+                    userInput$.complete();
+                    done();
+                    break;
+            }
+            attempt++;
+        });
+    });
+
     afterEach(() => {
         allowedNets$.complete();
+        category.destroy();
     });
 });

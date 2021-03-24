@@ -51,4 +51,8 @@ describe('CaseTitle', () => {
         expect(deserializedMetadata.category).toEqual(metadata.category);
         expect(deserializedMetadata.values).toEqual(metadata.values);
     });
+
+    afterEach(() => {
+        category.destroy();
+    });
 });

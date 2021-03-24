@@ -7,12 +7,14 @@ import {OptionalDependencies} from '../../../category-factory/optional-dependenc
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
+import {Subscription} from 'rxjs';
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.case.process';
 
     protected _uniqueOptionsMap: Map<string, Set<string>>;
+    private _allowedNetsSub: Subscription;
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processIdentifier'],
@@ -23,13 +25,22 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
         this._uniqueOptionsMap = new Map<string, Set<string>>();
     }
 
+    destroy() {
+        super.destroy();
+        if (!this._allowedNetsSub.closed) {
+            this._allowedNetsSub.unsubscribe();
+        }
+    }
+
     protected createOptions(): void {
-        this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+        this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+            this._optionsMap.clear();
             allowedNets.forEach(petriNet => {
                 if (this.isUniqueOption(petriNet.title, petriNet.identifier)) {
                     this.addToMap(petriNet.title, petriNet.identifier);
                 }
             });
+            this.updateOptions();
         });
     }
 

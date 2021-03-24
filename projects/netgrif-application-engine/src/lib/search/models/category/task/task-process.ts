@@ -7,10 +7,13 @@ import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
+import {Subscription} from 'rxjs';
 
 export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.task.process';
+
+    private _allowedNetsSub: Subscription;
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
@@ -20,11 +23,20 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
             operators);
     }
 
+    destroy() {
+        super.destroy();
+        if (!this._allowedNetsSub.closed) {
+            this._allowedNetsSub.unsubscribe();
+        }
+    }
+
     protected createOptions(): void {
-        this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+        this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+            this._optionsMap.clear();
             allowedNets.forEach(petriNet => {
                 this.addToMap(petriNet.title, petriNet.stringId);
             });
+            this.updateOptions();
         });
     }
 

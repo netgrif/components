@@ -3,7 +3,7 @@ import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SearchInputType} from './search-input-type';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AutocompleteOptions} from './autocomplete-options';
 import {FormControl} from '@angular/forms';
@@ -27,6 +27,8 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
      */
     protected _optionsMap: Map<string, Array<T>>;
 
+    protected _options$: BehaviorSubject<Array<SearchAutocompleteOption<Array<T>>>>;
+
     protected constructor(elasticKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
@@ -34,6 +36,7 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
                           operatorService: OperatorService) {
         super(elasticKeywords, allowedOperators, translationPath, SearchInputType.AUTOCOMPLETE, log, operatorService);
         this._optionsMap = new Map<string, Array<T>>();
+        this._options$ = new BehaviorSubject<Array<SearchAutocompleteOption<Array<T>>>>([]);
         // timeout is used to bypass javascript object initialization bugs.
         // Injected properties of inherited classes were not set in the function call.
         setTimeout(() => {
@@ -41,19 +44,45 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
         });
     }
 
+    destroy() {
+        super.destroy();
+        this._options$.complete();
+    }
+
     /**
      * Options the user can select from for this search Category.
+     */
+    public get options(): Array<SearchAutocompleteOption<Array<T>>> {
+        return this._options$.value;
+    }
+
+    /**
+     * An Observable of the options the user can select from for this search Category.
+     *
+     * The Observable is updated when the base set of options changes, not when the available options are
+     * filtered, see [filterOptions()]{@link AutocompleteCategory#filterOptions}.
+     *
+     * The Observable initially contains an empty array and the options may appear at a later point in time
+     * (based on the concrete AutocompleteCategory subclass implementation)
+     */
+    public get options$(): Observable<Array<SearchAutocompleteOption<Array<T>>>> {
+        return this._options$.asObservable();
+    }
+
+    /**
+     * Publishes a new value in the [_options$]{@link AutocompleteCategory#_options$} Subject generated from the
+     * [_optionsMap]{@link AutocompleteCategory#_optionsMap}.
      *
      * The default implementation iterates trough the [_optionsMap]{@link AutocompleteCategory#_optionsMap} and
      * creates options with the keys as [text]{@link SearchAutocompleteOption#text}
      * and values as [value]{@link SearchAutocompleteOption#value}.
      */
-    public get options(): Array<SearchAutocompleteOption<Array<T>>> {
+    protected updateOptions(): void {
         const result = [];
         for (const entry of this._optionsMap.entries()) {
             result.push(this.createSearchAutocompleteOption(entry[0], entry[1]));
         }
-        return result;
+        this._options$.next(result);
     }
 
     /**
@@ -67,22 +96,22 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
      * The function that is used to filter shown options in the autocomplete field.
      *
      * By default the options that start with the input string are returned (case insensitive).
+     *
+     * By default a new value is emitted, whenever either the user input or the base set of options changes.
      * @param userInput user search input
      * @returns options that satisfy the autocomplete condition
      */
     public filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<T>>>):
         Observable<Array<SearchAutocompleteOption<Array<T>>>> {
-
-        return userInput.pipe(
-            startWith(''),
-            map(input => {
-                let value;
-                if (typeof input === 'string') {
-                    value = input.toLocaleLowerCase();
-                } else {
-                    value = input.text;
-                }
-                return this.options.filter(option => option.text.toLocaleLowerCase().startsWith(value));
+        return combineLatest([
+            userInput.pipe(
+                startWith(''),
+                map(input => typeof input === 'string' ? input.toLocaleLowerCase() : input.text)
+            ),
+            this.options$
+        ]).pipe(
+            map(([input, options]) => {
+                return options.filter(o => o.text.toLocaleLowerCase().startsWith(input));
             })
         );
     }
