@@ -6,6 +6,7 @@ import {addViewToViewService} from '../../../_utility/view-service-functions';
 import {SidenavPromptOptions} from '../../models/sidenav-prompt-options';
 import {addViewToNaeJson} from '../../../_utility/add-view-to-nae-json';
 import {ViewClassInfo} from '../../../../_commons/view-class-info';
+import {ImportToAdd} from '../../../../_commons/import-to-add';
 
 
 export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPromptOptions): Rule {
@@ -38,7 +39,10 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
             viewIdSegment: getViewIdSegmentFromPath(sidenavOptions.createViewArguments.path)
         }));
-    updateAppModule(tree, view.className, view.fileImportPath, []);
+    updateAppModule(tree, view.className, view.fileImportPath, [
+        new ImportToAdd('ToolbarComponentModule', '@netgrif/components'),
+        new ImportToAdd('NavigationComponentModule', '@netgrif/components')
+    ]);
 
     if (sidenavOptions.addViewToService) {
         addViewToViewService(tree, view);

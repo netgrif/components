@@ -96,6 +96,7 @@ export class DelegateTaskService extends TaskHandlingService {
                         this._snackBar.openErrorSnackBar(eventOutcome.error);
                         this.sendNotification(false);
                         afterAction.next(false);
+                        afterAction.complete();
                     }
                 }, error => {
                     this._taskState.stopLoading(delegatedTaskId);
@@ -110,6 +111,7 @@ export class DelegateTaskService extends TaskHandlingService {
                      ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
                     this.sendNotification(false);
                     afterAction.next(false);
+                    afterAction.complete();
                 });
             }
         });
@@ -123,6 +125,7 @@ export class DelegateTaskService extends TaskHandlingService {
         this._taskOperations.reload();
         this.sendNotification(true);
         afterAction.next(true);
+        afterAction.complete();
     }
 
     /**

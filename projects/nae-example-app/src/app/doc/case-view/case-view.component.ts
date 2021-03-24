@@ -5,15 +5,15 @@ import {
     CaseViewService,
     SearchService,
     SimpleFilter,
-    AllNetsCaseViewServiceFactory,
     OverflowService,
+    CaseViewServiceFactory,
     NAE_VIEW_ID_SEGMENT,
     ViewIdService, CategoryFactory, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => {
-    return factory.create();
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.createWithAllNets();
 };
 
 const searchServiceFactory = () => {
@@ -26,13 +26,13 @@ const searchServiceFactory = () => {
     styleUrls: ['./case-view.component.scss'],
     providers: [
         CategoryFactory,
-        AllNetsCaseViewServiceFactory,
+        CaseViewServiceFactory,
         OverflowService,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
-            deps: [AllNetsCaseViewServiceFactory]},
+            deps: [CaseViewServiceFactory]},
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'case'},
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
