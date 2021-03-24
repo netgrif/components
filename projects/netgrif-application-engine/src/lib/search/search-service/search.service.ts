@@ -224,8 +224,11 @@ export class SearchService implements OnDestroy {
      * Clears the full text filter (if set). If the full text filter is not set, does nothing.
      */
     public clearFullTextFilter(): void {
+        const wasFulltextSet = this._fullTextFilter !== undefined;
         this._fullTextFilter = undefined;
-        this.updateActiveFilter();
+        if (wasFulltextSet) {
+            this.updateActiveFilter();
+        }
     }
 
     /**
