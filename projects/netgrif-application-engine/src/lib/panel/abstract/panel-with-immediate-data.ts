@@ -14,27 +14,34 @@ export abstract class PanelWithImmediateData extends PanelWithHeaderBinding impl
     }
 
     protected parseImmediateValue(immediate) {
-        if (immediate && immediate.value !== undefined) {
+        if (immediate && immediate.value !== undefined || immediate && immediate.type === 'button') {
             switch (immediate.type) {
                 case 'date':
-                    return {value: toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING), icon: 'event'};
+                    return {value: toMoment(immediate.value as NaeDate).format(DATE_FORMAT_STRING), icon: 'event', type: immediate.type};
                 case 'dateTime':
-                    return {value: toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING), icon: 'event'};
+                    return {value: toMoment(immediate.value as NaeDate).format(DATE_TIME_FORMAT_STRING),
+                        icon: 'event', type: immediate.type};
                 case 'enumeration':
-                    return {value: immediate.value.defaultValue, icon: undefined};
+                    return {value: immediate.value.defaultValue, icon: undefined, type: immediate.type};
                 case 'multichoice':
-                    return {value: immediate.value.map(it => it.defaultValue).join(', '), icon: undefined};
+                    return {value: immediate.value.map(it => it.defaultValue).join(', '), icon: undefined, type: immediate.type};
                 case 'file':
-                    return {value: immediate.value, icon: 'insert_drive_file'};
+                    return {value: immediate.value, icon: 'insert_drive_file', type: immediate.type};
                 case 'user':
-                    return {value: immediate.value.fullName, icon: 'account_circle'};
+                    return {value: immediate.value.fullName, icon: 'account_circle', type: immediate.type};
                 case 'boolean':
-                    return {value: this._translate.instant('dataField.values.boolean.' + immediate.value), icon: undefined};
+                    return {value: this._translate.instant('dataField.values.boolean.' + immediate.value),
+                        icon: undefined, type: immediate.type};
+                case 'button':
+                    return {value: immediate.placeholder && immediate.placeholder.defaultValue !== undefined
+                            ? immediate.placeholder.defaultValue : (immediate.name && immediate.name.defaultValue !== undefined
+                                ? immediate.name.defaultValue : this._translate.instant('dialog.submit')),
+                        icon: undefined, type: immediate.type};
                 default:
-                    return {value: immediate.value, icon: undefined};
+                    return {value: immediate.value, icon: undefined, type: immediate.type};
             }
         } else {
-            return {value: '', icon: ''};
+            return {value: '', icon: '', type: ''};
         }
     }
 }

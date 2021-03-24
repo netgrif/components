@@ -1,4 +1,4 @@
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {HeaderState, HeaderStateInterface} from './header-state';
 import {OnDestroy, Optional} from '@angular/core';
@@ -23,6 +23,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
     public static readonly DEFAULT_HEADER_RESPONSIVITY = true;
 
     protected _headerColumnCount$: BehaviorSubject<number>;
+    protected _preferenceColumnCount$: ReplaySubject<number>;
     protected _responsiveHeaders$: BehaviorSubject<boolean>;
     protected _headerState: HeaderState;
     protected _headerChange$: Subject<HeaderChange>;
@@ -41,6 +42,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this.fieldsGroup = [{groupTitle: 'Meta data', fields: this.createMetaHeaders()}];
         this._headerColumnCount$ = new BehaviorSubject<number>(AbstractHeaderService.DEFAULT_HEADER_COUNT);
         this._responsiveHeaders$ = new BehaviorSubject<boolean>(AbstractHeaderService.DEFAULT_HEADER_RESPONSIVITY);
+        this._preferenceColumnCount$ = new ReplaySubject<number>();
         this._clearHeaderSearch$ = new Subject<number>();
 
         if (this._viewIdService === null) {
@@ -107,6 +109,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     get initDefaultHeaders(): Array<string> {
         return this._initDefaultHeaders;
+    }
+
+    get preferenceColumnCount$(): Observable<number> {
+        return this._preferenceColumnCount$.asObservable();
     }
 
     private initializeHeaderState(): void {
@@ -247,6 +253,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
             this._logger.warn(
                 `Could not restore header with ID '${headerKey}' from preferences. It is not one of the available headers for this view.`);
         });
+        this._preferenceColumnCount$.next(newHeaders.length);
         this._headerState.updateSelectedHeaders(newHeaders);
     }
 
@@ -378,6 +385,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._headerColumnCount$.complete();
         this._responsiveHeaders$.complete();
         this.loading.complete();
+        this._preferenceColumnCount$.complete();
     }
 
     /**

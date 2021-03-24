@@ -22,6 +22,7 @@ import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
+import {ReplaySubjectQueue} from '../models/queue';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {SortableView} from '../../abstract/sortable-view';
 import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
@@ -39,13 +40,15 @@ export class TaskViewService extends SortableView implements OnDestroy {
     protected _pagination: Pagination;
     protected _initiallyOpenOneTask: boolean;
     protected _closeTaskTabOnNoTasks: boolean;
-
-    // Kovy fix
     protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
     protected _closeTab$: ReplaySubject<void>;
     protected _subInitiallyOpen: Subscription;
     protected _subCloseTask: Subscription;
     protected _subSearch: Subscription;
+
+    // Serializing assign after cancel
+    protected _allowMultiOpen: boolean;
+    protected _assignCancelQueue: ReplaySubjectQueue;
 
     private readonly _initializing: boolean = true;
 
@@ -60,9 +63,11 @@ export class TaskViewService extends SortableView implements OnDestroy {
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
                 @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
         super(resolver);
+        this._assignCancelQueue = new ReplaySubjectQueue();
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
+        this._allowMultiOpen = true;
         this._endOfData = false;
         this._pagination = {
             size: 50,
@@ -184,6 +189,27 @@ export class TaskViewService extends SortableView implements OnDestroy {
 
     protected get activeFilter(): Filter {
         return this._searchService.activeFilter;
+    }
+
+    public set allowMultiOpen(bool: boolean) {
+        this._allowMultiOpen = bool;
+    }
+
+    public get allowMultiOpen(): boolean {
+        return this._allowMultiOpen;
+    }
+
+    public addToQueue(obs: ReplaySubject<boolean>): void {
+        this._assignCancelQueue.push(obs);
+    }
+
+    public isEmptyQueue(): boolean {
+        this._assignCancelQueue.removeCompleted();
+        return this._assignCancelQueue.isEmpty();
+    }
+
+    public popQueue(): Observable<boolean> {
+        return this._assignCancelQueue.pop().asObservable();
     }
 
     public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {

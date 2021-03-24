@@ -6,8 +6,8 @@ import {of} from 'rxjs';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 
 describe('CaseTask', () => {
-    it('should create an instance', waitForAsync(() => {
+    it('should create an instance', waitForAsync(async () => {
         const opService = new OperatorService(new OperatorResolverService());
-        expect(new CaseTask(opService, null, createMockDependencies(of([])))).toBeTruthy();
+        expect(await new CaseTask(opService, null, createMockDependencies(of([])))).toBeTruthy();
     }));
 });

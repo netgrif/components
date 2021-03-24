@@ -13,8 +13,8 @@ describe('TaskProcess', () => {
         operatorService = new OperatorService(new OperatorResolverService());
     });
 
-    beforeEach( waitForAsync(() => {
-        category = new TaskProcess(operatorService, null, createMockDependencies(of([])));
+    beforeEach( waitForAsync(async () => {
+        category = await new TaskProcess(operatorService, null, createMockDependencies(of([])));
     }));
 
     it('should create an instance', () => {
