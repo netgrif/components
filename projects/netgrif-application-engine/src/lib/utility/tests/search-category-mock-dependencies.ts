@@ -12,7 +12,7 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 const opResolver = new OperatorResolverService();
 const opService = new OperatorService(opResolver);
 
-export const createMockDependencies: (allowedNets$: Observable<Array<Net>>, operatorService?: OperatorService) => OptionalDependencies =
+export const createMockDependencies: (allowedNets$?: Observable<Array<Net>>, operatorService?: OperatorService) => OptionalDependencies =
     (allowedNets$: Observable<Array<Net>> = of([]), operatorService?: OperatorService) => {
         const mockUserResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService;
         const searchIndexResolver = new SearchIndexResolverService();

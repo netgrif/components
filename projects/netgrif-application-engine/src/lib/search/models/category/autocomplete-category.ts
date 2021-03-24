@@ -159,7 +159,7 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
     protected deserializeOperandValue(text: string): SearchAutocompleteOption<Array<T>> {
         const value = this._optionsMap.get(text);
         if (value === undefined) {
-            throw new Error(`The serialized autocomplete value '${value
+            throw new Error(`The serialized autocomplete value '${text
             }' does not map to any autocomplete options and cannot be deserialized!`);
         }
         return this.createSearchAutocompleteOption(text, value);

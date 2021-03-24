@@ -10,7 +10,7 @@ import {configureCategory} from '../../../../utility/tests/utility/configure-cat
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
-import {filter} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 
 describe('CaseProcess', () => {
     let operatorService: OperatorService;
@@ -102,7 +102,7 @@ describe('CaseProcess', () => {
         expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
     });
 
-    it('should deserialize stored instance', () => {
+    it('should deserialize stored instance', (done) => {
         allowedNets$.next([
             createMockNet('', 'A', 'A'),
             createMockNet('', 'B', 'A'),
@@ -118,50 +118,22 @@ describe('CaseProcess', () => {
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
         const deserialized = new CaseProcess(operatorService, null, createMockDependencies(allowedNets$, operatorService));
-        deserialized.loadFromMetadata(metadata);
-        expect(deserialized.isOperatorSelected()).toBeTrue();
-        expect(deserialized.providesPredicate).toBeTrue();
 
-        expect((category as any)._operandsFormControls[0].value).toEqual((deserialized as any)._operandsFormControls[0].value);
+        // wait for autocomplete options to initialize
+        deserialized.options$.pipe(filter(o => o.length > 0), take(1)).subscribe(() => {
+            deserialized.loadFromMetadata(metadata);
+            expect(deserialized.isOperatorSelected()).toBeTrue();
+            expect(deserialized.providesPredicate).toBeTrue();
 
-        const deserializedMetadata = deserialized.createMetadata();
-        expect(deserializedMetadata).toBeTruthy();
-        expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-        expect(deserializedMetadata.category).toEqual(metadata.category);
-        expect(deserializedMetadata.values).toEqual(metadata.values);
-    });
+            expect((category as any)._operandsFormControls[0].value).toEqual((deserialized as any)._operandsFormControls[0].value);
 
-    it('should filter options on input change and on nets change', (done) => {
-        allowedNets$.next([
-            createMockNet('', 'AA', 'AA'),
-            createMockNet('', 'BB', 'BB'),
-        ]);
-        const userInput$ = new Subject<string>();
-        let attempt = 0;
-        category.filterOptions(userInput$.asObservable()).pipe(filter(o => o.length > 0)).subscribe(options => {
-            switch (attempt) {
-                case 0: // no input
-                    expect(Array.isArray(options)).toBeTrue();
-                    expect(options.length).toBe(2);
-                    userInput$.next('A');
-                    break;
-                case 1: // 'A'
-                    expect(Array.isArray(options)).toBeTrue();
-                    expect(options.length).toBe(1);
-                    allowedNets$.next([
-                        createMockNet('', 'AA', 'AA'),
-                        createMockNet('', 'BB', 'BB'),
-                        createMockNet('', 'AB', 'AB'),
-                    ]);
-                    break;
-                case 2: // 'A' new nets
-                    expect(Array.isArray(options)).toBeTrue();
-                    expect(options.length).toBe(2);
-                    userInput$.complete();
-                    done();
-                    break;
-            }
-            attempt++;
+            const deserializedMetadata = deserialized.createMetadata();
+            expect(deserializedMetadata).toBeTruthy();
+            expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
+            expect(deserializedMetadata.category).toEqual(metadata.category);
+            expect(deserializedMetadata.values).toEqual(metadata.values);
+
+            done();
         });
     });
 
