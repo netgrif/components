@@ -1,8 +1,8 @@
 <nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
               (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" class="panel-header-padding">
-            <div fxFlex class="text-column-div">
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" >
+            <div fxFlex class="text-column-div" [ngClass]="{'panel-header-padding': !textEllipsis}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="task-panel-icon panel-primary-icon">
                         {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
@@ -17,7 +17,8 @@
                   [fxHide.lt-xl]="i >= 3 && responsiveBody"
                   [fxHide.lt-lg]="i >= 2 && responsiveBody"
                   [fxHide.lt-md]="i >= 1 && responsiveBody"
-                  [fxHide.lt-sm]="i >= 0 && responsiveBody">
+                  [fxHide.lt-sm]="i >= 0 && responsiveBody"
+                    [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="task-panel-icon panel-primary-icon"
                               *ngIf="!!field.icon && !!field.value && field.type !== 'button'">{{field.icon}}</mat-icon>
