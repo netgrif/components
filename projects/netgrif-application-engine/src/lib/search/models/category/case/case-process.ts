@@ -11,23 +11,51 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.case.process';
 
+    protected _uniqueOptionsMap: Map<string, Set<string>>;
+
     constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
-        super(['processId'],
+        super(['processIdentifier'],
             [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
             logger);
+        this._uniqueOptionsMap = new Map<string, Set<string>>();
     }
 
     protected createOptions(): void {
         this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
-                this.addToMap(petriNet.title, petriNet.stringId);
+                if (this.isUniqueOption(petriNet.title, petriNet.identifier)) {
+                    this.addToMap(petriNet.title, petriNet.identifier);
+                }
             });
         });
     }
 
+    /**
+     * Checks whether the provided option is unique and updates the list of unique options with it.
+     * @param key autocomplete option key
+     * @param value autocomplete option value
+     * @returns `true` if the option has not yet been checked as unique. `false` if the option has been checked before.
+     */
+    protected isUniqueOption(key: string, value: string): boolean {
+        if (!this._uniqueOptionsMap.has(key)) {
+            this._uniqueOptionsMap.set(key, new Set<string>([value]));
+            return true;
+        }
+        if (this._uniqueOptionsMap.get(key).has(value)) {
+            return false;
+        } else {
+            this._uniqueOptionsMap.get(key).add(value);
+            return true;
+        }
+    }
+
     protected generateQuery(userInput: Array<Array<string>>): Query {
-        const queries = userInput.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
+        if (this.selectedOperator.numberOfOperands !== 1) {
+            throw new Error('Only unary operators are currently supported by the CaseProcess implementation');
+        }
+        const operand = userInput[0];
+        const queries = operand.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 

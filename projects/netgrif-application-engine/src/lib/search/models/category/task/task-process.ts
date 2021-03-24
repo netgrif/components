@@ -27,7 +27,11 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
     }
 
     protected generateQuery(userInput: Array<Array<string>>): Query {
-        const queries = userInput.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
+        if (this.selectedOperator.numberOfOperands !== 1) {
+            throw new Error('Only unary operators are currently supported by the TaskProcess implementation');
+        }
+        const operand = userInput[0];
+        const queries = operand.map(id => this.selectedOperator.createQuery(this.elasticKeywords, [id]));
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
