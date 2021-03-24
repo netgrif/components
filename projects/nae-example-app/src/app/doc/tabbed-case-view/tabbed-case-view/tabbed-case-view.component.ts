@@ -1,22 +1,33 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
+    AllNetsCaseViewServiceFactory,
     CaseViewService,
+    CategoryFactory,
+    defaultCaseSearchCategoriesFactory,
+    FilterType,
     InjectedTabbedCaseViewData,
     LoggerService,
+    NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SearchService,
     SimpleFilter,
     TabbedCaseView,
-    AllNetsCaseViewServiceFactory, ViewIdService, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory, CategoryFactory
+    ViewIdService,
+    Filter
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
+import {Subject} from 'rxjs';
 
 const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => {
     return factory.create();
 };
 
 const searchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyCaseFilter());
+    const filter = new Subject<Filter>();
+    setTimeout(() => {
+        filter.next(SimpleFilter.emptyCaseFilter());
+    }, 1000);
+    return new SearchService(filter.asObservable(), FilterType.CASE);
 };
 
 @Component({
