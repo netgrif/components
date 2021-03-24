@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    AllNetsCaseViewServiceFactory,
     CaseViewService,
     CategoryFactory,
     defaultCaseSearchCategoriesFactory,
@@ -12,14 +11,15 @@ import {
     SearchService,
     SimpleFilter,
     TabbedCaseView,
+    CaseViewServiceFactory,
     ViewIdService,
     Filter
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
 
-const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => {
-    return factory.create();
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.createWithAllNets();
 };
 
 const searchServiceFactory = () => {
@@ -36,12 +36,12 @@ const searchServiceFactory = () => {
     styleUrls: ['./tabbed-case-view.component.scss'],
     providers: [
         CategoryFactory,
-        AllNetsCaseViewServiceFactory,
+        CaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
-            deps: [AllNetsCaseViewServiceFactory]},
+            deps: [CaseViewServiceFactory]},
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ]

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseViewService,
     CategoryFactory,
-    ArrayCaseViewServiceFactory,
+    CaseViewServiceFactory,
     defaultCaseSearchCategoriesFactory,
     InjectedTabbedCaseViewData,
     LoggerService,
@@ -15,8 +15,8 @@ import {
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const localCaseViewServiceFactory = (factory: ArrayCaseViewServiceFactory) => {
-    return factory.create([]);
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.createFromArray([]);
 };
 
 const searchServiceFactory = () => {
@@ -29,12 +29,12 @@ const searchServiceFactory = () => {
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         CategoryFactory,
-        ArrayCaseViewServiceFactory,
+        CaseViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: CaseViewService,
             useFactory: localCaseViewServiceFactory,
-            deps: [ArrayCaseViewServiceFactory]},
+            deps: [CaseViewServiceFactory]},
         ViewIdService,
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
