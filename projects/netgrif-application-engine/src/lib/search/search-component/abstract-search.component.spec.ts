@@ -28,7 +28,6 @@ import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-metho
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
     let fixture: ComponentFixture<TestSearchComponent>;
-    let searchService: SearchService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -60,7 +59,6 @@ describe('AbstractSearchComponent', () => {
         fixture = TestBed.createComponent(TestSearchComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        searchService = TestBed.inject(SearchService);
     });
 
     it('should create', () => {
@@ -71,20 +69,6 @@ describe('AbstractSearchComponent', () => {
         expect(component.showSearchToggleButton).toBeTrue();
         expect(component.showSearchIcon).toBeFalse();
     });
-
-    // NAE-1243
-    it('should set and clear fulltext search', fakeAsync(() => {
-        const fc = component.fullTextFormControl;
-        expect(fc).toBeTruthy();
-        const spySet = spyOn(searchService, 'setFullTextFilter');
-        const spyClear = spyOn(searchService, 'clearFullTextFilter');
-        fc.setValue('hello world');
-        tick(600);
-        expect(spySet).toHaveBeenCalled();
-        fc.setValue('');
-        tick(600);
-        expect(spyClear).toHaveBeenCalled();
-    }));
 
     afterEach(() => {
         TestBed.resetTestingModule();

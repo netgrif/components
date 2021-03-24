@@ -1,5 +1,5 @@
 import {FormControl} from '@angular/forms';
-import {debounceTime, filter} from 'rxjs/operators';
+import {debounceTime, filter, map} from 'rxjs/operators';
 import {SearchService} from '../search-service/search.service';
 
 export class AbstractFulltextSearchComponent {
@@ -11,9 +11,14 @@ export class AbstractFulltextSearchComponent {
 
         this.fullTextFormControl.valueChanges.pipe(
             debounceTime(600),
-            filter(newValue => !!newValue)
-        ).subscribe(fulltext => {
-            this._searchService.setFullTextFilter(fulltext);
+            filter(newValue => typeof newValue === 'string'),
+            map((newValue: string) => newValue.trim())
+        ).subscribe((fulltext: string) => {
+            if (fulltext.length === 0) {
+                this._searchService.clearFullTextFilter();
+            } else {
+                this._searchService.setFullTextFilter(fulltext);
+            }
         });
     }
 
