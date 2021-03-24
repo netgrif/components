@@ -137,6 +137,17 @@ export abstract class Category<T> {
     }
 
     /**
+     * Cleans up the internal state of the object before its destruction.
+     *
+     * The developer must call this method at an appropriate moment, as this object cannot hook into the Angular lifecycle.
+     */
+    public destroy(): void {
+        this._operandsFormControls$.complete();
+        this._operatorTemplate$.complete();
+        this._generatedPredicate$.complete();
+    }
+
+    /**
      * Configuration input represent the steps that are necessary to configure the category.
      * The last input must always be of type [OPERATOR]{@link SearchInputType#OPERATOR}.
      * Selecting the operator completes the configuration of the category and the arguments inputs

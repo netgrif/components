@@ -115,6 +115,7 @@ describe('CaseProcess', () => {
         configureCategory(category, operatorService, Equals, [option]);
 
         const metadata = category.createMetadata();
+        expect(metadata).toBeTruthy();
         const deserialized = new CaseProcess(operatorService, null, createMockDependencies(allowedNets$, operatorService));
         deserialized.loadFromMetadata(metadata);
         expect(deserialized.isOperatorSelected()).toBeTrue();

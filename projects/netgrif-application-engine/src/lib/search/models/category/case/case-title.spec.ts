@@ -37,6 +37,7 @@ describe('CaseTitle', () => {
         configureCategory(category, operatorService, Equals, ['foo']);
 
         const metadata = category.createMetadata();
+        expect(metadata).toBeTruthy();
         const deserialized = new CaseTitle(operatorService, null);
         deserialized.loadFromMetadata(metadata);
         expect(deserialized.isOperatorSelected()).toBeTrue();

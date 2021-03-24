@@ -38,6 +38,7 @@ describe('CaseCreationDate', () => {
         configureCategory(category, operatorService, EqualsDate, [moment('2021-03-23')]);
 
         const metadata = category.createMetadata();
+        expect(metadata).toBeTruthy();
         const deserialized = new CaseCreationDate(operatorService, null);
         deserialized.loadFromMetadata(metadata);
         expect(deserialized.isOperatorSelected()).toBeTrue();

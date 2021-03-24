@@ -66,6 +66,11 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
         if (this._predicateChange && !this._predicateChange.closed) {
             this._predicateChange.unsubscribe();
         }
+        this._searchCategories.forEach(cat => {
+            if (cat !== this.generator) {
+                cat.destroy();
+            }
+        });
     }
 
     public get searchCategories(): Array<Category<any>> {

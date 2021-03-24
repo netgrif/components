@@ -17,11 +17,15 @@ import {TaskTask} from '../models/category/task/task-task';
  *
  * Depends on {@link CategoryFactory}.
  *
+ * The created categories cannot be used to generate any predicates, as their inner state is preemptively destroyed to avoid memory leaks
+ * caused by uncompleted Subjects. They should only be used to create new Category instances with the help of the
+ * [duplicate()]{@link Category#duplicate} method.
+ *
  * @returns an Array containing the default case search categories: {@link CaseDataset}, {@link CaseTitle}, {@link CaseCreationDate},
  * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor} and {@link CaseVisualId}
  */
 export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
-    return [
+    const cats = [
         factory.get(CaseDataset),
         factory.get(CaseTitle),
         factory.get(CaseCreationDate),
@@ -30,6 +34,8 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
         factory.get(CaseAuthor),
         factory.get(CaseVisualId),
     ];
+    cats.forEach(cat => cat.destroy());
+    return cats;
 }
 
 /**
@@ -37,14 +43,20 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
  *
  * Depends on {@link CategoryFactory}.
  *
+ * The created categories cannot be used to generate any predicates, as their inner state is preemptively destroyed to avoid memory leaks
+ * caused by uncompleted Subjects. They should only be used to create new Category instances with the help of the
+ * [duplicate()]{@link Category#duplicate} method.
+ *
  * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask}, {@link TaskProcess}
  * and {@link TaskRole}
  */
 export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
-    return [
+    const cats = [
         factory.get(TaskAssignee),
         factory.get(TaskTask),
         factory.get(TaskProcess),
         factory.get(TaskRole),
     ];
+    cats.forEach(cat => cat.destroy());
+    return cats;
 }
