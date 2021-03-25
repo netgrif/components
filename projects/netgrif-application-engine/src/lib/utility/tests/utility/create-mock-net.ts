@@ -1,4 +1,13 @@
 import {Net} from '../../../process/net';
+import NetRole from '../../../process/netRole';
+
+/**
+ * A mock transition representation used by the {@link createMockNet} function to populate the mock net with mock transition objects
+ */
+export interface MockTransition {
+    stringId: string;
+    title: string;
+}
 
 /**
  * Creates a mock Net instance with the given attributes.
@@ -8,8 +17,10 @@ import {Net} from '../../../process/net';
  */
 export function createMockNet(stringId: string = 'stringId',
                               identifier: string = 'identifier',
-                              title: string = 'title'): Net {
-    return new Net({
+                              title: string = 'title',
+                              roles: Array<NetRole> = [],
+                              transitions: Array<MockTransition> = []): Net {
+    const net = new Net({
         stringId,
         title,
         identifier,
@@ -23,4 +34,11 @@ export function createMockNet(stringId: string = 'stringId',
         },
         immediateData: []
     });
+    net.roles = roles;
+    net.transitions = transitions.map(t => ({
+        ...t,
+        petriNetId: '',
+        immediateData: []
+    }));
+    return net;
 }

@@ -2,7 +2,7 @@ import {CaseProcess} from './case-process';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
 import {waitForAsync} from '@angular/core/testing';
-import {ReplaySubject, Subject} from 'rxjs';
+import {ReplaySubject} from 'rxjs';
 import {Net} from '../../../../process/net';
 import {createMockNet} from '../../../../utility/tests/utility/create-mock-net';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
@@ -26,6 +26,11 @@ describe('CaseProcess', () => {
         category = await new CaseProcess(operatorService, null, createMockDependencies(allowedNets$, operatorService));
     }));
 
+    afterEach(() => {
+        allowedNets$.complete();
+        category.destroy();
+    });
+
     it('should create an instance', () => {
         allowedNets$.next([]);
         expect(category).toBeTruthy();
@@ -33,7 +38,9 @@ describe('CaseProcess', () => {
 
     it('should select default operator', () => {
         allowedNets$.next([]);
-        expect(category.selectDefaultOperator()).toBeUndefined();
+        expect(category.isOperatorSelected).toBeFalse();
+        category.selectDefaultOperator();
+        expect(category.isOperatorSelected).toBeTrue();
     });
 
     it('should join operands correctly', () => {
@@ -46,7 +53,7 @@ describe('CaseProcess', () => {
         expect(predicate.query.value).toContain('OR');
     });
 
-    it('should generate options with unique identifiers only', () => {
+    it('should generate options with unique name only', () => {
         allowedNets$.next([
             createMockNet('', 'A', 'A'),
             createMockNet('', 'A', 'A'),
@@ -135,10 +142,5 @@ describe('CaseProcess', () => {
 
             done();
         });
-    });
-
-    afterEach(() => {
-        allowedNets$.complete();
-        category.destroy();
     });
 });

@@ -16,8 +16,18 @@ describe('CaseCreationDate', () => {
         category = new CaseCreationDate(operatorService, null);
     });
 
+    afterEach(() => {
+        category.destroy();
+    });
+
     it('should create an instance', () => {
         expect(category).toBeTruthy();
+    });
+
+    it('should select default operator', () => {
+        expect(category.isOperatorSelected).toBeFalse();
+        category.selectDefaultOperator();
+        expect(category.isOperatorSelected).toBeTrue();
     });
 
     it('should not serialize incomplete instance', () => {
@@ -56,9 +66,5 @@ describe('CaseCreationDate', () => {
         expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
         expect(deserializedMetadata.category).toEqual(metadata.category);
         expect(deserializedMetadata.values).toEqual(metadata.values);
-    });
-
-    afterEach(() => {
-        category.destroy();
     });
 });
