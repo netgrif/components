@@ -11,6 +11,9 @@ import {configureCategory} from '../../../../utility/tests/utility/configure-cat
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
+import {CategoryGeneratorMetadata} from '../generator-metadata';
+import {Operator} from '../../operator/operator';
+import {Type} from '@angular/core';
 
 describe('CaseDataset', () => {
     let operatorService: OperatorService;
@@ -63,38 +66,58 @@ describe('CaseDataset', () => {
         expect(category.createMetadata()).toBeUndefined();
     });
 
-    it('should serialize complete instance', (done) => {
-        allowedNets$.next([
-            createMockNet('', 'netIdentifier', '', undefined, undefined, [{stringId: 'fieldId', title: 'title', type: 'text'}]),
-            createMockNet('', 'netIdentifier2', '', undefined, undefined, [{stringId: 'fieldId', title: 'title', type: 'text'}])
-        ]);
+    describe('serialization / deserialization', () => {
+        beforeEach(() => {
+            const data = [
+                {stringId: 'textField', title: 'title', type: 'text'},
+            ];
+            allowedNets$.next([
+                createMockNet('', 'netIdentifier', '', undefined, undefined, data),
+                createMockNet('', 'netIdentifier2', '', undefined, undefined, data)
+            ]);
+        });
 
-        category.configurationInputs$.pipe(take(1)).subscribe(inputs => {
-            expect(inputs).toBeTruthy();
-            expect(Array.isArray(inputs)).toBeTrue();
-            expect(inputs.length).toBe(1);
-
-            expect(category.hasSelectedDatafields).toBeFalse();
-            expect(category.isOperatorSelected()).toBeFalse();
-            inputs[0].filteredOptions$.pipe(filter(o => o.length > 0), take(1)).subscribe(options => {
-                expect(options.length).toBe(1);
-                const option = options[0];
-
-                category.selectDatafields(option.value as string, false);
-                expect(category.hasSelectedDatafields).toBeTrue();
-                expect(category.isOperatorSelected()).toBeFalse();
-
-                configureCategory(category, operatorService, Equals, ['value']);
-                expect(category.isOperatorSelected()).toBeTrue();
-
-                const metadata = category.createMetadata();
-                expect(metadata).toBeTruthy();
-                expect(metadata.values).toEqual(['value']);
-                expect(metadata.category).toBe(Categories.CASE_DATASET);
-                expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
-
-                done();
+        describe('should serialize', () => {
+            it('text field search', (done) => {
+                serializationTest(done, category, Equals, 'value', (metadata) => {
+                    expect(metadata.values).toEqual(['value']);
+                }, operatorService);
             });
         });
     });
 });
+
+function serializationTest(done: DoneFn,
+                           category: CaseDataset,
+                           operator: Type<Operator<any>>,
+                           value: any,
+                           valueExpectation: (metadata: CategoryGeneratorMetadata) => void,
+                           operatorService: OperatorService) {
+    category.configurationInputs$.pipe(take(1)).subscribe(inputs => {
+        expect(inputs).toBeTruthy();
+        expect(Array.isArray(inputs)).toBeTrue();
+        expect(inputs.length).toBe(1);
+
+        expect(category.hasSelectedDatafields).toBeFalse();
+        expect(category.isOperatorSelected()).toBeFalse();
+        inputs[0].filteredOptions$.pipe(filter(o => o.length > 0), take(1)).subscribe(options => {
+            expect(options.length).toBe(1);
+            const option = options[0];
+
+            category.selectDatafields(option.value as string, false);
+            expect(category.hasSelectedDatafields).toBeTrue();
+            expect(category.isOperatorSelected()).toBeFalse();
+
+            configureCategory(category, operatorService, operator, [value]);
+            expect(category.isOperatorSelected()).toBeTrue();
+
+            const metadata = category.createMetadata();
+            expect(metadata).toBeTruthy();
+            valueExpectation(metadata);
+            expect(metadata.category).toBe(Categories.CASE_DATASET);
+            expect(metadata.configuration?.operator).toBe(operatorService.getOperator(operator).serialize());
+
+            done();
+        });
+    });
+}
