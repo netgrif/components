@@ -10,10 +10,10 @@ import {filter, take} from 'rxjs/operators';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
-import {Operators} from '../../operator/operators';
 import {CategoryGeneratorMetadata} from '../generator-metadata';
 import {Operator} from '../../operator/operator';
 import {Type} from '@angular/core';
+import {DatafieldMapKey} from '../../datafield-map-key';
 
 describe('CaseDataset', () => {
     let operatorService: OperatorService;
@@ -70,6 +70,15 @@ describe('CaseDataset', () => {
         beforeEach(() => {
             const data = [
                 {stringId: 'textField', title: 'title', type: 'text'},
+                {stringId: 'numberField', title: 'title', type: 'number'},
+                {stringId: 'booleanField', title: 'title', type: 'boolean'},
+                {stringId: 'enumerationField', title: 'title', type: 'enumeration'},
+                {stringId: 'enumeration_mapField', title: 'title', type: 'enumeration_map'},
+                {stringId: 'multichoiceField', title: 'title', type: 'multichoice'},
+                {stringId: 'multichoice_mapField', title: 'title', type: 'multichoice_map'},
+                {stringId: 'fileField', title: 'title', type: 'file'},
+                {stringId: 'fileListField', title: 'title', type: 'fileList'},
+                {stringId: 'userListField', title: 'title', type: 'userList'},
             ];
             allowedNets$.next([
                 createMockNet('', 'netIdentifier', '', undefined, undefined, data),
@@ -79,8 +88,63 @@ describe('CaseDataset', () => {
 
         describe('should serialize', () => {
             it('text field search', (done) => {
-                serializationTest(done, category, Equals, 'value', (metadata) => {
-                    expect(metadata.values).toEqual(['value']);
+                const v = 'value';
+                serializationTest(done, category, Equals, 'text', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('enumeration field search', (done) => {
+                const v = 'value';
+                serializationTest(done, category, Equals, 'enumeration', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('enumeration_map field search', (done) => {
+                const v = 'value';
+                serializationTest(done, category, Equals, 'enumeration_map', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('multichoice field search', (done) => {
+                const v = 'value';
+                serializationTest(done, category, Equals, 'multichoice', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('multichoice_map field search', (done) => {
+                const v = 'value';
+                serializationTest(done, category, Equals, 'multichoice_map', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('file field search', (done) => {
+                const v = 'value';
+                serializationTest(done, category, Equals, 'file', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('fileList field search', (done) => {
+                const v = 'value';
+                serializationTest(done, category, Equals, 'fileList', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('userList field search', (done) => {
+                const v = 'value';
+                serializationTest(done, category, Equals, 'userList', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('number field search', (done) => {
+                const v = 10;
+                serializationTest(done, category, Equals, 'number', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
+                }, operatorService);
+            });
+            it('boolean field search', (done) => {
+                const v = true;
+                serializationTest(done, category, Equals, 'boolean', v, (metadata) => {
+                    expect(metadata.values).toEqual([v]);
                 }, operatorService);
             });
         });
@@ -90,6 +154,7 @@ describe('CaseDataset', () => {
 function serializationTest(done: DoneFn,
                            category: CaseDataset,
                            operator: Type<Operator<any>>,
+                           fieldType: string,
                            value: any,
                            valueExpectation: (metadata: CategoryGeneratorMetadata) => void,
                            operatorService: OperatorService) {
@@ -101,8 +166,17 @@ function serializationTest(done: DoneFn,
         expect(category.hasSelectedDatafields).toBeFalse();
         expect(category.isOperatorSelected()).toBeFalse();
         inputs[0].filteredOptions$.pipe(filter(o => o.length > 0), take(1)).subscribe(options => {
-            expect(options.length).toBe(1);
-            const option = options[0];
+            const option = options.find(o => {
+                const key = DatafieldMapKey.parse(o.value as string);
+                // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
+                if (fieldType === 'enumeration_map') {
+                    fieldType = 'enumeration';
+                } else if (fieldType === 'multichoice_map') {
+                    fieldType = 'multichoice';
+                }
+                return key.type === fieldType;
+            });
+            expect(option).toBeTruthy();
 
             category.selectDatafields(option.value as string, false);
             expect(category.hasSelectedDatafields).toBeTrue();
