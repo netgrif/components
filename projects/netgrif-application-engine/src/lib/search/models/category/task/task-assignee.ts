@@ -11,11 +11,13 @@ import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocompl
 import {NotEquals} from '../../operator/not-equals';
 import {IsNull} from '../../operator/is-null';
 import {Categories} from '../categories';
+import {FormControl} from '@angular/forms';
 
 
 export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.task.assignee';
+    private static readonly ICON = 'account_circle';
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['userId'],
@@ -40,7 +42,7 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
                         map(page => {
                             if (hasContent(page)) {
                                 return page.content.map(
-                                    user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
+                                    user => ({text: user.fullName, value: [user.id], icon: TaskAssignee.ICON})
                                 );
                             }
                             return [];
@@ -70,5 +72,14 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
 
     protected serialize(): Categories | string {
         return Categories.TASK_ASSIGNEE;
+    }
+
+    protected serializeOperandValue(valueFormControl: FormControl): any {
+        const autocompleteValue = valueFormControl.value as SearchAutocompleteOption<Array<string>>;
+        return {text: autocompleteValue.text, value: autocompleteValue.value};
+    }
+
+    protected deserializeOperandValue(savedOption: SearchAutocompleteOption<Array<string>>): SearchAutocompleteOption<Array<string>> {
+        return {...savedOption, icon: TaskAssignee.ICON};
     }
 }

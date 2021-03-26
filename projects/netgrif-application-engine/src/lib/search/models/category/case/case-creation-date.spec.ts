@@ -59,7 +59,7 @@ describe('CaseCreationDate', () => {
 
         expect(moment.isMoment(originalMoment)).toBeTrue();
         expect(moment.isMoment(deserializedMoment)).toBeTrue();
-        expect(originalMoment.isSame(deserializedMoment)).toBeTrue();
+        expect(deserializedMoment.isSame(originalMoment)).toBeTrue();
 
         const deserializedMetadata = deserialized.createMetadata();
         expect(deserializedMetadata).toBeTruthy();

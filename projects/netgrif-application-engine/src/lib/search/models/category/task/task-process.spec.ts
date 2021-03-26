@@ -130,7 +130,7 @@ describe('TaskProcess', () => {
             expect(deserialized.isOperatorSelected()).toBeTrue();
             expect(deserialized.providesPredicate).toBeTrue();
 
-            expect((category as any)._operandsFormControls[0].value).toEqual((deserialized as any)._operandsFormControls[0].value);
+            expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
 
             const deserializedMetadata = deserialized.createMetadata();
             expect(deserializedMetadata).toBeTruthy();

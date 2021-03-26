@@ -1,21 +1,33 @@
-import {CaseAuthor} from './case-author';
+import {TaskAssignee} from './task-assignee';
 import {OperatorService} from '../../../operator-service/operator.service';
+import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
+import {waitForAsync} from '@angular/core/testing';
+import {ReplaySubject} from 'rxjs';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
+import {Net} from '../../../../process/net';
+import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
-import {configureCategory} from '../../../../utility/tests/utility/configure-category';
+import {SearchAutocompleteOption} from '../search-autocomplete-option';
 
-describe('CaseAuthor', () => {
-    let category: CaseAuthor;
+describe('TaskAssignee', () => {
     let operatorService: OperatorService;
+    let category: TaskAssignee;
+    let allowedNets$: ReplaySubject<Array<Net>>;
 
-    beforeEach(() => {
+    beforeAll(() => {
         operatorService = new OperatorService(new OperatorResolverService());
-        category = new CaseAuthor(operatorService, null);
     });
 
+    beforeEach( waitForAsync(async () => {
+        allowedNets$ = new ReplaySubject<Array<Net>>(1);
+        allowedNets$.next([]);
+        category = await new TaskAssignee(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+    }));
+
     afterEach(() => {
+        allowedNets$.complete();
         category.destroy();
     });
 
@@ -24,9 +36,9 @@ describe('CaseAuthor', () => {
     });
 
     it('should select default operator', () => {
-        expect(category.isOperatorSelected).toBeFalse();
+        expect(category.isOperatorSelected()).toBeFalse();
         category.selectDefaultOperator();
-        expect(category.isOperatorSelected).toBeTrue();
+        expect(category.isOperatorSelected()).toBeTrue();
     });
 
     it('should not serialize incomplete instance', () => {
@@ -34,21 +46,24 @@ describe('CaseAuthor', () => {
     });
 
     it('should serialize complete instance', () => {
-        configureCategory(category, operatorService, Equals, ['foo']);
+        configureCategory(category, operatorService, Equals, [mockTaskAssigneeValue('Test User', 'userId')]);
+
+        const mockedSerializedValue = mockTaskAssigneeValue('Test User', 'userId');
+        delete mockedSerializedValue.icon;
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
-        expect(metadata.values).toEqual(['foo']);
-        expect(metadata.category).toBe(Categories.CASE_AUTHOR);
+        expect(metadata.values).toEqual([mockedSerializedValue]);
+        expect(metadata.category).toBe(Categories.TASK_ASSIGNEE);
         expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
     });
 
     it('should deserialize stored instance', () => {
-        configureCategory(category, operatorService, Equals, ['foo']);
+        configureCategory(category, operatorService, Equals, [mockTaskAssigneeValue('Test User', 'userId')]);
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
-        const deserialized = new CaseAuthor(operatorService, null);
+        const deserialized = new TaskAssignee(operatorService, null, createMockDependencies(allowedNets$, operatorService));
         deserialized.loadFromMetadata(metadata);
         expect(deserialized.isOperatorSelected()).toBeTrue();
         expect(deserialized.providesPredicate).toBeTrue();
@@ -62,3 +77,7 @@ describe('CaseAuthor', () => {
         expect(deserializedMetadata.values).toEqual(metadata.values);
     });
 });
+
+function mockTaskAssigneeValue(userName: string, userId: string): SearchAutocompleteOption<Array<string>> {
+    return {text: userName, value: [userId], icon: (TaskAssignee as any).ICON};
+}

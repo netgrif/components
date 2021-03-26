@@ -31,10 +31,10 @@ describe('TaskTask', () => {
         category.destroy();
     });
 
-    it('should create an instance', waitForAsync(async () => {
+    it('should create an instance', () => {
         allowedNets$.next([]);
         expect(category).toBeTruthy();
-    }));
+    });
 
     it('should select default operator', () => {
         allowedNets$.next([]);
@@ -120,7 +120,7 @@ describe('TaskTask', () => {
             expect(deserialized.isOperatorSelected()).toBeTrue();
             expect(deserialized.providesPredicate).toBeTrue();
 
-            expect((category as any)._operandsFormControls[0].value).toEqual((deserialized as any)._operandsFormControls[0].value);
+            expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
 
             const deserializedMetadata = deserialized.createMetadata();
             expect(deserializedMetadata).toBeTruthy();
