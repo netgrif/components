@@ -1,5 +1,6 @@
 import {Net} from '../../../process/net';
 import NetRole from '../../../process/netRole';
+import {ImmediateData} from '../../../resources/interface/immediate-data';
 
 /**
  * A mock transition representation used by the {@link createMockNet} function to populate the mock net with mock transition objects
@@ -19,7 +20,8 @@ export function createMockNet(stringId: string = 'stringId',
                               identifier: string = 'identifier',
                               title: string = 'title',
                               roles: Array<NetRole> = [],
-                              transitions: Array<MockTransition> = []): Net {
+                              transitions: Array<MockTransition> = [],
+                              immediateData: Array<ImmediateData> = []): Net {
     const net = new Net({
         stringId,
         title,
@@ -32,7 +34,7 @@ export function createMockNet(stringId: string = 'stringId',
             email: '',
             fullName: ''
         },
-        immediateData: []
+        immediateData
     });
     net.roles = roles;
     net.transitions = transitions.map(t => ({

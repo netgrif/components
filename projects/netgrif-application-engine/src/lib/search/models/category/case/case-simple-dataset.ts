@@ -14,11 +14,15 @@ import {CaseDataset} from './case-dataset';
 import {DatafieldMapKey} from '../../datafield-map-key';
 import {SearchIndex} from '../../search-index';
 import {Categories} from '../categories';
+import {CategoryGeneratorMetadata} from '../generator-metadata';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
  *
  * It can only generate "equality" queries for a single field. The category must be configured before it can be used to generate queries.
+ *
+ * This category cannot be serialized. If you want to preserve this category's state convert it to {@link CaseDataset}
+ * with the [transformToCaseDataset()]{@link CaseSimpleDataset#transformToCaseDataset} method and serialize the result.
  *
  * See [configure]{@link CaseSimpleDataset#configure} for more information.
  */
@@ -143,5 +147,19 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
 
     protected serialize(): Categories | string {
         return Categories.CASE_SIMPLE_DATASET;
+    }
+
+    /**
+     * Serialization is not supported. Throws an error.
+     */
+    createMetadata(): never {
+        throw new Error('CaseSimpleDataset does not support serialization!');
+    }
+
+    /**
+     * Deserialization is not supported. Throws an error.
+     */
+    loadFromMetadata(metadata: CategoryGeneratorMetadata): never {
+        throw new Error('CaseSimpleDataset does not support deserialization!');
     }
 }
