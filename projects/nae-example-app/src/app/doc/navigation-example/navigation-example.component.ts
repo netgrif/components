@@ -14,19 +14,19 @@ export class NavigationExampleComponent implements OnInit {
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationStart) {
                 if (event.url === '/navigation-test') {
-                    this.viewPath = 'navigation-test';
+                    this.viewPath = 'demo-navigation-test';
                     this.parentUrl = '/navigation-test';
                 } else  if (event.url === '/navigation-test/one') {
-                    this.viewPath = 'navigation-test/one';
+                    this.viewPath = 'demo-navigation-test/one';
                     this.parentUrl = '/navigation-test/one';
                 } else  if (event.url === '/navigation-test/two') {
-                    this.viewPath = '/navigation-test/two';
+                    this.viewPath = 'demo-navigation-test/two';
                     this.parentUrl = '/navigation-test/two';
                 }
             }
         });
-        this.viewPath = 'navigation-test';
-        this.parentUrl = '/navigation-test';
+        // this.viewPath = 'demo-navigation-test';
+        // this.parentUrl = '/navigation-test';
     }
 
     ngOnInit(): void {

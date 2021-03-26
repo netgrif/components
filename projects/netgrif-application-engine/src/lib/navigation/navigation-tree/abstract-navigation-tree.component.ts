@@ -26,6 +26,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
     protected subRouter: Subscription;
+    protected subUserService: Subscription;
 
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
@@ -46,27 +47,32 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     ngOnInit(): void {
         super.ngOnInit();
-        if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
-            this.subRouter = this._router.events.subscribe((event) => {
-                if (event instanceof NavigationEnd && this.routerChange) {
-                    const viewRoute = this._config.getViewByPath(this.viewPath);
-                    if (viewRoute && viewRoute.children) {
-                        this.dataSource.data = this.resolveNavigationNodes(viewRoute.children, this.parentUrl);
+        if (this.viewPath && this.parentUrl !== undefined) {
+            if (this.routerChange) {
+                this.subRouter = this._router.events.subscribe((event) => {
+                    if (event instanceof NavigationEnd && this.routerChange) {
+                        this.resolveChange();
                     }
-                    this.resolveLevels(this.dataSource.data);
-                }
-            });
-            const view = this._config.getViewByPath(this.viewPath);
-            if (view && view.children) {
-                this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
+                });
             }
-            this.resolveLevels(this.dataSource.data);
+            this.subUserService = this._userService.user$.subscribe(user => {
+                this.resolveChange();
+            });
+            this.resolveChange();
+        } else {
+            this.subUserService = this._userService.user$.subscribe(user => {
+                this.dataSource.data = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
+                this.resolveLevels(this.dataSource.data);
+            });
         }
     }
 
     ngOnDestroy(): void {
         if (this.subRouter) {
             this.subRouter.unsubscribe();
+        }
+        if (this.subUserService) {
+            this.subUserService.unsubscribe();
         }
     }
 
@@ -237,4 +243,11 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         return !view.access.hasOwnProperty('group') || this._groupGuard.canAccessView(view, url);
     }
 
+    protected resolveChange() {
+        const view = this._config.getViewByPath(this.viewPath);
+        if (view && view.children) {
+            this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
+        }
+        this.resolveLevels(this.dataSource.data);
+    }
 }
