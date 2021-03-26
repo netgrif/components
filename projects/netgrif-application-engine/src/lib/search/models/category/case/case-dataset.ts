@@ -49,6 +49,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     private static readonly _i18n = 'search.category.case.dataset';
     protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef'];
     protected static readonly DATAFIELD_METADATA = 'datafield';
+    private static readonly ICON = 'account_circle';
 
     protected readonly _DATAFIELD_INPUT: ConfigurationInput;
 
@@ -319,7 +320,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                         map(page => {
                             if (hasContent(page)) {
                                 return page.content.map(
-                                    user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
+                                    user => ({text: user.fullName, value: [user.id], icon: CaseDataset.ICON})
                                 );
                             }
                             return [];
@@ -406,7 +407,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected serializeOperandValue(valueFormControl: FormControl): unknown {
         switch (this.inputType) {
             case SearchInputType.AUTOCOMPLETE:
-                return (valueFormControl.value as SearchAutocompleteOption<unknown>).text;
+                const autocompleteValue = valueFormControl.value as SearchAutocompleteOption<unknown>;
+                return {text: autocompleteValue.text, value: autocompleteValue.value};
             case SearchInputType.DATE:
             case SearchInputType.DATE_TIME:
                 return (valueFormControl.value as Moment).valueOf();

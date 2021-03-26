@@ -14,6 +14,10 @@ import {CategoryGeneratorMetadata} from '../generator-metadata';
 import {Operator} from '../../operator/operator';
 import {Type} from '@angular/core';
 import {DatafieldMapKey} from '../../datafield-map-key';
+import {SearchAutocompleteOption} from '../search-autocomplete-option';
+import moment from 'moment';
+import {EqualsDate} from '../../operator/equals-date';
+import {EqualsDateTime} from '../../operator/equals-date-time';
 
 describe('CaseDataset', () => {
     let operatorService: OperatorService;
@@ -79,6 +83,9 @@ describe('CaseDataset', () => {
                 {stringId: 'fileField', title: 'title', type: 'file'},
                 {stringId: 'fileListField', title: 'title', type: 'fileList'},
                 {stringId: 'userListField', title: 'title', type: 'userList'},
+                {stringId: 'userField', title: 'title', type: 'user'},
+                {stringId: 'dateField', title: 'title', type: 'date'},
+                {stringId: 'dateTimeField', title: 'title', type: 'dateTime'},
             ];
             allowedNets$.next([
                 createMockNet('', 'netIdentifier', '', undefined, undefined, data),
@@ -147,6 +154,26 @@ describe('CaseDataset', () => {
                     expect(metadata.values).toEqual([v]);
                 }, operatorService);
             });
+            it('user field search', (done) => {
+                const v = mockUserSearchValue('Test User', '7');
+                serializationTest(done, category, Equals, 'user', v, (metadata) => {
+                    const mockedSerializedValue = mockUserSearchValue('Test User', '7');
+                    delete mockedSerializedValue.icon;
+                    expect(metadata.values).toEqual([mockedSerializedValue]);
+                }, operatorService);
+            });
+            it('date field search', (done) => {
+                const v = moment('2021-03-26');
+                serializationTest(done, category, EqualsDate, 'date', v, (metadata) => {
+                    expect(metadata.values).toEqual([v.valueOf()]);
+                }, operatorService);
+            });
+            it('dateTime field search', (done) => {
+                const v = moment('2021-03-26 12:37');
+                serializationTest(done, category, EqualsDateTime, 'dateTime', v, (metadata) => {
+                    expect(metadata.values).toEqual([v.valueOf()]);
+                }, operatorService);
+            });
         });
     });
 });
@@ -194,4 +221,8 @@ function serializationTest(done: DoneFn,
             done();
         });
     });
+}
+
+function mockUserSearchValue(userName: string, userId: string): SearchAutocompleteOption<Array<string>> {
+    return {text: userName, value: [userId], icon: (CaseDataset as any).ICON};
 }
