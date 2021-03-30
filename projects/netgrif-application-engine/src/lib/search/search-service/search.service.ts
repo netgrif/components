@@ -1,17 +1,15 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
-import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
+import {BehaviorSubject, forkJoin, Observable, Subject, Subscription} from 'rxjs';
 import {Predicate} from '../models/predicate/predicate';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {PredicateRemovalEvent} from '../models/predicate-removal-event';
 import {Query} from '../models/query/query';
-import {distinctUntilChanged, map} from 'rxjs/operators';
+import {distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
-import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
-import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
 import {CategoryGeneratorMetadata} from '../models/category/generator-metadata';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {BaseFilter} from '../models/base-filter';
@@ -285,10 +283,26 @@ export class SearchService implements OnDestroy {
 
         this.clearPredicates(true);
 
+        const generatorObservables = [];
+
         for (const clause of metadata) {
+            const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
+            const branchPredicate = (
+                this._rootPredicate.getPredicateMap().get(branchId)
+                    .getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
+            );
             for (const predicate of clause) {
-                const generator = this._categoryFactory.getFromMetadata(predicate);
+                const localBranchReference = branchPredicate;
+                generatorObservables.push(
+                    this._categoryFactory.getFromMetadata(predicate).pipe(tap(generator => {
+                        localBranchReference.addNewPredicateFromGenerator(generator);
+                    }))
+                );
             }
         }
+
+        forkJoin(generatorObservables).subscribe(() => {
+            this.updateActiveFilter();
+        });
     }
 }

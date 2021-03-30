@@ -60,6 +60,13 @@ export class PredicateWithGenerator extends Predicate {
         return this._predicate;
     }
 
+    /**
+     * @returns result [getWrappedPredicate()]{@link PredicateWithGenerator#getWrappedPredicate}
+     */
+    public get wrappedPredicate(): Predicate {
+        return this.getWrappedPredicate();
+    }
+
     show() {
         super.show();
         this._predicate.show();
