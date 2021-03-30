@@ -18,7 +18,7 @@ export class PredicateWithGenerator extends Predicate {
      */
     constructor(protected _predicate: Predicate, protected _generator?: Category<any>, initiallyVisible?: boolean) {
         super();
-        this._visible = initiallyVisible !== undefined ? initiallyVisible : !_generator;
+        this._visible = initiallyVisible ?? !_generator;
         this._metadataGenerator = () => {
             if (!this._generator) {
                 return this._predicate.createGeneratorMetadata();
@@ -56,7 +56,7 @@ export class PredicateWithGenerator extends Predicate {
     /**
      * @returns the wrapped Predicate
      */
-    get wrappedPredicate(): Predicate {
+    public getWrappedPredicate(): Predicate {
         return this._predicate;
     }
 

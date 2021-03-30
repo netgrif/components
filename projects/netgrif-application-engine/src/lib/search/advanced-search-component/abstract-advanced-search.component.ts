@@ -38,7 +38,7 @@ export class AbstractAdvancedSearchComponent implements AfterViewInit, OnDestroy
 
         for (const [key, value] of this._searchService.rootPredicate.getPredicateMap().entries()) {
             if (value.isVisible) {
-                map.set(key, value.wrappedPredicate as EditableClausePredicateWithGenerators);
+                map.set(key, value.getWrappedPredicate() as EditableClausePredicateWithGenerators);
             }
         }
 

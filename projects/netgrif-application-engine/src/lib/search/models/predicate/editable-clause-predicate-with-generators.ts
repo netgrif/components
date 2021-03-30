@@ -3,6 +3,8 @@ import {BooleanOperator} from '../boolean-operator';
 import {Subject} from 'rxjs';
 import {PredicateWithGenerator} from './predicate-with-generator';
 import {Predicate} from './predicate';
+import {Category} from '../category/category';
+import {EditablePredicateWithGenerator} from './editable-predicate-with-generator';
 
 export class EditableClausePredicateWithGenerators extends EditableClausePredicate {
 
@@ -31,10 +33,14 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
     }
 
     /**
-     * Adds a pre-wrapped predicate without wrapping it
-     * @param predicate the pre-wrapped predicate
+     * Creates a new editable predicate from the provided generator {@link Category} instance,
+     * connects it to the update notifications stream and adds it to the predicate subtree.
+     * @param generator
+     * @param initiallyVisible
      */
-    addPredicateWithGenerator(predicate: PredicateWithGenerator): number {
+    addNewPredicateFromGenerator(generator: Category<any>, initiallyVisible = true): number {
+        const predicate = new EditablePredicateWithGenerator(generator, initiallyVisible);
+        predicate.parentNotifier = this._childUpdated$;
         return super.addPredicate(predicate);
     }
 

@@ -109,7 +109,6 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     }
 
     public saveFilter(): void {
-        console.log(this._searchService.createPredicateGeneratorMetadata());
         this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
             filter: this._searchService.activeFilter,
             searchMetadata: {

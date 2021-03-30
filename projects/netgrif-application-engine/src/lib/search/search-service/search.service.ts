@@ -179,15 +179,9 @@ export class SearchService implements OnDestroy {
     public addGeneratedLeafPredicate(generator: Category<any>): number {
         const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR, false);
         const branch = (
-            this._rootPredicate.getPredicateMap().get(branchId).wrappedPredicate as unknown as EditableClausePredicateWithGenerators
+            this._rootPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
         );
-        const leafId = branch.addNewElementaryPredicate();
-        const leaf = (branch.getPredicateMap().get(leafId).wrappedPredicate as unknown as EditableElementaryPredicate);
-        const generatedPredicate = generator.generatedPredicate;
-        leaf.query = generatedPredicate ? generatedPredicate.query : Query.emptyQuery();
-        branch.removePredicate(leafId);
-        const withGenerator = new PredicateWithGenerator(leaf, generator);
-        branch.addPredicateWithGenerator(withGenerator);
+        branch.addNewPredicateFromGenerator(generator);
         return branchId;
     }
 
