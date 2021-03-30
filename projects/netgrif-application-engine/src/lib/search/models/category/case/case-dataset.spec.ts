@@ -182,6 +182,66 @@ describe('CaseDataset', () => {
                 deserializationTest(done, category, Equals, 'text', v, (d, c) => valueObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
+            it('enumeration field search', (done) => {
+                const v = 'value';
+                deserializationTest(done, category, Equals, 'enumeration', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('enumeration_map field search', (done) => {
+                const v = 'value';
+                deserializationTest(done, category, Equals, 'enumeration_map', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('multichoice field search', (done) => {
+                const v = 'value';
+                deserializationTest(done, category, Equals, 'multichoice', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('multichoice_map field search', (done) => {
+                const v = 'value';
+                deserializationTest(done, category, Equals, 'multichoice_map', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('file field search', (done) => {
+                const v = 'value';
+                deserializationTest(done, category, Equals, 'file', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('fileList field search', (done) => {
+                const v = 'value';
+                deserializationTest(done, category, Equals, 'fileList', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('userList field search', (done) => {
+                const v = 'value';
+                deserializationTest(done, category, Equals, 'userList', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('number field search', (done) => {
+                const v = 10;
+                deserializationTest(done, category, Equals, 'number', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('boolean field search', (done) => {
+                const v = true;
+                deserializationTest(done, category, Equals, 'boolean', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('user field search', (done) => {
+                const v = mockUserSearchValue('Test User', '7');
+                deserializationTest(done, category, Equals, 'user', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('date field search', (done) => {
+                const v = moment('2021-03-30');
+                deserializationTest(done, category, Equals, 'date', v, (d, c) => momentObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+            it('dateTime field search', (done) => {
+                const v = moment('2021-03-30 10:39');
+                deserializationTest(done, category, Equals, 'dateTime', v, (d, c) => momentObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
         });
     });
 });
@@ -286,6 +346,15 @@ function valueObjectsComparison(deserialized: any, category: any) {
     expect(deserialized._operandsFormControls[0].value).toEqual(category._operandsFormControls[0].value);
 }
 
+function momentObjectsComparison(deserialized: any, category: any) {
+    const originalMoment = (category as any)._operandsFormControls[0].value;
+    const deserializedMoment = (deserialized as any)._operandsFormControls[0].value;
+
+    expect(moment.isMoment(originalMoment)).toBeTrue();
+    expect(moment.isMoment(deserializedMoment)).toBeTrue();
+    expect(deserializedMoment.isSame(originalMoment)).toBeTrue();
+}
+
 function mockUserSearchValue(userName: string, userId: string): SearchAutocompleteOption<Array<string>> {
-    return {text: userName, value: [userId], icon: (CaseDataset as any).ICON};
+    return {text: userName, value: [userId], icon: (CaseDataset as any).AUTOCOMPLETE_ICON};
 }
