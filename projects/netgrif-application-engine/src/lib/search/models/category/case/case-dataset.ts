@@ -349,7 +349,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     public selectDatafields(datafieldMapKey: string, selectDefaultOperator = true): void {
         if (!this._datafieldOptions.has(datafieldMapKey)) {
-            this._log.warn(`The provided 'datafieldMapKey' does not exist.`);
+            this._log.warn(`The provided 'datafieldMapKey' (${datafieldMapKey}) does not exist.`);
             return;
         }
         this._DATAFIELD_INPUT.formControl.setValue(DatafieldMapKey.parse(datafieldMapKey));

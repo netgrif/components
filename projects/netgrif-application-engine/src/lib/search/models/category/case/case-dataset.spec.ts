@@ -18,6 +18,7 @@ import {SearchAutocompleteOption} from '../search-autocomplete-option';
 import moment from 'moment';
 import {EqualsDate} from '../../operator/equals-date';
 import {EqualsDateTime} from '../../operator/equals-date-time';
+import {LoggerService} from '../../../../logger/services/logger.service';
 
 describe('CaseDataset', () => {
     let operatorService: OperatorService;
@@ -234,12 +235,12 @@ describe('CaseDataset', () => {
             });
             it('date field search', (done) => {
                 const v = moment('2021-03-30');
-                deserializationTest(done, category, Equals, 'date', v, (d, c) => momentObjectsComparison(d, c),
+                deserializationTest(done, category, EqualsDate, 'date', v, (d, c) => momentObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
             it('dateTime field search', (done) => {
                 const v = moment('2021-03-30 10:39');
-                deserializationTest(done, category, Equals, 'dateTime', v, (d, c) => momentObjectsComparison(d, c),
+                deserializationTest(done, category, EqualsDateTime, 'dateTime', v, (d, c) => momentObjectsComparison(d, c),
                     operatorService, allowedNets$);
             });
         });
