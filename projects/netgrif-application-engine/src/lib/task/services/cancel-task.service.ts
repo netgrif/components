@@ -75,7 +75,7 @@ export class CancelTaskService extends TaskHandlingService {
             if (!this._taskViewService.isEmptyQueue()) {
                 this._taskViewService.popQueue().subscribe(() => {
                     this._taskState.startLoading(canceledTaskId);
-                    this.cancelRequest(afterAction, canceledTaskId, sub);
+                    this.cancelRequest(afterAction, canceledTaskId, sub, true);
                 });
                 this._taskViewService.addToQueue(sub);
                 return;
@@ -87,7 +87,8 @@ export class CancelTaskService extends TaskHandlingService {
         this.cancelRequest(afterAction, canceledTaskId, sub);
     }
 
-    protected cancelRequest(afterAction = new Subject<boolean>(), canceledTaskId: string, queueAction = new Subject<boolean>()) {
+    protected cancelRequest(afterAction = new Subject<boolean>(), canceledTaskId: string,
+                            queueAction = new Subject<boolean>(), fromQueue = false) {
         this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(canceledTaskId);
             if (!this.isTaskRelevant(canceledTaskId)) {
@@ -98,7 +99,7 @@ export class CancelTaskService extends TaskHandlingService {
             if (eventOutcome.success) {
                 this._taskContentService.updateStateData(eventOutcome);
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
-                this._taskOperations.reload();
+                fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, queueAction, true);
             } else if (eventOutcome.error !== undefined) {
                 if (eventOutcome.error !== '') {
