@@ -781,7 +781,8 @@
         "cases": {
             "layout": {
                 "name": "emptyView",
-                "componentName": "EmptyViewCustomNameTest"
+                "componentName": "EmptyViewCustomNameTest",
+                "params": {}
             },
             "access": "private",
             "navigation": {
@@ -821,7 +822,8 @@
         },
         "task": {
             "layout": {
-                "name": "emptyView"
+                "name": "emptyView",
+                "params": {}
             },
             "access": "private",
             "navigation": {

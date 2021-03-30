@@ -24,6 +24,10 @@ export class PageLoadRequestContext {
      * This option does not affect case requests.
      */
     reloadCurrentTaskPage: boolean;
+    /**
+     * Used for forcing the request after queued Assign or Cancel.
+     */
+    force: boolean;
 
     /**
      * @param requestFilter the {@link Filter} that is used by the request. Context holds the passed reference.
@@ -33,11 +37,12 @@ export class PageLoadRequestContext {
      * @param reloadCurrentTaskPage whether the current page of tasks should be updated with the result of the current request.
      * Does not affect case requests.
      */
-    constructor(requestFilter: Filter, requestPagination: Pagination, clearLoaded = false, reloadCurrentTaskPage = false) {
+    constructor(requestFilter: Filter, requestPagination: Pagination, clearLoaded = false, reloadCurrentTaskPage = false, force = false) {
         this.filter = requestFilter;
         this.pagination = Object.assign({}, requestPagination);
         this.clearLoaded = clearLoaded;
         this.reloadCurrentTaskPage = reloadCurrentTaskPage;
+        this.force = force;
     }
 
     public get pageNumber(): number {

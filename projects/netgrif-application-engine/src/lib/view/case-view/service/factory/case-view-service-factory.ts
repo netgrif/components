@@ -6,12 +6,15 @@ import {SearchService} from '../../../../search/search-service/search.service';
 import {ProcessService} from '../../../../process/process.service';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
-import {CaseViewService} from '../case-view-service';
-import {CaseViewParams} from '../../models/case-view-params';
 import {TranslateService} from '@ngx-translate/core';
-import {of} from 'rxjs';
-import {NAE_NEW_CASE_COMPONENT} from '../../../../side-menu/content-components/injection-tokens';
 import {UserService} from '../../../../user/services/user.service';
+import {NAE_NEW_CASE_COMPONENT} from '../../../../side-menu/content-components/injection-tokens';
+import {CaseViewService} from '../case-view-service';
+import {switchMap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {PetriNetResourceService} from '../../../../resources/engine-endpoint/petri-net-resource.service';
+import {CaseViewParams} from '../../models/case-view-params';
+import {Net} from '../../../../process/net';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link CaseViewService} dependencies.
@@ -19,15 +22,9 @@ import {UserService} from '../../../../user/services/user.service';
  * to create an instance for that view.
  *
  * If you have extended {@link CaseViewService} with your own functionality, you are encouraged to extend this service as well.
- *
- * This is one of available `CaseViewServiceFactory` implementations, see {@link ArrayCaseViewServiceFactory} for another one.
- *
- * This implementation is useful if you need to provide {@link CaseViewService} and have a view with `allowedNets`
- * defined in your configuration. The benefit of this approach is that you can pass view parameters from the configuration to the service
- * as well as the allowed nets.
  */
 @Injectable()
-export class ConfigCaseViewServiceFactory {
+export class CaseViewServiceFactory {
 
     constructor(protected _sideMenuService: SideMenuService,
                 protected _caseResourceService: CaseResourceService,
@@ -38,7 +35,55 @@ export class ConfigCaseViewServiceFactory {
                 protected _log: LoggerService,
                 protected _translate: TranslateService,
                 protected _user: UserService,
+                protected _petriNetResource: PetriNetResourceService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
+    }
+
+    /**
+     * Creates an instance of {@link CaseViewService} without having to provide all the dependencies yourself.
+     * @returns an instance of {@link CaseViewService} with the provided nets set as it's `allowedNets`.
+     * No view parameters are provided to the created instance.
+     */
+    public createWithAllNets(): CaseViewService {
+        return new CaseViewService(
+            this._petriNetResource.getAll().pipe(
+                switchMap(nets => {
+                    if (nets && Array.isArray(nets)) {
+                        return this._processService.getNets(nets.map(n => n.identifier));
+                    } else {
+                        return of([]);
+                    }
+                })
+            ),
+            this._sideMenuService,
+            this._caseResourceService,
+            this._log,
+            this._snackBarService,
+            this._searchService,
+            this._translate,
+            this._user,
+            this._newCaseComponent
+        );
+    }
+
+    /**
+     * Creates an instance of {@link CaseViewService} without having to provide all the dependencies yourself.
+     * @param allowedNetsIds identifiers of the allowed nets.
+     * @returns an instance of {@link CaseViewService} with the provided nets set as it's `allowedNets`.
+     * No view parameters are provided to the created instance.
+     */
+    public createFromArray(allowedNetsIds: Array<string>): CaseViewService {
+        return new CaseViewService(
+            this._processService.getNets(allowedNetsIds),
+            this._sideMenuService,
+            this._caseResourceService,
+            this._log,
+            this._snackBarService,
+            this._searchService,
+            this._translate,
+            this._user,
+            this._newCaseComponent
+        );
     }
 
     /**
@@ -47,7 +92,7 @@ export class ConfigCaseViewServiceFactory {
      * It is used to load [allowedNets]{@link SortableViewWithAllowedNets#_allowedNets$} from configuration.
      * @returns an instance of {@link CaseViewService} configured for view at the specified path.
      */
-    public create(webViewPath: string): CaseViewService {
+    public createFromConfig(webViewPath: string): CaseViewService {
         const view = this._configService.getViewByPath(webViewPath);
         if (view && view.layout && view.layout.params) {
             const viewParams = view.layout.params as CaseViewParams;
@@ -70,5 +115,25 @@ export class ConfigCaseViewServiceFactory {
         } else {
             throw new Error(`Can't load configuration for view with webPath: '${webViewPath}'`);
         }
+    }
+
+    /**
+     * Creates an instance of {@link CaseViewService} without having to provide all the dependencies yourself.
+     * @param nets is an observable of allowed nets.
+     * @returns an instance of {@link CaseViewService} with the provided nets set as it's `allowedNets`.
+     * No view parameters are provided to the created instance.
+     */
+    public createFromObservable(nets: Observable<Array<Net>>): CaseViewService {
+        return new CaseViewService(
+            nets,
+            this._sideMenuService,
+            this._caseResourceService,
+            this._log,
+            this._snackBarService,
+            this._searchService,
+            this._translate,
+            this._user,
+            this._newCaseComponent
+        );
     }
 }

@@ -11,7 +11,6 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
-import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {Subject} from 'rxjs';
 import {MaterialModule} from '../../material/material.module';
@@ -19,6 +18,7 @@ import {SearchService} from '../search-service/search.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 
 describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
@@ -42,9 +42,9 @@ describe('AbstractSearchPredicateComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

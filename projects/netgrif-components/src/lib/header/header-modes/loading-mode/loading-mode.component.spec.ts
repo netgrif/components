@@ -10,7 +10,7 @@ import {
     AuthenticationService,
     CaseHeaderService,
     CaseViewService,
-    ConfigCaseViewServiceFactory,
+    CaseViewServiceFactory,
     ConfigurationService,
     MaterialModule,
     MockAuthenticationMethodService,
@@ -45,7 +45,7 @@ describe('LoadingModeComponent', () => {
             ],
             providers: [
                 CaseHeaderService,
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: SearchService,
@@ -54,7 +54,7 @@ describe('LoadingModeComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
