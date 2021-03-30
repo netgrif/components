@@ -1,7 +1,7 @@
 import {CaseDataset} from './case-dataset';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
-import {ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {Net} from '../../../../process/net';
 import {waitForAsync} from '@angular/core/testing';
@@ -175,6 +175,14 @@ describe('CaseDataset', () => {
                 }, operatorService);
             });
         });
+
+        describe('should deserialize', () => {
+            it('text field search', (done) => {
+                const v = 'value';
+                deserializationTest(done, category, Equals, 'text', v, (d, c) => valueObjectsComparison(d, c),
+                    operatorService, allowedNets$);
+            });
+        });
     });
 });
 
@@ -221,6 +229,61 @@ function serializationTest(done: DoneFn,
             done();
         });
     });
+}
+
+function deserializationTest(done: DoneFn,
+                             category: CaseDataset,
+                             operator: Type<Operator<any>>,
+                             fieldType: string,
+                             value: any,
+                             expectDeserializedValueToBeEqual: (deserialized: any, category: any) => void,
+                             operatorService: OperatorService,
+                             allowedNets$: Observable<Array<Net>>) {
+    category.configurationInputs$.pipe(take(1)).subscribe(inputs => {
+        expect(inputs).toBeTruthy();
+        expect(Array.isArray(inputs)).toBeTrue();
+        expect(inputs.length).toBe(1);
+
+        inputs[0].filteredOptions$.pipe(filter(o => o.length > 0), take(1)).subscribe(options => {
+            const option = options.find(o => {
+                const key = DatafieldMapKey.parse(o.value as string);
+                // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
+                if (fieldType === 'enumeration_map') {
+                    fieldType = 'enumeration';
+                } else if (fieldType === 'multichoice_map') {
+                    fieldType = 'multichoice';
+                }
+                return key.type === fieldType;
+            });
+            expect(option).toBeTruthy();
+
+            category.selectDatafields(option.value as string, false);
+            configureCategory(category, operatorService, operator, [value]);
+
+            const metadata = category.createMetadata();
+            expect(metadata).toBeTruthy();
+            const deserialized = new CaseDataset(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+            deserialized.loadFromMetadata(metadata).subscribe(() => {
+                expect(deserialized.hasSelectedDatafields).toBeTrue();
+                expect(deserialized.isOperatorSelected()).toBeTrue();
+                expect(deserialized.providesPredicate).toBeTrue();
+
+                expectDeserializedValueToBeEqual(deserialized, category);
+
+                const deserializedMetadata = deserialized.createMetadata();
+                expect(deserializedMetadata).toBeTruthy();
+                expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
+                expect(deserializedMetadata.category).toEqual(metadata.category);
+                expect(deserializedMetadata.values).toEqual(metadata.values);
+
+                done();
+            });
+        });
+    });
+}
+
+function valueObjectsComparison(deserialized: any, category: any) {
+    expect(deserialized._operandsFormControls[0].value).toEqual(category._operandsFormControls[0].value);
 }
 
 function mockUserSearchValue(userName: string, userId: string): SearchAutocompleteOption<Array<string>> {

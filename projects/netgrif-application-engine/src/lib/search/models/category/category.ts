@@ -406,9 +406,14 @@ export abstract class Category<T> {
      * @returns an Observable. When the Observable emits the category has finished restoring its state.
      */
     public loadFromMetadata(metadata: CategoryGeneratorMetadata): Observable<void> {
-        const o1 = this.loadConfigurationFromMetadata(metadata.configuration);
-        const o2 = this.loadValuesFromMetadata(metadata.values);
-        return forkJoin({o1, o2}).pipe(map(() => {}));
+        const result$ = new ReplaySubject<void>(1);
+        this.loadConfigurationFromMetadata(metadata.configuration).subscribe(() => {
+            this.loadValuesFromMetadata(metadata.values).subscribe(() => {
+                result$.next();
+                result$.complete();
+            });
+        });
+        return result$.asObservable();
     }
 
     /**

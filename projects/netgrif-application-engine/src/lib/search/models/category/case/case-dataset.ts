@@ -12,7 +12,7 @@ import {EqualsDate} from '../../operator/equals-date';
 import {Substring} from '../../operator/substring';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
 import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {Category} from '../category';
@@ -37,6 +37,7 @@ import {Categories} from '../categories';
 import {FormControl} from '@angular/forms';
 import {Moment} from 'moment';
 import {CategoryMetadataConfiguration} from '../generator-metadata';
+import moment from 'moment';
 
 interface Datafield {
     netIdentifier: string;
@@ -49,7 +50,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     private static readonly _i18n = 'search.category.case.dataset';
     protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef'];
     protected static readonly DATAFIELD_METADATA = 'datafield';
-    private static readonly ICON = 'account_circle';
+    private static readonly AUTOCOMPLETE_ICON = 'account_circle';
 
     protected readonly _DATAFIELD_INPUT: ConfigurationInput;
 
@@ -58,6 +59,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected _configurationInputs$: BehaviorSubject<Array<ConfigurationInput>>;
 
     protected _datafieldOptions: Map<string, Array<Datafield>>;
+
+    private _datafieldOptionsInitialized$: ReplaySubject<void>;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -111,6 +114,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             }
             this._operatorFormControl.setValue(undefined);
         });
+    }
+
+    destroy() {
+        super.destroy();
+        this._configurationInputs$.complete();
     }
 
     get configurationInputs$(): Observable<Array<ConfigurationInput>> {
@@ -248,6 +256,10 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         return `${CaseDataset._i18n}.placeholder.value`;
     }
 
+    protected get datafieldOptionsInitialized$(): Observable<void> {
+        return this._datafieldOptionsInitialized$.asObservable();
+    }
+
     protected generateQuery(userInput: Array<unknown>): Query {
         const queryGenerationStrategy = this.isSelectedOperator(IsNull) ?
             (d, _) => this.isNullOperatorQueryGenerationStrategy(d) :
@@ -273,6 +285,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected createDatafieldOptions(): void {
+        this._datafieldOptionsInitialized$ = new ReplaySubject<void>(1);
         this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.immediateData
@@ -298,6 +311,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                         });
                     });
             });
+            this._datafieldOptionsInitialized$.next();
         });
     }
 
@@ -320,7 +334,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                         map(page => {
                             if (hasContent(page)) {
                                 return page.content.map(
-                                    user => ({text: user.fullName, value: [user.id], icon: CaseDataset.ICON})
+                                    user => ({text: user.fullName, value: [user.id], icon: CaseDataset.AUTOCOMPLETE_ICON})
                                 );
                             }
                             return [];
@@ -421,5 +435,35 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         const config = super.createMetadataConfiguration();
         config[CaseDataset.DATAFIELD_METADATA] = (this._DATAFIELD_INPUT.formControl.value as DatafieldMapKey).toSerializedForm();
         return config;
+    }
+
+    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): Observable<void> {
+        const result$ = new ReplaySubject<void>(1);
+        this.datafieldOptionsInitialized$.subscribe(() => {
+            const serializedMapKey = configuration[CaseDataset.DATAFIELD_METADATA] as string;
+            this.selectDatafields(serializedMapKey, false);
+            if (!this.hasSelectedDatafields) {
+                throw new Error(`Searched data fields cannot be restored from the provided configuration (${serializedMapKey
+                }). Make sure, that the correct allowed nets are provided in this view.`);
+            }
+            super.loadConfigurationFromMetadata(configuration).subscribe(() => {
+                result$.next();
+                result$.complete();
+            });
+        });
+        return result$.asObservable();
+    }
+
+    protected deserializeOperandValue(value: unknown): any {
+        switch (this.inputType) {
+            case SearchInputType.AUTOCOMPLETE:
+                const savedOption = value as SearchAutocompleteOption<Array<string>>;
+                return {...savedOption, icon: CaseDataset.AUTOCOMPLETE_ICON};
+            case SearchInputType.DATE:
+            case SearchInputType.DATE_TIME:
+                return moment(value as string);
+            default:
+                return super.deserializeOperandValue(value);
+        }
     }
 }
