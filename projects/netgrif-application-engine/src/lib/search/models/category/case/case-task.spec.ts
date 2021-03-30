@@ -116,19 +116,20 @@ describe('CaseTask', () => {
 
         // wait for autocomplete options to initialize
         deserialized.options$.pipe(filter(o => o.length > 0), take(1)).subscribe(() => {
-            deserialized.loadFromMetadata(metadata);
-            expect(deserialized.isOperatorSelected()).toBeTrue();
-            expect(deserialized.providesPredicate).toBeTrue();
+            deserialized.loadFromMetadata(metadata).subscribe(() => {
+                expect(deserialized.isOperatorSelected()).toBeTrue();
+                expect(deserialized.providesPredicate).toBeTrue();
 
-            expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
+                expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
 
-            const deserializedMetadata = deserialized.createMetadata();
-            expect(deserializedMetadata).toBeTruthy();
-            expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-            expect(deserializedMetadata.category).toEqual(metadata.category);
-            expect(deserializedMetadata.values).toEqual(metadata.values);
+                const deserializedMetadata = deserialized.createMetadata();
+                expect(deserializedMetadata).toBeTruthy();
+                expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
+                expect(deserializedMetadata.category).toEqual(metadata.category);
+                expect(deserializedMetadata.values).toEqual(metadata.values);
 
-            done();
+                done();
+            });
         });
     });
 });

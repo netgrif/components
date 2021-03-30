@@ -44,27 +44,30 @@ describe('CaseCreationDate', () => {
         expect(metadata.configuration?.operator).toBe(Operators.EQUALS_DATE);
     });
 
-    it('should deserialize stored instance', () => {
+    it('should deserialize stored instance', (done) => {
         configureCategory(category, operatorService, EqualsDate, [moment('2021-03-23')]);
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
         const deserialized = new CaseCreationDate(operatorService, null);
-        deserialized.loadFromMetadata(metadata);
-        expect(deserialized.isOperatorSelected()).toBeTrue();
-        expect(deserialized.providesPredicate).toBeTrue();
+        deserialized.loadFromMetadata(metadata).subscribe(() => {
+            expect(deserialized.isOperatorSelected()).toBeTrue();
+            expect(deserialized.providesPredicate).toBeTrue();
 
-        const originalMoment = (category as any)._operandsFormControls[0].value;
-        const deserializedMoment = (deserialized as any)._operandsFormControls[0].value;
+            const originalMoment = (category as any)._operandsFormControls[0].value;
+            const deserializedMoment = (deserialized as any)._operandsFormControls[0].value;
 
-        expect(moment.isMoment(originalMoment)).toBeTrue();
-        expect(moment.isMoment(deserializedMoment)).toBeTrue();
-        expect(deserializedMoment.isSame(originalMoment)).toBeTrue();
+            expect(moment.isMoment(originalMoment)).toBeTrue();
+            expect(moment.isMoment(deserializedMoment)).toBeTrue();
+            expect(deserializedMoment.isSame(originalMoment)).toBeTrue();
 
-        const deserializedMetadata = deserialized.createMetadata();
-        expect(deserializedMetadata).toBeTruthy();
-        expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-        expect(deserializedMetadata.category).toEqual(metadata.category);
-        expect(deserializedMetadata.values).toEqual(metadata.values);
+            const deserializedMetadata = deserialized.createMetadata();
+            expect(deserializedMetadata).toBeTruthy();
+            expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
+            expect(deserializedMetadata.category).toEqual(metadata.category);
+            expect(deserializedMetadata.values).toEqual(metadata.values);
+
+            done();
+        });
     });
 });

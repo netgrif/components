@@ -4,7 +4,7 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, forkJoin, Observable, ReplaySubject} from 'rxjs';
 import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
@@ -13,6 +13,7 @@ import {CategoryGeneratorMetadata, CategoryMetadataConfiguration} from './genera
 import {Categories} from './categories';
 import {OperatorService} from '../../operator-service/operator.service';
 import {Operators} from '../operator/operators';
+import {ofVoid} from '../../../utility/of-void';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -401,10 +402,13 @@ export abstract class Category<T> {
      * Restores the saved state contained in the provided metadata.
      *
      * @param metadata the metadata created by calling the [createMetadata()]{@link Category#createMetadata} method
+     *
+     * @returns an Observable. When the Observable emits the category has finished restoring its state.
      */
-    public loadFromMetadata(metadata: CategoryGeneratorMetadata): void {
-        this.loadConfigurationFromMetadata(metadata.configuration);
-        this.loadValuesFromMetadata(metadata.values);
+    public loadFromMetadata(metadata: CategoryGeneratorMetadata): Observable<void> {
+        const o1 = this.loadConfigurationFromMetadata(metadata.configuration);
+        const o2 = this.loadValuesFromMetadata(metadata.values);
+        return forkJoin({o1, o2}).pipe(map(() => {}));
     }
 
     /**
@@ -527,10 +531,13 @@ export abstract class Category<T> {
      * If the Category overrides the serialization method, it must override this method as well.
      *
      * @param configuration the serialized configuration
+     *
+     * @returns an Observable. When the Observable emits the category has finished loading its configuration.
      */
-    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): void {
+    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): Observable<void> {
         const resolvedOperator = this._operatorService.getFromMetadata(configuration[Category.OPERATOR_METADATA] as Operators | string);
         this.selectOperator(this.allowedOperators.findIndex(op => op === resolvedOperator));
+        return ofVoid();
     }
 
     /**
@@ -544,8 +551,10 @@ export abstract class Category<T> {
      * override its deserialization counterpart - [deserializeOperandValue()]{@link #Category#deserializeOperandValue}!
      *
      * @param values the serialized values that should be loaded into this Category instance
+     *
+     * @returns an Observable. When the Observable emits the category has finished loading its values.
      */
-    protected loadValuesFromMetadata(values: Array<unknown>): void {
+    protected loadValuesFromMetadata(values: Array<unknown>): Observable<void> {
         if (!this.isOperatorSelected()) {
             throw new Error('An operator must be selected before Category values can be resolved from metadata!');
         }
@@ -555,6 +564,7 @@ export abstract class Category<T> {
         }
         const deserializedValues = values.map(v => this.deserializeOperandValue(v));
         this.setOperands(deserializedValues);
+        return ofVoid();
     }
 
     /**

@@ -43,22 +43,25 @@ describe('CaseTitle', () => {
         expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
     });
 
-    it('should deserialize stored instance', () => {
+    it('should deserialize stored instance', (done) => {
         configureCategory(category, operatorService, Equals, ['foo']);
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
         const deserialized = new CaseTitle(operatorService, null);
-        deserialized.loadFromMetadata(metadata);
-        expect(deserialized.isOperatorSelected()).toBeTrue();
-        expect(deserialized.providesPredicate).toBeTrue();
+        deserialized.loadFromMetadata(metadata).subscribe(() => {
+            expect(deserialized.isOperatorSelected()).toBeTrue();
+            expect(deserialized.providesPredicate).toBeTrue();
 
-        expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
+            expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
 
-        const deserializedMetadata = deserialized.createMetadata();
-        expect(deserializedMetadata).toBeTruthy();
-        expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
-        expect(deserializedMetadata.category).toEqual(metadata.category);
-        expect(deserializedMetadata.values).toEqual(metadata.values);
+            const deserializedMetadata = deserialized.createMetadata();
+            expect(deserializedMetadata).toBeTruthy();
+            expect(deserializedMetadata.configuration).toEqual(metadata.configuration);
+            expect(deserializedMetadata.category).toEqual(metadata.category);
+            expect(deserializedMetadata.values).toEqual(metadata.values);
+
+            done();
+        });
     });
 });

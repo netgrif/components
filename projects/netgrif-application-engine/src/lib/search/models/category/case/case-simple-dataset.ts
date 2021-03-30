@@ -15,6 +15,7 @@ import {DatafieldMapKey} from '../../datafield-map-key';
 import {SearchIndex} from '../../search-index';
 import {Categories} from '../categories';
 import {CategoryGeneratorMetadata} from '../generator-metadata';
+import {Observable} from 'rxjs';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -159,7 +160,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     /**
      * Deserialization is not supported. Throws an error.
      */
-    loadFromMetadata(metadata: CategoryGeneratorMetadata): never {
+    loadFromMetadata(metadata: CategoryGeneratorMetadata): Observable<void> {
         throw new Error('CaseSimpleDataset does not support deserialization!');
     }
 }
