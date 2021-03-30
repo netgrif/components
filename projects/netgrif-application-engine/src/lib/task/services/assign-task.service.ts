@@ -67,7 +67,7 @@ export class AssignTaskService extends TaskHandlingService {
             if (!this._taskViewService.isEmptyQueue()) {
                 this._taskViewService.popQueue().subscribe(() => {
                     this._taskState.startLoading(assignedTaskId);
-                    this.assignRequest(afterAction, assignedTaskId, sub);
+                    this.assignRequest(afterAction, assignedTaskId, sub, true);
                 });
                 this._taskViewService.addToQueue(sub);
                 return;
@@ -78,7 +78,8 @@ export class AssignTaskService extends TaskHandlingService {
         this.assignRequest(afterAction, assignedTaskId, sub);
     }
 
-    protected assignRequest(afterAction = new Subject<boolean>(), assignedTaskId: string, queueAction = new Subject<boolean>()) {
+    protected assignRequest(afterAction = new Subject<boolean>(), assignedTaskId: string,
+                            queueAction = new Subject<boolean>(), fromQueue = false) {
         this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(assignedTaskId);
             if (!this.isTaskRelevant(assignedTaskId)) {
@@ -89,7 +90,7 @@ export class AssignTaskService extends TaskHandlingService {
             if (eventOutcome.success) {
                 this._taskContentService.updateStateData(eventOutcome);
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
-                this._taskOperations.reload();
+                fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, queueAction, true);
             } else if (eventOutcome.error) {
                 this._snackBar.openErrorSnackBar(eventOutcome.error);
