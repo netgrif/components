@@ -381,7 +381,7 @@
     },
     "publicView": {
         "resolving" : "Public view is loading ...",
-        "netNotExist": "Process doesn't exists",
+        "netNotExist": "The process does not exists",
         "errorCreate": "Error while creating case "
     }
 }
