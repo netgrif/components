@@ -14,6 +14,7 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
     private static readonly _i18n = 'search.category.task.process';
 
     private _allowedNetsSub: Subscription;
+    private _destroyed: boolean;
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processId'],
@@ -25,12 +26,17 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
 
     destroy() {
         super.destroy();
-        if (!this._allowedNetsSub.closed) {
+        if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
             this._allowedNetsSub.unsubscribe();
         }
+        this._destroyed = true;
     }
 
     protected createOptions(): void {
+        if (this._destroyed) {
+            return;
+        }
+
         this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this._optionsMap.clear();
             allowedNets.forEach(petriNet => {

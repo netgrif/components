@@ -15,6 +15,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     protected _uniqueOptionsMap: Map<string, Set<string>>;
     private _allowedNetsSub: Subscription;
+    private _destroyed: boolean;
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processIdentifier'],
@@ -27,12 +28,17 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     destroy() {
         super.destroy();
-        if (!this._allowedNetsSub.closed) {
+        if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
             this._allowedNetsSub.unsubscribe();
         }
+        this._destroyed = true;
     }
 
     protected createOptions(): void {
+        if (this._destroyed) {
+            return;
+        }
+
         this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this._optionsMap.clear();
             allowedNets.forEach(petriNet => {

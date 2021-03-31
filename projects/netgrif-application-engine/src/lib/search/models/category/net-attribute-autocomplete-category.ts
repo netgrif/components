@@ -19,6 +19,7 @@ import {OptionalDependencies} from '../../category-factory/optional-dependencies
 export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAutocompleteCategory<NetAttributePair> {
 
     private _allowedNetsSub: Subscription;
+    private _destroyed: boolean;
 
     protected constructor(elasticKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
@@ -31,12 +32,17 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
 
     destroy() {
         super.destroy();
-        if (!this._allowedNetsSub.closed) {
+        if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
             this._allowedNetsSub.unsubscribe();
         }
+        this._destroyed = true;
     }
 
     protected createOptions(): void {
+        if (this._destroyed) {
+            return;
+        }
+
         this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             this._optionsMap.clear();
             allowedNets.forEach(petriNet => {

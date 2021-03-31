@@ -12,7 +12,7 @@ import {EqualsDate} from '../../operator/equals-date';
 import {Substring} from '../../operator/substring';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
-import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, of, ReplaySubject, Subscription} from 'rxjs';
 import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {Category} from '../category';
@@ -61,6 +61,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected _datafieldOptions: Map<string, Array<Datafield>>;
 
     private _datafieldOptionsInitialized$: ReplaySubject<void>;
+    private _allowedNetsSub: Subscription;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -119,6 +120,10 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     destroy() {
         super.destroy();
         this._configurationInputs$.complete();
+        this._datafieldOptionsInitialized$.complete();
+        if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
+            this._allowedNetsSub.unsubscribe();
+        }
     }
 
     get configurationInputs$(): Observable<Array<ConfigurationInput>> {
@@ -286,7 +291,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected createDatafieldOptions(): void {
         this._datafieldOptionsInitialized$ = new ReplaySubject<void>(1);
-        this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+        this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.immediateData
                     .filter(immediateData => {
