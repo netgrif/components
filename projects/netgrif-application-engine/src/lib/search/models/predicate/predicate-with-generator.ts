@@ -20,12 +20,7 @@ export class PredicateWithGenerator extends Predicate {
         super();
         this._visible = initiallyVisible ?? !_generator;
         this._metadataGenerator = () => {
-            if (!this._generator) {
-                return this._predicate.createGeneratorMetadata();
-            } else {
-                // TODO
-                throw new Error('TODO');
-            }
+            return this._predicate.createGeneratorMetadata();
         };
     }
 
