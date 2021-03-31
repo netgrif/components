@@ -47,6 +47,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._forceLoadDataOnOpen = force;
         this._assignPolicyService.forced = force;
     }
+    @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
      */
@@ -60,6 +61,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     protected _subOperationOpen: Subscription;
     protected _subOperationClose: Subscription;
     protected _subOperationReload: Subscription;
+    protected _subOperationForceReload: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
 
@@ -96,6 +98,9 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         });
         this._subOperationReload = _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
+        });
+        this._subOperationForceReload = _taskOperations.forceReload$.subscribe(() => {
+            this._taskViewService.reloadCurrentPage(true);
         });
         this._taskDisableButtonFunctions = {
             finish: (t: Task) => false,
@@ -313,6 +318,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subOperationOpen.unsubscribe();
         this._subOperationClose.unsubscribe();
         this._subOperationReload.unsubscribe();
+        this._subOperationForceReload.unsubscribe();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
     }

@@ -29,6 +29,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
     protected _headerChange$: Subject<HeaderChange>;
     protected _clearHeaderSearch$: Subject<number>;
     private _initDefaultHeaders: Array<string>;
+    private _initializedCount: boolean;
 
     public loading: LoadingEmitter;
     public fieldsGroup: Array<FieldsGroup>;
@@ -44,6 +45,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         this._responsiveHeaders$ = new BehaviorSubject<boolean>(AbstractHeaderService.DEFAULT_HEADER_RESPONSIVITY);
         this._preferenceColumnCount$ = new ReplaySubject<number>();
         this._clearHeaderSearch$ = new Subject<number>();
+        this._initializedCount = false;
 
         if (this._viewIdService === null) {
             this._logger.warn('Header service could not inject ViewIdService! User preferences won\'t be loaded or saved!');
@@ -79,7 +81,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
         if (maxColumns !== this.headerColumnCount) {
             this._headerColumnCount$.next(maxColumns);
             this.updateHeaderColumnCount();
-            this.initializeDefaultHeaderState();
+            if (!this._initializedCount) {
+                this.initializeDefaultHeaderState();
+                this._initializedCount = true;
+            }
         }
     }
 
