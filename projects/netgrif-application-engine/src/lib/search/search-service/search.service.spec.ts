@@ -13,6 +13,11 @@ import {
 } from '../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {CaseCreationDate} from '../models/category/case/case-creation-date';
+import moment from 'moment';
+import {CaseVisualId} from '../models/category/case/case-visual-id';
+import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
+import {CategoryGeneratorMetadata} from '../models/category/generator-metadata';
 
 describe('SearchService', () => {
     let service: SearchService;
@@ -66,6 +71,63 @@ describe('SearchService', () => {
         expect(service.additionalFiltersApplied).toBeTrue();
         expect(service.rootPredicate.getPredicateMap().has(id)).toBeTrue();
         expect(service.rootPredicate.getPredicateMap().get(id)).toBeTruthy();
+    });
+
+    describe('serialization / deserialization', () => {
+        let serializedSearch: Array<Array<CategoryGeneratorMetadata>>;
+
+        beforeEach(() => {
+            const predicate1 = categoryFactory.getWithDefaultOperator(CaseTitle);
+            predicate1.setOperands(['title']);
+
+            const predicate2 = categoryFactory.getWithDefaultOperator(CaseCreationDate);
+            predicate2.setOperands([moment('2021-03-31').valueOf()]);
+
+            const predicate3 = categoryFactory.getWithDefaultOperator(CaseVisualId);
+            predicate3.setOperands(['visualId']);
+
+            const meta1 = predicate1.createMetadata();
+            expect(meta1).toBeTruthy();
+            const meta2 = predicate2.createMetadata();
+            expect(meta2).toBeTruthy();
+            const meta3 = predicate3.createMetadata();
+            expect(meta3).toBeTruthy();
+
+            serializedSearch = [[meta1, meta2], [meta3]];
+        });
+
+        it('should deserialize saved search', (done) => {
+            expect(service.additionalFiltersApplied).toBeFalse();
+
+            service.populatePredicateFromGeneratorMetadata(serializedSearch);
+            service.activeFilter$.subscribe(f => {
+                expect(service.additionalFiltersApplied).toBeTrue();
+
+                expect(f).toBeTruthy();
+                const filters = f.getRequestBody() as Array<CaseSearchRequestBody>;
+                expect(Array.isArray(filters)).toBeTrue();
+                expect(filters.length).toBe(2);
+                expect(filters[0]).toEqual({});
+                expect(filters[1].query).toBeTruthy();
+
+                done();
+            });
+        });
+
+        it('should serialize search', (done) => {
+            expect(service.additionalFiltersApplied).toBeFalse();
+
+            service.populatePredicateFromGeneratorMetadata(serializedSearch);
+            service.activeFilter$.subscribe(f => {
+                expect(service.additionalFiltersApplied).toBeTrue();
+
+                const serialized = service.createPredicateGeneratorMetadata();
+                expect(serialized).toBeTruthy();
+                expect(serialized).toEqual(serializedSearch);
+
+                done();
+            });
+        });
     });
 
     afterEach(() => {

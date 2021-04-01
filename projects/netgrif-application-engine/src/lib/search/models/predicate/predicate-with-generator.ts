@@ -20,7 +20,14 @@ export class PredicateWithGenerator extends Predicate {
         super();
         this._visible = initiallyVisible ?? !_generator;
         this._metadataGenerator = () => {
-            return this._predicate.createGeneratorMetadata();
+            try {
+                return this._predicate.createGeneratorMetadata();
+            } catch (e) {
+                if (this._generator && this._generator.providesPredicate) {
+                    return this._generator.createMetadata();
+                }
+                throw e;
+            }
         };
     }
 
