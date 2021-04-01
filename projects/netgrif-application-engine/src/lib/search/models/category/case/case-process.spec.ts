@@ -38,9 +38,9 @@ describe('CaseProcess', () => {
 
     it('should select default operator', () => {
         allowedNets$.next([]);
-        expect(category.isOperatorSelected).toBeFalse();
+        expect(category.isOperatorSelected()).toBeFalse();
         category.selectDefaultOperator();
-        expect(category.isOperatorSelected).toBeTrue();
+        expect(category.isOperatorSelected()).toBeTrue();
     });
 
     it('should join operands correctly', () => {

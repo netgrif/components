@@ -25,9 +25,9 @@ describe('CaseCreationDate', () => {
     });
 
     it('should select default operator', () => {
-        expect(category.isOperatorSelected).toBeFalse();
+        expect(category.isOperatorSelected()).toBeFalse();
         category.selectDefaultOperator();
-        expect(category.isOperatorSelected).toBeTrue();
+        expect(category.isOperatorSelected()).toBeTrue();
     });
 
     it('should not serialize incomplete instance', () => {
