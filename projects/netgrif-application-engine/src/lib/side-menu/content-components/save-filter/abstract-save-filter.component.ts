@@ -27,19 +27,19 @@ export abstract class AbstractSaveFilterComponent {
     }
 
     public save() {
-        this._filterService.save(this._injectedData.filter, this._injectedData.searchMetadata,
-            this.titleFormControl.value, this.descriptionFormControl.value)
-            .subscribe(success => {
-                if (success) {
-                    // TODO i18n
-                    this._snackBar.openSuccessSnackBar('Filter saved successfully');
-                } else {
-                    this.showErrorSnackBar();
-                }
-            }, error => {
-                this._log.error('Filter save failed', error);
-                this.showErrorSnackBar();
-            });
+        // this._filterService.save(this._injectedData.filter, this._injectedData.searchMetadata,
+        //     this.titleFormControl.value, this.descriptionFormControl.value)
+        //     .subscribe(success => {
+        //         if (success) {
+        //             // TODO i18n
+        //             this._snackBar.openSuccessSnackBar('Filter saved successfully');
+        //         } else {
+        //             this.showErrorSnackBar();
+        //         }
+        //     }, error => {
+        //         this._log.error('Filter save failed', error);
+        //         this.showErrorSnackBar();
+        //     });
     }
 
     protected showErrorSnackBar() {

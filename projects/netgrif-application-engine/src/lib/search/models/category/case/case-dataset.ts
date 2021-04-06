@@ -48,7 +48,7 @@ interface Datafield {
 export class CaseDataset extends Category<Datafield> implements AutocompleteOptions {
 
     private static readonly _i18n = 'search.category.case.dataset';
-    protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef'];
+    protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef', 'filter'];
     protected static readonly DATAFIELD_METADATA = 'datafield';
     private static readonly AUTOCOMPLETE_ICON = 'account_circle';
 

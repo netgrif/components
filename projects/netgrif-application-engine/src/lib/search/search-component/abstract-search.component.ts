@@ -10,6 +10,7 @@ import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {SideMenuSize} from '../../side-menu/models/side-menu-size';
 import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/injection-tokens';
 import {ComponentType} from '@angular/cdk/portal';
+import {UserFiltersService} from '../../filter/user-filters.service';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -39,6 +40,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _dialogService: DialogService,
                           protected _translate: TranslateService,
                           protected _sideMenuService: SideMenuService,
+                          protected _userFilterService: UserFiltersService,
                           @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
                           @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _sideMenuComponent: ComponentType<unknown>) {
         if (this._configuration === null) {
@@ -109,13 +111,15 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     }
 
     public saveFilter(): void {
-        this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
-            filter: this._searchService.activeFilter,
-            searchMetadata: {
-                // TODO allowedNets
-                allowedNets: [],
-                generatorMetadata: this._searchService.createPredicateGeneratorMetadata()
-            }
+        // TODO allowedNets
+        this._userFilterService.save(this._searchService, []).subscribe(filterCaseId => {
+            this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
+                filter: this._searchService.activeFilter,
+                searchMetadata: {
+                    allowedNets: [],
+                    generatorMetadata: this._searchService.createPredicateGeneratorMetadata()
+                }
+            });
         });
     }
 }
