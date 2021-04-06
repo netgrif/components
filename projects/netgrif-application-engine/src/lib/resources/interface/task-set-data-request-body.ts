@@ -1,3 +1,5 @@
+import {FilterMetadata} from '../../search/models/category/generator-metadata';
+
 /**
  * Describes request body for task setData endpoint.
  *
@@ -15,7 +17,15 @@ export interface TaskSetDataRequestBody {
         /**
          * new value
          */
-        value: any;
+        value?: any;
+        /**
+         * new `allowed nets` (for field types that support this)
+         */
+        allowedNets?: Array<string>;
+        /**
+         * new `filterMetadata` (for field types that support this)
+         */
+        filterMetadata?: FilterMetadata;
     };
 }
 

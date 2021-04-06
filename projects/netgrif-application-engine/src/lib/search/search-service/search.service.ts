@@ -10,11 +10,12 @@ import {Query} from '../models/query/query';
 import {distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
-import {CategoryGeneratorMetadata} from '../models/category/generator-metadata';
+import {CategoryGeneratorMetadata, FilterMetadata} from '../models/category/generator-metadata';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {BaseFilter} from '../models/base-filter';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CategoryFactory} from '../category-factory/category-factory';
+import {FilterType} from '../../filter/models/filter-type';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -46,7 +47,7 @@ export class SearchService implements OnDestroy {
      * The `rootPredicate` uses this stream to notify the search service about changes to the held query
      */
     private readonly _predicateQueryChanged$: Subject<void>;
-    private subFilter: Subscription;
+    private readonly subFilter: Subscription;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
@@ -141,6 +142,13 @@ export class SearchService implements OnDestroy {
      */
     public get rootPredicate(): EditableClausePredicateWithGenerators {
         return this._rootPredicate;
+    }
+
+    /**
+     * @returns the type of the filter held in this search service instance
+     */
+    public get filterType(): FilterType {
+        return this.baseFilter.type;
     }
 
     /**
@@ -263,8 +271,8 @@ export class SearchService implements OnDestroy {
         }
     }
 
-    public createPredicateGeneratorMetadata(): Array<Array<CategoryGeneratorMetadata>> | undefined {
-        return this._rootPredicate.createGeneratorMetadata() as Array<Array<CategoryGeneratorMetadata>>;
+    public createPredicateGeneratorMetadata(): FilterMetadata | undefined {
+        return this._rootPredicate.createGeneratorMetadata() as FilterMetadata;
     }
 
     /**
@@ -274,7 +282,7 @@ export class SearchService implements OnDestroy {
      *
      * @param metadata
      */
-    public populatePredicateFromGeneratorMetadata(metadata: Array<Array<CategoryGeneratorMetadata>>) {
+    public populatePredicateFromGeneratorMetadata(metadata: FilterMetadata) {
         if (this._categoryFactory === null) {
             this._log.error('A CategoryFactory instance must be provided for the SearchService'
                 + ' if you want to reconstruct a predicate filter from saved metadata');
