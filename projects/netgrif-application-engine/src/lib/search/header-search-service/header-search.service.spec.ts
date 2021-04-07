@@ -7,12 +7,12 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
-import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../material/material.module';
 import {SearchService} from '../search-service/search.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
 
 describe('HeaderSearchService', () => {
     let service: HeaderSearchService;
@@ -28,11 +28,11 @@ describe('HeaderSearchService', () => {
             providers: [
                 HeaderSearchService,
                 CategoryFactory,
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {provide: SearchService, useFactory: TestCaseSearchServiceFactory},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [ConfigCaseViewServiceFactory]}
+                {provide: CaseViewService, useFactory: TestCaseViewFactory, deps: [CaseViewServiceFactory]}
             ]
         });
         service = TestBed.inject(HeaderSearchService);

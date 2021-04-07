@@ -18,3 +18,28 @@
 .width-100 {
     width: 100%;
 }
+
+.text-column-ellipsis {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.text-column-word-wrap {
+    word-break: break-word !important;
+}
+
+.text-column-div {
+    min-width: 0;
+    width: 0;
+}
+
+.text-column-margin {
+    margin-right: 15px;
+    line-height: 24px;
+}
+
+.panel-header-padding {
+    padding: 12px 0 !important;
+}
+

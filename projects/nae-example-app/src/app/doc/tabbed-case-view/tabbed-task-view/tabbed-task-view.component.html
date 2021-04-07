@@ -2,6 +2,6 @@
     <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height" >
         <mat-card class="search-panel"><nc-search class="search-width"></nc-search></mat-card>
         <nc-header #header type="task" class="task-panel-padding-mini"></nc-header>
-        <nc-task-list [tasks$]="tasks$" [loading$]="loading$" [selectedHeaders$]="selectedHeaders$" fxFlex></nc-task-list>
+        <nc-task-list [tasks$]="tasks$" [loading$]="loading$" [allowMultiOpen]="false" [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true" fxFlex></nc-task-list>
     </div>
 </div>
