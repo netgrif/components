@@ -6,7 +6,6 @@ import {MaterialModule} from '../../../material/material.module';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {Observable, of} from 'rxjs';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {ConfigCaseViewServiceFactory} from './factory/config-case-view-service-factory';
 import {SearchService} from '../../../search/search-service/search.service';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {FilterType} from '../../../filter/models/filter-type';
@@ -24,9 +23,10 @@ import {Net} from '../../../process/net';
 import {UserService} from '../../../user/services/user.service';
 import {MockUserService} from '../../../utility/tests/mocks/mock-user.service';
 import {User} from '../../../user/models/user';
+import {CaseViewServiceFactory} from './factory/case-view-service-factory';
 
-const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('cases');
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.createFromConfig('cases');
 };
 
 const searchServiceFactory = () => {
@@ -51,12 +51,12 @@ describe('CaseViewService', () => {
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: UserService, useClass: MockUserService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: CaseViewService,
                     useFactory: localCaseViewServiceFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {
                     provide: SearchService,
