@@ -27,6 +27,7 @@
 
 .text-column-word-wrap {
     word-break: break-word !important;
+    white-space: pre-line !important;
 }
 
 .text-column-div {
@@ -43,3 +44,6 @@
     padding: 12px 0 !important;
 }
 
+.pre-line-dialog {
+    white-space: pre-line !important;
+}

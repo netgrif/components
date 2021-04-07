@@ -16,8 +16,8 @@
                     [class.do-not-click]="state.uploading">
                 <mat-icon>file_upload</mat-icon>
             </button>
-            <span (click)="download()" fxFlex [matTooltip]="isEmpty() ? '' : ('dataField.file.clickToDownload' | translate : {fileName: name})"
-                  class="input-name-ellipsis" [ngClass]="{'input-placeholder': isEmpty()}">{{name}}</span>
+            <span (click)="isEmpty() ? chooseFile() : download()" fxFlex [matTooltip]="isEmpty() ? '' : ('dataField.file.clickToDownload' | translate : {fileName: name})"
+                  class="input-name-ellipsis" [ngClass]="{'input-placeholder': isEmpty(), 'no-cursor': isEmpty() && formControl.disabled}">{{name}}</span>
             <button (click)="deleteFile()" [matTooltip]="'dataField.file.clickToDelete' | translate" mat-icon-button *ngIf="!isEmpty() && !formControl.disabled">
                 <mat-icon color="warn">close</mat-icon>
             </button>

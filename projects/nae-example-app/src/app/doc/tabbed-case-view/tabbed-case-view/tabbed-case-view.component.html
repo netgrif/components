@@ -15,6 +15,6 @@
 
     <nc-header #header [type]="headerType" class="case-header-padding" [maxHeaderColumns]="9"></nc-header>
 
-    <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="true"
+    <nc-case-list [selectedHeaders$]="selectedHeaders$" [textEllipsis]="false"
                    (caseClick)="handleCaseClick($event)" fxFlex></nc-case-list>
 </div>

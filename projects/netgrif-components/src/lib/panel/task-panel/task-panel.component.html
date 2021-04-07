@@ -26,7 +26,10 @@
                     <span [ngClass]="{
                                  'text-column-ellipsis': textEllipsis,
                                  'text-column-word-wrap': !textEllipsis
-                              }">{{field.type === 'button' ? '' : field.value }}</span>
+                              }" [matTooltip]="field.value"
+                          [matTooltipDisabled]="!textEllipsis"
+                          [matTooltipClass]="'pre-line-dialog'"
+                    >{{field.type === 'button' ? '' : field.value }}</span>
                 </span>
             </div>
         </div>
