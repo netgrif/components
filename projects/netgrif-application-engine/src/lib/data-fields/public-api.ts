@@ -28,6 +28,7 @@ export * from './text-field/html-textarea-field/abstract-html-textarea-field.com
 export * from './text-field/password-text-field/abstract-password-text-field.component';
 export * from './text-field/textarea-field/abstract-textarea-field.component';
 export * from './user-field/abstract-user-field.component';
+export * from './enumeration-field/enumeration-autocomplete-dynamic-field/abstract-enumeration-autocomplete-dynamic-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -46,6 +47,7 @@ export * from './date-time-field/models/date-time-field';
 export * from './button-field/models/button-field';
 export * from './date-field/models/custom-date-adapter';
 export * from './task-ref-field/model/task-ref-field';
+export * from './enumeration-field/models/dynamic-enumeration-field';
 
 /* Interfaces */
 export * from './models/changed-fields';

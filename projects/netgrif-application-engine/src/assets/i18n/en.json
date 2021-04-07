@@ -219,6 +219,9 @@
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
             "clickToDelete": "Click to delete file"
+        },
+        "dynamicEnum" : {
+            "noData": "No items match your search"
         }
     },
     "dialog": {

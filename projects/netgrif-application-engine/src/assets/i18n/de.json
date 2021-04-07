@@ -219,6 +219,9 @@
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
+        },
+        "dynamicEnum" : {
+            "noData": "Keine Einträge entsprechen Ihrer Suchanfrage"
         }
     },
     "dialog": {

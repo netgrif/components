@@ -219,6 +219,9 @@
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToDelete": "Kliknutím vymažte súbor"
+        },
+        "dynamicEnum" : {
+            "noData": "Vášmu vyhľadávaniu nezodpovedajú žiadne položky"
         }
     },
     "dialog": {
