@@ -23,7 +23,7 @@ import {
     AuthenticationService,
     PublicUrlResolverService,
     publicSearchServiceFactory,
-    publicFactoryResolver
+    publicFactoryResolver, Task, NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -64,6 +64,13 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         new PublicCaseResourceService(provider, config));
 };
 
+const disableButtonsFactory = () => {
+    return {
+        reassign: (t: Task) => true,
+        delegate: (t: Task) => true
+    };
+};
+
 @Component({
     selector: 'nae-app-public-task-view',
     templateUrl: './public-task-view.component.html',
@@ -98,6 +105,9 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
             useFactory: localTaskViewServiceFactory,
             deps: [TaskViewServiceFactory]
         },
+        {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+            useFactory: disableButtonsFactory
+        }
     ]
 })
 export class PublicTaskViewComponent extends AbstractTaskView implements AfterViewInit {

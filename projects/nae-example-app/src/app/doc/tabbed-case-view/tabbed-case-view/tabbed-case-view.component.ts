@@ -1,17 +1,24 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CaseViewService,
+    CategoryFactory,
+    defaultCaseSearchCategoriesFactory,
+    FilterType,
     InjectedTabbedCaseViewData,
     LoggerService,
+    NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SearchService,
     SimpleFilter,
     TabbedCaseView,
     CaseViewServiceFactory,
-    ViewIdService, NAE_SEARCH_CATEGORIES,
-    defaultCaseSearchCategoriesFactory, CategoryFactory, NAE_NEW_CASE_CONFIGURATION, InjectedTabData
+    ViewIdService,
+    Filter,
+    NAE_NEW_CASE_CONFIGURATION,
+    InjectedTabData
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
+import {Subject} from 'rxjs';
 
 interface ExampleInjectedData extends InjectedTabData {
     exampleUseCache: boolean;
@@ -22,7 +29,11 @@ const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
 };
 
 const searchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyCaseFilter());
+    const filter = new Subject<Filter>();
+    setTimeout(() => {
+        filter.next(SimpleFilter.emptyCaseFilter());
+    }, 1000);
+    return new SearchService(filter.asObservable(), FilterType.CASE);
 };
 
 const newCaseConfigFactory = (injectedTabData: ExampleInjectedData) => {
