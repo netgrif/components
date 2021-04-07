@@ -219,6 +219,9 @@
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
             "clickToDelete": "Click to delete file"
+        },
+        "dynamicEnum" : {
+            "noData": "No items match your search"
         }
     },
     "dialog": {
@@ -378,5 +381,10 @@
         "and": "and",
         "privacyNotice": "Privacy Notice",
         "sentenceEnd": ""
+    },
+    "publicView": {
+        "resolving" : "Public view is loading ...",
+        "netNotExist": "The process does not exists",
+        "errorCreate": "Error while creating case "
     }
 }

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
-    ConfigTaskViewServiceFactory,
+    TaskViewServiceFactory,
     SearchService,
     SimpleFilter,
     TaskEventNotification,
@@ -15,8 +15,8 @@ import {
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('case');
+const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
+    return factory.createFromConfig('case');
 };
 
 const searchServiceFactory = () => {
@@ -47,12 +47,12 @@ const disableButtonsFactory = () => {
     styleUrls: ['./task-view.component.scss'],
     providers: [
         CategoryFactory,
-        ConfigTaskViewServiceFactory,
+        TaskViewServiceFactory,
         {   provide: SearchService,
             useFactory: searchServiceFactory},
         {   provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]},
+            deps: [TaskViewServiceFactory]},
         {   provide: NAE_DEFAULT_HEADERS, useValue: [
                 'meta-case', 'meta-title', 'meta-priority', 'meta-priority',
                 'meta-user', 'all_data-number', 'all_data-text'

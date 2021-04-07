@@ -46,6 +46,9 @@ import { PreviewDialogComponent } from './file-field/preview-dialog/preview-dial
 import {MatDialogModule} from '@angular/material/dialog';
 import { EnumerationStepperFieldComponent } from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
 import { EnumerationIconFieldComponent } from './enumeration-field/enumeration-icon-field/enumeration-icon-field.component';
+import {
+    EnumerationAutocompleteDynamicFieldComponent
+} from './enumeration-field/enumeration-autocomplete-dynamic-field/enumeration-autocomplete-dynamic-field.component';
 
 @NgModule({
     declarations: [
@@ -77,7 +80,8 @@ import { EnumerationIconFieldComponent } from './enumeration-field/enumeration-i
         PreviewDialogComponent,
         NumberDefaultFieldComponent,
         EnumerationStepperFieldComponent,
-        EnumerationIconFieldComponent
+        EnumerationIconFieldComponent,
+        EnumerationAutocompleteDynamicFieldComponent
     ],
     exports: [
         BooleanFieldComponent,

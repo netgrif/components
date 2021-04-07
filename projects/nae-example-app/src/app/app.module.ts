@@ -30,7 +30,6 @@ import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-exampl
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
 import {ContentComponent} from './doc/tab-view-example/content/content.component';
-import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
@@ -103,7 +102,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         SnackBarExampleComponent,
         DialogExampleComponent,
         TabViewExampleComponent,
-        ReactiveTextFieldComponent,
         ToolbarExampleComponent,
         TaskViewComponent,
         CaseViewComponent,
@@ -195,7 +193,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         SnackBarExampleComponent,
         DialogExampleComponent,
         TabViewExampleComponent,
-        ReactiveTextFieldComponent,
         ToolbarExampleComponent,
         PanelsComponent,
         TaskViewComponent,

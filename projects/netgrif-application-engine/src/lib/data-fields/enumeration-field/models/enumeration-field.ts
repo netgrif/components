@@ -26,9 +26,9 @@ export enum EnumerationFieldValidation {
 export class EnumerationField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string,
-                private _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
-                layout?: Layout, private _view = EnumerationFieldView.DEFAULT,
-                private readonly _fieldType = FieldTypeResource.ENUMERATION, component?: Component) {
+                protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
+                layout?: Layout, protected _view = EnumerationFieldView.DEFAULT,
+                protected readonly _fieldType = FieldTypeResource.ENUMERATION, component?: Component) {
         super(stringId, title, value, behavior, placeholder, description, layout, component);
     }
 

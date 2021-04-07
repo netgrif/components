@@ -49,6 +49,7 @@ export class FinishPolicyService extends TaskHandlingService {
             this._taskOperations.open();
             this._dataFocusPolicyService.performDataFocusPolicy();
             afterAction.next(true);
+            afterAction.complete();
         }
     }
 
@@ -63,5 +64,6 @@ export class FinishPolicyService extends TaskHandlingService {
         this._taskOperations.open();
         this._dataFocusPolicyService.performDataFocusPolicy();
         afterAction.next(true);
+        afterAction.complete();
     }
 }

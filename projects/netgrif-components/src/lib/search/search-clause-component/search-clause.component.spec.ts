@@ -7,7 +7,7 @@ import {Subject} from 'rxjs';
 import {
     AuthenticationMethodService,
     BooleanOperator, CaseViewService,
-    CategoryFactory, ConfigCaseViewServiceFactory, ConfigurationService, defaultCaseSearchCategoriesFactory,
+    CategoryFactory, CaseViewServiceFactory, ConfigurationService, defaultCaseSearchCategoriesFactory,
     EditableClausePredicate,
     MaterialModule, MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory, TestConfigurationService,
@@ -38,9 +38,9 @@ describe('SearchClauseComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

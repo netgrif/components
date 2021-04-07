@@ -4,7 +4,7 @@ import {
     AuthenticationMethodService,
     CaseResourceService,
     CaseViewService,
-    ConfigCaseViewServiceFactory,
+    CaseViewServiceFactory,
     ConfigurationService,
     FilterType,
     MaterialModule,
@@ -19,8 +19,8 @@ import {of} from 'rxjs';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('cases');
+const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+    return factory.createFromConfig('cases');
 };
 
 const searchServiceFactory = () => {
@@ -44,11 +44,11 @@ describe('CaseListComponent', () => {
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: CaseViewService,
                     useFactory: localCaseViewServiceFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
                 {
                     provide: SearchService,
