@@ -27,14 +27,16 @@ import {
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
     return factory.createFromConfig('demo-public-view');
 };
 
 const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
-                              caseResourceService: CaseResourceService, snackBarService: SnackBarService) => {
-    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService);
+                              caseResourceService: CaseResourceService, snackBarService: SnackBarService,
+                              translate: TranslateService) => {
+    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService, translate);
 };
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
@@ -89,7 +91,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         {
             provide: SearchService,
             useFactory: searchServiceFactory,
-            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService]
+            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService, TranslateService]
         },
         {
             provide: TaskViewService,

@@ -381,5 +381,10 @@
         "and": "und die",
         "privacyNotice": "Datenschutzerklärung",
         "sentenceEnd": "gelesen und akzeptiert haben"
+    },
+    "publicView": {
+        "resolving" : "Die öffentliche Ansicht wird geladen ...",
+        "netNotExist": "Der Prozess existiert nicht",
+        "errorCreate": "Fehler beim Erstellen des Falles "
     }
 }

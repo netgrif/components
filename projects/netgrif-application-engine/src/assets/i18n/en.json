@@ -381,5 +381,10 @@
         "and": "and",
         "privacyNotice": "Privacy Notice",
         "sentenceEnd": ""
+    },
+    "publicView": {
+        "resolving" : "Public view is loading ...",
+        "netNotExist": "The process does not exists",
+        "errorCreate": "Error while creating case "
     }
 }
