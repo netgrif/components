@@ -65,7 +65,7 @@ describe('NumberDefaultFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-number-default-field [dataField]="field" [formControlRef]="formControl" ' +
+    template: '<nc-number-default-field [numberField]="field" [formControlRef]="formControl" ' +
         '[showLargeLayout]="label"></nc-number-default-field>'
 })
 class TestWrapperComponent {

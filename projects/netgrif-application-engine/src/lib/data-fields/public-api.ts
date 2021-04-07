@@ -20,6 +20,7 @@ export * from './multichoice-field/multichoice-select-field/abstract-multichoice
 export * from './number-field/abstract-number-field.component';
 export * from './number-field/currency-number-field/abstract-currency-number-field.component';
 export * from './number-field/number-default-field/abstract-default-number-field.component';
+export * from './number-field/abstract-number-errors.component';
 export * from './text-field/abstract-text-field.component';
 export * from './text-field/abstract-text-errors.component';
 export * from './text-field/simple-text-field/abstract-simple-text-field.component';

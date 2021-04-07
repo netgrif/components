@@ -134,8 +134,10 @@ export abstract class TaskContentService implements OnDestroy {
         if (this._task && this._task.dataGroups) {
             this._task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
-                    field.initialized$.subscribe(() => {
-                        field.block = blockingState;
+                    field.initialized$.subscribe((initialized) => {
+                        if (initialized) {
+                            field.block = blockingState;
+                        }
                     });
                 });
             });
