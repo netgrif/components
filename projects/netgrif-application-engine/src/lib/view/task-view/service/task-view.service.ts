@@ -112,9 +112,9 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                         if (!pageLoadResult.tasks[taskId]) {
                             delete acc[taskId];
                         } else {
-                            this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
                             pageLoadResult.tasks[taskId].task.dataGroups = acc[taskId].task.dataGroups;
                             pageLoadResult.tasks[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
+                            this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
                             this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user
                                 && this._userComparator.compareUsers(acc[taskId].task.user)));
                             delete pageLoadResult.tasks[taskId];
@@ -277,6 +277,11 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     private updateTask(old: Task, neww: Task) {
+        Object.keys(old).forEach(key => {
+            if (!neww.hasOwnProperty(key)) {
+                delete old[key];
+            }
+        });
         Object.keys(neww).forEach(key => {
             if (neww[key] !== undefined && neww[key] !== null) {
                 old[key] = neww[key];
@@ -308,7 +313,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
-        return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
+        return requestContext === undefined || (this._loading$.isActiveWithFilter(requestContext.filter) && !requestContext.force);
     }
 
     public reload(): void {
@@ -327,13 +332,13 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         this.nextPage(range, 0, requestContext);
     }
 
-    public reloadCurrentPage(): void {
+    public reloadCurrentPage(force?: boolean): void {
         if (!this._tasks$ || !this._pagination) {
             return;
         }
 
         this._endOfData = false;
-        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, false, true);
+        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, false, true, force);
         requestContext.pagination.number = 0; // TODO [BUG] - Reloading only first page
         const range = {
             start: -1,

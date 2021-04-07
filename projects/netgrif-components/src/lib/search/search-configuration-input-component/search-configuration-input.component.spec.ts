@@ -6,7 +6,7 @@ import {
     AuthenticationMethodService,
     CaseTitle, CaseViewService,
     Category,
-    CategoryFactory, ConfigCaseViewServiceFactory,
+    CategoryFactory, CaseViewServiceFactory,
     ConfigurationInput,
     ConfigurationService, MockAuthenticationMethodService,
     SearchInputType, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory,
@@ -35,9 +35,9 @@ describe('SearchConfigurationInputComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

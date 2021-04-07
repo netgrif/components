@@ -6,7 +6,7 @@ import {
     CaseResourceService,
     PublicCaseResourceService,
     PublicTaskResourceService,
-    ConfigTaskViewServiceFactory,
+    TaskViewServiceFactory,
     SearchService,
     PublicProcessService,
     ProcessService,
@@ -28,8 +28,8 @@ import {
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('demo-public-view');
+const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
+    return factory.createFromConfig('demo-public-view');
 };
 
 const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
@@ -74,7 +74,7 @@ const disableButtonsFactory = () => {
     templateUrl: './public-task-view.component.html',
     styleUrls: ['./public-task-view.component.scss'],
     providers: [
-        ConfigTaskViewServiceFactory,
+        TaskViewServiceFactory,
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
@@ -101,7 +101,7 @@ const disableButtonsFactory = () => {
         {
             provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]
+            deps: [TaskViewServiceFactory]
         },
         {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
             useFactory: disableButtonsFactory

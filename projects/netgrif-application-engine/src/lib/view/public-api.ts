@@ -30,14 +30,10 @@ export * from './workflow-view/models/injection-token-workflow-service';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';
-export * from './case-view/service/factory/config-case-view-service-factory';
-export * from './case-view/service/factory/array-case-view-service-factory';
-export * from './case-view/service/factory/all-nets-case-view-service-factory';
-export * from './case-view/service/factory/observable-case-view-service';
+export * from './case-view/service/factory/case-view-service-factory';
 
 export * from './task-view/service/task-view.service';
-export * from './task-view/service/factory/config-task-view-service-factory';
-export * from './task-view/service/factory/array-task-view-service-factory';
+export * from './task-view/service/factory/task-view-service-factory';
 
 export * from './workflow-view/workflow-view.service';
 

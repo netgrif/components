@@ -26,7 +26,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
 
     protected _fieldId: string;
     protected _fieldType: string;
-    protected _netIds: Array<string>;
+    protected _netIdentifiers: Array<string>;
 
     protected _processCategory: CaseProcess;
 
@@ -46,14 +46,14 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         return '';
     }
 
-    public configure(fieldId: string, fieldType: string, netIds: Array<string>): void {
-        if (!fieldId || !fieldType || !netIds || netIds.length === 0) {
+    public configure(fieldId: string, fieldType: string, netIdentifiers: Array<string>): void {
+        if (!fieldId || !fieldType || !netIdentifiers || netIdentifiers.length === 0) {
             this._log.error('CaseSimpleDataset must be configured with defined values and a non-empty array');
             return;
         }
         this._fieldId = fieldId;
         this._fieldType = fieldType;
-        this._netIds = netIds;
+        this._netIdentifiers = netIdentifiers;
     }
 
     protected get elasticKeywords(): Array<string> {
@@ -104,7 +104,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     protected generateQuery(userInput: Array<unknown>): Query {
         const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
         const netsQuery = Query.combineQueries(
-            this._netIds.map(id => this._processCategory.generatePredicate([[id]]).query),
+            this._netIdentifiers.map(id => this._processCategory.generatePredicate([[id]]).query),
             BooleanOperator.OR
         );
         return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    ArrayTaskViewServiceFactory, BOOLEAN_VALUE_LABEL_ENABLED, CategoryFactory, defaultTaskSearchCategoriesFactory,
+    TaskViewServiceFactory, BOOLEAN_VALUE_LABEL_ENABLED, CategoryFactory, defaultTaskSearchCategoriesFactory,
     InjectedTabbedTaskViewData, NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SearchService,
@@ -21,7 +21,7 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     styleUrls: ['./tabbed-task-view.component.scss'],
     providers: [
         CategoryFactory,
-        ArrayTaskViewServiceFactory,
+        TaskViewServiceFactory,
         {
             provide: SearchService,
             useFactory: searchServiceFactory,
@@ -30,7 +30,7 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         {
             provide: TaskViewService,
             useFactory: tabbedTaskViewServiceFactory,
-            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]
+            deps: [TaskViewServiceFactory, NAE_TAB_DATA]
         },
         {
             provide: BOOLEAN_VALUE_LABEL_ENABLED,

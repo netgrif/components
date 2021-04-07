@@ -21,4 +21,10 @@ export class NullTaskOperations implements TaskOperations {
      */
     reload(): void {
     }
+
+    /**
+     * Calling this function does nothing
+     */
+    forceReload(): void {
+    }
 }
