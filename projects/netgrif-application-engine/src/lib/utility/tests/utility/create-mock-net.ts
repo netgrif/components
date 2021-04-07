@@ -21,6 +21,7 @@ export function createMockNet(stringId: string = 'stringId',
             email: '',
             fullName: ''
         },
-        immediateData: []
+        immediateData: [],
+        staticImmediateData: []
     });
 }

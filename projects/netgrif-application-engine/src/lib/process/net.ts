@@ -48,6 +48,10 @@ export class Net {
     /**
      * @ignore
      */
+    private _staticImmediateData: Array<ImmediateData>;
+    /**
+     * @ignore
+     */
     private _transitions: Array<Transition>;
     /**
      * @ignore
@@ -74,6 +78,7 @@ export class Net {
         this._createdDate = net.createdDate;
         this._author = net.author;
         this._immediateData = net.immediateData;
+        this._staticImmediateData = net.staticImmediateData;
         this._transitions = [];
         this._transactions = [];
         this._roles = [];
@@ -149,6 +154,14 @@ export class Net {
 
     set immediateData(value: Array<ImmediateData>) {
         this._immediateData = value;
+    }
+
+    get staticImmediateData(): Array<ImmediateData> {
+        return this._staticImmediateData;
+    }
+
+    set staticImmediateData(value: Array<ImmediateData>) {
+        this._staticImmediateData = value;
     }
 
     get transitions(): Array<Transition> {

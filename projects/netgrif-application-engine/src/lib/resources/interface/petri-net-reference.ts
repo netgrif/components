@@ -44,5 +44,9 @@ export interface PetriNetReference {
      * [ImmediateData]{@link ImmediateData}
      */
     immediateData: Array<ImmediateData>;
+    /**
+     * [ImmediateData]{@link ImmediateData}
+     */
+    staticImmediateData: Array<ImmediateData>;
 }
 
