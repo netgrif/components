@@ -11,6 +11,7 @@ import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-f
 import {FieldConverterService} from './field-converter.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
+import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -96,6 +97,35 @@ export abstract class TaskContentService implements OnDestroy {
         return valid && validDisabled;
     }
 
+    public validateDynamicEnumField(): boolean {
+        if (!this._task || !this._task.dataGroups) {
+            return false;
+        }
+        const exists = this._task.dataGroups.some(group => group.fields.some( field => field instanceof DynamicEnumerationField ));
+        if (!exists) {
+            return true;
+        }
+        let valid = true;
+        for (const group of this._task.dataGroups) {
+            for (const field of group.fields) {
+                if (field instanceof DynamicEnumerationField) {
+                    if (field.choices !== undefined && field.choices.length !== 0 && field.value !== '' && field.value !== undefined) {
+                        if (!field.choices.some(choice => choice.key === field.value)) {
+                            field.value = '';
+                            if (field.behavior.required) {
+                                valid = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!valid) {
+            this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.missingRequired'));
+        }
+        return valid;
+    }
+
     /**
      * Changes the blocking state of all fields in the managed Task.
      * @param blockingState whether the field should be blocked or not
@@ -104,8 +134,10 @@ export abstract class TaskContentService implements OnDestroy {
         if (this._task && this._task.dataGroups) {
             this._task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
-                    field.initialized$.subscribe(() => {
-                        field.block = blockingState;
+                    field.initialized$.subscribe((initialized) => {
+                        if (initialized) {
+                            field.block = blockingState;
+                        }
                     });
                 });
             });
