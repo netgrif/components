@@ -5,7 +5,9 @@
  */
 export interface NetAttributePair {
     /**
-     * StringId of the net the attribute belongs to
+     * Identifier or stringId of the net the attribute belongs to.
+     *
+     * Cases use identifier, Tasks use stringId.
      */
     netId: string;
     /**

@@ -47,6 +47,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._forceLoadDataOnOpen = force;
         this._assignPolicyService.forced = force;
     }
+    @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
      */
@@ -60,6 +61,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     protected _subOperationOpen: Subscription;
     protected _subOperationClose: Subscription;
     protected _subOperationReload: Subscription;
+    protected _subOperationForceReload: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
 
@@ -96,6 +98,9 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         });
         this._subOperationReload = _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
+        });
+        this._subOperationForceReload = _taskOperations.forceReload$.subscribe(() => {
+            this._taskViewService.reloadCurrentPage(true);
         });
         this._taskDisableButtonFunctions = {
             finish: (t: Task) => false,
@@ -274,24 +279,25 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
-                return {value: task.caseTitle, icon: ''};
+                return {value: task.caseTitle, icon: '', type: 'meta'};
             case TaskMetaField.TITLE:
-                return {value: task.title, icon: ''};
+                return {value: task.title, icon: '', type: 'meta'};
             case TaskMetaField.PRIORITY:
                 // TODO priority
                 if (!task.priority || task.priority < 2) {
-                    return {value: 'high', icon: 'error'};
+                    return {value: 'high', icon: 'error', type: 'meta'};
                 }
                 if (task.priority === 2) {
-                    return {value: 'medium', icon: 'north'};
+                    return {value: 'medium', icon: 'north', type: 'meta'};
                 }
-                return {value: 'low', icon: 'south'};
+                return {value: 'low', icon: 'south', type: 'meta'};
             case TaskMetaField.USER:
-                return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
+                return {value: task.user ? task.user.fullName : '', icon: 'account_circle', type: 'meta'};
             case TaskMetaField.ASSIGN_DATE:
                 return {
                     value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '',
-                    icon: 'event'
+                    icon: 'event',
+                    type: 'meta'
                 };
         }
     }
@@ -301,7 +307,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             const immediate = this._taskContentService.task.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
             return this.parseImmediateValue(immediate);
         }
-        return {value: '', icon: ''};
+        return {value: '', icon: '', type: ''};
     }
 
     ngOnDestroy(): void {
@@ -312,6 +318,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subOperationOpen.unsubscribe();
         this._subOperationClose.unsubscribe();
         this._subOperationReload.unsubscribe();
+        this._subOperationForceReload.unsubscribe();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
     }
