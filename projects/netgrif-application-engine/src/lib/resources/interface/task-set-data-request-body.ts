@@ -21,7 +21,7 @@ export interface TaskSetDataRequestBody {
         /**
          * new `allowed nets` (for field types that support this)
          */
-        allowedNets?: Array<string>;
+        allowedNets?: readonly string[];
         /**
          * new `filterMetadata` (for field types that support this)
          */

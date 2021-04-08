@@ -54,7 +54,7 @@ export class UserFiltersService implements OnDestroy {
      * @param allowedNets allowed nets of the view, that contains the search service
      * @returns an observable that emits the id of the created Filter case instance
      */
-    public save(searchService: SearchService, allowedNets: Array<string>): Observable<string> {
+    public save(searchService: SearchService, allowedNets: readonly string[]): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized( () => {
             this._caseService.createCase({netId: this._filterNetId}).subscribe(filterCase => {

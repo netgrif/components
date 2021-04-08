@@ -112,8 +112,7 @@ export class FieldConverterService {
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
                     item.placeholder, item.description, item.layout);
             case FieldTypeResource.FILTER:
-                // TODO dokoncit
-                return new FilterField(item.stringId, item.name, item.value ?? '', [], [],
+                return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
                     item.behavior, item.placeholder, item.description, item.layout);
         }
     }
