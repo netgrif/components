@@ -31,6 +31,7 @@ export abstract class TaskContentService implements OnDestroy {
     $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
+    protected _isExpanding$: BehaviorSubject<boolean>;
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
@@ -38,6 +39,7 @@ export abstract class TaskContentService implements OnDestroy {
                           protected _logger: LoggerService) {
         this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
         this.$shouldCreateCounter = new BehaviorSubject<number>(0);
+        this._isExpanding$ = new BehaviorSubject<boolean>(false);
         this._task = undefined;
         this._taskDataReloadRequest$ = new Subject<FrontendActions>();
     }
@@ -47,6 +49,7 @@ export abstract class TaskContentService implements OnDestroy {
             this.$shouldCreate.complete();
         }
         this._taskDataReloadRequest$.complete();
+        this._isExpanding$.complete();
     }
 
     /**
@@ -72,6 +75,29 @@ export abstract class TaskContentService implements OnDestroy {
      */
     public get taskDataReloadRequest$(): Observable<FrontendActions> {
         return this._taskDataReloadRequest$.asObservable();
+    }
+
+    /**
+     * Whether the panel that the task content is contained in is currently expanding.
+     *
+     * If the task content is not contained in a panel, `isExpanding` will be always `false`.
+     */
+    public get isExpanding(): boolean {
+        return this._isExpanding$.value;
+    }
+
+    /**
+     * Changes the state of the task content to `expanding`.
+     */
+    public expansionStarted(): void {
+        this._isExpanding$.next(true);
+    }
+
+    /**
+     * Changes the state of the task content to `not expanding`.
+     */
+    public expansionFinished(): void {
+        this._isExpanding$.next(false);
     }
 
     /**

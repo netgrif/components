@@ -135,6 +135,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
+            this._taskContentService.expansionStarted();
             if (!this._taskState.isLoading()) {
                 this._assignPolicyService.performAssignPolicy(true);
             }
@@ -149,6 +150,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                 this._taskContentService.blockFields(!this.canFinish());
                 this._taskPanelData.initiallyExpanded = true;
             });
+            this._taskContentService.expansionFinished();
         });
         this.panelRef.afterCollapse.subscribe(() => {
             this._taskPanelData.initiallyExpanded = false;
