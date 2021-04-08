@@ -46,6 +46,8 @@ import {PreviewDialogComponent} from './file-field/preview-dialog/preview-dialog
 import {MatDialogModule} from '@angular/material/dialog';
 import {EnumerationStepperFieldComponent} from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
 import {FilterFieldComponent} from './filter-field/filter-field.component';
+import {FilterFieldContentComponent} from './filter-field/filter-field-content/filter-field-content.component';
+import {SearchComponentModule} from '../search/search.module';
 
 @NgModule({
     declarations: [
@@ -77,7 +79,8 @@ import {FilterFieldComponent} from './filter-field/filter-field.component';
         PreviewDialogComponent,
         NumberDefaultFieldComponent,
         EnumerationStepperFieldComponent,
-        FilterFieldComponent
+        FilterFieldComponent,
+        FilterFieldContentComponent
     ],
     exports: [
         BooleanFieldComponent,
@@ -107,13 +110,15 @@ import {FilterFieldComponent} from './filter-field/filter-field.component';
         TranslateLibModule,
         SideMenuContentComponentModule,
         QuillModule.forRoot(),
-        MatDialogModule
+        MatDialogModule,
+        SearchComponentModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
     ],
     entryComponents: [
-        PreviewDialogComponent
+        PreviewDialogComponent,
+        FilterFieldContentComponent
     ]
 })
 export class DataFieldsComponentModule {

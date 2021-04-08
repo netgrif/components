@@ -32,6 +32,7 @@ import { FulltextSearchComponent } from './fulltext-search-component/fulltext-se
         SearchPredicateComponent,
         SearchOperandInputComponent,
         SearchConfigurationInputComponent,
+        AdvancedSearchComponent,
     ],
     imports: [
         CommonModule,

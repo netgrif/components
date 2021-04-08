@@ -1,5 +1,11 @@
-import {Component, Inject, Optional} from '@angular/core';
-import {AbstractFilterFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
+import {Component, Inject, Injector, Optional} from '@angular/core';
+import {
+    AbstractFilterFieldComponent,
+    AbstractFilterFieldContentComponent,
+    NAE_INFORM_ABOUT_INVALID_DATA
+} from '@netgrif/application-engine';
+import {ComponentType} from '@angular/cdk/portal';
+import {FilterFieldContentComponent} from './filter-field-content/filter-field-content.component';
 
 @Component({
     selector: 'nc-filter-field',
@@ -8,8 +14,12 @@ import {AbstractFilterFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netg
 })
 export class FilterFieldComponent extends AbstractFilterFieldComponent {
 
-    constructor(@Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(informAboutInvalidData);
+    constructor(parentInjector: Injector,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(parentInjector, informAboutInvalidData);
     }
 
+    protected getFilterContentComponent(): ComponentType<AbstractFilterFieldContentComponent> {
+        return FilterFieldContentComponent;
+    }
 }

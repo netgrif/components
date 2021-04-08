@@ -29,6 +29,7 @@ export * from './text-field/password-text-field/abstract-password-text-field.com
 export * from './text-field/textarea-field/abstract-textarea-field.component';
 export * from './user-field/abstract-user-field.component';
 export * from './filter-field/abstract-filter-field.component';
+export * from './filter-field/abstract-filter-field-content.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -61,6 +62,7 @@ export * from './data-field-template/models/wrapped-boolean';
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
 export * from './models/invalid-data-policy-token';
+export * from './filter-field/models/filter-field-injection-token';
 
 /* Enums */
 export * from './models/template-appearance';

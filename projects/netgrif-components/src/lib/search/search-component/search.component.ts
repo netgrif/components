@@ -8,7 +8,7 @@ import {
     SearchService,
     NAE_SEARCH_COMPONENT_CONFIGURATION,
     NAE_SAVE_FILTER_COMPONENT,
-    SearchComponentConfiguration, SideMenuService, UserFiltersService
+    SearchComponentConfiguration, SideMenuService, UserFiltersService, AllowedNetsService
 } from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 import {ComponentType} from '@angular/cdk/portal';
@@ -30,8 +30,10 @@ export class SearchComponent extends AbstractSearchComponent {
                 translate: TranslateService,
                 sideMenuService: SideMenuService,
                 userFilterService: UserFiltersService,
+                allowedNetsService: AllowedNetsService,
                 @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
                 @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) sideMenuComponent: ComponentType<unknown>) {
-        super(searchService, logger, dialogService, translate, sideMenuService, userFilterService, configuration, sideMenuComponent);
+        super(searchService, logger, dialogService, translate, sideMenuService, userFilterService,
+            allowedNetsService, configuration, sideMenuComponent);
     }
 }
