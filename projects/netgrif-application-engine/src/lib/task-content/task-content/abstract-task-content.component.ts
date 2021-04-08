@@ -27,7 +27,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         batchSize: 4,
         batchDelay: 200,
         numberOfPlaceholders: 4,
-        enableAsyncRendering: true
+        enableAsyncRenderingForNewFields: true,
+        enableAsyncRenderingOnTaskExpand: true
     };
 
     /**
@@ -271,7 +272,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     }
 
     protected renderFields(gridElements: Array<DatafieldGridLayoutElement>) {
-        if (!this._asyncRenderingConfig.enableAsyncRendering) {
+        if (!this._asyncRenderingConfig.enableAsyncRenderingForNewFields
+            && !(this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand && this.taskContentService.isExpanding)) {
             this._dataSource$.next(gridElements);
             return;
         }
@@ -284,13 +286,17 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
         const keptElements = [];
         const newElements = [];
-        gridElements.forEach((element, index) => {
-            if (currentTrackByIds.has(this.trackByDatafields(index, element))) {
-                keptElements.push(element);
-            } else {
-                newElements.push(element);
-            }
-        });
+        if (this.taskContentService.isExpanding && this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand) {
+            newElements.push(...gridElements);
+        } else {
+            gridElements.forEach((element, index) => {
+                if (currentTrackByIds.has(this.trackByDatafields(index, element))) {
+                    keptElements.push(element);
+                } else {
+                    newElements.push(element);
+                }
+            });
+        }
 
         this.spreadFieldRenderingOverTime(keptElements, newElements);
     }
