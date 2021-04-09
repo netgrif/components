@@ -4,7 +4,7 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {BehaviorSubject, forkJoin, Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';

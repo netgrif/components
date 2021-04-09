@@ -7,17 +7,15 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
-import {
-    TestCaseBaseFilterProvider,
-    TestNoAllowedNetsFactory,
-} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory,} from '../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import moment from 'moment';
 import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
-import {CategoryGeneratorMetadata} from '../models/category/generator-metadata';
+import {FilterMetadata} from '../models/category/generator-metadata';
+import {FilterType} from '../../filter/models/filter-type';
 
 describe('SearchService', () => {
     let service: SearchService;
@@ -74,7 +72,7 @@ describe('SearchService', () => {
     });
 
     describe('serialization / deserialization', () => {
-        let serializedSearch: Array<Array<CategoryGeneratorMetadata>>;
+        let serializedSearch: FilterMetadata;
 
         beforeEach(() => {
             const predicate1 = categoryFactory.getWithDefaultOperator(CaseTitle);
@@ -93,13 +91,16 @@ describe('SearchService', () => {
             const meta3 = predicate3.createMetadata();
             expect(meta3).toBeTruthy();
 
-            serializedSearch = [[meta1, meta2], [meta3]];
+            serializedSearch = {
+                filterType: FilterType.CASE,
+                predicateMetadata: [[meta1, meta2], [meta3]]
+            };
         });
 
         it('should deserialize saved search', (done) => {
             expect(service.additionalFiltersApplied).toBeFalse();
 
-            service.populatePredicateFromGeneratorMetadata(serializedSearch);
+            service.loadFromMetadata(serializedSearch);
             service.activeFilter$.subscribe(f => {
                 expect(service.additionalFiltersApplied).toBeTrue();
 
@@ -117,11 +118,11 @@ describe('SearchService', () => {
         it('should serialize search', (done) => {
             expect(service.additionalFiltersApplied).toBeFalse();
 
-            service.populatePredicateFromGeneratorMetadata(serializedSearch);
+            service.loadFromMetadata(serializedSearch);
             service.activeFilter$.subscribe(f => {
                 expect(service.additionalFiltersApplied).toBeTrue();
 
-                const serialized = service.createPredicateGeneratorMetadata();
+                const serialized = service.createMetadata();
                 expect(serialized).toBeTruthy();
                 expect(serialized).toEqual(serializedSearch);
 

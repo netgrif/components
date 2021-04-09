@@ -118,7 +118,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                 filter: this._searchService.activeFilter,
                 searchMetadata: {
                     allowedNets: [],
-                    generatorMetadata: this._searchService.createPredicateGeneratorMetadata()
+                    generatorMetadata: this._searchService.createMetadata()
                 }
             });
         });

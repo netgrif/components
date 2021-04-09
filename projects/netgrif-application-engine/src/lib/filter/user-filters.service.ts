@@ -73,7 +73,7 @@ export class UserFiltersService implements OnDestroy {
                                 type: FieldTypeResource.FILTER,
                                 value: searchService.rootPredicate.query.value,
                                 allowedNets,
-                                filterMetadata: searchService.createPredicateGeneratorMetadata()
+                                filterMetadata: searchService.createMetadata()
                             }
                         }, this._callChainService.create(success => {
                             if (!success) {

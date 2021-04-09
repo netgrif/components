@@ -10,7 +10,7 @@ import {Query} from '../models/query/query';
 import {distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
-import {CategoryGeneratorMetadata, FilterMetadata} from '../models/category/generator-metadata';
+import {FilterMetadata, PredicateTreeMetadata} from '../models/category/generator-metadata';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {BaseFilter} from '../models/base-filter';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -271,8 +271,20 @@ export class SearchService implements OnDestroy {
         }
     }
 
-    public createPredicateGeneratorMetadata(): FilterMetadata | undefined {
-        return this._rootPredicate.createGeneratorMetadata() as FilterMetadata;
+    /**
+     * @returns `undefined` if the predicate tree contains no complete query.
+     * Otherwise returns {@link FilterMetadata} containing the serialized form of the completed queries in the predicate tree.
+     */
+    public createMetadata(): FilterMetadata | undefined {
+        const predicateMetadata = this._rootPredicate.createGeneratorMetadata() as PredicateTreeMetadata;
+        if (predicateMetadata === undefined) {
+            return undefined;
+        }
+
+        return {
+            filterType: this.filterType,
+            predicateMetadata
+        };
     }
 
     /**
@@ -280,20 +292,27 @@ export class SearchService implements OnDestroy {
      *
      * The {@link CategoryFactory} instance must be provided for this service if we want to use this method. Logs an error and does nothing.
      *
-     * @param metadata
+     * The `filterType` of this search service must match the `filterType` of the provided metadata. Otherwise an error is thrown.
+     *
+     * @param metadata the serialized state of the predicate tree that should be restored to this search service
      */
-    public populatePredicateFromGeneratorMetadata(metadata: FilterMetadata) {
+    public loadFromMetadata(metadata: FilterMetadata) {
         if (this._categoryFactory === null) {
             this._log.error('A CategoryFactory instance must be provided for the SearchService'
                 + ' if you want to reconstruct a predicate filter from saved metadata');
             return;
         }
 
+        if (metadata.filterType !== this.filterType) {
+            throw Error(`The filter type of the provided metadata (${metadata.filterType
+            }) does not match the filter type of the search service (${this.filterType})!`);
+        }
+
         this.clearPredicates(true);
 
         const generatorObservables = [];
 
-        for (const clause of metadata) {
+        for (const clause of metadata.predicateMetadata) {
             const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
             const branchPredicate = (
                 this._rootPredicate.getPredicateMap().get(branchId)

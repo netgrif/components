@@ -7,7 +7,7 @@ export abstract class AbstractFilterFieldContentComponent {
 
     protected constructor(@Inject(NAE_FILTER_FIELD) protected _filterField: FilterField,
                           protected _fieldSearchService: SearchService) {
-        this._fieldSearchService.populatePredicateFromGeneratorMetadata(this._filterField.filterMetadata);
+        this._fieldSearchService.loadFromMetadata(this._filterField.filterMetadata);
     }
 
 }
