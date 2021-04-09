@@ -12,7 +12,6 @@ import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
-import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {TaskViewComponent} from './doc/task-view/task-view.component';
@@ -55,7 +54,6 @@ export class NaeExampleAppViewService extends ViewService {
             TaskViewComponent,
             PanelsComponent,
             ToolbarExampleComponent,
-            ReactiveTextFieldComponent,
             TabViewExampleComponent,
             DialogExampleComponent,
             SnackBarExampleComponent,
