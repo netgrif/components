@@ -13,6 +13,12 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
+    AllowedNetsService,
+    TestNoAllowedNetsFactory,
+    AllowedNetsServiceFactory,
+    NAE_SEARCH_CATEGORIES,
+    defaultCaseSearchCategoriesFactory,
+    CategoryFactory
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -34,6 +40,9 @@ describe('SearchComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+                CategoryFactory,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
