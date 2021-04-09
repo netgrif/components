@@ -13,6 +13,7 @@ import {CallChainService} from '../utility/call-chain/call-chain.service';
 import {TaskSetDataRequestBody} from '../resources/interface/task-set-data-request-body';
 import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
+import {Net} from '../process/net';
 
 /**
  * Service that manages filters created by users of the application.
@@ -25,7 +26,7 @@ export class UserFiltersService implements OnDestroy {
     protected static readonly FILTER_NET_IDENTIFIER = 'filter';
 
     protected _initialized$: ReplaySubject<boolean>;
-    protected _filterNetId: string;
+    protected _filterNet: Net;
 
     constructor(protected _caseService: CaseResourceService,
                 protected _taskService: TaskResourceService,
@@ -34,7 +35,7 @@ export class UserFiltersService implements OnDestroy {
                 protected _log: LoggerService) {
         this._initialized$ = new ReplaySubject<boolean>(1);
         this._processService.getNet(UserFiltersService.FILTER_NET_IDENTIFIER).subscribe(net => {
-            this._filterNetId = net.stringId;
+            this._filterNet = net;
             this._initialized$.next(true);
         }, error => {
             this._log.error(`Filter net could not be loaded with error`, error);
@@ -56,10 +57,14 @@ export class UserFiltersService implements OnDestroy {
      * @param searchCategories search categories available in the saved advanced search component
      * @returns an observable that emits the id of the created Filter case instance
      */
-    public save(searchService: SearchService, allowedNets: readonly string[], searchCategories: readonly Category<any>[]): Observable<string> {
+    public save(searchService: SearchService, allowedNets: readonly string[],
+                searchCategories: readonly Category<any>[]): Observable<string> {
         const result = new ReplaySubject<string>(1);
-        this.whenInitialized( () => {
-            this._caseService.createCase({netId: this._filterNetId}).subscribe(filterCase => {
+        this.whenInitialized(() => {
+            this._caseService.createCase({
+                title: this._filterNet.defaultCaseName,
+                netId: this._filterNet.stringId
+            }).subscribe(filterCase => {
                 this._taskService.getTasks(SimpleFilter.fromTaskQuery({case: {id: filterCase.stringId}})).subscribe(page => {
                     if (!hasContent(page)) {
                         throw new Error('Expected filter process to contain tasks, but none were found!');
@@ -67,27 +72,27 @@ export class UserFiltersService implements OnDestroy {
 
                     const initTask = page.content[0];
                     this.assignSetDataFinish(initTask, {
-                            filter_type: {
-                                type: FieldTypeResource.ENUMERATION_MAP,
-                                value: searchService.filterType
-                            },
-                            filter: {
-                                type: FieldTypeResource.FILTER,
-                                value: searchService.rootPredicate.query.value,
-                                allowedNets,
-                                filterMetadata: {
-                                    filterType: searchService.filterType,
-                                    predicateMetadata: searchService.createPredicateMetadata(),
-                                    searchCategories: searchCategories.map(c => c.serializeClass())
-                                }
+                        filter_type: {
+                            type: FieldTypeResource.ENUMERATION_MAP,
+                            value: searchService.filterType
+                        },
+                        filter: {
+                            type: FieldTypeResource.FILTER,
+                            value: searchService.rootPredicate.query.value,
+                            allowedNets,
+                            filterMetadata: {
+                                filterType: searchService.filterType,
+                                predicateMetadata: searchService.createPredicateMetadata(),
+                                searchCategories: searchCategories.map(c => c.serializeClass())
                             }
-                        }, this._callChainService.create(success => {
-                            if (!success) {
-                                throw new Error('Filter instance could not be initialized');
-                            }
+                        }
+                    }, this._callChainService.create(success => {
+                        if (!success) {
+                            throw new Error('Filter instance could not be initialized');
+                        }
 
-                            result.next(filterCase.stringId);
-                            result.complete();
+                        result.next(filterCase.stringId);
+                        result.complete();
                     }));
                 });
             });
