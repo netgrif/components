@@ -16,6 +16,7 @@ import {BaseFilter} from '../models/base-filter';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {FilterType} from '../../filter/models/filter-type';
+import {LoadingEmitter} from '../../utility/loading-emitter';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -43,6 +44,7 @@ export class SearchService implements OnDestroy {
      * The index of a removed {@link Predicate} is emmited into this stream
      */
     protected _predicateRemoved$: Subject<PredicateRemovalEvent>;
+    protected _loadingFromMetadata$: LoadingEmitter;
     /**
      * The `rootPredicate` uses this stream to notify the search service about changes to the held query
      */
@@ -73,6 +75,7 @@ export class SearchService implements OnDestroy {
         this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
+        this._loadingFromMetadata$ = new LoadingEmitter();
 
         this.predicateQueryChanged$.subscribe(() => {
             this.updateActiveFilter();
@@ -86,6 +89,7 @@ export class SearchService implements OnDestroy {
         if (this.subFilter) {
             this.subFilter.unsubscribe();
         }
+        this._loadingFromMetadata$.complete();
     }
 
     /**
@@ -149,6 +153,25 @@ export class SearchService implements OnDestroy {
      */
     public get filterType(): FilterType {
         return this.baseFilter.type;
+    }
+
+    /**
+     * @returns whether the search service is currently loading its state from metadata or not.
+     *
+     * See [loadFromMetadata()]{@link SearchService#loadFromMetadata}
+     */
+    public get loadingFromMetadata(): boolean {
+        return this._loadingFromMetadata$.value;
+    }
+
+    /**
+     * @returns an `Observable` that emits `true` if the search service is currently loading its state from metadata,
+     * emits `false` otherwise.
+     *
+     * See [loadFromMetadata()]{@link SearchService#loadFromMetadata}
+     */
+    public get loadingFromMetadata$(): Observable<boolean> {
+        return this._loadingFromMetadata$.asObservable();
     }
 
     /**
@@ -301,6 +324,7 @@ export class SearchService implements OnDestroy {
         }
 
         this.clearPredicates(true);
+        this._loadingFromMetadata$.on();
 
         const generatorObservables = [];
 
@@ -321,6 +345,7 @@ export class SearchService implements OnDestroy {
         }
 
         forkJoin(generatorObservables).subscribe(() => {
+            this._loadingFromMetadata$.off();
             this.updateActiveFilter();
         });
     }
