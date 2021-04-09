@@ -79,7 +79,8 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
         return {text: autocompleteValue.text, value: autocompleteValue.value};
     }
 
-    protected deserializeOperandValue(savedOption: SearchAutocompleteOption<Array<string>>): SearchAutocompleteOption<Array<string>> {
-        return {...savedOption, icon: TaskAssignee.ICON};
+    protected deserializeOperandValue(savedOption: SearchAutocompleteOption<Array<string>>):
+        Observable<SearchAutocompleteOption<Array<string>>> {
+        return of({...savedOption, icon: TaskAssignee.ICON});
     }
 }

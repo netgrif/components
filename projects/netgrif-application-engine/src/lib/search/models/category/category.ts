@@ -4,7 +4,7 @@ import {Query} from '../query/query';
 import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
 import {debounceTime, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
@@ -567,19 +567,24 @@ export abstract class Category<T> {
             throw new Error(`The arity of the selected operator (${this.selectedOperatorArity
             }) doesn't match the number of the provided values (${values.length})!`);
         }
-        const deserializedValues = values.map(v => this.deserializeOperandValue(v));
-        this.setOperands(deserializedValues);
-        return ofVoid();
+        const deserializedValuesObservables = values.map(v => this.deserializeOperandValue(v));
+        const result$ = new ReplaySubject<void>(1);
+        forkJoin(deserializedValuesObservables).subscribe(deserializedValues => {
+            this.setOperands(deserializedValues);
+            result$.next();
+            result$.complete();
+        });
+        return result$.asObservable();
     }
 
     /**
      * @param value the serialized output of the [serializeOperandValue()]{@link Category#serializeOperandValue} method
-     * @returns the deserialized value, that can be set as FormControl value
+     * @returns an `Observable` that emits the deserialized value, that can be set as FormControl value and then completes
      *
      * This method may throw na error if the value cannot be deserialized.
      */
-    protected deserializeOperandValue(value: unknown): any {
-        return value;
+    protected deserializeOperandValue(value: unknown): Observable<any> {
+        return of(value);
     }
 
     /**

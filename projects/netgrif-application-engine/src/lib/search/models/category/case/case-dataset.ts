@@ -459,14 +459,14 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         return result$.asObservable();
     }
 
-    protected deserializeOperandValue(value: unknown): any {
+    protected deserializeOperandValue(value: unknown): Observable<any> {
         switch (this.inputType) {
             case SearchInputType.AUTOCOMPLETE:
                 const savedOption = value as SearchAutocompleteOption<Array<string>>;
-                return {...savedOption, icon: CaseDataset.AUTOCOMPLETE_ICON};
+                return of({...savedOption, icon: CaseDataset.AUTOCOMPLETE_ICON});
             case SearchInputType.DATE:
             case SearchInputType.DATE_TIME:
-                return moment(value as string);
+                return of(moment(value as string));
             default:
                 return super.deserializeOperandValue(value);
         }

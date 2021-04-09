@@ -11,6 +11,7 @@ import {InRangeDate} from '../../operator/in-range-date';
 import {Categories} from '../categories';
 import {FormControl} from '@angular/forms';
 import moment from 'moment';
+import {Observable, of} from 'rxjs';
 
 export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
@@ -47,7 +48,7 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
         return valueFormControl.value.valueOf();
     }
 
-    protected deserializeOperandValue(value: string): Moment {
-        return moment(value);
+    protected deserializeOperandValue(value: unknown): Observable<any> {
+        return of(moment(value));
     }
 }

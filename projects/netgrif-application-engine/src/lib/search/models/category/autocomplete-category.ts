@@ -3,8 +3,8 @@ import {Operator} from '../operator/operator';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SearchInputType} from './search-input-type';
 import {SearchAutocompleteOption} from './search-autocomplete-option';
-import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, Observable, ReplaySubject} from 'rxjs';
+import {filter, map, startWith, take} from 'rxjs/operators';
 import {AutocompleteOptions} from './autocomplete-options';
 import {FormControl} from '@angular/forms';
 import {OperatorService} from '../../operator-service/operator.service';
@@ -156,13 +156,18 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
      *
      * This method throws na error if the serialized value is not one of the autocomplete options.
      */
-    protected deserializeOperandValue(text: unknown): SearchAutocompleteOption<Array<T>> {
-        const value = this._optionsMap.get(text as string);
-        if (value === undefined) {
-            throw new Error(`The serialized autocomplete value '${text
-            }' does not map to any autocomplete options and cannot be deserialized!`);
-        }
-        return this.createSearchAutocompleteOption(text as string, value);
+    protected deserializeOperandValue(text: unknown): Observable<any> {
+        const result$ = new ReplaySubject(1);
+        this.options$.pipe(filter(o => o.length > 0), take(1)).subscribe(() => {
+            const value = this._optionsMap.get(text as string);
+            if (value === undefined) {
+                throw new Error(`The serialized autocomplete value '${value
+                }' does not map to any autocomplete options and cannot be deserialized!`);
+            }
+            result$.next(this.createSearchAutocompleteOption(text as string, value));
+            result$.complete();
+        });
+        return result$.asObservable();
     }
 
     protected createSearchAutocompleteOption(text: string, value: Array<T>): SearchAutocompleteOption<Array<T>> {
