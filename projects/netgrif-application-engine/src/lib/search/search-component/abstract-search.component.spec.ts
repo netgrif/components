@@ -23,11 +23,14 @@ import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/injection-tokens';
 import {ComponentType} from '@angular/cdk/portal';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
-import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {UserFiltersService} from '../../filter/user-filters.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {defaultCaseSearchCategoriesFactory} from '../category-factory/default-categories-factories';
+import {CategoryFactory} from '../category-factory/category-factory';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -46,6 +49,9 @@ describe('AbstractSearchComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+                CategoryFactory,
                 SearchService,
                 {
                     provide: NAE_BASE_FILTER,
