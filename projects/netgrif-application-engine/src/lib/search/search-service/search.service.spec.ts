@@ -7,7 +7,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
-import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory,} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
@@ -93,7 +93,8 @@ describe('SearchService', () => {
 
             serializedSearch = {
                 filterType: FilterType.CASE,
-                predicateMetadata: [[meta1, meta2], [meta3]]
+                predicateMetadata: [[meta1, meta2], [meta3]],
+                searchCategories: [] // they don't play a role for this test
             };
         });
 
@@ -124,7 +125,7 @@ describe('SearchService', () => {
 
                 const serialized = service.createPredicateMetadata();
                 expect(serialized).toBeTruthy();
-                expect(serialized).toEqual(serializedSearch);
+                expect(serialized).toEqual(serializedSearch.predicateMetadata);
 
                 done();
             });

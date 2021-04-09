@@ -24,6 +24,10 @@ import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/inje
 import {ComponentType} from '@angular/cdk/portal';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
+import {UserFiltersService} from '../../filter/user-filters.service';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
+import {Category} from '../models/category/category';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -86,8 +90,12 @@ class TestSearchComponent extends AbstractSearchComponent {
                 dialogService: DialogService,
                 translate: TranslateService,
                 sideMenuService: SideMenuService,
+                userFilterService: UserFiltersService,
+                allowedNetsService: AllowedNetsService,
+                @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
                 @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
                 @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) sideMenuComponent: ComponentType<unknown>) {
-        super(searchService, logger, dialogService, translate, sideMenuService, configuration, sideMenuComponent);
+        super(searchService, logger, dialogService, translate, sideMenuService, userFilterService, allowedNetsService, searchCategories,
+            configuration, sideMenuComponent);
     }
 }
