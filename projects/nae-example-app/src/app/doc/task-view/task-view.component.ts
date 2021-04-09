@@ -13,9 +13,10 @@ import {
     CategoryFactory,
     NAE_SEARCH_CATEGORIES,
     defaultTaskSearchCategoriesFactory,
+    NAE_ASYNC_RENDERING_CONFIGURATION,
     NAE_BASE_FILTER,
     AllowedNetsService,
-    AllowedNetsServiceFactory
+    AllowedNetsServiceFactory,
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -68,7 +69,9 @@ const disableButtonsFactory = () => {
         },
         {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'task'},
         ViewIdService,
-        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
+        {   provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
+        {   provide: NAE_ASYNC_RENDERING_CONFIGURATION,
+            useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}}
     ]
 })
 export class TaskViewComponent extends AbstractTaskView implements AfterViewInit {

@@ -27,7 +27,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 
 describe('AbstractFileListFieldComponent', () => {
-    let component: TestFilelistComponent;
+    let component: TestFileListComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(waitForAsync(() => {
@@ -50,7 +50,7 @@ describe('AbstractFileListFieldComponent', () => {
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             declarations: [
                 TestWrapperComponent,
-                TestFilelistComponent
+                TestFileListComponent
             ],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
@@ -78,7 +78,7 @@ describe('AbstractFileListFieldComponent', () => {
     selector: 'nae-test-filelist',
     template: ''
 })
-class TestFilelistComponent extends AbstractFileListFieldComponent {
+class TestFileListComponent extends AbstractFileListFieldComponent {
     constructor(taskResourceService: TaskResourceService,
                 log: LoggerService,
                 snackbar: SnackBarService,

@@ -48,7 +48,7 @@ describe('PetriNetResourceService', () => {
 
     it('should getPetriNetTranstions', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
-            service.getPetriNetTranstions('id').subscribe(res => {
+            service.getPetriNetTransitions('id').subscribe(res => {
                 expect(res.length).toEqual(0);
             });
 

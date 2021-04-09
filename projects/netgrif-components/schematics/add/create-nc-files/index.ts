@@ -17,6 +17,7 @@ export function createNcFiles(): Rule {
         rules.push(schematic('custom-themes', {}));
         rules.push(updateAppComponentHTML());
         rules.push(addInitialsImportsToAppModule());
+        rules.push(addImportsToIndexHTML());
         return chain(rules);
     };
 }
@@ -43,3 +44,22 @@ function updateAppComponentHTML(): Rule {
     };
 }
 
+function addImportsToIndexHTML(): Rule {
+    return (tree: Tree) => {
+        const pathToComponent = getProjectInfo(tree).path + '/../index.html';
+        const comp: Buffer | null = tree.read(pathToComponent);
+        let strComponent = '';
+        if (comp) {
+            strComponent = comp.toString();
+        }
+
+        const appendIndex = strComponent.indexOf('</head>');
+        const content2Append =
+            `  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> \n`;
+        const updatedContent = strComponent.slice(0, appendIndex) + content2Append + strComponent.slice(appendIndex);
+
+        tree.overwrite(pathToComponent, updatedContent);
+        return tree;
+    };
+}

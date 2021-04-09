@@ -10,7 +10,7 @@ import {SearchService} from '../../../search/search-service/search.service';
 import {Net} from '../../../process/net';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
 import {NAE_NEW_CASE_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
@@ -22,6 +22,10 @@ import {CasePageLoadRequestResult} from '../models/case-page-load-request-result
 import {UserService} from '../../../user/services/user.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {PermissionType} from '../../../process/permissions';
+import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injection-token';
+import {NewCaseConfiguration} from '../models/new-case-configuration';
+import {ProcessService} from '../../../process/process.service';
+import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-reference-with-permissions';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {SortableView} from '../../abstract/sortable-view';
@@ -29,11 +33,16 @@ import {SortableView} from '../../abstract/sortable-view';
 @Injectable()
 export class CaseViewService extends SortableView implements OnDestroy {
 
+    readonly DEFAULT_NEW_CASE_CONFIGURATION: NewCaseConfiguration = {
+        useCachedProcesses: true
+    };
+
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
     protected _nextPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
+    protected _newCaseConfiguration: NewCaseConfiguration;
 
     constructor(protected _allowedNetsService: AllowedNetsService,
                 protected _sideMenuService: SideMenuService,
@@ -43,9 +52,15 @@ export class CaseViewService extends SortableView implements OnDestroy {
                 protected _searchService: SearchService,
                 protected _translate: TranslateService,
                 protected _user: UserService,
+                protected _processService: ProcessService,
+                resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
-                resolver: SearchIndexResolverService) {
+                @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration) {
         super(resolver);
+        this._newCaseConfiguration = {...this.DEFAULT_NEW_CASE_CONFIGURATION};
+        if (newCaseConfig !== null) {
+            Object.assign(this._newCaseConfiguration, newCaseConfig);
+        }
         this._loading$ = new LoadingWithFilterEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
@@ -173,12 +188,9 @@ export class CaseViewService extends SortableView implements OnDestroy {
 
     public createNewCase(): Observable<Case> {
         const myCase = new Subject<Case>();
-        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
-            {
-                allowedNets$: this._allowedNetsService.allowedNets$.pipe(
-                    map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
-                )
-            }).onClose.subscribe($event => {
+        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
+            allowedNets$: this.getNewCaseAllowedNets()
+        }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.reload();
@@ -187,6 +199,22 @@ export class CaseViewService extends SortableView implements OnDestroy {
             myCase.complete();
         });
         return myCase.asObservable();
+    }
+
+    protected getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
+        if (this._newCaseConfiguration.useCachedProcesses) {
+            return this._allowedNetsService.allowedNets$.pipe(
+                map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
+            );
+        } else {
+            return this._allowedNetsService.allowedNets$.pipe(
+                switchMap(allowedNets => {
+                    return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
+                        map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
+                    );
+                })
+            );
+        }
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
@@ -232,7 +260,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
         return this._user.hasAuthority(authority);
     }
 
-    public canDo(action: string, net: Net): boolean {
+    public canDo(action: string, net: PetriNetReferenceWithPermissions): boolean {
         if (!net
             || !net.permissions
             || !action

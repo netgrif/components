@@ -18,6 +18,7 @@ import {FileListField} from '../../data-fields/file-list-field/models/file-list-
 import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
 import {Component} from '../../data-fields/models/component';
 import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 
 @Injectable({
@@ -61,9 +62,15 @@ export class FieldConverterService {
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
                     item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item));
             case FieldTypeResource.ENUMERATION:
-                return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
-                    item.type, item.component);
+                if ( item.component && item.component.name === 'autocomplete_dynamic') {
+                    return new DynamicEnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
+                        item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
+                        item.type, item.component);
+                } else {
+                    return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
+                        item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
+                        item.type, item.component);
+                }
             case FieldTypeResource.ENUMERATION_MAP:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumOptions(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),

@@ -12,10 +12,19 @@ import {
     SearchService,
     SimpleFilter,
     TabbedCaseView,
-    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, ViewIdService
+    CaseViewServiceFactory,
+    ViewIdService,
+    Filter,
+    NAE_NEW_CASE_CONFIGURATION,
+    InjectedTabData,
+    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService,
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
+
+interface ExampleInjectedData extends InjectedTabData {
+    exampleUseCache: boolean;
+}
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createWithAllNets();
@@ -30,6 +39,10 @@ const baseFilterFactory = () => {
         filter: filter.asObservable(),
         filterType: FilterType.CASE
     };
+};
+
+const newCaseConfigFactory = (injectedTabData: ExampleInjectedData) => {
+    return {useCachedProcesses: injectedTabData.exampleUseCache};
 };
 
 @Component({
@@ -47,6 +60,7 @@ const baseFilterFactory = () => {
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+        {provide: NAE_NEW_CASE_CONFIGURATION, useFactory: newCaseConfigFactory, deps: [NAE_TAB_DATA]}
     ]
 })
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {

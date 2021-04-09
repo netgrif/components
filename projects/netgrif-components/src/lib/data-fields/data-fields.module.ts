@@ -45,6 +45,11 @@ import {PasswordTextFieldComponent} from './text-field/password-text-field/passw
 import {PreviewDialogComponent} from './file-field/preview-dialog/preview-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {EnumerationStepperFieldComponent} from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
+import {EnumerationIconFieldComponent} from './enumeration-field/enumeration-icon-field/enumeration-icon-field.component';
+import {
+    EnumerationAutocompleteDynamicFieldComponent
+} from './enumeration-field/enumeration-autocomplete-dynamic-field/enumeration-autocomplete-dynamic-field.component';
+
 import {FilterFieldComponent} from './filter-field/filter-field.component';
 import {FilterFieldContentComponent} from './filter-field/filter-field-content/filter-field-content.component';
 import {SearchComponentModule} from '../search/search.module';
@@ -79,8 +84,10 @@ import {SearchComponentModule} from '../search/search.module';
         PreviewDialogComponent,
         NumberDefaultFieldComponent,
         EnumerationStepperFieldComponent,
+        EnumerationIconFieldComponent,
+        EnumerationAutocompleteDynamicFieldComponent,
         FilterFieldComponent,
-        FilterFieldContentComponent
+        FilterFieldContentComponent,
     ],
     exports: [
         BooleanFieldComponent,
