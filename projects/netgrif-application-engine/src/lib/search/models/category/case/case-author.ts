@@ -28,7 +28,7 @@ export class CaseAuthor extends NoConfigurationCategory<string> {
         return new CaseAuthor(this._operatorService, this._log);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.CASE_AUTHOR;
     }
 }

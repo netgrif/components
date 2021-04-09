@@ -273,18 +273,10 @@ export class SearchService implements OnDestroy {
 
     /**
      * @returns `undefined` if the predicate tree contains no complete query.
-     * Otherwise returns {@link FilterMetadata} containing the serialized form of the completed queries in the predicate tree.
+     * Otherwise returns the serialized form of the completed queries in the predicate tree.
      */
-    public createMetadata(): FilterMetadata | undefined {
-        const predicateMetadata = this._rootPredicate.createGeneratorMetadata() as PredicateTreeMetadata;
-        if (predicateMetadata === undefined) {
-            return undefined;
-        }
-
-        return {
-            filterType: this.filterType,
-            predicateMetadata
-        };
+    public createPredicateMetadata(): PredicateTreeMetadata | undefined {
+        return this._rootPredicate.createGeneratorMetadata() as PredicateTreeMetadata;
     }
 
     /**

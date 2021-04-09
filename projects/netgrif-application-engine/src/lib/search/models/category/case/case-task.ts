@@ -33,7 +33,7 @@ export class CaseTask extends CaseNetAttributeAutocompleteCategory {
         return new CaseTask(this._operatorService, this._log, this._optionalDependencies);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.CASE_TASK;
     }
 }

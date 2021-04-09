@@ -34,7 +34,7 @@ export class CaseTitle extends NoConfigurationCategory<string> {
         return new CaseTitle(this._operatorService, this._log);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.CASE_TITLE;
     }
 }

@@ -122,7 +122,7 @@ describe('SearchService', () => {
             service.activeFilter$.subscribe(f => {
                 expect(service.additionalFiltersApplied).toBeTrue();
 
-                const serialized = service.createMetadata();
+                const serialized = service.createPredicateMetadata();
                 expect(serialized).toBeTruthy();
                 expect(serialized).toEqual(serializedSearch);
 

@@ -68,7 +68,7 @@ export class CategoryResolverService {
      *
      * If you implement any custom {@link Category} classes, you should override this method to resolve them after serialization.
      *
-     * @param category the serialized string provided by your [Category.serialize()]{@link Category#serialize} implementation
+     * @param category the serialized string provided by your [Category.serialize()]{@link Category#serializeClass} implementation
      * @returns `undefined`
      */
     protected toCustomClass(category: string): Type<Category<any>> | undefined {

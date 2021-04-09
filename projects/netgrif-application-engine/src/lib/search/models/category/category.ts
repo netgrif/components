@@ -392,7 +392,7 @@ export abstract class Category<T> {
             return undefined;
         }
         return {
-            category: this.serialize(),
+            category: this.serializeClass(),
             configuration: this.createMetadataConfiguration(),
             values: this.createMetadataValues()
         };
@@ -488,7 +488,7 @@ export abstract class Category<T> {
     /**
      * @returns the category class in a serializable form
      */
-    protected abstract serialize(): Categories | string;
+    abstract serializeClass(): Categories | string;
 
     /**
      * The default implementation serializes only the operator.

@@ -54,4 +54,8 @@ export type PredicateTreeMetadata = Array<Array<CategoryGeneratorMetadata>>;
 export interface FilterMetadata {
     filterType: FilterType;
     predicateMetadata: PredicateTreeMetadata;
+    /**
+     * Serialized {@link Category} classes, that were available in the saved search component.
+     */
+    searchCategories: Array<string>;
 }

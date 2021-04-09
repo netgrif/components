@@ -146,7 +146,7 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.CASE_SIMPLE_DATASET;
     }
 

@@ -85,7 +85,8 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     duplicate(): CaseProcess {
         return new CaseProcess(this._operatorService, this._log, this._optionalDependencies);
     }
-    protected serialize(): Categories | string {
+
+    serializeClass(): Categories | string {
         return Categories.CASE_PROCESS;
     }
 }

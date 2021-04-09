@@ -34,7 +34,7 @@ export class TaskTask extends TaskNetAttributeAutocompleteCategory {
         return new TaskTask(this._operatorService, this._log, this._optionalDependencies);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.TASK_TASK;
     }
 }

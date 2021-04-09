@@ -33,7 +33,7 @@ export class TaskRole extends TaskNetAttributeAutocompleteCategory {
         return new TaskRole(this._operatorService, this._log, this._optionalDependencies);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.TASK_ROLE;
     }
 }

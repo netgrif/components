@@ -419,7 +419,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         return this.selectedOperator === this._operatorService.getOperator(operatorClass);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.CASE_DATASET;
     }
 

@@ -70,7 +70,7 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
         return new TaskAssignee(this._operatorService, this._log, this._optionalDependencies);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.TASK_ASSIGNEE;
     }
 

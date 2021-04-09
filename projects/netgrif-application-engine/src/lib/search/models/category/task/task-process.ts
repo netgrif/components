@@ -63,7 +63,7 @@ export class TaskProcess extends NoConfigurationAutocompleteCategory<string> {
         return new TaskProcess(this._operatorService, this._log, this._optionalDependencies);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.TASK_PROCESS;
     }
 }

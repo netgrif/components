@@ -28,7 +28,7 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
         return new CaseVisualId(this._operatorService, this._log);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.CASE_VISUAL_ID;
     }
 }

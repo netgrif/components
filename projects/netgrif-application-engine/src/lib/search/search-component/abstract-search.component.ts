@@ -12,6 +12,8 @@ import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/inje
 import {ComponentType} from '@angular/cdk/portal';
 import {UserFiltersService} from '../../filter/user-filters.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
+import {Category} from '../models/category/category';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -43,6 +45,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _sideMenuService: SideMenuService,
                           protected _userFilterService: UserFiltersService,
                           protected _allowedNetsService: AllowedNetsService,
+                          @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>,
                           @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
                           @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _sideMenuComponent: ComponentType<unknown>) {
         if (this._configuration === null) {
@@ -113,14 +116,15 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     }
 
     public saveFilter(): void {
-        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers).subscribe(filterCaseId => {
-            this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
-                filter: this._searchService.activeFilter,
-                searchMetadata: {
-                    allowedNets: [],
-                    generatorMetadata: this._searchService.createMetadata()
-                }
+        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers, this._searchCategories)
+            .subscribe(filterCaseId => {
+                this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
+                    filter: this._searchService.activeFilter,
+                    searchMetadata: {
+                        allowedNets: [],
+                        generatorMetadata: this._searchService.createPredicateMetadata()
+                    }
+                });
             });
-        });
     }
 }

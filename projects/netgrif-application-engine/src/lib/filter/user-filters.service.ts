@@ -12,6 +12,7 @@ import {Task} from '../resources/interface/task';
 import {CallChainService} from '../utility/call-chain/call-chain.service';
 import {TaskSetDataRequestBody} from '../resources/interface/task-set-data-request-body';
 import {FieldTypeResource} from '../task-content/model/field-type-resource';
+import {Category} from '../search/models/category/category';
 
 /**
  * Service that manages filters created by users of the application.
@@ -52,9 +53,10 @@ export class UserFiltersService implements OnDestroy {
      *
      * @param searchService search service containing a predicate filter, we want to save
      * @param allowedNets allowed nets of the view, that contains the search service
+     * @param searchCategories search categories available in the saved advanced search component
      * @returns an observable that emits the id of the created Filter case instance
      */
-    public save(searchService: SearchService, allowedNets: readonly string[]): Observable<string> {
+    public save(searchService: SearchService, allowedNets: readonly string[], searchCategories: readonly Category<any>[]): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized( () => {
             this._caseService.createCase({netId: this._filterNetId}).subscribe(filterCase => {
@@ -73,7 +75,11 @@ export class UserFiltersService implements OnDestroy {
                                 type: FieldTypeResource.FILTER,
                                 value: searchService.rootPredicate.query.value,
                                 allowedNets,
-                                filterMetadata: searchService.createMetadata()
+                                filterMetadata: {
+                                    filterType: searchService.filterType,
+                                    predicateMetadata: searchService.createPredicateMetadata(),
+                                    searchCategories: searchCategories.map(c => c.serializeClass())
+                                }
                             }
                         }, this._callChainService.create(success => {
                             if (!success) {

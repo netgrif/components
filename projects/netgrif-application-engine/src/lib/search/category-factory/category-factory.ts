@@ -49,12 +49,22 @@ export class CategoryFactory {
     /**
      * Create an instance of {@link Category} class and preselects it's default operator.
      * @param categoryClass the class that should be instantiated
-     * @returns a new instance of the provided class
+     * @returns a new instance of the provided class with the default operator selected
      */
     public getWithDefaultOperator(categoryClass: Type<Category<any>>): Category<any> {
         const category = this.get(categoryClass);
         category.selectDefaultOperator();
         return category;
+    }
+
+    /**
+     * Attempts to deserialize the provided `string` into a {@link Category} class,
+     * create an instance from it and preselect it's default operator.
+     * @param serializedCategoryClass the serialized form of a {@Link Category} class
+     * @returns a new instance of the provided class with the default operator selected
+     */
+    public getByNameWithDefaultOperator(serializedCategoryClass: string): Category<any> {
+        return this.getWithDefaultOperator(this._categoryResolver.toClass(serializedCategoryClass));
     }
 
     /**

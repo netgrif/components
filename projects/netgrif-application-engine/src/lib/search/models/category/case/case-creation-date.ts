@@ -39,7 +39,7 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
         return new CaseCreationDate(this._operatorService, this._log);
     }
 
-    protected serialize(): Categories | string {
+    serializeClass(): Categories | string {
         return Categories.CASE_CREATION_DATE;
     }
 
