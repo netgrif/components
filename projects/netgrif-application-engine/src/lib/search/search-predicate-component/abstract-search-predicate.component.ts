@@ -18,6 +18,12 @@ import {
  */
 export abstract class AbstractSearchPredicateComponent implements OnInit, OnDestroy {
 
+    /**
+     * Whether the contents displayed in this component can be edited by the user or not.
+     *
+     * Defaults to `true`
+     */
+    @Input() editable = true;
     @Input() predicate: EditableElementaryPredicate;
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
@@ -121,6 +127,10 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
     }
 
     public clearCategorySelection(): void {
+        if (!this.editable) {
+            return;
+        }
+
         this.categoryChanged(undefined);
     }
 

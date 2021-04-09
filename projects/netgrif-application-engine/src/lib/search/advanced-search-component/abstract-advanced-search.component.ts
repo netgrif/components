@@ -3,13 +3,20 @@ import {SearchService} from '../search-service/search.service';
 import {KeyValue} from '@angular/common';
 import {EditablePredicate} from '../models/predicate/editable-predicate';
 import {Subject} from 'rxjs';
-import {AfterViewInit, OnDestroy} from '@angular/core';
+import {AfterViewInit, Input, OnDestroy} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {
     AdvancedSearchComponentInitializationService
 } from '../advanced-search-component-initialization-service/advanced-search-component-initialization.service';
 
 export class AbstractAdvancedSearchComponent implements AfterViewInit, OnDestroy {
+
+    /**
+     * Whether the contents displayed in this component can be edited by the user or not.
+     *
+     * Defaults to `true`
+     */
+    @Input() editable = true;
 
     public removeChild$: Subject<number>;
 

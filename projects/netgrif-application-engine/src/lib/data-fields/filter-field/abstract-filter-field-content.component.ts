@@ -16,4 +16,8 @@ export abstract class AbstractFilterFieldContentComponent {
         });
     }
 
+    public get editable(): boolean {
+        return !!this._filterField.behavior.editable;
+    }
+
 }

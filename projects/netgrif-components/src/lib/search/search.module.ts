@@ -9,8 +9,8 @@ import {SearchClauseComponent} from './search-clause-component/search-clause.com
 import {SearchPredicateComponent} from './search-predicate-component/search-predicate.component';
 import {SearchOperandInputComponent} from './search-operand-input-component/search-operand-input.component';
 import {SearchConfigurationInputComponent} from './search-configuration-input-component/search-configuration-input.component';
-import { AdvancedSearchComponent } from './advanced-search-component/advanced-search.component';
-import { FulltextSearchComponent } from './fulltext-search-component/fulltext-search.component';
+import {AdvancedSearchComponent} from './advanced-search-component/advanced-search.component';
+import {FulltextSearchComponent} from './fulltext-search-component/fulltext-search.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +39,7 @@ import { FulltextSearchComponent } from './fulltext-search-component/fulltext-se
         MaterialModule,
         TranslateLibModule,
         NgxMatDatetimePickerModule,
+        MaterialModule,
     ]
 })
 export class SearchComponentModule {
