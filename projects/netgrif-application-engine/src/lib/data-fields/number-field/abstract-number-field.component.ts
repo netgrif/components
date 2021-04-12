@@ -1,5 +1,5 @@
 import {Inject, Input, Optional} from '@angular/core';
-import {NumberField, NumberFieldValidation} from './models/number-field';
+import {NumberField} from './models/number-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
@@ -13,41 +13,4 @@ export abstract class AbstractNumberFieldComponent extends AbstractDataFieldComp
         super(informAboutInvalidData);
     }
 
-    getErrorMessage() {
-        if (this.formControl.hasError(NumberFieldValidation.REQUIRED)) {
-            return this._translate.instant('dataField.validations.required');
-        }
-        if (this.formControl.hasError(NumberFieldValidation.VALID_ODD)) {
-            return this.resolveErrorMessage(NumberFieldValidation.ODD, this._translate.instant('dataField.validations.odd'));
-        }
-        if (this.formControl.hasError(NumberFieldValidation.VALID_EVEN)) {
-            return this.resolveErrorMessage(NumberFieldValidation.EVEN, this._translate.instant('dataField.validations.even'));
-        }
-        if (this.formControl.hasError(NumberFieldValidation.VALID_POSITIVE)) {
-            return this.resolveErrorMessage(NumberFieldValidation.POSITIVE, this._translate.instant('dataField.validations.positive'));
-        }
-        if (this.formControl.hasError(NumberFieldValidation.VALID_NEGATIVE)) {
-            return this.resolveErrorMessage(NumberFieldValidation.NEGATIVE, this._translate.instant('dataField.validations.negative'));
-        }
-        if (this.formControl.hasError(NumberFieldValidation.VALID_DECIMAL)) {
-            return this.resolveErrorMessage(NumberFieldValidation.DECIMAL, this._translate.instant('dataField.validations.decimal'));
-        }
-        if (this.formControl.hasError(NumberFieldValidation.VALID_IN_RANGE)) {
-            const tmp = this.dataField.validations.find(value =>
-                value.validationRule.includes(NumberFieldValidation.IN_RANGE)
-            ).validationRule.split(' ');
-            return this.resolveErrorMessage(
-                NumberFieldValidation.IN_RANGE, this._translate.instant('dataField.validations.inrange', {range: tmp[1]})
-            );
-        }
-        return '';
-    }
-
-    resolveErrorMessage(search: string, generalMessage: string) {
-        const validation = this.dataField.validations.find(value => value.validationRule.includes(search));
-        if (validation.validationMessage && validation.validationMessage !== '') {
-            return validation.validationMessage;
-        }
-        return generalMessage;
-    }
 }

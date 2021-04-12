@@ -40,8 +40,8 @@ export class NewCaseComponent extends AbstractNewCaseComponent {
             this.netVersion = option.value.version;
     }
 
-    checkVersion(viewValue: string): void {
-        const currentOption = this.options.find(option => option.viewValue === viewValue);
+    checkVersion(viewValue: any): void {
+        const currentOption = typeof viewValue === 'string' ? undefined : viewValue.version;
         if (currentOption === undefined) {
             this.netVersion = '';
         }

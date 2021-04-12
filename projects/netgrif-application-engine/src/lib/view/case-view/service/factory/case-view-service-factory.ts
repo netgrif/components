@@ -15,6 +15,8 @@ import {Observable, of} from 'rxjs';
 import {PetriNetResourceService} from '../../../../resources/engine-endpoint/petri-net-resource.service';
 import {CaseViewParams} from '../../models/case-view-params';
 import {Net} from '../../../../process/net';
+import {NAE_NEW_CASE_CONFIGURATION} from '../../models/new-case-configuration-injection-token';
+import {NewCaseConfiguration} from '../../models/new-case-configuration';
 
 /**
  * Utility Service that saves you from injecting a bunch of {@link CaseViewService} dependencies.
@@ -36,7 +38,8 @@ export class CaseViewServiceFactory {
                 protected _translate: TranslateService,
                 protected _user: UserService,
                 protected _petriNetResource: PetriNetResourceService,
-                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) protected _newCaseConfiguration: NewCaseConfiguration) {
     }
 
     /**
@@ -62,7 +65,9 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
-            this._newCaseComponent
+            this._processService,
+            this._newCaseComponent,
+            this._newCaseConfiguration
         );
     }
 
@@ -82,7 +87,9 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
-            this._newCaseComponent
+            this._processService,
+            this._newCaseComponent,
+            this._newCaseConfiguration
         );
     }
 
@@ -111,7 +118,10 @@ export class CaseViewServiceFactory {
                 this._searchService,
                 this._translate,
                 this._user,
-                this._newCaseComponent);
+                this._processService,
+                this._newCaseComponent,
+                this._newCaseConfiguration
+            );
         } else {
             throw new Error(`Can't load configuration for view with webPath: '${webViewPath}'`);
         }
@@ -133,7 +143,9 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
-            this._newCaseComponent
+            this._processService,
+            this._newCaseComponent,
+            this._newCaseConfiguration
         );
     }
 }
