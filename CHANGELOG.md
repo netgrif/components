@@ -1,5 +1,5 @@
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10874/tab/release-report-all-issues"></a>
-## 5.1.1 (XX.04.2021)
+## 5.1.1 (12.04.2021)
 ### Bug fixes
 * [NAE-1273](https://netgrif.atlassian.net/browse/NAE-1273) - Fieldy v tasku sa dajú editovať aj keď task nie je na nikoho priradený
 * [NAE-1266](https://netgrif.atlassian.net/browse/NAE-1266) - Public view does not use i18n
