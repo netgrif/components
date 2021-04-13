@@ -90,6 +90,7 @@ export class SearchService implements OnDestroy {
             this.subFilter.unsubscribe();
         }
         this._loadingFromMetadata$.complete();
+        this._rootPredicate.destroy();
     }
 
     /**

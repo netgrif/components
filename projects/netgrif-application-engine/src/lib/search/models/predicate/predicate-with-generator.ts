@@ -73,4 +73,13 @@ export class PredicateWithGenerator extends Predicate {
         super.show();
         this._predicate.show();
     }
+
+    /**
+     * Cleans-up the inner state of this object.
+     */
+    public destroy(): void {
+        if (this._generator !== undefined) {
+            this.generator.destroy();
+        }
+    }
 }

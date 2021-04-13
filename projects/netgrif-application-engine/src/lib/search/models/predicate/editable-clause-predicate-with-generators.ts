@@ -47,4 +47,13 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
     getPredicateMap(): Map<number, PredicateWithGenerator> {
         return this._predicates;
     }
+
+    /**
+     * Cleans-up the inner state of this object
+     */
+    destroy(): void {
+        for (const predicate of this._predicates.values()) {
+            predicate.destroy();
+        }
+    }
 }
