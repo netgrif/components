@@ -15,6 +15,7 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {SaveFilterInjectionData} from '../../side-menu/content-components/save-filter/model/save-filter-injection-data';
+import {filter, take} from 'rxjs/operators';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -119,9 +120,14 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     public saveFilter(): void {
         this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers, this._searchCategories)
             .subscribe(filterCaseId => {
-                this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
+                const ref = this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
                     newFilterCaseId: filterCaseId
                 } as SaveFilterInjectionData);
+                ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
+                    if (event.message === 'Side menu closed unexpectedly') {
+                        this._userFilterService.delete(filterCaseId);
+                    }
+                });
             });
     }
 }

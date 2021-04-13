@@ -47,6 +47,31 @@ export class UserFiltersService implements OnDestroy {
     }
 
     /**
+     * Deletes the specified filter case by its case id.
+     * @param filterCaseId StringId of the filter case that should be deleted
+     * @returns an Observable that emits `true` if the case was successfully deleted and `false` otherwise
+     */
+    public delete(filterCaseId: string): Observable<boolean> {
+        const result$ = new ReplaySubject<boolean>(1);
+        this._caseService.deleteCase(filterCaseId).subscribe(response => {
+            if (response.success) {
+                this._log.debug('Filter case delete success', response);
+                result$.next(true);
+                result$.complete();
+            } else {
+                this._log.error('Filter case delete failure', response);
+                result$.next(false);
+                result$.complete();
+            }
+        }, e => {
+            this._log.error('Filter case delete error', e);
+            result$.next(false);
+            result$.complete();
+        });
+        return result$.asObservable();
+    }
+
+    /**
      * Saves the predicate filter contained in the provided {@link SearchService} instance.
      *
      * The base filter of the search service is not saved.
