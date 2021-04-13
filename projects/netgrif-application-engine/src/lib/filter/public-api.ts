@@ -10,6 +10,7 @@ export * from './models/merged-filter';
 /* ENUMS */
 export * from './models/merge-operator';
 export * from './models/filter-type';
+export * from './models/user-filter-constants';
 
 /* INTERFACES */
 export * from './models/case-search-request-body';

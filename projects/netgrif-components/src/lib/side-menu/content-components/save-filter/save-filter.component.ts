@@ -1,23 +1,63 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractSaveFilterComponent} from '@netgrif/application-engine';
-import {NAE_SIDE_MENU_CONTROL} from '@netgrif/application-engine';
-import {SideMenuControl} from '@netgrif/application-engine';
-import {UserFiltersService} from '@netgrif/application-engine';
-import {SnackBarService} from '@netgrif/application-engine';
-import {LoggerService} from '@netgrif/application-engine';
+import {
+    AbstractSaveFilterComponent,
+    NAE_SIDE_MENU_CONTROL,
+    SideMenuControl,
+    SnackBarService,
+    LoggerService,
+    TaskViewService,
+    SearchService,
+    NAE_BASE_FILTER,
+    SimpleFilter,
+    SaveFilterInjectionData,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    UserFilterConstants,
+    BaseFilter
+} from '@netgrif/application-engine';
+
+export function baseFilterFactory(sideMenuControl: SideMenuControl): BaseFilter {
+    if (!sideMenuControl.data) {
+        throw new Error('NewFilterCaseId was not provided in the sidemenu injectio data');
+    }
+    const injectedData = sideMenuControl.data as SaveFilterInjectionData;
+
+    return {
+        filter: SimpleFilter.fromTaskQuery({
+            case: {id: injectedData.newFilterCaseId},
+            transitionId: UserFilterConstants.NEW_FILTER_TRANSITION_ID
+        })
+    };
+}
+
+export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): AllowedNetsService {
+    return factory.createFromArray([UserFilterConstants.FILTER_NET_IDENTIFIER]);
+}
 
 @Component({
     selector: 'nc-save-filter',
     templateUrl: './save-filter.component.html',
-    styleUrls: ['./save-filter.component.scss']
+    styleUrls: ['./save-filter.component.scss'],
+    providers: [
+        TaskViewService,
+        SearchService,
+        {
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
+            deps: [NAE_SIDE_MENU_CONTROL]
+        },
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
+    ]
 })
 export class SaveFilterComponent extends AbstractSaveFilterComponent {
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl,
-                filterService: UserFiltersService,
                 snackBar: SnackBarService,
-                log: LoggerService) {
-        super(sideMenuControl, filterService, snackBar, log);
+                log: LoggerService,
+                taskViewService: TaskViewService) {
+        super(sideMenuControl, snackBar, log, taskViewService);
     }
 
 }

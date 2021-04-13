@@ -14,6 +14,7 @@ import {TaskSetDataRequestBody} from '../resources/interface/task-set-data-reque
 import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
 import {Net} from '../process/net';
+import {UserFilterConstants} from './models/user-filter-constants';
 
 /**
  * Service that manages filters created by users of the application.
@@ -22,8 +23,6 @@ import {Net} from '../process/net';
     providedIn: 'root'
 })
 export class UserFiltersService implements OnDestroy {
-
-    protected static readonly FILTER_NET_IDENTIFIER = 'filter';
 
     protected _initialized$: ReplaySubject<boolean>;
     protected _filterNet: Net;
@@ -34,7 +33,7 @@ export class UserFiltersService implements OnDestroy {
                 protected _callChainService: CallChainService,
                 protected _log: LoggerService) {
         this._initialized$ = new ReplaySubject<boolean>(1);
-        this._processService.getNet(UserFiltersService.FILTER_NET_IDENTIFIER).subscribe(net => {
+        this._processService.getNet(UserFilterConstants.FILTER_NET_IDENTIFIER).subscribe(net => {
             this._filterNet = net;
             this._initialized$.next(true);
         }, error => {
