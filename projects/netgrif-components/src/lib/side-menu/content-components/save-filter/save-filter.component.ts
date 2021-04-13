@@ -3,7 +3,7 @@ import {
     AbstractSaveFilterComponent,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
-    SnackBarService,
+    CaseResourceService,
     LoggerService,
     TaskViewService,
     SearchService,
@@ -54,10 +54,10 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
 export class SaveFilterComponent extends AbstractSaveFilterComponent {
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl,
-                snackBar: SnackBarService,
+                caseResourceService: CaseResourceService,
                 log: LoggerService,
                 taskViewService: TaskViewService) {
-        super(sideMenuControl, snackBar, log, taskViewService);
+        super(sideMenuControl, caseResourceService, log, taskViewService);
     }
 
 }
