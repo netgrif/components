@@ -1,9 +1,9 @@
-import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
+import {ValidableDataField} from '../../models/validable-data-field';
 
 export enum AbstractTimeInstanceFieldValidation {
     BETWEEN = 'between',
@@ -15,17 +15,15 @@ export enum AbstractTimeInstanceFieldValidation {
     VALID_WEEKEND = 'validWeekend'
 }
 
-export abstract class AbstractTimeInstanceField extends DataField<Moment> {
+export abstract class AbstractTimeInstanceField extends ValidableDataField<Moment> {
 
     public min: Moment;
     public max: Moment;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                          description?: string, layout?: Layout, public validations?: any, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, component);
+                          description?: string, layout?: Layout, validations?: any, component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
     }
-
-    protected _validators: Array<ValidatorFn>;
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {
         return (!a && !b) || (!!a && !!b && a.isSame(b, granularity));
@@ -61,25 +59,6 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
             const newDate = moment(date);
             return newDate.isValid ? newDate : null;
         }
-    }
-
-    protected resolveFormControlValidators(): Array<ValidatorFn> {
-        const result = [];
-
-        if (this.behavior.required) {
-            result.push(Validators.required);
-        }
-
-        if (this.validations) {
-            if (this._validators) {
-                result.push(...this._validators);
-            } else {
-                this._validators = this.resolveValidations();
-                result.push(...this._validators);
-            }
-        }
-
-        return result;
     }
 
     protected resolveValidations(): Array<ValidatorFn> {
