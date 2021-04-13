@@ -3,7 +3,7 @@ import {SearchOperandInputComponent} from './search-operand-input.component';
 import {Component} from '@angular/core';
 import {MaterialModule, SearchInputType} from '@netgrif/application-engine';
 import {FormControl} from '@angular/forms';
-import {SearchComponentModule} from '../search.module';
+import {SearchComponentModule} from '../../search.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SearchOperandInputComponent', () => {

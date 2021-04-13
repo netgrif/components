@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchClauseComponent} from './search-clause.component';
-import {SearchComponentModule} from '../search.module';
+import {SearchComponentModule} from '../../search.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';

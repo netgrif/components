@@ -1,32 +1,30 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {SearchPredicateComponent} from './search-predicate.component';
-import {Component, OnDestroy} from '@angular/core';
+import {SearchConfigurationInputComponent} from './search-configuration-input.component';
+import {Component} from '@angular/core';
+import {SearchComponentModule} from '../../search.module';
 import {
     AuthenticationMethodService,
+    CaseTitle,
+    CaseViewService,
+    Category,
     CategoryFactory,
+    ConfigurationInput,
     ConfigurationService,
-    defaultCaseSearchCategoriesFactory,
-    EditableElementaryPredicate,
-    MaterialModule,
     MockAuthenticationMethodService,
-    NAE_SEARCH_CATEGORIES,
+    SearchInputType,
     SearchService,
     TestConfigurationService,
-    TranslateLibModule,
-    AdvancedSearchComponentInitializationService,
     NAE_BASE_FILTER,
     TestCaseBaseFilterProvider,
     AllowedNetsService,
     TestNoAllowedNetsFactory,
     AllowedNetsServiceFactory
 } from '@netgrif/application-engine';
-import {Subject} from 'rxjs';
-import {SearchComponentModule} from '../search.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('SearchPredicateComponent', () => {
-    let component: SearchPredicateComponent;
+describe('SearchConfigurationInputComponent', () => {
+    let component: SearchConfigurationInputComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(waitForAsync(() => {
@@ -34,8 +32,6 @@ describe('SearchPredicateComponent', () => {
             imports: [
                 SearchComponentModule,
                 HttpClientTestingModule,
-                MaterialModule,
-                TranslateLibModule,
                 NoopAnimationsModule
             ],
             declarations: [
@@ -43,7 +39,6 @@ describe('SearchPredicateComponent', () => {
             ],
             providers: [
                 CategoryFactory,
-                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SearchService,
                 {
@@ -51,7 +46,6 @@ describe('SearchPredicateComponent', () => {
                     useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                AdvancedSearchComponentInitializationService,
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         })
@@ -75,14 +69,25 @@ describe('SearchPredicateComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-search-predicate [predicate]="predicate" [remove$]="remove$" [predicateId]="0"></nc-search-predicate>'
+    template: '<nc-search-configuration-input [configuration]="configuration" [selectedCategory]="category">' +
+        '</nc-search-configuration-input>'
 })
-class TestWrapperComponent implements OnDestroy {
+class TestWrapperComponent {
 
-    public predicate = new EditableElementaryPredicate();
-    public remove$ = new Subject();
+    public configuration: ConfigurationInput;
 
-    ngOnDestroy(): void {
-        this.remove$.complete();
+    public category: Category<unknown>;
+
+    constructor(factory: CategoryFactory) {
+
+        const options = new Map();
+        options.set('a', ['a']);
+
+        this.configuration = new ConfigurationInput(SearchInputType.OPERATOR, 'label', true, options, () => {
+            return [{text: 'text', value: 'a'}];
+        });
+
+        this.category = factory.get(CaseTitle);
     }
+
 }

@@ -36,7 +36,6 @@ import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-
 import {SimpleTextFieldComponent} from './text-field/simple-text-field/simple-text-field.component';
 import {UserFieldComponent} from './user-field/user-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
-import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
 import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
 import {QuillModule} from 'ngx-quill';
 import {NumberCurrencyFieldComponent} from './number-field/number-currency-field/number-currency-field.component';
@@ -52,7 +51,8 @@ import {
 
 import {FilterFieldComponent} from './filter-field/filter-field.component';
 import {FilterFieldContentComponent} from './filter-field/filter-field-content/filter-field-content.component';
-import {SearchComponentModule} from '../search/search.module';
+import {AdvancedSearchComponentModule} from '../search/advanced-search/advanced-search.module';
+import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
 
 @NgModule({
     declarations: [
@@ -115,10 +115,10 @@ import {SearchComponentModule} from '../search/search.module';
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         TranslateLibModule,
-        SideMenuContentComponentModule,
+        SideMenuUserAssignComponentModule,
         QuillModule.forRoot(),
         MatDialogModule,
-        SearchComponentModule
+        AdvancedSearchComponentModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
