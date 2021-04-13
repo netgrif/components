@@ -5,7 +5,7 @@ import {ElementaryPredicate} from '../predicate/elementary-predicate';
 import {SearchInputType} from './search-input-type';
 import {FormControl} from '@angular/forms';
 import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
-import {debounceTime, map} from 'rxjs/operators';
+import {debounceTime, defaultIfEmpty, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
 import {ConfigurationInput} from '../configuration-input';
@@ -569,7 +569,7 @@ export abstract class Category<T> {
         }
         const deserializedValuesObservables = values.map(v => this.deserializeOperandValue(v));
         const result$ = new ReplaySubject<void>(1);
-        forkJoin(deserializedValuesObservables).subscribe(deserializedValues => {
+        forkJoin(deserializedValuesObservables).pipe(defaultIfEmpty([])).subscribe(deserializedValues => {
             this.setOperands(deserializedValues);
             result$.next();
             result$.complete();
