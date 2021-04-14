@@ -1,4 +1,4 @@
-import {FieldTypeResource} from '../../task-content/model/field-type-resource';
+import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 
 /**
  * Represents a value featured on a panel
@@ -6,5 +6,9 @@ import {FieldTypeResource} from '../../task-content/model/field-type-resource';
 export interface FeaturedValue {
     value: string;
     icon: string;
-    type: FieldTypeResource | 'meta' | '';
+    type: string;
+    /**
+     * Only for immediate filter fields
+     */
+    filterField?: FilterField;
 }

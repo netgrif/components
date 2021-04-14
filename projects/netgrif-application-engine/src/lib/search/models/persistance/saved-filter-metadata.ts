@@ -10,5 +10,5 @@ export interface SavedFilterMetadata {
     /**
      * The filter object represented by the provided metadata
      */
-    filter: Filter;
+    filter?: Filter;
 }
