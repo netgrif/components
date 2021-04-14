@@ -18,8 +18,9 @@ import {UserFilterConstants} from './models/user-filter-constants';
 import {SideMenuSize} from '../side-menu/models/side-menu-size';
 import {SaveFilterInjectionData} from '../side-menu/content-components/save-filter/model/save-filter-injection-data';
 import {SideMenuService} from '../side-menu/services/side-menu.service';
-import {NAE_SAVE_FILTER_COMPONENT} from '../side-menu/content-components/injection-tokens';
+import {NAE_LOAD_FILTER_COMPONENT, NAE_SAVE_FILTER_COMPONENT} from '../side-menu/content-components/injection-tokens';
 import {ComponentType} from '@angular/cdk/portal';
+import {LoadFilterInjectionData} from '../side-menu/content-components/load-filter/model/load-filter-injection-data';
 
 /**
  * Service that manages filters created by users of the application.
@@ -38,7 +39,8 @@ export class UserFiltersService implements OnDestroy {
                 protected _callChainService: CallChainService,
                 protected _sideMenuService: SideMenuService,
                 protected _log: LoggerService,
-                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>) {
+                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>,
+                @Optional() @Inject(NAE_LOAD_FILTER_COMPONENT) protected _loadFilterComponent: ComponentType<unknown>) {
         this._initialized$ = new ReplaySubject<boolean>(1);
         this._processService.getNet(UserFilterConstants.FILTER_NET_IDENTIFIER).subscribe(net => {
             this._filterNet = net;
@@ -80,7 +82,11 @@ export class UserFiltersService implements OnDestroy {
 
     public load(): Observable<any> {
         const result = new ReplaySubject<any>(1);
-
+        this._sideMenuService.open(this._loadFilterComponent, SideMenuSize.LARGE, {filter: SimpleFilter.fromCaseQuery({
+                process: {
+                    identifier: UserFilterConstants.FILTER_NET_IDENTIFIER
+                }
+            })} as LoadFilterInjectionData);
         return result.asObservable();
     }
 

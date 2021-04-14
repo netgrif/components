@@ -14,7 +14,7 @@ export * from './new-case/new-case.component';
 export * from './user-assign/user-assign.component';
 export * from './filter-selector/filter-selector.component';
 export * from './option-selector/option-selector.component';
-export * from './save-filter/save-filter.component';
-export * from './load-filter/load-filter.component';
+export {SaveFilterComponent} from './save-filter/save-filter.component';
+export {LoadFilterComponent} from './load-filter/load-filter.component';
 
 /* MODELS */

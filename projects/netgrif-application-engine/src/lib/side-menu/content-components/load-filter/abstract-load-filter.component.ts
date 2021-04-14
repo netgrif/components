@@ -20,7 +20,7 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
         }
     }
 
-    public processCaseClick(clickedCase: Case): void {
+    handleCaseClick(clickedCase: Case) {
         console.log(clickedCase);
     }
 }

@@ -1,1 +1,6 @@
-<p>load-filter works!</p>
+<!-- TODO i18n -->
+<mat-toolbar color="primary">Load filter</mat-toolbar>
+<div class="load-filter-container">
+    <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="false" [width]="getWidth()"
+                  (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list>
+</div>

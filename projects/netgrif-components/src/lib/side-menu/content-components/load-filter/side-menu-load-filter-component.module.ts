@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LoadFilterComponent} from './load-filter.component';
-import {PanelComponentModule} from '../../../panel/panel.module';
 import {MaterialModule, NAE_LOAD_FILTER_COMPONENT, TranslateLibModule} from '@netgrif/application-engine';
+import {CaseViewComponentModule} from '../../../view/case-view/case-view.module';
 
 
 @NgModule({
@@ -11,7 +11,7 @@ import {MaterialModule, NAE_LOAD_FILTER_COMPONENT, TranslateLibModule} from '@ne
         CommonModule,
         MaterialModule,
         TranslateLibModule,
-        PanelComponentModule
+        CaseViewComponentModule
     ],
     exports: [
         LoadFilterComponent
