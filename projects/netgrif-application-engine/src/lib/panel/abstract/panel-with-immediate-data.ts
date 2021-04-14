@@ -3,6 +3,7 @@ import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
 import {OnDestroy} from '@angular/core';
+import {FeaturedValue} from './featured-value';
 
 export abstract class PanelWithImmediateData extends PanelWithHeaderBinding implements OnDestroy {
     protected constructor(protected _translate: TranslateService) {
@@ -13,7 +14,7 @@ export abstract class PanelWithImmediateData extends PanelWithHeaderBinding impl
         super.ngOnDestroy();
     }
 
-    protected parseImmediateValue(immediate) {
+    protected parseImmediateValue(immediate): FeaturedValue {
         if (immediate && immediate.value !== undefined || immediate && immediate.type === 'button') {
             switch (immediate.type) {
                 case 'date':

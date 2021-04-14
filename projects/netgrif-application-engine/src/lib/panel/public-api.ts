@@ -9,3 +9,4 @@ export * from './abstract/tabbed-virtual-scroll.component';
 /* DATA */
 export * from './task-panel-list/task-panel-data/task-panel-data';
 export * from './task-panel/models/disable-functions';
+export * from './abstract/featured-value';
