@@ -1,11 +1,11 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {CaseResourceService} from '../resources/engine-endpoint/case-resource.service';
 import {TaskResourceService} from '../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../search/search-service/search.service';
 import {ProcessService} from '../process/process.service';
 import {LoggerService} from '../logger/services/logger.service';
-import {take} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 import {SimpleFilter} from './models/simple-filter';
 import {hasContent} from '../utility/pagination/page-has-content';
 import {Task} from '../resources/interface/task';
@@ -15,6 +15,11 @@ import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
 import {Net} from '../process/net';
 import {UserFilterConstants} from './models/user-filter-constants';
+import {SideMenuSize} from '../side-menu/models/side-menu-size';
+import {SaveFilterInjectionData} from '../side-menu/content-components/save-filter/model/save-filter-injection-data';
+import {SideMenuService} from '../side-menu/services/side-menu.service';
+import {NAE_SAVE_FILTER_COMPONENT} from '../side-menu/content-components/injection-tokens';
+import {ComponentType} from '@angular/cdk/portal';
 
 /**
  * Service that manages filters created by users of the application.
@@ -31,7 +36,9 @@ export class UserFiltersService implements OnDestroy {
                 protected _taskService: TaskResourceService,
                 protected _processService: ProcessService,
                 protected _callChainService: CallChainService,
-                protected _log: LoggerService) {
+                protected _sideMenuService: SideMenuService,
+                protected _log: LoggerService,
+                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _sideMenuComponent: ComponentType<unknown>) {
         this._initialized$ = new ReplaySubject<boolean>(1);
         this._processService.getNet(UserFilterConstants.FILTER_NET_IDENTIFIER).subscribe(net => {
             this._filterNet = net;
@@ -76,13 +83,50 @@ export class UserFiltersService implements OnDestroy {
      *
      * The base filter of the search service is not saved.
      *
+     * A new filter case is created and the necessary filter information is set into it.
+     *
+     * Then a side menu with the filter is opened for the user to enter the name and other properties.
+     * The user can confirm or cancel the save by finishing the task in the side menu, or by canceling/closing.
+     *
+     * @param searchService search service containing a predicate filter, we want to save
+     * @param allowedNets allowed nets of the view, that contains the search service
+     * @param searchCategories search categories available in the saved advanced search component
+     * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process
+     */
+    public save(searchService: SearchService, allowedNets: readonly string[],
+                searchCategories: readonly Category<any>[]): Observable<string> {
+        const result = new ReplaySubject<string>(1);
+        this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories).subscribe(filterCaseId => {
+            const ref = this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
+                newFilterCaseId: filterCaseId
+            } as SaveFilterInjectionData);
+            ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
+                if (event.message === 'Side menu closed unexpectedly') {
+                    this.delete(filterCaseId);
+                    result.next(undefined);
+                } else {
+                    result.next(filterCaseId);
+                }
+                result.complete();
+            });
+        });
+        return result.asObservable();
+    }
+
+    /**
+     * Saves the predicate filter contained in the provided {@link SearchService} instance.
+     *
+     * The base filter of the search service is not saved.
+     *
+     * A new filter case is created and the necessary filter information is set into it.
+     *
      * @param searchService search service containing a predicate filter, we want to save
      * @param allowedNets allowed nets of the view, that contains the search service
      * @param searchCategories search categories available in the saved advanced search component
      * @returns an observable that emits the id of the created Filter case instance
      */
-    public save(searchService: SearchService, allowedNets: readonly string[],
-                searchCategories: readonly Category<any>[]): Observable<string> {
+    public createFilterCaseAndSetData(searchService: SearchService, allowedNets: readonly string[],
+                                      searchCategories: readonly Category<any>[]): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized(() => {
             this._caseService.createCase({

@@ -7,11 +7,9 @@ import {
     LoggerService,
     SearchService,
     NAE_SEARCH_COMPONENT_CONFIGURATION,
-    NAE_SAVE_FILTER_COMPONENT,
-    SearchComponentConfiguration, SideMenuService, UserFiltersService, AllowedNetsService, NAE_SEARCH_CATEGORIES, Category
+    SearchComponentConfiguration, UserFiltersService, AllowedNetsService, NAE_SEARCH_CATEGORIES, Category
 } from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
-import {ComponentType} from '@angular/cdk/portal';
 
 @Component({
     selector: 'nc-search',
@@ -28,13 +26,10 @@ export class SearchComponent extends AbstractSearchComponent {
                 logger: LoggerService,
                 dialogService: DialogService,
                 translate: TranslateService,
-                sideMenuService: SideMenuService,
                 userFilterService: UserFiltersService,
                 allowedNetsService: AllowedNetsService,
                 @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
-                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
-                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) sideMenuComponent: ComponentType<unknown>) {
-        super(searchService, logger, dialogService, translate, sideMenuService, userFilterService,
-            allowedNetsService, searchCategories, configuration, sideMenuComponent);
+                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration) {
+        super(searchService, logger, dialogService, translate, userFilterService, allowedNetsService, searchCategories, configuration);
     }
 }

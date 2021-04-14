@@ -6,16 +6,10 @@ import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configurat
 import {Inject, Input, OnInit, Optional} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {SideMenuSize} from '../../side-menu/models/side-menu-size';
-import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/injection-tokens';
-import {ComponentType} from '@angular/cdk/portal';
 import {UserFiltersService} from '../../filter/user-filters.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
-import {SaveFilterInjectionData} from '../../side-menu/content-components/save-filter/model/save-filter-injection-data';
-import {filter, take} from 'rxjs/operators';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -44,12 +38,10 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _logger: LoggerService,
                           protected _dialogService: DialogService,
                           protected _translate: TranslateService,
-                          protected _sideMenuService: SideMenuService,
                           protected _userFilterService: UserFiltersService,
                           protected _allowedNetsService: AllowedNetsService,
                           @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>,
-                          @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
-                          @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _sideMenuComponent: ComponentType<unknown>) {
+                          @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration) {
         if (this._configuration === null) {
             this._configuration = {};
         }
@@ -118,16 +110,6 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     }
 
     public saveFilter(): void {
-        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers, this._searchCategories)
-            .subscribe(filterCaseId => {
-                const ref = this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
-                    newFilterCaseId: filterCaseId
-                } as SaveFilterInjectionData);
-                ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
-                    if (event.message === 'Side menu closed unexpectedly') {
-                        this._userFilterService.delete(filterCaseId);
-                    }
-                });
-            });
+        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers, this._searchCategories);
     }
 }
