@@ -6,16 +6,14 @@ import {CaseViewComponentModule} from '../../../view/case-view/case-view.module'
 
 
 @NgModule({
-    declarations: [LoadFilterComponent],
     imports: [
         CommonModule,
         MaterialModule,
         TranslateLibModule,
         CaseViewComponentModule
     ],
-    exports: [
-        LoadFilterComponent
-    ],
+    declarations: [LoadFilterComponent],
+    exports: [LoadFilterComponent],
     entryComponents: [LoadFilterComponent],
     providers: [
         {provide: NAE_LOAD_FILTER_COMPONENT, useValue: LoadFilterComponent}

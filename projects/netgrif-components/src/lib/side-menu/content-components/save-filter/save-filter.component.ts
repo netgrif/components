@@ -41,8 +41,7 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
     providers: [
         TaskViewService,
         SearchService,
-        {
-            provide: NAE_BASE_FILTER,
+        {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
             deps: [NAE_SIDE_MENU_CONTROL]
         },
