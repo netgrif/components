@@ -112,4 +112,9 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     public saveFilter(): void {
         this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers, this._searchCategories);
     }
+
+    public loadFilter(): void {
+        // TODO
+        this._userFilterService.load();
+    }
 }

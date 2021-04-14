@@ -38,7 +38,7 @@ export class UserFiltersService implements OnDestroy {
                 protected _callChainService: CallChainService,
                 protected _sideMenuService: SideMenuService,
                 protected _log: LoggerService,
-                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _sideMenuComponent: ComponentType<unknown>) {
+                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>) {
         this._initialized$ = new ReplaySubject<boolean>(1);
         this._processService.getNet(UserFilterConstants.FILTER_NET_IDENTIFIER).subscribe(net => {
             this._filterNet = net;
@@ -78,6 +78,12 @@ export class UserFiltersService implements OnDestroy {
         return result$.asObservable();
     }
 
+    public load(): Observable<any> {
+        const result = new ReplaySubject<any>(1);
+
+        return result.asObservable();
+    }
+
     /**
      * Saves the predicate filter contained in the provided {@link SearchService} instance.
      *
@@ -97,7 +103,7 @@ export class UserFiltersService implements OnDestroy {
                 searchCategories: readonly Category<any>[]): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories).subscribe(filterCaseId => {
-            const ref = this._sideMenuService.open(this._sideMenuComponent, SideMenuSize.LARGE, {
+            const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
                 newFilterCaseId: filterCaseId
             } as SaveFilterInjectionData);
             ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {

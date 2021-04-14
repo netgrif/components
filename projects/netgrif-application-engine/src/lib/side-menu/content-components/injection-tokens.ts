@@ -6,3 +6,4 @@ export const NAE_FILES_UPLOAD_COMPONENT = new InjectionToken<ComponentType<unkno
 export const NAE_NEW_CASE_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeNewCaseComponent');
 export const NAE_OPTION_SELECTOR_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeOptionSelectorComponent');
 export const NAE_SAVE_FILTER_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeSaveFilterComponent');
+export const NAE_LOAD_FILTER_COMPONENT = new InjectionToken<ComponentType<unknown>>('NaeLoadFilterComponent');

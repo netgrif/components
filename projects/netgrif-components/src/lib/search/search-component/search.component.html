@@ -25,6 +25,12 @@
         <mat-icon>save</mat-icon>
     </button>
 
+    <!-- TODO i18n -->
+    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showSaveFilterButton"
+            [matTooltip]="'load'" (click)="loadFilter()">
+        <mat-icon>open_in_browser</mat-icon>
+    </button>
+
     <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showAdvancedSearchHelp"
             [matTooltip]="'search.tooltip.help' | translate" (click)="showHelp()">
         <mat-icon>help</mat-icon>
