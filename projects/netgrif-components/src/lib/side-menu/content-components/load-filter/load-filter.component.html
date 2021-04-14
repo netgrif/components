@@ -1,6 +1,7 @@
 <!-- TODO i18n -->
 <mat-toolbar color="primary">Load filter</mat-toolbar>
-<div class="load-filter-container">
+<div class="load-filter-container" fxLayout="column" fxLayoutAlign="start stretch">
+    <nc-header #header [type]="headerType" [maxHeaderColumns]="2" [responsiveHeaders]="true" [hideEditMode]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
     <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="false" [width]="getWidth()"
                   (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list>
 </div>

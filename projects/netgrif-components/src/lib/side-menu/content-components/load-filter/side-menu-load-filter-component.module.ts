@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {LoadFilterComponent} from './load-filter.component';
 import {MaterialModule, NAE_LOAD_FILTER_COMPONENT, TranslateLibModule} from '@netgrif/application-engine';
 import {CaseViewComponentModule} from '../../../view/case-view/case-view.module';
+import {HeaderComponentModule} from '../../../header/header.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {CaseViewComponentModule} from '../../../view/case-view/case-view.module'
         CommonModule,
         MaterialModule,
         TranslateLibModule,
-        CaseViewComponentModule
+        CaseViewComponentModule,
+        HeaderComponentModule,
     ],
     declarations: [LoadFilterComponent],
     exports: [LoadFilterComponent],

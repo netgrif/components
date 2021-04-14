@@ -126,7 +126,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     }
 
     public loadFilter(): void {
-        this._userFilterService.load().subscribe(savedFilterData => {
+        this._userFilterService.load(this._searchService.filterType).subscribe(savedFilterData => {
             if (savedFilterData) {
                 this.filterLoaded.emit(savedFilterData);
             }

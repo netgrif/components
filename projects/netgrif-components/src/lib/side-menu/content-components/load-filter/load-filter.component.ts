@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     NAE_SIDE_MENU_CONTROL,
     AbstractLoadFilterComponent,
@@ -11,8 +11,10 @@ import {
     AllowedNetsServiceFactory,
     AllowedNetsService,
     SearchService,
-    NAE_BASE_FILTER
+    NAE_BASE_FILTER,
+    NAE_DEFAULT_HEADERS
 } from '@netgrif/application-engine';
+import {HeaderComponent} from '../../../header/header.component';
 
 export function baseFilterFactory(sideMenuControl: SideMenuControl): BaseFilter {
     if (!sideMenuControl.data) {
@@ -40,13 +42,21 @@ export function localAllowedNetsFactory(factory: AllowedNetsServiceFactory): All
         {   provide: AllowedNetsService,
             useFactory: localAllowedNetsFactory,
             deps: [AllowedNetsServiceFactory]},
+        {   provide: NAE_DEFAULT_HEADERS,
+            useValue: ['meta-title', `${UserFilterConstants.FILTER_NET_IDENTIFIER}-${UserFilterConstants.FILTER_FIELD_ID}`]}
     ]
 })
-export class LoadFilterComponent extends AbstractLoadFilterComponent {
+export class LoadFilterComponent extends AbstractLoadFilterComponent implements AfterViewInit {
+
+    @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl,
                 log: LoggerService,
                 caseViewService: CaseViewService) {
         super(sideMenuControl, log, caseViewService);
+    }
+
+    ngAfterViewInit(): void {
+        this.initializeHeader(this.caseHeaderComponent);
     }
 }

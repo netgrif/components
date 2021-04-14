@@ -4,5 +4,6 @@
 export enum UserFilterConstants {
     FILTER_NET_IDENTIFIER = 'filter',
     NEW_FILTER_TRANSITION_ID = 'newFilter',
-    FILTER_FIELD_ID = 'filter'
+    FILTER_FIELD_ID = 'filter',
+    FILTER_TYPE_FIELD_ID = 'filter_type',
 }

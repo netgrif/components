@@ -21,6 +21,7 @@ import {SideMenuService} from '../side-menu/services/side-menu.service';
 import {NAE_LOAD_FILTER_COMPONENT, NAE_SAVE_FILTER_COMPONENT} from '../side-menu/content-components/injection-tokens';
 import {ComponentType} from '@angular/cdk/portal';
 import {LoadFilterInjectionData} from '../side-menu/content-components/load-filter/model/load-filter-injection-data';
+import {FilterType} from './models/filter-type';
 
 /**
  * Service that manages filters created by users of the application.
@@ -85,12 +86,15 @@ export class UserFiltersService implements OnDestroy {
      *
      * @returns an Observable that emits the data necessary to reconstruct the selected filter, or `undefined` if no filter was selected
      */
-    public load(): Observable<any> {
+    public load(filterType: FilterType): Observable<any> {
         const result = new ReplaySubject<any>(1);
         const ref = this._sideMenuService.open(this._loadFilterComponent, SideMenuSize.LARGE, {
             filter: SimpleFilter.fromCaseQuery({
                 process: {
                     identifier: UserFilterConstants.FILTER_NET_IDENTIFIER
+                },
+                data: {
+                    [UserFilterConstants.FILTER_TYPE_FIELD_ID]: filterType
                 }
             })
         } as LoadFilterInjectionData);
