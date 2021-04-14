@@ -1,3 +1,5 @@
+import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
+
 /**
  * @ignore
  */
@@ -20,9 +22,13 @@ export interface ImmediateData {
      */
     value?: any;
     /**
-     * Only for Fields of type CaseRef
+     * Only for Fields of type `CaseRef` and `Filter`
      */
     allowedNets?: Array<string>;
+    /**
+     * Only for Fields of type `Filter`
+     */
+    filterMetadata?: FilterMetadata;
     /**
      * @ignore
      */

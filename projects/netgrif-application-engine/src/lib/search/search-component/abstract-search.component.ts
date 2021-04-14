@@ -3,13 +3,14 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
-import {Inject, Input, OnInit, Optional} from '@angular/core';
+import {EventEmitter, Inject, Input, OnInit, Optional, Output} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
 import {UserFiltersService} from '../../filter/user-filters.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
+import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -32,7 +33,10 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     private _showSearchToggleButton = true;
     private _showAdvancedSearchHelp = true;
     private _showSaveFilterButton = true;
+    private _showLoadFilterButton = true;
     private _initialSearchMode = SearchMode.FULLTEXT;
+
+    @Output() filterLoaded: EventEmitter<SavedFilterMetadata> = new EventEmitter();
 
     protected constructor(protected _searchService: SearchService,
                           protected _logger: LoggerService,
@@ -75,6 +79,14 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
         this._showSaveFilterButton = value;
     }
 
+    get showLoadFilterButton(): boolean {
+        return this._configuration.showLoadFilterButton ?? this._showLoadFilterButton;
+    }
+
+    @Input() set showLoadFilterButton(value: boolean) {
+        this._showLoadFilterButton = value;
+    }
+
     get initialSearchMode(): SearchMode {
         return this._configuration.initialSearchMode ?? this._initialSearchMode;
     }
@@ -114,7 +126,10 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     }
 
     public loadFilter(): void {
-        // TODO
-        this._userFilterService.load();
+        this._userFilterService.load().subscribe(savedFilterData => {
+            if (savedFilterData) {
+                this.filterLoaded.emit(savedFilterData);
+            }
+        });
     }
 }

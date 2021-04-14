@@ -80,13 +80,28 @@ export class UserFiltersService implements OnDestroy {
         return result$.asObservable();
     }
 
+    /**
+     * Opens a side menu with filter cases and allows the user to select one of them.
+     *
+     * @returns an Observable that emits the data necessary to reconstruct the selected filter, or `undefined` if no filter was selected
+     */
     public load(): Observable<any> {
         const result = new ReplaySubject<any>(1);
-        this._sideMenuService.open(this._loadFilterComponent, SideMenuSize.LARGE, {filter: SimpleFilter.fromCaseQuery({
+        const ref = this._sideMenuService.open(this._loadFilterComponent, SideMenuSize.LARGE, {
+            filter: SimpleFilter.fromCaseQuery({
                 process: {
                     identifier: UserFilterConstants.FILTER_NET_IDENTIFIER
                 }
-            })} as LoadFilterInjectionData);
+            })
+        } as LoadFilterInjectionData);
+        ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
+            if (event.message === 'Side menu closed unexpectedly') {
+                result.next(undefined);
+            } else {
+                result.next(event.data);
+            }
+            result.complete();
+        });
         return result.asObservable();
     }
 

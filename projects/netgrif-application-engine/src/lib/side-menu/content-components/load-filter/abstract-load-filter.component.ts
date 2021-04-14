@@ -6,6 +6,9 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {AbstractCaseView} from '../../../view/case-view/abstract-case-view';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {Case} from '../../../resources/interface/case';
+import {getImmediateData} from '../../../utility/get-immediate-data';
+import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
+import {SavedFilterMetadata} from '../../../search/models/persistance/saved-filter-metadata';
 
 export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
 
@@ -21,6 +24,11 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
     }
 
     handleCaseClick(clickedCase: Case) {
-        console.log(clickedCase);
+        const immediate = getImmediateData(clickedCase, UserFilterConstants.FILTER_FIELD_ID);
+        this._sideMenuControl.close({
+            opened: false,
+            message: 'Filter selected',
+            data: {allowedNets: immediate.allowedNets,  filterMetadata: immediate.filterMetadata} as SavedFilterMetadata
+        });
     }
 }

@@ -36,7 +36,7 @@ import {Type} from '@angular/core';
 import {Categories} from '../categories';
 import {FormControl} from '@angular/forms';
 import {Moment} from 'moment';
-import {CategoryMetadataConfiguration} from '../generator-metadata';
+import {CategoryMetadataConfiguration} from '../../persistance/generator-metadata';
 import moment from 'moment';
 
 interface Datafield {

@@ -10,7 +10,7 @@ import {filter, take} from 'rxjs/operators';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
-import {CategoryGeneratorMetadata} from '../generator-metadata';
+import {CategoryGeneratorMetadata} from '../../persistance/generator-metadata';
 import {Operator} from '../../operator/operator';
 import {Type} from '@angular/core';
 import {DatafieldMapKey} from '../../datafield-map-key';

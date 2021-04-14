@@ -5,5 +5,6 @@ export interface SearchComponentConfiguration {
     showSearchToggleButton?: boolean;
     showAdvancedSearchHelp?: boolean;
     showSaveFilterButton?: boolean;
+    showLoadFilterButton?: boolean;
     initialSearchMode?: SearchMode;
 }

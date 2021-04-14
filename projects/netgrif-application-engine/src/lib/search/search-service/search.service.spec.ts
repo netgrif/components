@@ -14,7 +14,7 @@ import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import moment from 'moment';
 import {CaseVisualId} from '../models/category/case/case-visual-id';
 import {CaseSearchRequestBody} from '../../filter/models/case-search-request-body';
-import {FilterMetadata} from '../models/category/generator-metadata';
+import {FilterMetadata} from '../models/persistance/generator-metadata';
 import {FilterType} from '../../filter/models/filter-type';
 
 describe('SearchService', () => {

@@ -1,5 +1,5 @@
 import {Query} from '../query/query';
-import {GeneratorMetadata} from '../category/generator-metadata';
+import {GeneratorMetadata} from '../persistance/generator-metadata';
 
 /**
  * Building block of search queries. Represents any node in a tree of predicates, that are combined with {@link BooleanOperator}s to create

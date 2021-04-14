@@ -2,7 +2,7 @@ import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
-import {FilterMetadata} from '../../../search/models/category/generator-metadata';
+import {FilterMetadata} from '../../../search/models/persistance/filter-metadata';
 
 export class FilterField extends DataField<string> {
 

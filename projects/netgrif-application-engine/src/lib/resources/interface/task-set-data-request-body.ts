@@ -1,4 +1,4 @@
-import {FilterMetadata} from '../../search/models/category/generator-metadata';
+import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
 
 /**
  * Describes request body for task setData endpoint.

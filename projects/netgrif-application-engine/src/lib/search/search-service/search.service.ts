@@ -10,13 +10,14 @@ import {Query} from '../models/query/query';
 import {distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
-import {FilterMetadata, PredicateTreeMetadata} from '../models/category/generator-metadata';
+import {PredicateTreeMetadata} from '../models/persistance/generator-metadata';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {BaseFilter} from '../models/base-filter';
 import {LoggerService} from '../../logger/services/logger.service';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {FilterType} from '../../filter/models/filter-type';
 import {LoadingEmitter} from '../../utility/loading-emitter';
+import {FilterMetadata} from '../models/persistance/filter-metadata';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.

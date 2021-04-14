@@ -9,7 +9,7 @@ import {debounceTime, defaultIfEmpty, map} from 'rxjs/operators';
 import {OperatorTemplatePart} from '../operator-template-part';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
 import {ConfigurationInput} from '../configuration-input';
-import {CategoryGeneratorMetadata, CategoryMetadataConfiguration} from './generator-metadata';
+import {CategoryGeneratorMetadata, CategoryMetadataConfiguration} from '../persistance/generator-metadata';
 import {Categories} from './categories';
 import {OperatorService} from '../../operator-service/operator.service';
 import {Operators} from '../operator/operators';

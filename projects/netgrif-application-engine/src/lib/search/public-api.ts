@@ -62,9 +62,11 @@ export * from './models/category/search-autocomplete-option';
 export * from './models/category/autocomplete-options';
 export * from './models/category/net-attribute-pair';
 export * from './models/category/name-id-pair';
-export * from './models/category/generator-metadata';
 export * from './models/component-configuration/search-component-configuration';
 export * from './models/base-filter';
+export * from './models/persistance/generator-metadata';
+export * from './models/persistance/filter-metadata';
+export * from './models/persistance/saved-filter-metadata';
 
 /* Enums */
 export * from './models/boolean-operator';

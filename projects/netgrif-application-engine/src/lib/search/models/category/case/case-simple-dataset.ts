@@ -14,7 +14,7 @@ import {CaseDataset} from './case-dataset';
 import {DatafieldMapKey} from '../../datafield-map-key';
 import {SearchIndex} from '../../search-index';
 import {Categories} from '../categories';
-import {CategoryGeneratorMetadata} from '../generator-metadata';
+import {CategoryGeneratorMetadata} from '../../persistance/generator-metadata';
 import {Observable} from 'rxjs';
 
 /**
