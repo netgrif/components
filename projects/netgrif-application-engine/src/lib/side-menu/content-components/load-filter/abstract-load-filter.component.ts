@@ -9,6 +9,7 @@ import {Case} from '../../../resources/interface/case';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
 import {SavedFilterMetadata} from '../../../search/models/persistance/saved-filter-metadata';
+import {SimpleFilter} from '../../../filter/models/simple-filter';
 
 export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
 
@@ -28,7 +29,13 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
         this._sideMenuControl.close({
             opened: false,
             message: 'Filter selected',
-            data: {allowedNets: immediate.allowedNets,  filterMetadata: immediate.filterMetadata} as SavedFilterMetadata
+            data: {
+                allowedNets: immediate.allowedNets,
+                filterMetadata: immediate.filterMetadata,
+                filter: new SimpleFilter('', immediate.filterMetadata.filterType, {
+                    query: immediate.value
+                }, clickedCase.title)
+            } as SavedFilterMetadata
         });
     }
 }
