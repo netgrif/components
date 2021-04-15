@@ -1,6 +1,6 @@
 <!-- TODO i18n -->
 <mat-toolbar color="primary">Save filter</mat-toolbar>
-<div class="save-filter-container">
+<div class="save-filter-container side-menu-root">
     <nc-task-list [allowMultiOpen]="false" [tasks$]="tasks$" [loading$]="loading$" [textEllipsis]="true" [forceLoadDataOnOpen]="true"
-                  [responsiveBody]="true" [selectedHeaders$]="selectedHeaders$" (taskEvent)="processTaskEvents($event)" fxFlex></nc-task-list>
+                  [responsiveBody]="true" [selectedHeaders$]="selectedHeaders$" (taskEvent)="processTaskEvents($event)" fxFlex class="virtual-scroll-list-padding"></nc-task-list>
 </div>
