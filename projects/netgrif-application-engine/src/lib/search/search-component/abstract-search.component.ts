@@ -11,6 +11,8 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
+import {ViewIdService} from '../../user/services/view-id.service';
+import {Observable} from 'rxjs';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -44,6 +46,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _translate: TranslateService,
                           protected _userFilterService: UserFiltersService,
                           protected _allowedNetsService: AllowedNetsService,
+                          protected _viewIdService: ViewIdService,
                           @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>,
                           @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration) {
         if (this._configuration === null) {
@@ -121,8 +124,13 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
         this._dialogService.openAlertDialog(this._translate.instant('search.help.title'), this._translate.instant('search.help.text'));
     }
 
-    public saveFilter(): void {
-        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers, this._searchCategories);
+    /**
+     * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process,
+     * or the filter could not be saved
+     */
+    public saveFilter(): Observable<string> {
+        return this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
+            this._searchCategories, this._viewIdService.viewId);
     }
 
     public loadFilter(): void {

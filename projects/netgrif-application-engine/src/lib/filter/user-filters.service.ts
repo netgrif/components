@@ -1,5 +1,5 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {CaseResourceService} from '../resources/engine-endpoint/case-resource.service';
 import {TaskResourceService} from '../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../search/search-service/search.service';
@@ -122,12 +122,19 @@ export class UserFiltersService implements OnDestroy {
      * @param searchService search service containing a predicate filter, we want to save
      * @param allowedNets allowed nets of the view, that contains the search service
      * @param searchCategories search categories available in the saved advanced search component
-     * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process
+     * @param viewId the viewId of the view which contained the filter
+     * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process,
+     * or the filter could not be saved
      */
     public save(searchService: SearchService, allowedNets: readonly string[],
-                searchCategories: readonly Category<any>[]): Observable<string> {
+                searchCategories: readonly Category<any>[], viewId: string): Observable<string> {
+        if (!searchService.additionalFiltersApplied) {
+            this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
+            return of(undefined);
+        }
+
         const result = new ReplaySubject<string>(1);
-        this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories).subscribe(filterCaseId => {
+        this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories, viewId).subscribe(filterCaseId => {
             const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
                 newFilterCaseId: filterCaseId
             } as SaveFilterInjectionData);
@@ -154,10 +161,11 @@ export class UserFiltersService implements OnDestroy {
      * @param searchService search service containing a predicate filter, we want to save
      * @param allowedNets allowed nets of the view, that contains the search service
      * @param searchCategories search categories available in the saved advanced search component
+     * @param viewId the viewId of the view which contained the filter
      * @returns an observable that emits the id of the created Filter case instance
      */
     public createFilterCaseAndSetData(searchService: SearchService, allowedNets: readonly string[],
-                                      searchCategories: readonly Category<any>[]): Observable<string> {
+                                      searchCategories: readonly Category<any>[], viewId: string): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized(() => {
             this._caseService.createCase({
@@ -171,11 +179,11 @@ export class UserFiltersService implements OnDestroy {
 
                     const initTask = page.content[0];
                     this.assignSetDataFinish(initTask, {
-                        filter_type: {
+                        [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
                             type: FieldTypeResource.ENUMERATION_MAP,
                             value: searchService.filterType
                         },
-                        filter: {
+                        [UserFilterConstants.FILTER_FIELD_ID]: {
                             type: FieldTypeResource.FILTER,
                             value: searchService.rootPredicate.query.value,
                             allowedNets,
@@ -184,6 +192,10 @@ export class UserFiltersService implements OnDestroy {
                                 predicateMetadata: searchService.createPredicateMetadata(),
                                 searchCategories: searchCategories.map(c => c.serializeClass())
                             }
+                        },
+                        [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
+                            type: FieldTypeResource.TEXT,
+                            value: viewId
                         }
                     }, this._callChainService.create(success => {
                         if (!success) {
