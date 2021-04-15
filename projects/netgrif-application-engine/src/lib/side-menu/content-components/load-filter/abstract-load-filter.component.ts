@@ -32,7 +32,9 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
             data: {
                 allowedNets: immediate.allowedNets,
                 filterMetadata: immediate.filterMetadata,
-                filter: new SimpleFilter('', immediate.filterMetadata.filterType, {
+                originViewId: getImmediateData(clickedCase, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID).value,
+                filterCase: clickedCase,
+                filter: new SimpleFilter(clickedCase.stringId, immediate.filterMetadata.filterType, {
                     query: immediate.value
                 }, clickedCase.title)
             } as SavedFilterMetadata
