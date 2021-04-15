@@ -1,9 +1,12 @@
+@import '../../side-menu.theme';
+
 .load-filter-container {
     height: calc(100% - 64px);
-    max-width: 496px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .case-header-padding {
     padding-bottom: 16px;
-    padding-top: 16px;
+    padding-top: 4px;
 }

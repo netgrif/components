@@ -1,4 +1,7 @@
+@import '../../side-menu.theme';
+
 .save-filter-container {
     height: calc(100% - 64px);
-    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
 }
