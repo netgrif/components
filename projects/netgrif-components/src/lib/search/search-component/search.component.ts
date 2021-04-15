@@ -7,7 +7,14 @@ import {
     LoggerService,
     SearchService,
     NAE_SEARCH_COMPONENT_CONFIGURATION,
-    SearchComponentConfiguration, UserFiltersService, AllowedNetsService, NAE_SEARCH_CATEGORIES, Category, ViewIdService
+    SearchComponentConfiguration,
+    UserFiltersService,
+    AllowedNetsService,
+    NAE_SEARCH_CATEGORIES,
+    Category,
+    ViewIdService,
+    NAE_FILTERS_FILTER,
+    Filter
 } from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -30,8 +37,9 @@ export class SearchComponent extends AbstractSearchComponent {
                 allowedNetsService: AllowedNetsService,
                 viewIdService: ViewIdService,
                 @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
-                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration) {
+                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
+                @Optional() @Inject(NAE_FILTERS_FILTER) filtersFilter: Filter = null) {
         super(searchService, logger, dialogService, translate, userFilterService, allowedNetsService,
-            viewIdService, searchCategories, configuration);
+            viewIdService, searchCategories, configuration, filtersFilter);
     }
 }

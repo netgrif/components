@@ -13,6 +13,8 @@ import {Category} from '../models/category/category';
 import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {Observable} from 'rxjs';
+import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
+import {Filter} from '../../filter/models/filter';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -48,7 +50,8 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _allowedNetsService: AllowedNetsService,
                           protected _viewIdService: ViewIdService,
                           @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>,
-                          @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration) {
+                          @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
+                          @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter = null) {
         if (this._configuration === null) {
             this._configuration = {};
         }
@@ -134,7 +137,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     }
 
     public loadFilter(): void {
-        this._userFilterService.load(this._searchService.filterType).subscribe(savedFilterData => {
+        this._userFilterService.load(this._searchService.filterType, this._filtersFilter ?? undefined).subscribe(savedFilterData => {
             if (savedFilterData) {
                 this.filterLoaded.emit(savedFilterData);
             }

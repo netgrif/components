@@ -22,6 +22,8 @@ import {NAE_LOAD_FILTER_COMPONENT, NAE_SAVE_FILTER_COMPONENT} from '../side-menu
 import {ComponentType} from '@angular/cdk/portal';
 import {LoadFilterInjectionData} from '../side-menu/content-components/load-filter/model/load-filter-injection-data';
 import {FilterType} from './models/filter-type';
+import {Filter} from './models/filter';
+import {MergeOperator} from './models/merge-operator';
 
 /**
  * Service that manages filters created by users of the application.
@@ -84,19 +86,36 @@ export class UserFiltersService implements OnDestroy {
     /**
      * Opens a side menu with filter cases and allows the user to select one of them.
      *
+     * The default filter constrains the cases to be instances of the filter process and to be filters of the specified type
+     * (`Case` or `Task`).
+     *
+     * @param filterType whether `Case` or `Task` user filters should be loaded
+     * @param additionalFilter additional constrains on the displayed user filter cases. Must be of type `Case`
+     * otherwise the method throws an error. If it is a {@link MergedFilter} must use the `AND` {@link MergeOperator} otherwise an error
+     * will be thrown
      * @returns an Observable that emits the data necessary to reconstruct the selected filter, or `undefined` if no filter was selected
      */
-    public load(filterType: FilterType): Observable<any> {
+    public load(filterType: FilterType, additionalFilter?: Filter): Observable<any> {
+        if (additionalFilter?.type === FilterType.TASK) {
+            this._log.error('The additional filter applied to UserFiltersService.load() must be of type Case', additionalFilter);
+            throw Error('The additional filter applied to UserFiltersService.load() must be of type Case');
+        }
+
+        let filterCasesFilter = SimpleFilter.fromCaseQuery({
+            process: {
+                identifier: UserFilterConstants.FILTER_NET_IDENTIFIER
+            },
+            data: {
+                [UserFilterConstants.FILTER_TYPE_FIELD_ID]: filterType
+            }
+        });
+        if (!!additionalFilter) {
+            filterCasesFilter = filterCasesFilter.merge(additionalFilter, MergeOperator.AND);
+        }
+
         const result = new ReplaySubject<any>(1);
         const ref = this._sideMenuService.open(this._loadFilterComponent, SideMenuSize.LARGE, {
-            filter: SimpleFilter.fromCaseQuery({
-                process: {
-                    identifier: UserFilterConstants.FILTER_NET_IDENTIFIER
-                },
-                data: {
-                    [UserFilterConstants.FILTER_TYPE_FIELD_ID]: filterType
-                }
-            })
+            filter: filterCasesFilter
         } as LoadFilterInjectionData);
         ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
             if (event.message === 'Side menu closed unexpectedly') {

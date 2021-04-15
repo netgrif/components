@@ -18,7 +18,7 @@ import {HeaderComponent} from '../../../header/header.component';
 
 export function baseFilterFactory(sideMenuControl: SideMenuControl): BaseFilter {
     if (!sideMenuControl.data) {
-        throw new Error('NewFilterCaseId was not provided in the sidemenu injectio data');
+        throw new Error('NewFilterCaseId was not provided in the side menu injection data');
     }
     const injectedData = sideMenuControl.data as LoadFilterInjectionData;
 
