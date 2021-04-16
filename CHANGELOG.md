@@ -1,3 +1,14 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10883/tab/release-report-all-issues"></a>
+## 5.1.2 (16.04.2021)
+### Bug fixes
+* [NAE-1287](https://netgrif.atlassian.net/browse/NAE-1287) - Broken case creation when only one process is uploaded
+  
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10874/tab/release-report-all-issues"></a>
 ## 5.1.1 (12.04.2021)
 ### Bug fixes
