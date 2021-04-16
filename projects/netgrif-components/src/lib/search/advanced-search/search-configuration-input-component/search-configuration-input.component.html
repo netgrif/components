@@ -65,18 +65,18 @@
 
         <ng-template #argumentsSelection>
             <div fxLayout="row" fxLayoutAlign="start center" (click)="clearOperatorInput()">
-                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate$ | async" let-last="last"
+                <ng-template ngFor let-templatePart [ngForOf]="selectedCategory.operatorTemplate$ | async"
                              [ngForTrackBy]="trackByTemplateParts">
                     <div [ngSwitch]="templatePart.type">
                         <ng-template [ngSwitchCase]="operatorTemplatePartType.TEXT">
                             <div fxLayout="row" fxLayoutAlign="start center"
-                                 [ngClass]="{'text-margin': !last}">
+                                 class="text-margin">
                                 {{templatePart.content | translate}}
                             </div>
                         </ng-template>
 
                         <ng-template [ngSwitchCase]="operatorTemplatePartType.INPUT">
-                            <div [ngClass]="{'text-margin': !last}"
+                            <div class="text-margin"
                                  (click)="$event.stopPropagation()">
                                 <nc-search-operand-input [inputFormControl]="templatePart.content"
                                                          [inputType]="selectedCategory.inputType"
