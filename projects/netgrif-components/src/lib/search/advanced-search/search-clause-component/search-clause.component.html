@@ -1,10 +1,10 @@
 <div class="clause-body clause-body-color">
     <div fxLayout="row wrap" fxLayoutAlign="start center">
-        <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-first="first" [ngForTrackBy]="trackByPredicates">
+        <div *ngFor="let item of getPredicateMap() | keyvalue; trackBy: trackByPredicates; first as first" fxLayout="row" fxLayoutAlign="start center">
             <div *ngIf="!first" class="button-margin">{{'search.or' | translate | uppercase}}</div>
             <nc-search-predicate [predicate]="item.value.wrappedPredicate" [predicateId]="item.key"
                                  [remove$]="removeChild$" [generator]="item.value.generator" [editable]="editable"></nc-search-predicate>
-        </ng-template>
+        </div>
         <button *ngIf="editable" mat-stroked-button (click)="addChildPredicate()" class="button-margin">+ {{'search.or' | translate | uppercase}}</button>
     </div>
 </div>
