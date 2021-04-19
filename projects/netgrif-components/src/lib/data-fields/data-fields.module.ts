@@ -45,6 +45,7 @@ import { PasswordTextFieldComponent } from './text-field/password-text-field/pas
 import { PreviewDialogComponent } from './file-field/preview-dialog/preview-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { EnumerationStepperFieldComponent } from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
+import { EnumerationIconFieldComponent } from './enumeration-field/enumeration-icon-field/enumeration-icon-field.component';
 import {
     EnumerationAutocompleteDynamicFieldComponent
 } from './enumeration-field/enumeration-autocomplete-dynamic-field/enumeration-autocomplete-dynamic-field.component';
@@ -79,6 +80,7 @@ import {
         PreviewDialogComponent,
         NumberDefaultFieldComponent,
         EnumerationStepperFieldComponent,
+        EnumerationIconFieldComponent,
         EnumerationAutocompleteDynamicFieldComponent
     ],
     exports: [

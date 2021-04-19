@@ -12,8 +12,10 @@ import {
     SimpleFilter,
     TabbedCaseView,
     CaseViewServiceFactory,
-    ViewIdService, NAE_SEARCH_CATEGORIES, Filter,
-    defaultCaseSearchCategoriesFactory, CategoryFactory, NAE_NEW_CASE_CONFIGURATION, InjectedTabData
+    ViewIdService,
+    Filter,
+    NAE_NEW_CASE_CONFIGURATION,
+    InjectedTabData
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
