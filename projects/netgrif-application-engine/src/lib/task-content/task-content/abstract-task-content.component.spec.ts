@@ -57,7 +57,8 @@ describe('AbstractTaskContentComponent', () => {
                 imports,
                 providers: [
                     ...providers,
-                    {provide: NAE_ASYNC_RENDERING_CONFIGURATION, useValue: {enableAsyncRendering: false}}
+                    {provide: NAE_ASYNC_RENDERING_CONFIGURATION,
+                     useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}}
                 ],
                 declarations: [TestTaskContentComponent]
             })

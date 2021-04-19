@@ -3,17 +3,21 @@ export interface AsyncRenderingConfiguration {
     /**
      * How many items are rendered at once
      */
-    batchSize: number;
+    batchSize?: number;
     /**
      * What is the delay between renders in milliseconds
      */
-    batchDelay: number;
+    batchDelay?: number;
     /**
      * How many placeholder elements are rendered after the items
      */
-    numberOfPlaceholders: number;
+    numberOfPlaceholders?: number;
     /**
-     * Whether the data fields should be rendered asynchronously or not
+     * Whether data fields that are not yet present in the task content should be rendered asynchronously or not
      */
-    enableAsyncRendering: boolean;
+    enableAsyncRenderingForNewFields?: boolean;
+    /**
+     * Whether all data fields that are already loaded, when a task is expanded should be rendered asynchronously or not
+     */
+    enableAsyncRenderingOnTaskExpand?: boolean;
 }
