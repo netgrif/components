@@ -1,5 +1,6 @@
 import {Query} from '../query/query';
 import {GeneratorMetadata} from '../persistance/generator-metadata';
+import {FilterTextSegment} from '../persistance/filter-text-segment';
 
 /**
  * Building block of search queries. Represents any node in a tree of predicates, that are combined with {@link BooleanOperator}s to create
@@ -52,5 +53,13 @@ export abstract class Predicate {
      */
     public createGeneratorMetadata(): GeneratorMetadata | undefined {
         return this._metadataGenerator();
+    }
+
+    /**
+     * @returns an Array containing text segments representing the content of this predicate.
+     * The default implementation returns an empty array.
+     */
+    public createFilterTextSegments(): Array<FilterTextSegment> {
+        return [];
     }
 }

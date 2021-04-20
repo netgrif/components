@@ -1,6 +1,7 @@
 import {Predicate} from './predicate';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
+import {FilterTextSegment} from '../persistance/filter-text-segment';
 
 /**
  * Represents a clause of {@link Predicate}s combined with a {@link BooleanOperator}.
@@ -81,5 +82,25 @@ export class ClausePredicate extends Predicate {
      */
     protected get queries(): Array<Query> {
         return this._predicates.map(p => p.query);
+    }
+
+    /**
+     * @returns an array containing the text segments of the contained predicates
+     * separated by text segments representing the boolean operators
+     */
+    createFilterTextSegments(): Array<FilterTextSegment> {
+        const result: Array<FilterTextSegment> = [];
+        let first = true;
+        for (const predicate of this._predicates) {
+            const textSegments = predicate.createFilterTextSegments();
+            if (textSegments.length > 0) {
+                if (!first) {
+                    result.push({segment: this._operator === BooleanOperator.AND ? 'search.and' : 'search.or', uppercase: true});
+                }
+                result.push(...textSegments);
+                first = false;
+            }
+        }
+        return result;
     }
 }

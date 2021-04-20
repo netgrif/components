@@ -6,6 +6,7 @@ import {OnDestroy} from '@angular/core';
 import {Query} from '../query/query';
 import {EditablePredicate} from './editable-predicate';
 import {Predicate} from './predicate';
+import {FilterTextSegment} from '../persistance/filter-text-segment';
 
 
 /**
@@ -127,5 +128,25 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         for (const p of this._predicates.values()) {
             p.show();
         }
+    }
+
+    /**
+     * @returns an array containing the text segments of the contained predicates
+     * separated by text segments representing the boolean operators
+     */
+    createFilterTextSegments(): Array<FilterTextSegment> {
+        const result: Array<FilterTextSegment> = [];
+        let first = true;
+        for (const predicate of this._predicates.values()) {
+            const textSegments = predicate.createFilterTextSegments();
+            if (textSegments.length > 0) {
+                if (!first) {
+                    result.push({segment: this._operator === BooleanOperator.AND ? 'search.and' : 'search.or', uppercase: true});
+                }
+                result.push(...textSegments);
+                first = false;
+            }
+        }
+        return result;
     }
 }

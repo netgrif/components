@@ -38,6 +38,7 @@ import {FormControl} from '@angular/forms';
 import {Moment} from 'moment';
 import {CategoryMetadataConfiguration} from '../../persistance/generator-metadata';
 import moment from 'moment';
+import {FilterTextSegment} from '../../persistance/filter-text-segment';
 
 interface Datafield {
     netIdentifier: string;
@@ -470,5 +471,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             default:
                 return super.deserializeOperandValue(value);
         }
+    }
+
+    protected createConfigurationFilterTextSegments(): Array<FilterTextSegment> {
+        return [{segment: this._configurationInputs$.value[0].formControl.value.text, bold: true}];
     }
 }

@@ -5,6 +5,7 @@ import {Observable, of} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {ConfigurationInput} from '../configuration-input';
 import {OperatorService} from '../../operator-service/operator.service';
+import {FilterTextSegment} from '../persistance/filter-text-segment';
 
 /**
  * A utility class that exists for inheritance by simpler category instances.
@@ -39,5 +40,9 @@ export abstract class NoConfigurationAutocompleteCategory<T> extends Autocomplet
             return this._operatorFormControl;
         }
         throw new Error(`Illegal inputIndex '${inputIndex}'. This category has only one configuration input!`);
+    }
+
+    protected createConfigurationFilterTextSegments(): Array<FilterTextSegment> {
+        return [];
     }
 }
