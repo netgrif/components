@@ -3,14 +3,14 @@ import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angul
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
-import {ValidableDataField} from '../../models/validable-data-field';
+import {DataField} from '../../models/abstract-data-field';
 
 export enum BooleanFieldValidation {
     REQUIRED_TRUE = 'requiredTrue',
     REQUIRED = 'required'
 }
 
-export class BooleanField extends ValidableDataField<boolean> {
+export class BooleanField extends DataField<boolean> {
 
     constructor(stringId: string, title: string, value: boolean, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Validation[], component?: Component) {

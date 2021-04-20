@@ -3,7 +3,7 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
-import {ValidableDataField} from '../../models/validable-data-field';
+import {DataField} from '../../models/abstract-data-field';
 
 export enum AbstractTimeInstanceFieldValidation {
     BETWEEN = 'between',
@@ -15,7 +15,7 @@ export enum AbstractTimeInstanceFieldValidation {
     VALID_WEEKEND = 'validWeekend'
 }
 
-export abstract class AbstractTimeInstanceField extends ValidableDataField<Moment> {
+export abstract class AbstractTimeInstanceField extends DataField<Moment> {
 
     public min: Moment;
     public max: Moment;

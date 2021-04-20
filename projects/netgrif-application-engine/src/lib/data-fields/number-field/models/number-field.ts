@@ -4,7 +4,7 @@ import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {FormatFilter} from '../../models/format-filter';
 import {Component} from '../../models/component';
-import {ValidableDataField} from '../../models/validable-data-field';
+import {DataField} from '../../models/abstract-data-field';
 
 export enum NumberFieldValidation {
     ODD = 'odd',
@@ -23,7 +23,7 @@ export enum NumberFieldValidation {
     VALID_IN_RANGE = 'validInRange'
 }
 
-export class NumberField extends ValidableDataField<number> {
+export class NumberField extends DataField<number> {
     public _formatFilter: FormatFilter;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, validations?: Validation[], placeholder?: string,

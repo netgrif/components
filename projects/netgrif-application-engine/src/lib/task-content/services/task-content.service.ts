@@ -11,7 +11,7 @@ import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-f
 import {FieldConverterService} from './field-converter.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
-import {ValidableDataField} from '../../data-fields/models/validable-data-field';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 import {Validation} from '../../data-fields/models/validation';
 
 /**
@@ -168,8 +168,8 @@ export abstract class TaskContentService implements OnDestroy {
                                 newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                             });
                             (field as EnumerationField | MultichoiceField).choices = newOptions;
-                        } else if (key === 'validations' && field instanceof ValidableDataField) {
-                            field.setValidations(updatedField.validations.map(it => (it as Validation)));
+                        } else if (key === 'validations') {
+                            field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
 
                         } else if (key !== 'type') {
                             field[key] = updatedField[key];
