@@ -9,8 +9,10 @@ import {WorkflowPanelComponent} from './workflow-panel/workflow-panel.component'
 import {DataFieldsComponentModule} from '../data-fields/data-fields.module';
 import {MaterialModule, SnackBarModule, TranslateLibModule} from '@netgrif/application-engine';
 import {TaskContentComponentModule} from '../task-content/task-content.module';
-import { PublicWorkflowPanelComponent } from './public-workflow-panel/public-workflow-panel.component';
+import {PublicWorkflowPanelComponent} from './public-workflow-panel/public-workflow-panel.component';
 import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
+import {ImmediateFilterTextComponent} from './immediate/immediate-filter-text/immediate-filter-text.component';
+import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-text-content/immediate-filter-text-content.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +22,8 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
         WorkflowPanelComponent,
         TaskListComponent,
         PublicWorkflowPanelComponent,
+        ImmediateFilterTextComponent,
+        ImmediateFilterTextContentComponent,
     ],
     imports: [
         CommonModule,
@@ -38,6 +42,10 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
         WorkflowPanelComponent,
         TaskListComponent,
         PublicWorkflowPanelComponent,
+        ImmediateFilterTextComponent,
+    ],
+    entryComponents: [
+        ImmediateFilterTextContentComponent,
     ]
 })
 export class PanelComponentModule {
