@@ -5,6 +5,7 @@ import {SearchService} from '../../search/search-service/search.service';
 import {Subscription} from 'rxjs';
 import {filter, take} from 'rxjs/operators';
 import {FilterTextSegment} from '../../search/models/persistance/filter-text-segment';
+import {TranslateService} from '@ngx-translate/core';
 
 export abstract class AbstractImmediateFilterTextContentComponent implements OnDestroy {
 
@@ -12,11 +13,15 @@ export abstract class AbstractImmediateFilterTextContentComponent implements OnD
 
     public segments: Array<FilterTextSegment> = [];
 
+    public tooltip: string;
+
     protected constructor(@Inject(NAE_FILTER_TEXT) protected _filterMetadata: FilterMetadataAllowedNets,
-                          protected _textSearchService: SearchService) {
+                          protected _textSearchService: SearchService,
+                          protected _translateService: TranslateService) {
         this._textSearchService.loadFromMetadata(this._filterMetadata.filterMetadata);
         this._searchServiceSub = this._textSearchService.loadingFromMetadata$.pipe(filter(loading => !loading), take(1)).subscribe(() => {
             this.segments = this._textSearchService.createFilterTextSegments();
+            this.tooltip = this.segments.map(segment => this._translateService.instant(segment.segment)).join(' ');
         });
     }
 

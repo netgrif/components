@@ -13,6 +13,7 @@ import {
     Category,
     NAE_SEARCH_CATEGORIES,
 } from '@netgrif/application-engine';
+import {TranslateService} from '@ngx-translate/core';
 
 export function filterTextBaseFilterFactory(metadata: FilterMetadataAllowedNets): BaseFilter {
     return {
@@ -45,8 +46,10 @@ export function filterTextCategoriesFactory(factory: CategoryFactory, metadata: 
 })
 export class ImmediateFilterTextContentComponent extends AbstractImmediateFilterTextContentComponent {
 
-    constructor(@Inject(NAE_FILTER_TEXT) filterMetadata: FilterMetadataAllowedNets, textSearchService: SearchService) {
-        super(filterMetadata, textSearchService);
+    constructor(@Inject(NAE_FILTER_TEXT) filterMetadata: FilterMetadataAllowedNets,
+                textSearchService: SearchService,
+                translateService: TranslateService) {
+        super(filterMetadata, textSearchService, translateService);
     }
 
 }
