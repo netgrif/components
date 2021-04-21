@@ -8,12 +8,6 @@ import {debounceTime} from 'rxjs/operators';
 
 export abstract class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
 
-    /**
-     * Whether the contents displayed in this component can be edited by the user or not.
-     *
-     * Defaults to `true`
-     */
-    @Input() editable = true;
     @Input() inputFormControl: FormControl;
     @Input() inputType: SearchInputType;
     @Input() first: boolean;
@@ -24,6 +18,8 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
 
     protected _inputConfirmed = false;
 
+    protected _editable = true;
+
     private _filteredOptions$: Observable<Array<SearchAutocompleteOption<unknown>>>;
 
     private _autocompleteChange: Subscription;
@@ -31,6 +27,25 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
     private _initialExpansion = true;
 
     public renderSelection = (selection: SearchAutocompleteOption<unknown>) => this._renderSelection(selection);
+
+    /**
+     * Whether the contents displayed in this component can be edited by the user or not.
+     *
+     * Defaults to `true`
+     */
+    @Input()
+    public set editable(editable: boolean) {
+        this._editable = editable;
+        if (this._editable) {
+            this.inputFormControl.enable();
+        } else {
+            this.inputFormControl.disable();
+        }
+    }
+
+    public get editable(): boolean {
+        return this._editable;
+    }
 
     ngOnInit(): void {
         if (this.inputType === SearchInputType.AUTOCOMPLETE) {

@@ -9,14 +9,28 @@ import {MatSelect} from '@angular/material/select';
 
 export abstract class AbstractSearchConfigurationInputComponent {
 
+    protected _editable = true;
+    @Input() configuration: ConfigurationInput;
+    @Input() selectedCategory: Category<any>;
+
     /**
      * Whether the contents displayed in this component can be edited by the user or not.
      *
      * Defaults to `true`
      */
-    @Input() editable = true;
-    @Input() configuration: ConfigurationInput;
-    @Input() selectedCategory: Category<any>;
+    @Input()
+    public set editable(editable: boolean) {
+        this._editable = editable;
+        if (this._editable) {
+            this.configuration.formControl.enable();
+        } else {
+            this.configuration.formControl.disable();
+        }
+    }
+
+    public get editable(): boolean {
+        return this._editable;
+    }
 
     @ViewChild('configurationInput')
     public set configurationInput(input: MatSelect | ElementRef<HTMLInputElement>) {

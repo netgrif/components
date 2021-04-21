@@ -6,7 +6,6 @@
             <mat-form-field appearance="outline">
                 <input type="text" matInput autocomplete="off"
                        [formControl]="inputFormControl"
-                       [disabled]="!editable"
                        (keydown.enter)="$event.target.blur()"
                        (blur)="confirmInput()"
                        #operandInput>
@@ -20,7 +19,6 @@
                        #autocompleteTrigger="matAutocompleteTrigger"
                        [formControl]="inputFormControl"
                        [matAutocomplete]="searchAutocomplete"
-                       [disabled]="!editable"
                        (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()"
                        (focus)="editInput()"
                        #operandInput>
@@ -40,7 +38,6 @@
                 <input matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        [matDatepicker]="searchDatepicker"
-                       [disabled]="!editable"
                        (keydown.enter)="searchDatepicker.close()"
                        (focus)="editInput(); searchDatepicker.open()"
                        (blur)="confirmInput()"
@@ -55,7 +52,6 @@
                 <input matInput autocomplete="off"
                        [formControl]="inputFormControl"
                        [ngxMatDatetimePicker]="searchDateTimepicker"
-                       [disabled]="!editable"
                        (keydown.enter)="searchDateTimepicker.close()"
                        (focus)="editInput(); searchDateTimepicker.open()"
                        #operandInput>
@@ -77,7 +73,6 @@
             <mat-form-field appearance="outline">
                 <input type="number" matInput autocomplete="off"
                        [formControl]="inputFormControl"
-                       [disabled]="!editable"
                        (keydown.enter)="$event.target.blur()"
                        (focus)="editInput()"
                        (blur)="confirmInput()"
@@ -88,7 +83,6 @@
         <ng-template [ngSwitchCase]="searchInputType.BOOLEAN">
             <div fxLayout="row">
                 <mat-slide-toggle [formControl]="inputFormControl"
-                                  [disabled]="!editable"
                                   (focus)="editInput()"
                                   (toggleChange)="confirmInput()"></mat-slide-toggle>
             </div>
