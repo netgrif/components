@@ -27,6 +27,7 @@ export class ClausePredicate extends Predicate {
         this._predicates = [];
         this._predicates.push(...predicates);
         this.updateQuery();
+        this.initializeFilterTextSegmentsGenerator();
     }
 
     get query(): Query {
@@ -84,23 +85,21 @@ export class ClausePredicate extends Predicate {
         return this._predicates.map(p => p.query);
     }
 
-    /**
-     * @returns an array containing the text segments of the contained predicates
-     * separated by text segments representing the boolean operators
-     */
-    createFilterTextSegments(): Array<FilterTextSegment> {
-        const result: Array<FilterTextSegment> = [];
-        let first = true;
-        for (const predicate of this._predicates) {
-            const textSegments = predicate.createFilterTextSegments();
-            if (textSegments.length > 0) {
-                if (!first) {
-                    result.push({segment: this._operator === BooleanOperator.AND ? 'search.and' : 'search.or', uppercase: true});
+    private initializeFilterTextSegmentsGenerator() {
+        this._filterTextSegmentsGenerator = () => {
+            const result: Array<FilterTextSegment> = [];
+            let first = true;
+            for (const predicate of this._predicates) {
+                const textSegments = predicate.createFilterTextSegments();
+                if (textSegments.length > 0) {
+                    if (!first) {
+                        result.push({segment: this._operator === BooleanOperator.AND ? 'search.and' : 'search.or', uppercase: true});
+                    }
+                    result.push(...textSegments);
+                    first = false;
                 }
-                result.push(...textSegments);
-                first = false;
             }
-        }
-        return result;
+            return result;
+        };
     }
 }

@@ -12,6 +12,7 @@ export abstract class Predicate {
 
     protected _visible: boolean;
     protected _metadataGenerator: () => GeneratorMetadata | undefined;
+    protected _filterTextSegmentsGenerator: () => Array<FilterTextSegment>;
 
     /**
      * @param initiallyVisible whether the predicate should be initially displayed or not
@@ -20,6 +21,9 @@ export abstract class Predicate {
         this._visible = !!initiallyVisible;
         this._metadataGenerator = () => {
             throw new Error('This predicate has no metadata generator registered!');
+        };
+        this._filterTextSegmentsGenerator = () => {
+            return [];
         };
     }
 
@@ -55,11 +59,15 @@ export abstract class Predicate {
         return this._metadataGenerator();
     }
 
+    public setFilterTextSegmentsGenerator(filterTextSegmentsGenerator: () => Array<FilterTextSegment>) {
+        this._filterTextSegmentsGenerator = filterTextSegmentsGenerator;
+    }
+
     /**
      * @returns an Array containing text segments representing the content of this predicate.
      * The default implementation returns an empty array.
      */
     public createFilterTextSegments(): Array<FilterTextSegment> {
-        return [];
+        return this._filterTextSegmentsGenerator();
     }
 }
