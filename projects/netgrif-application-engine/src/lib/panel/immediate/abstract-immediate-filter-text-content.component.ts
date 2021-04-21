@@ -21,7 +21,13 @@ export abstract class AbstractImmediateFilterTextContentComponent implements OnD
         this._textSearchService.loadFromMetadata(this._filterMetadata.filterMetadata);
         this._searchServiceSub = this._textSearchService.loadingFromMetadata$.pipe(filter(loading => !loading), take(1)).subscribe(() => {
             this.segments = this._textSearchService.createFilterTextSegments();
-            this.tooltip = this.segments.map(segment => this._translateService.instant(segment.segment)).join(' ');
+            this.tooltip = this.segments.map(segment => {
+                const translation = this._translateService.instant(segment.segment);
+                if (segment.uppercase) {
+                    return translation.toUpperCase();
+                }
+                return translation;
+            }).join(' ');
         });
     }
 
