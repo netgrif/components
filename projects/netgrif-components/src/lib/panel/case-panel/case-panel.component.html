@@ -25,7 +25,11 @@
                         <span *ngSwitchDefault [ngClass]="{'text-column-ellipsis': textEllipsis,
                          'text-column-word-wrap': !textEllipsis}">{{field.value}}</span>
                         <button *ngSwitchCase="'button'" mat-flat-button color="primary">{{field.value}}</button>
-                        <nc-immediate-filter-text *ngSwitchCase="'filter'" [filterMetadata]="field.filterMetadata"></nc-immediate-filter-text>
+                        <nc-immediate-filter-text *ngSwitchCase="'filter'"
+                                                  [filterMetadata]="field.filterMetadata"
+                                                  [ngClass]="{'text-column-ellipsis': textEllipsis,
+                                                            'text-column-word-wrap': !textEllipsis}">
+                        </nc-immediate-filter-text>
                     </ng-container>
                 </span>
             </div>

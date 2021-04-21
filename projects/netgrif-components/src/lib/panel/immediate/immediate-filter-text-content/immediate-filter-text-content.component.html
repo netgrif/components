@@ -1,3 +1,5 @@
 <ng-template ngFor let-segment [ngForOf]="segments">
-    <span [ngClass]="{'bold-text': segment.bold}">{{segment.uppercase ? (segment.segment | translate | uppercase) : (segment.segment | translate)}}</span>
+    <span [ngClass]="{'bold-text': segment.bold}" class="span-margin">
+        {{segment.uppercase ? (segment.segment | translate | uppercase) : (segment.segment | translate)}}
+    </span>
 </ng-template>
