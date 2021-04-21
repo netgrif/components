@@ -1,3 +1,30 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10883/tab/release-report-all-issues"></a>
+## 5.1.2 (16.04.2021)
+### Bug fixes
+* [NAE-1287](https://netgrif.atlassian.net/browse/NAE-1287) - Broken case creation when only one process is uploaded
+  
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10874/tab/release-report-all-issues"></a>
+## 5.1.1 (12.04.2021)
+### Bug fixes
+* [NAE-1273](https://netgrif.atlassian.net/browse/NAE-1273) - Fieldy v tasku sa dajú editovať aj keď task nie je na nikoho priradený
+* [NAE-1266](https://netgrif.atlassian.net/browse/NAE-1266) - Public view does not use i18n
+* [NAE-1265](https://netgrif.atlassian.net/browse/NAE-1265) - Anonym user inconsistence
+
+### Improvements
+* [NAE-1249](https://netgrif.atlassian.net/browse/NAE-1249) - Async loading datagroup
+* [NAE-1248](https://netgrif.atlassian.net/browse/NAE-1248) - Icon enum
+* [NAE-1247](https://netgrif.atlassian.net/browse/NAE-1247) - Backend autocomplete enumeration
+* [NAE-1245](https://netgrif.atlassian.net/browse/NAE-1245) - Dynamic process loading
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10860/tab/release-report-all-issues"></a>
 ## 5.1.0 - Black Zinc (25.3.2021)
 ### Bug fixes
