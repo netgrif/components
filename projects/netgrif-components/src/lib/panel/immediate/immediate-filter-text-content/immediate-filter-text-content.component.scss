@@ -6,8 +6,9 @@
     margin-right: 0.4ex;
 }
 
-.full-size {
-    width: 100%;
-    height: 100%;
-    display: inline;
+.ellipsis {
+    word-break: break-word !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }

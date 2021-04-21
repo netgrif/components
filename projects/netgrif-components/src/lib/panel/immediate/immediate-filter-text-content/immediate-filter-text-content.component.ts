@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {
     AbstractImmediateFilterTextContentComponent,
     NAE_FILTER_TEXT,
-    FilterMetadataAllowedNets,
+    FilterTextConfiguration,
     SearchService,
     NAE_BASE_FILTER,
     BaseFilter,
@@ -15,19 +15,19 @@ import {
 } from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
-export function filterTextBaseFilterFactory(metadata: FilterMetadataAllowedNets): BaseFilter {
+export function filterTextBaseFilterFactory(configuration: FilterTextConfiguration): BaseFilter {
     return {
-        filter: SimpleFilter.empty(metadata.filterMetadata.filterType)
+        filter: SimpleFilter.empty(configuration.metadata.filterMetadata.filterType)
     };
 }
 
 export function filterTextAllowedNetsFactory(factory: AllowedNetsServiceFactory,
-                                             metadata: FilterMetadataAllowedNets): AllowedNetsService {
-    return factory.createFromArray(metadata.allowedNets);
+                                             configuration: FilterTextConfiguration): AllowedNetsService {
+    return factory.createFromArray(configuration.metadata.allowedNets);
 }
 
-export function filterTextCategoriesFactory(factory: CategoryFactory, metadata: FilterMetadataAllowedNets): Array<Category<any>> {
-    const categories = metadata.filterMetadata.searchCategories.map(c => factory.getByNameWithDefaultOperator(c));
+export function filterTextCategoriesFactory(factory: CategoryFactory, configuration: FilterTextConfiguration): Array<Category<any>> {
+    const categories = configuration.metadata.filterMetadata.searchCategories.map(c => factory.getByNameWithDefaultOperator(c));
     categories.forEach(c => c.destroy());
     return categories;
 }
@@ -46,10 +46,10 @@ export function filterTextCategoriesFactory(factory: CategoryFactory, metadata: 
 })
 export class ImmediateFilterTextContentComponent extends AbstractImmediateFilterTextContentComponent {
 
-    constructor(@Inject(NAE_FILTER_TEXT) filterMetadata: FilterMetadataAllowedNets,
+    constructor(@Inject(NAE_FILTER_TEXT) configuration: FilterTextConfiguration,
                 textSearchService: SearchService,
                 translateService: TranslateService) {
-        super(filterMetadata, textSearchService, translateService);
+        super(configuration, textSearchService, translateService);
     }
 
 }
