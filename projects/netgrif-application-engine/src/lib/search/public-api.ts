@@ -68,6 +68,7 @@ export * from './models/persistance/generator-metadata';
 export * from './models/persistance/filter-metadata';
 export * from './models/persistance/saved-filter-metadata';
 export * from './models/persistance/filter-text-segment';
+export * from './models/persistance/filter-metadata-allowed-nets';
 
 /* Enums */
 export * from './models/boolean-operator';

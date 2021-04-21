@@ -1,19 +1,11 @@
-import {FilterMetadata} from './filter-metadata';
 import {Filter} from '../../../filter/models/filter';
 import {Case} from '../../../resources/interface/case';
+import {FilterMetadataAllowedNets} from './filter-metadata-allowed-nets';
 
 /**
  * All the necessary data for full reconstruction of a saved filter
  */
-export interface SavedFilterMetadata {
-    /**
-     * Allowed nets used to create the filter
-     */
-    allowedNets: Array<string>;
-    /**
-     * Serialized advanced search state of the saved filter
-     */
-    filterMetadata: FilterMetadata;
+export interface SavedFilterMetadata extends FilterMetadataAllowedNets {
     /**
      * The view ID of the view the filter was created in
      */

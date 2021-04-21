@@ -1,4 +1,4 @@
-import {FilterField} from '../../data-fields/filter-field/models/filter-field';
+import {FilterMetadataAllowedNets} from '../../search/models/persistance/filter-metadata-allowed-nets';
 
 /**
  * Represents a value featured on a panel
@@ -10,5 +10,5 @@ export interface FeaturedValue {
     /**
      * Only for immediate filter fields
      */
-    filterField?: FilterField;
+    filterMetadata?: FilterMetadataAllowedNets;
 }
