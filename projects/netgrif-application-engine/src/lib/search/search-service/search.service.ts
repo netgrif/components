@@ -74,7 +74,7 @@ export class SearchService implements OnDestroy {
             });
         }
         this._predicateQueryChanged$ = new Subject<void>();
-        this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$);
+        this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$, undefined, true);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
         this._loadingFromMetadata$ = new LoadingEmitter();

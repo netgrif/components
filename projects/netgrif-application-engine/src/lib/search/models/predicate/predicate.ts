@@ -1,6 +1,7 @@
 import {Query} from '../query/query';
 import {GeneratorMetadata} from '../persistance/generator-metadata';
 import {FilterTextSegment} from '../persistance/filter-text-segment';
+import {BooleanOperator} from '../boolean-operator';
 
 /**
  * Building block of search queries. Represents any node in a tree of predicates, that are combined with {@link BooleanOperator}s to create
@@ -39,6 +40,45 @@ export abstract class Predicate {
      * this Predicate as it's root node.
      */
     public abstract get query(): Query;
+
+    /**
+     * Combines the text segments of the predicates with the given operator and wraps the individual predicates in brackets optionaly
+     * @param predicates sources of text segments that are to be combined with a boolean operator
+     * @param operator boolean operator used to combine the individual predicate text segments
+     * @param wrapWithBrackets whether the individual predicate text segments should be wrapped in braces or not
+     * (if only one predicate is provided it is never wrapped)
+     */
+    public static combineTextSegmentsWithBooleanOperator(predicates: IterableIterator<Predicate> | Array<Predicate>,
+                                                         operator: BooleanOperator,
+                                                         wrapWithBrackets = false): Array<FilterTextSegment> {
+        const result: Array<FilterTextSegment> = [];
+        let first = true;
+        let hasTwo = false;
+        for (const predicate of predicates) {
+            const textSegments = predicate.createFilterTextSegments();
+            if (textSegments.length > 0) {
+                if (!first) {
+                    if (!hasTwo && wrapWithBrackets) {
+                        result.unshift({segment: '('});
+                        hasTwo = true;
+                    }
+                    if (wrapWithBrackets) {
+                        result.push({segment: ')'});
+                    }
+                    result.push({segment: operator === BooleanOperator.AND ? 'search.and' : 'search.or', uppercase: true});
+                    if (wrapWithBrackets) {
+                        result.push({segment: '('});
+                    }
+                }
+                result.push(...textSegments);
+                first = false;
+            }
+        }
+        if (hasTwo && wrapWithBrackets) {
+            result.push({segment: ')'});
+        }
+        return result;
+    }
 
     /**
      * Sets the predicates state to `visible`

@@ -20,7 +20,10 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
     protected _childCounter: IncrementingCounter;
     protected _query: Query;
 
-    constructor(protected _operator: BooleanOperator, parentNotifier?: Subject<void>, initiallyVisible = true) {
+    constructor(protected _operator: BooleanOperator,
+                parentNotifier?: Subject<void>,
+                initiallyVisible = true,
+                protected _bracketSubPredicateText = false) {
         super(parentNotifier, initiallyVisible);
         this._predicates = new Map<number, Predicate>();
         this._childUpdated$ = new Subject<void>();
@@ -133,19 +136,8 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
 
     private initializeFilterTextSegmentsGenerator() {
         this._filterTextSegmentsGenerator = () => {
-            const result: Array<FilterTextSegment> = [];
-            let first = true;
-            for (const predicate of this._predicates.values()) {
-                const textSegments = predicate.createFilterTextSegments();
-                if (textSegments.length > 0) {
-                    if (!first) {
-                        result.push({segment: this._operator === BooleanOperator.AND ? 'search.and' : 'search.or', uppercase: true});
-                    }
-                    result.push(...textSegments);
-                    first = false;
-                }
-            }
-            return result;
+            return Predicate.combineTextSegmentsWithBooleanOperator(this._predicates.values(),
+                this._operator, this._bracketSubPredicateText);
         };
     }
 }

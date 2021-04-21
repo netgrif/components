@@ -21,8 +21,13 @@ export class ClausePredicate extends Predicate {
      * @param predicates Predicates that should be combined into one
      * @param _operator Operator that is used to combine the predicates
      * @param initiallyVisible whether the predicate should be initially displayed or not
+     * @param _bracketSubPredicateText whether the individual sub predicates are wrapped in brackets when a textual representation
+     * is generated
      */
-    constructor(predicates: Array<Predicate>, protected _operator: BooleanOperator, initiallyVisible = true) {
+    constructor(predicates: Array<Predicate>,
+                protected _operator: BooleanOperator,
+                initiallyVisible = true,
+                protected _bracketSubPredicateText = false) {
         super(initiallyVisible);
         this._predicates = [];
         this._predicates.push(...predicates);
@@ -87,19 +92,7 @@ export class ClausePredicate extends Predicate {
 
     private initializeFilterTextSegmentsGenerator() {
         this._filterTextSegmentsGenerator = () => {
-            const result: Array<FilterTextSegment> = [];
-            let first = true;
-            for (const predicate of this._predicates) {
-                const textSegments = predicate.createFilterTextSegments();
-                if (textSegments.length > 0) {
-                    if (!first) {
-                        result.push({segment: this._operator === BooleanOperator.AND ? 'search.and' : 'search.or', uppercase: true});
-                    }
-                    result.push(...textSegments);
-                    first = false;
-                }
-            }
-            return result;
+            return Predicate.combineTextSegmentsWithBooleanOperator(this._predicates, this._operator, this._bracketSubPredicateText);
         };
     }
 }
