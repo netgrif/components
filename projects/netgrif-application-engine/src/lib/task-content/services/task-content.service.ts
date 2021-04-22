@@ -11,9 +11,7 @@ import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-f
 import {FieldConverterService} from './field-converter.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
-import {DataField} from '../../data-fields/models/abstract-data-field';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
-import {ValidableDataField} from '../../data-fields/models/validable-data-field';
 import {Validation} from '../../data-fields/models/validation';
 
 /**
