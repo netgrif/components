@@ -2,7 +2,7 @@
                      (afterCollapse)="emitCollapse()" #matExpansionPanel class="panel-margin"
                      [ngClass]="{'margin-top':first, 'margin-bottom':last}">
     <mat-expansion-panel-header (click)="expandPanel()" class="panel-color header-padding header-min-height"
-                                [ngStyle]="{'background': caseColor, 'color': computeCaseFontColor()}">
+                                [ngStyle]="{'background': caseColor, 'color': getCaseFontColor()}">
         <mat-panel-description *ngTemplateOutlet="panelHeader">
         </mat-panel-description>
     </mat-expansion-panel-header>
