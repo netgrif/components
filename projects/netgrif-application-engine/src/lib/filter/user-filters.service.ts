@@ -105,9 +105,7 @@ export class UserFiltersService implements OnDestroy {
             process: {
                 identifier: UserFilterConstants.FILTER_NET_IDENTIFIER
             },
-            data: {
-                [UserFilterConstants.FILTER_TYPE_FIELD_ID]: filterType
-            }
+            query: `dataSet.${UserFilterConstants.FILTER_TYPE_FIELD_ID}.keyValue:${filterType}`
         });
         if (!!additionalFilter) {
             filterCasesFilter = filterCasesFilter.merge(additionalFilter, MergeOperator.AND);
