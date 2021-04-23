@@ -51,6 +51,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
             this._logger.warn('Header service could not inject ViewIdService! User preferences won\'t be loaded or saved!');
         }
 
+        this._preferences.preferencesChanged$.subscribe(() => {
+            this.loadHeadersFromPreferences();
+        });
+
         this.initializeHeaderState();
     }
 
