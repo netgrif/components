@@ -3,7 +3,6 @@ import {Component, Inject} from '@angular/core';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {UserFiltersService} from '../../../filter/user-filters.service';
-import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../../material/material.module';
@@ -17,6 +16,7 @@ import {AuthenticationService} from '../../../authentication/services/authentica
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
+import {TaskViewService} from '../../../view/task-view/service/task-view.service';
 
 describe('AbstractSaveFilterComponent', () => {
     let component: TestSaveFilterComponent;
@@ -63,8 +63,8 @@ describe('AbstractSaveFilterComponent', () => {
 class TestSaveFilterComponent extends AbstractSaveFilterComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl,
                 filterService: UserFiltersService,
-                snackBar: SnackBarService,
-                log: LoggerService) {
-        super(sideMenuControl, filterService, snackBar, log);
+                log: LoggerService,
+                taskViewService: TaskViewService) {
+        super(sideMenuControl, filterService, log, taskViewService);
     }
 }
