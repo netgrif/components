@@ -1,5 +1,11 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ImmediateFilterTextComponent} from './immediate-filter-text.component';
+import {
+    MaterialModule,
+    ConfigurationService,
+    TestConfigurationService,
+} from '@netgrif/application-engine';
+import {PanelComponentModule} from '../../panel.module';
 
 describe('ImmediateFilterTextComponent', () => {
     let component: ImmediateFilterTextComponent;
@@ -7,7 +13,12 @@ describe('ImmediateFilterTextComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ImmediateFilterTextComponent]
+            imports: [
+                MaterialModule,
+                PanelComponentModule
+            ], providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+            ]
         })
             .compileComponents();
     });

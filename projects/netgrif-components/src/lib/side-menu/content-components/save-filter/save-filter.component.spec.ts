@@ -5,11 +5,15 @@ import {
     MaterialModule,
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
-    TestConfigurationService
+    TestConfigurationService,
+    TranslateLibModule,
+    AuthenticationMethodService,
+    MockAuthenticationMethodService
 } from '@netgrif/application-engine';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {PanelComponentModule} from '../../../panel/panel.module';
 
 describe('SaveFilterComponent', () => {
     let component: SaveFilterComponent;
@@ -20,7 +24,9 @@ describe('SaveFilterComponent', () => {
             imports: [
                 MaterialModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                PanelComponentModule,
+                TranslateLibModule
             ],
             declarations: [SaveFilterComponent],
             providers: [
@@ -28,7 +34,8 @@ describe('SaveFilterComponent', () => {
                     provide: NAE_SIDE_MENU_CONTROL,
                     useValue: new SideMenuControl(undefined, undefined, () => of('close'), {allowedNets$: of([])})
                 },
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
             ]
         })
             .compileComponents();

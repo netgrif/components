@@ -13,7 +13,8 @@ import {
     SearchService,
     TestConfigurationService,
     UserResourceService, NAE_BASE_FILTER, TestCaseBaseFilterProvider, AllowedNetsService, AllowedNetsServiceFactory,
-    TestNoAllowedNetsFactory
+    TestNoAllowedNetsFactory,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {SearchComponentModule} from '../../search.module';
 
@@ -39,7 +40,8 @@ describe('CaseSearchComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ]
         })
             .compileComponents();

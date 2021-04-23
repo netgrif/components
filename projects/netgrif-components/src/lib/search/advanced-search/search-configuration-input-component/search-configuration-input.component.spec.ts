@@ -1,11 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchConfigurationInputComponent} from './search-configuration-input.component';
 import {Component} from '@angular/core';
-import {SearchComponentModule} from '../../search.module';
 import {
     AuthenticationMethodService,
     CaseTitle,
-    CaseViewService,
     Category,
     CategoryFactory,
     ConfigurationInput,
@@ -22,6 +20,7 @@ import {
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AdvancedSearchComponentModule} from '../advanced-search.module';
 
 describe('SearchConfigurationInputComponent', () => {
     let component: SearchConfigurationInputComponent;
@@ -30,7 +29,7 @@ describe('SearchConfigurationInputComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
-                SearchComponentModule,
+                AdvancedSearchComponentModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule
             ],

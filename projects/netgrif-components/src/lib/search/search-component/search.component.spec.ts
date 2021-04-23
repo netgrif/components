@@ -18,7 +18,8 @@ import {
     AllowedNetsServiceFactory,
     NAE_SEARCH_CATEGORIES,
     defaultCaseSearchCategoriesFactory,
-    CategoryFactory
+    CategoryFactory,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -48,6 +49,7 @@ describe('SearchComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ]
         })
             .compileComponents();
