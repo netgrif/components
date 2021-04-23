@@ -6,7 +6,6 @@ import {OnDestroy} from '@angular/core';
 import {Query} from '../query/query';
 import {EditablePredicate} from './editable-predicate';
 import {Predicate} from './predicate';
-import {FilterTextSegment} from '../persistance/filter-text-segment';
 
 
 /**

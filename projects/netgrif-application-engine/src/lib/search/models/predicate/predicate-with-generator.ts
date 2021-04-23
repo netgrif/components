@@ -2,7 +2,6 @@ import {Predicate} from './predicate';
 import {Category} from '../category/category';
 import {Query} from '../query/query';
 import {EditableElementaryPredicate} from './editable-elementary-predicate';
-import {FilterTextSegment} from '../persistance/filter-text-segment';
 
 /**
  * A predicate wrapper, that can contain a generator of a Predicate.

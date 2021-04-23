@@ -3,7 +3,6 @@ import {ProcessService} from '../../process/process.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {getNetAndCreateCase} from './get-net-and-create-case';
-import {SearchService} from '../../search/search-service/search.service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {TranslateService} from '@ngx-translate/core';

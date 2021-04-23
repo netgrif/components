@@ -1,7 +1,6 @@
 import {Predicate} from './predicate';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
-import {FilterTextSegment} from '../persistance/filter-text-segment';
 
 /**
  * Represents a clause of {@link Predicate}s combined with a {@link BooleanOperator}.

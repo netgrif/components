@@ -7,7 +7,7 @@ import {NameIdPair} from './name-id-pair';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {Category} from './category';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
 
