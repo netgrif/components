@@ -1,6 +1,13 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ImmediateFilterTextContentComponent} from './immediate-filter-text-content.component';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {
+    MaterialModule,
+    TranslateLibModule,
+    TestConfigurationService,
+    ConfigurationService,
+    NAE_FILTER_TEXT,
+    FilterType
+} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('ImmediateFilterTextContentComponent', () => {
@@ -14,6 +21,19 @@ describe('ImmediateFilterTextContentComponent', () => {
                 MaterialModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
+            ],
+            providers: [
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {
+                    provide: NAE_FILTER_TEXT,
+                    useValue: {
+                        metadata: {
+                            allowedNets: [], filterMetadata: {
+                                filterType: FilterType.CASE, predicateMetadata: [], searchCategories: []
+                            }
+                        }, ellipsis: true
+                    }
+                },
             ]
         })
             .compileComponents();
