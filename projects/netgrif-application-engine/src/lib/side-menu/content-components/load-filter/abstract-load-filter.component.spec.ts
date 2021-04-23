@@ -16,6 +16,12 @@ import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authe
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
+import {TestCaseViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
+import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {SearchService} from '../../../search/search-service/search.service';
+import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
+import {SimpleFilter} from '../../../filter/models/simple-filter';
 
 describe('AbstractLoadFilterComponent', () => {
     let component: TestLoadFilterComponent;
@@ -37,6 +43,10 @@ describe('AbstractLoadFilterComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                CaseViewService,
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                SearchService,
+                {provide: NAE_BASE_FILTER, useValue: {filter: SimpleFilter.emptyCaseFilter()}}
             ],
             declarations: [
                 TestLoadFilterComponent,

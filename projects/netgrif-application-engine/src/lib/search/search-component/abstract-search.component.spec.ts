@@ -34,6 +34,8 @@ import {CategoryFactory} from '../category-factory/category-factory';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
 import {ViewIdService} from '../../user/services/view-id.service';
+import {NAE_FILTER_TEXT} from '../../panel/immediate/model/filter-text-injection-token';
+import {FilterType} from '../../filter/models/filter-type';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -60,7 +62,8 @@ describe('AbstractSearchComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: NAE_SEARCH_COMPONENT_CONFIGURATION, useValue: {showSearchIcon: false}}
+                {provide: NAE_SEARCH_COMPONENT_CONFIGURATION, useValue: {showSearchIcon: false}},
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ],
             declarations: [
                 TestSearchComponent,
