@@ -51,4 +51,8 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
             this.formControl.setValue(this.formControl.value + 1);
         }
     }
+
+    public notEmptyTitle(): boolean {
+        return !!this.dataField.title && this.dataField.title !== '';
+    }
 }
