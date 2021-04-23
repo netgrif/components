@@ -33,7 +33,7 @@ import {AutocompleteOptions} from '../autocomplete-options';
 import {ConfigurationInput} from '../../configuration-input';
 
 interface Datafield {
-    netId: string;
+    netIdentifier: string;
     fieldId: string;
     fieldType: string;
 }
@@ -239,7 +239,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateNetConstraint(datafield: Datafield): Query {
-        return this._processCategory.generatePredicate([[datafield.netId]]).query;
+        return this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
     }
 
     protected createDatafieldOptions(): void {
@@ -253,7 +253,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     })
                     .forEach(immediateData => {
                         this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
-                            netId: petriNet.stringId,
+                            netIdentifier: petriNet.identifier,
                             fieldId: immediateData.stringId,
                             fieldType: immediateData.type,
                         });

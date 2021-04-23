@@ -1,5 +1,5 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {Subject} from 'rxjs';
+import {ReplaySubject, Subject} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -15,6 +15,7 @@ import {createTaskEventNotification} from '../../task-content/model/task-event-n
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
+import {TaskViewService} from '../../view/task-view/service/task-view.service';
 
 
 /**
@@ -32,6 +33,7 @@ export class AssignTaskService extends TaskHandlingService {
                 protected _taskDataService: TaskDataService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
+                @Optional() protected _taskViewService: TaskViewService,
                 _taskContentService: TaskContentService) {
         super(_taskContentService, _selectedCaseService);
     }
@@ -59,8 +61,25 @@ export class AssignTaskService extends TaskHandlingService {
             this.completeSuccess(afterAction);
             return;
         }
-        this._taskState.startLoading(assignedTaskId);
 
+        const sub = new ReplaySubject<boolean>();
+        if (this._taskViewService !== null && !this._taskViewService.allowMultiOpen) {
+            if (!this._taskViewService.isEmptyQueue()) {
+                this._taskViewService.popQueue().subscribe(() => {
+                    this._taskState.startLoading(assignedTaskId);
+                    this.assignRequest(afterAction, assignedTaskId, sub, true);
+                });
+                this._taskViewService.addToQueue(sub);
+                return;
+            }
+            this._taskViewService.addToQueue(sub);
+        }
+        this._taskState.startLoading(assignedTaskId);
+        this.assignRequest(afterAction, assignedTaskId, sub);
+    }
+
+    protected assignRequest(afterAction = new Subject<boolean>(), assignedTaskId: string,
+                            queueAction = new Subject<boolean>(), fromQueue = false) {
         this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
             this._taskState.stopLoading(assignedTaskId);
             if (!this.isTaskRelevant(assignedTaskId)) {
@@ -71,11 +90,11 @@ export class AssignTaskService extends TaskHandlingService {
             if (eventOutcome.success) {
                 this._taskContentService.updateStateData(eventOutcome);
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
-                this.completeSuccess(afterAction);
+                fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
+                this.completeActions(afterAction, queueAction, true);
             } else if (eventOutcome.error) {
                 this._snackBar.openErrorSnackBar(eventOutcome.error);
-                this.sendNotification(false);
-                afterAction.next(false);
+                this.completeActions(afterAction, queueAction, false);
             }
         }, error => {
             this._taskState.stopLoading(assignedTaskId);
@@ -88,8 +107,7 @@ export class AssignTaskService extends TaskHandlingService {
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
              ${this._taskContentService.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.sendNotification(false);
-            afterAction.next(false);
+            this.completeActions(afterAction, queueAction, false);
         });
     }
 
@@ -101,6 +119,19 @@ export class AssignTaskService extends TaskHandlingService {
         this._taskOperations.reload();
         this.sendNotification(true);
         afterAction.next(true);
+        afterAction.complete();
+    }
+
+    /**
+     * @ignore
+     * complete all action streams and send notification with selected boolean
+     */
+    protected completeActions(afterAction: Subject<boolean>, queueAction: Subject<boolean>, bool: boolean): void {
+        this.sendNotification(bool);
+        afterAction.next(bool);
+        afterAction.complete();
+        queueAction.next(bool);
+        queueAction.complete();
     }
 
     /**

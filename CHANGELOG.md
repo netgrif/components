@@ -1,3 +1,95 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10883/tab/release-report-all-issues"></a>
+## 5.1.2 (16.04.2021)
+### Bug fixes
+* [NAE-1287](https://netgrif.atlassian.net/browse/NAE-1287) - Broken case creation when only one process is uploaded
+  
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10874/tab/release-report-all-issues"></a>
+## 5.1.1 (12.04.2021)
+### Bug fixes
+* [NAE-1273](https://netgrif.atlassian.net/browse/NAE-1273) - Fieldy v tasku sa dajú editovať aj keď task nie je na nikoho priradený
+* [NAE-1266](https://netgrif.atlassian.net/browse/NAE-1266) - Public view does not use i18n
+* [NAE-1265](https://netgrif.atlassian.net/browse/NAE-1265) - Anonym user inconsistence
+
+### Improvements
+* [NAE-1249](https://netgrif.atlassian.net/browse/NAE-1249) - Async loading datagroup
+* [NAE-1248](https://netgrif.atlassian.net/browse/NAE-1248) - Icon enum
+* [NAE-1247](https://netgrif.atlassian.net/browse/NAE-1247) - Backend autocomplete enumeration
+* [NAE-1245](https://netgrif.atlassian.net/browse/NAE-1245) - Dynamic process loading
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10860/tab/release-report-all-issues"></a>
+## 5.1.0 - Black Zinc (25.3.2021)
+### Bug fixes
+* [NAE-867](https://netgrif.atlassian.net/browse/NAE-867) - Search ignores process versions
+* [NAE-1183](https://netgrif.atlassian.net/browse/NAE-1183) - Race condition pri prekliknuti z otvoreneho tasku na zatvoreny task
+* [NAE-1198](https://netgrif.atlassian.net/browse/NAE-1198) - Na assign tasku sa nedoťahujú nové dáta, ak už bol task predtým assignuty
+* [NAE-1200](https://netgrif.atlassian.net/browse/NAE-1200) - Table mode broken after load
+* [NAE-1237](https://netgrif.atlassian.net/browse/NAE-1237) - Asynchronous search tests fail randomly
+* [NAE-1270](https://netgrif.atlassian.net/browse/NAE-1270) - Nie je možné opätovné nahratie dokumentu po jeho zmazaní
+
+### Improvement
+* [NAE-1040](https://netgrif.atlassian.net/browse/NAE-1040) - SearchService with variable base filter
+* [NAE-1129](https://netgrif.atlassian.net/browse/NAE-1129) - Add trackBy to data field ngFor
+* [NAE-1158](https://netgrif.atlassian.net/browse/NAE-1158) - Refactor factory services
+* [NAE-1217](https://netgrif.atlassian.net/browse/NAE-1217) - Upload file-ov na public view
+* [NAE-1233](https://netgrif.atlassian.net/browse/NAE-1233) - Add textElipsis on taskView
+* [NAE-1234](https://netgrif.atlassian.net/browse/NAE-1234) - Prevent ENOENT error during library build
+
+### Features
+* [NAE-1226](https://netgrif.atlassian.net/browse/NAE-1226) - Frontend starter app
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10873/tab/release-report-all-issues"></a>
+## 5.0.7 (01.03.2021)
+### Bug fixes
+None
+
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10871/tab/release-report-all-issues"></a>
+## 5.0.6 (24.02.2021)
+### Bug fixes
+None
+
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10870/tab/release-report-all-issues"></a>
+## 5.0.5 (19.02.2021)
+### Bug fixes
+None
+
+### Improvements
+* [NAE-1244](https://netgrif.atlassian.net/browse/NAE-1244) - Add button to immediate on panel
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10866/tab/release-report-all-issues"></a>
+## 5.0.4 - Gray Titanium (19.02.2021)
+### Bug fixes
+* [NAE-1243](https://netgrif.atlassian.net/browse/NAE-1243) - Clearing fulltext input doesn't clear fulltext search
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10864/tab/release-report-all-issues"></a>
 ## 5.0.3 - Aqua Copper (09.02.2021)
 ### Bug fixes

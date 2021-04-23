@@ -23,6 +23,7 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {take} from 'rxjs/operators';
+import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -122,6 +123,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (this._safeTask.dataSize > 0 && !force) {
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.next(true);
+            afterAction.complete();
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
             return;
         }
@@ -148,7 +150,14 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     group.fields.forEach(field => {
                         field.valueChanges().subscribe(() => {
                             if (this.wasFieldUpdated(field)) {
-                                this.updateTaskDataFields();
+                                if (field instanceof DynamicEnumerationField) {
+                                    field.loading = true;
+                                    this.updateTaskDataFields(this._afterActionFactory.create(bool => {
+                                        field.loading = false;
+                                    }));
+                                } else {
+                                    this.updateTaskDataFields();
+                                }
                             }
                         });
                         if (field instanceof FileField || field instanceof FileListField) {
@@ -165,6 +174,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             this._taskState.stopLoading(gottenTaskId);
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.next(true);
+            afterAction.complete();
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
             this._taskContentService.$shouldCreateCounter.next(this._taskContentService.$shouldCreateCounter.getValue() + 1);
         }, (error: HttpErrorResponse) => {
@@ -185,6 +195,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             }
             this.sendNotification(TaskEvent.GET_DATA, false);
             afterAction.next(false);
+            afterAction.complete();
         });
     }
 
@@ -217,6 +228,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         if (this._taskState.isUpdating(setTaskId)) {
             afterAction.next(true);
+            afterAction.complete();
             return;
         }
 
@@ -231,6 +243,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (Object.keys(body).length === 0) {
             this.sendNotification(TaskEvent.SET_DATA, true);
             afterAction.next(true);
+            afterAction.complete();
             return;
         }
 
@@ -331,6 +344,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
         this.sendNotification(TaskEvent.SET_DATA, result);
         afterAction.next(result);
+        afterAction.complete();
     }
 
     /**

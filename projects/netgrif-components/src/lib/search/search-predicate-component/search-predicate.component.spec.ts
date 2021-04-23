@@ -4,7 +4,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {
     AuthenticationMethodService,
     CaseViewService,
-    CategoryFactory, ConfigCaseViewServiceFactory, ConfigurationService,
+    CategoryFactory, CaseViewServiceFactory, ConfigurationService,
     defaultCaseSearchCategoriesFactory,
     EditableElementaryPredicate, MaterialModule, MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES, SearchService, TestCaseSearchServiceFactory, TestCaseViewFactory, TestConfigurationService, TranslateLibModule
@@ -37,9 +37,9 @@ describe('SearchPredicateComponent', () => {
                 {
                     provide: CaseViewService,
                     useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    deps: [CaseViewServiceFactory]
                 },
-                ConfigCaseViewServiceFactory,
+                CaseViewServiceFactory,
                 {
                     provide: SearchService,
                     useFactory: TestCaseSearchServiceFactory

@@ -6,7 +6,7 @@ import {KeyValue} from '@angular/common';
 import {BooleanOperator} from '../models/boolean-operator';
 import {EditablePredicate} from '../models/predicate/editable-predicate';
 import {FormControl} from '@angular/forms';
-import {debounceTime, filter} from 'rxjs/operators';
+import {debounceTime, filter, map} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -39,9 +39,14 @@ export abstract class AbstractSearchComponent implements OnDestroy {
 
         this.fullTextFormControl.valueChanges.pipe(
             debounceTime(600),
-            filter(newValue => !!newValue)
-        ).subscribe(fulltext => {
-            this._searchService.setFullTextFilter(fulltext);
+            filter(newValue => typeof newValue === 'string'),
+            map((newValue: string) => newValue.trim())
+        ).subscribe((fulltext: string) => {
+            if (fulltext.length === 0) {
+                this._searchService.clearFullTextFilter();
+            } else {
+                this._searchService.setFullTextFilter(fulltext);
+            }
         });
     }
 
@@ -52,15 +57,15 @@ export abstract class AbstractSearchComponent implements OnDestroy {
     public trackByPredicates = (a: number, b: KeyValue<number, EditablePredicate>) => b.value;
 
     public getPredicateMap(): Map<number, EditableClausePredicateWithGenerators> {
-        const map = new Map<number, EditableClausePredicateWithGenerators>();
+        const predicateMap = new Map<number, EditableClausePredicateWithGenerators>();
 
         for (const [key, value] of this._searchService.rootPredicate.getPredicateMap().entries()) {
             if (value.isVisible) {
-                map.set(key, value.wrappedPredicate as EditableClausePredicateWithGenerators);
+                predicateMap.set(key, value.wrappedPredicate as EditableClausePredicateWithGenerators);
             }
         }
 
-        return map;
+        return predicateMap;
     }
 
     public hasPredicates(): boolean {
