@@ -10,6 +10,7 @@
                        #autocompleteTrigger="matAutocompleteTrigger"
                        [formControl]="configuration.formControl"
                        [matAutocomplete]="configurationAutocomplete"
+                       [disabled]="!editable"
                        (keydown.enter)="$event.target.blur(); autocompleteTrigger.closePanel()"
                        #configurationInput>
                 <mat-autocomplete #configurationAutocomplete="matAutocomplete"
@@ -39,7 +40,7 @@
         <ng-template #operatorSelection>
             <mat-form-field appearance="outline">
                 <mat-label>{{configuration.label | translate}}</mat-label>
-                <mat-select [formControl]="configuration.formControl" #configurationInput>
+                <mat-select [formControl]="configuration.formControl" [disabled]="!editable" #configurationInput>
                     <mat-option *ngFor="let operator of selectedCategory.allowedOperators" [value]="operator">
                         <div fxLayout="row" fxLayoutAlign="start center">
                             <ng-template ngFor let-namePart [ngForOf]="operator.getOperatorNameTemplate()" let-last="last">
