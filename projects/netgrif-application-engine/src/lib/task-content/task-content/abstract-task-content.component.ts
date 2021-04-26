@@ -156,6 +156,17 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     }
 
     /**
+     * @returns the rows configuration for the grid layout
+     */
+    public getGridRows(): string {
+        let rowConfig = '';
+        for (const row of this.gridAreas.split('|')) {
+            rowConfig = rowConfig.concat(row.includes('xgroup') ? 'auto' : 'minmax(105px, auto)', ' ') ;
+        }
+        return rowConfig.trim();
+    }
+
+    /**
      * @returns the number of columns as specified by the tasks layout property, or 4 if no value is specified.
      */
     public getNumberOfFormColumns(): number {

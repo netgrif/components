@@ -4,7 +4,7 @@
 
 <ng-template #notLoading>
     <div *ngIf="hasDataToDisplay$ | async; else noContentToDisplay" [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView()}">
-        <div [gdAreas]="gridAreas" [gdColumns]="getGridColumns()">
+        <div [gdAreas]="gridAreas" [gdColumns]="getGridColumns()" [ngStyle]="{'grid-template-rows': getGridRows()}">
             <div *ngFor="let item of dataSource; trackBy: trackByFn"
                  [gdArea]="item.gridAreaId"
                  class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
