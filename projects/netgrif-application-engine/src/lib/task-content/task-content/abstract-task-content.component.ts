@@ -224,7 +224,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 group.layout.type = defaultLayout;
             }
 
-            if (group.title && group.title !== '') {
+            if (group.title !== undefined) {
                 const title = this.groupTitleElement(group, gridData.runningTitleCount);
                 gridData.gridElements.push(title);
                 gridData.grid.push(this.newGridRow(title.gridAreaId));
