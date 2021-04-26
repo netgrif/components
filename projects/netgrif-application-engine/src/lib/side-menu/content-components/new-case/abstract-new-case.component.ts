@@ -24,6 +24,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
 
+    options: Array<Form> = [];
     colors: Form[] = [
         {value: 'panel-primary-icon', viewValue: 'Primary'},
         {value: 'panel-accent-icon', viewValue: 'Accent'},
@@ -74,6 +75,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                 if (options.length === 0) {
                     this.closeNoNets();
                 }
+                this.options = options;
                 this._hasMultipleNets$.next(options.length > 1);
             })
         ).subscribe(options => {
@@ -128,7 +130,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             const newCase = {
                 title: this.titleFormControl.value,
                 color: 'panel-primary-icon',
-                netId: this.processFormControl.value.value
+                netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
             };
 
             this._caseResourceService.createCase(newCase)

@@ -31,6 +31,11 @@ import {Category} from '../models/category/category';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {defaultCaseSearchCategoriesFactory} from '../category-factory/default-categories-factories';
 import {CategoryFactory} from '../category-factory/category-factory';
+import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
+import {Filter} from '../../filter/models/filter';
+import {ViewIdService} from '../../user/services/view-id.service';
+import {NAE_FILTER_TEXT} from '../../panel/immediate/model/filter-text-injection-token';
+import {FilterType} from '../../filter/models/filter-type';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -57,7 +62,8 @@ describe('AbstractSearchComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: NAE_SEARCH_COMPONENT_CONFIGURATION, useValue: {showSearchIcon: false}}
+                {provide: NAE_SEARCH_COMPONENT_CONFIGURATION, useValue: {showSearchIcon: false}},
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ],
             declarations: [
                 TestSearchComponent,
@@ -95,13 +101,13 @@ class TestSearchComponent extends AbstractSearchComponent {
                 logger: LoggerService,
                 dialogService: DialogService,
                 translate: TranslateService,
-                sideMenuService: SideMenuService,
                 userFilterService: UserFiltersService,
                 allowedNetsService: AllowedNetsService,
+                viewIdService: ViewIdService,
                 @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
                 @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
-                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) sideMenuComponent: ComponentType<unknown>) {
-        super(searchService, logger, dialogService, translate, sideMenuService, userFilterService, allowedNetsService, searchCategories,
-            configuration, sideMenuComponent);
+                @Optional() @Inject(NAE_FILTERS_FILTER) filtersFilter: Filter) {
+        super(searchService, logger, dialogService, translate, userFilterService, allowedNetsService, viewIdService,
+            searchCategories, configuration, filtersFilter);
     }
 }

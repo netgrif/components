@@ -6,6 +6,7 @@ import {Observable, of} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {ConfigurationInput} from '../configuration-input';
 import {OperatorService} from '../../operator-service/operator.service';
+import {FilterTextSegment} from '../persistance/filter-text-segment';
 
 /**
  * A utility class that exists for inheritance by simpler category instances.
@@ -45,5 +46,9 @@ export abstract class NoConfigurationCategory<T> extends Category<T> {
 
     protected isOperandValueSelected(newValue: any): boolean {
         return !!newValue;
+    }
+
+    protected createConfigurationFilterTextSegments(): Array<FilterTextSegment> {
+        return [];
     }
 }

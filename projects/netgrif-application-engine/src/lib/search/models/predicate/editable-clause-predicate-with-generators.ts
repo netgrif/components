@@ -10,8 +10,8 @@ export class EditableClausePredicateWithGenerators extends EditableClausePredica
 
     protected _predicates: Map<number, PredicateWithGenerator>;
 
-    constructor(operator: BooleanOperator, parentNotifier?: Subject<void>, initiallyVisible = true) {
-        super(operator, parentNotifier, initiallyVisible);
+    constructor(operator: BooleanOperator, parentNotifier?: Subject<void>, initiallyVisible = true, bracketSubPredicateText = false) {
+        super(operator, parentNotifier, initiallyVisible, bracketSubPredicateText);
         this._metadataGenerator = () => {
             const result = [];
             for (const predicate of this._predicates.values()) {

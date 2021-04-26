@@ -164,7 +164,9 @@
         "tooltip": {
             "toAdvanced": "Prepnúť na rozšírené vyhľadávanie",
             "toFullText": "Prepnúť na jednoduché vyhľadávanie",
-            "help": "Nápoveda"
+            "help": "Nápoveda",
+            "save": "Uložiť filter",
+            "load": "Načítať filter"
         },
         "help": {
             "title": "Nápoveda pre rozšírené vyhľadávanie",

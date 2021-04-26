@@ -105,9 +105,7 @@ export class UserFiltersService implements OnDestroy {
             process: {
                 identifier: UserFilterConstants.FILTER_NET_IDENTIFIER
             },
-            data: {
-                [UserFilterConstants.FILTER_TYPE_FIELD_ID]: filterType
-            }
+            query: `dataSet.${UserFilterConstants.FILTER_TYPE_FIELD_ID}.keyValue:${filterType}`
         });
         if (!!additionalFilter) {
             filterCasesFilter = filterCasesFilter.merge(additionalFilter, MergeOperator.AND);
@@ -119,7 +117,7 @@ export class UserFiltersService implements OnDestroy {
         } as LoadFilterInjectionData);
         ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
             if (event.message === 'Side menu closed unexpectedly') {
-                result.next(undefined);
+                result.next();
             } else {
                 result.next(event.data);
             }
@@ -160,7 +158,7 @@ export class UserFiltersService implements OnDestroy {
             ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
                 if (event.message === 'Side menu closed unexpectedly') {
                     this.delete(filterCaseId);
-                    result.next(undefined);
+                    result.next();
                 } else {
                     result.next(filterCaseId);
                 }

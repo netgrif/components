@@ -5,9 +5,9 @@ import {FilterFieldContentComponent} from './filter-field-content/filter-field-c
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MaterialModule, FilterType, FilterField, ConfigurationService, TestConfigurationService} from '@netgrif/application-engine';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
-import {SearchComponentModule} from '../../search/search.module';
 import {Component} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {AdvancedSearchComponentModule} from '../../search/advanced-search/advanced-search.module';
 
 describe('FilterFieldComponent', () => {
     let component: FilterFieldComponent;
@@ -17,7 +17,7 @@ describe('FilterFieldComponent', () => {
         await TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                SearchComponentModule,
+                AdvancedSearchComponentModule,
                 HttpClientTestingModule
             ],
             providers: [

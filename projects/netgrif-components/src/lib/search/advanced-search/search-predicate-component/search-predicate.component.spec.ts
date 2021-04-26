@@ -21,9 +21,9 @@ import {
     AllowedNetsServiceFactory
 } from '@netgrif/application-engine';
 import {Subject} from 'rxjs';
-import {SearchComponentModule} from '../../search.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AdvancedSearchComponentModule} from '../advanced-search.module';
 
 describe('SearchPredicateComponent', () => {
     let component: SearchPredicateComponent;
@@ -32,7 +32,7 @@ describe('SearchPredicateComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
-                SearchComponentModule,
+                AdvancedSearchComponentModule,
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,

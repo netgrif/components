@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchClauseComponent} from './search-clause.component';
-import {SearchComponentModule} from '../../search.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';
@@ -21,6 +20,7 @@ import {
     NAE_BASE_FILTER, TestCaseBaseFilterProvider, AllowedNetsService, AllowedNetsServiceFactory, TestNoAllowedNetsFactory
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AdvancedSearchComponentModule} from '../advanced-search.module';
 
 describe('SearchClauseComponent', () => {
     let component: SearchClauseComponent;
@@ -29,7 +29,7 @@ describe('SearchClauseComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
-                SearchComponentModule,
+                AdvancedSearchComponentModule,
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,

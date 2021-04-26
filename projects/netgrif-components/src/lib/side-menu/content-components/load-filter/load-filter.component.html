@@ -1,5 +1,4 @@
-<!-- TODO i18n -->
-<mat-toolbar color="primary">Load filter</mat-toolbar>
+<mat-toolbar color="primary">{{'search.tooltip.load' | translate}}</mat-toolbar>
 <div class="load-filter-container side-menu-root" fxLayout="column" fxLayoutAlign="start stretch">
     <nc-header #header [type]="headerType" [maxHeaderColumns]="2" [responsiveHeaders]="true" [hideEditMode]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
     <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="false" [width]="getWidth()"

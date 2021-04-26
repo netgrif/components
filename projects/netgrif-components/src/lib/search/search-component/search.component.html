@@ -19,15 +19,13 @@
         <mat-icon>youtube_searched_for</mat-icon>
     </button>
 
-    <!-- TODO i18n -->
     <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showSaveFilterButton"
-            [matTooltip]="'save'" (click)="saveFilter()">
+            [matTooltip]="'search.tooltip.save' | translate" (click)="saveFilter()">
         <mat-icon>save</mat-icon>
     </button>
 
-    <!-- TODO i18n -->
     <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showLoadFilterButton"
-            [matTooltip]="'load'" (click)="loadFilter()">
+            [matTooltip]="'search.tooltip.load' | translate" (click)="loadFilter()">
         <mat-icon>open_in_browser</mat-icon>
     </button>
 

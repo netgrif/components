@@ -43,6 +43,7 @@ import {MoreThanEqualDate} from '../../operator/more-than-equal-date';
 import {LessThanEqualDate} from '../../operator/less-than-equal-date';
 import {MoreThanEqualDateTime} from '../../operator/more-than-equal-date-time';
 import {LessThanEqualDateTime} from '../../operator/less-than-equal-date-time';
+import {FilterTextSegment} from '../../persistance/filter-text-segment';
 
 interface Datafield {
     netIdentifier: string;
@@ -481,5 +482,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             default:
                 return super.deserializeOperandValue(value);
         }
+    }
+
+    protected createConfigurationFilterTextSegments(): Array<FilterTextSegment> {
+        return [{segment: this._configurationInputs$.value[0].formControl.value.text, bold: true}];
     }
 }

@@ -4,7 +4,6 @@ import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-for
 import {TranslateService} from '@ngx-translate/core';
 import {OnDestroy} from '@angular/core';
 import {FeaturedValue} from './featured-value';
-import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 
 export abstract class PanelWithImmediateData extends PanelWithHeaderBinding implements OnDestroy {
     protected constructor(protected _translate: TranslateService) {
@@ -40,10 +39,8 @@ export abstract class PanelWithImmediateData extends PanelWithHeaderBinding impl
                                 ? immediate.name.defaultValue : this._translate.instant('dialog.submit')),
                         icon: undefined, type: immediate.type};
                 case 'filter':
-                    return  { value: '', icon: undefined, type: immediate.type,
-                        filterField: new FilterField('', '', immediate.value, immediate.filterMetadata, immediate.allowedNets,
-                            {editable: false}, '', '')
-                    };
+                    return {value: undefined, icon: undefined, type: immediate.type,
+                        filterMetadata: {filterMetadata: immediate.filterMetadata, allowedNets: immediate.allowedNets}};
                 default:
                     return {value: immediate.value, icon: undefined, type: immediate.type};
             }

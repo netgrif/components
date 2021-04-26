@@ -164,7 +164,9 @@
         "tooltip": {
             "toAdvanced": "Switch to advanced search",
             "toFullText": "Switch to basic search",
-            "help": "Help"
+            "help": "Help",
+            "save": "Save filter",
+            "load": "Load filter"
         },
         "help": {
             "title": "Advanced search help",

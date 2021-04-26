@@ -18,6 +18,7 @@ import {CategoryFactory} from '../category-factory/category-factory';
 import {FilterType} from '../../filter/models/filter-type';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {FilterMetadata} from '../models/persistance/filter-metadata';
+import {FilterTextSegment} from '../models/persistance/filter-text-segment';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -73,7 +74,7 @@ export class SearchService implements OnDestroy {
             });
         }
         this._predicateQueryChanged$ = new Subject<void>();
-        this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$);
+        this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$, undefined, true);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
         this._loadingFromMetadata$ = new LoadingEmitter();
@@ -350,5 +351,12 @@ export class SearchService implements OnDestroy {
             this._loadingFromMetadata$.off();
             this.updateActiveFilter();
         });
+    }
+
+    /**
+     * @returns an Array of filter text segments that correspond to the currently displayed completed predicates
+     */
+    public createFilterTextSegments(): Array<FilterTextSegment> {
+        return this._rootPredicate.createFilterTextSegments();
     }
 }

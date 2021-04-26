@@ -119,7 +119,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         super.ngOnInit();
         this._taskContentService.task = this._taskPanelData.task;
 
-        // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         this.createContentPortal();
 
         this._sub = this._taskPanelData.changedFields.subscribe(chFields => {

@@ -66,6 +66,13 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
             }
             return undefined;
         });
+
+        this.predicate.setFilterTextSegmentsGenerator(() => {
+            if (!!this._selectedCategory) {
+                return this._selectedCategory.createFilterTextSegments();
+            }
+            return [];
+        });
     }
 
     ngOnDestroy(): void {

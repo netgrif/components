@@ -7,8 +7,6 @@ import {HeaderChangeType} from '../../header/models/user-changes/header-change-t
 import {OnDestroy} from '@angular/core';
 import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {SearchIndex} from '../../search/models/search-index';
-import {Equals} from '../../search/models/operator/equals';
-import {NotEquals} from '../../search/models/operator/not-equals';
 
 
 export abstract class SortableView implements OnDestroy {

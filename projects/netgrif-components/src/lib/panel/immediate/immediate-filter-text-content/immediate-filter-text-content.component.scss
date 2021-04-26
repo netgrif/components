@@ -1,0 +1,14 @@
+.bold-text {
+    font-weight: bold;
+}
+
+.span-margin {
+    margin-right: 0.4ex;
+}
+
+.ellipsis {
+    word-break: break-word !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
