@@ -68,10 +68,6 @@ export class SearchService implements OnDestroy {
             this._baseFilter = baseFilter.filter.clone();
         } else if (baseFilter.filter instanceof Observable) {
             this._baseFilter = new SimpleFilter('', baseFilter.filterType, {process: {identifier: '__EMPTY__'}});
-            this.subFilter = baseFilter.filter.subscribe((filter) => {
-                this._baseFilter = filter.clone();
-                this.updateActiveFilter();
-            });
         }
         this._predicateQueryChanged$ = new Subject<void>();
         this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$, undefined, true);
@@ -79,6 +75,12 @@ export class SearchService implements OnDestroy {
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
         this._loadingFromMetadata$ = new LoadingEmitter();
 
+        if(baseFilter.filter instanceof Observable){
+            this.subFilter = baseFilter.filter.subscribe((filter) => {
+                this._baseFilter = filter.clone();
+                this.updateActiveFilter();
+            });
+        }
         this.predicateQueryChanged$.subscribe(() => {
             this.updateActiveFilter();
         });
