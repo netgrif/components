@@ -269,6 +269,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
                 return {value: task.caseTitle, icon: ''};
+            case TaskMetaField.CASE_ID:
+                return {value: task.caseId, icon: ''};
+            case TaskMetaField.TASK_ID:
+                return {value: task.stringId, icon: ''};
             case TaskMetaField.TITLE:
                 return {value: task.title, icon: ''};
             case TaskMetaField.PRIORITY:

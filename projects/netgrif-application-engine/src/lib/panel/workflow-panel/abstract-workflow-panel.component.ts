@@ -105,6 +105,8 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
                 return {value: this.workflow.initials, icon: ''};
             case WorkflowMetaField.TITLE:
                 return {value: this.workflow.title, icon: ''};
+            case WorkflowMetaField.NET_ID:
+                return {value: this.workflow.stringId, icon: ''};
             case WorkflowMetaField.VERSION:
                 return {value: this.workflow.version, icon: ''};
             case WorkflowMetaField.AUTHOR:

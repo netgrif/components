@@ -257,6 +257,7 @@
         "date": "Zvoľte dátum",
         "selectUser": "Vyberte používateľa",
         "caseMeta": {
+            "mongoID": "ID Prípadu",
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
@@ -264,6 +265,8 @@
         },
         "taskMeta": {
             "case": "Prípad",
+            "caseID": "ID Prípadu",
+            "taskID": "ID Úlohy",
             "priority": "Priorita",
             "user": "Riešiteľ",
             "assignDate": "Dátum priradenia"
@@ -271,6 +274,7 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
+            "netId": "Proces ID",
             "creationDate": "Dátum nahratia",
             "title": "Názov",
             "author": "Autor"
