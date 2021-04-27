@@ -17,22 +17,22 @@ export class CaseListFontColorService {
      *
      * @param caseColor string color of case
      * @returns font color black or white
-     * */
+     */
     computeCaseFontColor(caseColor: string): string {
-        //check if hex color
+        // check if hex color
         if (caseColor in this.cache) {
             return this.cache[caseColor];
         }
-        var m = caseColor.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i);
-        if (m === null || m.length != 4) {
-            this.cache[caseColor] = 'black'
+        const m = caseColor.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i);
+        if (m === null || m.length !== 4) {
+            this.cache[caseColor] = 'black';
             return 'black';
         }
-        let r = parseInt(m[1], 16);
-        let g = parseInt(m[2], 16);
-        let b = parseInt(m[3], 16);
-        //možné špecifickejšie upraviť threshold hodnotu
-        let fontColor = (((r * 0.299) + (g * 0.587) + (b * 0.114)) > 150) ?
+        const r = parseInt(m[1], 16);
+        const g = parseInt(m[2], 16);
+        const b = parseInt(m[3], 16);
+        // možné špecifickejšie upraviť threshold hodnotu
+        const fontColor = (((r * 0.299) + (g * 0.587) + (b * 0.114)) > 150) ?
             'black' : 'white';
         this.cache[caseColor] = fontColor;
         return fontColor;

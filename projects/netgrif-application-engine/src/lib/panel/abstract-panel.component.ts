@@ -43,7 +43,7 @@ export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy
         }
     }
 
-    getCaseFontColor(): string{
-        return this._caseListFontColorService.computeCaseFontColor(this.caseColor)
+    getCaseFontColor(): string {
+        return this._caseListFontColorService.computeCaseFontColor(this.caseColor);
     }
 }
