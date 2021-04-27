@@ -219,6 +219,9 @@
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToDelete": "Kliknutím vymažte súbor"
+        },
+        "dynamicEnum" : {
+            "noData": "Vášmu vyhľadávaniu nezodpovedajú žiadne položky"
         }
     },
     "dialog": {
@@ -382,5 +385,10 @@
         "and": "a",
         "privacyNotice": "zásady ochrany osobných údajov",
         "sentenceEnd": ""
+    },
+    "publicView": {
+        "resolving" : "Verejné view sa načítava ...",
+        "netNotExist": "Proces neexistuje",
+        "errorCreate": "Chyba pri vytváraní prípadu "
     }
 }

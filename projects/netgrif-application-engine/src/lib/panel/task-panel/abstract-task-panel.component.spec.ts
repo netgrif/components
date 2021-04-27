@@ -26,10 +26,6 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {
-    ArrayTaskViewServiceFactory,
-    noNetsTaskViewServiceFactory
-} from '../../view/task-view/service/factory/array-task-view-service-factory';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
@@ -37,7 +33,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory} from '../../utility/tests/test-factory-methods';
+import {TestTaskSearchServiceFactory, TestTaskViewFactory} from '../../utility/tests/test-factory-methods';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
@@ -54,6 +50,7 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {TranslateService} from '@ngx-translate/core';
+import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -77,15 +74,15 @@ describe('AbtsractTaskPanelComponent', () => {
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                ArrayTaskViewServiceFactory,
+                TaskViewServiceFactory,
                 SideMenuService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {
                     provide: TaskViewService,
-                    useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]
+                    useFactory: TestTaskViewFactory,
+                    deps: [TaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyTaskResources},
                 {provide: UserResourceService, useClass: MockUserResourceService},

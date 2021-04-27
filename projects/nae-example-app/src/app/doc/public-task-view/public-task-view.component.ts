@@ -6,7 +6,7 @@ import {
     CaseResourceService,
     PublicCaseResourceService,
     PublicTaskResourceService,
-    ConfigTaskViewServiceFactory,
+    TaskViewServiceFactory,
     SearchService,
     PublicProcessService,
     ProcessService,
@@ -23,18 +23,20 @@ import {
     AuthenticationService,
     PublicUrlResolverService,
     publicSearchServiceFactory,
-    publicFactoryResolver
+    publicFactoryResolver, Task, NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('demo-public-view');
+const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
+    return factory.createFromConfig('demo-public-view');
 };
 
 const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
-                              caseResourceService: CaseResourceService, snackBarService: SnackBarService) => {
-    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService);
+                              caseResourceService: CaseResourceService, snackBarService: SnackBarService,
+                              translate: TranslateService) => {
+    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService, translate);
 };
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
@@ -62,12 +64,19 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         new PublicCaseResourceService(provider, config));
 };
 
+const disableButtonsFactory = () => {
+    return {
+        reassign: (t: Task) => true,
+        delegate: (t: Task) => true
+    };
+};
+
 @Component({
     selector: 'nae-app-public-task-view',
     templateUrl: './public-task-view.component.html',
     styleUrls: ['./public-task-view.component.scss'],
     providers: [
-        ConfigTaskViewServiceFactory,
+        TaskViewServiceFactory,
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
@@ -89,13 +98,16 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         {
             provide: SearchService,
             useFactory: searchServiceFactory,
-            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService]
+            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService, TranslateService]
         },
         {
             provide: TaskViewService,
             useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]
+            deps: [TaskViewServiceFactory]
         },
+        {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+            useFactory: disableButtonsFactory
+        }
     ]
 })
 export class PublicTaskViewComponent extends AbstractTaskView implements AfterViewInit {

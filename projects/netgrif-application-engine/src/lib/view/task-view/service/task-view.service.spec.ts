@@ -9,8 +9,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {Observable, of} from 'rxjs';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {SearchService} from '../../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory} from '../../../utility/tests/test-factory-methods';
-import {ArrayTaskViewServiceFactory, noNetsTaskViewServiceFactory} from './factory/array-task-view-service-factory';
+import {TestTaskSearchServiceFactory, TestTaskViewFactory} from '../../../utility/tests/test-factory-methods';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
@@ -29,6 +28,7 @@ import {Page} from '../../../resources/interface/page';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
+import {TaskViewServiceFactory} from './factory/task-view-service-factory';
 
 describe('TaskViewService', () => {
     let service: TaskViewService;
@@ -45,11 +45,11 @@ describe('TaskViewService', () => {
                 SnackBarModule
             ],
             providers: [
-                ArrayTaskViewServiceFactory,
+                TaskViewServiceFactory,
                 {
                     provide: TaskViewService,
-                    useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]
+                    useFactory: TestTaskViewFactory,
+                    deps: [TaskViewServiceFactory]
                 },
                 {provide: TaskResourceService, useClass: MyResources},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},

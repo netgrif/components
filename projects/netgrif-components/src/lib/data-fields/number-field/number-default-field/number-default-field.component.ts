@@ -1,5 +1,5 @@
-import {Component, Inject, Optional} from '@angular/core';
-import {AbstractDefaultNumberFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
+import {Component} from '@angular/core';
+import {AbstractDefaultNumberFieldComponent} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./number-default-field.component.scss']
 })
 export class NumberDefaultFieldComponent extends AbstractDefaultNumberFieldComponent {
-    constructor(_translate: TranslateService, @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(_translate, informAboutInvalidData);
+    constructor(translate: TranslateService) {
+        super(translate);
     }
 }

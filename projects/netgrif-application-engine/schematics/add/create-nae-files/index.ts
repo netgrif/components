@@ -51,7 +51,9 @@ function createRoutesModule(): Rule {
             );
             return createFilesFromTemplates('./files', projectInfo.path);
         } else {
-            return chain([]);
+            return addImportsToAppModule(tree, [
+                new ImportToAdd('RouterModule.forRoot([])', '@angular/router')
+            ]);
         }
     };
 }

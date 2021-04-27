@@ -4,8 +4,8 @@ import {createMockDependencies} from '../../../../utility/tests/search-category-
 import {waitForAsync} from '@angular/core/testing';
 
 describe('CaseRole', () => {
-    it('should create an instance', waitForAsync(() => {
-        const opService = new OperatorService();
+    it('should create an instance', waitForAsync(async () => {
+        const opService = await new OperatorService();
         expect(new CaseRole(opService, null, createMockDependencies())).toBeTruthy();
     }));
 });

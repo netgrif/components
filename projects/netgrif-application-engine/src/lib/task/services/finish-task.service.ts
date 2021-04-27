@@ -52,11 +52,12 @@ export class FinishTaskService extends TaskHandlingService {
     public validateDataAndFinish(afterAction = new Subject<boolean>()): void {
         if (this._safeTask.dataSize <= 0) {
             this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
-                if (this._safeTask.dataSize <= 0 || this._taskContentService.validateTaskData()) {
+                if (this._safeTask.dataSize <= 0 ||
+                    (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData())) {
                     this.sendFinishTaskRequest(afterAction);
                 }
             }));
-        } else if (this._taskContentService.validateTaskData()) {
+        } else if (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData()) {
             const finishedTaskId = this._safeTask.stringId;
             this._taskDataService.updateTaskDataFields(this._callChain.create(success => {
                 if (success) {
@@ -109,6 +110,7 @@ export class FinishTaskService extends TaskHandlingService {
                 this._taskOperations.reload();
                 this.sendNotification(true);
                 afterAction.next(true);
+                afterAction.complete();
                 this._taskOperations.close();
             } else if (eventOutcome.error !== undefined) {
                 if (eventOutcome.error !== '') {
@@ -117,6 +119,7 @@ export class FinishTaskService extends TaskHandlingService {
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
                 this.sendNotification(false);
                 afterAction.next(false);
+                afterAction.complete();
             }
         }, error => {
             this._taskState.stopLoading(finishedTaskId);
@@ -131,6 +134,7 @@ export class FinishTaskService extends TaskHandlingService {
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.sendNotification(false);
             afterAction.next(false);
+            afterAction.complete();
         });
     }
 
