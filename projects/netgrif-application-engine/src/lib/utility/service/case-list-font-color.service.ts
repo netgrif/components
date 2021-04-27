@@ -20,6 +20,9 @@ export class CaseListFontColorService {
      */
     computeCaseFontColor(caseColor: string): string {
         // check if hex color
+        if (caseColor === undefined) {
+            return 'black';
+        }
         if (caseColor in this.cache) {
             return this.cache[caseColor];
         }
