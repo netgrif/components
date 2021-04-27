@@ -91,7 +91,7 @@ export class ProcessList {
                     };
                 }
                 cache[net.identifier].processes.sort((a, b) => {
-                    return b.version.localeCompare(a.version, undefined, { numeric:true })
+                    return b.version.localeCompare(a.version, undefined, { numeric: true });
                 });
                 cache[net.identifier].newestVersion = cache[net.identifier].processes[0].version;
             });
