@@ -127,22 +127,21 @@ export class UserPreferenceService implements OnDestroy {
     protected _savePreferences(): void {
         if (!this._anonym) {
             this._userResourceService.setPreferences(this._preferences).subscribe(resultMessage => {
-                if (typeof resultMessage.success === 'string') {
-                    this._snackbar.openSuccessSnackBar(this._translate.instant('preferences.snackbar.saveSuccess'));
-                } else {
-                    this._snackbar.openErrorSnackBar(this._translate.instant('preferences.snackbar.saveFailure'));
-                    this._logger.error('User preferences failed to save', resultMessage);
-                }
+                this.resultMessage(resultMessage);
             });
         } else {
             this._userResourceService.setPublicPreferences(this._preferences).subscribe(resultMessage => {
-                if (typeof resultMessage.success === 'string') {
-                    this._snackbar.openSuccessSnackBar(this._translate.instant('preferences.snackbar.saveSuccess'));
-                } else {
-                    this._snackbar.openErrorSnackBar(this._translate.instant('preferences.snackbar.saveFailure'));
-                    this._logger.error('User preferences failed to save', resultMessage);
-                }
+                this.resultMessage(resultMessage);
             });
+        }
+    }
+
+    protected resultMessage(resultMessage): void {
+        if (typeof resultMessage.success === 'string') {
+            this._snackbar.openSuccessSnackBar(this._translate.instant('preferences.snackbar.saveSuccess'));
+        } else {
+            this._snackbar.openErrorSnackBar(this._translate.instant('preferences.snackbar.saveFailure'));
+            this._logger.error('User preferences failed to save', resultMessage);
         }
     }
 
