@@ -1,4 +1,4 @@
-<nc-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last">
+<nc-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last" [caseColor] = case_.color>
     <ng-template #casePanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <div fxFlex class="text-column-div" [ngClass]="{'panel-header-padding': !textEllipsis}" [ngStyle]="{'min-width': getMinWidth()}">

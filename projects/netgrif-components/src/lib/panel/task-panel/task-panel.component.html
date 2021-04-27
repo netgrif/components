@@ -31,7 +31,9 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
-            <button mat-icon-button (click)="preventPanelOpen($event)" *ngIf="!isLoading" [matMenuTriggerFor]="menu">
+            <button mat-icon-button (click)="preventPanelOpen($event)"
+                    *ngIf="!isLoading && (canAssign() || canDo('delegate') || canReassign() || canCancel() || canFinish())"
+                    [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
