@@ -142,6 +142,30 @@ export class UserResourceService extends AbstractResourceService {
     }
 
     /**
+     * Get user's preferences
+     *
+     * **Request Type:** GET
+     *
+     * **Request URL:** {{baseUrl}}/api/user/preferences
+     */
+    public getPublicPreferences(params?: Params): Observable<Preferences> {
+        return this._resourceProvider.get$('public/user/preferences', this.SERVER_URL, params)
+            .pipe(map(r => this.changeType(r, undefined)));
+    }
+
+    /**
+     * Set user's preferences
+     *
+     * **Request Type:** POST
+     *
+     * **Request URL:** {{baseUrl}}/api/user/preferences
+     */
+    public setPublicPreferences(body: object, params?: Params): Observable<MessageResource> {
+        return this._resourceProvider.post$('public/user/preferences', this.SERVER_URL, body, params)
+            .pipe(map(r => this.changeType(r, undefined)));
+    }
+
+    /**
      * Generic user search
      *
      * **Request Type:** POST

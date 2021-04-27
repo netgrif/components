@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AbstractPanelComponent} from '@netgrif/application-engine';
+import {CaseListFontColorService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-app-panel',
@@ -7,7 +8,7 @@ import {AbstractPanelComponent} from '@netgrif/application-engine';
     styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent extends AbstractPanelComponent {
-    constructor() {
-        super();
+    constructor(caseListFontColorService: CaseListFontColorService) {
+        super(caseListFontColorService);
     }
 }
