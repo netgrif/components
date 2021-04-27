@@ -77,7 +77,7 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.INITIALS, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.TITLE, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.VERSION, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', true, 'string'),
     ]);
     public workflow: PetriNetReference = {
         author: {
