@@ -310,10 +310,10 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                             type = 'multichoice';
                         }
 
-                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(type, immediateData.title), {
+                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
                             netIdentifier: petriNet.identifier,
                             fieldId: immediateData.stringId,
-                            fieldType: type,
+                            fieldType: immediateData.type,
                         });
                     });
             });

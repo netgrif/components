@@ -38,6 +38,7 @@ export class CaseHeaderService extends AbstractHeaderService implements OnDestro
     protected createMetaHeaders(): Array<HeaderColumn> {
         return [
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'headers.caseMeta.visualID', 'text'),
+            new HeaderColumn(HeaderColumnType.META, CaseMetaField.MONGO_ID, 'headers.caseMeta.mongoID', 'text', false),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'headers.caseMeta.title', 'text'),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'headers.caseMeta.author', 'text'),
             new HeaderColumn(HeaderColumnType.META, CaseMetaField.CREATION_DATE, 'headers.caseMeta.creationDate', 'date'),

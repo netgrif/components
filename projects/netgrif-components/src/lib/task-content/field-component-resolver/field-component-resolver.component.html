@@ -43,7 +43,7 @@
 
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">
         <div fxFlex="20" class="line-datagroup"></div>
-        <span class="margin-default">{{getDataGroupTitle()}}</span>
+        <span [ngClass]="{'margin-default': getDataGroupTitle() !== ''}">{{getDataGroupTitle()}}</span>
         <div fxFlex class="line-datagroup"></div>
     </div>
 

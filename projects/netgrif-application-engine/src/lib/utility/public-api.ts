@@ -6,6 +6,7 @@ export * from './call-chain/call-chain.service';
 export * from './pagination/page-has-content';
 export * from './pagination/load-all-pages';
 export * from './service/spinner-overlay.service';
+export * from './service/case-list-font-color.service';
 export * from './incrementing-counter';
 export * from './array-to-observable';
 export * from './process-message-response';

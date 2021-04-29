@@ -22,14 +22,24 @@ import {
     AuthenticationService,
     PublicUrlResolverService,
     publicBaseFilterFactory,
-    publicFactoryResolver, Task, NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS, AllowedNetsService, AllowedNetsServiceFactory,
+    publicFactoryResolver,
+    Task,
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 
-const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
-    return factory.createFromConfig('demo-public-view');
+const localTaskViewServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
+    const array = [];
+    if (route.snapshot.paramMap.get('petriNetId') !== null) {
+        array.push(route.snapshot.paramMap.get('petriNetId'));
+    }
+    return factory.createFromArray(array);
 };
 
 const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
@@ -61,13 +71,6 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
     return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
         new CaseResourceService(provider, config),
         new PublicCaseResourceService(provider, config));
-};
-
-const disableButtonsFactory = () => {
-    return {
-        reassign: (t: Task) => true,
-        delegate: (t: Task) => true
-    };
 };
 
 @Component({
@@ -102,11 +105,10 @@ const disableButtonsFactory = () => {
         {
             provide: AllowedNetsService,
             useFactory: localAllowedNetsFactory,
-            deps: [AllowedNetsServiceFactory]
+            deps: [AllowedNetsServiceFactory, ActivatedRoute]
         },
-        {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
-            useFactory: disableButtonsFactory
-        }
+        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicView'},
+        ViewIdService,
     ]
 })
 export class PublicTaskViewComponent extends AbstractTaskView implements AfterViewInit {

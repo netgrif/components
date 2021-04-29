@@ -36,6 +36,8 @@ export class TaskHeaderService extends AbstractHeaderService implements OnDestro
     protected createMetaHeaders(): Array<HeaderColumn> {
         return [
             new HeaderColumn(HeaderColumnType.META, TaskMetaField.CASE, 'headers.taskMeta.case', 'text'),
+            new HeaderColumn(HeaderColumnType.META, TaskMetaField.CASE_ID, 'headers.taskMeta.caseID', 'text', false),
+            new HeaderColumn(HeaderColumnType.META, TaskMetaField.TASK_ID, 'headers.taskMeta.taskID', 'text', false),
             new HeaderColumn(HeaderColumnType.META, TaskMetaField.TITLE, 'headers.caseMeta.title', 'text'),
             new HeaderColumn(HeaderColumnType.META, TaskMetaField.PRIORITY, 'headers.taskMeta.priority', 'enumeration'),
             new HeaderColumn(HeaderColumnType.META, TaskMetaField.USER, 'headers.taskMeta.user', 'text'),
