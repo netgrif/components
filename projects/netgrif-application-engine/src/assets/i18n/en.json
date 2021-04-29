@@ -219,6 +219,9 @@
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
             "clickToDelete": "Click to delete file"
+        },
+        "dynamicEnum" : {
+            "noData": "No items match your search"
         }
     },
     "dialog": {
@@ -258,6 +261,7 @@
         "dateTime": "Choose a date and time",
         "selectUser": "Choose a user",
         "caseMeta": {
+            "mongoID": "Case ID",
             "visualID": "Visual ID",
             "title": "Title",
             "author": "Author",
@@ -265,6 +269,8 @@
         },
         "taskMeta": {
             "case": "Case",
+            "caseID": "Case ID",
+            "taskID": "Task ID",
             "priority": "Priority",
             "user": "Assignee",
             "assignDate": "Assign Date"
@@ -272,6 +278,7 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
+            "netId": "Process ID",
             "creationDate": "Upload date",
             "title": "Title",
             "author": "Author"
@@ -379,5 +386,10 @@
         "and": "and",
         "privacyNotice": "Privacy Notice",
         "sentenceEnd": ""
+    },
+    "publicView": {
+        "resolving" : "Public view is loading ...",
+        "netNotExist": "The process does not exists",
+        "errorCreate": "Error while creating case "
     }
 }

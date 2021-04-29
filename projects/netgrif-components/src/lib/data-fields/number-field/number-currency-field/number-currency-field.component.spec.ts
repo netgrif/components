@@ -65,7 +65,7 @@ describe('NumberCurrencyFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-number-currency-field [dataField]="field" [formControlRef]="formControl"' +
+    template: '<nc-number-currency-field [numberField]="field" [formControlRef]="formControl"' +
         ' [showLargeLayout]="label"></nc-number-currency-field>'
 })
 class TestWrapperComponent {

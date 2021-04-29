@@ -35,7 +35,7 @@ import {SearchIndex} from '../../search-index';
 import {Type} from '@angular/core';
 
 interface Datafield {
-    netId: string;
+    netIdentifier: string;
     fieldId: string;
     fieldType: string;
 }
@@ -262,7 +262,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateNetConstraint(datafield: Datafield): Query {
-        return this._processCategory.generatePredicate([[datafield.netId]]).query;
+        return this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
     }
 
     protected createDatafieldOptions(): void {
@@ -284,10 +284,10 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                             type = 'multichoice';
                         }
 
-                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(type, immediateData.title), {
-                            netId: petriNet.stringId,
+                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
+                            netIdentifier: petriNet.identifier,
                             fieldId: immediateData.stringId,
-                            fieldType: type,
+                            fieldType: immediateData.type,
                         });
                     });
             });

@@ -15,6 +15,8 @@ import {Observable, of} from 'rxjs';
 import {PetriNetResourceService} from '../../../../resources/engine-endpoint/petri-net-resource.service';
 import {CaseViewParams} from '../../models/case-view-params';
 import {Net} from '../../../../process/net';
+import {NAE_NEW_CASE_CONFIGURATION} from '../../models/new-case-configuration-injection-token';
+import {NewCaseConfiguration} from '../../models/new-case-configuration';
 import {SearchIndexResolverService} from '../../../../search/search-keyword-resolver-service/search-index-resolver.service';
 
 /**
@@ -38,7 +40,8 @@ export class CaseViewServiceFactory {
                 protected _user: UserService,
                 protected _petriNetResource: PetriNetResourceService,
                 protected _resolver: SearchIndexResolverService,
-                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) protected _newCaseConfiguration: NewCaseConfiguration) {
     }
 
     /**
@@ -64,7 +67,9 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
+            this._processService,
             this._newCaseComponent,
+            this._newCaseConfiguration,
             this._resolver
         );
     }
@@ -85,7 +90,9 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
+            this._processService,
             this._newCaseComponent,
+            this._newCaseConfiguration,
             this._resolver
         );
     }
@@ -115,7 +122,9 @@ export class CaseViewServiceFactory {
                 this._searchService,
                 this._translate,
                 this._user,
+                this._processService,
                 this._newCaseComponent,
+                this._newCaseConfiguration,
                 this._resolver
             );
         } else {
@@ -139,7 +148,9 @@ export class CaseViewServiceFactory {
             this._searchService,
             this._translate,
             this._user,
+            this._processService,
             this._newCaseComponent,
+            this._newCaseConfiguration,
             this._resolver
         );
     }

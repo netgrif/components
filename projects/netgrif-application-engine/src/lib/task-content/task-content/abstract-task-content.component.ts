@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {FieldConverterService} from '../services/field-converter.service';
 import {TaskContentService} from '../services/task-content.service';
@@ -17,10 +17,19 @@ import {FieldTypeResource} from '../model/field-type-resource';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
+import {AsyncRenderingConfiguration} from '../model/async-rendering-configuration';
 
 export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
     readonly DEFAULT_FIELD_ALIGNMENT = FieldAlignment.CENTER;
+    readonly DEFAULT_ASYNC_RENDERING_CONFIGURATION: AsyncRenderingConfiguration = {
+        batchSize: 4,
+        batchDelay: 200,
+        numberOfPlaceholders: 4,
+        enableAsyncRenderingForNewFields: true,
+        enableAsyncRenderingOnTaskExpand: true
+    };
 
     /**
      * Indicates whether data is being loaded from backend, or if it is being processed.
@@ -77,12 +86,21 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected _dataSource$: BehaviorSubject<Array<DatafieldGridLayoutElement>>;
     protected _subTaskContent: Subscription;
     protected _subTaskEvent: Subscription;
+    protected _asyncRenderingConfig: AsyncRenderingConfiguration;
+    protected _asyncRenderTimeout: number;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
                           protected _paperView: PaperViewService,
                           protected _logger: LoggerService,
-                          protected _taskEventService: TaskEventService = null) {
+                          @Optional() protected _taskEventService: TaskEventService = null,
+                          @Optional() @Inject(NAE_ASYNC_RENDERING_CONFIGURATION)
+                              asyncRenderingConfiguration: AsyncRenderingConfiguration = null) {
+        this._asyncRenderingConfig = {...this.DEFAULT_ASYNC_RENDERING_CONFIGURATION};
+        if (asyncRenderingConfiguration !== null) {
+            Object.assign(this._asyncRenderingConfig, asyncRenderingConfiguration);
+        }
+
         this.loading$ = new LoadingEmitter(true);
         this._dataSource$ = new BehaviorSubject<Array<DatafieldGridLayoutElement>>([]);
         this.hasDataToDisplay$ = this._dataSource$.pipe(map(data => {
@@ -117,6 +135,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         if (this._subTaskEvent) {
             this._subTaskEvent.unsubscribe();
         }
+        if (this._asyncRenderTimeout !== undefined) {
+            window.clearTimeout(this._asyncRenderTimeout);
+        }
     }
 
     public get taskId(): string {
@@ -132,6 +153,17 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      */
     public getGridColumns(): string {
         return 'repeat(' + this.formCols + ', 1fr)';
+    }
+
+    /**
+     * @returns the rows configuration for the grid layout
+     */
+    public getGridRows(): string {
+        let rowConfig = '';
+        for (const row of this.gridAreas.split('|')) {
+            rowConfig = rowConfig.concat(row.includes('xgroup') ? 'auto' : 'minmax(105px, auto)', ' ') ;
+        }
+        return rowConfig.trim();
     }
 
     /**
@@ -224,7 +256,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 group.layout.type = defaultLayout;
             }
 
-            if (group.title && group.title !== '') {
+            if (group.title !== undefined) {
                 const title = this.groupTitleElement(group, gridData.runningTitleCount);
                 gridData.gridElements.push(title);
                 gridData.grid.push(this.newGridRow(title.gridAreaId));
@@ -246,8 +278,57 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         });
 
         this.fillEmptySpace(gridData);
-        this._dataSource$.next(gridData.gridElements);
+        this.renderFields(gridData.gridElements);
         this.gridAreas = this.createGridAreasString(gridData.grid);
+    }
+
+    protected renderFields(gridElements: Array<DatafieldGridLayoutElement>) {
+        if (!this._asyncRenderingConfig.enableAsyncRenderingForNewFields
+            && !(this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand && this.taskContentService.isExpanding)) {
+            this._dataSource$.next(gridElements);
+            return;
+        }
+
+        const currentElements = this._dataSource$.value;
+        const currentTrackByIds = new Set<string>();
+        currentElements.forEach((element, index) => {
+            currentTrackByIds.add(this.trackByDatafields(index, element));
+        });
+
+        const keptElements = [];
+        const newElements = [];
+        if (this.taskContentService.isExpanding && this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand) {
+            newElements.push(...gridElements);
+        } else {
+            gridElements.forEach((element, index) => {
+                if (currentTrackByIds.has(this.trackByDatafields(index, element))) {
+                    keptElements.push(element);
+                } else {
+                    newElements.push(element);
+                }
+            });
+        }
+
+        this.spreadFieldRenderingOverTime(keptElements, newElements);
+    }
+
+    protected spreadFieldRenderingOverTime(keptElements: Array<DatafieldGridLayoutElement>,
+                                           newElements: Array<DatafieldGridLayoutElement>,
+                                           iteration = 1) {
+        this._asyncRenderTimeout = undefined;
+        const fieldsInCurrentIteration = newElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
+        const placeholdersInCurrentIteration = newElements.slice(iteration * this._asyncRenderingConfig.batchSize,
+            iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
+
+        fieldsInCurrentIteration.push(
+            ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
+
+        this._dataSource$.next([...keptElements, ...fieldsInCurrentIteration]);
+        if (this._asyncRenderingConfig.batchSize * iteration < newElements.length) {
+            this._asyncRenderTimeout = window.setTimeout(() => {
+                this.spreadFieldRenderingOverTime(keptElements, newElements, iteration + 1);
+            }, this._asyncRenderingConfig.batchDelay);
+        }
     }
 
     /**
@@ -260,8 +341,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         const result = dataGroups.map(group => {
             const g = {...group};
             g.fields = g.fields.filter(field => !field.behavior.hidden
-                                                && !field.behavior.forbidden
-                                                && this._fieldConverter.resolveType(field) !== FieldTypeResource.TASK_REF);
+                && !field.behavior.forbidden
+                && this._fieldConverter.resolveType(field) !== FieldTypeResource.TASK_REF);
             return g;
         });
 
@@ -606,6 +687,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         switch (element.type) {
             case TaskElementType.BLANK:
                 return element.gridAreaId + '-' + this.taskContentService.$shouldCreateCounter.getValue();
+            case TaskElementType.LOADER:
+                return element.gridAreaId + '-L-' + this.taskContentService.$shouldCreateCounter.getValue();
             case TaskElementType.DATA_GROUP_TITLE:
                 return element.title + '-' + this.taskContentService.$shouldCreateCounter.getValue();
             default:

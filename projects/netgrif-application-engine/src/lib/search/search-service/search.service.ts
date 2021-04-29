@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {Predicate} from '../models/predicate/predicate';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
@@ -12,6 +12,7 @@ import {EditableClausePredicateWithGenerators} from '../models/predicate/editabl
 import {Category} from '../models/category/category';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
 import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
+import {FilterType} from '../../filter/models/filter-type';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -43,13 +44,23 @@ export class SearchService implements OnDestroy {
      * The `rootPredicate` uses this stream to notify the search service about changes to the held query
      */
     private readonly _predicateQueryChanged$: Subject<void>;
+    private subFilter: Subscription;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
      * @param baseFilter Filter that should be applied to the view when no searching is being performed.
+     * @param type
      */
-    constructor(baseFilter: Filter) {
-        this._baseFilter = baseFilter.clone();
+    constructor(baseFilter: Filter | Observable<Filter>, type: FilterType = FilterType.CASE) {
+        if (baseFilter instanceof Filter) {
+            this._baseFilter = baseFilter.clone();
+        } else if (baseFilter instanceof Observable) {
+            this._baseFilter = new SimpleFilter('', type, {process: {identifier: '__EMPTY__'}});
+            this.subFilter = baseFilter.subscribe((filter) => {
+                this._baseFilter = filter.clone();
+                this.updateActiveFilter();
+            });
+        }
         this._predicateQueryChanged$ = new Subject<void>();
         this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
@@ -64,6 +75,9 @@ export class SearchService implements OnDestroy {
         this._predicateRemoved$.complete();
         this._activeFilter.complete();
         this._predicateQueryChanged$.complete();
+        if (this.subFilter) {
+            this.subFilter.unsubscribe();
+        }
     }
 
     /**
@@ -210,8 +224,11 @@ export class SearchService implements OnDestroy {
      * Clears the full text filter (if set). If the full text filter is not set, does nothing.
      */
     public clearFullTextFilter(): void {
+        const wasFulltextSet = this._fullTextFilter !== undefined;
         this._fullTextFilter = undefined;
-        this.updateActiveFilter();
+        if (wasFulltextSet) {
+            this.updateActiveFilter();
+        }
     }
 
     /**

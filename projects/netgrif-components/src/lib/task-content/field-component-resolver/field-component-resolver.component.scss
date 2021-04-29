@@ -11,3 +11,53 @@
 .min-row-height {
     min-height: 105px;
 }
+
+.phl-row {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.phl-col {
+    height: 70px;
+    flex: 0 0 90%;
+    background-color: #ced4da;
+    border-radius: 8px;
+
+}
+
+.phl-item {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background-color: #fff;
+
+    &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient(
+                90deg,
+                rgba(#fff, 0) 0,
+                rgba(#fff, 0.2) 20%,
+                rgba(#fff, 0.5) 60%,
+                rgba(#fff, 0)
+        );
+        animation: shimmer 1s infinite;
+        content: '';
+    }
+
+    @keyframes shimmer {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+}
+
+.phl-item, .phl-item *, .phl-item::after, .phl-item::before {
+    box-sizing: border-box;
+}
