@@ -1,6 +1,6 @@
 import {ViewService} from './view.service';
 import {Component, Type} from '@angular/core';
-import {View} from './model/view';
+import {ViewEntry} from './model/view-entry';
 
 
 describe('ViewService', () => {
@@ -36,7 +36,7 @@ describe('ViewService', () => {
 });
 
 class TestViewService extends ViewService {
-    constructor(componentClasses: Array<Type<any> | View>) {
+    constructor(componentClasses: Array<Type<any> | ViewEntry>) {
         super(componentClasses, undefined, undefined, undefined);
     }
 }
