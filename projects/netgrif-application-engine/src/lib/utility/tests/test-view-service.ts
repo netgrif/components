@@ -6,7 +6,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 
 @Injectable()
 export class TestViewService extends ViewService {
-    constructor(config: ConfigurationService, router: Router, logger: LoggerService) {
-        super([], config, router, logger);
+    constructor() {
+        super([]);
     }
 }

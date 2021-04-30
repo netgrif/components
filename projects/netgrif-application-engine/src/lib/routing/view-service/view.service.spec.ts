@@ -37,7 +37,7 @@ describe('ViewService', () => {
 
 class TestViewService extends ViewService {
     constructor(componentClasses: Array<Type<any> | ViewEntry>) {
-        super(componentClasses, undefined, undefined, undefined);
+        super(componentClasses);
     }
 }
 

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ViewService, ConfigurationService, LoggerService} from '@netgrif/application-engine';
+import {ViewService} from '@netgrif/application-engine';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';
 import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
 import {PasswordFormComponent} from './doc/forms/email-form/password-form.component';
@@ -36,7 +35,7 @@ import {GroupViewComponent} from './doc/group-view/group-view.component';
     providedIn: 'root'
 })
 export class NaeExampleAppViewService extends ViewService {
-    constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
+    constructor() {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([
@@ -69,6 +68,6 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
             {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: PublicResolverComponent},
-            {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent}], configurationService, router, loggerService);
+            {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent}]);
     }
 }
