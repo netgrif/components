@@ -125,6 +125,10 @@ export abstract class Category<T> {
         });
     }
 
+    public destroy(): void {
+        // do nothing for now, awaiting merge with NAE-1207
+    }
+
     /**
      * Configuration input represent the steps that are necessary to configure the category.
      * The last input must always be of type [OPERATOR]{@link SearchInputType#OPERATOR}.
