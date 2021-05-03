@@ -21,7 +21,7 @@ import {TaskTask} from '../models/category/task/task-task';
  * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor} and {@link CaseVisualId}
  */
 export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
-    return [
+    const cats = [
         factory.get(CaseDataset),
         factory.get(CaseTitle),
         factory.get(CaseCreationDate),
@@ -30,6 +30,8 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
         factory.get(CaseAuthor),
         factory.get(CaseVisualId),
     ];
+    cats.forEach(cat => cat.destroy());
+    return cats;
 }
 
 /**
@@ -41,10 +43,12 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
  * and {@link TaskRole}
  */
 export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
-    return [
+    const cats = [
         factory.get(TaskAssignee),
         factory.get(TaskTask),
         factory.get(TaskProcess),
         factory.get(TaskRole),
     ];
+    cats.forEach(cat => cat.destroy());
+    return cats;
 }

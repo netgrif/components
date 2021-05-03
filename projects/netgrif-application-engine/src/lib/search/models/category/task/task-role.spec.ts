@@ -6,6 +6,8 @@ import {waitForAsync} from '@angular/core/testing';
 describe('TaskRole', () => {
     it('should create an instance', waitForAsync(async () => {
         const opService = await new OperatorService();
-        expect(new TaskRole(opService, null, createMockDependencies())).toBeTruthy();
+        const taskRole = new TaskRole(opService, null, createMockDependencies());
+        expect(taskRole).toBeTruthy();
+        taskRole.destroy();
     }));
 });
