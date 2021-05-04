@@ -9,7 +9,7 @@ None
 ### Features
 * [NAE-1251](https://netgrif.atlassian.net/browse/NAE-1251) - Dynamic validations
 
-<a name="https://netgrif.atlassian.net/projects/NAE/versions/10883/tab/release-report-all-issues"></a>
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10862/tab/release-report-all-issues"></a>
 ## 5.2.0 (03.05.2021)
 ### Bug fixes
 * [NAE-1165](https://netgrif.atlassian.net/browse/NAE-1165) - Grid layout not stretching rows in height
