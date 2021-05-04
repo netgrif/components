@@ -1,9 +1,9 @@
-import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
+import {ValidableDataField} from '../../models/validable-data-field';
 
 export enum TextFieldView {
     DEFAULT = 'default',
@@ -30,15 +30,13 @@ export enum TextFieldValidation {
     EMAIL = 'email'
 }
 
-export class TextField extends DataField<string> {
+export class TextField extends ValidableDataField<string> {
     public static FIELD_HEIGHT = 105;
 
-    private _validators: Array<ValidatorFn>;
-
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, public validations?: Validation[], protected _view = TextFieldView.DEFAULT,
+                description?: string, layout?: Layout, validations?: Validation[], protected _view = TextFieldView.DEFAULT,
                 _component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, _component);
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component);
     }
 
     /*@deprecated in 4.3.0*/
@@ -46,26 +44,7 @@ export class TextField extends DataField<string> {
         return this._view;
     }
 
-    protected resolveFormControlValidators(): Array<ValidatorFn> {
-        const result = [];
-
-        if (this.behavior.required) {
-            result.push(Validators.required);
-        }
-
-        if (this.validations) {
-            if (this._validators) {
-                result.push(...this._validators);
-            } else {
-                this._validators = this.resolveValidations();
-                result.push(...this._validators);
-            }
-        }
-
-        return result;
-    }
-
-    private resolveValidations(): Array<ValidatorFn> {
+    protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 
         this.validations.forEach(item => {

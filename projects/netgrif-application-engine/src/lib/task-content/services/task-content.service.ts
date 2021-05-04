@@ -12,6 +12,8 @@ import {FieldConverterService} from './field-converter.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
+import {ValidableDataField} from '../../data-fields/models/validable-data-field';
+import {Validation} from '../../data-fields/models/validation';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -224,8 +226,12 @@ export abstract class TaskContentService implements OnDestroy {
                                 newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                             });
                             (field as EnumerationField | MultichoiceField).choices = newOptions;
+                        } else if (key === 'validations' && field instanceof ValidableDataField) {
+                            field.setValidations(updatedField.validations.map(it => (it as Validation)));
+
                         } else if (key !== 'type') {
                             field[key] = updatedField[key];
+
                         }
                         field.update();
                     });
