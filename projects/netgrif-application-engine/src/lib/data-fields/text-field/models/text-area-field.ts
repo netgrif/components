@@ -11,7 +11,7 @@ export class TextAreaField extends TextField {
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, validations?: Validation[], protected _view = TextFieldView.DEFAULT, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, null, TextFieldView.DEFAULT, component);
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, TextFieldView.DEFAULT, component);
     }
 
     public valueChanges(): Observable<string> {

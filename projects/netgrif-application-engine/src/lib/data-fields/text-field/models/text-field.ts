@@ -3,7 +3,7 @@ import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
-import {ValidableDataField} from '../../models/validable-data-field';
+import {DataField} from '../../models/abstract-data-field';
 
 export enum TextFieldView {
     DEFAULT = 'default',
@@ -30,7 +30,7 @@ export enum TextFieldValidation {
     EMAIL = 'email'
 }
 
-export class TextField extends ValidableDataField<string> {
+export class TextField extends DataField<string> {
     public static FIELD_HEIGHT = 105;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,

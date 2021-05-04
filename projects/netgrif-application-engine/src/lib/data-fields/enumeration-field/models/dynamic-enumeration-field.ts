@@ -7,6 +7,7 @@ import {ValidatorFn, Validators} from '@angular/forms';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
+import {Validation} from '../../models/validation';
 
 export class DynamicEnumerationField extends EnumerationField {
     protected REQUEST_DEBOUNCE_TIME = 350;
@@ -16,8 +17,9 @@ export class DynamicEnumerationField extends EnumerationField {
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, protected _view = EnumerationFieldView.DEFAULT,
-                protected readonly _fieldType = FieldTypeResource.ENUMERATION, component?: Component) {
-        super(stringId, title, value, _choices, behavior, placeholder, description, layout, _view, _fieldType, component);
+                protected readonly _fieldType = FieldTypeResource.ENUMERATION,
+                validations?: Validation[], component?: Component) {
+        super(stringId, title, value, _choices, behavior, placeholder, description, layout, _view, _fieldType, validations, component);
         this._choicesChange$ = new Subject<void>();
         this._loading = new LoadingEmitter();
     }
