@@ -117,10 +117,10 @@ export class FieldConverterService {
                     item.placeholder, item.description, item.layout, item.validations, null, null, item.component);
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations);
+                    item.placeholder, item.description, item.layout, item.validations, item.component);
             case FieldTypeResource.FILTER:
                 return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
-                    item.behavior, item.placeholder, item.description, item.layout);
+                    item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component);
         }
     }
 
