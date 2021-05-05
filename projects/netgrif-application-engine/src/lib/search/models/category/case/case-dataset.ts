@@ -325,8 +325,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         });
     }
 
-    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>)
-        : Observable<Array<SearchAutocompleteOption<Array<string>>>> {
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>):
+        Observable<Array<SearchAutocompleteOption<Array<string>>>> {
 
         if (!this.hasSelectedDatafields) {
             throw new Error('The category must be fully configured before attempting to get autocomplete options!');

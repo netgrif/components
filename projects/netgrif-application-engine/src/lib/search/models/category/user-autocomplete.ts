@@ -15,9 +15,11 @@ export class UserAutocomplete implements AutocompleteOptions {
 
     public static readonly USER_ICON = 'account_circle';
 
-    public static readonly USER_ME_ICON = 'person'; // person_pin, person_pin_circle
+    public static readonly USER_ME_ICON = 'person_pin_circle'; // person_pin, person_pin_circle
 
     public static readonly USER_ME_TEMPLATE = '<<me>>';
+
+    private static readonly _i18n = 'search.category.userMe';
 
 
     protected _userResourceService: UserResourceService;
@@ -30,8 +32,8 @@ export class UserAutocomplete implements AutocompleteOptions {
         this._userResourceService = optionalDependencies.userResourceService;
     }
 
-    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>)
-        : Observable<Array<SearchAutocompleteOption<Array<string>>>> {
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>):
+        Observable<Array<SearchAutocompleteOption<Array<string>>>> {
 
         return userInput.pipe(
             startWith(''),
@@ -46,9 +48,11 @@ export class UserAutocomplete implements AutocompleteOptions {
                                 );
 
                                 if (this._includeMe) {
-                                    options.unshift(
-                                        {text: '', value: [UserAutocomplete.USER_ME_TEMPLATE], icon: UserAutocomplete.USER_ME_ICON}
-                                    );
+                                    options.unshift({
+                                        text: UserAutocomplete._i18n,
+                                        value: [UserAutocomplete.USER_ME_TEMPLATE],
+                                        icon: UserAutocomplete.USER_ME_ICON
+                                    });
                                 }
 
                                 return options;

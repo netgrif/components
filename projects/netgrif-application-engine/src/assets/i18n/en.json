@@ -143,7 +143,8 @@
                     "placeholder": "Select task"
                 }
             },
-            "select": "Search category"
+            "select": "Search category",
+            "userMe": "ME"
         },
         "operator": {
             "name": "Operator",

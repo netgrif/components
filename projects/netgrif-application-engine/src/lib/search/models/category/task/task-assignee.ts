@@ -34,8 +34,8 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
     protected createOptions(): void {
     }
 
-    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>)
-        : Observable<Array<SearchAutocompleteOption<Array<string>>>> {
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>):
+        Observable<Array<SearchAutocompleteOption<Array<string>>>> {
 
         return this._userAutocomplete.filterOptions(userInput);
     }
