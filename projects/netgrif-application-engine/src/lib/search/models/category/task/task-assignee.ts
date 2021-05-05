@@ -12,6 +12,7 @@ import {NotEquals} from '../../operator/not-equals';
 import {IsNull} from '../../operator/is-null';
 import {Categories} from '../categories';
 import {FormControl} from '@angular/forms';
+import {UserAutocomplete} from '../user-autocomplete';
 
 
 export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
@@ -19,40 +20,24 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
     private static readonly _i18n = 'search.category.task.assignee';
     private static readonly ICON = 'account_circle';
 
+    private _userAutocomplete: UserAutocomplete;
+
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['userId'],
             [operators.getOperator(Equals), operators.getOperator(NotEquals), operators.getOperator(IsNull)],
             `${TaskAssignee._i18n}.name`,
             logger,
             operators);
+        this._userAutocomplete = new UserAutocomplete(this._optionalDependencies);
     }
 
     protected createOptions(): void {
     }
 
-    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>):
-        Observable<Array<SearchAutocompleteOption<Array<string>>>> {
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>)
+        : Observable<Array<SearchAutocompleteOption<Array<string>>>> {
 
-        return userInput.pipe(
-            startWith(''),
-            debounceTime(600),
-            switchMap(input => {
-                if (typeof input === 'string') {
-                    return this._optionalDependencies.userResourceService.search({fulltext: input}).pipe(
-                        map(page => {
-                            if (hasContent(page)) {
-                                return page.content.map(
-                                    user => ({text: user.fullName, value: [user.id], icon: TaskAssignee.ICON})
-                                );
-                            }
-                            return [];
-                        })
-                    );
-                } else {
-                    return of([input]);
-                }
-            })
-        );
+        return this._userAutocomplete.filterOptions(userInput);
     }
 
     protected generateQuery(userInput: Array<Array<string>>): Query {

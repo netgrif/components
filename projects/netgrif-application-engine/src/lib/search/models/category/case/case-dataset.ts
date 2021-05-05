@@ -39,6 +39,7 @@ import {Moment} from 'moment';
 import {CategoryMetadataConfiguration} from '../../persistance/generator-metadata';
 import moment from 'moment';
 import {FilterTextSegment} from '../../persistance/filter-text-segment';
+import {UserAutocomplete} from '../user-autocomplete';
 
 interface Datafield {
     netIdentifier: string;
@@ -63,6 +64,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     private _datafieldOptionsInitialized$: ReplaySubject<void>;
     private _allowedNetsSub: Subscription;
+    private _userAutocomplete: UserAutocomplete;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -93,6 +95,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         this._processCategory.selectDefaultOperator();
 
         this._datafieldOptions = new Map<string, Array<Datafield>>();
+        this._userAutocomplete = new UserAutocomplete(this._optionalDependencies);
         this.createDatafieldOptions();
 
         this._DATAFIELD_INPUT = new ConfigurationInput(
@@ -322,8 +325,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         });
     }
 
-    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>):
-        Observable<Array<SearchAutocompleteOption<Array<string>>>> {
+    filterOptions(userInput: Observable<string | SearchAutocompleteOption<Array<string>>>)
+        : Observable<Array<SearchAutocompleteOption<Array<string>>>> {
 
         if (!this.hasSelectedDatafields) {
             throw new Error('The category must be fully configured before attempting to get autocomplete options!');
@@ -332,26 +335,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             throw new Error('Cannot filter options of non-autocomplete operands');
         }
 
-        return userInput.pipe(
-            startWith(''),
-            debounceTime(600),
-            switchMap(input => {
-                if (typeof input === 'string') {
-                    return this._optionalDependencies.userResourceService.search({fulltext: input}).pipe(
-                        map(page => {
-                            if (hasContent(page)) {
-                                return page.content.map(
-                                    user => ({text: user.fullName, value: [user.id], icon: CaseDataset.AUTOCOMPLETE_ICON})
-                                );
-                            }
-                            return [];
-                        })
-                    );
-                } else {
-                    return of([input]);
-                }
-            })
-        );
+        return this._userAutocomplete.filterOptions(userInput);
     }
 
     public selectDatafields(datafieldMapKey: string, selectDefaultOperator = true): void {

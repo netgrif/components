@@ -31,6 +31,7 @@ export * from './models/operator/not-equals-date';
 export * from './models/category/category';
 export * from './models/category/no-configuration-category';
 export * from './models/category/autocomplete-category';
+export * from './models/category/user-autocomplete';
 export * from './models/category/no-configuration-autocomplete-category';
 export * from './models/category/net-attribute-autocomplete-category';
 export * from './models/category/case/case-net-attribute-autocomplete-category';
