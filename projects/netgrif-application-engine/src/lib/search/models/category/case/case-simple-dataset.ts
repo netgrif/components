@@ -51,6 +51,11 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         this._processCategory = _optionalDependencies.categoryFactory.getWithDefaultOperator(CaseProcess) as CaseProcess;
     }
 
+    destroy() {
+        super.destroy();
+        this._processCategory.destroy();
+    }
+
     get inputPlaceholder(): string {
         return '';
     }

@@ -125,6 +125,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
             this._allowedNetsSub.unsubscribe();
         }
+        this._processCategory.destroy();
     }
 
     get configurationInputs$(): Observable<Array<ConfigurationInput>> {
