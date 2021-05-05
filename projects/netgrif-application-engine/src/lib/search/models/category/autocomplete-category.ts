@@ -25,6 +25,8 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
      */
     protected _optionsMap: Map<string, Array<T>>;
 
+    private readonly _timeoutId: number;
+
     protected constructor(elasticKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
@@ -33,9 +35,14 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
         this._optionsMap = new Map<string, Array<T>>();
         // timeout is used to bypass javascript object initialization bugs.
         // Injected properties of inherited classes were not set in the function call.
-        setTimeout(() => {
+        this._timeoutId = setTimeout(() => {
             this.createOptions();
         });
+    }
+
+    destroy() {
+        super.destroy();
+        clearTimeout(this._timeoutId);
     }
 
     /**
