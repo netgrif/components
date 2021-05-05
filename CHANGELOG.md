@@ -1,3 +1,31 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10885/tab/release-report-all-issues"></a>
+## 5.3.0 (05.05.2021)
+### Bug fixes
+None
+
+### Improvements
+* [NAE-58](https://netgrif.atlassian.net/browse/NAE-58) - Dynamic Init values
+
+### Features
+* [NAE-1251](https://netgrif.atlassian.net/browse/NAE-1251) - Dynamic validations
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10862/tab/release-report-all-issues"></a>
+## 5.2.0 (03.05.2021)
+### Bug fixes
+* [NAE-1165](https://netgrif.atlassian.net/browse/NAE-1165) - Grid layout not stretching rows in height
+* [NAE-1285](https://netgrif.atlassian.net/browse/NAE-1285) - Zoradovanie verzií procesov
+* [NAE-1241](https://netgrif.atlassian.net/browse/NAE-1241) - Remove three dots on task panel
+
+### Improvements
+* [NAE-1291](https://netgrif.atlassian.net/browse/NAE-1291) - Color lines
+* [NAE-1272](https://netgrif.atlassian.net/browse/NAE-1272) - Datagroup divider improvement
+* [NAE-1269](https://netgrif.atlassian.net/browse/NAE-1269) - Enable user preferences for anonym user
+* [NAE-1268](https://netgrif.atlassian.net/browse/NAE-1268) - Zobrazenie ID casu ako metadata
+* [NAE-1238](https://netgrif.atlassian.net/browse/NAE-1238) - Case event view
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10883/tab/release-report-all-issues"></a>
 ## 5.1.2 (16.04.2021)
 ### Bug fixes

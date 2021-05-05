@@ -24,6 +24,11 @@ export abstract class TaskNetAttributeAutocompleteCategory extends NetAttributeA
         this._processCategory.selectDefaultOperator();
     }
 
+    destroy() {
+        super.destroy();
+        this._processCategory.destroy();
+    }
+
     protected getProcessCategory(): Category<Array<string>> {
         return this._processCategory;
     }

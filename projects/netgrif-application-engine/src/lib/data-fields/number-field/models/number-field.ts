@@ -1,10 +1,10 @@
-import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
-import {FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {FormControl, ValidatorFn} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {FormatFilter} from '../../models/format-filter';
 import {Component} from '../../models/component';
+import {DataField} from '../../models/abstract-data-field';
 
 export enum NumberFieldValidation {
     ODD = 'odd',
@@ -24,32 +24,12 @@ export enum NumberFieldValidation {
 }
 
 export class NumberField extends DataField<number> {
-    private _validators: Array<ValidatorFn>;
     public _formatFilter: FormatFilter;
 
-    constructor(stringId: string, title: string, value: number, behavior: Behavior, public validations?: Validation[], placeholder?: string,
+    constructor(stringId: string, title: string, value: number, behavior: Behavior, validations?: Validation[], placeholder?: string,
                 description?: string, layout?: Layout, format?: FormatFilter, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, component);
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
         this._formatFilter = format;
-    }
-
-    protected resolveFormControlValidators(): Array<ValidatorFn> {
-        const result = [];
-
-        if (this.behavior.required) {
-            result.push(Validators.required);
-        }
-
-        if (this.validations) {
-            if (this._validators) {
-                result.push(...this._validators);
-            } else {
-                this._validators = this.resolveValidations();
-                result.push(...this._validators);
-            }
-        }
-
-        return result;
     }
 
     protected resolveValidations(): Array<ValidatorFn> {

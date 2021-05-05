@@ -142,4 +142,8 @@ describe('TaskProcess', () => {
             });
         });
     });
+
+    afterEach(() => {
+        category.destroy();
+    });
 });

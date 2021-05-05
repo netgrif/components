@@ -139,6 +139,10 @@ export abstract class Category<T> {
         });
     }
 
+    public destroy(): void {
+        // do nothing for now, awaiting merge with NAE-1207
+    }
+
     /**
      * Cleans up the internal state of the object before its destruction.
      *
