@@ -17,9 +17,9 @@ export function addViewToViewService(tree: Tree, view: ImportToAdd): void {
     const arrayContent = getArrayNodeContent(fileData.sourceFile);
     const recorder = tree.beginUpdate(fileData.fileEntry.path);
     if (arrayContent.getChildren().length === 0) {
-        recorder.insertRight(arrayContent.pos, `${view.className}`);
+        recorder.insertRight(arrayContent.pos, `{id: '${view.className}', class: ${view.className}}`);
     } else {
-        recorder.insertRight(arrayContent.pos, `${view.className},\n\t\t\t`);
+        recorder.insertRight(arrayContent.pos, `{id: '${view.className}', class: ${view.className}},\n\t\t\t`);
     }
     tree.commitUpdate(recorder);
 
@@ -46,7 +46,15 @@ export function getGeneratedViewClassNames(tree: Tree): Set<string> {
     const nodesInArray = getArrayNodeContent(fileData.sourceFile).getChildren();
     const result = new Set<string>();
     for (let i = 0; i < nodesInArray.length; i += 2 /* Even nodes are commas */) {
-        result.add(nodesInArray[i].getText());
+        if (nodesInArray[i].kind === ts.SyntaxKind.Identifier) {
+            result.add(nodesInArray[i].getText());
+        } else if (nodesInArray[i].kind === ts.SyntaxKind.ObjectLiteralExpression) { // object of the form {id: string, class: Class}
+            const objectLiteral: ts.ObjectLiteralExpression = nodesInArray[i] as ts.ObjectLiteralExpression;
+            const id: ts.PropertyAssignment = objectLiteral.properties.find(property =>
+                property.kind === ts.SyntaxKind.PropertyAssignment && property.name.getText() === 'id') as ts.PropertyAssignment;
+            const text = id.initializer.getText();
+            result.add(text.substring(1, text.length - 1)); // trim ' from start and end of string
+        }
     }
     return result;
 }
