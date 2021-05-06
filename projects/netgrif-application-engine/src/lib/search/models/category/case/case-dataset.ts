@@ -271,16 +271,21 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateQuery(userInput: Array<unknown>): Query {
-        const queryGenerationStrategy = this.isSelectedOperator(IsNull) ?
-            (d, _) => this.isNullOperatorQueryGenerationStrategy(d) :
-            (d, ui) => this.standardQueryGenerationStrategy(d, ui);
+        let queryGenerationStrategy;
+        if (this.isSelectedOperator(IsNull)) {
+            queryGenerationStrategy = (d, _) => this.isNullOperatorQueryGenerationStrategy(d);
+        } else if (this.inputType === SearchInputType.AUTOCOMPLETE) {
+            queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui[0], false);
+        } else {
+            queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui);
+        }
 
         const queries = this._selectedDatafields.map(datafield => queryGenerationStrategy(datafield, userInput));
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
-    protected standardQueryGenerationStrategy(datafield: Datafield, userInput: Array<unknown>): Query {
-        const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
+    protected standardQueryGenerationStrategy(datafield: Datafield, userInput: Array<unknown>, escapeInput = true): Query {
+        const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput, escapeInput);
         const netQuery = this.generateNetConstraint(datafield);
         return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
     }

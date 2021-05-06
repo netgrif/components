@@ -23,7 +23,7 @@ export abstract class Operator<T> {
     /**
      * Reserved characters for Elasticsearch queries. These characters can be escaped with a `\` character.
      */
-    private static readonly ESCAPABLE_CHARACTERS = new Set (
+    private static readonly ESCAPABLE_CHARACTERS = new Set(
         ['+', '-', '=', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\', '/']);
 
     /**
@@ -124,10 +124,11 @@ export abstract class Operator<T> {
      * the results with an `OR` operator.
      * @returns query that wos constructed with the given arguments and keywords. Returns an empty query if no arguments are provided.
      */
-    public createQuery(elasticKeywords: Array<string>, args: Array<T>): Query {
+    public createQuery(elasticKeywords: Array<string>, args: Array<T>, escapeArgs = true): Query {
         this.checkArgumentsCount(args);
         return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
-            const escapedValue = Operator.escapeInput(args[0] as unknown as string);
+            const escapedValue = escapeArgs ?
+                Operator.escapeInput(args[0] as unknown as string) : ({value: args[0] as unknown as string, wasEscaped: false});
             const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, escapedValue.wasEscaped);
             const queryString = Operator.query(keyword, wrappedValue.value, this._operatorSymbols);
             return new Query(queryString);
