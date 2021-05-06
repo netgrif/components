@@ -4,7 +4,6 @@ import {map} from 'rxjs/operators';
 import {Params, ResourceProvider} from '../resource-provider.service';
 import {Count} from '../interface/count';
 import {Case} from '../interface/case';
-import {MessageResource} from '../interface/message-resource';
 import {DataGroupsResource} from '../interface/data-groups';
 import {FileResource} from '../interface/file-resource';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -14,6 +13,8 @@ import {FilterType} from '../../filter/models/filter-type';
 import {Page} from '../interface/page';
 import {CaseGetRequestBody} from '../interface/case-get-request-body';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
+import {CreateCaseEventOutcome} from '../event-outcomes/case-outcomes/create-case-event-outcome';
+import {DeleteCaseEventOutcome} from '../event-outcomes/case-outcomes/delete-case-event-outcome';
 
 @Injectable({
     providedIn: 'root'
@@ -68,7 +69,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * DELETE
      * {{baseUrl}}/api/workflow/case/:id
      */
-    public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<MessageResource> {
+    public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<DeleteCaseEventOutcome> {
         return this._resourceProvider.delete$('workflow/case/' + caseID,
             this.SERVER_URL,
             deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
@@ -105,7 +106,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * POST
      * {{baseUrl}}/api/workflow/case
      */
-    public createCase(body: object): Observable<Case> {
+    public createCase(body: object): Observable<CreateCaseEventOutcome> {
         return this._resourceProvider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
     }
 

@@ -16,6 +16,7 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {AssingTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/assing-task-event-outcome';
 
 
 /**
@@ -80,7 +81,7 @@ export class AssignTaskService extends TaskHandlingService {
 
     protected assignRequest(afterAction = new Subject<boolean>(), assignedTaskId: string,
                             queueAction = new Subject<boolean>(), fromQueue = false) {
-        this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
+        this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1)).subscribe((eventOutcome: AssingTaskEventOutcome) => {
             this._taskState.stopLoading(assignedTaskId);
             if (!this.isTaskRelevant(assignedTaskId)) {
                 this._log.debug('current task changed before the assign response could be received, discarding...');
@@ -89,7 +90,7 @@ export class AssignTaskService extends TaskHandlingService {
 
             if (eventOutcome.success) {
                 this._taskContentService.updateStateData(eventOutcome);
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
                 fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, queueAction, true);
             } else if (eventOutcome.error) {

@@ -7,6 +7,7 @@ import {ResourceProvider} from '../../resource-provider.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {DataGroupsResource} from '../../interface/data-groups';
 import {Case} from '../../interface/case';
+import {CreateCaseEventOutcome} from '../../event-outcomes/case-outcomes/create-case-event-outcome';
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +33,7 @@ export class PublicCaseResourceService extends CaseResourceService {
      * POST
      * {{baseUrl}}/api/workflow/case
      */
-    public createCase(body: object): Observable<Case> {
+    public createCase(body: object): Observable<CreateCaseEventOutcome> {
         return this._resourceProvider.post$('public/case/', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }

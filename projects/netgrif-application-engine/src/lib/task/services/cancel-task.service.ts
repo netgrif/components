@@ -17,6 +17,7 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {CancelTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/cancel-task-event-outcome';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -89,7 +90,7 @@ export class CancelTaskService extends TaskHandlingService {
 
     protected cancelRequest(afterAction = new Subject<boolean>(), canceledTaskId: string,
                             queueAction = new Subject<boolean>(), fromQueue = false) {
-        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
+        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe((eventOutcome: CancelTaskEventOutcome) => {
             this._taskState.stopLoading(canceledTaskId);
             if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel response could be received, discarding...');
@@ -98,14 +99,14 @@ export class CancelTaskService extends TaskHandlingService {
 
             if (eventOutcome.success) {
                 this._taskContentService.updateStateData(eventOutcome);
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
                 fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, queueAction, true);
             } else if (eventOutcome.error !== undefined) {
                 if (eventOutcome.error !== '') {
                     this._snackBar.openErrorSnackBar(eventOutcome.error);
                 }
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
                 this.completeActions(afterAction, queueAction, false);
             }
         }, error => {

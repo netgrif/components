@@ -20,6 +20,7 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
+import {DelegateTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/delegate-task-event-outcome';
 
 
 /**
@@ -81,7 +82,8 @@ export class DelegateTaskService extends TaskHandlingService {
 
                 this._taskState.startLoading(delegatedTaskId);
 
-                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id).pipe(take(1)).subscribe(eventOutcome => {
+                this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id)
+                    .pipe(take(1)).subscribe((eventOutcome: DelegateTaskEventOutcome) => {
                     this._taskState.stopLoading(delegatedTaskId);
                     if (!this.isTaskRelevant(delegatedTaskId)) {
                         this._log.debug('current task changed before the delegate response could be received, discarding...');
@@ -90,7 +92,7 @@ export class DelegateTaskService extends TaskHandlingService {
 
                     if (eventOutcome.success) {
                         this._taskContentService.updateStateData(eventOutcome);
-                        this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                        this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
                         this.completeSuccess(afterAction);
                     } else if (eventOutcome.error) {
                         this._snackBar.openErrorSnackBar(eventOutcome.error);

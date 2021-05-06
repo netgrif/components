@@ -20,6 +20,10 @@ import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 import {LoggerService} from '../../logger/services/logger.service';
 import {EventOutcome} from '../interface/event-outcome';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
+import {AssingTaskEventOutcome} from '../event-outcomes/task-outcomes/assing-task-event-outcome';
+import {CancelTaskEventOutcome} from '../event-outcomes/task-outcomes/cancel-task-event-outcome';
+import {DelegateTaskEventOutcome} from '../event-outcomes/task-outcomes/delegate-task-event-outcome';
+import {FinishTaskEventOutcome} from '../event-outcomes/task-outcomes/finish-task-event-outcome';
 
 @Injectable({
     providedIn: 'root'
@@ -61,7 +65,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/assign/:id
-    public assignTask(taskId: string): Observable<EventOutcome> {
+    public assignTask(taskId: string): Observable<AssingTaskEventOutcome> {
         return this._resourceProvider.get$('task/assign/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -71,7 +75,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/cancel/:id
-    public cancelTask(taskId: string): Observable<EventOutcome> {
+    public cancelTask(taskId: string): Observable<CancelTaskEventOutcome> {
         return this._resourceProvider.get$('task/cancel/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -81,7 +85,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/delegate/:id
-    public delegateTask(taskId: string, body: object): Observable<EventOutcome> {
+    public delegateTask(taskId: string, body: object): Observable<DelegateTaskEventOutcome> {
         return this._resourceProvider.post$('task/delegate/' + taskId, this.SERVER_URL, body, undefined, {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -91,7 +95,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/finish/:id
-    public finishTask(taskId: string): Observable<EventOutcome> {
+    public finishTask(taskId: string): Observable<FinishTaskEventOutcome> {
         return this._resourceProvider.get$('task/finish/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -202,6 +206,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * @param taskId ID of the task who's data should be retrieved from the server
      * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
      */
+    // todo data event outcomy?
     public getData(taskId: string): Observable<Array<DataGroup>> {
         return this.rawGetData(taskId).pipe(
             map(responseArray => {

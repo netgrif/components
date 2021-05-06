@@ -1,5 +1,6 @@
 import {Link} from './link';
 import {PetriNetReference} from './petri-net-reference';
+import {EventOutcome} from './event-outcome';
 
 /**
  * Object response message
@@ -34,4 +35,10 @@ export interface PetriNetMessageResource {
      * Success Message
      */
     success?: string;
+}
+
+export interface EventOutcomeMessageResource extends MessageResource {
+
+    data?: EventOutcome[];
+
 }

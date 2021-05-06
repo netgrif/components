@@ -9,10 +9,10 @@ import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumera
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-fields';
 import {FieldConverterService} from './field-converter.service';
-import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {Validation} from '../../data-fields/models/validation';
+import {TaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/task-event-outcome';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -128,7 +128,7 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return false;
         }
-        const exists = this._task.dataGroups.some(group => group.fields.some( field => field instanceof DynamicEnumerationField ));
+        const exists = this._task.dataGroups.some(group => group.fields.some(field => field instanceof DynamicEnumerationField));
         if (!exists) {
             return true;
         }
@@ -174,7 +174,7 @@ export abstract class TaskContentService implements OnDestroy {
     /**
      * Clears the assignee, start date and finish date from the managed Task.
      */
-    public updateStateData(eventOutcome: EventOutcome): void {
+    public updateStateData(eventOutcome: TaskEventOutcome): void {
         if (this._task) {
             this._task.user = eventOutcome.assignee;
             this._task.startDate = eventOutcome.startDate;
@@ -215,7 +215,10 @@ export abstract class TaskContentService implements OnDestroy {
                                 });
                             } else {
                                 Object.keys(updatedField.choices).forEach(choiceKey => {
-                                    newChoices.push({key: choiceKey, value: updatedField.choices[choiceKey]} as EnumerationFieldValue);
+                                    newChoices.push({
+                                        key: choiceKey,
+                                        value: updatedField.choices[choiceKey]
+                                    } as EnumerationFieldValue);
                                 });
                             }
                             (field as EnumerationField | MultichoiceField).choices = newChoices;

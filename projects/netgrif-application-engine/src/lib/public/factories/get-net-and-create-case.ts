@@ -24,7 +24,7 @@ export const getNetAndCreateCase = (router: Router,
             snackBarService.openWarningSnackBar(translate.instant('publicView.netNotExist'));
         }
     })).subscribe(response => {
-            router.navigate([route.snapshot.url.join('/') + '/' + response.stringId]);
+            router.navigate([route.snapshot.url.join('/') + '/' + response.case.stringId]);
         }, error => {
             snackBarService.openErrorSnackBar(translate.instant('publicView.errorCreate') + error);
         }

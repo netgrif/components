@@ -18,6 +18,10 @@ import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {Task} from '../../interface/task';
 import {HttpEventType} from '@angular/common/http';
 import {MessageResource} from '../../interface/message-resource';
+import {AssignTaskService} from '../../../task/services/assign-task.service';
+import {AssingTaskEventOutcome} from '../../event-outcomes/task-outcomes/assing-task-event-outcome';
+import {CancelTaskEventOutcome} from '../../event-outcomes/task-outcomes/cancel-task-event-outcome';
+import {FinishTaskEventOutcome} from '../../event-outcomes/task-outcomes/finish-task-event-outcome';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +40,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/public/task/assign/:id
-    public assignTask(taskId: string): Observable<EventOutcome> {
+    public assignTask(taskId: string): Observable<AssingTaskEventOutcome> {
         return this._provider.get$('public/task/assign/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -46,7 +50,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/public/task/cancel/:id
-    public cancelTask(taskId: string): Observable<EventOutcome> {
+    public cancelTask(taskId: string): Observable<CancelTaskEventOutcome> {
         return this._provider.get$('public/task/cancel/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -56,7 +60,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/public/task/finish/:id
-    public finishTask(taskId: string): Observable<EventOutcome> {
+    public finishTask(taskId: string): Observable<FinishTaskEventOutcome> {
         return this._provider.get$('public/task/finish/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }

@@ -16,6 +16,7 @@ import {SelectedCaseService} from './selected-case.service';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
+import {FinishTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/finish-task-event-outcome';
 
 
 /**
@@ -97,7 +98,7 @@ export class FinishTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(finishedTaskId);
 
-        this._taskResourceService.finishTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
+        this._taskResourceService.finishTask(this._safeTask.stringId).pipe(take(1)).subscribe((eventOutcome: FinishTaskEventOutcome) => {
             this._taskState.stopLoading(finishedTaskId);
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
@@ -106,7 +107,7 @@ export class FinishTaskService extends TaskHandlingService {
 
             if (eventOutcome.success) {
                 this._taskContentService.updateStateData(eventOutcome);
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
                 this._taskOperations.reload();
                 this.sendNotification(true);
                 afterAction.next(true);
@@ -116,7 +117,7 @@ export class FinishTaskService extends TaskHandlingService {
                 if (eventOutcome.error !== '') {
                     this._snackBar.openErrorSnackBar(eventOutcome.error);
                 }
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
                 this.sendNotification(false);
                 afterAction.next(false);
                 afterAction.complete();

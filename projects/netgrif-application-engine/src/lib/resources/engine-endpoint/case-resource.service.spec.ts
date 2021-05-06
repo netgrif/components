@@ -106,13 +106,15 @@ describe('CaseResourceService', () => {
     it('should createCase', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.createCase({}).subscribe(res => {
-                expect(res.stringId).toEqual('string');
+                expect(res.case.stringId).toEqual('string');
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
             expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({stringId: 'string'});
+            reqLog.flush({case: {
+                stringId: 'string'
+            }});
         })
     );
 

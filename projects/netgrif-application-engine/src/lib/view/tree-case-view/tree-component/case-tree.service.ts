@@ -501,7 +501,7 @@ export class CaseTreeService implements OnDestroy {
                 netId: net.stringId
             }).subscribe(childCase => {
                 const caseRefField = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
-                const setCaseRefValue = [...caseRefField.value, childCase.stringId];
+                const setCaseRefValue = [...caseRefField.value, childCase.case.stringId];
                 this.performCaseRefCall(clickedNode.case.stringId, setCaseRefValue).subscribe(
                     valueChange => this.updateTreeAfterChildAdd(clickedNode, valueChange ? valueChange : setCaseRefValue, operationResult)
                 );
