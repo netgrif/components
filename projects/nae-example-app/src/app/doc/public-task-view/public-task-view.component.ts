@@ -104,7 +104,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         },
         {
             provide: AllowedNetsService,
-            useFactory: localAllowedNetsFactory,
+            useFactory: localTaskViewServiceFactory,
             deps: [AllowedNetsServiceFactory, ActivatedRoute]
         },
         {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicView'},
