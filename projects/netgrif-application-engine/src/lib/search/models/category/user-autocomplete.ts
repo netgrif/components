@@ -5,6 +5,7 @@ import {UserResourceService} from '../../../resources/engine-endpoint/user-resou
 import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
 import {hasContent} from '../../../utility/pagination/page-has-content';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
+import {FormControl} from '@angular/forms';
 
 /**
  * Contains implementation of querying the backend for user information.
@@ -65,5 +66,22 @@ export class UserAutocomplete implements AutocompleteOptions {
                 }
             })
         );
+    }
+
+    public serializeOperandValue(valueFormControl: FormControl): any {
+        const autocompleteValue = valueFormControl.value as SearchAutocompleteOption<Array<string>>;
+        return {text: autocompleteValue.text, value: autocompleteValue.value};
+    }
+
+    public deserializeOperandValue(savedOption: SearchAutocompleteOption<Array<string>>):
+        Observable<SearchAutocompleteOption<Array<string>>> {
+        return of({...savedOption, icon: this.isUserMeTemplate(savedOption) ? UserAutocomplete.USER_ME_ICON : UserAutocomplete.USER_ICON});
+    }
+
+    private isUserMeTemplate(option: SearchAutocompleteOption<Array<string>>): boolean {
+        return !!option?.value
+            && Array.isArray(option.value)
+            && option.value.length === 1
+            && option.value[0] === UserAutocomplete.USER_ME_TEMPLATE;
     }
 }

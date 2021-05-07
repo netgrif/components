@@ -417,8 +417,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected serializeOperandValue(valueFormControl: FormControl): unknown {
         switch (this.inputType) {
             case SearchInputType.AUTOCOMPLETE:
-                const autocompleteValue = valueFormControl.value as SearchAutocompleteOption<unknown>;
-                return {text: autocompleteValue.text, value: autocompleteValue.value};
+                return this._userAutocomplete.serializeOperandValue(valueFormControl);
             case SearchInputType.DATE:
             case SearchInputType.DATE_TIME:
                 return (valueFormControl.value as Moment).valueOf();
@@ -453,8 +452,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected deserializeOperandValue(value: unknown): Observable<any> {
         switch (this.inputType) {
             case SearchInputType.AUTOCOMPLETE:
-                const savedOption = value as SearchAutocompleteOption<Array<string>>;
-                return of({...savedOption, icon: CaseDataset.AUTOCOMPLETE_ICON});
+                return this._userAutocomplete.deserializeOperandValue(value as SearchAutocompleteOption<Array<string>>);
             case SearchInputType.DATE:
             case SearchInputType.DATE_TIME:
                 return of(moment(value as string));

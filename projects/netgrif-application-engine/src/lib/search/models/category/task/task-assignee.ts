@@ -18,7 +18,6 @@ import {UserAutocomplete} from '../user-autocomplete';
 export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.task.assignee';
-    private static readonly ICON = 'account_circle';
 
     private _userAutocomplete: UserAutocomplete;
 
@@ -60,12 +59,11 @@ export class TaskAssignee extends NoConfigurationAutocompleteCategory<string> {
     }
 
     protected serializeOperandValue(valueFormControl: FormControl): any {
-        const autocompleteValue = valueFormControl.value as SearchAutocompleteOption<Array<string>>;
-        return {text: autocompleteValue.text, value: autocompleteValue.value};
+        return this._userAutocomplete.serializeOperandValue(valueFormControl);
     }
 
     protected deserializeOperandValue(savedOption: SearchAutocompleteOption<Array<string>>):
         Observable<SearchAutocompleteOption<Array<string>>> {
-        return of({...savedOption, icon: TaskAssignee.ICON});
+        return this._userAutocomplete.deserializeOperandValue(savedOption);
     }
 }
