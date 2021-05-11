@@ -7,6 +7,10 @@ export enum UserFilterConstants {
      */
     FILTER_NET_IDENTIFIER = 'filter',
     /**
+     * Transition ID of the "Set filter metadata" transition used for setting filter metadata to new filter cases
+     */
+    SET_FILTER_METADATA_TRANSITION_ID = 'frontend_create',
+    /**
      * Transition ID of the "New Filter" transition displayed in the side menu
      */
     NEW_FILTER_TRANSITION_ID = 'newFilter',

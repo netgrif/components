@@ -194,7 +194,11 @@ export class UserFiltersService implements OnDestroy {
                         throw new Error('Expected filter process to contain tasks, but none were found!');
                     }
 
-                    const initTask = page.content[0];
+                    const initTask = page.content.find(task => task.transitionId === UserFilterConstants.SET_FILTER_METADATA_TRANSITION_ID);
+                    if (initTask === undefined) {
+                        throw new Error(`Expected filter process to contain task '${UserFilterConstants.SET_FILTER_METADATA_TRANSITION_ID
+                        }', but none was found!`);
+                    }
                     this.assignSetDataFinish(initTask, {
                         [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
                             type: FieldTypeResource.ENUMERATION_MAP,
