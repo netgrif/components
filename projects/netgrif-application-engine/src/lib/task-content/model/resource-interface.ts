@@ -4,6 +4,7 @@ import {Validation} from '../../data-fields/models/validation';
 import {FieldTypeResource} from './field-type-resource';
 import {FormatFilter} from '../../data-fields/models/format-filter';
 import {Component} from '../../data-fields/models/component';
+import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
 
 export interface DataFieldResource {
     stringId: string;
@@ -34,4 +35,6 @@ export interface DataFieldResource {
     options?: {
         [k: string]: string
     };
+    allowedNets?: Array<string>;
+    filterMetadata?: FilterMetadata;
 }

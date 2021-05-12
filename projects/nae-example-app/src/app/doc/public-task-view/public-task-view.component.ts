@@ -6,7 +6,6 @@ import {
     CaseResourceService,
     PublicCaseResourceService,
     PublicTaskResourceService,
-    TaskViewServiceFactory,
     SearchService,
     PublicProcessService,
     ProcessService,
@@ -22,15 +21,20 @@ import {
     FieldConverterService,
     AuthenticationService,
     PublicUrlResolverService,
-    publicSearchServiceFactory,
-    publicFactoryResolver, NAE_VIEW_ID_SEGMENT,
+    publicBaseFilterFactory,
+    publicFactoryResolver,
+    Task,
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    NAE_VIEW_ID_SEGMENT,
     ViewIdService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 
-const localTaskViewServiceFactory = (factory: TaskViewServiceFactory, route: ActivatedRoute) => {
+const localTaskViewServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
     const array = [];
     if (route.snapshot.paramMap.get('petriNetId') !== null) {
         array.push(route.snapshot.paramMap.get('petriNetId'));
@@ -41,7 +45,7 @@ const localTaskViewServiceFactory = (factory: TaskViewServiceFactory, route: Act
 const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
                               caseResourceService: CaseResourceService, snackBarService: SnackBarService,
                               translate: TranslateService) => {
-    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService, translate);
+    return publicBaseFilterFactory(router, route, process, caseResourceService, snackBarService, translate);
 };
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
@@ -74,7 +78,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
     templateUrl: './public-task-view.component.html',
     styleUrls: ['./public-task-view.component.scss'],
     providers: [
-        TaskViewServiceFactory,
+        TaskViewService,
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
@@ -99,9 +103,9 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
             deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService, TranslateService]
         },
         {
-            provide: TaskViewService,
+            provide: AllowedNetsService,
             useFactory: localTaskViewServiceFactory,
-            deps: [TaskViewServiceFactory, ActivatedRoute]
+            deps: [AllowedNetsServiceFactory, ActivatedRoute]
         },
         {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicView'},
         ViewIdService,

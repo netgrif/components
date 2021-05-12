@@ -5,18 +5,16 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    CaseViewService,
     CategoryFactory,
-    CaseViewServiceFactory,
     ConfigurationService,
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     SearchService,
-    TestCaseSearchServiceFactory,
-    TestCaseViewFactory,
     TestConfigurationService,
-    UserResourceService
+    UserResourceService, NAE_BASE_FILTER, TestCaseBaseFilterProvider, AllowedNetsService, AllowedNetsServiceFactory,
+    TestNoAllowedNetsFactory,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {SearchComponentModule} from '../../search.module';
 
@@ -32,21 +30,18 @@ describe('CaseSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
-                CaseViewServiceFactory,
                 CategoryFactory,
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
-                },
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ]
         })
             .compileComponents();

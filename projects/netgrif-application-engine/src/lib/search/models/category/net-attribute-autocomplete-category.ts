@@ -7,7 +7,9 @@ import {NameIdPair} from './name-id-pair';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {Category} from './category';
-import {Observable} from 'rxjs';
+import {Subscription} from 'rxjs';
+import {OperatorService} from '../../operator-service/operator.service';
+import {OptionalDependencies} from '../../category-factory/optional-dependencies';
 
 /**
  * A utility class for autocomplete search categories that are net specific, such as searching by roles, or tasks.
@@ -16,15 +18,33 @@ import {Observable} from 'rxjs';
  */
 export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAutocompleteCategory<NetAttributePair> {
 
+    private _allowedNetsSub: Subscription;
+    private _destroyed: boolean;
+
     protected constructor(elasticKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
-                          log: LoggerService) {
-        super(elasticKeywords, allowedOperators, translationPath, log);
+                          log: LoggerService,
+                          operatorService: OperatorService,
+                          protected _optionalDependencies: OptionalDependencies) {
+        super(elasticKeywords, allowedOperators, translationPath, log, operatorService);
+    }
+
+    destroy() {
+        super.destroy();
+        if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
+            this._allowedNetsSub.unsubscribe();
+        }
+        this._destroyed = true;
     }
 
     protected createOptions(): void {
-        this.getAllowedNets$().subscribe(allowedNets => {
+        if (this._destroyed) {
+            return;
+        }
+
+        this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+            this._optionsMap.clear();
             allowedNets.forEach(petriNet => {
                 this.extractAttributes(petriNet)
                     .filter(pair => pair.name && pair.name.trim().length > 0)
@@ -35,16 +55,9 @@ export abstract class NetAttributeAutocompleteCategory extends NoConfigurationAu
                         });
                     });
             });
+            this.updateOptions();
         });
     }
-
-    /**
-     * This method should provide the allowed nets that are processed to create the options of this category.
-     *
-     * Since this class aims to be a universal implementation and allowed nets are provided in either the
-     * {@Link CaseViewService}, or the {@link TaskViewService}, we must demand the source from a subclass.
-     */
-    protected abstract getAllowedNets$(): Observable<Array<Net>>;
 
     /**
      * This method should extract the relevant attribute display names and ids.

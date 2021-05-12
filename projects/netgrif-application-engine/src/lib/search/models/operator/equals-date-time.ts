@@ -3,6 +3,7 @@ import {OperatorService} from '../../operator-service/operator.service';
 import {Moment} from 'moment';
 import {Query} from '../query/query';
 import {Operator} from './operator';
+import {Operators} from './operators';
 
 /**
  * Equality operator for indexed fields that store a date time object in timestamp format.
@@ -26,5 +27,9 @@ export class EqualsDateTime extends Operator<Moment> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.equals', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.EQUALS_DATE_TIME;
     }
 }

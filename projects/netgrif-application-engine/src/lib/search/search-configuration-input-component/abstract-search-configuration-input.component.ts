@@ -9,6 +9,12 @@ import {MatSelect} from '@angular/material/select';
 
 export abstract class AbstractSearchConfigurationInputComponent {
 
+    /**
+     * Whether the contents displayed in this component can be edited by the user or not.
+     *
+     * Defaults to `true`
+     */
+    @Input() editable = true;
     @Input() configuration: ConfigurationInput;
     @Input() selectedCategory: Category<any>;
 
@@ -39,6 +45,22 @@ export abstract class AbstractSearchConfigurationInputComponent {
      * @param option the {@link SearchAutocompleteOption} object that was selected in the autocomplete list.
      */
     public renderSelection = (option: SearchAutocompleteOption<unknown>) => this._renderSelection(option);
+
+    public clearConfigurationInput(): void {
+        if (!this.editable) {
+            return;
+        }
+
+        this.configuration.clear();
+    }
+
+    public clearOperatorInput(): void {
+        if (!this.editable) {
+            return;
+        }
+
+        this.selectedCategory.clearOperatorSelection();
+    }
 
     public filterOptions: (userInput: Observable<string>) => Observable<Array<SearchAutocompleteOption<unknown>>> = userInput => {
         return (this.selectedCategory as (Category<any> & AutocompleteOptions)).filterOptions(userInput);
