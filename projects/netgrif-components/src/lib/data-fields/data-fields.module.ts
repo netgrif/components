@@ -49,6 +49,7 @@ import { EnumerationIconFieldComponent } from './enumeration-field/enumeration-i
 import {
     EnumerationAutocompleteDynamicFieldComponent
 } from './enumeration-field/enumeration-autocomplete-dynamic-field/enumeration-autocomplete-dynamic-field.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -110,7 +111,9 @@ import {
         TranslateLibModule,
         SideMenuContentComponentModule,
         QuillModule.forRoot(),
-        MatDialogModule
+        MatDialogModule,
+        MatProgressSpinnerModule,
+        MaterialModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
