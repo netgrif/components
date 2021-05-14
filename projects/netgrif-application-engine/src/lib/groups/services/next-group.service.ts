@@ -13,6 +13,8 @@ import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
  * If no user is logged an empty array is provided.
  *
  * If a user can be owner of at most one group, this service provides utility methods to access this group directly.
+ *
+ * The groups are assumed to be instances of the engine group process, this is never checked nor enforced.
  */
 @Injectable({
   providedIn: 'root'
