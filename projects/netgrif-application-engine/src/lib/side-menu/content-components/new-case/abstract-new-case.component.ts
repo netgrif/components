@@ -63,7 +63,11 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         this._options$ = new ReplaySubject(1);
 
         this._allowedNetsSubscription = this._injectedData.allowedNets$.pipe(
-            map(nets => nets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}))),
+            map(nets => nets.map(petriNet => ({
+                value: petriNet.stringId,
+                viewValue: petriNet.title,
+                version: petriNet.version
+            }))),
             map(nets => {
                 if (!this._sideMenuControl.allVersionEnabled) {
                     return this.removeOldVersions(nets);
@@ -126,6 +130,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     public createNewCase(): void {
+        // todo riešiť case title
         if (this.titleFormControl.valid) {
             const newCase = {
                 title: this.titleFormControl.value,
@@ -233,5 +238,13 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             newestNets.push(current);
         }
         return newestNets;
+    }
+
+    isCaseTitleEnabled(): boolean {
+        return this._injectedData.enableCaseTitle;
+    }
+
+    isCaseTitleRequired(): boolean {
+        return this.isCaseTitleEnabled() && this._injectedData.isCaseTitleRequired;
     }
 }

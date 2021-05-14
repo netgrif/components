@@ -27,6 +27,7 @@ import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injec
 import {NewCaseConfiguration} from '../models/new-case-configuration';
 import {ProcessService} from '../../../process/process.service';
 import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-reference-with-permissions';
+import {NewCaseCreationConfigurationData} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
 
 @Injectable()
 export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
@@ -183,10 +184,14 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
         return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
 
-    public createNewCase(): Observable<Case> {
+    public createNewCase(newCaseCreationConfiguration: NewCaseCreationConfigurationData = {
+        enableCaseTitle: true,
+        isCaseTitleRequired: true
+    }): Observable<Case> {
         const myCase = new Subject<Case>();
         this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
-            allowedNets$: this.getNewCaseAllowedNets()
+            allowedNets$: this.getNewCaseAllowedNets(),
+            newCaseCreationConfiguration
         }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {

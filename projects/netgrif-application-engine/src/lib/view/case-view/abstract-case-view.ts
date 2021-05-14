@@ -5,6 +5,7 @@ import {CaseViewService} from './service/case-view-service';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
 import {Authority} from '../../resources/interface/authority';
 import {OverflowService} from '../../header/services/overflow.service';
+import {NewCaseCreationConfigurationData} from '../../side-menu/content-components/new-case/model/new-case-injection-data';
 
 
 export abstract class AbstractCaseView extends ViewWithHeaders {
@@ -17,6 +18,10 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
 
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _overflowService?: OverflowService,
+                          protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
+                              enableCaseTitle: true,
+                              isCaseTitleRequired: true
+                          },
                           protected _authority: Array<Authority> = [{authority: 'ROLE_USER'}]) {
         super(_caseViewService);
         this._caseViewService.loading$.subscribe(loading => {
@@ -27,6 +32,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     }
 
     public createNewCase(): void {
+        // todo vyriešiť vytvorenie caseu bez okna
         this._caseViewService.createNewCase();
     }
 

@@ -5,3 +5,11 @@ import {PetriNetReference} from '../../../../resources/interface/petri-net-refer
 export interface NewCaseInjectionData extends SideMenuInjectionData {
     allowedNets$: Observable<Array<PetriNetReference>>;
 }
+
+export interface NewCaseCreationConfigurationData {
+
+    enableCaseTitle: boolean;
+
+    isCaseTitleRequired: boolean;
+
+}
