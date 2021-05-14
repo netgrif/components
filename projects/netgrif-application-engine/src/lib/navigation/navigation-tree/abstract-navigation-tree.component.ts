@@ -50,24 +50,14 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
             this.subRouter = this._router.events.subscribe((event) => {
                 if (event instanceof NavigationEnd && this.routerChange) {
-                    const viewRoute = this._config.getViewByPath(this.viewPath);
-                    if (viewRoute && viewRoute.children) {
-                        this.dataSource.data = this.resolveNavigationNodes(viewRoute.children, this.parentUrl);
-                    }
-                    this.resolveLevels(this.dataSource.data);
+                    this.resolveNavigationNodesWithOffsetRoot();
                 }
             });
-            const view = this._config.getViewByPath(this.viewPath);
-            if (view && view.children) {
-                this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
-            }
-            this.resolveLevels(this.dataSource.data);
+
+            this.resolveNavigationNodesWithOffsetRoot();
+
             this.subUser = this._userService.user$.subscribe(() => {
-                const uView = this._config.getViewByPath(this.viewPath);
-                if (uView && uView.children) {
-                    this.dataSource.data = this.resolveNavigationNodes(uView.children, this.parentUrl);
-                }
-                this.resolveLevels(this.dataSource.data);
+                this.resolveNavigationNodesWithOffsetRoot();
             });
         } else {
             this.subUser = this._userService.user$.subscribe(() => {
@@ -90,6 +80,14 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         return !!node.children && node.children.length > 0;
     }
 
+    protected resolveNavigationNodesWithOffsetRoot(): void {
+        const view = this._config.getViewByPath(this.viewPath);
+        if (view && view.children) {
+            this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
+        }
+        this.resolveLevels(this.dataSource.data);
+    }
+
     protected resolveNavigationNodes(views: Views, parentUrl: string): Array<NavigationNode> {
         if (!views || Object.keys(views).length === 0) {
             return null;
@@ -106,7 +104,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 throw new Error('Route segment doesnt exist in view ' + parentUrl + '/' + viewKey + ' !');
             }
 
-            if  (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
+            if (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
                 return; // continue
             }
 
