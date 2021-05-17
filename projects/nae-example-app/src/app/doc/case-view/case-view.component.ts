@@ -43,7 +43,10 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     constructor(caseViewService: CaseViewService, protected overflowService: OverflowService) {
-        super(caseViewService, overflowService);
+        super(caseViewService, {
+            enableCaseTitle: true,
+            isCaseTitleRequired: false
+        }, overflowService);
     }
 
     ngAfterViewInit(): void {

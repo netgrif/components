@@ -32,7 +32,11 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
         dasherize: strings.dasherize,
         classify: strings.classify,
         configName: projectInfo.projectNameClassified,
-        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`)
+        configImportPath: createRelativePath(view.fileImportPath, `./${projectInfo.projectNameDasherized}-configuration.service`),
+        caseCreationConfig: {
+            enableCaseTitle: args.enableCaseTitle,
+            isCaseTitleRequired: args.isCaseTitleRequired
+        }
     };
 
     const commonPathPrefix = './views/case-view/files/';

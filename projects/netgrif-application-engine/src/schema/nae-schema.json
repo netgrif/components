@@ -707,6 +707,12 @@
                         "name": {
                             "type": "string"
                         },
+                        "enableCaseTitle": {
+                            "type": "boolean"
+                        },
+                        "isCaseTitleRequired": {
+                            "type": "boolean"
+                        },
                         "params": {
                             "additionalProperties": {
                             },

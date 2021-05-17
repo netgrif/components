@@ -17,11 +17,11 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public authorityToCreate: Array<string>;
 
     protected constructor(protected _caseViewService: CaseViewService,
-                          protected _overflowService?: OverflowService,
                           protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true
                           },
+                          protected _overflowService?: OverflowService,
                           protected _authority: Array<Authority> = [{authority: 'ROLE_USER'}]) {
         super(_caseViewService);
         this._caseViewService.loading$.subscribe(loading => {
@@ -31,9 +31,12 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
         this.authorityToCreate = _authority.map(a => a.authority);
     }
 
-    public createNewCase(): void {
-        // todo vyriešiť vytvorenie caseu bez okna
-        this._caseViewService.createNewCase();
+    public createNewCase(): Observable<Case> {
+        if (this._newCaseCreationConfig.enableCaseTitle === false && this._caseViewService.allowedNetsCount === 1) {
+            return this._caseViewService.createDefaultNewCase();
+        } else {
+            return this._caseViewService.createNewCase(this._newCaseCreationConfig);
+        }
     }
 
     public abstract handleCaseClick(clickedCase: Case): void;

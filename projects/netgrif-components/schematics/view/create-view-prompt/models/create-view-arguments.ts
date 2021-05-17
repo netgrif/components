@@ -5,4 +5,6 @@ export interface  CreateViewArguments {
     componentName?: string;
     customImportPath?: string;
     access: { [k: string]: any; } | ('public' | 'private');
+    enableCaseTitle?: boolean;
+    isCaseTitleRequired?: boolean;
 }

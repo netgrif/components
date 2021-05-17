@@ -130,10 +130,9 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     public createNewCase(): void {
-        // todo riešiť case title
-        if (this.titleFormControl.valid) {
+        if (this.titleFormControl.valid || !this.isCaseTitleRequired()) {
             const newCase = {
-                title: this.titleFormControl.value,
+                title: this.titleFormControl.value === '' ? null : this.titleFormControl.value,
                 color: 'panel-primary-icon',
                 netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
             };
@@ -142,7 +141,10 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                 .subscribe(
                     response => {
                         this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
-                            + ' ' + newCase.title);
+                            + ' ' + (newCase.title !== null
+                                    ? newCase.title
+                                    : this._translate.instant('side-menu.new-case.defaultCaseName')
+                            ));
                         this._sideMenuControl.close({
                             opened: false,
                             message: 'Confirm new case setup',
@@ -241,10 +243,10 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     isCaseTitleEnabled(): boolean {
-        return this._injectedData.enableCaseTitle;
+        return this._injectedData.newCaseCreationConfiguration.enableCaseTitle;
     }
 
     isCaseTitleRequired(): boolean {
-        return this.isCaseTitleEnabled() && this._injectedData.isCaseTitleRequired;
+        return this.isCaseTitleEnabled() && this._injectedData.newCaseCreationConfiguration.isCaseTitleRequired;
     }
 }

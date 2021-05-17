@@ -193,6 +193,8 @@ export interface Views {
 export interface View {
     layout?: {
         name: string;
+        enableCaseTitle?: boolean;
+        isCaseTitleRequired?: boolean;
         params?: {
             orientation?: string;
             [k: string]: any;

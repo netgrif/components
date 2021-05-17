@@ -7,4 +7,6 @@ export interface NullableCreateViewArguments {
     customImportPath?: CreateViewArguments['customImportPath'];
     layoutParams?: CreateViewArguments['layoutParams'];
     access: CreateViewArguments['access'] | undefined;
+    enableCaseTitle?: CreateViewArguments['enableCaseTitle'];
+    isCaseTitleRequired?: CreateViewArguments['enableCaseTitle'];
 }

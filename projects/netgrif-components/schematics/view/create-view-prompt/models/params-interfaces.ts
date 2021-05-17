@@ -22,4 +22,6 @@ export interface EmbeddedView {
     };
     canBeClosed: boolean;
     order?: number;
+    enableCaseTitle?: boolean;
+    isCaseTitleRequired?: boolean;
 }

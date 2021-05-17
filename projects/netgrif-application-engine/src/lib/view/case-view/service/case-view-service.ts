@@ -203,6 +203,24 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
         return myCase.asObservable();
     }
 
+    public createDefaultNewCase(): Observable<Case> {
+        const myCase = new Subject<Case>();
+        this.getNewCaseAllowedNets().subscribe((nets: PetriNetReferenceWithPermissions[]) => {
+            this._caseResourceService.createCase({
+                title: null,
+                color: 'panel-primary-icon',
+                netId: nets[0].stringId
+            }).subscribe((response: Case) => {
+                this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
+                    + ' ' + this._translate.instant('side-menu.new-case.defaultCaseName'));
+                this.reload();
+                myCase.next(response);
+                myCase.complete();
+            }, error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error));
+        });
+        return myCase;
+    }
+
     protected getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this.allowedNets$.pipe(
