@@ -183,6 +183,18 @@ export function createRelativePath(sourcePath: string, destinationPath: string):
 }
 
 /**
+ * Recursively iterates over every non-test, typescript source file in the project
+ * and executes the given lambda with it as the input parameter.
+ */
+export function forEachSourceTsFile(tree: Tree, lambda: (fe: FileEntry) => void): void {
+    forEachProjectFile(tree, (fe => {
+        if (fe.path.endsWith('.ts') && !fe.path.endsWith('.spec.ts')) {
+            lambda(fe);
+        }
+    }));
+}
+
+/**
  * Recursively iterates over every file in the project and executes the given lambda with it as the input parameter.
  * @param tree tree to get access to the file system
  * @param lambda the function that is called with each of the project files as it's argument
