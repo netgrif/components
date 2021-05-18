@@ -97,9 +97,9 @@ function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], provi
     }
     const providerNode = providersArrayContent[index];
 
-    let textToRemove = providerNode.getText();
+    let textToRemove = providerNode.getFullText();
     if (index !== providersArrayContent.length - 1) {
-        textToRemove += providersArrayContent[index + 1].getText();
+        textToRemove += providersArrayContent[index + 1].getFullText();
     }
     return new RemoveChange(file.path, providerNode.pos, textToRemove);
 }
