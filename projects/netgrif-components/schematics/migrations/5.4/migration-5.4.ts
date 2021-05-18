@@ -1,10 +1,18 @@
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import {Rule, Tree, FileEntry} from '@angular-devkit/schematics';
 import {
+    commitChangesToFile,
     fileEntryToTsSource,
     forEachSourceTsFile
 } from '../../_utility/utility-functions';
 import {findNodes} from '@schematics/angular/utility/ast-utils';
+import {Change, RemoveChange} from '@schematics/angular/utility/change';
+
+
+interface NodeRemoval {
+    removedNode: ts.Node;
+    changes: Array<Change>;
+}
 
 /**
  * Changes providers of any components that provides SearchService
@@ -45,20 +53,56 @@ export function schematicEntryPoint(): Rule {
                     continue;
                 }
 
+                let changes;
                 if (viewServiceFactoryProvider.getText() === 'CaseViewServiceFactory') {
-                    migrateCaseView();
+                    changes = migrateCaseView(file, providersArrayContent);
                 } else {
-                    migrateTaskView();
+                    changes = migrateTaskView();
                 }
+                commitChangesToFile(tree, file, changes);
             }
         });
     };
 }
 
-function migrateCaseView(): void {
-
+function migrateCaseView(file: FileEntry, providersArrayContent: ts.Node[]): Array<Change> {
+    const removed = removeProvider(file, providersArrayContent, 'CaseViewServiceFactory');
+    if (removed === null) {
+        return [];
+    }
+    return removed.changes;
 }
 
-function migrateTaskView(): void {
+function migrateTaskView(): Array<Change> {
+    return [];
+}
 
+function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], providerName: string): NodeRemoval | null {
+    const providerIndex = providersArrayContent.findIndex(node => node.kind !== ts.SyntaxKind.CommaToken
+        && (
+            (node.kind === ts.SyntaxKind.Identifier && node.getText() === providerName)
+            || (node.kind === ts.SyntaxKind.ObjectLiteralExpression && node.getChildAt(1).getChildren().some(complexProviderNode =>
+                complexProviderNode.kind === ts.SyntaxKind.PropertyAssignment
+                && complexProviderNode.getChildAt(0).getText() === 'provide'
+                && complexProviderNode.getChildAt(2).getText() === providerName
+            ))
+        ));
+
+    if (providerIndex === -1) {
+        return null;
+    }
+
+    const providerNode = providersArrayContent[providerIndex];
+
+    let textToDelete = providerNode.getText();
+    if (providersArrayContent.length - 1 > providerIndex) {
+        textToDelete += providersArrayContent[providerIndex + 1].getText();
+    }
+
+    const changes = [new RemoveChange(file.path, providerNode.pos, textToDelete)];
+
+    return {
+        removedNode: providerNode,
+        changes
+    };
 }
