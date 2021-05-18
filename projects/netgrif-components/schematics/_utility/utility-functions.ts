@@ -17,6 +17,8 @@ import {FileSystemNode} from './models/file-system-node';
 import {ProjectInfo} from './models/project-info';
 import {addSymbolToDecoratorMetadata} from './modified-library-functions';
 import {NetgrifApplicationEngine} from '@netgrif/application-engine';
+import {ImportToAdd} from '../_commons/import-to-add';
+import {insertImport} from '@schematics/angular/utility/ast-utils';
 
 
 export function getProjectInfo(tree: Tree): ProjectInfo {
@@ -250,13 +252,13 @@ export function findNodesInChildren(start: ts.Node, target: ts.SyntaxKind, recur
  * Adds another provider to the providers of a specified component
  * @param componentFile the file with the component
  * @param symbolName the class name of the added provider
- * @param insertedText the text that should be inserted into the providers array
  * @param importPath the path from which to import the symbol
+ * @param insertedText? the text that should be inserted into the providers array
  */
 export function addProviderToComponent(componentFile: FileEntry,
                                        symbolName: string,
-                                       insertedText?: string,
-                                       importPath: string | null = null): Array<Change> {
+                                       importPath: string | null = null,
+                                       insertedText?: string): Array<Change> {
     return addSymbolToDecoratorMetadata(
         fileEntryToTsSource(componentFile),
         componentFile.path,
@@ -266,4 +268,8 @@ export function addProviderToComponent(componentFile: FileEntry,
         insertedText,
         importPath
     );
+}
+
+export function addImport(file: FileEntry, newImport: ImportToAdd): Change {
+    return insertImport(fileEntryToTsSource(file), file.path, newImport.className, newImport.fileImportPath);
 }

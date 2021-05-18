@@ -9,8 +9,8 @@ import {
     CaseViewServiceFactory,
     NAE_VIEW_ID_SEGMENT,
     ViewIdService, CategoryFactory, NAE_SEARCH_CATEGORIES, defaultCaseSearchCategoriesFactory
-} from 'netgrif-application-engine';
-import {HeaderComponent} from 'netgrif-components';
+} from '@netgrif/application-engine';
+import {HeaderComponent} from '@netgrif/components';
 
 const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
     return factory.createWithAllNets();

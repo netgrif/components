@@ -16,8 +16,8 @@ import {
     Filter,
     NAE_NEW_CASE_CONFIGURATION,
     InjectedTabData
-} from 'netgrif-application-engine';
-import {HeaderComponent} from 'netgrif-components';
+} from '@netgrif/application-engine';
+import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
 
 interface ExampleInjectedData extends InjectedTabData {

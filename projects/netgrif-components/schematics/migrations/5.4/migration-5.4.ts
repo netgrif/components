@@ -1,18 +1,16 @@
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import {Rule, Tree, FileEntry} from '@angular-devkit/schematics';
 import {
+    addImport,
+    addProviderToComponent,
     commitChangesToFile,
     fileEntryToTsSource,
     forEachSourceTsFile
 } from '../../_utility/utility-functions';
 import {findNodes} from '@schematics/angular/utility/ast-utils';
-import {Change, RemoveChange} from '@schematics/angular/utility/change';
+import {Change} from '@schematics/angular/utility/change';
+import {ImportToAdd} from '../../_commons/import-to-add';
 
-
-interface NodeRemoval {
-    removedNode: ts.Node;
-    changes: Array<Change>;
-}
 
 /**
  * Changes providers of any components that provides SearchService
@@ -66,18 +64,29 @@ export function schematicEntryPoint(): Rule {
 }
 
 function migrateCaseView(file: FileEntry, providersArrayContent: ts.Node[]): Array<Change> {
-    const removed = removeProvider(file, providersArrayContent, 'CaseViewServiceFactory');
-    if (removed === null) {
+    const searchServiceAlias = findProviderAlias(providersArrayContent, 'SearchService');
+
+    if (searchServiceAlias === null) {
         return [];
     }
-    return removed.changes;
+
+    const changes = addProviderToComponent(file, 'CaseViewService', '@netgrif/application-engine');
+    changes.push(...addProviderToComponent(file, searchServiceAlias,
+        searchServiceAlias === 'SearchService' ? '@netgrif/application-engine' : undefined));
+    changes.push(...addProviderToComponent(file, 'NAE_BASE_FILTER', '@netgrif/application-engine',
+        '{provide: NAE_BASE_FILTER, useFactory: baseFilterFactory}'));
+    changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/application-engine',
+        '{provide: AllowedNetsService, useFactory: localAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}'));
+    changes.push(addImport(file, new ImportToAdd('AllowedNetsServiceFactory', '@netgrif/application-engine')));
+
+    return changes;
 }
 
 function migrateTaskView(): Array<Change> {
     return [];
 }
 
-function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], providerName: string): NodeRemoval | null {
+function findProviderAlias(providersArrayContent: ts.Node[], providerName: string): string | null {
     const providerIndex = providersArrayContent.findIndex(node => node.kind !== ts.SyntaxKind.CommaToken
         && (
             (node.kind === ts.SyntaxKind.Identifier && node.getText() === providerName)
@@ -94,15 +103,17 @@ function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], provi
 
     const providerNode = providersArrayContent[providerIndex];
 
-    let textToDelete = providerNode.getText();
-    if (providersArrayContent.length - 1 > providerIndex) {
-        textToDelete += providersArrayContent[providerIndex + 1].getText();
+    if (providerNode.kind === ts.SyntaxKind.Identifier) {
+        return providerName;
     }
 
-    const changes = [new RemoveChange(file.path, providerNode.pos, textToDelete)];
+    const useExistingNode = providerNode.getChildAt(1).getChildren().find(complexProviderNode =>
+        complexProviderNode.kind === ts.SyntaxKind.PropertyAssignment
+        && complexProviderNode.getChildAt(0).getText() === 'useExisting');
 
-    return {
-        removedNode: providerNode,
-        changes
-    };
+    if (useExistingNode === undefined) {
+        return providerName;
+    }
+
+    return useExistingNode.getChildAt(2).getText();
 }
