@@ -35,7 +35,30 @@ export function schematicEntryPoint(): Rule {
                 if (providers === undefined) {
                     continue;
                 }
+
+                const providersArrayContent = providers.getChildAt(2).getChildAt(1).getChildren();
+
+                const viewServiceFactoryProvider = providersArrayContent.find(node => node.kind === ts.SyntaxKind.Identifier
+                    && (node.getText() === 'CaseViewServiceFactory' || node.getText() === 'TaskViewServiceFactory'));
+
+                if (viewServiceFactoryProvider === undefined) {
+                    continue;
+                }
+
+                if (viewServiceFactoryProvider.getText() === 'CaseViewServiceFactory') {
+                    migrateCaseView();
+                } else {
+                    migrateTaskView();
+                }
             }
         });
     };
+}
+
+function migrateCaseView(): void {
+
+}
+
+function migrateTaskView(): void {
+
 }
