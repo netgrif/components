@@ -55,7 +55,7 @@ export function schematicEntryPoint(): Rule {
                 if (viewServiceFactoryProvider.getText() === 'CaseViewServiceFactory') {
                     changes = migrateCaseView(file, providersArrayContent);
                 } else {
-                    changes = migrateTaskView();
+                    changes = migrateTaskView(file, providersArrayContent);
                 }
                 commitChangesToFile(tree, file, changes);
             }
@@ -86,8 +86,14 @@ function migrateCaseView(file: FileEntry, providersArrayContent: ts.Node[]): Arr
     return changes;
 }
 
-function migrateTaskView(): Array<Change> {
-    return [];
+function migrateTaskView(file: FileEntry, providersArrayContent: ts.Node[]): Array<Change> {
+    const searchServiceAlias = findProviderAlias(providersArrayContent, 'SearchService');
+
+    if (searchServiceAlias === null) {
+        return [];
+    }
+
+
 }
 
 function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], providerName: string): Change {
