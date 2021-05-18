@@ -11,7 +11,7 @@ import {
 } from '@angular-devkit/schematics';
 import {FileEntry, UpdateRecorder, DirEntry} from '@angular-devkit/schematics/src/tree/interface';
 import {experimental, normalize, strings} from '@angular-devkit/core';
-import {Change, InsertChange} from '@schematics/angular/utility/change';
+import {Change, InsertChange, NoopChange, RemoveChange} from '@schematics/angular/utility/change';
 import {FileData} from './models/file-data';
 import {FileSystemNode} from './models/file-system-node';
 import {ProjectInfo} from './models/project-info';
@@ -72,6 +72,12 @@ export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Arra
     for (const change of changes) {
         if (change instanceof InsertChange) {
             exportRecorder.insertLeft(change.pos, change.toAdd);
+        } else if (change instanceof RemoveChange) {
+            exportRecorder.remove(change.order, change.toRemove.length);
+        } else if (change instanceof NoopChange) {
+            continue;
+        } else {
+            throw new SchematicsException('Other change types are currently not supported by Netgrif utility implementation');
         }
     }
     return exportRecorder;

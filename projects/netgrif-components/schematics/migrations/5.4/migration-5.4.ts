@@ -8,7 +8,7 @@ import {
     forEachSourceTsFile
 } from '../../_utility/utility-functions';
 import {findNodes} from '@schematics/angular/utility/ast-utils';
-import {Change} from '@schematics/angular/utility/change';
+import {Change, NoopChange, RemoveChange} from '@schematics/angular/utility/change';
 import {ImportToAdd} from '../../_commons/import-to-add';
 
 
@@ -79,6 +79,10 @@ function migrateCaseView(file: FileEntry, providersArrayContent: ts.Node[]): Arr
         '{provide: AllowedNetsService, useFactory: localAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}'));
     changes.push(addImport(file, new ImportToAdd('AllowedNetsServiceFactory', '@netgrif/application-engine')));
 
+    changes.push(removeProvider(file, providersArrayContent, 'CaseViewServiceFactory'));
+    changes.push(removeProvider(file, providersArrayContent, searchServiceAlias));
+    changes.push(removeProvider(file, providersArrayContent, 'CaseViewService'));
+
     return changes;
 }
 
@@ -86,16 +90,22 @@ function migrateTaskView(): Array<Change> {
     return [];
 }
 
+function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], providerName: string): Change {
+    const index = findProviderIndex(providersArrayContent, providerName);
+    if (index === -1) {
+        return new NoopChange();
+    }
+    const providerNode = providersArrayContent[index];
+
+    let textToRemove = providerNode.getText();
+    if (index !== providersArrayContent.length - 1) {
+        textToRemove += providersArrayContent[index + 1].getText();
+    }
+    return new RemoveChange(file.path, providerNode.pos, textToRemove);
+}
+
 function findProviderAlias(providersArrayContent: ts.Node[], providerName: string): string | null {
-    const providerIndex = providersArrayContent.findIndex(node => node.kind !== ts.SyntaxKind.CommaToken
-        && (
-            (node.kind === ts.SyntaxKind.Identifier && node.getText() === providerName)
-            || (node.kind === ts.SyntaxKind.ObjectLiteralExpression && node.getChildAt(1).getChildren().some(complexProviderNode =>
-                complexProviderNode.kind === ts.SyntaxKind.PropertyAssignment
-                && complexProviderNode.getChildAt(0).getText() === 'provide'
-                && complexProviderNode.getChildAt(2).getText() === providerName
-            ))
-        ));
+    const providerIndex = findProviderIndex(providersArrayContent, providerName);
 
     if (providerIndex === -1) {
         return null;
@@ -116,4 +126,16 @@ function findProviderAlias(providersArrayContent: ts.Node[], providerName: strin
     }
 
     return useExistingNode.getChildAt(2).getText();
+}
+
+function findProviderIndex(providersArrayContent: ts.Node[], providerName: string): number {
+    return providersArrayContent.findIndex(node => node.kind !== ts.SyntaxKind.CommaToken
+        && (
+            (node.kind === ts.SyntaxKind.Identifier && node.getText() === providerName)
+            || (node.kind === ts.SyntaxKind.ObjectLiteralExpression && node.getChildAt(1).getChildren().some(complexProviderNode =>
+                complexProviderNode.kind === ts.SyntaxKind.PropertyAssignment
+                && complexProviderNode.getChildAt(0).getText() === 'provide'
+                && complexProviderNode.getChildAt(2).getText() === providerName
+            ))
+        ));
 }
