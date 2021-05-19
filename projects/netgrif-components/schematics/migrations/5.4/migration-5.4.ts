@@ -93,7 +93,35 @@ function migrateTaskView(file: FileEntry, providersArrayContent: ts.Node[]): Arr
         return [];
     }
 
+    const changes = addProviderToComponent(file, 'TaskViewService', '@netgrif/application-engine');
+    changes.push(...addProviderToComponent(file, searchServiceAlias,
+        searchServiceAlias === 'SearchService' ? '@netgrif/application-engine' : undefined));
+    changes.push(...addProviderToComponent(file, 'NAE_BASE_FILTER', '@netgrif/application-engine',
+        '{provide: NAE_BASE_FILTER, useFactory: baseFilterFactory}'));
+    changes.push(addImport(file, new ImportToAdd('AllowedNetsServiceFactory', '@netgrif/application-engine')));
 
+    changes.push(removeProvider(file, providersArrayContent, 'TaskViewServiceFactory'));
+    changes.push(removeProvider(file, providersArrayContent, searchServiceAlias));
+    changes.push(removeProvider(file, providersArrayContent, 'TaskViewService'));
+
+    const source = fileEntryToTsSource(file);
+    const identifiers = findNodes(source, ts.SyntaxKind.Identifier);
+
+    if (identifiers.some(identifier => identifier.getText() === 'NAE_TAB_DATA')) {
+        // tabbed task view
+        changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/application-engine',
+            '{provide: AllowedNetsService, useFactory: tabbedAllowedNetsServiceFactory, deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]}'));
+        changes.push(addImport(file, new ImportToAdd('tabbedAllowedNetsServiceFactory', '@netgrif/application-engine')));
+        changes.push(...addProviderToComponent(file, 'NAE_TASK_VIEW_CONFIGURATION', '@netgrif/application-engine',
+            '{provide: NAE_TASK_VIEW_CONFIGURATION, useFactory: tabbedTaskViewConfigurationFactory, deps: [NAE_TAB_DATA]}'));
+        changes.push(addImport(file, new ImportToAdd('tabbedTaskViewConfigurationFactory', '@netgrif/application-engine')));
+    } else {
+        // standard task view
+        changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/application-engine',
+            '{provide: AllowedNetsService, useFactory: localAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}'));
+    }
+
+    return changes;
 }
 
 function removeProvider(file: FileEntry, providersArrayContent: ts.Node[], providerName: string): Change {
