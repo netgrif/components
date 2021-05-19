@@ -4,13 +4,16 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {View, Views} from '../../../commons/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {Subscription} from 'rxjs';
+import {Observable, of, ReplaySubject, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
 import {AbstractNavigationResizableDrawerComponent} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
+import {ActiveGroupService} from '../../groups/services/active-group.service';
+import {map} from 'rxjs/operators';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 
 export interface NavigationNode {
     name: string;
@@ -22,11 +25,19 @@ export interface NavigationNode {
 
 export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
+    /**
+     * Name of the component that indicates the position of the group specific navigation elements.
+     */
+    public static readonly GROUP_NAVIGATION_OUTLET = 'groupNavigation';
+
+    private static readonly FIRST_ENTRY_DATAGROUP_OFFSET = 1;
+
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
     protected subRouter: Subscription;
     protected subUser: Subscription;
+    private _subGroupResolution: Subscription;
 
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
@@ -37,7 +48,9 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _userService: UserService,
                           protected _roleGuard: RoleGuardService,
                           protected _authorityGuard: AuthorityGuardService,
-                          protected _groupGuard: GroupGuardService) {
+                          protected _groupGuard: GroupGuardService,
+                          protected _activeGroupService: ActiveGroupService,
+                          protected _taskResourceService: TaskResourceService) {
         super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
@@ -74,6 +87,9 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         if (this.subUser) {
             this.subUser.unsubscribe();
         }
+        if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
+            this._subGroupResolution.unsubscribe();
+        }
     }
 
     public hasChild(_: number, node: NavigationNode): boolean {
@@ -92,9 +108,24 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         if (!views || Object.keys(views).length === 0) {
             return null;
         }
+
+        let groupNavigationGenerated = false;
         const nodes: Array<NavigationNode> = [];
         Object.keys(views).forEach((viewKey: string) => {
             const view = views[viewKey];
+
+            if (!groupNavigationGenerated && this.isGroupNavigationNode(view)) {
+                groupNavigationGenerated = true;
+                const insertPosition = nodes.length;
+                if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
+                    this._subGroupResolution.unsubscribe();
+                }
+                this._subGroupResolution = this.generateGroupNavigationNodes().subscribe(groupNavNodes => {
+                    this.dataSource.data.splice(insertPosition, 0, ...groupNavNodes);
+                });
+                return; // continue
+            }
+
             if (!this.hasNavigation(view) && !this.hasSubRoutes(view)) {
                 return; // continue
             }
@@ -249,6 +280,20 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
      */
     protected passesGroupGuard(view: View, url: string): boolean {
         return !view.access.hasOwnProperty('group') || this._groupGuard.canAccessView(view, url);
+    }
+
+    /**
+     * @returns `true` if the layout of the provided {@link View} node's name indicates it is a
+     * [group navigation outlet]{@link AbstractNavigationTreeComponent#GROUP_NAVIGATION_OUTLET}. Returns `false` otherwise.
+     */
+    protected isGroupNavigationNode(view: View): boolean {
+        return view?.layout?.name === AbstractNavigationTreeComponent.GROUP_NAVIGATION_OUTLET;
+    }
+
+    protected generateGroupNavigationNodes(): Observable<Array<NavigationNode>> {
+        return of(...this._activeGroupService.activeGroups).pipe(
+            map(groupCase => this._taskResourceService.get)
+        );
     }
 
 }
