@@ -11,12 +11,14 @@ import {
 } from '@angular-devkit/schematics';
 import {FileEntry, UpdateRecorder, DirEntry} from '@angular-devkit/schematics/src/tree/interface';
 import {experimental, normalize, strings} from '@angular-devkit/core';
-import {Change, InsertChange} from '@schematics/angular/utility/change';
+import {Change, InsertChange, NoopChange, RemoveChange} from '@schematics/angular/utility/change';
 import {FileData} from './models/file-data';
 import {FileSystemNode} from './models/file-system-node';
 import {ProjectInfo} from './models/project-info';
 import {addSymbolToDecoratorMetadata} from './modified-library-functions';
 import {NetgrifApplicationEngine} from '@netgrif/application-engine';
+import {ImportToAdd} from '../_commons/import-to-add';
+import {insertImport} from '@schematics/angular/utility/ast-utils';
 
 
 export function getProjectInfo(tree: Tree): ProjectInfo {
@@ -70,6 +72,12 @@ export function createChangesRecorder(tree: Tree, file: FileEntry, changes: Arra
     for (const change of changes) {
         if (change instanceof InsertChange) {
             exportRecorder.insertLeft(change.pos, change.toAdd);
+        } else if (change instanceof RemoveChange) {
+            exportRecorder.remove(change.order, change.toRemove.length);
+        } else if (change instanceof NoopChange) {
+            continue;
+        } else {
+            throw new SchematicsException('Other change types are currently not supported by Netgrif utility implementation');
         }
     }
     return exportRecorder;
@@ -183,6 +191,18 @@ export function createRelativePath(sourcePath: string, destinationPath: string):
 }
 
 /**
+ * Recursively iterates over every non-test, typescript source file in the project
+ * and executes the given lambda with it as the input parameter.
+ */
+export function forEachSourceTsFile(tree: Tree, lambda: (fe: FileEntry) => void): void {
+    forEachProjectFile(tree, (fe => {
+        if (fe.path.endsWith('.ts') && !fe.path.endsWith('.spec.ts')) {
+            lambda(fe);
+        }
+    }));
+}
+
+/**
  * Recursively iterates over every file in the project and executes the given lambda with it as the input parameter.
  * @param tree tree to get access to the file system
  * @param lambda the function that is called with each of the project files as it's argument
@@ -238,13 +258,13 @@ export function findNodesInChildren(start: ts.Node, target: ts.SyntaxKind, recur
  * Adds another provider to the providers of a specified component
  * @param componentFile the file with the component
  * @param symbolName the class name of the added provider
- * @param insertedText the text that should be inserted into the providers array
  * @param importPath the path from which to import the symbol
+ * @param insertedText? the text that should be inserted into the providers array
  */
 export function addProviderToComponent(componentFile: FileEntry,
                                        symbolName: string,
-                                       insertedText?: string,
-                                       importPath: string | null = null): Array<Change> {
+                                       importPath: string | null = null,
+                                       insertedText?: string): Array<Change> {
     return addSymbolToDecoratorMetadata(
         fileEntryToTsSource(componentFile),
         componentFile.path,
@@ -254,4 +274,8 @@ export function addProviderToComponent(componentFile: FileEntry,
         insertedText,
         importPath
     );
+}
+
+export function addImport(file: FileEntry, newImport: ImportToAdd): Change {
+    return insertImport(fileEntryToTsSource(file), file.path, newImport.className, newImport.fileImportPath);
 }

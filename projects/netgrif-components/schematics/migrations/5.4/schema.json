@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsUpdatePackageJson",
-    "title": "Modifies build script",
+    "id": "SchematicsMigration-5.4",
+    "title": "Migration 5.4",
     "type": "object",
     "properties": {}
 }
