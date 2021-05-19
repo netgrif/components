@@ -1,11 +1,6 @@
 {
     "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
-        "migration-4.0.1": {
-            "version": "4.0.1",
-            "description": "applies changes when moving from v4.0.x to v4.0.1 or higher",
-            "factory": "./migrations/4.0.1/migration-4.0.1#schematicEntryPoint"
-        },
         "migration-4.1": {
             "version": "4.1",
             "description": "applies changes when moving from v4.0.x to v4.1.0 or higher",
