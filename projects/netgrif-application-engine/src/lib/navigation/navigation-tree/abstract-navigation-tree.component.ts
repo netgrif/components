@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {View, Views} from '../../../commons/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {forkJoin, Observable, of, Subscription} from 'rxjs';
+import {BehaviorSubject, combineLatest, forkJoin, Observable, of, ReplaySubject, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
@@ -12,12 +12,13 @@ import {AuthorityGuardService} from '../../authorization/authority/authority-gua
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
 import {AbstractNavigationResizableDrawerComponent} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
-import {concatMap, map} from 'rxjs/operators';
+import {concatMap, debounceTime, filter, map} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {hasContent} from '../../utility/pagination/page-has-content';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
+import {refreshTree} from '../../utility/refresh-tree';
 
 export interface NavigationNode {
     name: string;
@@ -32,8 +33,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
-    protected subRouter: Subscription;
-    protected subUser: Subscription;
+
+    protected _reloadNavigation: ReplaySubject<void>;
+
+    private _subscriptions: Array<Subscription>;
     private _subGroupResolution: Subscription;
 
     treeControl: NestedTreeControl<NavigationNode>;
@@ -53,37 +56,36 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
         this.dataSource.data = this.resolveNavigationNodes(_config.getConfigurationSubtree(['views']), '');
         this.resolveLevels(this.dataSource.data);
+        this._reloadNavigation = new ReplaySubject<void>(1);
     }
 
     ngOnInit(): void {
         super.ngOnInit();
         if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
-            this.subRouter = this._router.events.subscribe((event) => {
-                if (event instanceof NavigationEnd && this.routerChange) {
-                    this.resolveNavigationNodesWithOffsetRoot();
-                }
-            });
-
             this.resolveNavigationNodesWithOffsetRoot();
-
-            this.subUser = this._userService.user$.subscribe(() => {
-                this.resolveNavigationNodesWithOffsetRoot();
-            });
-        } else {
-            this.subUser = this._userService.user$.subscribe(() => {
-                this.dataSource.data = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
-                this.resolveLevels(this.dataSource.data);
-            });
         }
+
+        this._subscriptions = [
+            this._router.events.pipe(filter(event => event instanceof NavigationEnd && this.routerChange))
+                .subscribe(() => this._reloadNavigation.next()),
+            this._userService.user$.subscribe(() => this._reloadNavigation.next()),
+            this._activeGroupService.activeGroups$.subscribe(() => this._reloadNavigation.next())
+        ];
+
+        this._subscriptions.push(
+            this._reloadNavigation.pipe(debounceTime(100)).subscribe(() => {
+                this.resolveNavigation();
+            })
+        );
     }
 
     ngOnDestroy(): void {
-        if (this.subRouter) {
-            this.subRouter.unsubscribe();
+        for (const sub of this._subscriptions) {
+            if (!sub.closed) {
+                sub.unsubscribe();
+            }
         }
-        if (this.subUser) {
-            this.subUser.unsubscribe();
-        }
+        this._reloadNavigation.complete();
         if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
             this._subGroupResolution.unsubscribe();
         }
@@ -91,6 +93,15 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     public hasChild(_: number, node: NavigationNode): boolean {
         return !!node.children && node.children.length > 0;
+    }
+
+    protected resolveNavigation(): void {
+        if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
+            this.resolveNavigationNodesWithOffsetRoot();
+        } else {
+            this.dataSource.data = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
+            this.resolveLevels(this.dataSource.data);
+        }
     }
 
     protected resolveNavigationNodesWithOffsetRoot(): void {
@@ -119,6 +130,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 }
                 this._subGroupResolution = this.generateGroupNavigationNodes().subscribe(groupNavNodes => {
                     this.dataSource.data.splice(insertPosition, 0, ...groupNavNodes);
+                    refreshTree(this.dataSource);
                 });
                 return; // continue
             }

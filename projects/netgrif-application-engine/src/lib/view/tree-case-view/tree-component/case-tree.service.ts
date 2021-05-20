@@ -27,6 +27,7 @@ import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {CaseTreePath} from './model/case-tree-path';
 import {ExpansionTree} from './model/expansion-tree';
 import {ResultWithAfterActions} from '../../../utility/result-with-after-actions';
+import {refreshTree} from '../../../utility/refresh-tree';
 
 /**
  * An internal helper object, that is used to return two values from a function.
@@ -831,9 +832,7 @@ export class CaseTreeService implements OnDestroy {
      * Forces a rerender of the tree content
      */
     private refreshTree(): void {
-        const d = this._treeDataSource.data;
-        this._treeDataSource.data = null;
-        this._treeDataSource.data = d;
+        refreshTree(this._treeDataSource);
     }
 
     /**
