@@ -10,6 +10,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
+import {GroupNavigationConstants} from '../../navigation/model/group-navigation-constants';
 
 
 /**
@@ -98,6 +99,9 @@ export class RoutingBuilderService {
             let className;
             if (!!view.layout.componentName) {
                 className = `${classify(view.layout.componentName)}Component`;
+            } else if (view.layout.name === GroupNavigationConstants.GROUP_NAVIGATION_OUTLET) {
+                this._logger.debug('ignoring group navigation outlet during routing construction');
+                return undefined;
             } else {
                 const classInfo = new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
                 className = classInfo.className;

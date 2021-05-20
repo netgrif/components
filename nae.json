@@ -588,6 +588,12 @@
                 }
             }
         },
+        "group-navigation-outlet": {
+            "layout": {
+                "name": "groupNavigation"
+            },
+            "navigation": false
+        },
         "dashboard": {
             "layout": {
                 "name": "dashboard",

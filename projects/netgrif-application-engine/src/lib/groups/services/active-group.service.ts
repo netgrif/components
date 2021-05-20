@@ -28,6 +28,7 @@ export class ActiveGroupService implements OnDestroy {
     private _groupSub: Subscription;
 
     constructor(protected _groupService: NextGroupService) {
+        this._activeGroups$ = new BehaviorSubject<Array<Case>>([]);
         this._groupSub = this._groupService.memberGroups$.subscribe(groups => {
             this._activeGroups$.next(groups);
         });
