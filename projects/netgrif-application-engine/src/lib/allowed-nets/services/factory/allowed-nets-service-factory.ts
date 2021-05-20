@@ -12,7 +12,7 @@ import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injecte
 
 
 /**
- * Convenience method that can be used as a allowed nets factory for tabbed task views.
+ * Convenience method that can be used as an allowed nets factory for tabbed task views.
  * If no allowed nets are provided in the injected data then an {@link AllowedNetsService} with no allowed nets is created.
  * It has a dependency on this class and {@link NAE_TAB_DATA} injection token.
  */
