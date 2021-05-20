@@ -1036,6 +1036,10 @@
         "legal": {
             "termsOfService": "https://netgrif.com/",
             "privacyPolicy": "https://netgrif.com/"
+        },
+        "groupNavigation": {
+            "caseViewLink": "/group-nav-case",
+            "taskViewLink": "/group-nav-task"
         }
     }
 }

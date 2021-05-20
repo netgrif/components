@@ -294,6 +294,10 @@ export interface Services {
         termsOfService: string,
         privacyPolicy: string
     };
+    groupNavigation?: {
+        caseViewLink?: string,
+        taskViewLink?: string
+    };
 
     [k: string]: any;
 }

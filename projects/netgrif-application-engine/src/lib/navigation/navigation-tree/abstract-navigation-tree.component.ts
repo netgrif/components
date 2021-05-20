@@ -1,7 +1,7 @@
 import {Input, OnDestroy, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {View, Views} from '../../../commons/schema';
+import {Services, View, Views} from '../../../commons/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {BehaviorSubject, combineLatest, forkJoin, Observable, of, ReplaySubject, Subscription} from 'rxjs';
@@ -19,6 +19,8 @@ import {hasContent} from '../../utility/pagination/page-has-content';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {refreshTree} from '../../utility/refresh-tree';
+import {FilterField} from '../../data-fields/filter-field/models/filter-field';
+import {FilterType} from '../../filter/models/filter-type';
 
 export interface NavigationNode {
     name: string;
@@ -35,6 +37,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public routerChange: boolean;
 
     protected _reloadNavigation: ReplaySubject<void>;
+    protected _groupNavigationConfig: Services['groupNavigation'];
 
     private _subscriptions: Array<Subscription>;
     private _subGroupResolution: Subscription;
@@ -54,6 +57,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
+        this._groupNavigationConfig = this._config.getConfigurationSubtree(['services', 'groupNavigation']);
         this.dataSource.data = this.resolveNavigationNodes(_config.getConfigurationSubtree(['views']), '');
         this.resolveLevels(this.dataSource.data);
         this._reloadNavigation = new ReplaySubject<void>(1);
@@ -330,19 +334,44 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         const result = [];
         for (let i = GroupNavigationConstants.FIRST_ENTRY_DATAGROUP_OFFSET as number; i < navConfigDatagroups.length; i += 2) {
             // "first" datagroup has name
-            const name = navConfigDatagroups[i].fields.find(
+            const nameField = navConfigDatagroups[i].fields.find(
                 field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX)
             );
 
-            if (name === undefined) {
+            if (nameField === undefined) {
                 this._log.error('Navigation entry name could not be resolved. Entry was ignored');
-                return;
+                continue;
             }
-            result.push({name: name.value, url: '/'});
 
             // "second" datagroup has filter
+            const filterField = navConfigDatagroups[i + 1].fields.find(
+                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_FILTER_FIELD_ID_SUFFIX)
+            );
+
+            if (filterField === undefined || !(filterField instanceof FilterField)) {
+                this._log.error('Navigation entry filter could not be resolved. Entry was ignored');
+                continue;
+            }
+
+            const url = this.getUrlByFilterType(filterField.filterMetadata.filterType);
+            if (url === undefined) {
+                this._log.error(`No URL is configured in nae.json for filters of type ${filterField.filterMetadata.filterType
+                }. Entry was ignored`);
+                continue;
+            }
+
+            // TODO get filter case id from task data
+            result.push({name: nameField.value, url: '/'});
         }
         return result;
     }
 
+    protected getUrlByFilterType(type: FilterType): string {
+        switch (type) {
+            case FilterType.CASE:
+                return this._groupNavigationConfig.caseViewLink;
+            case FilterType.TASK:
+                return this._groupNavigationConfig.taskViewLink;
+        }
+    }
 }
