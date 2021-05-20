@@ -5,3 +5,6 @@ export * from './quick-panel/public-api';
 export * from './navigation-tree/abstract-navigation-tree.component';
 export * from './navigation-drawer/abstract-navigation-drawer.component';
 export * from './navigation-rail/abstract-navigation-rail.component';
+
+/* MODELS */
+export * from './model/group-navigation-constants';

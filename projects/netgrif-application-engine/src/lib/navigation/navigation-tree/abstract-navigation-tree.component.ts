@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {View, Views} from '../../../commons/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {Observable, of, ReplaySubject, Subscription} from 'rxjs';
+import {forkJoin, Observable, of, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
@@ -12,8 +12,12 @@ import {AuthorityGuardService} from '../../authorization/authority/authority-gua
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
 import {AbstractNavigationResizableDrawerComponent} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
-import {map} from 'rxjs/operators';
+import {concatMap, map} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {hasContent} from '../../utility/pagination/page-has-content';
+import {DataGroup} from '../../resources/interface/data-groups';
+import {GroupNavigationConstants} from '../model/group-navigation-constants';
 
 export interface NavigationNode {
     name: string;
@@ -24,13 +28,6 @@ export interface NavigationNode {
 }
 
 export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
-
-    /**
-     * Name of the component that indicates the position of the group specific navigation elements.
-     */
-    public static readonly GROUP_NAVIGATION_OUTLET = 'groupNavigation';
-
-    private static readonly FIRST_ENTRY_DATAGROUP_OFFSET = 1;
 
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
@@ -284,16 +281,56 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     /**
      * @returns `true` if the layout of the provided {@link View} node's name indicates it is a
-     * [group navigation outlet]{@link AbstractNavigationTreeComponent#GROUP_NAVIGATION_OUTLET}. Returns `false` otherwise.
+     * [group navigation outlet]{@link GroupNavigationConstants#GROUP_NAVIGATION_OUTLET}. Returns `false` otherwise.
      */
     protected isGroupNavigationNode(view: View): boolean {
-        return view?.layout?.name === AbstractNavigationTreeComponent.GROUP_NAVIGATION_OUTLET;
+        return view?.layout?.name === GroupNavigationConstants.GROUP_NAVIGATION_OUTLET;
     }
 
     protected generateGroupNavigationNodes(): Observable<Array<NavigationNode>> {
-        return of(...this._activeGroupService.activeGroups).pipe(
-            map(groupCase => this._taskResourceService.get)
+        return forkJoin(this._activeGroupService.activeGroups.map(groupCase => {
+            return this._taskResourceService.searchTask(SimpleFilter.fromTaskQuery(
+                {case: {id: groupCase.stringId}, transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string}
+            )).pipe(
+                map(taskPage => {
+                    if (hasContent(taskPage)) {
+                        return this._taskResourceService.getData(taskPage.content[0].stringId);
+                    } else {
+                        this._log.error('Group navigation configuration task was not found.'
+                            + ' Navigation for this group cannot be constructed.');
+                        return of([]);
+                    }
+                }),
+                concatMap(o => o)
+            );
+        })).pipe(
+            map((navigationConfigurations: Array<Array<DataGroup>>) => {
+                const result = [];
+                for (const navConfig of navigationConfigurations) {
+                    result.push(...this.convertDatagroupsToNavEntries(navConfig));
+                }
+                return result;
+            })
         );
+    }
+
+    protected convertDatagroupsToNavEntries(navConfigDatagroups: Array<DataGroup>): Array<NavigationNode> {
+        const result = [];
+        for (let i = GroupNavigationConstants.FIRST_ENTRY_DATAGROUP_OFFSET as number; i < navConfigDatagroups.length; i += 2) {
+            // "first" datagroup has name
+            const name = navConfigDatagroups[i].fields.find(
+                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX)
+            );
+
+            if (name === undefined) {
+                this._log.error('Navigation entry name could not be resolved. Entry was ignored');
+                return;
+            }
+            result.push({name: name.value, url: '/'});
+
+            // "second" datagroup has filter
+        }
+        return result;
     }
 
 }
