@@ -99,7 +99,7 @@ export class SimpleFilter extends Filter {
      * See [Filter.bodyContainsQuery()]{@link Filter#bodyContainsQuery}
      */
     bodyContainsQuery(): boolean {
-        return !!this._filter.query;
+        return this._filter.query !== undefined && this._filter.query !== null;
     }
 
     /**
