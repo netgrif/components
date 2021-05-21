@@ -20,7 +20,7 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {refreshTree} from '../../utility/refresh-tree';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
-import {FilterType} from '../../filter/models/filter-type';
+import {TextField} from '../../data-fields/text-field/models/text-field';
 
 export interface NavigationNode {
     name: string;
@@ -348,7 +348,12 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_FILTER_FIELD_ID_SUFFIX)
             );
 
-            if (filterField === undefined || !(filterField instanceof FilterField)) {
+            const filterCaseIdField = navConfigDatagroups[i + 1].fields.find(
+                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_FILTER_CASE_ID_FIELD_ID_SUFFIX)
+            );
+
+            if (filterField === undefined || !(filterField instanceof FilterField)
+                || filterCaseIdField === undefined || !(filterCaseIdField instanceof TextField)) {
                 this._log.error('Navigation entry filter could not be resolved. Entry was ignored');
                 continue;
             }
@@ -360,8 +365,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 continue;
             }
 
-            // TODO get filter case id from task data
-            result.push({name: nameField.value, url: `/${url}`});
+            result.push({name: nameField.value, url: `/${url}/${filterCaseIdField.value}`});
         }
         return result;
     }

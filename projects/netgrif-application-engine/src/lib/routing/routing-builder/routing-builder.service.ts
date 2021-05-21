@@ -133,7 +133,7 @@ export class RoutingBuilderService {
         const servicesConfig = this._configService.getServicesConfiguration();
         if (servicesConfig?.groupNavigation?.groupNavigationRoute !== undefined) {
             result.push({
-                path: servicesConfig.groupNavigation.groupNavigationRoute,
+                path: `${servicesConfig.groupNavigation.groupNavigationRoute}/:${GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM}`,
                 component: this._groupNavigationComponentResolverComponent,
                 canActivate: [AuthenticationGuardService]
             });
