@@ -23,9 +23,6 @@ import {
     DefaultGroupNavigationComponentResolverService
 } from './group-navigation-component-resolver/default-group-navigation-component-resolver.service';
 import {
-    DefaultTaskViewContentComponent
-} from './group-navigation-component-resolver/default-components/default-task-view-content/default-task-view-content.component';
-import {
     DefaultSimpleTaskViewComponent
 } from './group-navigation-component-resolver/default-components/default-simple-task-view/default-simple-task-view.component';
 import {
@@ -37,6 +34,9 @@ import {
 import {
     DefaultTabViewComponent
 } from './group-navigation-component-resolver/default-components/default-tab-view/default-tab-view.component';
+import {SearchComponentModule} from '../search/search.module';
+import {HeaderComponentModule} from '../header/header.module';
+import {PanelComponentModule} from '../panel/panel.module';
 
 
 @NgModule({
@@ -45,7 +45,6 @@ import {
         NavigationRailComponent,
         NavigationTreeComponent,
         GroupNavigationComponentResolverComponent,
-        DefaultTaskViewContentComponent,
         DefaultSimpleTaskViewComponent,
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,
@@ -61,14 +60,16 @@ import {
         TranslateLibModule,
         UserComponentModule,
         ResizableModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        SearchComponentModule,
+        HeaderComponentModule,
+        PanelComponentModule
     ],
     exports: [
         NavigationDrawerComponent,
         NavigationRailComponent,
         NavigationTreeComponent,
         GroupNavigationComponentResolverComponent,
-        DefaultTaskViewContentComponent,
         DefaultSimpleTaskViewComponent,
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,

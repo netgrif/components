@@ -5,7 +5,7 @@ import {
     FilterType,
     getImmediateData,
     GroupNavigationComponentResolverService,
-    GroupNavigationConstants
+    UserFilterConstants
 } from '@netgrif/application-engine';
 import {DefaultTabViewComponent} from './default-components/default-tab-view/default-tab-view.component';
 import {DefaultSimpleTaskViewComponent} from './default-components/default-simple-task-view/default-simple-task-view.component';
@@ -18,7 +18,7 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
     }
 
     public resolveViewComponent(filterCase: Case): Type<any> {
-        const filterField = getImmediateData(filterCase, GroupNavigationConstants.NAVIGATION_FILTER_FIELD_ID_SUFFIX);
+        const filterField = getImmediateData(filterCase, UserFilterConstants.FILTER_FIELD_ID);
 
         if (filterField === undefined) {
             throw new Error(`Provided filter case with id '${filterCase.stringId}' is not a filter case`);

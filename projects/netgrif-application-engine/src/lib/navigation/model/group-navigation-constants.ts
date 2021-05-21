@@ -17,11 +17,6 @@ export enum GroupNavigationConstants {
      */
     NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX = 'entry_name',
     /**
-     * Suffix of the field id that contains the filter of the navigation entry.
-     * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
-     */
-    NAVIGATION_FILTER_FIELD_ID_SUFFIX = 'filter',
-    /**
      * Suffix of the field id that contains the filter case id.
      * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
      */

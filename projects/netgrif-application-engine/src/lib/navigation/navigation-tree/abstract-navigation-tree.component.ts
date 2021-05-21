@@ -21,6 +21,7 @@ import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {refreshTree} from '../../utility/refresh-tree';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {TextField} from '../../data-fields/text-field/models/text-field';
+import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 
 export interface NavigationNode {
     name: string;
@@ -345,7 +346,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
             // "second" datagroup has filter
             const filterField = navConfigDatagroups[i + 1].fields.find(
-                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_FILTER_FIELD_ID_SUFFIX)
+                field => field.stringId.endsWith('-' + UserFilterConstants.FILTER_FIELD_ID)
             );
 
             const filterCaseIdField = navConfigDatagroups[i + 1].fields.find(

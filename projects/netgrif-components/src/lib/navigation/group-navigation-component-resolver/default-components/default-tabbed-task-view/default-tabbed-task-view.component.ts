@@ -1,15 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {
+    NAE_TAB_DATA,
+    TaskViewService,
+    TabbedTaskView,
+    InjectedTabbedTaskViewData,
+    CategoryFactory,
+    SearchService,
+    NAE_BASE_FILTER,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    ViewIdService,
+    NAE_TASK_VIEW_CONFIGURATION,
+    tabbedTaskViewConfigurationFactory,
+    NAE_SEARCH_CATEGORIES,
+    tabbedAllowedNetsServiceFactory,
+    defaultTaskSearchCategoriesFactory
+} from '@netgrif/application-engine';
+import {HeaderComponent} from '../../../../header/header.component';
+
+export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
+    return {
+        filter: injectedTabData.baseFilter
+    };
+}
 
 @Component({
-  selector: 'nc-default-tabbed-task-view',
-  templateUrl: './default-tabbed-task-view.component.html',
-  styleUrls: ['./default-tabbed-task-view.component.scss']
+    selector: 'nc-default-tabbed-task-view',
+    templateUrl: './default-tabbed-task-view.component.html',
+    styleUrls: ['./default-tabbed-task-view.component.scss'],
+    providers: [
+        CategoryFactory,
+        TaskViewService,
+        SearchService,
+        {
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
+            deps: [NAE_TAB_DATA]
+        },
+        {
+            provide: AllowedNetsService,
+            useFactory: tabbedAllowedNetsServiceFactory,
+            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]
+        },
+        {   provide: ViewIdService, useValue: null},
+        {
+            provide: NAE_TASK_VIEW_CONFIGURATION,
+            useFactory: tabbedTaskViewConfigurationFactory,
+            deps: [NAE_TAB_DATA]
+        },
+        {
+            provide: NAE_SEARCH_CATEGORIES,
+            useFactory: defaultTaskSearchCategoriesFactory,
+            deps: [CategoryFactory]
+        }
+    ]
 })
-export class DefaultTabbedTaskViewComponent implements OnInit {
+export class DefaultTabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {
 
-  constructor() { }
+    @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
-  ngOnInit(): void {
-  }
+    constructor(taskViewService: TaskViewService, @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedTaskViewData) {
+        super(taskViewService, injectedTabData);
+    }
 
+    ngAfterViewInit(): void {
+        this.initializeHeader(this.taskHeaderComponent);
+    }
 }

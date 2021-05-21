@@ -9,6 +9,9 @@ import {CaseViewParams} from '../../../view/case-view/models/case-view-params';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {TaskViewParams} from '../../../view/task-view/models/task-view-params';
 import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injected-tabbed-task-view-data';
+import {Case} from '../../../resources/interface/case';
+import {getImmediateData} from '../../../utility/get-immediate-data';
+import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
 
 
 /**
@@ -19,6 +22,15 @@ import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injecte
 export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                 tabData: InjectedTabbedTaskViewData): AllowedNetsService {
     return factory.createFromArray(tabData?.allowedNets ?? []);
+}
+
+/**
+ * Convenience method that can be used as an allowed nets factory for views that are loaded from filter process instances.
+ * It has a dependency on this class and {@link NAE_FILTER_CASE} injection token.
+ */
+export function filterCaseAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
+                                                    filterCase: Case): AllowedNetsService {
+    return factory.createFromFilterCase(filterCase);
 }
 
 /**
@@ -93,6 +105,22 @@ export class AllowedNetsServiceFactory {
     public createFromObservable(netIdentifiers$: Observable<Array<string>>): AllowedNetsService {
         return new AllowedNetsService(
             netIdentifiers$,
+            this._processService
+        );
+    }
+
+    /**
+     * Creates an instance of {@link AllowedNetsService} without having to provide all the dependencies yourself.
+     * @param filterCase a filter process instance
+     * Allowed nets are set from filter process immediate data
+     */
+    public createFromFilterCase(filterCase: Case): AllowedNetsService {
+        const filterData = getImmediateData(filterCase, UserFilterConstants.FILTER_FIELD_ID);
+        if (filterData === undefined) {
+            throw new Error(`Cannot get filter from case '${filterCase.title}' with id '${filterCase.stringId}'`);
+        }
+        return new AllowedNetsService(
+            of(filterData.allowedNets),
             this._processService
         );
     }
