@@ -1,6 +1,6 @@
 import {Component, Injector} from '@angular/core';
 import {AbstractGroupNavigationComponentResolverComponent, GroupNavigationComponentResolverService} from '@netgrif/application-engine';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'nc-group-navigation-component-resolver',
@@ -11,8 +11,9 @@ export class GroupNavigationComponentResolverComponent extends AbstractGroupNavi
 
     constructor(componentResolverService: GroupNavigationComponentResolverService,
                 parentInjector: Injector,
-                activatedRoute: ActivatedRoute) {
-        super(componentResolverService, parentInjector, activatedRoute);
+                activatedRoute: ActivatedRoute,
+                router: Router) {
+        super(componentResolverService, parentInjector, activatedRoute, router);
     }
 
 }

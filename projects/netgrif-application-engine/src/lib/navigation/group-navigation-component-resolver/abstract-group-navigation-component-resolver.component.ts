@@ -1,9 +1,11 @@
 import {GroupNavigationComponentResolverService} from './group-navigation-component-resolver.service';
 import {Injector, OnDestroy, OnInit} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {Subscription} from 'rxjs';
+import {filter} from 'rxjs/operators';
+import {destroySubscription} from '../../utility/destroy-subscription';
 
 export abstract class AbstractGroupNavigationComponentResolverComponent implements OnInit, OnDestroy {
 
@@ -11,24 +13,33 @@ export abstract class AbstractGroupNavigationComponentResolverComponent implemen
     public initialized = false;
 
     private _portalSub: Subscription;
+    private _routerSub: Subscription;
 
     protected constructor(protected _componentResolverService: GroupNavigationComponentResolverService,
                           protected _parentInjector: Injector,
-                          protected _activatedRoute: ActivatedRoute) {
+                          protected _activatedRoute: ActivatedRoute,
+                          protected _router: Router) {
     }
 
     ngOnInit(): void {
+        this.resolveComponent();
+        this._routerSub = this._router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
+            this.resolveComponent();
+        });
+    }
+
+    ngOnDestroy(): void {
+        destroySubscription(this._portalSub);
+        destroySubscription(this._routerSub);
+    }
+
+    protected resolveComponent(): void {
+        this.initialized = false;
         this._portalSub = this._componentResolverService.createResolvedViewComponentPortal(
             this._activatedRoute.snapshot.paramMap.get(GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM)
         ).subscribe(portal => {
             this.portal = portal;
             this.initialized = true;
         });
-    }
-
-    ngOnDestroy(): void {
-        if (this._portalSub && !this._portalSub.closed) {
-            this._portalSub.unsubscribe();
-        }
     }
 }

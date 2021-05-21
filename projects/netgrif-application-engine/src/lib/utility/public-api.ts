@@ -13,6 +13,7 @@ export * from './process-message-response';
 export * from './result-with-after-actions';
 export * from './clear-time-information';
 export * from './refresh-tree';
+export * from './destroy-subscription';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';
