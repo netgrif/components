@@ -1,0 +1,7 @@
+<div *ngIf="initialized; else loading">
+    <ng-template [cdkPortalOutlet]="portal"></ng-template>
+</div>
+
+<ng-template #loading>
+    <mat-progress-spinner></mat-progress-spinner>
+</ng-template>
