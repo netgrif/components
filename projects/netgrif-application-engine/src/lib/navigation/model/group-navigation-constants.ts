@@ -16,7 +16,7 @@ export enum GroupNavigationConstants {
      * Suffix of the field id that contains the filter of the navigation entry.
      * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
      */
-    NAVIGATION_FILTER_FIELD_ID_SUFFIX = 'filter'
+    NAVIGATION_FILTER_FIELD_ID_SUFFIX = 'filter',
     /**
      * Offset of the first datagroup that contains group navigation data from the start of the task data.
      */

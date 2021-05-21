@@ -1038,8 +1038,7 @@
             "privacyPolicy": "https://netgrif.com/"
         },
         "groupNavigation": {
-            "caseViewLink": "/group-nav-case",
-            "taskViewLink": "/group-nav-task"
+            "groupNavigationRoute": "group-nav"
         }
     }
 }

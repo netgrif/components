@@ -295,8 +295,7 @@ export interface Services {
         privacyPolicy: string
     };
     groupNavigation?: {
-        caseViewLink?: string,
-        taskViewLink?: string
+        groupNavigationRoute: string,
     };
 
     [k: string]: any;

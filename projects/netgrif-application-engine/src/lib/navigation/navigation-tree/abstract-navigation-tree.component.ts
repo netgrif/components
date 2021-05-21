@@ -353,7 +353,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 continue;
             }
 
-            const url = this.getUrlByFilterType(filterField.filterMetadata.filterType);
+            const url = this._groupNavigationConfig?.groupNavigationRoute;
             if (url === undefined) {
                 this._log.error(`No URL is configured in nae.json for filters of type ${filterField.filterMetadata.filterType
                 }. Entry was ignored`);
@@ -361,17 +361,8 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             }
 
             // TODO get filter case id from task data
-            result.push({name: nameField.value, url: '/'});
+            result.push({name: nameField.value, url: `/${url}`});
         }
         return result;
-    }
-
-    protected getUrlByFilterType(type: FilterType): string {
-        switch (type) {
-            case FilterType.CASE:
-                return this._groupNavigationConfig.caseViewLink;
-            case FilterType.TASK:
-                return this._groupNavigationConfig.taskViewLink;
-        }
     }
 }
