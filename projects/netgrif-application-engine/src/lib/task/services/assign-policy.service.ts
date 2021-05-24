@@ -10,6 +10,7 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {Subject} from 'rxjs';
+import {UserComparatorService} from '../../user/services/user-comparator.service';
 
 /**
  * Handles the sequence of actions that are performed when a task is being assigned, based on the task's configuration.
@@ -24,6 +25,7 @@ export class AssignPolicyService extends TaskHandlingService {
                 protected _cancelTaskService: CancelTaskService,
                 protected _finishPolicyService: FinishPolicyService,
                 protected _callchain: CallChainService,
+                protected _userComparatorService: UserComparatorService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 taskContentService: TaskContentService) {
         super(taskContentService);
@@ -112,6 +114,12 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     protected autoAssignClosedPolicy(afterAction: Subject<boolean>): void {
+        if (!this._userComparatorService.compareUsers(this._task.user)) {
+            this._taskOperations.close();
+            afterAction.next(false);
+            afterAction.complete();
+            return;
+    }
         this._cancelTaskService.cancel(
             this._callchain.create((requestSuccess) => {
                 this._taskOperations.close();
