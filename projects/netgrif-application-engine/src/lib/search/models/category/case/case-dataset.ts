@@ -35,9 +35,14 @@ import {SearchIndex} from '../../search-index';
 import {Type} from '@angular/core';
 import {Categories} from '../categories';
 import {FormControl} from '@angular/forms';
-import {Moment} from 'moment';
+import moment, {Moment} from 'moment';
 import {CategoryMetadataConfiguration} from '../../persistance/generator-metadata';
-import moment from 'moment';
+import {MoreThanEqual} from '../../operator/more-than-equal';
+import {LessThanEqual} from '../../operator/less-than-equal';
+import {MoreThanEqualDate} from '../../operator/more-than-equal-date';
+import {LessThanEqualDate} from '../../operator/less-than-equal-date';
+import {MoreThanEqualDateTime} from '../../operator/more-than-equal-date-time';
+import {LessThanEqualDateTime} from '../../operator/less-than-equal-date-time';
 import {FilterTextSegment} from '../../persistance/filter-text-segment';
 import {UserAutocomplete} from '../user-autocomplete';
 
@@ -160,7 +165,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(Equals),
                     this._operatorService.getOperator(NotEquals),
                     this._operatorService.getOperator(MoreThan),
+                    this._operatorService.getOperator(MoreThanEqual),
                     this._operatorService.getOperator(LessThan),
+                    this._operatorService.getOperator(LessThanEqual),
                     this._operatorService.getOperator(InRange),
                     this._operatorService.getOperator(IsNull)
                 ];
@@ -181,7 +188,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                     this._operatorService.getOperator(EqualsDate),
                     this._operatorService.getOperator(NotEqualsDate),
                     this._operatorService.getOperator(MoreThanDate),
+                    this._operatorService.getOperator(MoreThanEqualDate),
                     this._operatorService.getOperator(LessThanDate),
+                    this._operatorService.getOperator(LessThanEqualDate),
                     this._operatorService.getOperator(InRangeDate),
                     this._operatorService.getOperator(IsNull)
                 ];
@@ -189,7 +198,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                 return [
                     this._operatorService.getOperator(EqualsDateTime),
                     this._operatorService.getOperator(MoreThanDateTime),
+                    this._operatorService.getOperator(MoreThanEqualDateTime),
                     this._operatorService.getOperator(LessThanDateTime),
+                    this._operatorService.getOperator(LessThanEqualDateTime),
                     this._operatorService.getOperator(InRangeDateTime),
                     this._operatorService.getOperator(IsNull)
                 ];

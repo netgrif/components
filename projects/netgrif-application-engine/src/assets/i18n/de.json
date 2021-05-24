@@ -157,6 +157,8 @@
             "notEquals": "unterscheidet sich von",
             "moreThan": "ist größer als",
             "lessThan": "ist kleiner als",
+            "lessThanEqual": "ist kleiner oder gleich als",
+            "moreThanEqual": "ist größer oder gleich als",
             "like": "ist ähnlich wie",
             "isNull": "ist leer"
         },

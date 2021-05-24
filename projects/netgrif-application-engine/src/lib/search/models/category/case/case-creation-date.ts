@@ -12,6 +12,10 @@ import {Categories} from '../categories';
 import {FormControl} from '@angular/forms';
 import moment from 'moment';
 import {Observable, of} from 'rxjs';
+import {MoreThanEqual} from '../../operator/more-than-equal';
+import {MoreThanEqualDate} from '../../operator/more-than-equal-date';
+import {LessThanEqual} from '../../operator/less-than-equal';
+import {LessThanEqualDate} from '../../operator/less-than-equal-date';
 
 export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
@@ -23,7 +27,9 @@ export class CaseCreationDate extends NoConfigurationCategory<Moment> {
                 operators.getOperator(EqualsDate),
                 operators.getOperator(NotEqualsDate),
                 operators.getOperator(MoreThanDate),
+                operators.getOperator(MoreThanEqualDate),
                 operators.getOperator(LessThanDate),
+                operators.getOperator(LessThanEqualDate),
                 operators.getOperator(InRangeDate)
             ],
             `${CaseCreationDate._i18n}.name`,
