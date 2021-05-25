@@ -1,3 +1,14 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10886/tab/release-report-all-issues"></a>
+## 5.3.1 (20.05.2021)
+### Bug fixes
+* [NAE-1307](https://netgrif.atlassian.net/browse/NAE-1307) - Cancel tasku sa volá aj keď daný task nemám assignutý
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10885/tab/release-report-all-issues"></a>
 ## 5.3.0 (05.05.2021)
 ### Bug fixes
