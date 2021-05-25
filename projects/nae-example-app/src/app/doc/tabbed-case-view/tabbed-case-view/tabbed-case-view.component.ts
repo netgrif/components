@@ -95,4 +95,8 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
         }, this._autoswitchToTaskTab, this._openExistingTab);
     }
 
+    saveFilter(filterData: SavedFilterMetadata) {
+        console.log(filterData);
+    }
+
 }

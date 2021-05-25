@@ -34,6 +34,7 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
                 filterMetadata: immediate.filterMetadata,
                 originViewId: getImmediateData(clickedCase, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID).value,
                 filterCase: clickedCase,
+                filterCaseId: clickedCase.stringId,
                 filter: new SimpleFilter(clickedCase.stringId, immediate.filterMetadata.filterType, {
                     query: immediate.value
                 }, clickedCase.title)
