@@ -24,6 +24,8 @@ import {LoadFilterInjectionData} from '../side-menu/content-components/load-filt
 import {FilterType} from './models/filter-type';
 import {Filter} from './models/filter';
 import {MergeOperator} from './models/merge-operator';
+import {SavedFilterMetadata} from '../search/models/persistance/saved-filter-metadata';
+import {FilterMetadata} from '../search/models/persistance/filter-metadata';
 
 /**
  * Service that manages filters created by users of the application.
@@ -144,13 +146,13 @@ export class UserFiltersService implements OnDestroy {
      * or the filter could not be saved
      */
     public save(searchService: SearchService, allowedNets: readonly string[],
-                searchCategories: readonly Category<any>[], viewId: string): Observable<string> {
+                searchCategories: readonly Category<any>[], viewId: string): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
             this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
             return of(undefined);
         }
 
-        const result = new ReplaySubject<string>(1);
+        const result = new ReplaySubject<SavedFilterMetadata>(1);
         this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories, viewId).subscribe(filterCaseId => {
             const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
                 newFilterCaseId: filterCaseId
@@ -160,7 +162,13 @@ export class UserFiltersService implements OnDestroy {
                     this.delete(filterCaseId);
                     result.next();
                 } else {
-                    result.next(filterCaseId);
+                    result.next({
+                        filterCaseId,
+                        allowedNets: [...allowedNets],
+                        originViewId: viewId,
+                        filterMetadata: this.filterMetadataFromSearchService(searchService, searchCategories),
+                        filter: SimpleFilter.fromQuery({query: searchService.rootPredicate.query.value}, searchService.filterType)
+                    });
                 }
                 result.complete();
             });
@@ -204,11 +212,7 @@ export class UserFiltersService implements OnDestroy {
                             type: FieldTypeResource.FILTER,
                             value: searchService.rootPredicate.query.value,
                             allowedNets,
-                            filterMetadata: {
-                                filterType: searchService.filterType,
-                                predicateMetadata: searchService.createPredicateMetadata(),
-                                searchCategories: searchCategories.map(c => c.serializeClass())
-                            }
+                            filterMetadata: this.filterMetadataFromSearchService(searchService, searchCategories)
                         },
                         [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
                             type: FieldTypeResource.TEXT,
@@ -268,5 +272,13 @@ export class UserFiltersService implements OnDestroy {
             this._log.error(`Could not assign task '${task.title}'`, task, error);
             callChain.next(false);
         });
+    }
+
+    protected filterMetadataFromSearchService(searchService: SearchService, searchCategories: readonly Category<any>[]): FilterMetadata {
+        return {
+            filterType: searchService.filterType,
+            predicateMetadata: searchService.createPredicateMetadata(),
+            searchCategories: searchCategories.map(c => c.serializeClass())
+        };
     }
 }
