@@ -38,6 +38,7 @@ import {SearchComponentModule} from '../search/search.module';
 import {HeaderComponentModule} from '../header/header.module';
 import {PanelComponentModule} from '../panel/panel.module';
 import {TabsComponentModule} from '../tabs/tabs.module';
+import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import {TabsComponentModule} from '../tabs/tabs.module';
         HeaderComponentModule,
         PanelComponentModule,
         TabsComponentModule,
+        CaseViewComponentModule,
     ],
     exports: [
         NavigationDrawerComponent,

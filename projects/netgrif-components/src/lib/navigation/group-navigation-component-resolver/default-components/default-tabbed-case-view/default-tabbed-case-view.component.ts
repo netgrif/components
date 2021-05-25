@@ -1,15 +1,76 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {
+    CategoryFactory,
+    ViewIdService,
+    SearchService,
+    NAE_BASE_FILTER,
+    AllowedNetsService,
+    NAE_SEARCH_CATEGORIES,
+    CaseViewService,
+    AllowedNetsServiceFactory,
+    TabbedCaseView,
+    NAE_TAB_DATA,
+    LoggerService,
+    SavedFilterMetadata
+} from '@netgrif/application-engine';
+import {HeaderComponent} from '../../../../header/header.component';
+import {InjectedTabbedCaseViewDataWithFilterCase} from '../model/injected-tabbed-case-view-data-with-filter-case';
+import {
+    filterCaseTabbedDataAllowedNetsServiceFactory,
+    filterCaseTabbedDataFilterFactory,
+    filterCaseTabbedDataSearchCategoriesFactory
+} from '../model/factory-methods';
 
 @Component({
-  selector: 'nc-default-tabbed-case-view',
-  templateUrl: './default-tabbed-case-view.component.html',
-  styleUrls: ['./default-tabbed-case-view.component.scss']
+    selector: 'nc-default-tabbed-case-view',
+    templateUrl: './default-tabbed-case-view.component.html',
+    styleUrls: ['./default-tabbed-case-view.component.scss'],
+    providers: [
+        CategoryFactory,
+        CaseViewService,
+        SearchService,
+        {   provide: ViewIdService, useValue: null},
+        {
+            provide: NAE_BASE_FILTER,
+            useFactory: filterCaseTabbedDataFilterFactory,
+            deps: [NAE_TAB_DATA]
+        },
+        {
+            provide: AllowedNetsService,
+            useFactory: filterCaseTabbedDataAllowedNetsServiceFactory,
+            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]
+        },
+        {   provide: NAE_SEARCH_CATEGORIES,
+            useFactory: filterCaseTabbedDataSearchCategoriesFactory,
+            deps: [CategoryFactory, NAE_TAB_DATA]
+        },
+    ]
 })
-export class DefaultTabbedCaseViewComponent implements OnInit {
+export class DefaultTabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
 
-  constructor() { }
+    @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-  ngOnInit(): void {
-  }
+    constructor(caseViewService: CaseViewService,
+                loggerService: LoggerService,
+                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewDataWithFilterCase) {
+        super(caseViewService, loggerService, injectedTabData);
+    }
+
+    ngAfterViewInit(): void {
+        super.initializeHeader(this.caseHeaderComponent);
+    }
+
+    loadFilter(filterData: SavedFilterMetadata) {
+        this._injectedTabData.tabViewRef.openTab({
+            label: {
+                text: filterData.filter.title
+            },
+            canBeClosed: true,
+            tabContentComponent: DefaultTabbedCaseViewComponent,
+            injectedObject: {...this._injectedTabData, filterCase: filterData.filterCase},
+            order: this._injectedTabData.tabViewOrder,
+            parentUniqueId: this._injectedTabData.tabUniqueId
+        }, this._autoswitchToTaskTab, this._openExistingTab);
+    }
 
 }

@@ -9,10 +9,10 @@ import {
     NAE_BASE_FILTER,
     AllowedNetsServiceFactory,
     NAE_SEARCH_CATEGORIES,
-    defaultTaskSearchCategoriesFactory,
     filterCaseFilterFactory,
     NAE_FILTER_CASE,
-    filterCaseAllowedNetsServiceFactory
+    filterCaseAllowedNetsServiceFactory,
+    filterCaseSearchCategoriesFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '../../../../header/header.component';
 
@@ -34,8 +34,8 @@ import {HeaderComponent} from '../../../../header/header.component';
             useFactory: filterCaseAllowedNetsServiceFactory,
             deps: [AllowedNetsServiceFactory, NAE_FILTER_CASE]
         },
-        {provide: ViewIdService, useValue: null},
-        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
+        {   provide: ViewIdService, useValue: null},
+        {   provide: NAE_SEARCH_CATEGORIES, useFactory: filterCaseSearchCategoriesFactory, deps: [CategoryFactory, NAE_FILTER_CASE]},
     ]
 })
 export class DefaultSimpleTaskViewComponent extends AbstractTaskView implements AfterViewInit {

@@ -25,7 +25,8 @@ export class DefaultTabViewComponent {
                 tabContentComponent: DefaultTabbedCaseViewComponent,
                 injectedObject: {
                     tabViewComponent: DefaultTabbedTaskViewComponent,
-                    tabViewOrder: 0
+                    tabViewOrder: 0,
+                    filterCase: this._filterCase
                 }
             }
         ];

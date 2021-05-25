@@ -15,6 +15,7 @@ export * from './clear-time-information';
 export * from './refresh-tree';
 export * from './destroy-subscription';
 export * from './filter-case-filter-factory';
+export * from './filter-case-search-categories-factory';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';
