@@ -37,6 +37,7 @@ import {
 import {SearchComponentModule} from '../search/search.module';
 import {HeaderComponentModule} from '../header/header.module';
 import {PanelComponentModule} from '../panel/panel.module';
+import {TabsComponentModule} from '../tabs/tabs.module';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import {PanelComponentModule} from '../panel/panel.module';
         MatProgressSpinnerModule,
         SearchComponentModule,
         HeaderComponentModule,
-        PanelComponentModule
+        PanelComponentModule,
+        TabsComponentModule,
     ],
     exports: [
         NavigationDrawerComponent,
