@@ -24,5 +24,5 @@ export enum GroupNavigationConstants {
     /**
      * Offset of the first datagroup that contains group navigation data from the start of the task data.
      */
-    FIRST_ENTRY_DATAGROUP_OFFSET = 1
+    FIRST_ENTRY_DATAGROUP_OFFSET = 3
 }
