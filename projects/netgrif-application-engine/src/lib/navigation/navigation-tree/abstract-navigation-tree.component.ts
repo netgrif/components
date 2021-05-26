@@ -333,7 +333,13 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     protected convertDatagroupsToNavEntries(navConfigDatagroups: Array<DataGroup>): Array<NavigationNode> {
         const result = [];
-        for (let i = GroupNavigationConstants.FIRST_ENTRY_DATAGROUP_OFFSET as number; i < navConfigDatagroups.length; i += 2) {
+        const firstEntryIndex = navConfigDatagroups.findIndex(
+            group => group.fields.some(
+                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX)
+            )
+        );
+
+        for (let i = firstEntryIndex; i < navConfigDatagroups.length; i += 2) {
             // "first" datagroup has name
             const nameField = navConfigDatagroups[i].fields.find(
                 field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX)

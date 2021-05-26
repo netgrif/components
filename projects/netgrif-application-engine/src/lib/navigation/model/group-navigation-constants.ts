@@ -22,7 +22,8 @@ export enum GroupNavigationConstants {
      */
     NAVIGATION_FILTER_CASE_ID_FIELD_ID_SUFFIX = 'filter_case_id',
     /**
-     * Offset of the first datagroup that contains group navigation data from the start of the task data.
+     * Suffix of the field id that is the navigation entry marker.
+     * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
      */
-    FIRST_ENTRY_DATAGROUP_OFFSET = 3
+    NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX = 'entry_marker',
 }
