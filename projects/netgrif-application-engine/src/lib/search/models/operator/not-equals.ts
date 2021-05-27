@@ -2,6 +2,7 @@ import {Operator} from './operator';
 import {Equals} from './equals';
 import {OperatorService} from '../../operator-service/operator.service';
 import {Query} from '../query/query';
+import {Operators} from './operators';
 
 /**
  * Inequality operator. Will match if the field has a different value than the input.
@@ -28,5 +29,9 @@ export class NotEquals extends Operator<string | number> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.notEquals', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.NOT_EQUALS;
     }
 }

@@ -8,15 +8,20 @@ import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CaseMetaField, HeaderColumn, HeaderColumnType, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {
+    AllowedNetsService, AllowedNetsServiceFactory,
+    CaseMetaField,
+    HeaderColumn,
+    HeaderColumnType,
+    MaterialModule,
+    NAE_BASE_FILTER, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
+    TranslateLibModule
+} from '@netgrif/application-engine';
 import {
     TestConfigurationService,
     ConfigurationService,
     CaseViewService,
-    TestCaseViewFactory,
-    CaseViewServiceFactory,
     SearchService,
-    TestCaseSearchServiceFactory,
     AuthenticationMethodService,
     MockAuthenticationMethodService
 } from '@netgrif/application-engine';
@@ -38,17 +43,14 @@ describe('CasePanelComponent', () => {
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                CaseViewService,
+                SearchService,
                 {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
-                {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [CasePanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA]

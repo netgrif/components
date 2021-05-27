@@ -9,6 +9,7 @@ export * from './models/predicate/editable-elementary-predicate';
 export * from './models/predicate/editable-clause-predicate';
 export * from './models/predicate/predicate-with-generator';
 export * from './models/predicate/editable-clause-predicate-with-generators';
+export * from './models/predicate/editable-predicate-with-generator';
 
 export * from './models/operator/operator';
 export * from './models/operator/substring';
@@ -61,20 +62,37 @@ export * from './models/category/search-autocomplete-option';
 export * from './models/category/autocomplete-options';
 export * from './models/category/net-attribute-pair';
 export * from './models/category/name-id-pair';
+export * from './models/component-configuration/search-component-configuration';
+export * from './models/base-filter';
+export * from './models/persistance/generator-metadata';
+export * from './models/persistance/filter-metadata';
+export * from './models/persistance/saved-filter-metadata';
+export * from './models/persistance/filter-text-segment';
+export * from './models/persistance/filter-metadata-allowed-nets';
 
 /* Enums */
 export * from './models/boolean-operator';
 export * from './models/category/search-input-type';
+export * from './models/category/categories';
 export * from './models/operator-template-part-type';
+export * from './models/search-index';
+export * from './models/component-configuration/search-mode';
+export * from './models/operator/operators';
 
 /* Services */
 export * from './search-service/search.service';
 export * from './operator-service/operator.service';
+export * from './operator-service/operator-resolver.service';
 export * from './category-factory/category-factory';
+export * from './category-factory/category-resolver.service';
 export * from './header-search-service/header-search.service';
+export * from './search-keyword-resolver-service/search-index-resolver.service';
+export * from './advanced-search-component-initialization-service/advanced-search-component-initialization.service';
 
 /* Components */
 export * from './search-component/abstract-search.component';
+export * from './fulltext-search-component/abstract-fulltext-search.component';
+export * from './advanced-search-component/abstract-advanced-search.component';
 export * from './search-clause-component/abstract-search-clause.component';
 export * from './search-predicate-component/abstract-search-predicate.component';
 export * from './search-operand-input-component/abstract-search-operand-input.component';
@@ -85,3 +103,5 @@ export * from './category-factory/default-categories-factories';
 
 /* Tokens */
 export * from './category-factory/search-categories-injection-token';
+export * from './models/component-configuration/search-component-configuration-injection-token';
+export * from './models/base-filter-injection-token';

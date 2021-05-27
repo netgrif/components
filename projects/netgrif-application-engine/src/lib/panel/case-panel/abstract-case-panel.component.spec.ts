@@ -17,7 +17,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {SearchService} from '../../search/search-service/search.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -27,7 +27,9 @@ import {SignUpService} from '../../authentication/sign-up/services/sign-up.servi
 import {OverflowService} from '../../header/services/overflow.service';
 import {UserService} from '../../user/services/user.service';
 import {Case} from '../../resources/interface/case';
-import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -48,20 +50,17 @@ describe('AbstractCasePanelComponent', () => {
                 LoggerService,
                 TranslateService,
                 CaseResourceService,
+                CaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                SearchService,
                 {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
-                {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                SignUpService
+                SignUpService,
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 TestCasePanelComponent,

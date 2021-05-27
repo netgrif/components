@@ -3,6 +3,7 @@ import {OperatorService} from '../../operator-service/operator.service';
 import {Query} from '../query/query';
 import {EqualsDate} from './equals-date';
 import {Moment} from 'moment';
+import {Operators} from './operators';
 
 /**
  * Inequality operator for Date fields. Will match if the field has a date with different day than the provided date.
@@ -26,5 +27,9 @@ export class NotEqualsDate extends Operator<Moment> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.notEquals', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.NOT_EQUALS_DATE;
     }
 }

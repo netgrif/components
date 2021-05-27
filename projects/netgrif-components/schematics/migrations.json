@@ -1,15 +1,15 @@
 {
     "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
-        "migration-4.0.1": {
-            "version": "4.0.1",
-            "description": "applies changes when moving from v4.0.x to v4.0.1 or higher",
-            "factory": "./migrations/4.0.1/migration-4.0.1#schematicEntryPoint"
-        },
         "migration-4.1": {
             "version": "4.1",
             "description": "applies changes when moving from v4.0.x to v4.1.0 or higher",
             "factory": "./migrations/4.1/migration-4.1#schematicEntryPoint"
+        },
+        "migration-5.4": {
+            "version": "5.4",
+            "description": "applies changes when moving from v5.3.x to v5.4.0 or higher",
+            "factory": "./migrations/5.4/migration-5.4#schematicEntryPoint"
         }
     }
 }

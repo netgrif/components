@@ -5,6 +5,8 @@ import {HeaderChange} from '../../header/models/user-changes/header-change';
 import {HttpParams} from '@angular/common/http';
 import {HeaderChangeType} from '../../header/models/user-changes/header-change-type';
 import {OnDestroy} from '@angular/core';
+import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {SearchIndex} from '../../search/models/search-index';
 
 
 export abstract class SortableView implements OnDestroy {
@@ -12,12 +14,13 @@ export abstract class SortableView implements OnDestroy {
     protected _lastHeaderSearchState: SortChangeDescription;
     protected _subHeader: Subscription;
 
-    protected constructor() {
+    protected constructor(protected _resolver: SearchIndexResolverService) {
         this._lastHeaderSearchState = {
             columnType: undefined,
             fieldIdentifier: '',
             sortDirection: '',
-            columnIdentifier: -1
+            columnIdentifier: -1,
+            fieldType: undefined
         };
     }
 
@@ -56,7 +59,18 @@ export abstract class SortableView implements OnDestroy {
         if (this._lastHeaderSearchState.columnType === HeaderColumnType.META) {
             return this.getMetaFieldSortId();
         } else {
-            return `dataSet.${this._lastHeaderSearchState.fieldIdentifier}.sortable`;
+            switch (this._lastHeaderSearchState.fieldType) {
+                case 'number':
+                    return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.NUMBER);
+                case 'date':
+                case 'dateTime':
+                    return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.TIMESTAMP);
+                case 'user':
+                case 'userList':
+                    return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.FULL_NAME, true);
+                default:
+                    return this._resolver.getIndex(this._lastHeaderSearchState.fieldIdentifier, SearchIndex.FULLTEXT, true);
+            }
         }
     }
 

@@ -1,10 +1,11 @@
 import {MoreThanDate} from './more-than-date';
 import {OperatorService} from '../../operator-service/operator.service';
 import moment from 'moment';
+import {OperatorResolverService} from '../../operator-service/operator-resolver.service';
 
 describe('MoreThanDate', () => {
     it('should create an instance', () => {
-        expect(new MoreThanDate(new OperatorService())).toBeTruthy();
+        expect(new MoreThanDate(new OperatorService(new OperatorResolverService()))).toBeTruthy();
     });
 
     it('moment handles negative rollover', () => {

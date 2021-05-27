@@ -14,6 +14,7 @@ import {FilterType} from '../../filter/models/filter-type';
 import {Page} from '../interface/page';
 import {CaseGetRequestBody} from '../interface/case-get-request-body';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
+import {CreateCaseRequestBody} from '../interface/create-case-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -105,7 +106,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * POST
      * {{baseUrl}}/api/workflow/case
      */
-    public createCase(body: object): Observable<Case> {
+    public createCase(body: CreateCaseRequestBody): Observable<Case> {
         return this._resourceProvider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
     }
 

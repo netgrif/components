@@ -1,35 +1,36 @@
 <div fxLayout="row wrap" fxLayoutAlign="start center">
-    <div class="search-icon" fxLayout="row" fxLayoutAlign="start center">
+    <div class="search-icon" fxLayout="row" fxLayoutAlign="start center" *ngIf="showSearchIcon">
         <mat-icon [inline]="true">search</mat-icon>
     </div>
 
     <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
 
     <ng-template #advancedSearch>
-        <ng-template ngFor let-item [ngForOf]="getPredicateMap() | keyvalue" let-last="last" [ngForTrackBy]="trackByPredicates">
-            <nc-search-clause [predicate]="item.value" [predicateId]="item.key" [remove$]="removeChild$" class="clause-margin"></nc-search-clause>
-            <div *ngIf="!last" class="button-margin">{{'search.and' | translate | uppercase}}</div>
-        </ng-template>
-        <button mat-stroked-button (click)="addChildPredicate()" class="button-margin">+ {{'search.and' | translate | uppercase}}</button>
+        <nc-advanced-search></nc-advanced-search>
     </ng-template>
 
     <ng-template #fullTextSearch>
-        <mat-form-field appearance="outline" class="disable-error-margin">
-            <input type="text" matInput
-                   [placeholder]="'search.fullText' | translate"
-                   [formControl]="fullTextFormControl"
-                   (keydown.enter)="$event.target.blur()">
-        </mat-form-field>
+        <nc-fulltext-search></nc-fulltext-search>
     </ng-template>
 
-    <button mat-icon-button class="search-toggle-margin"
-            [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate" (click)="toggleSearchMode()">
+    <button mat-icon-button class="search-buttons-margin" *ngIf="showSearchToggleButton"
+            [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate"
+            (click)="toggleSearchMode()">
         <mat-icon>youtube_searched_for</mat-icon>
     </button>
 
-    <ng-template [ngIf]="advancedSearchDisplayed">
-        <button mat-icon-button class="search-toggle-margin" [matTooltip]="'search.tooltip.help' | translate" (click)="showHelp()">
-            <mat-icon>help</mat-icon>
-        </button>
-    </ng-template>
+    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showSaveFilterButton"
+            [matTooltip]="'search.tooltip.save' | translate" (click)="saveFilter()">
+        <mat-icon>save</mat-icon>
+    </button>
+
+    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showLoadFilterButton"
+            [matTooltip]="'search.tooltip.load' | translate" (click)="loadFilter()">
+        <mat-icon>open_in_browser</mat-icon>
+    </button>
+
+    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showAdvancedSearchHelp"
+            [matTooltip]="'search.tooltip.help' | translate" (click)="showHelp()">
+        <mat-icon>help</mat-icon>
+    </button>
 </div>
