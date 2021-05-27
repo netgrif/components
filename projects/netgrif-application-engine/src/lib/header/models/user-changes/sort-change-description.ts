@@ -9,5 +9,6 @@ export interface SortChangeDescription extends ColumnHeaderChange {
     fieldIdentifier: string;
     sortDirection: SortDirection;
     columnType: HeaderColumnType;
+    fieldType: string;
     petriNetIdentifier?: string;
 }

@@ -1,0 +1,32 @@
+.predicate-body {
+    border-radius: 4px;
+    padding-right: 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    min-height: 32px;
+}
+
+.smaller-button {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    margin-right: -4px;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.text-margin {
+    margin-left: 4px;
+}
+
+// TODO 19.1.2021 - we might want to get the "white" color from the theme, so that it is not hardcoded
+.white-background {
+    background: #fafafa;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    margin: 0;
+    padding-bottom: 0;
+}
