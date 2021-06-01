@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {CaseResourceService, Filter, FilterType, ProcessService, SimpleFilter, TreeCaseViewService} from '@netgrif/application-engine';
 import {HttpParams} from '@angular/common/http';
-import {CreateCaseEventOutcome} from '../../../../../netgrif-application-engine/src/lib/resources/event-outcomes/case-outcomes/create-case-event-outcome';
+import {
+    CreateCaseEventOutcome
+} from '../../../../../netgrif-application-engine/src/lib/resources/event-outcomes/case-outcomes/create-case-event-outcome';
 
 @Component({
     selector: 'nae-app-tree-view-example',
