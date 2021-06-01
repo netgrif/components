@@ -13,7 +13,7 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../models/subject-task-operations';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
-import {MessageResource} from '../../resources/interface/message-resource';
+import {EventOutcomeMessageResource, MessageResource} from '../../resources/interface/message-resource';
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -29,6 +29,7 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {TaskDataService} from './task-data.service';
 import {DataFocusPolicyService} from './data-focus-policy.service';
+import {TaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/task-event-outcome';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -107,7 +108,36 @@ describe('CancelTaskService', () => {
     it('should cancel successfully', done => {
         expect(testTask.startDate).toBeTruthy();
         expect(testTask.user).toBeTruthy();
-        resourceService.response = {success: 'success'};
+        resourceService.response = {
+            success: 'success',
+            outcome: {
+                outcomes: [],
+                message: '',
+                task: {
+                    caseId: '',
+                    transitionId: '',
+                    title: '',
+                    caseColor: '',
+                    caseTitle: '',
+                    user: null,
+                    roles: {
+                        role: 'perform'
+                    },
+                    startDate: null,
+                    finishDate: null,
+                    assignPolicy: AssignPolicy.manual,
+                    dataFocusPolicy: DataFocusPolicy.manual,
+                    finishPolicy: FinishPolicy.manual,
+                    stringId: 'taskId',
+                    layout: {rows: 1, cols: 1, offset: 0},
+                    dataGroups: [],
+                    _links: {}
+                },
+                data: {
+                    changedFields: []
+                }
+            } as TaskEventOutcome
+        };
 
         let taskEvent: TaskEventNotification;
         taskEventService.taskEventNotifications$.subscribe(event => {
@@ -131,7 +161,12 @@ describe('CancelTaskService', () => {
     it('should cancel unsuccessful', done => {
         expect(testTask.startDate).toBeTruthy();
         expect(testTask.user).toBeTruthy();
-        resourceService.response = {error: 'error'};
+        resourceService.response = {
+            error: 'error',
+            changedFields: {
+                changedFields: []
+            }
+        };
 
         let taskEvent: TaskEventNotification;
         taskEventService.taskEventNotifications$.subscribe(event => {
@@ -183,9 +218,9 @@ describe('CancelTaskService', () => {
 
 class TestTaskResourceService {
 
-    public response: MessageResource;
+    public response: EventOutcomeMessageResource;
 
-    public cancelTask(): Observable<MessageResource> {
+    public cancelTask(): Observable<EventOutcomeMessageResource> {
         if (this.response.error === 'throw') {
             return of(this.response).pipe(map(r => {
                 throw throwError(r);

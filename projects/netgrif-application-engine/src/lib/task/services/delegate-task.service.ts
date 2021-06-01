@@ -21,6 +21,7 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
 import {DelegateTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/delegate-task-event-outcome';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 
 
 /**
@@ -83,19 +84,19 @@ export class DelegateTaskService extends TaskHandlingService {
                 this._taskState.startLoading(delegatedTaskId);
 
                 this._taskResourceService.delegateTask(this._safeTask.stringId, event.data.id)
-                    .pipe(take(1)).subscribe((eventOutcome: DelegateTaskEventOutcome) => {
+                    .pipe(take(1)).subscribe((outcomeResource: EventOutcomeMessageResource) => {
                     this._taskState.stopLoading(delegatedTaskId);
                     if (!this.isTaskRelevant(delegatedTaskId)) {
                         this._log.debug('current task changed before the delegate response could be received, discarding...');
                         return;
                     }
 
-                    if (eventOutcome.success) {
-                        this._taskContentService.updateStateData(eventOutcome);
-                        this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
+                    if (outcomeResource.success) {
+                        this._taskContentService.updateStateData(outcomeResource.outcome as DelegateTaskEventOutcome);
+                        this._taskDataService.emitChangedFields((outcomeResource.outcome as DelegateTaskEventOutcome).data.changedFields);
                         this.completeSuccess(afterAction);
-                    } else if (eventOutcome.error) {
-                        this._snackBar.openErrorSnackBar(eventOutcome.error);
+                    } else if (outcomeResource.error) {
+                        this._snackBar.openErrorSnackBar(outcomeResource.error);
                         this.sendNotification(false);
                         afterAction.next(false);
                         afterAction.complete();

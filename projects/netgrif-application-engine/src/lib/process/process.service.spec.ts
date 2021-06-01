@@ -148,6 +148,10 @@ describe('ProcessService', () => {
     afterEach(() => {
         TestBed.resetTestingModule();
     });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 class MyPetriNetResource {

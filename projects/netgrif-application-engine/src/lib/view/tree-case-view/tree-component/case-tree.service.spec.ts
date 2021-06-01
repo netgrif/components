@@ -28,11 +28,13 @@ import {Net} from '../../../process/net';
 import {ProcessService} from '../../../process/process.service';
 import {createMockPage} from '../../../utility/tests/utility/create-mock-page';
 import {TaskSearchCaseQuery, TaskSearchRequestBody} from '../../../filter/models/task-search-request-body';
-import {EventOutcome} from '../../../resources/interface/event-outcome';
 import {TaskSetDataRequestBody} from '../../../resources/interface/task-set-data-request-body';
-import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {ChangedFields} from '../../../data-fields/models/changed-fields';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
+import {SetDataEventOutcome} from '../../../resources/event-outcomes/data-outcomes/set-data-event-outcome';
+import {AssignTaskEventOutcome} from '../../../resources/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {CreateCaseEventOutcome} from '../../../resources/event-outcomes/case-outcomes/create-case-event-outcome';
 
 
 class MockTreeNode {
@@ -471,14 +473,21 @@ class TreeTestCaseResourceService {
         }
     }
 
-    public createCase(body: any): Observable<Case> {
+    public createCase(body: any): Observable<EventOutcomeMessageResource> {
         if (body && body.title && body.netId) {
             if (!this.createNext) {
                 const newCaseId = this.createMockTreeNode(new MockTreeNode(true));
                 const newCase = this.mockCases.get(newCaseId);
                 newCase.title = body.title;
                 newCase.petriNetId = body.netId;
-                return of(newCase);
+                return of({
+                    success: '',
+                    outcome: {
+                        acase: newCase,
+                        message: '',
+                        outcomes: []
+                    } as CreateCaseEventOutcome
+                });
             } else {
                 const preparedCase = this.unavailableMockCases.get(this.createNext.stringId);
                 this.createNext = undefined;
@@ -487,7 +496,14 @@ class TreeTestCaseResourceService {
                 }
                 this.unavailableMockCases.delete(preparedCase.stringId);
                 this.mockCases.set(preparedCase.stringId, preparedCase);
-                return of(preparedCase);
+                return of({
+                    success: '',
+                    outcome: {
+                        acase: preparedCase,
+                        message: '',
+                        outcomes: []
+                    } as CreateCaseEventOutcome
+                });
             }
         } else {
             throw new Error('The mock TreeTestCaseResourceService cannot mock the provided create case request');
@@ -540,11 +556,22 @@ class TreeTestTaskResourceService {
         }
     }
 
-    public assignTask(taskId: string): Observable<EventOutcome> {
-        return of({success: '' + this.mockTasks.has(taskId), error: `Task with ID ${taskId} doesn't exist in the mock`, changedFields: {}});
+    public assignTask(taskId: string): Observable<EventOutcomeMessageResource> {
+        return of({
+            success: '' + this.mockTasks.has(taskId),
+            error: `Task with ID ${taskId} doesn't exist in the mock`,
+            outcome: {
+                message: '',
+                outcomes: [],
+                data: {
+                    changedFields: []
+                },
+                task: this.mockTasks.get(taskId)
+            } as AssignTaskEventOutcome
+        });
     }
 
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<ChangedFieldContainer> {
+    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
         const task = this.mockTasks.get(taskId);
         const caseOfTask = this._mockCaseService.mockCases.get(task.caseId);
         Object.entries(body).forEach(([fieldId, changeRequest]) => {
@@ -555,7 +582,16 @@ class TreeTestTaskResourceService {
         });
 
         if (!this.changeNext) {
-            return of({changedFields: {}});
+            return of({
+                success: '',
+                outcome: {
+                    outcomes: [],
+                    message: '',
+                    data: {
+                        changedFields: []
+                    }
+                } as SetDataEventOutcome
+            });
         } else {
             Object.entries(this.changeNext).forEach(([fieldId, changeRequest]) => {
                 const data = getImmediateData(caseOfTask, fieldId);
@@ -565,11 +601,20 @@ class TreeTestTaskResourceService {
             });
             const change = this.changeNext;
             this.changeNext = undefined;
-            return of({changedFields: change});
+            return of({
+                success: '',
+                outcome: {
+                    outcomes: [],
+                    message: '',
+                    data: {
+                        changedFields: change
+                    }
+                } as SetDataEventOutcome
+            });
         }
     }
 
-    public finishTask(taskId: string): Observable<EventOutcome> {
+    public finishTask(taskId: string): Observable<EventOutcomeMessageResource> {
         return this.assignTask(taskId);
     }
 }

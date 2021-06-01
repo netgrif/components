@@ -1,9 +1,9 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
 import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {of, Subject, throwError} from 'rxjs';
+import {Observable, of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -51,6 +51,9 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {TranslateService} from '@ngx-translate/core';
 import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {AssignTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {FinishTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/finish-task-event-outcome';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -237,25 +240,92 @@ class MyTaskResources {
         return of({changedFields: {}});
     }
 
-    assignTask(stringId) {
+    assignTask(stringId): Observable<EventOutcomeMessageResource> {
         if (stringId === 'true') {
-            return of({success: 'Success'});
+            return of({
+                success: 'Success',
+                outcome: {
+                    message: '',
+                    task: {
+                        caseId: 'string',
+                        transitionId: 'string',
+                        title: 'string',
+                        caseColor: 'string',
+                        caseTitle: 'string',
+                        user: undefined,
+                        roles: {},
+                        startDate: undefined,
+                        finishDate: undefined,
+                        assignPolicy: AssignPolicy.manual,
+                        dataFocusPolicy: DataFocusPolicy.manual,
+                        finishPolicy: FinishPolicy.manual,
+                        stringId: 'string',
+                        layout: {
+                            offset: 0,
+                            cols: undefined,
+                            rows: undefined
+                        },
+                        dataGroups: [],
+                        _links: {}
+                    },
+                    data: {
+                        changedFields: []
+                    }
+                } as AssignTaskEventOutcome
+            });
         } else if (stringId === 'false') {
-            return of({error: 'error'});
+            return of({
+                error: 'error',
+                changedFields: {
+                    changedFields: []
+                }
+            });
         } else if (stringId === 'error') {
-            return of({error: 'error'}).pipe(map(res => {
+            return of({
+                error: 'error'
+            }).pipe(map(res => {
                 throw throwError(res);
             }));
         }
     }
 
-    finishTask(stringId) {
+    finishTask(stringId): Observable<EventOutcomeMessageResource> {
         if (stringId === 'true') {
-            return of({success: 'Success'});
+            return of({
+                success: 'Success',
+                outcome: {
+                    message: '',
+                    task: {
+                        caseId: 'string',
+                        transitionId: 'string',
+                        title: 'string',
+                        caseColor: 'string',
+                        caseTitle: 'string',
+                        user: undefined,
+                        roles: {},
+                        startDate: undefined,
+                        finishDate: undefined,
+                        assignPolicy: AssignPolicy.manual,
+                        dataFocusPolicy: DataFocusPolicy.manual,
+                        finishPolicy: FinishPolicy.manual,
+                        stringId: 'string',
+                        layout: {
+                            offset: 0,
+                            cols: undefined,
+                            rows: undefined
+                        },
+                        dataGroups: [],
+                        _links: {}
+                    },
+                    data: {
+                        changedFields: []
+                    }
+                } as FinishTaskEventOutcome
+            });
         } else if (stringId === 'false') {
-            return of({error: 'error'});
+            return of({error: 'error', changedFields: { changedFields: [] }});
         } else if (stringId === 'error') {
-            return of({error: 'error'}).pipe(map(res => {
+            return of({error: 'error', changedFields: { changedFields: [] }}).pipe(map(res => {
                 throw throwError(res);
             }));
         }

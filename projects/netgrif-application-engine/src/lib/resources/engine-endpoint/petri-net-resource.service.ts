@@ -7,7 +7,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
 import {HttpEventType, HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
-import {EventOutcomeMessageResource, MessageResource, PetriNetMessageResource} from '../interface/message-resource';
+import {EventOutcomeMessageResource, MessageResource} from '../interface/message-resource';
 import {PetriNetReference} from '../interface/petri-net-reference';
 import {PetriNetRequestBody} from '../interface/petri-net-request-body';
 import {Page} from '../interface/page';

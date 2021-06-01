@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {CaseResourceService, Filter, FilterType, ProcessService, SimpleFilter, TreeCaseViewService} from '@netgrif/application-engine';
 import {HttpParams} from '@angular/common/http';
+import {CreateCaseEventOutcome} from '../../../../../netgrif-application-engine/src/lib/resources/event-outcomes/case-outcomes/create-case-event-outcome';
 
 @Component({
     selector: 'nae-app-tree-view-example',
@@ -38,7 +39,7 @@ export class TreeViewExampleComponent {
                         };
                         this._caseResource.createCase(newCaseRequest).subscribe(newCase => {
                             this.filter = new SimpleFilter('id', FilterType.CASE, {
-                                query: 'stringId:' + newCase.case.stringId
+                                query: 'stringId:' + (newCase.outcome as CreateCaseEventOutcome).acase.stringId
                             });
                             this.loading = false;
                         });

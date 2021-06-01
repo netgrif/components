@@ -192,7 +192,6 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
             if ($event.data) {
                 this.reload();
                 myCase.next($event.data);
-                // myCase.next($event.data.outcome.acase);
             }
             myCase.complete();
         });

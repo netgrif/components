@@ -18,6 +18,7 @@ import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {CancelTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/cancel-task-event-outcome';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -90,23 +91,24 @@ export class CancelTaskService extends TaskHandlingService {
 
     protected cancelRequest(afterAction = new Subject<boolean>(), canceledTaskId: string,
                             queueAction = new Subject<boolean>(), fromQueue = false) {
-        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe((eventOutcome: CancelTaskEventOutcome) => {
+        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1))
+            .subscribe((outcomeResource: EventOutcomeMessageResource) => {
             this._taskState.stopLoading(canceledTaskId);
             if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel response could be received, discarding...');
                 return;
             }
 
-            if (eventOutcome.success) {
-                this._taskContentService.updateStateData(eventOutcome);
-                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
+            if (outcomeResource.success) {
+                this._taskContentService.updateStateData(outcomeResource.outcome as CancelTaskEventOutcome);
+                this._taskDataService.emitChangedFields((outcomeResource.outcome as CancelTaskEventOutcome).data.changedFields );
                 fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, queueAction, true);
-            } else if (eventOutcome.error !== undefined) {
-                if (eventOutcome.error !== '') {
-                    this._snackBar.openErrorSnackBar(eventOutcome.error);
+            } else if (outcomeResource.error !== undefined) {
+                if (outcomeResource.error !== '') {
+                    this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
-                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
+                this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
                 this.completeActions(afterAction, queueAction, false);
             }
         }, error => {

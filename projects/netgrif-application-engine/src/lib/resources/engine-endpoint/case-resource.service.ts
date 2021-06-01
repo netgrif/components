@@ -15,6 +15,7 @@ import {CaseGetRequestBody} from '../interface/case-get-request-body';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {CreateCaseEventOutcome} from '../event-outcomes/case-outcomes/create-case-event-outcome';
 import {DeleteCaseEventOutcome} from '../event-outcomes/case-outcomes/delete-case-event-outcome';
+import {EventOutcomeMessageResource} from '../interface/message-resource';
 
 @Injectable({
     providedIn: 'root'
@@ -69,7 +70,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * DELETE
      * {{baseUrl}}/api/workflow/case/:id
      */
-    public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<DeleteCaseEventOutcome> {
+    public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.delete$('workflow/case/' + caseID,
             this.SERVER_URL,
             deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
@@ -82,9 +83,10 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * GET
      * {{baseUrl}}/api/workflow/case/:id/data
      */
-    public getCaseData(caseID: string): Observable<Array<DataGroupsResource>> {
+    // todo zmeniť response
+    public getCaseData(caseID: string): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(
-            map(r => this.changeType(r, 'dataGroups'))
+            map(r => this.changeType(r, undefined))
         );
     }
 
@@ -106,7 +108,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * POST
      * {{baseUrl}}/api/workflow/case
      */
-    public createCase(body: object): Observable<CreateCaseEventOutcome> {
+    public createCase(body: object): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
     }
 

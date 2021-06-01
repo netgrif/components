@@ -3,10 +3,9 @@ import {Injectable} from '@angular/core';
 import {Params, ProviderProgress, ResourceProvider} from '../resource-provider.service';
 import {Observable} from 'rxjs';
 import {Count} from '../interface/count';
-import {MessageResource} from '../interface/message-resource';
+import {EventOutcomeMessageResource, MessageResource} from '../interface/message-resource';
 import {filter, map} from 'rxjs/operators';
 import {TaskReference} from '../interface/task-reference';
-import {DataGroup, DataGroupsResource} from '../interface/data-groups';
 import {Task} from '../interface/task';
 import {ChangedFieldContainer} from '../interface/changed-field-container';
 import {CountService} from '../abstract-endpoint/count-service';
@@ -14,16 +13,13 @@ import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {HttpEventType} from '@angular/common/http';
 import {Page} from '../interface/page';
-import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {TaskSetDataRequestBody} from '../interface/task-set-data-request-body';
 import {LoggerService} from '../../logger/services/logger.service';
-import {EventOutcome} from '../interface/event-outcome';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
-import {AssingTaskEventOutcome} from '../event-outcomes/task-outcomes/assing-task-event-outcome';
-import {CancelTaskEventOutcome} from '../event-outcomes/task-outcomes/cancel-task-event-outcome';
-import {DelegateTaskEventOutcome} from '../event-outcomes/task-outcomes/delegate-task-event-outcome';
-import {FinishTaskEventOutcome} from '../event-outcomes/task-outcomes/finish-task-event-outcome';
+import {DataGroup} from '../interface/data-groups';
+import {DataField} from '../../data-fields/models/abstract-data-field';
+import {GetDataGroupsEventOutcome} from '../event-outcomes/data-outcomes/get-data-groups-event-outcome';
 
 @Injectable({
     providedIn: 'root'
@@ -65,7 +61,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/assign/:id
-    public assignTask(taskId: string): Observable<AssingTaskEventOutcome> {
+    public assignTask(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.get$('task/assign/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -75,7 +71,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/cancel/:id
-    public cancelTask(taskId: string): Observable<CancelTaskEventOutcome> {
+    public cancelTask(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.get$('task/cancel/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -85,7 +81,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/delegate/:id
-    public delegateTask(taskId: string, body: object): Observable<DelegateTaskEventOutcome> {
+    public delegateTask(taskId: string, body: object): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('task/delegate/' + taskId, this.SERVER_URL, body, undefined, {'Content-Type': 'text/plain'})
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -95,7 +91,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * GET
      */
     // {{baseUrl}}/api/task/finish/:id
-    public finishTask(taskId: string): Observable<FinishTaskEventOutcome> {
+    public finishTask(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.get$('task/finish/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -191,9 +187,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * @returns the raw backend response without any additional processing
      */
     // {{baseUrl}}/api/task/:id/data
-    public rawGetData(taskId: string): Observable<Array<DataGroupsResource>> {
+    public rawGetData(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.get$('task/' + taskId + '/data', this.SERVER_URL)
-            .pipe(map(r => this.changeType(r, 'dataGroups')));
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -206,15 +202,15 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * @param taskId ID of the task who's data should be retrieved from the server
      * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
      */
-    // todo data event outcomy?
     public getData(taskId: string): Observable<Array<DataGroup>> {
         return this.rawGetData(taskId).pipe(
-            map(responseArray => {
-                if (!Array.isArray(responseArray)) {
+            map((responseOutcome: EventOutcomeMessageResource) => {
+                const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
+                if (!Array.isArray(dataGroupsArray)) {
                     return [];
                 }
                 const result = [];
-                responseArray.forEach(dataGroupResource => {
+                dataGroupsArray.forEach(dataGroupResource => {
                     const dataFields: Array<DataField<any>> = [];
                     if (!dataGroupResource.fields._embedded) {
                         return; // continue
@@ -243,7 +239,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
      * POST
      */
     // {{baseUrl}}/api/task/:id/data
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<ChangedFieldContainer> {
+    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }

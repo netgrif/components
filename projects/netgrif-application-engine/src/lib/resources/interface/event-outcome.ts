@@ -1,9 +1,6 @@
-import {MessageResource} from './message-resource';
+export interface EventOutcome {
 
-// todo spravené pre task, treba refactor podľa backendu
-export interface EventOutcome extends MessageResource {
+    message?: string;
 
-    message: string;
-
-    outcomes: EventOutcome[];
+    outcomes?: EventOutcome[];
 }

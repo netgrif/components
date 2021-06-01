@@ -14,7 +14,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
 import {Observable, of, throwError} from 'rxjs';
-import {MessageResource} from '../../resources/interface/message-resource';
+import {EventOutcomeMessageResource, MessageResource} from '../../resources/interface/message-resource';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
 import {Task} from '../../resources/public-api';
@@ -29,6 +29,7 @@ import {TaskEventNotification} from '../../task-content/model/task-event-notific
 import {TaskEvent} from '../../task-content/model/task-event';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {TaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/task-event-outcome';
 
 describe('AssignTaskService', () => {
     let service: AssignTaskService;
@@ -98,7 +99,36 @@ describe('AssignTaskService', () => {
 
     it('should assign successfully', done => {
         expect(testTask.startDate).toBeTruthy();
-        resourceService.response = {success: 'success'};
+        resourceService.response = {
+            success: 'success',
+            outcome: {
+                message: '',
+                data: {
+                    changedFields: []
+                },
+                task: {
+                    caseId: '',
+                    transitionId: '',
+                    title: '',
+                    caseColor: '',
+                    caseTitle: '',
+                    user: null,
+                    roles: {
+                        role: 'perform'
+                    },
+                    startDate: null,
+                    finishDate: null,
+                    assignPolicy: AssignPolicy.manual,
+                    dataFocusPolicy: DataFocusPolicy.manual,
+                    finishPolicy: FinishPolicy.manual,
+                    stringId: 'taskId',
+                    layout: {rows: 1, cols: 1, offset: 0},
+                    dataGroups: [],
+                    _links: {}
+                },
+                outcomes: []
+            } as TaskEventOutcome
+        };
 
         let taskEvent: TaskEventNotification;
         taskEventService.taskEventNotifications$.subscribe(event => {
@@ -120,7 +150,12 @@ describe('AssignTaskService', () => {
 
     it('should assign unsuccessful', done => {
         expect(testTask.startDate).toBeTruthy();
-        resourceService.response = {error: 'error'};
+        resourceService.response = {
+            error: 'error',
+            changedFields: {
+                changedFields: []
+            }
+        };
 
         let taskEvent: TaskEventNotification;
         taskEventService.taskEventNotifications$.subscribe(event => {
@@ -169,9 +204,9 @@ describe('AssignTaskService', () => {
 
 class TestTaskResourceService {
 
-    public response: MessageResource;
+    public response: EventOutcomeMessageResource;
 
-    public assignTask(): Observable<MessageResource> {
+    public assignTask(): Observable<EventOutcomeMessageResource> {
         if (this.response.error === 'throw') {
             return of(this.response).pipe(map(r => {
                 throw throwError(r);

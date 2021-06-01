@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {TaskResourceService} from '../task-resource.service';
 import {FieldConverterService} from '../../../task-content/services/field-converter.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {Params, ProviderProgress, ResourceProvider} from '../../resource-provider.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Observable} from 'rxjs';
-import {EventOutcome} from '../../interface/event-outcome';
 import {filter, map} from 'rxjs/operators';
 import {FilterType} from '../../../filter/models/filter-type';
 import {Filter} from '../../../filter/models/filter';
@@ -13,15 +12,12 @@ import {Page} from '../../interface/page';
 import {ChangedFieldContainer} from '../../interface/changed-field-container';
 import {TaskSetDataRequestBody} from '../../interface/task-set-data-request-body';
 import {TaskReference} from '../../interface/task-reference';
-import {DataGroup, DataGroupsResource} from '../../interface/data-groups';
+import {DataGroup} from '../../interface/data-groups';
 import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {Task} from '../../interface/task';
 import {HttpEventType} from '@angular/common/http';
-import {MessageResource} from '../../interface/message-resource';
-import {AssignTaskService} from '../../../task/services/assign-task.service';
-import {AssingTaskEventOutcome} from '../../event-outcomes/task-outcomes/assing-task-event-outcome';
-import {CancelTaskEventOutcome} from '../../event-outcomes/task-outcomes/cancel-task-event-outcome';
-import {FinishTaskEventOutcome} from '../../event-outcomes/task-outcomes/finish-task-event-outcome';
+import {EventOutcomeMessageResource, MessageResource} from '../../interface/message-resource';
+import {GetDataGroupsEventOutcome} from '../../event-outcomes/data-outcomes/get-data-groups-event-outcome';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +36,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/public/task/assign/:id
-    public assignTask(taskId: string): Observable<AssingTaskEventOutcome> {
+    public assignTask(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._provider.get$('public/task/assign/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -50,7 +46,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/public/task/cancel/:id
-    public cancelTask(taskId: string): Observable<CancelTaskEventOutcome> {
+    public cancelTask(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._provider.get$('public/task/cancel/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -60,7 +56,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * GET
      */
     // {{baseUrl}}/api/public/task/finish/:id
-    public finishTask(taskId: string): Observable<FinishTaskEventOutcome> {
+    public finishTask(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._provider.get$('public/task/finish/' + taskId, this.SERVER_URL)
             .pipe(map(r => this.changeType(r, undefined)));
     }
@@ -85,7 +81,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * @returns the raw backend response without any additional processing
      */
     // {{baseUrl}}/api/public/task/:id/data
-    public rawGetData(taskId: string): Observable<Array<DataGroupsResource>> {
+    public rawGetData(taskId: string): Observable<EventOutcomeMessageResource> {
         return this._provider.get$('public/task/' + taskId + '/data', this.SERVER_URL)
             .pipe(map(r => this.changeType(r, 'dataGroups')));
     }
@@ -100,14 +96,16 @@ export class PublicTaskResourceService extends TaskResourceService {
      * @param taskId ID of the task who's data should be retrieved from the server
      * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
      */
+    // todo opraviť
     public getData(taskId: string): Observable<Array<DataGroup>> {
         return this.rawGetData(taskId).pipe(
-            map(responseArray => {
-                if (!Array.isArray(responseArray)) {
+            map((responseOutcome: EventOutcomeMessageResource) => {
+                const dataGroupsArray = this.changeType((responseOutcome.outcome as GetDataGroupsEventOutcome).data, 'dataGroups');
+                if (!Array.isArray(dataGroupsArray)) {
                     return [];
                 }
                 const result = [];
-                responseArray.forEach(dataGroupResource => {
+                dataGroupsArray.forEach(dataGroupResource => {
                     const dataFields: Array<DataField<any>> = [];
                     if (!dataGroupResource.fields._embedded) {
                         return; // continue
@@ -136,7 +134,7 @@ export class PublicTaskResourceService extends TaskResourceService {
      * POST
      */
     // {{baseUrl}}/api/public/task/:id/data
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<ChangedFieldContainer> {
+    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
         return this._provider.post$('public/task/' + taskId + '/data', this.SERVER_URL, body)
             .pipe(map(r => this.changeType(r, undefined)));
     }

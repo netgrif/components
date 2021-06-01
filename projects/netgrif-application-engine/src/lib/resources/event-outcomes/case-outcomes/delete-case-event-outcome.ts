@@ -1,6 +1,6 @@
-import {CaseEventOutcome} from './case-event-outcome';
+import {EventOutcome} from '../../interface/event-outcome';
 
-// tslint:disable-next-line:no-empty-interface
-export interface DeleteCaseEventOutcome extends CaseEventOutcome{
+export interface DeleteCaseEventOutcome extends EventOutcome {
 
+    stringId: string;
 }

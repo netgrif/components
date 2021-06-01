@@ -6,6 +6,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {CreateCaseEventOutcome} from '../event-outcomes/case-outcomes/create-case-event-outcome';
 
 describe('CaseResourceService', () => {
     let service: CaseResourceService;
@@ -77,13 +78,22 @@ describe('CaseResourceService', () => {
     it('should getCaseData', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getCaseData('id').subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res.outcome).toEqual({
+                    message: '',
+                    outcomes: []
+                });
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/data');
             expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
+            reqLog.flush({
+                outcome: {
+                    message: '',
+                    outcomes: []
+                },
+                success: ''
+            });
         })
     );
 
@@ -106,15 +116,19 @@ describe('CaseResourceService', () => {
     it('should createCase', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.createCase({}).subscribe(res => {
-                expect(res.case.stringId).toEqual('string');
+                expect((res.outcome as CreateCaseEventOutcome).acase.stringId).toEqual('string');
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
             expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({case: {
-                stringId: 'string'
-            }});
+            reqLog.flush({
+                outcome: {
+                    acase: {
+                        stringId: 'string'
+                    }
+                }
+            });
         })
     );
 

@@ -13,7 +13,7 @@ import {TaskContentService} from '../../task-content/services/task-content.servi
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MessageResource} from '../../resources/interface/message-resource';
+import {EventOutcomeMessageResource, MessageResource} from '../../resources/interface/message-resource';
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -30,6 +30,8 @@ import {TaskEventNotification} from '../../task-content/model/task-event-notific
 import {TaskEvent} from '../../task-content/model/task-event';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {TaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/task-event-outcome';
+import {AssignTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/assign-task-event-outcome';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
@@ -102,7 +104,36 @@ describe('FinishTaskService', () => {
 
     it('should finish successfully', done => {
         expect(testTask.startDate).toBeTruthy();
-        resourceService.response = {success: 'success'};
+        resourceService.response = {
+            success: 'success',
+            outcome: {
+                message: '',
+                outcomes: [],
+                task: {
+                    caseId: '',
+                    transitionId: '',
+                    title: '',
+                    caseColor: '',
+                    caseTitle: '',
+                    user: null,
+                    roles: {
+                        role: 'perform'
+                    },
+                    startDate: null,
+                    finishDate: null,
+                    assignPolicy: AssignPolicy.manual,
+                    dataFocusPolicy: DataFocusPolicy.manual,
+                    finishPolicy: FinishPolicy.manual,
+                    stringId: 'taskId',
+                    layout: {rows: 1, cols: 1, offset: 0},
+                    dataGroups: [],
+                    _links: {}
+                },
+                data: {
+                    changedFields: []
+                }
+            } as AssignTaskEventOutcome
+        };
 
         let taskEvent: TaskEventNotification;
         taskEventService.taskEventNotifications$.subscribe(event => {
@@ -125,7 +156,12 @@ describe('FinishTaskService', () => {
 
     it('should finish unsuccessful', done => {
         expect(testTask.startDate).toBeTruthy();
-        resourceService.response = {error: 'error'};
+        resourceService.response = {
+            error: 'error',
+            changedFields: {
+                changedFields: []
+            }
+        };
 
         let taskEvent: TaskEventNotification;
         taskEventService.taskEventNotifications$.subscribe(event => {
@@ -174,9 +210,9 @@ describe('FinishTaskService', () => {
 
 class TestTaskResourceService {
 
-    public response: MessageResource;
+    public response: EventOutcomeMessageResource;
 
-    public finishTask(): Observable<MessageResource> {
+    public finishTask(): Observable<EventOutcomeMessageResource> {
         if (this.response.error === 'throw') {
             return of(this.response).pipe(map(r => {
                 throw throwError(r);

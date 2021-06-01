@@ -1,6 +1,6 @@
 import {TaskEventOutcome} from './task-event-outcome';
 
 // tslint:disable-next-line:no-empty-interface
-export interface AssingTaskEventOutcome extends TaskEventOutcome {
+export interface AssignTaskEventOutcome extends TaskEventOutcome {
 
 }

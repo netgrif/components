@@ -17,6 +17,7 @@ import {createTaskEventNotification} from '../../task-content/model/task-event-n
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {FinishTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/finish-task-event-outcome';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 
 
 /**
@@ -98,26 +99,27 @@ export class FinishTaskService extends TaskHandlingService {
         }
         this._taskState.startLoading(finishedTaskId);
 
-        this._taskResourceService.finishTask(this._safeTask.stringId).pipe(take(1)).subscribe((eventOutcome: FinishTaskEventOutcome) => {
+        this._taskResourceService.finishTask(this._safeTask.stringId).pipe(take(1))
+            .subscribe((outcomeResource: EventOutcomeMessageResource) => {
             this._taskState.stopLoading(finishedTaskId);
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
                 return;
             }
 
-            if (eventOutcome.success) {
-                this._taskContentService.updateStateData(eventOutcome);
-                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
+            if (outcomeResource.success) {
+                this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
+                this._taskDataService.emitChangedFields((outcomeResource.outcome as FinishTaskEventOutcome).data.changedFields);
                 this._taskOperations.reload();
                 this.sendNotification(true);
                 afterAction.next(true);
                 afterAction.complete();
                 this._taskOperations.close();
-            } else if (eventOutcome.error !== undefined) {
-                if (eventOutcome.error !== '') {
-                    this._snackBar.openErrorSnackBar(eventOutcome.error);
+            } else if (outcomeResource.error !== undefined) {
+                if (outcomeResource.error !== '') {
+                    this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
-                this._taskDataService.emitChangedFields(eventOutcome.data.changedFields);
+                this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
                 this.sendNotification(false);
                 afterAction.next(false);
                 afterAction.complete();

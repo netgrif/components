@@ -12,6 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {MatToolbar} from '@angular/material/toolbar';
 import semver from 'semver';
+import {CreateCaseEventOutcome} from '../../../resources/event-outcomes/case-outcomes/create-case-event-outcome';
 
 interface Form {
     value: string;
@@ -141,7 +142,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
                         this._sideMenuControl.close({
                             opened: false,
                             message: 'Confirm new case setup',
-                            data: response
+                            data: (response.outcome as CreateCaseEventOutcome).acase
                         });
                     },
                     error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error)

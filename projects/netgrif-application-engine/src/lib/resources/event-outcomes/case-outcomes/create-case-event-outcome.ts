@@ -1,7 +1,9 @@
-import {CaseEventOutcome} from './case-event-outcome';
+import {EventOutcome} from '../../interface/event-outcome';
+import {Case} from '../../interface/case';
 
-// tslint:disable-next-line:no-empty-interface
-export interface CreateCaseEventOutcome extends CaseEventOutcome {
+export interface CreateCaseEventOutcome extends EventOutcome {
+
+    acase: Case;
 
 }
 
