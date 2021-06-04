@@ -5,19 +5,38 @@
          [fxHide.lt-md]="i >= 2 && this.headerService.responsiveHeaders"
          [fxHide.lt-sm]="i >= 1 && this.headerService.responsiveHeaders" fxFlex [ngStyle]="{'min-width': getMinWidth()}">
         <div
-            *ngIf="!!header && header.fieldType !== 'button' && header.fieldType !== 'file' && header.fieldType !== 'dateTime'; then thenBlock else elseBlock"
+            *ngIf="!!header && header.fieldType !== 'button'; then thenBlock else elseBlock"
             fxFlex></div>
         <ng-template #thenBlock>
             <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType">
                 <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'">
                     <mat-label>{{header.title | translate}}</mat-label>
-                    <input matInput [matDatepicker]="datepicker"
+                    <input matInput autocomplete="off"
+                           [matDatepicker]="datepicker"
                            [formControl]="formControls[i]"
                            [placeholder]="'headers.date' | translate"
                            (click)="datepicker.open()"
                            (keydown.enter)="datepicker.close()">
                     <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
                     <mat-datepicker #datepicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'dateTime'">
+                    <mat-label>{{header.title | translate}}</mat-label>
+                    <input matInput autocomplete="off"
+                           [ngxMatDatetimePicker]="datetimepicker"
+                           [formControl]="formControls[i]"
+                           [placeholder]="'headers.dateTime' | translate"
+                           (click)="datetimepicker.open()"
+                           (keydown.enter)="datetimepicker.close()">
+                    <mat-datepicker-toggle matPrefix [for]="datetimepicker"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #datetimepicker
+                                             [showSpinners]="true"
+                                             [showSeconds]="false"
+                                             [stepHour]="1"
+                                             [stepMinute]="5"
+                                             [color]="'primary'"
+                                             [enableMeridian]="false">
+                    </ngx-mat-datetime-picker>
                 </mat-form-field>
                 <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'number'">
                     <mat-label>{{header.title | translate}}</mat-label>

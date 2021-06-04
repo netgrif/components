@@ -16,6 +16,7 @@ import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.se
 import {CreateCaseEventOutcome} from '../event-outcomes/case-outcomes/create-case-event-outcome';
 import {DeleteCaseEventOutcome} from '../event-outcomes/case-outcomes/delete-case-event-outcome';
 import {EventOutcomeMessageResource} from '../interface/message-resource';
+import {CreateCaseRequestBody} from '../interface/create-case-request-body';
 
 @Injectable({
     providedIn: 'root'
@@ -83,7 +84,6 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * GET
      * {{baseUrl}}/api/workflow/case/:id/data
      */
-    // todo zmeniť response
     public getCaseData(caseID: string): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(
             map(r => this.changeType(r, undefined))
@@ -108,7 +108,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * POST
      * {{baseUrl}}/api/workflow/case
      */
-    public createCase(body: object): Observable<EventOutcomeMessageResource> {
+    public createCase(body: CreateCaseRequestBody): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
     }
 

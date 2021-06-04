@@ -25,12 +25,6 @@
             "factory": "./view-service/schematic-create-view-service#schematicEntryPoint",
             "schema": "./view-service/schema.json",
             "hidden": true
-        },
-        "update-package-json": {
-            "description": "Modifies build script in package.json file",
-            "factory": "./add/update-package-json/update-package-json#schematicEntryPoint",
-            "schema": "./add/update-package-json/schema.json",
-            "hidden": true
         }
     }
 }

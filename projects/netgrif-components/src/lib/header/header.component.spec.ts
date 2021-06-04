@@ -8,6 +8,7 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {MatIconModule} from '@angular/material/icon';
 import {HeaderComponentModule} from './header.module';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
     AuthenticationService,
     CaseViewService,
@@ -17,7 +18,7 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     SuccessSnackBarComponent,
-    TestConfigurationService,
+    TestConfigurationService, TestNoAllowedNetsFactory,
     TestViewService,
     TranslateLibModule,
     UserResourceService,
@@ -45,6 +46,7 @@ describe('HeaderComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 ErrorSnackBarComponent,

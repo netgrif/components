@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine-project",
-    "version": "5.3.0-rc.1",
+    "version": "5.4.1",
     "description": "Netgrif Application Engine Frontend project. Project includes angular library as base for NAE applications.",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -56,6 +56,7 @@
         "project:local-build": "npm run nae:local-build && npm run nc:local-build",
         "project:full-test": "npm run nae:full-test && npm run nae:local-build && npm run nc:full-test",
         "project:start": "npm run project:local-build && ng serve",
+        "components:start": "npm run nc:local-build && ng serve",
         "example:start": "ng serve",
         "example:build": "ng build --prod",
         "test": "ng test",

@@ -8,6 +8,12 @@ import {debounceTime} from 'rxjs/operators';
 
 export abstract class AbstractSearchOperandInputComponent implements OnInit, OnDestroy {
 
+    /**
+     * Whether the contents displayed in this component can be edited by the user or not.
+     *
+     * Defaults to `true`
+     */
+    @Input() editable = true;
     @Input() inputFormControl: FormControl;
     @Input() inputType: SearchInputType;
     @Input() first: boolean;
@@ -83,6 +89,10 @@ export abstract class AbstractSearchOperandInputComponent implements OnInit, OnD
     }
 
     public editInput(): void {
+        if (!this.editable) {
+            return;
+        }
+
         this._inputConfirmed = false;
     }
 

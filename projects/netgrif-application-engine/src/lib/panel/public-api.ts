@@ -5,7 +5,11 @@ export * from './task-panel/abstract-task-panel.component';
 export * from './task-panel-list/abstract-task-list.component';
 export * from './workflow-panel/abstract-workflow-panel.component';
 export * from './abstract/tabbed-virtual-scroll.component';
+export * from './immediate/abstract-immediate-filter-text.component';
+export * from './immediate/abstract-immediate-filter-text-content.component';
 
 /* DATA */
 export * from './task-panel-list/task-panel-data/task-panel-data';
 export * from './task-panel/models/disable-functions';
+export * from './abstract/featured-value';
+export * from './immediate/model/filter-text-injection-token';

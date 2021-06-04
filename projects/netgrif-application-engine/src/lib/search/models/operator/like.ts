@@ -1,5 +1,6 @@
 import {Operator} from './operator';
 import {Query} from '../query/query';
+import {Operators} from './operators';
 
 /**
  * A fuzzy search operator for string fields.
@@ -24,5 +25,9 @@ export class Like extends Operator<string> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.like', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.LIKE;
     }
 }
