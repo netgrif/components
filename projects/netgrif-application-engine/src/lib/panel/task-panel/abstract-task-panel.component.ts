@@ -28,6 +28,7 @@ import {Task} from '../../resources/interface/task';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
+import {FeaturedValue} from '../abstract/featured-value';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
@@ -118,7 +119,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         super.ngOnInit();
         this._taskContentService.task = this._taskPanelData.task;
 
-        // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         this.createContentPortal();
 
         this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
@@ -277,7 +277,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
         const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
@@ -308,7 +308,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
         if (this._taskContentService.task && this._taskContentService.task.immediateData) {
             const immediate = this._taskContentService.task.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
             return this.parseImmediateValue(immediate);

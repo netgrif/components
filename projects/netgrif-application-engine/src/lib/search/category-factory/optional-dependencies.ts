@@ -1,7 +1,7 @@
-import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {CategoryFactory} from './category-factory';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
-import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {SearchIndexResolverService} from '../search-keyword-resolver-service/search-index-resolver.service';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 
 /**
  * Other dependencies that the {@link CategoryFactory} provides to the [Categories]{@link Category} it creates.
@@ -14,14 +14,8 @@ export interface OptionalDependencies {
      * within a net to that net.
      */
     categoryFactory: CategoryFactory;
-    /**
-     * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
-     */
-    caseViewService: CaseViewService | null;
-    /**
-     * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
-     */
-    taskViewService: TaskViewService | null;
+    searchIndexResolver: SearchIndexResolverService;
+    allowedNetsService: AllowedNetsService;
     /**
      * If the {@link CategoryFactory} cannot inject an instance of this service into itself `null` will be provided.
      */

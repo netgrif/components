@@ -14,6 +14,8 @@ import {OverflowService} from '../../header/services/overflow.service';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {UserService} from '../../user/services/user.service';
 import {take} from 'rxjs/operators';
+import {getImmediateData} from '../../utility/get-immediate-data';
+import {FeaturedValue} from '../abstract/featured-value';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -38,10 +40,10 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         return false;
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
         switch (selectedHeader.fieldIdentifier) {
             case CaseMetaField.MONGO_ID:
-                return {value: this.case_.stringId, icon: undefined};
+                return {value: this.case_.stringId, icon: undefined, type: 'meta'};
             case CaseMetaField.VISUAL_ID:
                 return {value: this.case_.visualId, icon: undefined, type: 'meta'};
             case CaseMetaField.TITLE:
@@ -57,8 +59,8 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
-        const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
+        const immediate = getImmediateData(this.case_, selectedHeader.fieldIdentifier);
         return this.parseImmediateValue(immediate);
     }
 

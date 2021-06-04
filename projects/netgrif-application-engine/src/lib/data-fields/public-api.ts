@@ -31,6 +31,8 @@ export * from './text-field/textarea-field/abstract-textarea-field.component';
 export * from './user-field/abstract-user-field.component';
 export * from './enumeration-field/enumeration-icon-field/abstract-enumeration-icon-field.component';
 export * from './enumeration-field/enumeration-autocomplete-dynamic-field/abstract-enumeration-autocomplete-dynamic-field.component';
+export * from './filter-field/abstract-filter-field.component';
+export * from './filter-field/abstract-filter-field-content.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -50,6 +52,7 @@ export * from './button-field/models/button-field';
 export * from './date-field/models/custom-date-adapter';
 export * from './task-ref-field/model/task-ref-field';
 export * from './enumeration-field/models/dynamic-enumeration-field';
+export * from './filter-field/models/filter-field';
 
 /* Interfaces */
 export * from './models/changed-fields';
@@ -63,6 +66,7 @@ export * from './data-field-template/models/wrapped-boolean';
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
 export * from './models/invalid-data-policy-token';
+export * from './filter-field/models/filter-field-injection-token';
 
 /* Enums */
 export * from './models/template-appearance';

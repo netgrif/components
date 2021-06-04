@@ -6,28 +6,47 @@ import {BooleanOperator} from '../../boolean-operator';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocomplete-category';
 import {NotEquals} from '../../operator/not-equals';
+import {Categories} from '../categories';
+import {Subscription} from 'rxjs';
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
     private static readonly _i18n = 'search.category.case.process';
 
     protected _uniqueOptionsMap: Map<string, Set<string>>;
+    private _allowedNetsSub: Subscription;
+    private _destroyed: boolean;
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(['processIdentifier'],
-            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
-            logger);
+            logger,
+            operators);
         this._uniqueOptionsMap = new Map<string, Set<string>>();
     }
 
+    destroy() {
+        super.destroy();
+        if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
+            this._allowedNetsSub.unsubscribe();
+        }
+        this._destroyed = true;
+    }
+
     protected createOptions(): void {
-        this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
+        if (this._destroyed) {
+            return;
+        }
+
+        this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
+            this._optionsMap.clear();
             allowedNets.forEach(petriNet => {
                 if (this.isUniqueOption(petriNet.title, petriNet.identifier)) {
                     this.addToMap(petriNet.title, petriNet.identifier);
                 }
             });
+            this.updateOptions();
         });
     }
 
@@ -64,6 +83,10 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     }
 
     duplicate(): CaseProcess {
-        return new CaseProcess(this._operators, this._log, this._optionalDependencies);
+        return new CaseProcess(this._operatorService, this._log, this._optionalDependencies);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.CASE_PROCESS;
     }
 }
