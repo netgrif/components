@@ -32,7 +32,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     }
 
     public createNewCase(): Observable<Case> {
-        if (this._newCaseCreationConfig.enableCaseTitle === false && this._caseViewService.allowedNetsCount === 1) {
+        if (this._newCaseCreationConfig.enableCaseTitle === false && this._caseViewService.getAllowedNetsCount() === 1) {
             return this._caseViewService.createDefaultNewCase();
         } else {
             return this._caseViewService.createNewCase(this._newCaseCreationConfig);

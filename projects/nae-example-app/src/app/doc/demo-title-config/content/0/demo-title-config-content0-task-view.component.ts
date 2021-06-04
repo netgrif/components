@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    TaskViewServiceFactory,
     CategoryFactory,
     defaultTaskSearchCategoriesFactory,
     InjectedTabbedTaskViewData,
@@ -8,16 +7,21 @@ import {
     NAE_TAB_DATA,
     SearchService,
     TabbedTaskView,
-    tabbedTaskViewServiceFactory,
     TaskViewService,
     ViewIdService,
+    NAE_BASE_FILTER,
+    NAE_TASK_VIEW_CONFIGURATION,
+    tabbedTaskViewConfigurationFactory,
+    tabbedAllowedNetsServiceFactory, AllowedNetsService, AllowedNetsServiceFactory
 } from 'netgrif-application-engine';
 import {
     HeaderComponent,
 } from 'netgrif-components';
 
-const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
-    return new SearchService(injectedTabData.baseFilter);
+const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
+    return {
+        filter: injectedTabData.baseFilter
+    };
 };
 
 @Component({
@@ -26,14 +30,22 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     styleUrls: ['./demo-title-config-content0-task-view.component.scss'],
     providers: [
         CategoryFactory,
-        TaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory,
-            deps: [NAE_TAB_DATA]},
-        {   provide: TaskViewService,
-            useFactory: tabbedTaskViewServiceFactory,
-            deps: [TaskViewServiceFactory, NAE_TAB_DATA]},
+        TaskViewService,
+        SearchService,
+        {
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
+            deps: [NAE_TAB_DATA]
+        },
+        {
+            provide: AllowedNetsService,
+            useFactory: tabbedAllowedNetsServiceFactory,
+            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]
+        },
         {   provide: ViewIdService, useValue: null},
+        {   provide: NAE_TASK_VIEW_CONFIGURATION,
+            useFactory: tabbedTaskViewConfigurationFactory,
+            deps: [NAE_TAB_DATA]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })

@@ -239,6 +239,10 @@ export class CaseViewService extends SortableView implements OnDestroy {
         }
     }
 
+    public getAllowedNetsCount(): number {
+        return this._allowedNetsService.allowedNets.length;
+    }
+
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
         params = params.set('size', pagination.size + '');
         params = params.set('page', pagination.number + '');
