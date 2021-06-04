@@ -18,7 +18,9 @@ export class PredicateWithGenerator extends Predicate {
      */
     constructor(protected _predicate: Predicate, protected _generator?: Category<any>, initiallyVisible?: boolean) {
         super();
-        this._visible = initiallyVisible !== undefined ? initiallyVisible : !_generator;
+        this._visible = initiallyVisible ?? !_generator;
+        this.initializeMetadataGenerator();
+        this.initializeFilterTextSegmentsGenerator();
     }
 
     get query(): Query {
@@ -48,12 +50,54 @@ export class PredicateWithGenerator extends Predicate {
     /**
      * @returns the wrapped Predicate
      */
-    get wrappedPredicate(): Predicate {
+    public getWrappedPredicate(): Predicate {
         return this._predicate;
+    }
+
+    /**
+     * @returns result [getWrappedPredicate()]{@link PredicateWithGenerator#getWrappedPredicate}
+     */
+    public get wrappedPredicate(): Predicate {
+        return this.getWrappedPredicate();
     }
 
     show() {
         super.show();
         this._predicate.show();
+    }
+
+    /**
+     * Cleans-up the inner state of this object.
+     */
+    public destroy(): void {
+        if (this._generator !== undefined) {
+            this.generator.destroy();
+        }
+    }
+
+    private initializeMetadataGenerator() {
+        this._metadataGenerator = () => {
+            try {
+                return this._predicate.createGeneratorMetadata();
+            } catch (e) {
+                if (this._generator && this._generator.providesPredicate) {
+                    return this._generator.createMetadata();
+                }
+                throw e;
+            }
+        };
+    }
+
+    private initializeFilterTextSegmentsGenerator() {
+        this._filterTextSegmentsGenerator = () => {
+            const segments = this._predicate.createFilterTextSegments();
+            if (segments.length > 0) {
+                return segments;
+            }
+            if (this._generator && this._generator.providesPredicate) {
+                return this._generator.createFilterTextSegments();
+            }
+            return [];
+        };
     }
 }

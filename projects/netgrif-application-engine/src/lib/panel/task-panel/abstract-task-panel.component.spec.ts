@@ -33,7 +33,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory, TestTaskViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {ErrorSnackBarComponent} from '../../snack-bar/components/error-snack-bar/error-snack-bar.component';
 import {SuccessSnackBarComponent} from '../../snack-bar/components/success-snack-bar/success-snack-bar.component';
 import {TaskPanelData} from '../task-panel-list/task-panel-data/task-panel-data';
@@ -50,7 +50,9 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {TranslateService} from '@ngx-translate/core';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -74,19 +76,18 @@ describe('AbtsractTaskPanelComponent', () => {
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                TaskViewServiceFactory,
+                TaskViewService,
                 SideMenuService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
-                    deps: [TaskViewServiceFactory]
-                },
                 {provide: TaskResourceService, useClass: MyTaskResources},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
+                },
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 TaskDataService,
                 TaskEventService,
@@ -99,6 +100,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 TestTaskPanelComponent,

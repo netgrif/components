@@ -163,7 +163,9 @@
         "tooltip": {
             "toAdvanced": "Wechseln zum erweiterten Suchmodus",
             "toFullText": "Wechseln zum einfachen Suchmodus",
-            "help": "Hilfe"
+            "help": "Hilfe",
+            "save": "Filter speichern",
+            "load": "Filter laden"
         },
         "help": {
             "title": "Hilfe für den erweiterten Suchmodus",
@@ -259,6 +261,7 @@
     "headers": {
         "newHeader": "Kopfzeile auswählen",
         "date": "Datum auswählen",
+        "dateTime": "Datum und Uhrzeit asuwählen",
         "selectUser": "Benutzer auswählen",
         "caseMeta": {
             "mongoID": "Fall ID",
