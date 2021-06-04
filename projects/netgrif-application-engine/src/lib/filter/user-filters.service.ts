@@ -26,6 +26,7 @@ import {Filter} from './models/filter';
 import {MergeOperator} from './models/merge-operator';
 import {SavedFilterMetadata} from '../search/models/persistance/saved-filter-metadata';
 import {FilterMetadata} from '../search/models/persistance/filter-metadata';
+import {CreateCaseEventOutcome} from '../resources/event-outcomes/case-outcomes/create-case-event-outcome';
 
 /**
  * Service that manages filters created by users of the application.
@@ -197,7 +198,11 @@ export class UserFiltersService implements OnDestroy {
                 title: this._filterNet.defaultCaseName,
                 netId: this._filterNet.stringId
             }).subscribe(filterCase => {
-                this._taskService.getTasks(SimpleFilter.fromTaskQuery({case: {id: filterCase.stringId}})).subscribe(page => {
+                this._taskService.getTasks(SimpleFilter.fromTaskQuery({
+                    case: {
+                        id: (filterCase.outcome as CreateCaseEventOutcome).acase.stringId
+                    }
+                })).subscribe(page => {
                     if (!hasContent(page)) {
                         throw new Error('Expected filter process to contain tasks, but none were found!');
                     }
@@ -223,7 +228,7 @@ export class UserFiltersService implements OnDestroy {
                             throw new Error('Filter instance could not be initialized');
                         }
 
-                        result.next(filterCase.stringId);
+                        result.next((filterCase.outcome as CreateCaseEventOutcome).acase.stringId);
                         result.complete();
                     }));
                 });
