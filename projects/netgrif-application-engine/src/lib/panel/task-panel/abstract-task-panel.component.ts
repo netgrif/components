@@ -29,6 +29,10 @@ import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
+import {CurrencyPipe, registerLocaleData} from '@angular/common';
+import en from '@angular/common/locales/en';
+import sk from '@angular/common/locales/sk';
+import de from '@angular/common/locales/de';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
@@ -81,8 +85,12 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
-                          protected _translate: TranslateService) {
-        super(_translate);
+                          protected _translate: TranslateService,
+                          protected _currencyPipe: CurrencyPipe) {
+        super(_translate, _currencyPipe);
+        registerLocaleData(en);
+        registerLocaleData(sk);
+        registerLocaleData(de);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);

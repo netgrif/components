@@ -16,6 +16,10 @@ import {UserService} from '../../user/services/user.service';
 import {take} from 'rxjs/operators';
 import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
+import {CurrencyPipe, registerLocaleData} from '@angular/common';
+import en from '@angular/common/locales/en';
+import sk from '@angular/common/locales/sk';
+import de from '@angular/common/locales/de';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -31,8 +35,12 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
 
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService) {
-        super(_translateService);
+                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
+                          protected _currencyPipe: CurrencyPipe) {
+        super(_translateService, _currencyPipe);
+        registerLocaleData(en);
+        registerLocaleData(sk);
+        registerLocaleData(de);
     }
 
     public show(event: MouseEvent): boolean {

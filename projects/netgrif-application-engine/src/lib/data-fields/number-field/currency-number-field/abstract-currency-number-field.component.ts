@@ -36,10 +36,22 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     }
 
     getCurrencySymbol(): string {
+        if (this.numberField._formatFilter === undefined) {
+            return getCurrencySymbol(this.numberField.component.properties['code'],
+                'wide', this.numberField.component.properties['locale']);
+        }
         return getCurrencySymbol(this.numberField._formatFilter.code, 'wide', this.numberField._formatFilter.locale);
     }
 
     private transformCurrency(value: string): string {
+        if (this.numberField._formatFilter === undefined) {
+            return this._currencyPipe.transform(
+                parseFloat(value),
+                this.numberField.component.properties['code'],
+                'symbol',
+                '1.' + this.numberField.component.properties['fractionSize'] + '-' + this.numberField.component.properties['fractionSize'],
+                this.numberField.component.properties['locale']);
+        }
         return this._currencyPipe.transform(
             parseFloat(value),
             this.numberField._formatFilter.code,
