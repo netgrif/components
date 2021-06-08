@@ -22,7 +22,7 @@ export class MoreThanEqualDate extends Operator<Moment> {
         this.checkArgumentsCount(args);
         const arg = moment(args[0]);
         clearTimeInformation(arg);
-        return this.moreThanEqual.createQuery(elasticKeywords,[arg.valueOf()])
+        return this.moreThanEqual.createQuery(elasticKeywords, [arg.valueOf()]);
     }
 
     getOperatorNameTemplate(): Array<string> {

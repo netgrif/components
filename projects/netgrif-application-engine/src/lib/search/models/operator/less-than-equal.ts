@@ -4,7 +4,7 @@ import {Operators} from './operators';
 /**
  * Less or equal than operator for numeric fields
  */
-export class LessThanEqual extends Operator<number>{
+export class LessThanEqual extends Operator<number> {
 
     constructor() {
         super(1, '<=');
