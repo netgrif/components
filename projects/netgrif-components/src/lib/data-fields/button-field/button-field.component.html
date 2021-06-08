@@ -24,9 +24,9 @@
                 [disabled]="formControl.disabled || dataField.changed"
                 (click)="resolveValue()">
                 <mat-icon *ngIf="dataField.changed"><mat-spinner color="primary" diameter="22"></mat-spinner></mat-icon>
-                {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : ((resolveComponentType() === 'fab' || resolveComponentType() === 'minifab' || resolveComponentType() === 'icon') ? '' : dataField.placeholder) }}
+                {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : ( isIconTypeButton() ? '' : dataField.placeholder) }}
             <mat-icon
-                *ngIf="(resolveComponentType() === 'fab' || resolveComponentType() === 'minifab' || resolveComponentType() === 'icon') && !dataField.changed">{{dataField.placeholder}}</mat-icon>
+                *ngIf="isIconTypeButton() && !dataField.changed">{{dataField.placeholder}}</mat-icon>
         </button>
 
         <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>
