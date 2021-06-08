@@ -8,8 +8,7 @@ import {CurrencyPipe} from '@angular/common';
 @Component({
     selector: 'nc-case-panel',
     templateUrl: './case-panel.component.html',
-    styleUrls: ['./case-panel.component.scss'],
-    providers: [CurrencyPipe]
+    styleUrls: ['./case-panel.component.scss']
 })
 export class CasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
