@@ -1,4 +1,4 @@
-import {TabContent, TabViewInterface} from '../interfaces';
+import {InjectedTabData, TabContent, TabViewInterface} from '../interfaces';
 import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -228,6 +228,7 @@ export class TabView implements TabViewInterface {
         if (index === this.selectedIndex && this.selectedIndex + 1 < this.openedTabs.length) {
             this.openedTabs[index + 1].tabSelected$.next(true);
         }
+        this.openedTabs[index].tabClosed$.next();
         const deleted = this.openedTabs.splice(index, 1);
         deleted[0].destroy();
         if (index < this.selectedIndex) {
@@ -247,8 +248,9 @@ export class TabView implements TabViewInterface {
             Object.assign(tab.injectedObject, {
                 tabUniqueId: tab.uniqueId,
                 tabViewRef: this.tabViewInterface,
-                tabSelected$: tab.tabSelected$.asObservable()
-            });
+                tabSelected$: tab.tabSelected$.asObservable(),
+                tabClosed$: tab.tabClosed$.asObservable(),
+            } as InjectedTabData);
 
             const providers: StaticProvider[] = [
                 {provide: NAE_TAB_DATA, useValue: tab.injectedObject}
