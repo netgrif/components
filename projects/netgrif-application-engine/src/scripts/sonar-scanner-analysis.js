@@ -58,8 +58,8 @@ function fixLcovFileNames() {
 fixLcovFileNames();
 sonarqubeScanner(
     {
-        serverUrl: 'https://sonar.netgrif.com',
-        token: 'a77040433bc2c05b8139a35fcf696b362cefa908',
+        serverUrl: 'https://sonarcloud.io',
+        token: '2720aa963574b33bef938fd119daae9768665870',
         options: {
             'sonar.projectKey': projectKey,
             'sonar.projectName': projectName,
