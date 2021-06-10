@@ -5,7 +5,6 @@ import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component
 
 export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberErrorsComponent implements OnInit {
 
-    numberValue: number;
     @Input() transformedValue: string;
     fieldType: string;
 
@@ -14,25 +13,28 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     }
 
     ngOnInit() {
-        if (this.numberField.value !== undefined) {
-            this.transformedValue = this.transformCurrency(this.numberField.value.toString());
-            this.numberValue = parseFloat(this.numberField.value.toString());
-        } else {
-            this.transformedValue = '';
-            this.numberValue = 0.0;
-        }
+        this.fieldType = 'text';
+        this.transformedValue = this.transformCurrency(this.numberField.value.toString());
+        this.numberField.valueChanges().subscribe(value => {
+            if (value !== undefined) {
+                if (this.fieldType === 'text') {
+                    this.transformedValue = this.transformCurrency(value.toString());
+                }
+            } else {
+                this.transformedValue = '';
+            }
+        });
     }
 
     transformToText(event: Event) {
         const target = (event.target as HTMLInputElement);
-        this.numberValue = parseFloat(target.value);
         this.fieldType = 'text';
         this.transformedValue = this.transformCurrency(target.value);
     }
 
     transformToNumber() {
         this.fieldType = 'number';
-        this.transformedValue = this.numberValue.toString();
+        this.transformedValue = this.numberField.value.toString();
     }
 
     getCurrencySymbol(): string {
