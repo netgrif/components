@@ -1,3 +1,16 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10888/tab/release-report-all-issues"></a>
+## 5.5.0 (XX.06.2021)
+### Bug fixes
+None
+
+### Improvements
+* [NAE-1289](https://netgrif.atlassian.net/browse/NAE-1289) - Advanced search - more operators
+* [NAE-1297](https://netgrif.atlassian.net/browse/NAE-1297) - Set akcia v prípade nevalidnej hodnoty pre povinné pole
+
+### Features
+* [NAE-1305](https://netgrif.atlassian.net/browse/NAE-1305) - Loading na set data pre button
+
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10890/tab/release-report-all-issues"></a>
 ## 5.4.1 (31.05.2021)
 ### Bug fixes

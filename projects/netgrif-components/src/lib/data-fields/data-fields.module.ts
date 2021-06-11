@@ -49,6 +49,7 @@ import {EnumerationIconFieldComponent} from './enumeration-field/enumeration-ico
 import {
     EnumerationAutocompleteDynamicFieldComponent
 } from './enumeration-field/enumeration-autocomplete-dynamic-field/enumeration-autocomplete-dynamic-field.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {FilterFieldComponent} from './filter-field/filter-field.component';
 import {FilterFieldContentComponent} from './filter-field/filter-field-content/filter-field-content.component';
@@ -120,6 +121,7 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
         QuillModule.forRoot(),
         MatDialogModule,
         AdvancedSearchComponentModule,
+        MatProgressSpinnerModule,
         CurrencyModule
     ],
     providers: [
