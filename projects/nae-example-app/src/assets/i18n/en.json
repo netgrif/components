@@ -10,5 +10,8 @@
     "tab": {
         "testLabel": "English label"
     },
-    "translateNavTest": "one"
+    "translateNavTest": "one",
+    "translateNav": {
+        "Test": "one-one"
+    }
 }
