@@ -5,7 +5,8 @@ import {
     MaterialModule,
     CovalentModule,
     TranslateLibModule,
-    CustomDateAdapter
+    CustomDateAdapter,
+    CurrencyModule
 } from '@netgrif/application-engine';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -121,7 +122,7 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
         MatDialogModule,
         AdvancedSearchComponentModule,
         MatProgressSpinnerModule,
-        MaterialModule
+        CurrencyModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
