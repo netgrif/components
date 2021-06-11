@@ -26,4 +26,14 @@ export enum GroupNavigationConstants {
      * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
      */
     NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX = 'entry_marker',
+    /**
+     * Suffix of the boolean field id that determines if the navigation entry defines an icon.
+     * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
+     */
+    NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX = 'use_icon',
+    /**
+     * Suffix of the text field id that contains the id of the used material icon.
+     * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
+     */
+    NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'icon_name',
 }

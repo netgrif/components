@@ -22,6 +22,7 @@ import {refreshTree} from '../../utility/refresh-tree';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {TextField} from '../../data-fields/text-field/models/text-field';
 import {UserFilterConstants} from '../../filter/models/user-filter-constants';
+import {getField} from '../../utility/get-field';
 
 export interface NavigationNode {
     name: string;
@@ -346,24 +347,35 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         );
 
         for (let i = firstEntryIndex; i < navConfigDatagroups.length; i += 2) {
+            const newNode: NavigationNode = {name: '', url: ''};
+
             // "first" datagroup has name
-            const nameField = navConfigDatagroups[i].fields.find(
-                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX)
-            );
+            const nameField = getField(navConfigDatagroups[i].fields,
+                GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX, true);
 
             if (nameField === undefined) {
                 this._log.error('Navigation entry name could not be resolved. Entry was ignored');
                 continue;
             }
+            newNode.name = nameField.value;
+
+            const useIcon = getField(navConfigDatagroups[i].fields,
+                GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX, true);
+            if (useIcon !== undefined && useIcon.value) {
+                const icon = getField(navConfigDatagroups[i].fields,
+                    GroupNavigationConstants.NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX, true);
+                if (icon === undefined) {
+                    this._log.error('Navigation entry icon could not be resolved, but is enabled. Icon was ignored');
+                } else {
+                    newNode.icon = icon.value;
+                }
+            }
 
             // "second" datagroup has filter
-            const filterField = navConfigDatagroups[i + 1].fields.find(
-                field => field.stringId.endsWith('-' + UserFilterConstants.FILTER_FIELD_ID)
-            );
+            const filterField = getField(navConfigDatagroups[i + 1].fields, UserFilterConstants.FILTER_FIELD_ID, true);
 
-            const filterCaseIdField = navConfigDatagroups[i + 1].fields.find(
-                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_FILTER_CASE_ID_FIELD_ID_SUFFIX)
-            );
+            const filterCaseIdField = getField(navConfigDatagroups[i + 1].fields,
+                GroupNavigationConstants.NAVIGATION_FILTER_CASE_ID_FIELD_ID_SUFFIX, true);
 
             if (filterField === undefined || !(filterField instanceof FilterField)
                 || filterCaseIdField === undefined || !(filterCaseIdField instanceof TextField)) {
@@ -373,12 +385,12 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
             const url = this._groupNavigationConfig?.groupNavigationRoute;
             if (url === undefined) {
-                this._log.error(`No URL is configured in nae.json for filters of type ${filterField.filterMetadata.filterType
-                }. Entry was ignored`);
+                this._log.error(`No URL is configured in nae.json for configurable group navigation. Entry was ignored`);
                 continue;
             }
+            newNode.url = `/${url}/${filterCaseIdField.value}`;
 
-            result.push({name: nameField.value, url: `/${url}/${filterCaseIdField.value}`});
+            result.push(newNode);
         }
         return result;
     }
