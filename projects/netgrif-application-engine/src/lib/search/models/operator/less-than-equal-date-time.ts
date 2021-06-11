@@ -8,7 +8,7 @@ import {Query} from '../query/query';
 /**
  * Greater or equal than operator for Datetime fields
  */
-export class LessThanEqualDateTime extends Operator<Moment>{
+export class LessThanEqualDateTime extends Operator<Moment> {
 
     protected lessThanEqual: LessThanEqual;
 

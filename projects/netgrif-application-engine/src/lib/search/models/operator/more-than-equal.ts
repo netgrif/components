@@ -7,7 +7,7 @@ import {Operators} from './operators';
 export class MoreThanEqual extends Operator<number> {
 
     constructor() {
-        super(1,'>=');
+        super(1, '>=');
     }
 
     getOperatorNameTemplate(): Array<string> {

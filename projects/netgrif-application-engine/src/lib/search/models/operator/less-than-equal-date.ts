@@ -8,7 +8,7 @@ import {LessThanDate} from './less-than-date';
 /**
  * Less or equal than operator for Date fields
  */
-export class LessThanEqualDate extends Operator<Moment>{
+export class LessThanEqualDate extends Operator<Moment> {
 
     protected lessThan: LessThanDate;
 
