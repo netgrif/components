@@ -34,12 +34,12 @@ pipeline {
       }
     }
 
-    stage('Sonar NAE') {
-        steps {
-            echo 'Sent to SonarQube analysis'
-            sh 'npm run nae:sonar'
-        }
-    }
+//    stage('Sonar NAE') {
+//        steps {
+//            echo 'Sent to SonarQube analysis'
+//            sh 'npm run nae:sonar'
+//        }
+//    }
 
     stage('Build NAE') {
       steps {
@@ -72,12 +72,12 @@ pipeline {
         }
     }
 
-    stage('Sonar NC') {
-        steps {
-            echo 'Sent to SonarQube analysis'
-            sh 'npm run nc:sonar'
-        }
-    }
+//    stage('Sonar NC') {
+//        steps {
+//            echo 'Sent to SonarQube analysis'
+//            sh 'npm run nc:sonar'
+//        }
+//    }
 
     stage('Build NC') {
         steps {
