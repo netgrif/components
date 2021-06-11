@@ -142,18 +142,21 @@ export class UserFiltersService implements OnDestroy {
      * @param allowedNets allowed nets of the view, that contains the search service
      * @param searchCategories search categories available in the saved advanced search component
      * @param viewId the viewId of the view which contained the filter
+     * @param additionalData set data request body, that is sent to the filter in addition to the default body.
+     * The default body is applied first and can be overridden by this argument.
      * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process,
      * or the filter could not be saved
      */
     public save(searchService: SearchService, allowedNets: readonly string[],
-                searchCategories: readonly Category<any>[], viewId: string): Observable<SavedFilterMetadata> {
+                searchCategories: readonly Category<any>[], viewId: string,
+                additionalData: TaskSetDataRequestBody = {}): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
             this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
             return of(undefined);
         }
 
         const result = new ReplaySubject<SavedFilterMetadata>(1);
-        this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories, viewId).subscribe(filterCaseId => {
+        this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories, viewId, additionalData).subscribe(filterCaseId => {
             const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
                 newFilterCaseId: filterCaseId
             } as SaveFilterInjectionData);
@@ -187,10 +190,13 @@ export class UserFiltersService implements OnDestroy {
      * @param allowedNets allowed nets of the view, that contains the search service
      * @param searchCategories search categories available in the saved advanced search component
      * @param viewId the viewId of the view which contained the filter
+     * @param additionalData set data request body, that is sent to the filter in addition to the default body.
+     * The default body is applied first and can be overridden by this argument.
      * @returns an observable that emits the id of the created Filter case instance
      */
     public createFilterCaseAndSetData(searchService: SearchService, allowedNets: readonly string[],
-                                      searchCategories: readonly Category<any>[], viewId: string): Observable<string> {
+                                      searchCategories: readonly Category<any>[], viewId: string,
+                                      additionalData: TaskSetDataRequestBody = {}): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized(() => {
             this._caseService.createCase({
@@ -217,7 +223,8 @@ export class UserFiltersService implements OnDestroy {
                         [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
                             type: FieldTypeResource.TEXT,
                             value: viewId
-                        }
+                        },
+                        ...additionalData
                     }, this._callChainService.create(success => {
                         if (!success) {
                             throw new Error('Filter instance could not be initialized');

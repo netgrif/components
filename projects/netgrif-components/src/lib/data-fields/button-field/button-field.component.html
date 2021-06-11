@@ -21,11 +21,12 @@
                 'mat-mini-fab': resolveComponentType() === 'minifab'}"
                 color="primary"
                 [matTooltip]="dataField.description"
-                [disabled]="formControl.disabled"
+                [disabled]="formControl.disabled || dataField.changed"
                 (click)="resolveValue()">
-            {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : ((dataField.view === 'fab' || dataField.view === 'minifab') ? '' : dataField.placeholder) }}
+                <mat-icon *ngIf="dataField.changed"><mat-spinner color="primary" diameter="22"></mat-spinner></mat-icon>
+                {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : ( isIconTypeButton() ? '' : dataField.placeholder) }}
             <mat-icon
-                *ngIf="dataField.view === 'fab' || dataField.view === 'minifab'">{{dataField.placeholder}}</mat-icon>
+                *ngIf="isIconTypeButton() && !dataField.changed">{{dataField.placeholder}}</mat-icon>
         </button>
 
         <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>

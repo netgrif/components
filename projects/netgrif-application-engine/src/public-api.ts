@@ -6,6 +6,7 @@ export * from './commons/schema';
 /* MODULES */
 export * from './lib/material/material.module';
 export * from './lib/covalent/covalent.module';
+export * from './lib/currency/currency.module';
 
 /* APIS */
 export * from './lib/logger/public-api';
