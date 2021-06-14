@@ -15,7 +15,8 @@ import {
     AuthenticationService,
     CancelTaskService,
     ChangedFields,
-    ConfigurationService, createMockTask,
+    ConfigurationService,
+    createMockTask,
     DataFocusPolicy,
     DataFocusPolicyService,
     DelegateTaskService,
@@ -47,7 +48,12 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
-    NAE_BASE_FILTER, TestTaskBaseFilterProvider, AllowedNetsService, TestTaskViewAllowedNetsFactory, AllowedNetsServiceFactory
+    NAE_BASE_FILTER,
+    TestTaskBaseFilterProvider,
+    AllowedNetsService,
+    TestTaskViewAllowedNetsFactory,
+    AllowedNetsServiceFactory,
+    CurrencyModule
 } from '@netgrif/application-engine';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -75,6 +81,7 @@ describe('TaskPanelComponent', () => {
                 HttpClientTestingModule,
                 SnackBarModule,
                 TaskContentComponentModule,
+                CurrencyModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

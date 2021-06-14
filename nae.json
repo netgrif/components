@@ -454,8 +454,9 @@
                             },
                             "access": "private",
                             "navigation": {
-                                "title": "one-one",
-                                "icon": "account_circle"
+                                "title": "translateNav.Test",
+                                "icon": "account_circle",
+                                "translate": true
                             },
                             "routing": {
                                 "path": "one-one"
