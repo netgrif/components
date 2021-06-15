@@ -6,7 +6,7 @@
         <button *ngIf="node.level >= 1" mat-icon-button disabled class="margin-component"></button>
         <button *ngIf="node.level >= 2" mat-icon-button disabled class="margin-component"></button>
         <mat-icon color="primary" class="tree-node-icon">{{node.icon}}</mat-icon>
-        {{node.name}}
+        {{node.translate ? (node.name | translate) : node.name}}
     </mat-tree-node>
 
     <!-- This is the tree node template for expandable nodes -->
@@ -17,7 +17,7 @@
             <button *ngIf="node.level >= 2" mat-icon-button disabled class="margin-component"></button>
 
             <mat-icon color="primary" class="tree-node-icon">{{node.icon}}</mat-icon>
-            {{node.name}}
+            {{node.translate ? (node.name | translate) : node.name}}
 
             <div fxFlex></div>
             <button mat-icon-button class="nested-tree-expansion-icon">

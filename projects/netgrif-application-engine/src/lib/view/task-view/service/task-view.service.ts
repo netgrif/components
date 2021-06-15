@@ -249,7 +249,7 @@ export class TaskViewService extends SortableView implements OnDestroy {
             }),
             tap(t => {
                 if (this._pagination.totalElements && this._pagination.totalElements > 0
-                    && t.pagination.totalElements === 0 && !Array.isArray(t.content)) {
+                    && t.pagination.totalElements === 0 && !Array.isArray(t.content) && this._closeTaskTabOnNoTasks) {
                     this._closeTab$.next();
                 }
             }),

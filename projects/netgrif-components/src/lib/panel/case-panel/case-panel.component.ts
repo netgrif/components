@@ -3,6 +3,7 @@ import {AbstractCasePanelComponent, CaseViewService, LoggerService, OverflowServ
 import {CaseResourceService} from '@netgrif/application-engine';
 import {SnackBarService} from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
     selector: 'nc-case-panel',
@@ -13,8 +14,8 @@ export class CasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                 protected _log: LoggerService, @Optional() protected _overflowService: OverflowService,
-                protected _userService: UserService) {
+                protected _userService: UserService, protected _currencyPipe: CurrencyPipe) {
         super(_caseResourceService, _caseViewService, _snackBarService,
-            _translateService, _log, _overflowService, _userService);
+            _translateService, _log, _overflowService, _userService, _currencyPipe);
     }
 }
