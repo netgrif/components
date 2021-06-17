@@ -18,3 +18,4 @@ export * from './model/group-navigation-item-label';
 
 /* UTILITY METHODS */
 export * from './utility/navigation-item-task-utility-methods';
+export * from './group-navigation-component-resolver/group-navigation-view-id-segment-factory';

@@ -32,6 +32,7 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
         CategoryFactory,
         TaskViewService,
         SearchService,
+        {   provide: ViewIdService, useValue: null},
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
@@ -42,7 +43,6 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
             useFactory: tabbedAllowedNetsServiceFactory,
             deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]
         },
-        {   provide: ViewIdService, useValue: null},
         {
             provide: NAE_TASK_VIEW_CONFIGURATION,
             useFactory: tabbedTaskViewConfigurationFactory,

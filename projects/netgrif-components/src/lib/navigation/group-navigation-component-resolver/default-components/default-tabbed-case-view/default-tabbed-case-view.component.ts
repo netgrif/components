@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     CategoryFactory,
-    ViewIdService,
     SearchService,
     NAE_BASE_FILTER,
     AllowedNetsService,
@@ -29,7 +28,6 @@ import {
         CategoryFactory,
         CaseViewService,
         SearchService,
-        {   provide: ViewIdService, useValue: null},
         {
             provide: NAE_BASE_FILTER,
             useFactory: filterCaseTabbedDataFilterFactory,
