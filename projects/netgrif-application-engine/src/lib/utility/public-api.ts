@@ -15,8 +15,8 @@ export * from './result-with-after-actions';
 export * from './clear-time-information';
 export * from './refresh-tree';
 export * from './destroy-subscription';
-export * from './filter-case-filter-factory';
-export * from './filter-case-search-categories-factory';
+export * from './navigation-item-task-filter-factory';
+export * from './navigation-item-task-search-categories-factory';
 
 /* TESTS */
 export * from './tests/mocks/mock-authentication.service';

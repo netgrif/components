@@ -14,7 +14,7 @@ import {
     SavedFilterMetadata
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '../../../../header/header.component';
-import {InjectedTabbedCaseViewDataWithFilterCase} from '../model/injected-tabbed-case-view-data-with-filter-case';
+import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from '../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {
     filterCaseTabbedDataAllowedNetsServiceFactory,
     filterCaseTabbedDataFilterFactory,
@@ -52,7 +52,7 @@ export class DefaultTabbedCaseViewComponent extends TabbedCaseView implements Af
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
-                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewDataWithFilterCase) {
+                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
         super(caseViewService, loggerService, injectedTabData);
     }
 

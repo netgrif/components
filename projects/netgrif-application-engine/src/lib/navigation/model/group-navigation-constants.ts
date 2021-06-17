@@ -12,6 +12,10 @@ export enum GroupNavigationConstants {
      */
     NAVIGATION_CONFIG_TRANSITION_ID = 'navigationMenuConfig',
     /**
+     * Id of the task ref field that holds the ids of the individual navigation item tasks
+     */
+    NAVIGATION_ENTRIES_TASK_REF_FIELD_ID = 'filter_tasks',
+    /**
      * Suffix of the field id that contains the name of the navigation entry.
      * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
      */
@@ -36,4 +40,8 @@ export enum GroupNavigationConstants {
      * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
      */
     NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX = 'icon_name',
+    /**
+     * The number of datagroups in the navigation configuration task that correspond to a single navigation entry.
+     */
+    DATAGROUPS_PER_NAVIGATION_ENTRY = 2,
 }

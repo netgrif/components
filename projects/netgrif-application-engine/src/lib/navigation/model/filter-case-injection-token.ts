@@ -1,7 +1,7 @@
 import {InjectionToken} from '@angular/core';
-import {Case} from '../../resources/interface/case';
+import {DataGroup} from '../../resources/public-api';
 
 /**
- * Holds a filter process instance
+ * Holds a navigation item task data containing the aggregated data describing the navigation item
  */
-export const NAE_FILTER_CASE = new InjectionToken<Case>('NaeFilterCase');
+export const NAE_NAVIGATION_ITEM_TASK_DATA = new InjectionToken<Array<DataGroup>>('NaeNavigationItemTaskData');

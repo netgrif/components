@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {ViewIdService, TabContent, NAE_FILTER_CASE, Case} from '@netgrif/application-engine';
+import {ViewIdService, TabContent, NAE_NAVIGATION_ITEM_TASK_DATA, Task, DataGroup, extractIconAndTitle} from '@netgrif/application-engine';
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 
@@ -15,18 +15,17 @@ export class DefaultTabViewComponent {
 
     tabs: Array<TabContent>;
 
-    constructor(@Inject(NAE_FILTER_CASE) protected _filterCase: Case) {
+    constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>) {
+        const labelData = extractIconAndTitle(this._navigationItemTaskData);
         this.tabs = [
             {
-                label: {
-                    text: this._filterCase.title
-                },
+                label: {text: labelData.name, icon: labelData.icon},
                 canBeClosed: false,
                 tabContentComponent: DefaultTabbedCaseViewComponent,
                 injectedObject: {
                     tabViewComponent: DefaultTabbedTaskViewComponent,
                     tabViewOrder: 0,
-                    filterCase: this._filterCase
+                    navigationItemTaskData: this._navigationItemTaskData
                 }
             }
         ];

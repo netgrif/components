@@ -9,10 +9,10 @@ import {
     NAE_BASE_FILTER,
     AllowedNetsServiceFactory,
     NAE_SEARCH_CATEGORIES,
-    filterCaseFilterFactory,
-    NAE_FILTER_CASE,
-    filterCaseAllowedNetsServiceFactory,
-    filterCaseSearchCategoriesFactory
+    navigationItemTaskFilterFactory,
+    NAE_NAVIGATION_ITEM_TASK_DATA,
+    navigationItemTaskAllowedNetsServiceFactory,
+    navigationItemTaskCategoryFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '../../../../header/header.component';
 
@@ -24,18 +24,21 @@ import {HeaderComponent} from '../../../../header/header.component';
         CategoryFactory,
         TaskViewService,
         SearchService,
+        {   provide: ViewIdService, useValue: null},
         {
             provide: NAE_BASE_FILTER,
-            useFactory: filterCaseFilterFactory,
-            deps: [NAE_FILTER_CASE]
+            useFactory: navigationItemTaskFilterFactory,
+            deps: [NAE_NAVIGATION_ITEM_TASK_DATA]
         },
         {
             provide: AllowedNetsService,
-            useFactory: filterCaseAllowedNetsServiceFactory,
-            deps: [AllowedNetsServiceFactory, NAE_FILTER_CASE]
+            useFactory: navigationItemTaskAllowedNetsServiceFactory,
+            deps: [AllowedNetsServiceFactory, NAE_NAVIGATION_ITEM_TASK_DATA]
         },
-        {   provide: ViewIdService, useValue: null},
-        {   provide: NAE_SEARCH_CATEGORIES, useFactory: filterCaseSearchCategoriesFactory, deps: [CategoryFactory, NAE_FILTER_CASE]},
+        {   provide: NAE_SEARCH_CATEGORIES,
+            useFactory: navigationItemTaskCategoryFactory,
+            deps: [CategoryFactory, NAE_NAVIGATION_ITEM_TASK_DATA]
+        },
     ]
 })
 export class DefaultSimpleTaskViewComponent extends AbstractTaskView implements AfterViewInit {

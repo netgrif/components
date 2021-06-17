@@ -23,6 +23,7 @@ import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {TextField} from '../../data-fields/text-field/models/text-field';
 import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {getField} from '../../utility/get-field';
+import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
 
 export interface NavigationNode {
     name: string;
@@ -272,9 +273,9 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         }
 
         return !this._userService.user.isEmpty() // AuthGuard
-                && this.passesRoleGuard(view, url)
-                && this.passesAuthorityGuard(view)
-                && this.passesGroupGuard(view, url);
+            && this.passesRoleGuard(view, url)
+            && this.passesAuthorityGuard(view)
+            && this.passesGroupGuard(view, url);
     }
 
     /**
@@ -346,52 +347,39 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             )
         );
 
-        for (let i = firstEntryIndex; i < navConfigDatagroups.length; i += 2) {
-            const newNode: NavigationNode = {name: '', url: ''};
-
-            // "first" datagroup has name
-            const nameField = getField(navConfigDatagroups[i].fields,
-                GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX, true);
-
-            if (nameField === undefined) {
-                this._log.error('Navigation entry name could not be resolved. Entry was ignored');
-                continue;
+        let navEntriesTaskRef;
+        navConfigDatagroups.some(group => {
+            const taskRef = getField(group.fields, GroupNavigationConstants.NAVIGATION_ENTRIES_TASK_REF_FIELD_ID);
+            if (taskRef !== undefined) {
+                navEntriesTaskRef = taskRef;
             }
-            newNode.name = nameField.value;
+            return !!taskRef;
+        });
 
-            const useIcon = getField(navConfigDatagroups[i].fields,
-                GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX, true);
-            if (useIcon !== undefined && useIcon.value) {
-                const icon = getField(navConfigDatagroups[i].fields,
-                    GroupNavigationConstants.NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX, true);
-                if (icon === undefined) {
-                    this._log.error('Navigation entry icon could not be resolved, but is enabled. Icon was ignored');
-                } else {
-                    newNode.icon = icon.value;
-                }
-            }
+        if (!navEntriesTaskRef) {
+            throw new Error('The navigation configuration task contains no task ref with entries. Navigation cannot be constructed');
+        }
 
-            // "second" datagroup has filter
-            const filterField = getField(navConfigDatagroups[i + 1].fields, UserFilterConstants.FILTER_FIELD_ID, true);
+        for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {
+            const index = this.transformOrderToIndex(order, firstEntryIndex);
 
-            const filterCaseIdField = getField(navConfigDatagroups[i + 1].fields,
-                GroupNavigationConstants.NAVIGATION_FILTER_CASE_ID_FIELD_ID_SUFFIX, true);
-
-            if (filterField === undefined || !(filterField instanceof FilterField)
-                || filterCaseIdField === undefined || !(filterCaseIdField instanceof TextField)) {
-                this._log.error('Navigation entry filter could not be resolved. Entry was ignored');
-                continue;
-            }
+            const label = extractIconAndTitle(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY), true);
+            const newNode: NavigationNode = {url: '', ...label};
 
             const url = this._groupNavigationConfig?.groupNavigationRoute;
             if (url === undefined) {
                 this._log.error(`No URL is configured in nae.json for configurable group navigation. Entry was ignored`);
                 continue;
             }
-            newNode.url = `/${url}/${filterCaseIdField.value}`;
+            newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
 
             result.push(newNode);
         }
         return result;
+    }
+
+    private transformOrderToIndex(order: number, offset: number): number {
+        return offset + order * GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY;
     }
 }

@@ -1,11 +1,8 @@
 import {Injectable, Injector, Type} from '@angular/core';
 import {
-    Case,
-    CaseResourceService,
+    DataGroup, extractFilter,
     FilterType,
-    getImmediateData,
-    GroupNavigationComponentResolverService,
-    UserFilterConstants
+    GroupNavigationComponentResolverService, LoggerService, TaskResourceService,
 } from '@netgrif/application-engine';
 import {DefaultTabViewComponent} from './default-components/default-tab-view/default-tab-view.component';
 import {DefaultSimpleTaskViewComponent} from './default-components/default-simple-task-view/default-simple-task-view.component';
@@ -13,24 +10,24 @@ import {DefaultSimpleTaskViewComponent} from './default-components/default-simpl
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(caseResourceService: CaseResourceService, parentInjector: Injector) {
-        super(caseResourceService, parentInjector);
+    constructor(taskResourceService: TaskResourceService, parentInjector: Injector, log: LoggerService) {
+        super(taskResourceService, parentInjector, log);
     }
 
-    public resolveViewComponent(filterCase: Case): Type<any> {
-        const filterField = getImmediateData(filterCase, UserFilterConstants.FILTER_FIELD_ID);
+    public resolveViewComponent(navigationItemTaskData: Array<DataGroup>): Type<any> {
+        const filter = extractFilter(navigationItemTaskData);
 
-        if (filterField === undefined) {
-            throw new Error(`Provided filter case with id '${filterCase.stringId}' is not a filter case`);
+        if (filter === undefined) {
+            throw new Error('Provided navigation item task data does not contain a filter field');
         }
 
-        switch (filterField?.filterMetadata?.filterType) {
+        switch (filter.type) {
             case FilterType.CASE:
                 return DefaultTabViewComponent;
             case FilterType.TASK:
                 return DefaultSimpleTaskViewComponent;
             default:
-                throw new Error(`Cannot resolve group navigation component from '${filterField?.filterMetadata?.filterType}' filter type`);
+                throw new Error(`Cannot resolve group navigation component from '${filter.type}' filter type`);
         }
     }
 }

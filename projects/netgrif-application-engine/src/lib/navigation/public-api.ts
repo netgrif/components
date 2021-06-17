@@ -14,3 +14,7 @@ export * from './group-navigation-component-resolver/group-navigation-component-
 export * from './model/group-navigation-constants';
 export * from './model/group-navigation-component-resolver-component-injection-token';
 export * from './model/filter-case-injection-token';
+export * from './model/group-navigation-item-label';
+
+/* UTILITY METHODS */
+export * from './utility/navigation-item-task-utility-methods';
