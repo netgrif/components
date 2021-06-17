@@ -15,6 +15,10 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = false): GroupNavigationItemLabel {
     const result: GroupNavigationItemLabel = {name: ''};
 
+    if (dataSection.length === 0) {
+        throw new Error('The provided task data does not belong to a Navigation menu item task. Icon and title cannot be extracted');
+    }
+
     // "first" datagroup has name and icon
     const nameField = getField(dataSection[0].fields,
         GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX, taskReffed);
@@ -44,6 +48,10 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = 
  * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed TO BE task reffed by default.
  */
 export function extractFilter(dataSection: Array<DataGroup>, taskReffed = true): Filter {
+    if (dataSection.length < 2) {
+        throw new Error('The provided task data does not belong to a Navigation menu item task. Icon and title cannot be extracted');
+    }
+
     // "second" datagroup has filter
     const filterField = getField(dataSection[1].fields, UserFilterConstants.FILTER_FIELD_ID, taskReffed);
 

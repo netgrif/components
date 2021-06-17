@@ -396,5 +396,8 @@
         "resolving" : "Public view is loading ...",
         "netNotExist": "The process does not exists",
         "errorCreate": "Error while creating case "
+    },
+    "dynamicNavigation": {
+        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
     }
 }
