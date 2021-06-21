@@ -139,9 +139,15 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
                 this._response = (response.outcome as PetriNetEventOutcome);
                 file.inProgress = false;
                 file.completed = true;
+                this._snackbar.openSuccessSnackBar(response.outcome.message === undefined
+                    ? this._translate.instant('workflow.snackBar.uploadSuccess')
+                    : response.outcome.message);
                 this._sideMenuControl.publish({
                     opened: true,
-                    message: 'Process ' + file.data.name + ' successfully uploaded',
+                    message: response.outcome.message === undefined
+                        ? 'Process ' + file.data.name + ' successfully uploaded'
+                        : response.outcome.message
+                    ,
                     data: {net: (response.outcome as PetriNetEventOutcome).net}
                 });
             }

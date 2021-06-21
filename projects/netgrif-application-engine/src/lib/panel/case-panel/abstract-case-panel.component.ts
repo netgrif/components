@@ -16,6 +16,7 @@ import {UserService} from '../../user/services/user.service';
 import {take} from 'rxjs/operators';
 import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -65,8 +66,11 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     }
 
     public deleteCase() {
-        this._caseResourceService.deleteCase(this.case_.stringId).pipe(take(1)).subscribe(data => {
+        this._caseResourceService.deleteCase(this.case_.stringId).pipe(take(1)).subscribe((data: EventOutcomeMessageResource) => {
             if (data.success) {
+                this._snackBarService.openSuccessSnackBar(data.outcome.message === undefined
+                    ? this._translateService.instant('tasks.snackbar.caseDeleteSuccess')
+                    : data.outcome.message);
                 this._caseViewService.reload();
             } else if (data.error) {
                 this.throwError(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));

@@ -104,6 +104,9 @@ export class CancelTaskService extends TaskHandlingService {
                 this._taskDataService.emitChangedFields((outcomeResource.outcome as CancelTaskEventOutcome).data.changedFields );
                 fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, queueAction, true);
+                this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
+                    ? this._translate.instant('tasks.snackbar.cancelTaskSuccess')
+                    : outcomeResource.outcome.message);
             } else if (outcomeResource.error !== undefined) {
                 if (outcomeResource.error !== '') {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);

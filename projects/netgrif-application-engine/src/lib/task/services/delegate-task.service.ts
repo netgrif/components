@@ -95,6 +95,9 @@ export class DelegateTaskService extends TaskHandlingService {
                         this._taskContentService.updateStateData(outcomeResource.outcome as DelegateTaskEventOutcome);
                         this._taskDataService.emitChangedFields((outcomeResource.outcome as DelegateTaskEventOutcome).data.changedFields);
                         this.completeSuccess(afterAction);
+                        this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
+                            ? this._translate.instant('tasks.snackbar.delegateTaskSuccess')
+                            : outcomeResource.outcome.message);
                     } else if (outcomeResource.error) {
                         this._snackBar.openErrorSnackBar(outcomeResource.error);
                         this.sendNotification(false);

@@ -269,7 +269,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 this._changedFields$.next(changedFields as ChangedFields);
             }
             this.clearChangedFlagFromDataFields(body);
-            this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
+            this._snackBar.openSuccessSnackBar(response.outcome.message === undefined
+                ? this._translate.instant('tasks.snackbar.dataSaved')
+                : response.outcome.message);
             this.updateStateInfo(afterAction, true, setTaskId);
         }, error => {
             this._log.debug('setting task data failed', error);

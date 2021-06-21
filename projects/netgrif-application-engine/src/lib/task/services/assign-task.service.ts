@@ -95,6 +95,9 @@ export class AssignTaskService extends TaskHandlingService {
                 this._taskDataService.emitChangedFields((outcomeResource.outcome as AssignTaskEventOutcome).data.changedFields);
                 fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, queueAction, true);
+                this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
+                    ? this._translate.instant('tasks.snackbar.assignTaskSuccess')
+                    : outcomeResource.outcome.message);
             } else if (outcomeResource.error) {
                 this._snackBar.openErrorSnackBar(outcomeResource.error);
                 this.completeActions(afterAction, queueAction, false);
