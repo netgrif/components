@@ -95,12 +95,12 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         ) {
             return false;
         }
-        if (Object.keys(this.case_.permissions).length === 0) {
+        if (Object.keys(this.case_.permissions).length === 0 && Object.keys(this.case_.users).length === 0) {
             return true;
         }
 
         const result = Object.keys(this.case_.users).some(user =>
-            !!this.case_.users ? !!this.case_.users[user][action] : false
+            !!this.case_.users[this._userService.user.id] ? !!this.case_.users[this._userService.user.id][action] : false
         );
         return result || Object.keys(this.case_.permissions).some(role =>
             this._userService.hasRoleById(role) ? !!this.case_.permissions[role][action] : false
