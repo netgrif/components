@@ -106,14 +106,4 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
             this._userService.hasRoleById(role) ? !!this.case_.permissions[role][action] : false
         );
     }
-
-    /**
-     * If the event was cause by selecting some text, it will not propagate
-     * @param event
-     */
-    public preventSelectionClick(event: MouseEvent): void {
-        if (event.view.getSelection().type === 'Range') {
-            event.stopPropagation();
-        }
-    }
 }
