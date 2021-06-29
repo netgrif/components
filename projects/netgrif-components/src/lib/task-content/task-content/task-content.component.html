@@ -8,7 +8,7 @@
             <div *ngFor="let item of dataSource; trackBy: trackByFn"
                  [gdArea]="item.gridAreaId"
                  class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
-                <nc-field-component-resolver [gridElement]="item" fxFlex></nc-field-component-resolver>
+                <nc-field-component-resolver [id]="item?.item?.stringId" [gridElement]="item" fxFlex></nc-field-component-resolver>
             </div>
         </div>
     </div>

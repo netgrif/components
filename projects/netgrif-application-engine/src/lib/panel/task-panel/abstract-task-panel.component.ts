@@ -30,6 +30,7 @@ import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
+
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
     /**
@@ -215,7 +216,19 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     finish() {
-        this._finishTaskService.validateDataAndFinish();
+        if (!this._taskContentService.validateTaskData()) {
+            if (this._taskContentService.task.dataSize <= 0) {
+                this._taskDataService.initializeTaskDataFields();
+            }
+            const invalidFields = this._taskContentService.getInvalidTaskData();
+            document.getElementById(invalidFields[0].stringId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        } else {
+            this._finishTaskService.validateDataAndFinish();
+        }
     }
 
     collapse() {
