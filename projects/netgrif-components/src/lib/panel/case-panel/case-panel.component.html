@@ -1,6 +1,6 @@
 <nc-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last" [caseColor] = case_.color>
     <ng-template #casePanelHeader>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
             <div fxFlex class="text-column-div" [ngClass]="{'panel-header-padding': !textEllipsis}" [ngStyle]="{'min-width': getMinWidth()}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="case-panel-icon panel-primary-icon" *ngIf="showCasePanelIcon">
