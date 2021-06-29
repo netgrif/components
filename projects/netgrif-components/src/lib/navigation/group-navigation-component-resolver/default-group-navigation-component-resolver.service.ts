@@ -1,4 +1,4 @@
-import {Injectable, Injector, Type} from '@angular/core';
+import {Injectable, Type} from '@angular/core';
 import {
     DataGroup, extractFilter,
     FilterType,
@@ -10,8 +10,8 @@ import {DefaultSimpleTaskViewComponent} from './default-components/default-simpl
 @Injectable()
 export class DefaultGroupNavigationComponentResolverService extends GroupNavigationComponentResolverService {
 
-    constructor(taskResourceService: TaskResourceService, parentInjector: Injector, log: LoggerService) {
-        super(taskResourceService, parentInjector, log);
+    constructor(taskResourceService: TaskResourceService, log: LoggerService) {
+        super(taskResourceService, log);
     }
 
     public resolveViewComponent(navigationItemTaskData: Array<DataGroup>): Type<any> {

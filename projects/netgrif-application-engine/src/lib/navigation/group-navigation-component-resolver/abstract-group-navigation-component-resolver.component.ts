@@ -39,7 +39,8 @@ export abstract class AbstractGroupNavigationComponentResolverComponent implemen
     protected resolveComponent(): void {
         this.initialized = false;
         this._portalSub = this._componentResolverService.createResolvedViewComponentPortal(
-            this._activatedRoute.snapshot.paramMap.get(GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM)
+            this._activatedRoute.snapshot.paramMap.get(GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM),
+            this._parentInjector
         ).subscribe(portal => {
             this.portal = portal;
             this.initialized = true;

@@ -10,13 +10,12 @@ import {HttpErrorResponse} from '@angular/common/http';
 export abstract class GroupNavigationComponentResolverService {
 
     protected constructor(protected _taskResourceService: TaskResourceService,
-                          protected _parentInjector: Injector,
                           protected _log: LoggerService) {
     }
 
     protected abstract resolveViewComponent(navigationItemTaskData: Array<DataGroup>): Type<any>;
 
-    public createResolvedViewComponentPortal(taskId: string): Observable<ComponentPortal<any>> {
+    public createResolvedViewComponentPortal(taskId: string, parentInjector: Injector): Observable<ComponentPortal<any>> {
         const result = new ReplaySubject<ComponentPortal<any>>(1);
         this._taskResourceService.getData(taskId).subscribe(taskData => {
             try {
@@ -25,7 +24,7 @@ export abstract class GroupNavigationComponentResolverService {
                     null,
                     Injector.create({
                         providers: [{provide: NAE_NAVIGATION_ITEM_TASK_DATA, useValue: taskData}],
-                        parent: this._parentInjector
+                        parent: parentInjector
                     })
                 ));
                 result.complete();

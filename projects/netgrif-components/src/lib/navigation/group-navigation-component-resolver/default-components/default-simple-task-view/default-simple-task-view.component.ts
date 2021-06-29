@@ -12,9 +12,10 @@ import {
     navigationItemTaskFilterFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     navigationItemTaskAllowedNetsServiceFactory,
-    navigationItemTaskCategoryFactory
+    navigationItemTaskCategoryFactory, NAE_VIEW_ID_SEGMENT, groupNavigationViewIdSegmentFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '../../../../header/header.component';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'nc-default-simple-task-view',
@@ -24,7 +25,8 @@ import {HeaderComponent} from '../../../../header/header.component';
         CategoryFactory,
         TaskViewService,
         SearchService,
-        {   provide: ViewIdService, useValue: null},
+        ViewIdService,
+        {   provide: NAE_VIEW_ID_SEGMENT, useFactory: groupNavigationViewIdSegmentFactory, deps: [ActivatedRoute]},
         {
             provide: NAE_BASE_FILTER,
             useFactory: navigationItemTaskFilterFactory,

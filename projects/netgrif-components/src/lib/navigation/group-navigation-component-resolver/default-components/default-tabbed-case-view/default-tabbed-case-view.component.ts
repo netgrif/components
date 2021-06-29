@@ -10,7 +10,7 @@ import {
     TabbedCaseView,
     NAE_TAB_DATA,
     LoggerService,
-    SavedFilterMetadata
+    SavedFilterMetadata, ViewIdService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '../../../../header/header.component';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from '../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
@@ -28,6 +28,7 @@ import {
         CategoryFactory,
         CaseViewService,
         SearchService,
+        ViewIdService,
         {
             provide: NAE_BASE_FILTER,
             useFactory: filterCaseTabbedDataFilterFactory,
