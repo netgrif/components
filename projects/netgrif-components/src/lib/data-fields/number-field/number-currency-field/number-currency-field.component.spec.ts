@@ -8,7 +8,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    ConfigurationService,
+    ConfigurationService, CurrencyModule,
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -32,7 +32,8 @@ describe('NumberCurrencyFieldComponent', () => {
                 AngularResizedEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                CurrencyModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

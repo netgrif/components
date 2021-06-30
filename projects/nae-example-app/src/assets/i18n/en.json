@@ -9,5 +9,9 @@
     },
     "tab": {
         "testLabel": "English label"
+    },
+    "translateNavTest": "one",
+    "translateNav": {
+        "Test": "one-one"
     }
 }

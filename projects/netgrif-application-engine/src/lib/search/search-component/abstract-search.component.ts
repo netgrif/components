@@ -14,6 +14,7 @@ import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
+import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -38,6 +39,12 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     private _showSaveFilterButton = true;
     private _showLoadFilterButton = true;
     private _initialSearchMode = SearchMode.FULLTEXT;
+
+    /**
+     * Set data request body, that is sent to the filter in addition to the default body.
+     * The default body is applied first and can be overridden by this argument.
+     */
+    @Input() additionalFilterData: TaskSetDataRequestBody = {};
 
     /**
      * The emitted data contains the filter case object
@@ -138,7 +145,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      */
     public saveFilter(): void {
         this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
-            this._searchCategories, this._viewIdService.viewId).subscribe(savedFilterData => {
+            this._searchCategories, this._viewIdService.viewId, this.additionalFilterData).subscribe(savedFilterData => {
                 if (savedFilterData) {
                     this.filterSaved.emit(savedFilterData);
                 }
