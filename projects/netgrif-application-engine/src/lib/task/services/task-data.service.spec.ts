@@ -154,12 +154,57 @@ describe('TaskDataService', () => {
     });
 
     // NAE-1386
+    it('should queue update task data field requests', (done) => {
+        expect(service).toBeTruthy();
+        expect(taskContentService).toBeTruthy();
+
+        taskContentService.task = createMockTask();
+        taskResourceService.response = [createMockDataGroup([
+            createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, 'field1'),
+            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, 'field2')
+        ])];
+
+        taskResourceService.setChangedFieldsResponse('field1', 'field1success');
+        taskResourceService.setChangedFieldsResponse('field2', 'field2success');
+
+        service.initializeTaskDataFields(afterActionService.create(success => {
+            if (success) {
+                expect(taskContentService.task.dataGroups.length).toEqual(1);
+                expect(taskContentService.task.dataGroups[0].fields.length).toEqual(2);
+
+                const mockField1 = taskContentService.task.dataGroups[0].fields[0];
+                expect(((mockField1 as any)._value as BehaviorSubject<boolean>).observers.length).toEqual(1);
+                mockField1.registerFormControl(new FormControl());
+                const mockField2 = taskContentService.task.dataGroups[0].fields[1];
+                expect(((mockField2 as any)._value as BehaviorSubject<boolean>).observers.length).toEqual(1);
+                mockField2.registerFormControl(new FormControl());
+
+                let numOfResponses = 0;
+                service.changedFields$.pipe(take(2)).subscribe(changed => {
+                    if (changed.hasOwnProperty('field1') || changed.hasOwnProperty('field2')) {
+                        numOfResponses++;
+                    }
+                    if (numOfResponses === 2) {
+                        done();
+                    }
+
+                    // console.log(JSON.stringify(changed));
+                });
+
+                taskContentService.task.user = {email: '', id: '', name: '', surname: '', fullName: ''};
+
+                mockField1.value = !mockField1.value;
+                mockField2.value = !mockField2.value;
+            }
+        }));
+    });
 });
 
 class MockTaskResourceService {
 
     private _delay = 100;
     private _response: Array<DataGroup> = [];
+    private _changedFieldsMap: Map<string, string> = new Map();
 
     public set delay(delayMs: number) {
         this._delay = delayMs;
@@ -169,12 +214,22 @@ class MockTaskResourceService {
         this._response = dataGroups;
     }
 
+    public setChangedFieldsResponse(key: string, value: string) {
+        this._changedFieldsMap.set(key, value);
+    }
+
     public getData(taskId: string): Observable<Array<DataGroup>> {
         return of(this._response).pipe(delay(this._delay));
     }
 
     public setData(taskId: string, body: TaskSetDataRequestBody): Observable<ChangedFieldContainer> {
-        return of({changedFields: {}}).pipe(delay(this._delay));
+        const response = {};
+        Object.keys(body).forEach(key => {
+            if (this._changedFieldsMap.has(key)) {
+                response[this._changedFieldsMap.get(key)] = {};
+            }
+        });
+        return of({changedFields: response}).pipe(delay(this._delay));
     }
 }
 
