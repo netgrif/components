@@ -9,5 +9,9 @@
     },
     "tab": {
         "testLabel": "Slovenský názov"
+    },
+    "translateNavTest": "jeden",
+    "translateNav": {
+        "Test": "jeden-jeden"
     }
 }
