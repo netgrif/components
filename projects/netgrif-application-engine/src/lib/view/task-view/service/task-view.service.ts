@@ -20,7 +20,7 @@ import {NAE_PREFERRED_TASK_ENDPOINT} from '../models/injection-token-task-endpoi
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
-import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
+import {LoadingWithKeyEmitter} from '../../../utility/loading-with-key-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
 import {ReplaySubjectQueue} from '../models/queue';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
@@ -35,7 +35,7 @@ export class TaskViewService extends SortableView implements OnDestroy {
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFields>;
     protected _requestedPage$: BehaviorSubject<PageLoadRequestContext>;
-    protected _loading$: LoadingWithFilterEmitter;
+    protected _loading$: LoadingWithKeyEmitter<Filter>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _initiallyOpenOneTask: boolean;
@@ -65,7 +65,7 @@ export class TaskViewService extends SortableView implements OnDestroy {
         super(resolver);
         this._assignCancelQueue = new ReplaySubjectQueue();
         this._tasks$ = new Subject<Array<TaskPanelData>>();
-        this._loading$ = new LoadingWithFilterEmitter();
+        this._loading$ = new LoadingWithKeyEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
         this._allowMultiOpen = true;
         this._endOfData = false;

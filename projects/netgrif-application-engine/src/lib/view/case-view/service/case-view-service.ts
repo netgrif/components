@@ -16,7 +16,7 @@ import {NAE_NEW_CASE_COMPONENT} from '../../../side-menu/content-components/inje
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
 import {Filter} from '../../../filter/models/filter';
 import {ListRange} from '@angular/cdk/collections';
-import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
+import {LoadingWithKeyEmitter} from '../../../utility/loading-with-key-emitter';
 import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
 import {UserService} from '../../../user/services/user.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
@@ -36,7 +36,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
         useCachedProcesses: true
     };
 
-    protected _loading$: LoadingWithFilterEmitter;
+    protected _loading$: LoadingWithKeyEmitter<Filter>;
     protected _cases$: Observable<Array<Case>>;
     protected _nextPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _endOfData: boolean;
@@ -60,7 +60,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
         if (newCaseConfig !== null) {
             Object.assign(this._newCaseConfiguration, newCaseConfig);
         }
-        this._loading$ = new LoadingWithFilterEmitter();
+        this._loading$ = new LoadingWithKeyEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
