@@ -131,7 +131,7 @@ export class FinishTaskService extends TaskHandlingService {
             }
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
-             ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
+             ${this._task.title} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.sendNotification(false);
             afterAction.next(false);
             afterAction.complete();
