@@ -16,10 +16,19 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
+import {createMockField} from '../../utility/tests/utility/create-mock-field';
+import {createMockDataGroup} from '../../utility/tests/utility/create-mock-datagroup';
+import {CallChainService} from '../../utility/call-chain/call-chain.service';
+import {DataGroup} from '../../resources/interface/data-groups';
+import {Observable, of} from 'rxjs';
+import {delay} from 'rxjs/operators';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
     let taskContentService: TaskContentService;
+    let afterActionService: CallChainService;
+    let taskResourceService: MockTaskResourceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,10 +47,17 @@ describe('TaskDataService', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: TaskResourceService, useClass: MockTaskResourceService}
             ]
         });
         service = TestBed.inject(TaskDataService);
         taskContentService = TestBed.inject(TaskContentService);
+        afterActionService = TestBed.inject(CallChainService);
+        taskResourceService = TestBed.inject(TaskResourceService) as unknown as MockTaskResourceService;
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should be created', () => {
@@ -62,7 +78,41 @@ describe('TaskDataService', () => {
         expect(service.ngOnDestroy()).toBeUndefined();
     });
 
-    afterEach(() => {
-        TestBed.resetTestingModule();
+    it('should initialize task data fields', (done) => {
+        expect(service).toBeTruthy();
+        expect(taskContentService).toBeTruthy();
+
+        taskContentService.task = createMockTask();
+        taskResourceService.response = [createMockDataGroup([
+            createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, 0),
+            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, 1)
+        ])];
+
+        service.initializeTaskDataFields(afterActionService.create(success => {
+            if (success) {
+                expect(service.ngOnDestroy()).toBeUndefined();
+                done();
+            }
+        }));
     });
+
+    // NAE-1386
 });
+
+class MockTaskResourceService {
+
+    private _delay = 100;
+    private _response: Array<DataGroup> = [];
+
+    public set delay(delayMs: number) {
+        this._delay = delayMs;
+    }
+
+    public set response(dataGroups: Array<DataGroup>) {
+        this._response = dataGroups;
+    }
+
+    public getData(taskId: string): Observable<Array<DataGroup>> {
+        return of(this._response).pipe(delay(this._delay));
+    }
+}
