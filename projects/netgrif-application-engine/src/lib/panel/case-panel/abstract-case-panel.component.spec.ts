@@ -125,6 +125,7 @@ class TestWrapperComponent {
         title: 'string',
         author: {email: 'email', fullName: 'fullName'},
         permissions: {},
+        users: {},
         color: 'color',
         creationDate: [],
         lastModified: [],
