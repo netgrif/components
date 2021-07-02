@@ -27,6 +27,7 @@ import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-re
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {FormControl} from '@angular/forms';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -34,6 +35,11 @@ describe('TaskDataService', () => {
     let afterActionService: CallChainService;
     let taskResourceService: MockTaskResourceService;
     let taskStateService: TestTaskRequestStateService;
+
+    const FIELD_1 = 'field1';
+    const FIELD_2 = 'field2';
+    const FIELD_1_RESPONSE = 'field1success';
+    const FIELD_2_RESPONSE = 'field2success';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -50,7 +56,7 @@ describe('TaskDataService', () => {
                 TaskEventService,
                 {provide: TaskRequestStateService, useClass: TestTaskRequestStateService},
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
-                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: TaskResourceService, useClass: MockTaskResourceService},
@@ -116,11 +122,11 @@ describe('TaskDataService', () => {
 
         taskContentService.task = createMockTask();
         taskResourceService.response = [createMockDataGroup([
-            createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, 'field1'),
-            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, 'field2')
+            createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, FIELD_1),
+            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, FIELD_2)
         ])];
 
-        taskResourceService.setChangedFieldsResponse('field1', 'field1success');
+        taskResourceService.setChangedFieldsResponse(FIELD_1, FIELD_1_RESPONSE);
 
         service.initializeTaskDataFields(afterActionService.create(success => {
             if (success) {
@@ -132,7 +138,7 @@ describe('TaskDataService', () => {
                 mockField.registerFormControl(new FormControl());
 
                 service.changedFields$.pipe(take(1)).subscribe(changed => {
-                    expect(changed.hasOwnProperty('field1'));
+                    expect(changed.hasOwnProperty(FIELD_1_RESPONSE));
                     done();
                 });
 
@@ -150,12 +156,12 @@ describe('TaskDataService', () => {
 
         taskContentService.task = createMockTask();
         taskResourceService.response = [createMockDataGroup([
-            createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, 'field1'),
-            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, 'field2')
+            createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, FIELD_1),
+            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, FIELD_2)
         ])];
 
-        taskResourceService.setChangedFieldsResponse('field1', 'field1success');
-        taskResourceService.setChangedFieldsResponse('field2', 'field2success');
+        taskResourceService.setChangedFieldsResponse(FIELD_1, FIELD_1_RESPONSE);
+        taskResourceService.setChangedFieldsResponse(FIELD_2, FIELD_2_RESPONSE);
 
         service.initializeTaskDataFields(afterActionService.create(success => {
             if (success) {
@@ -171,14 +177,12 @@ describe('TaskDataService', () => {
 
                 let numOfResponses = 0;
                 service.changedFields$.pipe(take(2)).subscribe(changed => {
-                    if (changed.hasOwnProperty('field1') || changed.hasOwnProperty('field2')) {
+                    if (changed.hasOwnProperty(FIELD_1_RESPONSE) || changed.hasOwnProperty(FIELD_2_RESPONSE)) {
                         numOfResponses++;
                     }
                     if (numOfResponses === 2) {
                         done();
                     }
-
-                    // console.log(JSON.stringify(changed));
                 });
 
                 taskContentService.task.user = {email: '', id: '', name: '', surname: '', fullName: ''};
