@@ -126,10 +126,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 return this.isTaskPresent();
             },
             nextEvent => {
-                this.performGetDataRequest(this._afterActionFactory.create(outcome => {
-                    afterAction.resolve(outcome);
-                    nextEvent.resolve(outcome);
-                }), force);
+                this.performGetDataRequest(afterAction, force, nextEvent);
             }, nextEvent => {
                 afterAction.resolve(false);
                 nextEvent.resolve(false);
@@ -141,9 +138,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * Performs a getData request on the task currently stored in the `taskContent` service
      * @param afterAction the action that should be performed after the request is processed
      * @param force set to `true` if you need force reload of all task data
-     * @protected
+     * @param nextEvent indicates to the event queue that the next event can be processed
      */
-    protected performGetDataRequest(afterAction: AfterAction, force: boolean) {
+    protected performGetDataRequest(afterAction: AfterAction, force: boolean, nextEvent: AfterAction) {
         if (this._safeTask.dataSize > 0 && !force) {
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.resolve(true);
@@ -158,9 +155,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskState.startLoading(gottenTaskId);
 
         this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(dataGroups => {
-            this.processSuccessfulGetDataRequest(gottenTaskId, dataGroups, afterAction);
+            this.processSuccessfulGetDataRequest(gottenTaskId, dataGroups, afterAction, nextEvent);
         }, error => {
-            this.processErroneousGetDataRequest(gottenTaskId, error, afterAction);
+            this.processErroneousGetDataRequest(gottenTaskId, error, afterAction, nextEvent);
         });
     }
 
@@ -169,11 +166,17 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param gottenTaskId the Id of the task whose data was requested
      * @param dataGroups the returned data groups of the task
      * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
      */
-    protected processSuccessfulGetDataRequest(gottenTaskId: string, dataGroups: Array<DataGroup>, afterAction: AfterAction): void {
+    protected processSuccessfulGetDataRequest(gottenTaskId: string,
+                                              dataGroups: Array<DataGroup>,
+                                              afterAction: AfterAction,
+                                              nextEvent: AfterAction): void {
         if (!this.isTaskRelevant(gottenTaskId)) {
             this._log.debug('current task changed before the get data response could be received, discarding...');
             this._taskState.stopLoading(gottenTaskId);
+            afterAction.complete();
+            nextEvent.resolve(true);
             return;
         }
 
@@ -210,6 +213,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskState.stopLoading(gottenTaskId);
         this.sendNotification(TaskEvent.GET_DATA, true);
         afterAction.resolve(true);
+        nextEvent.resolve(true);
         this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
         this._taskContentService.$shouldCreateCounter.next(this._taskContentService.$shouldCreateCounter.getValue() + 1);
     }
@@ -219,14 +223,19 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param gottenTaskId the Id of the task whose data was requested
      * @param error the returned error
      * @param afterAction the action that should be performed after the request is processed
-     * @protected
+     * @param nextEvent indicates to the event queue that the next event can be processed
      */
-    protected processErroneousGetDataRequest(gottenTaskId: string, error: HttpErrorResponse, afterAction: AfterAction) {
+    protected processErroneousGetDataRequest(gottenTaskId: string,
+                                             error: HttpErrorResponse,
+                                             afterAction: AfterAction,
+                                             nextEvent: AfterAction) {
         this._taskState.stopLoading(gottenTaskId);
         this._log.debug('getting task data failed', error);
 
         if (!this.isTaskRelevant(gottenTaskId)) {
             this._log.debug('current task changed before the get data error could be received');
+            afterAction.complete();
+            nextEvent.resolve(false);
             return;
         }
 
@@ -239,6 +248,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
         this.sendNotification(TaskEvent.GET_DATA, false);
         afterAction.resolve(false);
+        nextEvent.resolve(false);
     }
 
     /**
