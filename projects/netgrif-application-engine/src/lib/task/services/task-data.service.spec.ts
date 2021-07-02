@@ -116,9 +116,11 @@ describe('TaskDataService', () => {
 
         taskContentService.task = createMockTask();
         taskResourceService.response = [createMockDataGroup([
-            createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, 0),
-            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, 1)
+            createMockField(true, {x: 0, y: 0, cols: 0, rows: 0}, 'field1'),
+            createMockField(true, {x: 1, y: 0, cols: 0, rows: 0}, 'field2')
         ])];
+
+        taskResourceService.setChangedFieldsResponse('field1', 'field1success');
 
         service.initializeTaskDataFields(afterActionService.create(success => {
             if (success) {
@@ -129,21 +131,9 @@ describe('TaskDataService', () => {
                 expect(((mockField as any)._value as BehaviorSubject<boolean>).observers.length).toEqual(1);
                 mockField.registerFormControl(new FormControl());
 
-                let subCallCount = 0;
-                taskStateService.updating$.pipe(take(3)).subscribe(updating => {
-                    switch (subCallCount) {
-                        case 0:
-                            expect(updating).toBeFalse();
-                            break;
-                        case 1:
-                            expect(updating).toBeTrue();
-                            break;
-                        case 2:
-                            expect(updating).toBeFalse();
-                            done();
-                            break;
-                    }
-                    subCallCount++;
+                service.changedFields$.pipe(take(1)).subscribe(changed => {
+                    expect(changed.hasOwnProperty('field1'));
+                    done();
                 });
 
                 taskContentService.task.user = {email: '', id: '', name: '', surname: '', fullName: ''};

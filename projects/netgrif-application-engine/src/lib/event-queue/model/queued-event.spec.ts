@@ -1,7 +1,7 @@
-import { QueuedEvent } from './queued-event';
+import {QueuedEvent} from './queued-event';
 
 describe('QueuedEvent', () => {
-  it('should create an instance', () => {
-    expect(new QueuedEvent()).toBeTruthy();
-  });
+    it('should create an instance', () => {
+        expect(new QueuedEvent(() => true, () => {})).toBeTruthy();
+    });
 });
