@@ -1,4 +1,4 @@
-import {AfterAction} from '../../utility/call-chain/call-chain.service';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 /**
  * Wrapper for a scheduled event
@@ -14,7 +14,7 @@ export class QueuedEvent {
     constructor(protected _isRelevant: () => boolean,
                 protected _execute: (afterAction: AfterAction) => void,
                 protected _revert: (afterAction: AfterAction) => void = (a) => {
-                    a.next(true);
+                    a.resolve(true);
                 }) {
     }
 

@@ -3,6 +3,7 @@ export * from './loading-emitter';
 export * from './loading-with-filter-emitter';
 export * from './get-immediate-data';
 export * from './call-chain/call-chain.service';
+export * from './call-chain/after-action';
 export * from './pagination/page-has-content';
 export * from './pagination/load-all-pages';
 export * from './service/spinner-overlay.service';

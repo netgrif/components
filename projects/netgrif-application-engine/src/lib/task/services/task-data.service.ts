@@ -24,6 +24,10 @@ import {DataField} from '../../data-fields/models/abstract-data-field';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {take} from 'rxjs/operators';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
+import {EventQueueService} from '../../event-queue/services/event-queue.service';
+import {QueuedEvent} from '../../event-queue/model/queued-event';
+import {AfterAction} from '../../utility/call-chain/after-action';
+import {DataGroup} from '../../resources/interface/data-groups';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -47,7 +51,8 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService,
-                protected _afterActionFactory: CallChainService) {
+                protected _afterActionFactory: CallChainService,
+                protected _eventQueue: EventQueueService) {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ = new Subject<boolean>();
         this._changedFields$ = new Subject<ChangedFields>();
@@ -115,15 +120,33 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      * @param force set to `true` if you need force reload of all task data
      */
-    public initializeTaskDataFields(afterAction = new Subject<boolean>(), force: boolean = false): void {
-        if (!this.isTaskPresent()) {
-            return;
-        }
+    public initializeTaskDataFields(afterAction: AfterAction = new AfterAction(), force: boolean = false): void {
+        this._eventQueue.scheduleEvent(new QueuedEvent(
+            () => {
+                return this.isTaskPresent();
+            },
+            nextEvent => {
+                this.performGetDataRequest(this._afterActionFactory.create(outcome => {
+                    afterAction.resolve(outcome);
+                    nextEvent.resolve(outcome);
+                }), force);
+            }, nextEvent => {
+                afterAction.resolve(false);
+                nextEvent.resolve(false);
+            }
+        ));
+    }
 
+    /**
+     * Performs a getData request on the task currently stored in the `taskContent` service
+     * @param afterAction the action that should be performed after the request is processed
+     * @param force set to `true` if you need force reload of all task data
+     * @protected
+     */
+    protected performGetDataRequest(afterAction: AfterAction, force: boolean) {
         if (this._safeTask.dataSize > 0 && !force) {
             this.sendNotification(TaskEvent.GET_DATA, true);
-            afterAction.next(true);
-            afterAction.complete();
+            afterAction.resolve(true);
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
             return;
         }
@@ -134,69 +157,88 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         const gottenTaskId = this._safeTask.stringId;
         this._taskState.startLoading(gottenTaskId);
 
-        this._taskResourceService.getData(this._safeTask.stringId).pipe(take(1)).subscribe(dataGroups => {
-            if (!this.isTaskRelevant(gottenTaskId)) {
-                this._log.debug('current task changed before the get data response could be received, discarding...');
-                this._taskState.stopLoading(gottenTaskId);
-                return;
-            }
+        this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(dataGroups => {
+            this.processSuccessfulGetDataRequest(gottenTaskId, dataGroups, afterAction);
+        }, error => {
+            this.processErroneousGetDataRequest(gottenTaskId, error, afterAction);
+        });
+    }
 
-            this._safeTask.dataGroups = dataGroups;
-            if (dataGroups.length === 0) {
-                this._log.info('Task has no data ' + this._safeTask);
-                this._safeTask.dataSize = 0;
-            } else {
-                dataGroups.forEach(group => {
-                    group.fields.forEach(field => {
-                        field.valueChanges().subscribe(() => {
-                            if (this.wasFieldUpdated(field)) {
-                                if (field instanceof DynamicEnumerationField) {
-                                    field.loading = true;
-                                    this.updateTaskDataFields(this._afterActionFactory.create(bool => {
-                                        field.loading = false;
-                                    }));
-                                } else {
-                                    this.updateTaskDataFields();
-                                }
+    /**
+     * Processes a successful outcome of a `getData` request
+     * @param gottenTaskId the Id of the task whose data was requested
+     * @param dataGroups the returned data groups of the task
+     * @param afterAction the action that should be performed after the request is processed
+     */
+    protected processSuccessfulGetDataRequest(gottenTaskId: string, dataGroups: Array<DataGroup>, afterAction: AfterAction): void {
+        if (!this.isTaskRelevant(gottenTaskId)) {
+            this._log.debug('current task changed before the get data response could be received, discarding...');
+            this._taskState.stopLoading(gottenTaskId);
+            return;
+        }
+
+        this._safeTask.dataGroups = dataGroups;
+        if (dataGroups.length === 0) {
+            this._log.info('Task has no data ' + this._safeTask);
+            this._safeTask.dataSize = 0;
+        } else {
+            dataGroups.forEach(group => {
+                group.fields.forEach(field => {
+                    field.valueChanges().subscribe(() => {
+                        if (this.wasFieldUpdated(field)) {
+                            if (field instanceof DynamicEnumerationField) {
+                                field.loading = true;
+                                this.updateTaskDataFields(this._afterActionFactory.create(bool => {
+                                    field.loading = false;
+                                }));
+                            } else {
+                                this.updateTaskDataFields();
                             }
-                        });
-                        if (field instanceof FileField || field instanceof FileListField) {
-                            field.changedFields$.subscribe(change => {
-                                this._changedFields$.next(change.changedFields);
-                            });
                         }
                     });
-                    this._safeTask.dataSize === undefined ?
-                        this._safeTask.dataSize = group.fields.length :
-                        this._safeTask.dataSize += group.fields.length;
+                    if (field instanceof FileField || field instanceof FileListField) {
+                        field.changedFields$.subscribe(change => {
+                            this._changedFields$.next(change.changedFields);
+                        });
+                    }
                 });
-            }
-            this._taskState.stopLoading(gottenTaskId);
-            this.sendNotification(TaskEvent.GET_DATA, true);
-            afterAction.next(true);
-            afterAction.complete();
-            this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
-            this._taskContentService.$shouldCreateCounter.next(this._taskContentService.$shouldCreateCounter.getValue() + 1);
-        }, (error: HttpErrorResponse) => {
-            this._taskState.stopLoading(gottenTaskId);
-            this._log.debug('getting task data failed', error);
+                this._safeTask.dataSize === undefined ?
+                    this._safeTask.dataSize = group.fields.length :
+                    this._safeTask.dataSize += group.fields.length;
+            });
+        }
+        this._taskState.stopLoading(gottenTaskId);
+        this.sendNotification(TaskEvent.GET_DATA, true);
+        afterAction.resolve(true);
+        this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
+        this._taskContentService.$shouldCreateCounter.next(this._taskContentService.$shouldCreateCounter.getValue() + 1);
+    }
 
-            if (!this.isTaskRelevant(gottenTaskId)) {
-                this._log.debug('current task changed before the get data error could be received');
-                return;
-            }
+    /**
+     * Processes an erroneous outcome of a `getData` request
+     * @param gottenTaskId the Id of the task whose data was requested
+     * @param error the returned error
+     * @param afterAction the action that should be performed after the request is processed
+     * @protected
+     */
+    protected processErroneousGetDataRequest(gottenTaskId: string, error: HttpErrorResponse, afterAction: AfterAction) {
+        this._taskState.stopLoading(gottenTaskId);
+        this._log.debug('getting task data failed', error);
 
-            if (error.status === 500 && error.error.message && error.error.message.startsWith('Could not find task with id')) {
-                this._snackBar.openWarningSnackBar(this._translate.instant('tasks.snackbar.noLongerExists'));
-                this._taskOperations.reload();
-            } else {
-                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
-             ${this._taskContentService.task.title} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
-            }
-            this.sendNotification(TaskEvent.GET_DATA, false);
-            afterAction.next(false);
-            afterAction.complete();
-        });
+        if (!this.isTaskRelevant(gottenTaskId)) {
+            this._log.debug('current task changed before the get data error could be received');
+            return;
+        }
+
+        if (error.status === 500 && error.error.message && error.error.message.startsWith('Could not find task with id')) {
+            this._snackBar.openWarningSnackBar(this._translate.instant('tasks.snackbar.noLongerExists'));
+            this._taskOperations.reload();
+        } else {
+            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.noGroup')}
+                        ${this._taskContentService.task.title} ${this._translate.instant('tasks.snackbar.failedToLoad')}`);
+        }
+        this.sendNotification(TaskEvent.GET_DATA, false);
+        afterAction.resolve(false);
     }
 
     /**
