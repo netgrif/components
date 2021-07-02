@@ -7,7 +7,7 @@ import {IncrementingCounter} from '../../incrementing-counter';
 
 /**
  * Creates a mock boolean or button field, with the specified properties
- * @param visible if `true` the fields behavior is set to `visible`, if `false` the fields behavior is set to `hidden`
+ * @param visible if `true` the fields behavior is set to `editable`, if `false` the fields behavior is set to `hidden`
  * @param layout position of the field in the grid layout
  * @param counterOrStringId if a `string` is provided its value will be used as the fields ID.
  * If a number is provided the fields ID will be set to 'f<number>'.
@@ -20,7 +20,7 @@ export function createMockField(visible = true,
                                 layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0},
                                 counterOrStringId: number | IncrementingCounter | string = 0,
                                 booleanField = true): BooleanField | ButtonField {
-    const b = visible ? {visible: true} : {hidden: true};
+    const b = visible ? {editable: true} : {hidden: true};
     const l = {
         ...layout,
         template: TemplateAppearance.MATERIAL,
