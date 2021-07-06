@@ -57,7 +57,6 @@ export class CancelTaskService extends TaskHandlingService {
      * @param afterAction if cancel completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
     public cancel(afterAction: AfterAction = new AfterAction()) {
-
         this._eventQueue.scheduleEvent(new QueuedEvent(
             () => this.canCancel(),
             nextEvent => {
