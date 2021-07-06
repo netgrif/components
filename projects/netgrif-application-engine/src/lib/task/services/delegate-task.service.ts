@@ -20,8 +20,8 @@ import {TaskEventService} from '../../task-content/services/task-event.service';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
-import {AfterAction} from '../../utility/call-chain/after-action';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 
 /**
