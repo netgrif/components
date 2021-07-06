@@ -149,6 +149,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             this.sendNotification(TaskEvent.GET_DATA, true);
             afterAction.resolve(true);
             this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
+            nextEvent.resolve(true);
             return;
         }
         if (force) {
@@ -269,17 +270,20 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     public updateTaskDataFields(afterAction: AfterAction = new AfterAction()): void {
         if (!this.isTaskPresent()) {
             this._log.debug('Task is not present. Update request ignored.');
+            afterAction.resolve(false);
             return;
         }
 
         if (this._safeTask.user === undefined) {
             this._log.debug('current task is not assigned...');
+            afterAction.resolve(false);
             return;
         }
 
         const setTaskId = this._safeTask.stringId;
 
         if (this._safeTask.dataSize <= 0) {
+            afterAction.resolve(true);
             return;
         }
 
