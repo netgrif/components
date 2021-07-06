@@ -30,6 +30,7 @@ import {AfterAction} from '../../utility/call-chain/after-action';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
+import {TaskSetDataRequestContext} from '../models/task-set-data-request-context';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -282,15 +283,15 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             return;
         }
 
-        const body = this.createUpdateRequestBody();
+        const requestContext = this.createUpdateRequestContext();
 
         this._eventQueue.scheduleEvent(new QueuedEvent(
-            () => this.isSetDataRequestStillValid(body),
+            () => this.isSetDataRequestStillValid(requestContext.body),
             nextEvent => {
-                this.performSetDataRequest(setTaskId, body, afterAction, nextEvent);
+                this.performSetDataRequest(setTaskId, requestContext.body, afterAction, nextEvent);
             },
             nextEvent => {
-                // TODO revert the changes attempted by the request
+                this.revertSetDataRequest(requestContext);
                 nextEvent.resolve(false);
             }
         ));
@@ -300,20 +301,25 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @ignore
      * Goes over all the data fields in the managed Task and if they are valid and changed adds them to the set data request
      */
-    protected createUpdateRequestBody(): TaskSetDataRequestBody {
-        const body = {};
+    protected createUpdateRequestContext(): TaskSetDataRequestContext {
+        const context: TaskSetDataRequestContext = {
+            body: {},
+            previousValues: {}
+        };
+
         this._safeTask.dataGroups.forEach(dataGroup => {
             dataGroup.fields.forEach(field => {
                 if (this.wasFieldUpdated(field)) {
-                    body[field.stringId] = {
+                    context.body[field.stringId] = {
                         type: this._fieldConverterService.resolveType(field),
                         value: this._fieldConverterService.formatValueForBackend(field, field.value)
                     };
+                    context.previousValues[field.stringId] = field.previousValue;
                     field.changed = false;
                 }
             });
         });
-        return body;
+        return context;
     }
 
     /**
@@ -446,6 +452,61 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this.updateStateInfo(afterAction, false, setTaskId);
         nextEvent.resolve(false);
         this._taskOperations.reload();
+    }
+
+    /**
+     * Reverts the effects of a failed `setData` request, so that the user sees current values.
+     * @param context the context of the failed request
+     */
+    protected revertSetDataRequest(context: TaskSetDataRequestContext) {
+        // this iteration could be improved if we had a map of all the data fields in a task
+        const totalCount = Object.keys(context.body).length;
+        let foundCount = 0;
+
+        for (const datagroup of this._safeTask.dataGroups) {
+            for (const field of datagroup.fields) {
+                if (!context.body[field.stringId]) {
+                    continue;
+                }
+
+                if (this.compareBackendFormattedFieldValues(
+                    this._fieldConverterService.formatValueForBackend(field, field.value),
+                    context.body[field.stringId].value)
+                ) {
+                    field.valueWithoutChange(context.previousValues[field.stringId]);
+                }
+
+                foundCount++;
+                if (foundCount === totalCount) {
+                    return;
+                }
+            }
+        }
+
+        this._log.error(`Invalid state. Some data fields of task ${this._safeTask.stringId}, are no longer present in it!`);
+    }
+
+    /**
+     * Compares the values that are in the backend compatible format as given by the {@link FieldConverterService}
+     * and determines whether they are the same value, or not.
+     * @param current the current value (can also be called `value1` or `left`)
+     * @param old the new value (can also be called `value2` or `right`)
+     * @returns `true` if the values are the same and `false` otherwise
+     */
+    protected compareBackendFormattedFieldValues(current, old): boolean {
+        if (Array.isArray(current)) {
+            if (!Array.isArray(old)) {
+                throw new Error('Illegal arguments! Cannot compare array value to non-array value');
+            }
+
+            if (current.length !== old.length) {
+                return false;
+            }
+
+            return current.every((value, index) => old[index] === value);
+        }
+
+        return current === old;
     }
 
     /**
