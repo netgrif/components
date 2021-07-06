@@ -350,6 +350,12 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         // this iteration could be improved if we had a map of all the data fields in a task
         const totalCount = Object.keys(request).length;
+
+        if (totalCount === 0) {
+            // an empty request is handled later in the code
+            return true;
+        }
+
         let foundCount = 0;
 
         for (const datagroup of this._safeTask.dataGroups) {
