@@ -49,7 +49,6 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 protected _snackBar: SnackBarService,
                 protected _taskResourceService: TaskResourceService,
                 protected _fieldConverterService: FieldConverterService,
-                protected _dataFocusPolicyService: DataFocusPolicyService,
                 protected _taskEvent: TaskEventService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
