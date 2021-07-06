@@ -220,6 +220,17 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                     });
                     fields.sort((a, b) => a.order - b.order);
                     dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
+                    if (dataFields[0].layout !== undefined) {
+                        dataFields.sort((field1, field2) => {
+                            if (field1.layout.y === field2.layout.y) {
+                                if (field1.layout.x > field2.layout.x) {
+                                    return 1;
+                                } else return -1;
+                            } else if (field1.layout.y > field2.layout.y) {
+                                return 1;
+                            } else return -1;
+                        });
+                    }
                     result.push({
                         fields: dataFields,
                         stretch: dataGroupResource.stretch,
