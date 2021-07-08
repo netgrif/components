@@ -27,7 +27,6 @@ import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-re
 import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {FormControl} from '@angular/forms';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
-import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -56,7 +55,7 @@ describe('TaskDataService', () => {
                 TaskEventService,
                 {provide: TaskRequestStateService, useClass: TestTaskRequestStateService},
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
-                {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: TaskResourceService, useClass: MockTaskResourceService},
