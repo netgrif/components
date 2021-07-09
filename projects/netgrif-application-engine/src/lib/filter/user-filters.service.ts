@@ -144,38 +144,41 @@ export class UserFiltersService implements OnDestroy {
      * @param viewId the viewId of the view which contained the filter
      * @param additionalData set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
+     * @param withDefaultCategories Whether the saved filter should be saved with
+     * the [defaultSearchCategories]{@link FilterMetadata#defaultSearchCategories} flag set to `true`, or `false`.
      * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process,
      * or the filter could not be saved
      */
     public save(searchService: SearchService, allowedNets: readonly string[],
                 searchCategories: readonly Category<any>[], viewId: string,
-                additionalData: TaskSetDataRequestBody = {}): Observable<SavedFilterMetadata> {
+                additionalData: TaskSetDataRequestBody = {}, withDefaultCategories = true): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
             this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
             return of(undefined);
         }
 
         const result = new ReplaySubject<SavedFilterMetadata>(1);
-        this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories, viewId, additionalData).subscribe(filterCaseId => {
-            const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
-                newFilterCaseId: filterCaseId
-            } as SaveFilterInjectionData);
-            ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
-                if (event.message === 'Side menu closed unexpectedly') {
-                    this.delete(filterCaseId);
-                    result.next();
-                } else {
-                    result.next({
-                        filterCaseId,
-                        allowedNets: [...allowedNets],
-                        originViewId: viewId,
-                        filterMetadata: this.filterMetadataFromSearchService(searchService, searchCategories),
-                        filter: SimpleFilter.fromQuery({query: searchService.rootPredicate.query.value}, searchService.filterType)
-                    });
-                }
-                result.complete();
+        this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories, viewId, additionalData, withDefaultCategories)
+            .subscribe(filterCaseId => {
+                const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
+                    newFilterCaseId: filterCaseId
+                } as SaveFilterInjectionData);
+                ref.onClose.pipe(filter(e => !e.opened), take(1)).subscribe(event => {
+                    if (event.message === 'Side menu closed unexpectedly') {
+                        this.delete(filterCaseId);
+                        result.next();
+                    } else {
+                        result.next({
+                            filterCaseId,
+                            allowedNets: [...allowedNets],
+                            originViewId: viewId,
+                            filterMetadata: this.filterMetadataFromSearchService(searchService, searchCategories, withDefaultCategories),
+                            filter: SimpleFilter.fromQuery({query: searchService.rootPredicate.query.value}, searchService.filterType)
+                        });
+                    }
+                    result.complete();
+                });
             });
-        });
         return result.asObservable();
     }
 
@@ -192,11 +195,14 @@ export class UserFiltersService implements OnDestroy {
      * @param viewId the viewId of the view which contained the filter
      * @param additionalData set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
+     * @param withDefaultCategories Whether the saved filter should be saved with
+     * the [defaultSearchCategories]{@link FilterMetadata#defaultSearchCategories} flag set to `true`, or `false`.
      * @returns an observable that emits the id of the created Filter case instance
      */
     public createFilterCaseAndSetData(searchService: SearchService, allowedNets: readonly string[],
                                       searchCategories: readonly Category<any>[], viewId: string,
-                                      additionalData: TaskSetDataRequestBody = {}): Observable<string> {
+                                      additionalData: TaskSetDataRequestBody = {},
+                                      withDefaultCategories = true): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized(() => {
             this._caseService.createCase({
@@ -222,7 +228,7 @@ export class UserFiltersService implements OnDestroy {
                             type: FieldTypeResource.FILTER,
                             value: searchService.rootPredicate.query.value,
                             allowedNets,
-                            filterMetadata: this.filterMetadataFromSearchService(searchService, searchCategories)
+                            filterMetadata: this.filterMetadataFromSearchService(searchService, searchCategories, withDefaultCategories)
                         },
                         [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
                             type: FieldTypeResource.TEXT,
@@ -285,11 +291,14 @@ export class UserFiltersService implements OnDestroy {
         });
     }
 
-    protected filterMetadataFromSearchService(searchService: SearchService, searchCategories: readonly Category<any>[]): FilterMetadata {
+    protected filterMetadataFromSearchService(searchService: SearchService,
+                                              searchCategories: readonly Category<any>[],
+                                              withDefaultCategories: boolean): FilterMetadata {
         return {
             filterType: searchService.filterType,
             predicateMetadata: searchService.createPredicateMetadata(),
-            searchCategories: searchCategories.map(c => c.serializeClass())
+            searchCategories: searchCategories.map(c => c.serializeClass()),
+            defaultSearchCategories: withDefaultCategories
         };
     }
 }
