@@ -5,6 +5,7 @@ import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
+import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
 
 describe('CaseAuthor', () => {
     let category: CaseAuthor;
@@ -12,7 +13,7 @@ describe('CaseAuthor', () => {
 
     beforeEach(() => {
         operatorService = new OperatorService(new OperatorResolverService());
-        category = new CaseAuthor(operatorService, null);
+        category = new CaseAuthor(operatorService, null, createMockDependencies(undefined, operatorService));
     });
 
     afterEach(() => {
@@ -48,7 +49,7 @@ describe('CaseAuthor', () => {
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
-        const deserialized = new CaseAuthor(operatorService, null);
+        const deserialized = new CaseAuthor(operatorService, null, createMockDependencies(undefined, operatorService));
         deserialized.loadFromMetadata(metadata).subscribe(() => {
             expect(deserialized.isOperatorSelected()).toBeTrue();
             expect(deserialized.providesPredicate).toBeTrue();
