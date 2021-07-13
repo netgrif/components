@@ -58,7 +58,6 @@ export * from './models/configuration-input';
 /* Interfaces */
 export * from './models/escape-result';
 export * from './models/wrap-result';
-export * from './category-factory/optional-dependencies';
 export * from './models/predicate-removal-event';
 export * from './models/category/search-autocomplete-option';
 export * from './models/category/autocomplete-options';
@@ -71,6 +70,9 @@ export * from './models/persistance/filter-metadata';
 export * from './models/persistance/saved-filter-metadata';
 export * from './models/persistance/filter-text-segment';
 export * from './models/persistance/filter-metadata-allowed-nets';
+
+export * from './category-factory/optional-dependencies';
+export * from './category-factory/category-serialisation-pair';
 
 /* Enums */
 export * from './models/boolean-operator';
@@ -107,3 +109,6 @@ export * from './category-factory/default-categories-factories';
 export * from './category-factory/search-categories-injection-token';
 export * from './models/component-configuration/search-component-configuration-injection-token';
 export * from './models/base-filter-injection-token';
+
+/* Modules */
+export * from './category-factory/default-search-categories.module';

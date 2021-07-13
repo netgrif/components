@@ -1,4 +1,4 @@
-import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional, Type} from '@angular/core';
 import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {CaseResourceService} from '../resources/engine-endpoint/case-resource.service';
 import {TaskResourceService} from '../resources/engine-endpoint/task-resource.service';
@@ -26,6 +26,7 @@ import {Filter} from './models/filter';
 import {MergeOperator} from './models/merge-operator';
 import {SavedFilterMetadata} from '../search/models/persistance/saved-filter-metadata';
 import {FilterMetadata} from '../search/models/persistance/filter-metadata';
+import {CategoryResolverService} from '../search/category-factory/category-resolver.service';
 
 /**
  * Service that manages filters created by users of the application.
@@ -44,6 +45,7 @@ export class UserFiltersService implements OnDestroy {
                 protected _callChainService: CallChainService,
                 protected _sideMenuService: SideMenuService,
                 protected _log: LoggerService,
+                protected _categoryResolverService: CategoryResolverService,
                 @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>,
                 @Optional() @Inject(NAE_LOAD_FILTER_COMPONENT) protected _loadFilterComponent: ComponentType<unknown>) {
         this._initialized$ = new ReplaySubject<boolean>(1);
@@ -150,7 +152,7 @@ export class UserFiltersService implements OnDestroy {
      * or the filter could not be saved
      */
     public save(searchService: SearchService, allowedNets: readonly string[],
-                searchCategories: readonly Category<any>[], viewId: string,
+                searchCategories: readonly Type<Category<any>>[], viewId: string,
                 additionalData: TaskSetDataRequestBody = {}, withDefaultCategories = true): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
             this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
@@ -200,7 +202,7 @@ export class UserFiltersService implements OnDestroy {
      * @returns an observable that emits the id of the created Filter case instance
      */
     public createFilterCaseAndSetData(searchService: SearchService, allowedNets: readonly string[],
-                                      searchCategories: readonly Category<any>[], viewId: string,
+                                      searchCategories: readonly Type<Category<any>>[], viewId: string,
                                       additionalData: TaskSetDataRequestBody = {},
                                       withDefaultCategories = true): Observable<string> {
         const result = new ReplaySubject<string>(1);
@@ -292,12 +294,12 @@ export class UserFiltersService implements OnDestroy {
     }
 
     protected filterMetadataFromSearchService(searchService: SearchService,
-                                              searchCategories: readonly Category<any>[],
+                                              searchCategories: readonly Type<Category<any>>[],
                                               withDefaultCategories: boolean): FilterMetadata {
         return {
             filterType: searchService.filterType,
             predicateMetadata: searchService.createPredicateMetadata(),
-            searchCategories: searchCategories.map(c => c.serializeClass()),
+            searchCategories: searchCategories.map(c => this._categoryResolverService.serialize(c)),
             defaultSearchCategories: withDefaultCategories
         };
     }

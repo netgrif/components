@@ -16,10 +16,25 @@ describe('CategoryResolverService', () => {
 
     it('should resolve all engine categories', () => {
         const categories = Object.values(Categories);
+        const unique = new Set();
         expect(categories.length > 0).toBeTrue();
         for (const cat of categories) {
             const category = service.toClass(cat);
             expect(category).toBeTruthy();
+            unique.add(category);
+        }
+        expect(unique.size).toEqual(categories.length);
+    });
+
+    it('should map both ways', () => {
+        const categories = Object.values(Categories);
+        expect(categories.length > 0).toBeTrue();
+        for (const cat of categories) {
+            const category = service.toClass(cat);
+            expect(category).toBeTruthy();
+            const serialized = service.serialize(category);
+            expect(serialized).toBeTruthy();
+            expect(serialized).toBe(cat);
         }
     });
 

@@ -23,6 +23,8 @@ import {TaskTask} from '../models/category/task/task-task';
  *
  * @returns an Array containing the default case search categories: {@link CaseDataset}, {@link CaseTitle}, {@link CaseCreationDate},
  * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor} and {@link CaseVisualId}
+ *
+ * @deprecated in 5.6.0 - Use the {@link NAE_DEFAULT_CASE_SEARCH_CATEGORIES} injection token instead
  */
 export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     const cats = [
@@ -49,6 +51,8 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
  *
  * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask}, {@link TaskProcess}
  * and {@link TaskRole}
+ *
+ * @deprecated in 5.6.0 - Use the {@link NAE_DEFAULT_TASK_SEARCH_CATEGORIES} injection token instead
  */
 export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     const cats = [
