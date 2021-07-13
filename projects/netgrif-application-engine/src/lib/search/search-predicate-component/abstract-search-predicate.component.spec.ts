@@ -1,10 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AbstractSearchPredicateComponent} from './abstract-search-predicate.component';
-import {Component, Inject, OnDestroy} from '@angular/core';
-import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
+import {Component, Inject, OnDestroy, Type} from '@angular/core';
+import {NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {LoggerService} from '../../logger/services/logger.service';
-import {defaultCaseSearchCategoriesFactory} from '../category-factory/default-categories-factories';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -44,7 +43,7 @@ describe('AbstractSearchPredicateComponent', () => {
             ],
             providers: [
                 CategoryFactory,
-                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+                {provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SearchService,
                 {
@@ -78,10 +77,11 @@ describe('AbstractSearchPredicateComponent', () => {
     template: ''
 })
 class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
-    constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
+    constructor(@Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Type<Category<any>>>,
                 logger: LoggerService,
-                initializationService: AdvancedSearchComponentInitializationService) {
-        super(searchCategories, logger, initializationService);
+                initializationService: AdvancedSearchComponentInitializationService,
+                categoryFactory: CategoryFactory) {
+        super(searchCategories, logger, initializationService, categoryFactory);
     }
 }
 
