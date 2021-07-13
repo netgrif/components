@@ -12,9 +12,7 @@ import {
     ViewIdService,
     NAE_TASK_VIEW_CONFIGURATION,
     tabbedTaskViewConfigurationFactory,
-    NAE_SEARCH_CATEGORIES,
-    tabbedAllowedNetsServiceFactory,
-    defaultTaskSearchCategoriesFactory
+    tabbedAllowedNetsServiceFactory
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '../../../../header/header.component';
 
@@ -47,11 +45,6 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
             provide: NAE_TASK_VIEW_CONFIGURATION,
             useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]
-        },
-        {
-            provide: NAE_SEARCH_CATEGORIES,
-            useFactory: defaultTaskSearchCategoriesFactory,
-            deps: [CategoryFactory]
         }
     ]
 })

@@ -12,7 +12,11 @@ import {
     navigationItemTaskFilterFactory,
     NAE_NAVIGATION_ITEM_TASK_DATA,
     navigationItemTaskAllowedNetsServiceFactory,
-    navigationItemTaskCategoryFactory, NAE_VIEW_ID_SEGMENT, groupNavigationViewIdSegmentFactory
+    navigationItemTaskCategoryFactory,
+    NAE_VIEW_ID_SEGMENT,
+    groupNavigationViewIdSegmentFactory,
+    CategoryResolverService,
+    NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '../../../../header/header.component';
 import {ActivatedRoute} from '@angular/router';
@@ -39,7 +43,12 @@ import {ActivatedRoute} from '@angular/router';
         },
         {   provide: NAE_SEARCH_CATEGORIES,
             useFactory: navigationItemTaskCategoryFactory,
-            deps: [CategoryFactory, NAE_NAVIGATION_ITEM_TASK_DATA]
+            deps: [
+                CategoryResolverService,
+                NAE_NAVIGATION_ITEM_TASK_DATA,
+                NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
+                NAE_DEFAULT_TASK_SEARCH_CATEGORIES
+            ]
         },
     ]
 })
