@@ -9,7 +9,7 @@ import {SearchAutocompleteOption} from './search-autocomplete-option';
 import {Query} from '../query/query';
 import {FormControl} from '@angular/forms';
 
-export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigurationAutocompleteCategory<string>{
+export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigurationAutocompleteCategory<string> {
 
     private _userAutocomplete: UserAutocomplete;
 

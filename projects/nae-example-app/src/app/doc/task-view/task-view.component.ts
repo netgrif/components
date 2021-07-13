@@ -21,7 +21,7 @@ import {
 import {HeaderComponent} from '@netgrif/components';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
-    return factory.createFromConfig('case');
+    return factory.createWithAllNets();
 };
 
 const baseFilterFactory = () => {
