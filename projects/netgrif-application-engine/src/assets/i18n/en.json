@@ -97,6 +97,10 @@
                     "name": "Case visual ID",
                     "placeholder": "Enter case visual ID"
                 },
+                "stringId": {
+                    "name": "Case string ID",
+                    "placeholder": "Enter case string ID"
+                },
                 "author": {
                     "name": "Case author",
                     "placeholder": "Enter author's name or email"
