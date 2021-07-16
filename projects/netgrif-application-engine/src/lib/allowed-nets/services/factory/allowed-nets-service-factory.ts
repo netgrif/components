@@ -12,9 +12,10 @@ import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injecte
 import {Case} from '../../../resources/interface/case';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
-import {DataGroup, Task} from '../../../resources/public-api';
+import {DataGroup} from '../../../resources/public-api';
 import {getField} from '../../../utility/get-field';
 import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
+import {BaseAllowedNetsService} from '../base-allowed-nets.service';
 
 
 /**
@@ -32,6 +33,7 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
  * It has a dependency on this class and {@link NAE_NAVIGATION_ITEM_TASK_DATA} injection token.
  */
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
+                                                            baseAllowedNets: BaseAllowedNetsService,
                                                             navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
     const filterField = getField(navigationItemTaskData[navigationItemTaskData.length - 1].fields,
         UserFilterConstants.FILTER_FIELD_ID, true) as FilterField;
@@ -39,7 +41,14 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
     if (filterField === undefined) {
         throw new Error(`Provided navigation item task data does not contain a filter field! Allowed nets cannot be generated from it!`);
     }
-    return factory.createFromArray(filterField.allowedNets);
+
+    const nets = [...filterField.allowedNets];
+
+    if (filterField.filterMetadata.inheritAllowedNets) {
+        nets.push(...baseAllowedNets.allowedNets);
+    }
+
+    return factory.createFromArray(nets);
 }
 
 /**

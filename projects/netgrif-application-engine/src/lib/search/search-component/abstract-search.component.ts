@@ -146,7 +146,8 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     public saveFilter(): void {
         this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
             this._searchCategories, this._viewIdService.viewId, this.additionalFilterData,
-            this._configuration.saveFilterWithDefaultCategories ?? true).subscribe(savedFilterData => {
+            this._configuration.saveFilterWithDefaultCategories ?? true,
+            this._configuration.inheritAllowedNets ?? true).subscribe(savedFilterData => {
                 if (savedFilterData) {
                     this.filterSaved.emit(savedFilterData);
                 }

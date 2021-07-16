@@ -9,6 +9,7 @@ import {
 } from '@netgrif/application-engine';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from './injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {Type} from '@angular/core';
+import {BaseAllowedNetsService} from '../../../../../../../netgrif-application-engine/src/lib/allowed-nets/services/base-allowed-nets.service';
 
 /**
  * Converts a navigation item case task data injected by the {@link NAE_TAB_DATA} injection token into a {@link BaseFilter} instance
@@ -22,13 +23,15 @@ export function filterCaseTabbedDataFilterFactory(tabData: InjectedTabbedCaseVie
  * Converts a navigation item case task data injected by the {@link NAE_TAB_DATA} injection token into an {@link AllowedNetsService}
  * instance
  * @param allowedNetsServiceFactory
+ * @param baseAllowedNets
  * @param tabData the injected data containing the navigation item case task data
  */
 export function filterCaseTabbedDataAllowedNetsServiceFactory(allowedNetsServiceFactory: AllowedNetsServiceFactory,
+                                                              baseAllowedNets: BaseAllowedNetsService,
                                                               tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData)
     : AllowedNetsService {
 
-    return navigationItemTaskAllowedNetsServiceFactory(allowedNetsServiceFactory, tabData.navigationItemTaskData);
+    return navigationItemTaskAllowedNetsServiceFactory(allowedNetsServiceFactory, baseAllowedNets, tabData.navigationItemTaskData);
 }
 
 /**

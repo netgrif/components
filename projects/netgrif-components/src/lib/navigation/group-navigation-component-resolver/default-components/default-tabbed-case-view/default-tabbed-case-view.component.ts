@@ -10,7 +10,12 @@ import {
     TabbedCaseView,
     NAE_TAB_DATA,
     LoggerService,
-    SavedFilterMetadata, ViewIdService, CategoryResolverService, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES
+    SavedFilterMetadata,
+    ViewIdService,
+    CategoryResolverService,
+    NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
+    NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
+    BaseAllowedNetsService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '../../../../header/header.component';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from '../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
@@ -37,9 +42,10 @@ import {
         {
             provide: AllowedNetsService,
             useFactory: filterCaseTabbedDataAllowedNetsServiceFactory,
-            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]
+            deps: [AllowedNetsServiceFactory, BaseAllowedNetsService, NAE_TAB_DATA]
         },
-        {   provide: NAE_SEARCH_CATEGORIES,
+        {
+            provide: NAE_SEARCH_CATEGORIES,
             useFactory: filterCaseTabbedDataSearchCategoriesFactory,
             deps: [CategoryResolverService, NAE_TAB_DATA, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_DEFAULT_TASK_SEARCH_CATEGORIES]
         },
