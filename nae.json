@@ -1019,8 +1019,7 @@
             "serializeExtraParams": true,
             "includeLogLevel": true,
             "publishers": [
-                "console",
-                "localStorage"
+                "console"
             ]
         },
         "auth": {

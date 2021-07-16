@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
+import {AfterAction} from './after-action';
 
 @Injectable({
     providedIn: 'root'
@@ -20,8 +20,8 @@ export class CallChainService {
      * The emitted value is passed as the argument.
      * @returns a subscribed `Subject` instance that performs the provided `callback` on the first emission and then completes
      */
-    public create(callback: (boolean) => void): Subject<boolean> {
-        const chain = new Subject<boolean>();
+    public create(callback: (boolean) => void): AfterAction {
+        const chain = new AfterAction();
         chain.subscribe(result => {
             callback(result);
             chain.complete();

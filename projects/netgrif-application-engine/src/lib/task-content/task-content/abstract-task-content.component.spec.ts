@@ -15,20 +15,19 @@ import {PaperViewService} from '../../navigation/quick-panel/components/paper-vi
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventService} from '../services/task-event.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {DataGroup, DataGroupAlignment} from '../../resources/interface/data-groups';
+import {DataGroupAlignment} from '../../resources/interface/data-groups';
 import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
 import {UnlimitedTaskContentService} from '../services/unlimited-task-content.service';
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
-import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridLayout} from '../../utility/grid-layout/model/grid-element';
-import {TemplateAppearance} from '../../data-fields/models/template-appearance';
-import {MaterialAppearance} from '../../data-fields/models/material-appearance';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {TaskElementType} from '../model/task-content-element-type';
 import {ButtonField} from '../../data-fields/button-field/models/button-field';
+import {createMockDataGroup} from '../../utility/tests/utility/create-mock-datagroup';
+import {createMockField} from '../../utility/tests/utility/create-mock-field';
 
 describe('AbstractTaskContentComponent', () => {
     let component: TestTaskContentComponent;
@@ -81,7 +80,7 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
-                createDataGroup([createField()], 'hello world', DataGroupAlignment.START, DataGroupLayoutType.LEGACY, true)
+                createMockDataGroup([createField()], 'hello world', DataGroupAlignment.START, DataGroupLayoutType.LEGACY, true)
             ]);
 
             expect(component.dataSource).toBeTruthy();
@@ -103,8 +102,8 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
-                createDataGroup([createField(false)], 'hello world'),
-                createDataGroup([createField()])
+                createMockDataGroup([createField(false)], 'hello world'),
+                createMockDataGroup([createField()])
             ]);
 
             expect(component.dataSource).toBeTruthy();
@@ -123,8 +122,8 @@ describe('AbstractTaskContentComponent', () => {
 
         it('should not have input side effects', () => {
             const input = [
-                createDataGroup([createField(false)], 'hello world'),
-                createDataGroup([createField()])
+                createMockDataGroup([createField(false)], 'hello world'),
+                createMockDataGroup([createField()])
             ];
 
             component.computeLayoutData(input);
@@ -139,9 +138,9 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
-                createDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.START),
-                createDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.CENTER),
-                createDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.END)
+                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.START),
+                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.CENTER),
+                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.END)
             ]);
 
             expect(component.dataSource).toBeTruthy();
@@ -181,11 +180,11 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
-                createDataGroup([createField(), createField(), createField(), createField(), createField(false), createField()],
+                createMockDataGroup([createField(), createField(), createField(), createField(), createField(false), createField()],
                     'title', DataGroupAlignment.START, DataGroupLayoutType.FLOW),
-                createDataGroup([createField(), createField(), createField(), createField(), createField(false), createField()],
+                createMockDataGroup([createField(), createField(), createField(), createField(), createField(false), createField()],
                     'title', DataGroupAlignment.CENTER, DataGroupLayoutType.FLOW),
-                createDataGroup([createField(), createField(), createField(), createField(), createField(false), createField()],
+                createMockDataGroup([createField(), createField(), createField(), createField(), createField(false), createField()],
                     'title', DataGroupAlignment.END, DataGroupLayoutType.FLOW)
             ]);
 
@@ -238,7 +237,7 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
-                createDataGroup([
+                createMockDataGroup([
                         createField(true, {x: 0, y: 0, rows: 1, cols: 1}),
                         createField(false, {x: 1, y: 0, rows: 1, cols: 3}),
                         createField(true, {x: 2, y: 1, rows: 1, cols: 2}),
@@ -309,7 +308,7 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
-                createDataGroup([
+                createMockDataGroup([
                         createField(true, {x: 0, y: 0, rows: 1, cols: 1}),
                         createField(true, {x: 1, y: 0, rows: 1, cols: 1}),
                         createField(true, {x: 2, y: 0, rows: 1, cols: 1}),
@@ -364,7 +363,7 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
-                createDataGroup([
+                createMockDataGroup([
                         createField(true, {x: 0, y: 0, rows: 1, cols: 1}, 'bool1'),
                         createField(true, {x: 1, y: 0, rows: 1, cols: 1}, 'bool2'),
                         createField(true, {x: 2, y: 0, rows: 1, cols: 1}, 'bool3'),
@@ -413,7 +412,7 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[4].type).toEqual(FieldTypeResource.BOOLEAN);
 
             component.computeLayoutData([
-                createDataGroup([
+                createMockDataGroup([
                         createField(true, {x: 0, y: 0, rows: 1, cols: 1}, 'bool1'),
                         createField(true, {x: 1, y: 0, rows: 1, cols: 1}, 'bool2'),
                         createField(true, {x: 0, y: 1, rows: 1, cols: 2}, 'btn1', false),
@@ -450,43 +449,13 @@ describe('AbstractTaskContentComponent', () => {
     });
 });
 
-function createDataGroup(fields: Array<DataField<unknown>>,
-                         title?: string,
-                         alignment = DataGroupAlignment.START,
-                         layoutType = DataGroupLayoutType.LEGACY,
-                         stretch = false,
-                         cols = 4): DataGroup {
-    return {
-        fields,
-        title,
-        alignment,
-        stretch,
-        layout: {
-            type: layoutType,
-            rows: 0,
-            cols
-        }
-    };
-}
-
 const counter = new IncrementingCounter();
 
 function createField(visible = true,
                      layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0},
                      stringId?: string,
                      booleanField = true): BooleanField | ButtonField {
-    const b = visible ? {visible: true} : {hidden: true};
-    const l = {
-        ...layout,
-        template: TemplateAppearance.MATERIAL,
-        appearance: MaterialAppearance.OUTLINE,
-        offset: 0
-    };
-    if (booleanField) {
-        return new BooleanField(!!stringId ? stringId : 'f' + counter.next(), 'title', false, b, '', '', l);
-    } else {
-        return new ButtonField(!!stringId ? stringId : 'f' + counter.next(), 'title', b, 0, '', '', l);
-    }
+    return createMockField(visible, layout, stringId ?? counter, booleanField);
 }
 
 function transformStringToGrid(gridString: string): Array<Array<string>> {
