@@ -86,6 +86,7 @@ import { PublicTaskViewComponent } from './doc/public-task-view/public-task-view
 import { PublicWorkflowViewComponent } from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import { GroupViewComponent } from './doc/group-view/group-view.component';
+import { RedirectComponent } from './doc/redirect/redirect.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -129,6 +130,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicWorkflowViewComponent,
         PublicResolverComponent,
         GroupViewComponent,
+        RedirectComponent,
     ],
     imports: [
         BrowserModule,
@@ -211,7 +213,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicTaskViewComponent,
         PublicWorkflowViewComponent,
         PublicResolverComponent,
-        GroupViewComponent
+        GroupViewComponent,
+        RedirectComponent
     ],
     providers: [{
         provide: ConfigurationService,
