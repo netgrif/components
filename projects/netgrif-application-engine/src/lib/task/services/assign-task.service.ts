@@ -61,6 +61,9 @@ export class AssignTaskService extends TaskHandlingService {
             },
             nextEvent => {
                 this.performAssignRequest(afterAction, nextEvent, this._taskViewService !== null && !this._taskViewService.allowMultiOpen);
+            },
+            nextEvent => {
+                this.completeSuccess(afterAction, nextEvent);
             }
         ));
     }
@@ -78,11 +81,6 @@ export class AssignTaskService extends TaskHandlingService {
         // this is probably no longer necessary because of the event queue
         if (this._taskState.isLoading(assignedTaskId)) {
             nextEvent.resolve(true);
-            return;
-        }
-
-        if (this._safeTask.user) {
-            this.completeSuccess(afterAction, nextEvent);
             return;
         }
 

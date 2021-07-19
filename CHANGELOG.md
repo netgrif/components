@@ -1,3 +1,14 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10897/tab/release-report-all-issues"></a>
+## 5.5.2 (19.07.2021)
+### Bug fixes
+* [NAE-1395](https://netgrif.atlassian.net/browse/NAE-1395) - AfterActions are not completed if some event queue conditions are not met
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10896/tab/release-report-all-issues"></a>
 ## 5.5.1 (09.07.2021)
 ### Bug fixes
