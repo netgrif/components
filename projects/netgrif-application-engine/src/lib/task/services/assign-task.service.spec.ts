@@ -17,7 +17,7 @@ import {Observable, of, throwError} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
-import {Task} from '../../resources/public-api';
+import {EventOutcome, Task} from '../../resources/public-api';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -92,6 +92,10 @@ describe('AssignTaskService', () => {
         spyOn(console, 'debug');
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
@@ -162,8 +166,30 @@ describe('AssignTaskService', () => {
         }));
     });
 
-    afterEach(() => {
-        TestBed.resetTestingModule();
+    // NAE-1395
+    it('should trigger AfterAction on assigned task', done => {
+        expect(testTask.startDate).toBeTruthy();
+        resourceService.response = {success: 'success'};
+
+        let taskEvent: TaskEventNotification;
+        taskEventService.taskEventNotifications$.subscribe(event => {
+            taskEvent = event;
+        });
+
+        service.assign(callChainService.create((resultCall1) => {
+            expect(resultCall1).toBeTrue();
+            expect(testTask.startDate).toBeFalsy();
+
+            expect(taskEvent).toBeTruthy();
+            expect(taskEvent.taskId).toEqual('taskId');
+            expect(taskEvent.success).toBeTrue();
+            expect(taskEvent.event).toEqual(TaskEvent.ASSIGN);
+
+            service.assign(callChainService.create((resultCall2) => {
+                expect(resultCall2).toBeTrue();
+                done();
+            }));
+        }));
     });
 });
 
@@ -171,12 +197,30 @@ class TestTaskResourceService {
 
     public response: MessageResource;
 
-    public assignTask(): Observable<MessageResource> {
+    public assignTask(): Observable<EventOutcome> {
         if (this.response.error === 'throw') {
             return of(this.response).pipe(map(r => {
                 throw throwError(r);
             }));
         }
-        return of(this.response);
+
+        if (this.response.error !== undefined) {
+            return of({
+                ...this.response,
+                changedFields: {}
+            });
+        }
+
+        return of({
+            ...this.response,
+            changedFields: {},
+            assignee: {
+                id: 'id',
+                email: 'email',
+                name: 'name',
+                surname: 'surname',
+                fullName: 'fullName',
+            }
+        });
     }
 }
