@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractRedirectComponent} from 'netgrif-application-engine';
-import {Router} from '@angular/router';
+import {AbstractRedirectComponent, LoggerService} from '@netgrif/application-engine';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'nae-app-redirect',
@@ -9,8 +9,10 @@ import {Router} from '@angular/router';
 })
 export class RedirectComponent extends AbstractRedirectComponent implements OnInit {
 
-  constructor(protected router: Router) {
-      super(router);
+  constructor(protected route: ActivatedRoute,
+              protected router: Router,
+              protected log: LoggerService) {
+      super(route, router, log);
   }
 
   ngOnInit(): void {

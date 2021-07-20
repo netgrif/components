@@ -16,6 +16,7 @@ import {LoggerService} from '../../../../logger/services/logger.service';
 import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-virtual-scroll.component';
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
+import {ActivatedRoute, Route} from '@angular/router';
 
 export abstract class AbstractCaseListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
@@ -30,14 +31,17 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
     public cases$: Observable<Array<Case>>;
     public loading$: Observable<boolean>;
+    private redirectCaseId: string;
 
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _log: LoggerService,
-                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
+                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                          protected route: ActivatedRoute) {
         super(injectedTabData);
         this.cases$ = this._caseViewService.cases$;
         this.loading$ = this._caseViewService.loading$;
         this.caseClick = new EventEmitter<Case>();
+        this.onRedirect();
     }
 
     ngOnDestroy(): void {
@@ -62,6 +66,22 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
 
     public onCaseClick(case_: Case) {
         this.caseClick.emit(case_);
+    }
+
+    public onRedirect() {
+        this.route.queryParams.subscribe(paramMap => {
+           if (!!paramMap['caseId']) {
+               this.redirectCaseId = paramMap['caseId'];
+               this.cases$.subscribe(cases => {
+                   if (cases !== undefined && cases.length > 0) {
+                       const _case = cases.find(c => c.stringId === this.redirectCaseId);
+                       if (_case !== undefined) {
+                           this.caseClick.emit(_case);
+                       }
+                   }
+               });
+           }
+        });
     }
 
 }
