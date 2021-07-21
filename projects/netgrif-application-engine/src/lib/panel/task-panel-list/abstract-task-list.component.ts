@@ -52,7 +52,7 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
     }
 
     ngAfterViewInit() {
-        // this.onRedirect();
+        this.onRedirect();
     }
 
     ngOnDestroy(): void {
