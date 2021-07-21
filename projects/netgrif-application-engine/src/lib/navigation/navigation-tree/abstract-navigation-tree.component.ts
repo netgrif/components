@@ -4,7 +4,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {Services, View, Views} from '../../../commons/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {BehaviorSubject, combineLatest, forkJoin, Observable, of, ReplaySubject, Subscription} from 'rxjs';
+import {forkJoin, Observable, of, ReplaySubject, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
@@ -12,18 +12,16 @@ import {AuthorityGuardService} from '../../authorization/authority/authority-gua
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
 import {AbstractNavigationResizableDrawerComponent} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
-import {concatMap, debounceTime, filter, map} from 'rxjs/operators';
+import {concatMap, debounceTime, filter, map, take} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {hasContent} from '../../utility/pagination/page-has-content';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {refreshTree} from '../../utility/refresh-tree';
-import {FilterField} from '../../data-fields/filter-field/models/filter-field';
-import {TextField} from '../../data-fields/text-field/models/text-field';
-import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {getField} from '../../utility/get-field';
 import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
+import {LanguageService} from '../../translate/language.service';
 
 export interface NavigationNode {
     name: string;
@@ -45,6 +43,8 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     private _subscriptions: Array<Subscription>;
     private _subGroupResolution: Subscription;
+    private _subLangChange: Subscription;
+    private _groupNavNodesCount = 0;
 
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
@@ -57,7 +57,8 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _authorityGuard: AuthorityGuardService,
                           protected _groupGuard: GroupGuardService,
                           protected _activeGroupService: ActiveGroupService,
-                          protected _taskResourceService: TaskResourceService) {
+                          protected _taskResourceService: TaskResourceService,
+                          protected _languageService: LanguageService) {
         super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
@@ -94,8 +95,11 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             }
         }
         this._reloadNavigation.complete();
-        if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
+        if (this._subGroupResolution !== undefined) {
             this._subGroupResolution.unsubscribe();
+        }
+        if (this._subLangChange !== undefined) {
+            this._subLangChange.unsubscribe();
         }
     }
 
@@ -133,13 +137,12 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             if (!groupNavigationGenerated && this.isGroupNavigationNode(view)) {
                 groupNavigationGenerated = true;
                 const insertPosition = nodes.length;
-                if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
-                    this._subGroupResolution.unsubscribe();
-                }
-                this._subGroupResolution = this.generateGroupNavigationNodes().subscribe(groupNavNodes => {
-                    this.dataSource.data.splice(insertPosition, 0, ...groupNavNodes);
-                    refreshTree(this.dataSource);
+
+                this._subLangChange = this._languageService.getLangChange$().subscribe(() => {
+                    this.loadGroupNavigationNodes(insertPosition);
                 });
+                this.loadGroupNavigationNodes(insertPosition);
+
                 return; // continue
             }
 
@@ -310,6 +313,22 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
      */
     protected isGroupNavigationNode(view: View): boolean {
         return view?.layout?.name === GroupNavigationConstants.GROUP_NAVIGATION_OUTLET;
+    }
+
+    /**
+     * Forces a reload of the group navigation nodes.
+     * @param insertPosition
+     */
+    protected loadGroupNavigationNodes(insertPosition: number): void {
+        if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
+            this._subGroupResolution.unsubscribe();
+        }
+
+        this._subGroupResolution = this.generateGroupNavigationNodes().pipe(take(1)).subscribe(groupNavNodes => {
+            this.dataSource.data.splice(insertPosition, this._groupNavNodesCount, ...groupNavNodes);
+            this._groupNavNodesCount = groupNavNodes.length;
+            refreshTree(this.dataSource);
+        });
     }
 
     protected generateGroupNavigationNodes(): Observable<Array<NavigationNode>> {
