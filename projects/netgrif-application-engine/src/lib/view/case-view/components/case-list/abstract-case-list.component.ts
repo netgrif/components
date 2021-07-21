@@ -27,6 +27,7 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
     @Input() showDeleteMenu = false;
     @Input() textEllipsis = false;
     @Input() width: string;
+    @Input() redirectEnabled = true;
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
     public cases$: Observable<Array<Case>>;
@@ -69,6 +70,10 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
     }
 
     public onRedirect() {
+        if (!this.redirectEnabled) {
+            return;
+        }
+
         this.route.queryParams.subscribe(paramMap => {
            if (!!paramMap['caseId']) {
                this.redirectCaseId = paramMap['caseId'];

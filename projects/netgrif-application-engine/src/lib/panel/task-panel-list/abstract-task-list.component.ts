@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Input, OnDestroy, Optional, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
 import {Observable} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -9,16 +9,20 @@ import {TaskEventNotification} from '../../task-content/model/task-event-notific
 import {TabbedVirtualScrollComponent} from '../abstract/tabbed-virtual-scroll.component';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
+import {MatExpansionPanel} from '@angular/material/expansion';
+import {ActivatedRoute} from '@angular/router';
 
-export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
+export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
 
     protected _allowMultiOpen = true;
+    protected taskPanelRefs: Map<string, MatExpansionPanel>;
     @Input() tasks$: Observable<Array<TaskPanelData>>;
     @Input() loading$: Observable<boolean>;
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() responsiveBody = true;
     @Input() forceLoadDataOnOpen = false;
     @Input() textEllipsis = false;
+
     @Input()
     set allowMultiOpen(bool: boolean) {
         this._allowMultiOpen = bool;
@@ -36,11 +40,19 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
+    private redirectTaskId: string;
+
     protected constructor(protected _taskViewService: TaskViewService,
                           protected _log: LoggerService,
-                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
+                          @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                          protected route: ActivatedRoute) {
         super(injectedTabData);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
+        this.taskPanelRefs = new Map<string, MatExpansionPanel>();
+    }
+
+    ngAfterViewInit() {
+        // this.onRedirect();
     }
 
     ngOnDestroy(): void {
@@ -65,5 +77,24 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
      */
     public emitTaskEvent(event: TaskEventNotification) {
         this.taskEvent.emit(event);
+    }
+
+    public addToPanelRefs(task: TaskPanelData, panelRef: MatExpansionPanel) {
+        this.taskPanelRefs.set(task.task.stringId, panelRef);
+    }
+
+    public onRedirect() {
+        this.route.queryParams.subscribe(paramMap => {
+            if (!!paramMap['taskId']) {
+                this.redirectTaskId = paramMap['taskId'];
+                this.tasks$.subscribe(tasks => {
+                    const task = tasks.find(t => t.task.stringId === this.redirectTaskId);
+                    if (!!task && !task.initiallyExpanded) {
+                        this.taskPanelRefs.get(this.redirectTaskId).open();
+                        this.taskPanelRefs.get(this.redirectTaskId).expanded = true;
+                    }
+                });
+            }
+        });
     }
 }

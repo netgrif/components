@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Router, UrlSegment} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router, UrlSegment} from '@angular/router';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Views} from '../../../commons/schema';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -14,7 +14,8 @@ export class RedirectService {
 
     constructor(protected _router: Router,
                 protected _log: LoggerService,
-                protected _config: ConfigurationService) {
+                protected _config: ConfigurationService,
+                protected _route: ActivatedRoute) {
     }
 
     get lastUrl(): Array<UrlSegment> {
@@ -36,6 +37,10 @@ export class RedirectService {
                 this._log.info('Router navigate to last path : ' + log);
             });
         }
+    }
+
+    public redirectFromUrl() {
+        this._router.navigate([this.parseRedirectPath(this._router.url)], {queryParams: this._route.snapshot.queryParams});
     }
 
     public resolveLoginPath(): string {
@@ -70,5 +75,15 @@ export class RedirectService {
             }
         }
         return null;
+    }
+
+    public parseRedirectPath(url: string): string {
+        let path: string;
+        if (url.includes('?')) {
+            path = url.slice(0, url.indexOf('?'));
+        } else {
+            path = url;
+        }
+        return path.replace('/redirect', '');
     }
 }

@@ -68,7 +68,7 @@ import {
     LoginFormComponentModule,
     NavigationComponentModule,
     PanelComponentModule,
-    ProfileComponentModule,
+    ProfileComponentModule, RedirectComponentModule,
     RegistrationFormComponentModule,
     SearchComponentModule,
     SideMenuComponentModule,
@@ -178,6 +178,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         WorkflowViewComponentModule,
         NgxChartsModule,
         EmailSubmissionFormComponentModule,
+        RedirectComponentModule
     ],
     entryComponents: [
         ContentComponent,
