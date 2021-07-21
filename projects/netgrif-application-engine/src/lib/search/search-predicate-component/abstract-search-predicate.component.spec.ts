@@ -25,6 +25,7 @@ import {
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {DefaultSearchCategoriesModule} from '../category-factory/default-search-categories.module';
 
 describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
@@ -35,7 +36,8 @@ describe('AbstractSearchPredicateComponent', () => {
             imports: [
                 HttpClientTestingModule,
                 MaterialModule,
-                TranslateLibModule
+                TranslateLibModule,
+                DefaultSearchCategoriesModule,
             ],
             declarations: [
                 TestSearchPredicateComponent,

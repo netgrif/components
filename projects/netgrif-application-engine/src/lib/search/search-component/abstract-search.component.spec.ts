@@ -30,6 +30,7 @@ import {CategoryFactory} from '../category-factory/category-factory';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
 import {ViewIdService} from '../../user/services/view-id.service';
+import {DefaultSearchCategoriesModule} from '../category-factory/default-search-categories.module';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -42,6 +43,7 @@ describe('AbstractSearchComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                DefaultSearchCategoriesModule,
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
