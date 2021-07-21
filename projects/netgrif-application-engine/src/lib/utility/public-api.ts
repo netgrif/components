@@ -38,3 +38,4 @@ export * from './tests/test-config';
 export * from './tests/test-factory-methods';
 export * from './tests/test-view-service';
 export * from './tests/mocks/mock-endpoint';
+export * from './tests/test-mock-dependencies.module';

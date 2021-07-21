@@ -4,7 +4,7 @@ import {UserResource} from '../../resources/interface/user-resource';
 
 export abstract class AuthenticationMethodService {
 
-    protected constructor() {
+    constructor() {
     }
 
     abstract login(credentials: Credentials): Observable<UserResource>;
