@@ -2,6 +2,7 @@ import {
     AllowedNetsService,
     AllowedNetsServiceFactory,
     BaseFilter,
+    BaseAllowedNetsService,
     Category,
     navigationItemTaskAllowedNetsServiceFactory,
     navigationItemTaskFilterFactory,
@@ -9,7 +10,6 @@ import {
 } from '@netgrif/application-engine';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from './injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {Type} from '@angular/core';
-import {BaseAllowedNetsService} from '../../../../../../../netgrif-application-engine/src/lib/allowed-nets/services/base-allowed-nets.service';
 
 /**
  * Converts a navigation item case task data injected by the {@link NAE_TAB_DATA} injection token into a {@link BaseFilter} instance

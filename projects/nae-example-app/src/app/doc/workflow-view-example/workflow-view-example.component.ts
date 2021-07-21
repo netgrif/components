@@ -1,6 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, PetriNetResourceService} from '@netgrif/application-engine';
-import {loadAllPages} from '@netgrif/application-engine';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+    NAE_WORKFLOW_SERVICE_CONFIRM_DELETE,
+    PetriNetResourceService,
+    BaseAllowedNetsService,
+    loadAllPages
+} from '@netgrif/application-engine';
+import {WorkflowViewComponent} from '@netgrif/components';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'nae-app-workflows-view-example',
@@ -10,14 +16,30 @@ import {loadAllPages} from '@netgrif/application-engine';
         // {provide: NAE_WORKFLOW_SERVICE_CONFIRM_DELETE, useValue: false}
     ]
 })
-export class WorkflowViewExampleComponent implements OnInit {
+export class WorkflowViewExampleComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly TITLE = 'Workflows view';
     readonly DESCRIPTION = 'Ukážka použitia workflow view...';
-    constructor(private petriNetRes: PetriNetResourceService) {
+
+    @ViewChild(WorkflowViewComponent) workflowViewComp: WorkflowViewComponent;
+
+    private _sub: Subscription;
+
+    constructor(private petriNetRes: PetriNetResourceService, private _baseAllowedNets: BaseAllowedNetsService) {
     }
 
     ngOnInit(): void {
         loadAllPages((a, b) => this.petriNetRes.searchPetriNets(a, b), {}).subscribe(a => console.log(a));
     }
 
+    ngAfterViewInit(): void {
+        this._sub = this.workflowViewComp.workflows$.subscribe(nets => {
+            this._baseAllowedNets.allowedNets = nets.map(net => net.identifier);
+        });
+    }
+
+    ngOnDestroy(): void {
+        if (this._sub !== undefined) {
+            this._sub.unsubscribe();
+        }
+    }
 }
