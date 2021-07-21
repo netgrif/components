@@ -25,6 +25,7 @@ export * from './tests/mocks/mock-user-preference.service';
 export * from './tests/mocks/mock-user-resource.service';
 export * from './tests/mocks/mock-authentication-method-service';
 export * from './tests/mocks/mock-sign-up.service';
+export * from './tests/mocks/mock-user-autocomplete-value';
 export * from './tests/utility/create-mock-task';
 export * from './tests/utility/create-mock-case';
 export * from './tests/utility/create-mock-immediate-data';

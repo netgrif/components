@@ -6,6 +6,7 @@ import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
+import {mockUserAutocompleteValue} from '../../../../utility/tests/mocks/mock-user-autocomplete-value';
 
 describe('CaseAuthor', () => {
     let category: CaseAuthor;
@@ -35,17 +36,20 @@ describe('CaseAuthor', () => {
     });
 
     it('should serialize complete instance', () => {
-        configureCategory(category, operatorService, Equals, ['foo']);
+        configureCategory(category, operatorService, Equals, [mockUserAutocompleteValue('Test User', true, 'userId')]);
+
+        const mockedSerializedValue = mockUserAutocompleteValue('Test User', true, 'userId');
+        delete mockedSerializedValue.icon;
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
-        expect(metadata.values).toEqual(['foo']);
+        expect(metadata.values).toEqual([mockedSerializedValue]);
         expect(metadata.category).toBe(Categories.CASE_AUTHOR);
         expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
     });
 
     it('should deserialize stored instance', (done) => {
-        configureCategory(category, operatorService, Equals, ['foo']);
+        configureCategory(category, operatorService, Equals, [mockUserAutocompleteValue('Test User', true, 'userId')]);
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
