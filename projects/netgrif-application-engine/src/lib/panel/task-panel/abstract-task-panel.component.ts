@@ -253,17 +253,11 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public getAssignTitle(): string {
-        // if (this.taskPanelData.task.assignTitle === '' || this.taskPanelData.task.assignTitle) {
-        //     return this.taskPanelData.task.assignTitle;
-        // } else return 'tasks.view.assign';
-        // return this.taskPanelData.task.assignTitle ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
         return (this.taskPanelData.task.assignTitle === '' || this.taskPanelData.task.assignTitle)
             ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
     }
 
     public getCancelTitle(): string {
-        // return this.taskPanelData.task.cancelTitle ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
-
         return (this.taskPanelData.task.cancelTitle === '' || this.taskPanelData.task.cancelTitle)
             ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
     }
@@ -271,13 +265,11 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     public getDelegateTitle(): string {
         return (this.taskPanelData.task.delegateTitle === '' || this.taskPanelData.task.delegateTitle)
             ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
-        // return this.taskPanelData.task.delegateTitle ?? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
     }
 
     public getFinishTitle(): string {
         return (this.taskPanelData.task.finishTitle === '' || this.taskPanelData.task.finishTitle)
             ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
-        // return this.taskPanelData.task.finishTitle ?? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
     }
 
     public canDisable(type: string): boolean {
