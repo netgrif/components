@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RedirectComponent } from './redirect.component';
+import { ExampleRedirectComponent } from './example-redirect.component';
 
 describe('RedirectComponent', () => {
-  let component: RedirectComponent;
-  let fixture: ComponentFixture<RedirectComponent>;
+  let component: ExampleRedirectComponent;
+  let fixture: ComponentFixture<ExampleRedirectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RedirectComponent ]
+      declarations: [ ExampleRedirectComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RedirectComponent);
+    fixture = TestBed.createComponent(ExampleRedirectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
