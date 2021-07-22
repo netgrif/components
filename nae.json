@@ -62,6 +62,19 @@
             "navigation": true,
             "routing": {
                 "path": "redirect/:view"
+            },
+            "children": {
+                "custom-redirect": {
+                    "component": {
+                        "class": "RedirectComponent",
+                        "from": "./doc/redirect/redirect.component"
+                    },
+                    "access": "public",
+                    "navigation": true,
+                    "routing": {
+                        "path": "**"
+                    }
+                }
             }
         },
         "demo-authentication": {

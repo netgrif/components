@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot, Router, UrlSegment} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, Params, Router, UrlSegment} from '@angular/router';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Views} from '../../../commons/schema';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -11,6 +11,7 @@ export class RedirectService {
 
     public static readonly LOGIN_COMPONENT = 'login';
     protected _lastIntendedRoute: ActivatedRouteSnapshot;
+    private lastQueryParams: Params;
 
     constructor(protected _router: Router,
                 protected _log: LoggerService,
@@ -24,6 +25,10 @@ export class RedirectService {
 
     set intendedRoute(route: ActivatedRouteSnapshot) {
         this._lastIntendedRoute = route;
+    }
+
+    get queryParams(): Params {
+        return this.lastQueryParams;
     }
 
     public redirect(path?: string) {
@@ -40,7 +45,8 @@ export class RedirectService {
     }
 
     public redirectFromUrl() {
-        this._router.navigate([this.parseRedirectPath(this._router.url)], {queryParams: this._route.snapshot.queryParams});
+        this.lastQueryParams = this._route.snapshot.queryParams;
+        this._router.navigate([this.parseRedirectPath(this._router.url)], { queryParams: this.lastQueryParams });
     }
 
     public resolveLoginPath(): string {
