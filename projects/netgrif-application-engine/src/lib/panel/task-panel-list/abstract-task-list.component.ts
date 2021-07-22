@@ -45,7 +45,7 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
     protected constructor(protected _taskViewService: TaskViewService,
                           protected _log: LoggerService,
                           @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
-                          protected route: ActivatedRoute) {
+                          protected route?: ActivatedRoute) {
         super(injectedTabData);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.taskPanelRefs = new Map<string, MatExpansionPanel>();

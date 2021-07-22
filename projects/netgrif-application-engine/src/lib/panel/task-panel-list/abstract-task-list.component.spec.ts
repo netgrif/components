@@ -28,6 +28,7 @@ import {InjectedTabData} from '../../tabs/interfaces';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {ActivatedRoute} from '@angular/router';
 
 
 describe('AbstractTaskListComponent', () => {
@@ -84,8 +85,9 @@ describe('AbstractTaskListComponent', () => {
 class TestTaskListComponent extends AbstractTaskListComponent {
     constructor(protected _taskViewService: TaskViewService,
                 protected _log: LoggerService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
-        super(_taskViewService, _log, injectedTabData);
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected _route: ActivatedRoute) {
+        super(_taskViewService, _log, injectedTabData, _route);
     }
 }
 

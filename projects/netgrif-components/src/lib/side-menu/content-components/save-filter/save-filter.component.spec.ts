@@ -14,6 +14,7 @@ import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {PanelComponentModule} from '../../../panel/panel.module';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('SaveFilterComponent', () => {
     let component: SaveFilterComponent;
@@ -26,7 +27,8 @@ describe('SaveFilterComponent', () => {
                 HttpClientTestingModule,
                 NoopAnimationsModule,
                 PanelComponentModule,
-                TranslateLibModule
+                TranslateLibModule,
+                RouterTestingModule.withRoutes([])
             ],
             declarations: [SaveFilterComponent],
             providers: [

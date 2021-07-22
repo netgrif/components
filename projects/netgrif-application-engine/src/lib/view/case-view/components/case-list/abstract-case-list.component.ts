@@ -37,7 +37,7 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _log: LoggerService,
                           @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
-                          protected route: ActivatedRoute) {
+                          protected route?: ActivatedRoute) {
         super(injectedTabData);
         this.cases$ = this._caseViewService.cases$;
         this.loading$ = this._caseViewService.loading$;

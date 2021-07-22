@@ -11,7 +11,7 @@ export class TaskListComponent extends AbstractTaskListComponent {
     constructor(protected _taskViewService: TaskViewService,
                 protected _log: LoggerService,
                 @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
-                protected route: ActivatedRoute) {
+                protected route?: ActivatedRoute) {
         super(_taskViewService, _log, injectedTabData, route);
     }
 }
