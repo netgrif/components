@@ -9,7 +9,7 @@ import {
     MockAuthenticationMethodService,
     TestConfigurationService,
     TranslateLibModule
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

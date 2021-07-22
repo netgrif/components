@@ -7,7 +7,7 @@ import {
     MaterialModule,
     MockAuthenticationMethodService, MockAuthenticationService, MockUserResourceService, PetriNetReference, TestConfigurationService,
     TranslateLibModule, UserResourceService, WorkflowMetaField, WorkflowViewService
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
