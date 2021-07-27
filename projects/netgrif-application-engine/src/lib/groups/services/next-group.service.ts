@@ -103,7 +103,7 @@ export class NextGroupService implements OnDestroy {
     }
 
     /**
-     * @deprecated in NAE 5.4.0 - use [ownerGroups]{@link NextGroupService#ownerGroups} instead
+     * @deprecated in NAE 5.6.0 - use [ownerGroups]{@link NextGroupService#ownerGroups} instead
      */
     get groupOfUser(): Array<Case> {
         return this.ownerGroups;
