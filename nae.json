@@ -66,8 +66,8 @@
             "children": {
                 "custom-redirect": {
                     "component": {
-                        "class": "RedirectComponent",
-                        "from": "./doc/redirect/redirect.component"
+                        "class": "ExampleRedirectComponent",
+                        "from": "./doc/redirect/example-redirect.component"
                     },
                     "access": "public",
                     "navigation": true,
