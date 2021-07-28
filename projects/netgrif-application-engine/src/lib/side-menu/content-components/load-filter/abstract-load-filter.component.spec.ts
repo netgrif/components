@@ -72,7 +72,8 @@ describe('AbstractLoadFilterComponent', () => {
 class TestLoadFilterComponent extends AbstractLoadFilterComponent {
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) sideMenuControl: SideMenuControl,
                 log: LoggerService,
+                allowedNetsService: AllowedNetsService,
                 caseViewService: CaseViewService) {
-        super(sideMenuControl, log, caseViewService);
+        super(sideMenuControl, log, allowedNetsService, caseViewService);
     }
 }

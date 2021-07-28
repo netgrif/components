@@ -10,6 +10,7 @@ import {getImmediateData} from '../../../utility/get-immediate-data';
 import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
 import {SavedFilterMetadata} from '../../../search/models/persistance/saved-filter-metadata';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 
 export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
 
@@ -17,8 +18,9 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
 
     protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                           protected _log: LoggerService,
+                          allowedNetsService: AllowedNetsService,
                           caseViewService: CaseViewService) {
-        super(caseViewService);
+        super(allowedNetsService, caseViewService);
         if (this._sideMenuControl.data) {
             this._injectedData = this._sideMenuControl.data as LoadFilterInjectionData;
         }
