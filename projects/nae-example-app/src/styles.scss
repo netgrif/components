@@ -32,3 +32,6 @@ h1, h2 {
     font-size: 12px;
 }
 
+div > nc-workflow-panel:last-child > nc-app-panel > mat-expansion-panel {
+    margin-bottom: 2px !important;
+}
