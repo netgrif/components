@@ -6,13 +6,14 @@ import {NoConfigurationCategory} from '../no-configuration-category';
 import {Equals} from '../../operator/equals';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
+import {CaseSearch} from './case-search.enum';
 
 export class CaseAuthor extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.author';
 
     constructor(operators: OperatorService, logger: LoggerService) {
-        super(['authorEmail', 'authorName'],
+        super([CaseSearch.AUTHOR_EMAIL, CaseSearch.AUTHOR_NAME],
             [operators.getOperator(Substring), operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseAuthor._i18n}.name`,
             SearchInputType.TEXT,

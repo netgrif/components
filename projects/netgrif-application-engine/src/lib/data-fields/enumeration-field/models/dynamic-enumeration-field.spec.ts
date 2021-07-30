@@ -1,4 +1,4 @@
-import { DynamicEnumerationField } from './dynamic-enumeration-field';
+import {DynamicEnumerationField} from './dynamic-enumeration-field';
 
 describe('DynamicEnumerationField', () => {
     it('should create an instance', () => {

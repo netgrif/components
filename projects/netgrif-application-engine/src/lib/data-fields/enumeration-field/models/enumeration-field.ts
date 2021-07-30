@@ -16,7 +16,7 @@ export enum EnumerationFieldView {
     DEFAULT = 'default',
     LIST = 'list',
     AUTOCOMPLETE = 'autocomplete',
-    STEPPER= 'stepper'
+    STEPPER = 'stepper'
 }
 
 export enum EnumerationFieldValidation {

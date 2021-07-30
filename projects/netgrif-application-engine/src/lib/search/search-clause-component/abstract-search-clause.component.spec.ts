@@ -1,6 +1,6 @@
 import {AbstractSearchClauseComponent} from './abstract-search-clause.component';
 import {Component, OnDestroy} from '@angular/core';
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {Subject} from 'rxjs';
 import {EditableClausePredicate} from '../models/predicate/editable-clause-predicate';
 import {BooleanOperator} from '../models/boolean-operator';

@@ -23,7 +23,7 @@ export abstract class Operator<T> {
     /**
      * Reserved characters for Elasticsearch queries. These characters can be escaped with a `\` character.
      */
-    private static readonly ESCAPABLE_CHARACTERS = new Set (
+    private static readonly ESCAPABLE_CHARACTERS = new Set(
         ['+', '-', '=', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\', '/']);
 
     /**

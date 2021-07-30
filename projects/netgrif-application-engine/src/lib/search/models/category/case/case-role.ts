@@ -7,13 +7,14 @@ import {Net} from '../../../../process/net';
 import {NameIdPair} from '../name-id-pair';
 import {CaseNetAttributeAutocompleteCategory} from './case-net-attribute-autocomplete-category';
 import {Categories} from '../categories';
+import {CaseSearch} from './case-search.enum';
 
 export class CaseRole extends CaseNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.case.role';
 
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
-        super(['enabledRoles'],
+        super([CaseSearch.ENABLED_ROLES],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseRole._i18n}.name`,
             logger,

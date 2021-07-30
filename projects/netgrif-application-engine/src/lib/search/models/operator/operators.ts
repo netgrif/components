@@ -24,5 +24,6 @@ export enum Operators {
     MORE_THAN_EQUAL_DATE_TIME = 'more_than_equal_date_time',
     NOT_EQUALS = 'not_equals',
     NOT_EQUALS_DATE = 'not_equals_date',
+    NOT_EQUALS_DATE_TIME = 'not_equals_date_time',
     SUBSTRING = 'substring',
 }

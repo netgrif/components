@@ -1,4 +1,4 @@
-import { MoreThanEqual } from './more-than-equal';
+import {MoreThanEqual} from './more-than-equal';
 
 describe('MoreThanEqual', () => {
   it('should create an instance', () => {

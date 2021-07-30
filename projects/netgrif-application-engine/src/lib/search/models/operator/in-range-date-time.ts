@@ -1,5 +1,5 @@
 import {Operator} from './operator';
-import moment, { Moment } from 'moment';
+import moment, {Moment} from 'moment';
 import {Query} from '../query/query';
 import {Operators} from './operators';
 

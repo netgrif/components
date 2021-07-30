@@ -8,6 +8,7 @@ import {NoConfigurationAutocompleteCategory} from '../no-configuration-autocompl
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
 import {Subscription} from 'rxjs';
+import {CaseSearch} from './case-search.enum';
 
 export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
 
@@ -18,7 +19,7 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
     private _destroyed: boolean;
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
-        super(['processIdentifier'],
+        super([CaseSearch.PROCESS_IDENTIFIER],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseProcess._i18n}.name`,
             logger,

@@ -1,4 +1,4 @@
-import {Moment} from 'moment';
+import moment, {Moment} from 'moment';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {EqualsDate} from '../../operator/equals-date';
@@ -10,19 +10,17 @@ import {LessThanDate} from '../../operator/less-than-date';
 import {InRangeDate} from '../../operator/in-range-date';
 import {Categories} from '../categories';
 import {FormControl} from '@angular/forms';
-import moment from 'moment';
 import {Observable, of} from 'rxjs';
-import {MoreThanEqual} from '../../operator/more-than-equal';
 import {MoreThanEqualDate} from '../../operator/more-than-equal-date';
-import {LessThanEqual} from '../../operator/less-than-equal';
 import {LessThanEqualDate} from '../../operator/less-than-equal-date';
+import {CaseSearch} from './case-search.enum';
 
 export class CaseCreationDate extends NoConfigurationCategory<Moment> {
 
     private static readonly _i18n = 'search.category.case.creationDate';
 
     constructor(operators: OperatorService, logger: LoggerService) {
-        super(['creationDateSortable'],
+        super([CaseSearch.CREATION_DATE],
             [
                 operators.getOperator(EqualsDate),
                 operators.getOperator(NotEqualsDate),

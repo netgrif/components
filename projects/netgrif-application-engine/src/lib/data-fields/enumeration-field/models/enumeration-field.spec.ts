@@ -1,4 +1,4 @@
-import { EnumerationField } from './enumeration-field';
+import {EnumerationField} from './enumeration-field';
 
 describe('EnumerationField', () => {
   it('should create an instance', () => {

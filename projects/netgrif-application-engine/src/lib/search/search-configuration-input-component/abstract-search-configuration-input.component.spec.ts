@@ -1,6 +1,6 @@
 import {AbstractSearchConfigurationInputComponent} from './abstract-search-configuration-input.component';
 import {Component} from '@angular/core';
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 describe('AbstractSearchConfigurationInputComponent', () => {
     let component: TestSearchConfigurationInputComponent;

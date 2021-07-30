@@ -1,4 +1,4 @@
-import { NumberField } from './number-field';
+import {NumberField} from './number-field';
 
 describe('NumberField', () => {
   it('should create an instance', () => {

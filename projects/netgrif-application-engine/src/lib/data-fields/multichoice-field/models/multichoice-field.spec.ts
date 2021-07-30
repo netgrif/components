@@ -1,4 +1,4 @@
-import { MultichoiceField } from './multichoice-field';
+import {MultichoiceField} from './multichoice-field';
 
 describe('MultichoiceField', () => {
   it('should create an instance', () => {

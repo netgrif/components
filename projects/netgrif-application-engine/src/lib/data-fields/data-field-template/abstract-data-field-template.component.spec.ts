@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';

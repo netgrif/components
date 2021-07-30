@@ -7,13 +7,14 @@ import {Equals} from '../../operator/equals';
 import {NotEquals} from '../../operator/not-equals';
 import {Like} from '../../operator/like';
 import {Categories} from '../categories';
+import {CaseSearch} from './case-search.enum';
 
 export class CaseTitle extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.title';
 
     constructor(operators: OperatorService, logger: LoggerService) {
-        super(['title'],
+        super([CaseSearch.TITLE],
             [
                 operators.getOperator(Substring),
                 operators.getOperator(Equals),

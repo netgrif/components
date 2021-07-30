@@ -1,4 +1,4 @@
-import { UserField } from './user-field';
+import {UserField} from './user-field';
 
 describe('UserField', () => {
   it('should create an instance', () => {

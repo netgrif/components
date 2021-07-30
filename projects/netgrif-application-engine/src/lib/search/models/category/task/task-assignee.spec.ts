@@ -20,7 +20,7 @@ describe('TaskAssignee', () => {
         operatorService = new OperatorService(new OperatorResolverService());
     });
 
-    beforeEach( waitForAsync(async () => {
+    beforeEach(waitForAsync(async () => {
         allowedNets$ = new ReplaySubject<Array<Net>>(1);
         allowedNets$.next([]);
         category = await new TaskAssignee(operatorService, null, createMockDependencies(allowedNets$, operatorService));

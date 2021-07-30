@@ -11,6 +11,7 @@ export abstract class AbstractRichTextareaFieldComponent extends AbstractTextErr
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
     options: any;
+
     // TODO BUG: update on blur dont working, switch back to update on ngModel
 
     constructor(protected _translate: TranslateService) {
