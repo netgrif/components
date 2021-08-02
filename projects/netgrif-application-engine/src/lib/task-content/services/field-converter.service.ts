@@ -26,8 +26,6 @@ import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 })
 export class FieldConverterService {
 
-    constructor() {
-    }
 
     public toClass(item: DataFieldResource): DataField<any> {
         switch (item.type) {

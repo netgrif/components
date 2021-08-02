@@ -4,6 +4,7 @@ export class NullStorage implements Storage {
     readonly length: number;
 
     clear(): void {
+        return;
     }
 
     getItem(key: string): string | null {
@@ -15,9 +16,11 @@ export class NullStorage implements Storage {
     }
 
     removeItem(key: string): void {
+        return;
     }
 
     setItem(key: string, value: string): void {
+        return;
     }
 
 }

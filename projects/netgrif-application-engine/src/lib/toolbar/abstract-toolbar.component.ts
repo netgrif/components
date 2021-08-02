@@ -1,8 +1,8 @@
-import {Input, OnInit} from '@angular/core';
+import {Input} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../translate/language.service';
 
-export abstract class AbstractToolbarComponent implements OnInit {
+export abstract class AbstractToolbarComponent {
 
     @Input()
     public loggedUser: string;
@@ -17,9 +17,6 @@ export abstract class AbstractToolbarComponent implements OnInit {
     public logoAlt: string;
 
     constructor(protected translate: TranslateService, protected selectLangService: LanguageService) {
-    }
-
-    ngOnInit() {
     }
 
     setLang(lang: string): void {

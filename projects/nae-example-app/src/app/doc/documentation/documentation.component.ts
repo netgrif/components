@@ -7,7 +7,7 @@ import {ApiProperties} from './api-properties';
     templateUrl: './documentation.component.html',
     styleUrls: ['./documentation.component.scss']
 })
-export class DocumentationComponent implements OnInit {
+export class DocumentationComponent {
 
     @Input() liveExample: TemplateRef<object>;
     @Input() mainTitle: string;
@@ -21,6 +21,4 @@ export class DocumentationComponent implements OnInit {
     constructor() {
     }
 
-    ngOnInit() {
-    }
 }

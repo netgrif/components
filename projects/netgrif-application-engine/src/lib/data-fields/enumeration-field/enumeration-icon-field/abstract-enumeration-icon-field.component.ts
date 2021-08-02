@@ -3,17 +3,11 @@ import {EnumerationField} from '../models/enumeration-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
-export abstract class AbstractEnumerationIconFieldComponent implements OnInit {
+export abstract class AbstractEnumerationIconFieldComponent {
 
     @Input() enumerationField: EnumerationField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
-
-    constructor() {
-    }
-
-    ngOnInit(): void {
-    }
 
     resolveIconValue(key: string) {
         return this.enumerationField.component?.optionIcons.find(icon => icon.key === key)?.value;

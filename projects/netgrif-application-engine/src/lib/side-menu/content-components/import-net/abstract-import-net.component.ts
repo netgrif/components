@@ -26,7 +26,7 @@ interface FileList {
     [key: string]: FileUploadModel;
 }
 
-export abstract class AbstractImportNetComponent implements OnInit, AfterViewInit {
+export abstract class AbstractImportNetComponent implements AfterViewInit {
 
     public files: FileList = {};
     public releaseTypes: string[] = ['Major', 'Minor', 'Patch'];
@@ -40,9 +40,6 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
-    }
-
-    ngOnInit() {
     }
 
     ngAfterViewInit(): void {
@@ -90,13 +87,19 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
         this._sideMenuControl.close({
             opened: false,
             message: 'All process files were processed',
-            data: this._response ? { net: this._response.net } : undefined
+            data: this._response ? {net: this._response.net} : undefined
         });
     }
 
     protected setupFile(file: File): FileUploadModel {
         return {
-            data: file, stringId: '', downloading: false, inProgress: false, progress: 0, completed: false, uploaded: false
+            data: file,
+            stringId: '',
+            downloading: false,
+            inProgress: false,
+            progress: 0,
+            completed: false,
+            uploaded: false
         };
     }
 

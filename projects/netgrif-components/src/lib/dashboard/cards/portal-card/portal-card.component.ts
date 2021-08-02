@@ -33,5 +33,6 @@ export class PortalCardComponent extends AbstractCustomCard implements OnInit {
     }
 
     convertData(json: AggregationResult): void {
+        return;
     }
 }
