@@ -62,6 +62,12 @@ describe('AbstractWorkflowPanelComponent', () => {
         expect(component.show(new MouseEvent('type'))).toEqual(false);
     });
 
+    it('should translate', () => {
+        component.translate.use('sk-SK');
+        component.translate.use('en-US');
+        expect(component.panelContent.netIdentifier.title).not.toEqual('Identifikátor siete');
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -72,7 +78,7 @@ describe('AbstractWorkflowPanelComponent', () => {
     template: ''
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
-    constructor(log: LoggerService, translate: TranslateService, workflowService: WorkflowViewService) {
+    constructor(log: LoggerService, public translate: TranslateService, workflowService: WorkflowViewService) {
         super(log, translate, workflowService);
     }
 }

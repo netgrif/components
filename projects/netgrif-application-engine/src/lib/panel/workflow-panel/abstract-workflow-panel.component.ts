@@ -2,7 +2,7 @@ import {Input, OnDestroy, OnInit} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {toMoment} from '../../resources/types/nae-date-type';
 import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
@@ -10,7 +10,7 @@ import {TextField} from '../../data-fields/text-field/models/text-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {Behavior} from '../../data-fields/models/behavior';
 import {Net} from '../../process/net';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {FeaturedValue} from '../abstract/featured-value';
@@ -32,6 +32,7 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
     @Input() showDeleteMenu = false;
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
+    private _subscription: Subscription;
 
     protected dataFieldsBehaviour: Behavior = {visible: true, editable: false};
 
@@ -39,6 +40,14 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
                           protected _translate: TranslateService,
                           protected _workflowService: WorkflowViewService) {
         super();
+
+        this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
+            this.panelContent.netIdentifier.title = this._translate.instant('panel.workflow.net');
+            this.panelContent.title.title = this._translate.instant('panel.workflow.title');
+            this.panelContent.version.title = this._translate.instant('panel.workflow.version');
+            this.panelContent.author.title = this._translate.instant('panel.workflow.author');
+            this.panelContent.uploaded.title = this._translate.instant('panel.workflow.upload');
+        });
     }
 
     ngOnInit(): void {
@@ -48,6 +57,7 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
+        this._subscription.unsubscribe();
     }
 
     public show(event: MouseEvent): boolean {
