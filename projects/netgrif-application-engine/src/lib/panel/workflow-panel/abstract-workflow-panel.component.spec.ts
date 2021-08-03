@@ -23,10 +23,13 @@ import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
+import en from 'projects/netgrif-application-engine/src/assets/i18n/en.json';
+import sk from 'projects/netgrif-application-engine/src/assets/i18n/sk.json';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
+    let oldTitle: string;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -63,9 +66,14 @@ describe('AbstractWorkflowPanelComponent', () => {
     });
 
     it('should translate', () => {
+        component.translate.addLangs(['en-US', 'sk-SK', 'de-DE']);
+        component.translate.setTranslation('en-US', en, true);
+        component.translate.setTranslation('sk-SK', sk, true);
         component.translate.use('sk-SK');
+        oldTitle = component.panelContent.netIdentifier.title;
+        expect(oldTitle).toEqual('Identifikátor siete');
         component.translate.use('en-US');
-        expect(component.panelContent.netIdentifier.title).not.toEqual('Identifikátor siete');
+        expect(component.panelContent.netIdentifier.title).not.toEqual(oldTitle);
     });
 
     afterEach(() => {
