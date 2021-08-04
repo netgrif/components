@@ -94,6 +94,8 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
                 ) || (
                     !!this._task.user
                     && this.canDo('cancel')
+                ) && (
+                    this._task.user.id === this._userService.user.id
                 )
             );
     }
