@@ -7,6 +7,7 @@ import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
 import {FinishTaskService} from './finish-task.service';
 import {Subject} from 'rxjs';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 /**
  * Handles the sequence of actions that are performed when a task is being finished, based on the task's configuration.
@@ -25,7 +26,7 @@ export class FinishPolicyService extends TaskHandlingService {
      * Performs the actions that correspond to the policy defined by the Task when it's finished.
      * @param afterAction the action that should be performed when the finish policy finishes
      */
-    public performFinishPolicy(afterAction: Subject<boolean> = new Subject<boolean>()): void {
+    public performFinishPolicy(afterAction: AfterAction = new AfterAction()): void {
         if (this._safeTask.finishPolicy === FinishPolicy.autoNoData) {
             this.autoNoDataFinishPolicy(afterAction);
         } else {
@@ -41,15 +42,14 @@ export class FinishPolicyService extends TaskHandlingService {
      *
      * @param afterAction the action that should be performed when the finish policy finishes
      */
-    protected autoNoDataFinishPolicy(afterAction: Subject<boolean>): void {
+    protected autoNoDataFinishPolicy(afterAction: AfterAction): void {
         if (this._safeTask.dataSize <= 0) {
             this._finishTaskService.validateDataAndFinish(afterAction);
             this._taskOperations.close();
         } else {
             this._taskOperations.open();
             this._dataFocusPolicyService.performDataFocusPolicy();
-            afterAction.next(true);
-            afterAction.complete();
+            afterAction.resolve(true);
         }
     }
 

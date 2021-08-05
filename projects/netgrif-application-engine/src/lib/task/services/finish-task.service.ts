@@ -1,5 +1,4 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {Subject} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -18,6 +17,9 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {FinishTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/finish-task-event-outcome';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {EventQueueService} from '../../event-queue/services/event-queue.service';
+import {QueuedEvent} from '../../event-queue/model/queued-event';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 
 /**
@@ -34,6 +36,7 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _taskDataService: TaskDataService,
                 protected _callChain: CallChainService,
                 protected _taskEvent: TaskEventService,
+                protected _eventQueue: EventQueueService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -51,12 +54,12 @@ export class FinishTaskService extends TaskHandlingService {
      * @param afterAction if finish request completes successfully `true` will be emitted into this Subject,
      * otherwise `false` will be emitted
      */
-    public validateDataAndFinish(afterAction = new Subject<boolean>()): void {
+    public validateDataAndFinish(afterAction: AfterAction = new AfterAction()): void {
         if (this._safeTask.dataSize <= 0) {
             this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
                 if (this._safeTask.dataSize <= 0 ||
                     (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData())) {
-                    this.sendFinishTaskRequest(afterAction);
+                    this.queueFinishTaskRequest(afterAction);
                 }
             }));
         } else if (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData()) {
@@ -66,11 +69,11 @@ export class FinishTaskService extends TaskHandlingService {
                     if (this._taskState.isUpdating(finishedTaskId)) {
                         this._taskDataService.updateSuccess$.pipe(take(1)).subscribe(bool => {
                             if (bool) {
-                                this.sendFinishTaskRequest(afterAction);
+                                this.queueFinishTaskRequest(afterAction);
                             }
                         });
                     } else {
-                        this.sendFinishTaskRequest(afterAction);
+                        this.queueFinishTaskRequest(afterAction);
                     }
                 }
             }));
@@ -91,12 +94,29 @@ export class FinishTaskService extends TaskHandlingService {
      * @param afterAction if finish request completes successfully `true` will be emitted into this Subject,
      * otherwise `false` will be emitted
      */
-    protected sendFinishTaskRequest(afterAction: Subject<boolean>): void {
+    protected queueFinishTaskRequest(afterAction: AfterAction): void {
+        this._eventQueue.scheduleEvent(new QueuedEvent(
+            () => true,
+            nextEvent => {
+                this.performFinishRequest(afterAction, nextEvent);
+            }
+        ));
+    }
+
+    /**
+     * Performs a `finish` request on the task currently stored in the `taskContent` service
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     */
+    protected performFinishRequest(afterAction: AfterAction, nextEvent: AfterAction) {
         const finishedTaskId = this._safeTask.stringId;
 
+        // this is probably no longer necessary because of the event queue
         if (this._taskState.isLoading(finishedTaskId)) {
+            nextEvent.resolve(true);
             return;
         }
+
         this._taskState.startLoading(finishedTaskId);
 
         this._taskResourceService.finishTask(this._safeTask.stringId).pipe(take(1))
@@ -104,6 +124,7 @@ export class FinishTaskService extends TaskHandlingService {
             this._taskState.stopLoading(finishedTaskId);
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
+                nextEvent.resolve(false);
                 return;
             }
 
@@ -111,9 +132,7 @@ export class FinishTaskService extends TaskHandlingService {
                 this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
                 this._taskDataService.emitChangedFields((outcomeResource.outcome as FinishTaskEventOutcome).data.changedFields);
                 this._taskOperations.reload();
-                this.sendNotification(true);
-                afterAction.next(true);
-                afterAction.complete();
+                this.completeActions(afterAction, nextEvent, true);
                 this._taskOperations.close();
                 this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
                     ? this._translate.instant('tasks.snackbar.finishTaskSuccess')
@@ -123,9 +142,7 @@ export class FinishTaskService extends TaskHandlingService {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
                 this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
-                this.sendNotification(false);
-                afterAction.next(false);
-                afterAction.complete();
+                this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {
             this._taskState.stopLoading(finishedTaskId);
@@ -133,15 +150,23 @@ export class FinishTaskService extends TaskHandlingService {
 
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish error could be received');
+                nextEvent.resolve(false);
                 return;
             }
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.sendNotification(false);
-            afterAction.next(false);
-            afterAction.complete();
+            this.completeActions(afterAction, nextEvent, false);
         });
+    }
+
+    /**
+     * Completes all the action streams and sends the notification, with the provided result
+     */
+    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, result: boolean) {
+        this.sendNotification(result);
+        afterAction.resolve(result);
+        nextEvent.resolve(result);
     }
 
     /**

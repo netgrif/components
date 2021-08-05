@@ -1,5 +1,4 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {ReplaySubject, Subject} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskContentService} from '../../task-content/services/task-content.service';
 import {TaskEventService} from '../../task-content/services/task-event.service';
@@ -19,6 +18,9 @@ import {take} from 'rxjs/operators';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {CancelTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/cancel-task-event-outcome';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {EventQueueService} from '../../event-queue/services/event-queue.service';
+import {QueuedEvent} from '../../event-queue/model/queued-event';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -35,6 +37,7 @@ export class CancelTaskService extends TaskHandlingService {
                 protected _userComparator: UserComparatorService,
                 protected _taskEvent: TaskEventService,
                 protected _taskDataService: TaskDataService,
+                protected _eventQueue: EventQueueService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 @Optional() protected _taskViewService: TaskViewService,
@@ -55,64 +58,69 @@ export class CancelTaskService extends TaskHandlingService {
      * and the `afterAction` will not be executed.
      * @param afterAction if cancel completes successfully `true` will be emitted into this Subject, otherwise `false` will be emitted
      */
-    cancel(afterAction = new Subject<boolean>()) {
+    public cancel(afterAction: AfterAction = new AfterAction()) {
+        this._eventQueue.scheduleEvent(new QueuedEvent(
+            () => this.canCancel(),
+            nextEvent => {
+                this.performCancelRequest(afterAction, nextEvent, this._taskViewService !== null && !this._taskViewService.allowMultiOpen);
+            },
+            nextEvent => {
+                this.completeActions(afterAction, nextEvent, false);
+            }
+        ));
+    }
+
+    /**
+     * Performs a `cancel` request on the task currently stored in the `taskContent` service
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param forceReload whether a force reload of the task data should be performed after cancel.
+     * If set to `false` a regular reload is performed instead.
+     */
+    protected performCancelRequest(afterAction: AfterAction, nextEvent: AfterAction, forceReload: boolean) {
         const canceledTaskId = this._safeTask.stringId;
 
+        // this is probably no longer necessary because of the event queue
         if (this._taskState.isLoading(canceledTaskId)) {
+            nextEvent.resolve(true);
             return;
-        }
-        if (!this._safeTask.user
-            || (
-                !this._userComparator.compareUsers(this._safeTask.user)
-                && !this._taskEventService.canDo('perform')
-            )) {
-            this.sendNotification(false);
-            afterAction.next(false);
-            afterAction.complete();
-            return;
-        }
-
-        const sub = new ReplaySubject<boolean>();
-        if (this._taskViewService !== null && !this._taskViewService.allowMultiOpen) {
-            if (!this._taskViewService.isEmptyQueue()) {
-                this._taskViewService.popQueue().subscribe(() => {
-                    this._taskState.startLoading(canceledTaskId);
-                    this.cancelRequest(afterAction, canceledTaskId, sub, true);
-                });
-                this._taskViewService.addToQueue(sub);
-                return;
-            }
-            this._taskViewService.addToQueue(sub);
         }
 
         this._taskState.startLoading(canceledTaskId);
-        this.cancelRequest(afterAction, canceledTaskId, sub);
+        this.cancelRequest(afterAction, canceledTaskId, nextEvent, forceReload);
     }
 
-    protected cancelRequest(afterAction = new Subject<boolean>(), canceledTaskId: string,
-                            queueAction = new Subject<boolean>(), fromQueue = false) {
-        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1))
-            .subscribe((outcomeResource: EventOutcomeMessageResource) => {
+    /**
+     * Calls the endpoint and processes the possible responses.
+     * @param afterAction the action that should be performed after the request is processed
+     * @param canceledTaskId the id of the task that is being canceled
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param forceReload whether a force reload of the task data should be performed after cancel.
+     * If set to `false` a regular reload is performed instead.
+     */
+    protected cancelRequest(afterAction: AfterAction = new AfterAction(),
+                            canceledTaskId: string,
+                            nextEvent: AfterAction = new AfterAction(),
+                            forceReload: boolean) {
+        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe((outcomeResource: EventOutcomeMessageResource) => {
             this._taskState.stopLoading(canceledTaskId);
             if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel response could be received, discarding...');
+                nextEvent.resolve(false);
                 return;
             }
 
             if (outcomeResource.success) {
                 this._taskContentService.updateStateData(outcomeResource.outcome as CancelTaskEventOutcome);
-                this._taskDataService.emitChangedFields((outcomeResource.outcome as CancelTaskEventOutcome).data.changedFields );
-                fromQueue ? this._taskOperations.forceReload() : this._taskOperations.reload();
-                this.completeActions(afterAction, queueAction, true);
-                this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
-                    ? this._translate.instant('tasks.snackbar.cancelTaskSuccess')
-                    : outcomeResource.outcome.message);
+                this._taskDataService.emitChangedFields((outcomeResource.outcome as CancelTaskEventOutcome).data.changedFields);
+                forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
+                this.completeActions(afterAction, nextEvent, true);
             } else if (outcomeResource.error !== undefined) {
                 if (outcomeResource.error !== '') {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
                 this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
-                this.completeActions(afterAction, queueAction, false);
+                this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {
             this._taskState.stopLoading(canceledTaskId);
@@ -120,25 +128,34 @@ export class CancelTaskService extends TaskHandlingService {
 
             if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel error could be received');
+                nextEvent.resolve(false);
                 return;
             }
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.cancelTask')}
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.completeActions(afterAction, queueAction, false);
+            this.completeActions(afterAction, nextEvent, false);
         });
     }
 
     /**
-     * @ignore
+     * Determines whether the cancel operation can be performed.
+     */
+    protected canCancel(): boolean {
+        return !!this._safeTask.user
+                && (
+                    this._userComparator.compareUsers(this._safeTask.user)
+                    || this._taskEventService.canDo('perform')
+                );
+    }
+
+    /**
      * complete all action streams and send notification with selected boolean
      */
-    protected completeActions(afterAction: Subject<boolean>, queueAction: Subject<boolean>, bool: boolean): void {
+    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, bool: boolean): void {
         this.sendNotification(bool);
-        afterAction.next(bool);
-        afterAction.complete();
-        queueAction.next(bool);
-        queueAction.complete();
+        afterAction.resolve(bool);
+        nextEvent.resolve(bool);
     }
 
     /**
