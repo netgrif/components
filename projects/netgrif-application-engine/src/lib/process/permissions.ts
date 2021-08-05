@@ -9,9 +9,11 @@ export interface UsersPermissions {
 export interface Permission {
     create?: boolean;
     delete?: boolean;
+    view?: boolean;
 }
 
 export enum PermissionType {
     CREATE = 'create',
-    DELETE = 'delete'
+    DELETE = 'delete',
+    VIEW = 'view'
 }

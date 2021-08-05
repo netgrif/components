@@ -8,6 +8,9 @@ import {CaseViewService} from './service/case-view-service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {FilterType} from '../../filter/models/filter-type';
 import {OverflowService} from '../../header/services/overflow.service';
+import {User} from '../../user/models/user';
+import {PermissionType} from '../../process/permissions';
+import {UserService} from '../../user/services/user.service';
 
 export interface InjectedTabbedCaseViewData extends InjectedTabData {
     tabViewComponent: Type<any>;
@@ -21,6 +24,7 @@ export abstract class TabbedCaseView extends AbstractCaseView {
     protected constructor(caseViewService: CaseViewService,
                           protected _loggerService: LoggerService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
+                          protected _userService: UserService,
                           protected _overflowService?: OverflowService,
                           protected _autoswitchToTaskTab: boolean = true,
                           protected _openExistingTab: boolean = true) {
@@ -41,7 +45,9 @@ export abstract class TabbedCaseView extends AbstractCaseView {
     public createNewCase(): void {
         const myCase = this._caseViewService.createNewCase();
         myCase.subscribe( kaze => {
-            this.openTab(kaze);
+            if (this.viewEnabled(kaze, this._userService.user)) {
+                this.openTab(kaze);
+            }
         });
     }
 
@@ -60,5 +66,15 @@ export abstract class TabbedCaseView extends AbstractCaseView {
             order: this._injectedTabData.tabViewOrder,
             parentUniqueId: this._injectedTabData.tabUniqueId
         }, this._autoswitchToTaskTab, this._openExistingTab);
+    }
+
+    private viewEnabled(kaze: Case, user: User): boolean {
+        const result = user.roles.some(role =>
+            !!kaze.permissions[role.stringId] && !!!kaze.permissions[role.stringId][PermissionType.VIEW]);
+
+        if (result) {
+            return false;
+        }
+        return !(!!kaze.users[user.id] && !!!kaze.permissions[user.id][PermissionType.VIEW]);
     }
 }
