@@ -1,7 +1,7 @@
 import {Inject, OnDestroy, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {StepperSelectionEvent} from '@angular/cdk/stepper';
-import {map, startWith, tap} from 'rxjs/operators';
+import {map, startWith, take, tap} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, Observable, ReplaySubject, Subscription} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
@@ -40,6 +40,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     protected _hasMultipleNets$: ReplaySubject<boolean>;
     protected _notInitialized$: BehaviorSubject<boolean>;
     private _allowedNetsSubscription: Subscription;
+    private _newCaseBeingCreated = false;
 
     protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
                           protected _formBuilder: FormBuilder,
@@ -126,27 +127,39 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     public createNewCase(): void {
-        if (this.titleFormControl.valid) {
-            const newCase = {
-                title: this.titleFormControl.value,
-                color: 'panel-primary-icon',
-                netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
-            };
-
-            this._caseResourceService.createCase(newCase)
-                .subscribe(
-                    response => {
-                        this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
-                            + ' ' + newCase.title);
-                        this._sideMenuControl.close({
-                            opened: false,
-                            message: 'Confirm new case setup',
-                            data: response
-                        });
-                    },
-                    error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
-                );
+        if (!this.titleFormControl.valid || this.isCaseBeingCreated()) {
+            return;
         }
+
+        this._newCaseBeingCreated = true;
+        const newCase = {
+            title: this.titleFormControl.value,
+            color: 'panel-primary-icon',
+            netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
+        };
+
+        this._caseResourceService.createCase(newCase)
+            .subscribe(
+                response => {
+                    this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
+                        + ' ' + newCase.title);
+                    this._sideMenuControl.close({
+                        opened: false,
+                        message: 'Confirm new case setup',
+                        data: response
+                    }).pipe(take(1)).subscribe(() => {
+                        this._newCaseBeingCreated = false;
+                    });
+                },
+                error => {
+                    this._snackBarService.openErrorSnackBar(error.message ? error.message : error);
+                    this._newCaseBeingCreated = false;
+                }
+            );
+    }
+
+    public isCaseBeingCreated(): boolean {
+        return this._newCaseBeingCreated;
     }
 
     /**

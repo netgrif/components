@@ -25,7 +25,7 @@
         </mat-form-field>
         <div>
             <button mat-button (click)="stepper1.reset()">{{'side-menu.new-case.reset' | translate}}</button>
-            <button mat-button (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
+            <button mat-button [disabled]="isCaseBeingCreated()" (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
         </div>
     </mat-step>
 </mat-vertical-stepper>
@@ -37,7 +37,7 @@
         </mat-form-field>
         <div>
             <button mat-button (click)="stepper2.reset()">{{'side-menu.new-case.reset' | translate}}</button>
-            <button mat-button (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
+            <button mat-button [disabled]="isCaseBeingCreated()" (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
         </div>
     </mat-step>
 </mat-vertical-stepper>
