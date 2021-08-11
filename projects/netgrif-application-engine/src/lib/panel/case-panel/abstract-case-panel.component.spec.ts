@@ -1,5 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {CommonModule} from '@angular/common';
+import {CommonModule, CurrencyPipe} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -17,7 +17,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {SearchService} from '../../search/search-service/search.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -27,7 +27,9 @@ import {SignUpService} from '../../authentication/sign-up/services/sign-up.servi
 import {OverflowService} from '../../header/services/overflow.service';
 import {UserService} from '../../user/services/user.service';
 import {Case} from '../../resources/interface/case';
-import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -48,20 +50,18 @@ describe('AbstractCasePanelComponent', () => {
                 LoggerService,
                 TranslateService,
                 CaseResourceService,
+                CaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                SearchService,
+                CurrencyPipe,
                 {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
-                },
-                CaseViewServiceFactory,
-                {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                SignUpService
+                SignUpService,
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 TestCasePanelComponent,
@@ -100,8 +100,9 @@ class TestCasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                 protected _log: LoggerService, @Optional() protected overflowService: OverflowService,
-                protected _userService: UserService) {
-        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService, _userService);
+                protected _userService: UserService, protected _currencyPipe: CurrencyPipe) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService,
+            _userService, _currencyPipe);
     }
 }
 
@@ -114,10 +115,10 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', true, 'netid'),
     ]);
     case_: Case = {
         stringId: 'string',

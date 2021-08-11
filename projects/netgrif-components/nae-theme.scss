@@ -8,9 +8,9 @@
 @import "src/lib/side-menu/content-components/user-assign/user-assign-list/user-assign-item/theme/user-assign-item.component.theme";
 @import 'src/lib/view/view.theme';
 @import 'src/lib/tabs/tabs.theme';
-@import "src/lib/search/search-predicate-component/search-predicate.component.theme";
-@import "src/lib/search/search-clause-component/search-clause.component.theme";
-@import "src/lib/search/search-configuration-input-component/search-configuration-input.component.theme";
+@import "src/lib/search/advanced-search/search-predicate-component/search-predicate.component.theme";
+@import "src/lib/search/advanced-search/search-clause-component/search-clause.component.theme";
+@import "src/lib/search/advanced-search/search-configuration-input-component/search-configuration-input.component.theme";
 
 @mixin nae-lib-theme($app-theme, $app-typography-config) {
     @include nae-typography($app-typography-config);

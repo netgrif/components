@@ -6,6 +6,7 @@ import {distinctUntilChanged} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Component} from './component';
+import {Validation} from './validation';
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -82,12 +83,16 @@ export abstract class DataField<T> {
     /**
      * Whether invalid field values should be sent to backend.
      */
-    private _sendInvalidValues = false;
+    private _sendInvalidValues = true;
     /**
      * Flag that is set during reverting
      */
     private _reverting = false;
 
+    /**
+     * Validators resolved from field validations
+     */
+    protected _validators: Array<ValidatorFn>;
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -96,11 +101,13 @@ export abstract class DataField<T> {
      * @param _placeholder - placeholder displayed in the datafield
      * @param _description - tooltip of the datafield
      * @param _layout - information regarding the component rendering
+     * @param validations
      * @param _component - component data of datafield
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
-                          private _description?: string, private _layout?: Layout, private _component?: Component) {
+                          private _description?: string, private _layout?: Layout, public validations?: Validation[],
+                          private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new BehaviorSubject<boolean>(false);
@@ -241,7 +248,7 @@ export abstract class DataField<T> {
     }
 
     set sendInvalidValues(value: boolean | null) {
-        this._sendInvalidValues = value !== null && value;
+        this._sendInvalidValues = value === null || value;
     }
 
     public update(): void {
@@ -363,10 +370,34 @@ export abstract class DataField<T> {
      */
     protected resolveFormControlValidators(): Array<ValidatorFn> {
         const result = [];
+
         if (this.behavior.required) {
             result.push(Validators.required);
         }
+
+        if (this.validations) {
+            if (this._validators) {
+                result.push(...this._validators);
+            } else {
+                this._validators = this.resolveValidations();
+                result.push(...this._validators);
+            }
+        }
+
         return result;
+    }
+
+    public replaceValidations(validations: Validation[]) {
+        this.clearValidators();
+        this.validations = validations;
+    }
+
+    public clearValidators(): void {
+        this._validators = null;
+    }
+
+    protected resolveValidations(): Array<ValidatorFn> {
+        return [];
     }
 
     /**

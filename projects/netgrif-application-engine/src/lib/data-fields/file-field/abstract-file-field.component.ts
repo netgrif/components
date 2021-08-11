@@ -32,6 +32,8 @@ export interface FileState {
 
 const preview = 'preview';
 
+const fieldHeight = 105;
+
 const fieldPadding = 16;
 
 /**
@@ -135,7 +137,6 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
         if (this.filePreview) {
             if (!!this.imageDivEl) {
-                this.maxHeight = this.imageDivEl.nativeElement.parentElement.parentElement.offsetHeight - fieldPadding + 'px';
                 if (!this.isEmpty()) {
                     this.initializePreviewIfDisplayable();
                 }
@@ -401,7 +402,6 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     public changeMaxWidth(event: ResizedEvent) {
         if (!!this.imageEl) {
-            this.imageEl.nativeElement.style.maxHeight = this.maxHeight;
             this.imageEl.nativeElement.style.maxWidth = event.newWidth + 'px';
         }
     }
@@ -413,6 +413,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this.previewExtension = FilePreviewType[extension];
             this.initFileFieldImage();
         }
+    }
+
+    public getHeight() {
+        return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
+            (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
     }
 }
 

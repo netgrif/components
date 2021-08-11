@@ -4,6 +4,7 @@ import {Layout} from '../../models/layout';
 import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
 import {Component} from '../../models/component';
+import {Validation} from '../../models/validation';
 
 export interface EnumerationFieldValue {
     key: string;
@@ -28,8 +29,9 @@ export class EnumerationField extends DataField<string> {
     constructor(stringId: string, title: string, value: string,
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, protected _view = EnumerationFieldView.DEFAULT,
-                protected readonly _fieldType = FieldTypeResource.ENUMERATION, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, component);
+                protected readonly _fieldType = FieldTypeResource.ENUMERATION,
+                validations?: Validation[], component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
     }
 
     set choices(choices: Array<EnumerationFieldValue>) {

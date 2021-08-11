@@ -8,8 +8,6 @@ import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
-import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
-import {Net} from '../../../process/net';
 import {Pagination} from '../../../resources/interface/pagination';
 import {Task} from '../../../resources/interface/task';
 import {SearchService} from '../../../search/search-service/search.service';
@@ -24,11 +22,14 @@ import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
-import {ReplaySubjectQueue} from '../models/queue';
+import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {SortableView} from '../../abstract/sortable-view';
+import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
+import {TaskViewConfiguration} from '../models/task-view-configuration';
 
 
 @Injectable()
-export class TaskViewService extends SortableViewWithAllowedNets implements OnDestroy {
+export class TaskViewService extends SortableView implements OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
     protected _changedFields$: Subject<ChangedFields>;
@@ -46,7 +47,6 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
 
     // Serializing assign after cancel
     protected _allowMultiOpen: boolean;
-    protected _assignCancelQueue: ReplaySubjectQueue;
 
     private readonly _initializing: boolean = true;
 
@@ -57,12 +57,10 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                 protected _searchService: SearchService,
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
-                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint,
-                allowedNets: Observable<Array<Net>> = of([]),
-                initiallyOpenOneTask: Observable<boolean> = of(true),
-                closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
-        super(allowedNets);
-        this._assignCancelQueue = new ReplaySubjectQueue();
+                resolver: SearchIndexResolverService,
+                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
+                @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
+        super(resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
@@ -79,9 +77,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         );
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
-        if (this._preferredEndpoint === undefined || this._preferredEndpoint === null) {
-            this._preferredEndpoint = TaskEndpoint.MONGO;
-        }
+        this._preferredEndpoint = taskViewConfig?.preferredEndpoint ?? (this._preferredEndpoint ?? TaskEndpoint.MONGO);
 
         this._initializing = false;
 
@@ -144,11 +140,11 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
             }),
             tap(v => this._panelUpdate$.next(v)));
 
-        this._subInitiallyOpen = initiallyOpenOneTask.subscribe(bool => {
+        this._subInitiallyOpen = (taskViewConfig?.initiallyOpenOneTask ?? of(true)).subscribe(bool => {
             this._initiallyOpenOneTask = bool;
         });
 
-        this._subCloseTask = closeTaskTabOnNoTasks.subscribe(bool => {
+        this._subCloseTask = (taskViewConfig?.closeTaskTabOnNoTasks ?? of(true)).subscribe(bool => {
             this._closeTaskTabOnNoTasks = bool;
         });
     }
@@ -200,19 +196,6 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         return this._allowMultiOpen;
     }
 
-    public addToQueue(obs: ReplaySubject<boolean>): void {
-        this._assignCancelQueue.push(obs);
-    }
-
-    public isEmptyQueue(): boolean {
-        this._assignCancelQueue.removeCompleted();
-        return this._assignCancelQueue.isEmpty();
-    }
-
-    public popQueue(): Observable<boolean> {
-        return this._assignCancelQueue.pop().asObservable();
-    }
-
     public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
         if (requestContext === null || requestContext.pageNumber < 0) {
             return of({tasks: {}, requestContext});
@@ -250,7 +233,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
             }),
             tap(t => {
                 if (this._pagination.totalElements && this._pagination.totalElements > 0
-                    && t.pagination.totalElements === 0 && !Array.isArray(t.content)) {
+                    && t.pagination.totalElements === 0 && !Array.isArray(t.content) && this._closeTaskTabOnNoTasks) {
                     this._closeTab$.next();
                 }
             }),

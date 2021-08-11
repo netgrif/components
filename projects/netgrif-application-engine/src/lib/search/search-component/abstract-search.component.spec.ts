@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {AbstractSearchComponent} from './abstract-search.component';
 import {SearchService} from '../search-service/search.service';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -13,16 +13,33 @@ import {UserResourceService} from '../../resources/engine-endpoint/user-resource
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
-import {TestCaseSearchServiceFactory} from '../../utility/tests/test-factory-methods';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '../../dialog/services/dialog.service';
+import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
+import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
+import {SideMenuService} from '../../side-menu/services/side-menu.service';
+import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/injection-tokens';
+import {ComponentType} from '@angular/cdk/portal';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
+import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
+import {UserFiltersService} from '../../filter/user-filters.service';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
+import {Category} from '../models/category/category';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {defaultCaseSearchCategoriesFactory} from '../category-factory/default-categories-factories';
+import {CategoryFactory} from '../category-factory/category-factory';
+import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
+import {Filter} from '../../filter/models/filter';
+import {ViewIdService} from '../../user/services/view-id.service';
+import {NAE_FILTER_TEXT} from '../../panel/immediate/model/filter-text-injection-token';
+import {FilterType} from '../../filter/models/filter-type';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
     let fixture: ComponentFixture<TestSearchComponent>;
-    let searchService: SearchService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -37,7 +54,16 @@ describe('AbstractSearchComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestCaseSearchServiceFactory}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+                CategoryFactory,
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
+                {provide: NAE_SEARCH_COMPONENT_CONFIGURATION, useValue: {showSearchIcon: false}},
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ],
             declarations: [
                 TestSearchComponent,
@@ -49,26 +75,16 @@ describe('AbstractSearchComponent', () => {
         fixture = TestBed.createComponent(TestSearchComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        searchService = TestBed.inject(SearchService);
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    // NAE-1243
-    it('should set and clear fulltext search', fakeAsync(() => {
-        const fc = component.fullTextFormControl;
-        expect(fc).toBeTruthy();
-        const spySet = spyOn(searchService, 'setFullTextFilter');
-        const spyClear = spyOn(searchService, 'clearFullTextFilter');
-        fc.setValue('hello world');
-        tick(600);
-        expect(spySet).toHaveBeenCalled();
-        fc.setValue('');
-        tick(600);
-        expect(spyClear).toHaveBeenCalled();
-    }));
+    it('injection token configuration can override values', () => {
+        expect(component.showSearchToggleButton).toBeTrue();
+        expect(component.showSearchIcon).toBeFalse();
+    });
 
     afterEach(() => {
         TestBed.resetTestingModule();
@@ -84,7 +100,14 @@ class TestSearchComponent extends AbstractSearchComponent {
     constructor(searchService: SearchService,
                 logger: LoggerService,
                 dialogService: DialogService,
-                translate: TranslateService) {
-        super(searchService, logger, dialogService, translate);
+                translate: TranslateService,
+                userFilterService: UserFiltersService,
+                allowedNetsService: AllowedNetsService,
+                viewIdService: ViewIdService,
+                @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
+                @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
+                @Optional() @Inject(NAE_FILTERS_FILTER) filtersFilter: Filter) {
+        super(searchService, logger, dialogService, translate, userFilterService, allowedNetsService, viewIdService,
+            searchCategories, configuration, filtersFilter);
     }
 }

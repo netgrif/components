@@ -105,7 +105,10 @@ describe('CaseResourceService', () => {
 
     it('should createCase', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
-            service.createCase({}).subscribe(res => {
+            service.createCase({
+                title: '',
+                netId: ''
+            }).subscribe(res => {
                 expect(res.stringId).toEqual('string');
             });
 

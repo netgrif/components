@@ -65,6 +65,6 @@ class TestWrapperComponent {
         visible: true,
         editable: true,
         hidden: true
-    }, undefined, undefined, undefined, undefined, undefined, {name: 'autocomplete_dynamic'});
+    }, undefined, undefined, undefined, undefined, undefined, undefined, {name: 'autocomplete_dynamic'});
     form = new FormControl();
 }

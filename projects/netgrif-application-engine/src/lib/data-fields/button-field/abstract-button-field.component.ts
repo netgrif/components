@@ -34,6 +34,14 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
     }
 
     /**
+     * Function checks if button is icon type
+     * @returns true if component type is 'fab', 'minifab' or 'icon'
+     */
+    public isIconTypeButton(): boolean {
+        return this.resolveComponentType() === 'fab' || this.resolveComponentType() === 'minifab' || this.resolveComponentType() === 'icon';
+    }
+
+    /**
      * This function depends on type of component, if had dialogText provided in component, then its open a dialog with that text
      */
     public resolveValue(): void {

@@ -51,6 +51,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
             this._logger.warn('Header service could not inject ViewIdService! User preferences won\'t be loaded or saved!');
         }
 
+        this._preferences.preferencesChanged$.subscribe(() => {
+            this.loadHeadersFromPreferences();
+        });
+
         this.initializeHeaderState();
     }
 
@@ -122,11 +126,13 @@ export abstract class AbstractHeaderService implements OnDestroy {
 
     private initializeHeaderState(): void {
         const defaultHeaders = [];
-        for (let i = 0; i < this.headerColumnCount; i++) {
-            defaultHeaders.push(null);
+        for (let i = 0; i < this.fieldsGroup[0].fields.length && defaultHeaders.length < this.headerColumnCount; i++) {
+            if (this.fieldsGroup[0].fields[i].initial) {
+                defaultHeaders.push(this.fieldsGroup[0].fields[i]);
+            }
         }
-        for (let i = 0; i < this.fieldsGroup[0].fields.length && i < this.headerColumnCount; i++) {
-            defaultHeaders[i] = this.fieldsGroup[0].fields[i];
+        while (defaultHeaders.length < this.headerColumnCount) {
+            defaultHeaders.push(null);
         }
         this._headerState = new HeaderState(defaultHeaders);
     }
@@ -186,7 +192,8 @@ export abstract class AbstractHeaderService implements OnDestroy {
             };
             allowedNet.immediateData.forEach(immediate => {
                 fieldsGroup.fields.push(
-                    new HeaderColumn(HeaderColumnType.IMMEDIATE, immediate.stringId, immediate.title, immediate.type, allowedNet.identifier)
+                    new HeaderColumn(HeaderColumnType.IMMEDIATE, immediate.stringId, immediate.title,
+                        immediate.type, false, allowedNet.identifier)
                 );
             });
             fieldsGroups.push(fieldsGroup);
@@ -215,7 +222,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
                         existing.add(data.stringId);
                         fieldsGroup.fields.push(
                             new HeaderColumn(HeaderColumnType.IMMEDIATE, data.stringId,
-                                data.title, data.type, allowedNet.identifier)
+                                data.title, data.type, false, allowedNet.identifier)
                         );
                     }
                 });
@@ -281,7 +288,8 @@ export abstract class AbstractHeaderService implements OnDestroy {
                     columnType: header.type,
                     fieldIdentifier: header.fieldIdentifier,
                     petriNetIdentifier: header.petriNetIdentifier,
-                    columnIdentifier: columnIndex
+                    columnIdentifier: columnIndex,
+                    fieldType: header.fieldType
                 };
                 header.sortDirection = direction;
                 foundFirstMatch = true;

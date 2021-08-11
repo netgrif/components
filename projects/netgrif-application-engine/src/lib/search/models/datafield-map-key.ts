@@ -38,14 +38,18 @@ export class DatafieldMapKey implements SearchAutocompleteOption<string> {
                 return 'today';
             case 'enumeration':
                 return 'radio_button_checked';
-            // case "file":
-            //     return "insert_drive_file";
+            case 'file':
+                return 'insert_drive_file';
+            case 'fileList':
+                return 'file_copy';
             case 'multichoice':
                 return 'check_box';
             case 'number':
                 return 'looks_one';
             case 'user':
                 return 'person';
+            case 'userList':
+                return 'people';
             case 'dateTime':
                 return 'schedule';
             default:

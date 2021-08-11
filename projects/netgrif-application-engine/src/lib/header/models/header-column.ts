@@ -14,8 +14,8 @@ export class HeaderColumn {
                 public fieldIdentifier: string,
                 public title: string,
                 public fieldType: string,
-                public petriNetIdentifier?: string
-                ) {
+                public initial = true,
+                public petriNetIdentifier?: string) {
         if (this.type === HeaderColumnType.IMMEDIATE && !this.petriNetIdentifier) {
             throw new Error('HeaderColumn instances of type IMMEDIATE cannot be created without a petriNetIdentifier!');
         }

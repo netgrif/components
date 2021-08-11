@@ -12,7 +12,7 @@ import {EqualsDate} from '../../operator/equals-date';
 import {Substring} from '../../operator/substring';
 import {EqualsDateTime} from '../../operator/equals-date-time';
 import {Equals} from '../../operator/equals';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, ReplaySubject, Subscription} from 'rxjs';
 import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
 import {hasContent} from '../../../../utility/pagination/page-has-content';
 import {Category} from '../category';
@@ -31,6 +31,19 @@ import {LessThanDateTime} from '../../operator/less-than-date-time';
 import {InRangeDateTime} from '../../operator/in-range-date-time';
 import {AutocompleteOptions} from '../autocomplete-options';
 import {ConfigurationInput} from '../../configuration-input';
+import {SearchIndex} from '../../search-index';
+import {Type} from '@angular/core';
+import {Categories} from '../categories';
+import {FormControl} from '@angular/forms';
+import moment, {Moment} from 'moment';
+import {CategoryMetadataConfiguration} from '../../persistance/generator-metadata';
+import {MoreThanEqual} from '../../operator/more-than-equal';
+import {LessThanEqual} from '../../operator/less-than-equal';
+import {MoreThanEqualDate} from '../../operator/more-than-equal-date';
+import {LessThanEqualDate} from '../../operator/less-than-equal-date';
+import {MoreThanEqualDateTime} from '../../operator/more-than-equal-date-time';
+import {LessThanEqualDateTime} from '../../operator/less-than-equal-date-time';
+import {FilterTextSegment} from '../../persistance/filter-text-segment';
 
 interface Datafield {
     netIdentifier: string;
@@ -41,8 +54,9 @@ interface Datafield {
 export class CaseDataset extends Category<Datafield> implements AutocompleteOptions {
 
     private static readonly _i18n = 'search.category.case.dataset';
-    // TODO 4.5.2020 - only button, file and file list fields are truly unsupported, dateTime is implemented but lacks elastic support
-    protected static DISABLED_TYPES = ['button', 'file', 'dateTime', 'fileList', 'enumeration_map', 'multichoice_map'];
+    protected static DISABLED_TYPES = ['button', 'taskRef', 'caseRef', 'filter'];
+    protected static readonly DATAFIELD_METADATA = 'datafield';
+    private static readonly AUTOCOMPLETE_ICON = 'account_circle';
 
     protected readonly _DATAFIELD_INPUT: ConfigurationInput;
 
@@ -51,6 +65,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected _configurationInputs$: BehaviorSubject<Array<ConfigurationInput>>;
 
     protected _datafieldOptions: Map<string, Array<Datafield>>;
+
+    private _datafieldOptionsInitialized$: ReplaySubject<void>;
+    private _allowedNetsSub: Subscription;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -69,12 +86,13 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         }
     }
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
             `${CaseDataset._i18n}.name`,
             undefined,
-            logger);
+            logger,
+            operators);
 
         this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
         this._processCategory.selectDefaultOperator();
@@ -105,6 +123,15 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         });
     }
 
+    destroy() {
+        super.destroy();
+        this._configurationInputs$.complete();
+        this._datafieldOptionsInitialized$.complete();
+        if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
+            this._allowedNetsSub.unsubscribe();
+        }
+    }
+
     get configurationInputs$(): Observable<Array<ConfigurationInput>> {
         return this._configurationInputs$.asObservable();
     }
@@ -131,50 +158,55 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         switch (this._selectedDatafields[0].fieldType) {
             case 'number':
                 return [
-                    this._operators.getOperator(Equals),
-                    this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(MoreThan),
-                    this._operators.getOperator(LessThan),
-                    this._operators.getOperator(InRange),
-                    this._operators.getOperator(IsNull)
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(MoreThan),
+                    this._operatorService.getOperator(MoreThanEqual),
+                    this._operatorService.getOperator(LessThan),
+                    this._operatorService.getOperator(LessThanEqual),
+                    this._operatorService.getOperator(InRange),
+                    this._operatorService.getOperator(IsNull)
                 ];
             case 'boolean':
-                return [this._operators.getOperator(Equals), this._operators.getOperator(NotEquals)];
-            case 'user':
-                // Angular JS frontend used these operators for enumeration, multichoice and file as well
                 return [
-                    this._operators.getOperator(Equals),
-                    this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(IsNull),
-                    this._operators.getOperator(Like)
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals)
+                ];
+            case 'user':
+            case 'userList':
+                return [
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(IsNull)
                 ];
             case 'date':
                 return [
-                    this._operators.getOperator(EqualsDate),
-                    this._operators.getOperator(NotEqualsDate),
-                    this._operators.getOperator(MoreThanDate),
-                    this._operators.getOperator(LessThanDate),
-                    this._operators.getOperator(InRangeDate),
-                    this._operators.getOperator(IsNull)
+                    this._operatorService.getOperator(EqualsDate),
+                    this._operatorService.getOperator(NotEqualsDate),
+                    this._operatorService.getOperator(MoreThanDate),
+                    this._operatorService.getOperator(MoreThanEqualDate),
+                    this._operatorService.getOperator(LessThanDate),
+                    this._operatorService.getOperator(LessThanEqualDate),
+                    this._operatorService.getOperator(InRangeDate),
+                    this._operatorService.getOperator(IsNull)
                 ];
             case 'dateTime':
                 return [
-                    this._operators.getOperator(EqualsDateTime),
-                    this._operators.getOperator(MoreThanDateTime),
-                    this._operators.getOperator(LessThanDateTime),
-                    this._operators.getOperator(InRangeDateTime),
-                    this._operators.getOperator(IsNull)
+                    this._operatorService.getOperator(EqualsDateTime),
+                    this._operatorService.getOperator(MoreThanDateTime),
+                    this._operatorService.getOperator(MoreThanEqualDateTime),
+                    this._operatorService.getOperator(LessThanDateTime),
+                    this._operatorService.getOperator(LessThanEqualDateTime),
+                    this._operatorService.getOperator(InRangeDateTime),
+                    this._operatorService.getOperator(IsNull)
                 ];
             default:
                 return [
-                    this._operators.getOperator(Substring),
-                    this._operators.getOperator(Equals),
-                    this._operators.getOperator(NotEquals),
-                    this._operators.getOperator(MoreThan),
-                    this._operators.getOperator(LessThan),
-                    this._operators.getOperator(InRange),
-                    this._operators.getOperator(IsNull),
-                    this._operators.getOperator(Like)
+                    this._operatorService.getOperator(Substring),
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(IsNull),
+                    this._operatorService.getOperator(Like)
                 ];
         }
     }
@@ -200,14 +232,37 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     duplicate(): CaseDataset {
-        return new CaseDataset(this._operators, this._log, this._optionalDependencies);
+        return new CaseDataset(this._operatorService, this._log, this._optionalDependencies);
     }
 
     protected get elasticKeywords(): Array<string> {
         if (!this.hasSelectedDatafields) {
             return [];
         } else {
-            return this._selectedDatafields.map(datafield => `dataSet.${datafield.fieldId}.value`);
+            return this._selectedDatafields.map(datafield => this.resolveElasticKeyword(datafield));
+        }
+    }
+
+    protected resolveElasticKeyword(datafield: Datafield): string {
+        const resolver = this._optionalDependencies.searchIndexResolver;
+        switch (datafield.fieldType) {
+            case 'number':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.NUMBER);
+            case 'date':
+            case 'dateTime':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.TIMESTAMP);
+            case 'boolean':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.BOOLEAN);
+            case 'file':
+            case 'fileList':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
+            case 'user':
+            case 'userList':
+                return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
+            default:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
         }
     }
 
@@ -218,8 +273,12 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         return `${CaseDataset._i18n}.placeholder.value`;
     }
 
+    protected get datafieldOptionsInitialized$(): Observable<void> {
+        return this._datafieldOptionsInitialized$.asObservable();
+    }
+
     protected generateQuery(userInput: Array<unknown>): Query {
-        const queryGenerationStrategy = this.selectedOperator === this._operators.getOperator(IsNull) ?
+        const queryGenerationStrategy = this.isSelectedOperator(IsNull) ?
             (d, _) => this.isNullOperatorQueryGenerationStrategy(d) :
             (d, ui) => this.standardQueryGenerationStrategy(d, ui);
 
@@ -235,7 +294,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
         const constraint = this.generateNetConstraint(datafield);
-        return (this._operators.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.elasticKeywords, constraint);
+        return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.elasticKeywords, constraint);
     }
 
     protected generateNetConstraint(datafield: Datafield): Query {
@@ -243,7 +302,8 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected createDatafieldOptions(): void {
-        this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
+        this._datafieldOptionsInitialized$ = new ReplaySubject<void>(1);
+        this._allowedNetsSub = this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets => {
             allowedNets.forEach(petriNet => {
                 petriNet.immediateData
                     .filter(immediateData => {
@@ -252,6 +312,15 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                             && !CaseDataset.DISABLED_TYPES.includes(immediateData.type);
                     })
                     .forEach(immediateData => {
+                        let type = immediateData.type;
+
+                        // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
+                        if (type === 'enumeration_map') {
+                            type = 'enumeration';
+                        } else if (type === 'multichoice_map') {
+                            type = 'multichoice';
+                        }
+
                         this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
                             netIdentifier: petriNet.identifier,
                             fieldId: immediateData.stringId,
@@ -259,6 +328,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                         });
                     });
             });
+            this._datafieldOptionsInitialized$.next();
         });
     }
 
@@ -281,7 +351,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
                         map(page => {
                             if (hasContent(page)) {
                                 return page.content.map(
-                                    user => ({text: user.fullName, value: [user.id], icon: 'account_circle'})
+                                    user => ({text: user.fullName, value: [user.id], icon: CaseDataset.AUTOCOMPLETE_ICON})
                                 );
                             }
                             return [];
@@ -296,7 +366,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     public selectDatafields(datafieldMapKey: string, selectDefaultOperator = true): void {
         if (!this._datafieldOptions.has(datafieldMapKey)) {
-            this._log.warn(`The provided 'datafieldMapKey' does not exist.`);
+            this._log.warn(`The provided 'datafieldMapKey' (${datafieldMapKey}) does not exist.`);
             return;
         }
         this._DATAFIELD_INPUT.formControl.setValue(DatafieldMapKey.parse(datafieldMapKey));
@@ -355,5 +425,66 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             return (value as SearchAutocompleteOption<Array<number>>).value;
         }
         return value;
+    }
+
+    protected isSelectedOperator(operatorClass: Type<any>): boolean {
+        return this.selectedOperator === this._operatorService.getOperator(operatorClass);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.CASE_DATASET;
+    }
+
+    protected serializeOperandValue(valueFormControl: FormControl): unknown {
+        switch (this.inputType) {
+            case SearchInputType.AUTOCOMPLETE:
+                const autocompleteValue = valueFormControl.value as SearchAutocompleteOption<unknown>;
+                return {text: autocompleteValue.text, value: autocompleteValue.value};
+            case SearchInputType.DATE:
+            case SearchInputType.DATE_TIME:
+                return (valueFormControl.value as Moment).valueOf();
+            default:
+                return super.serializeOperandValue(valueFormControl);
+        }
+    }
+
+    protected createMetadataConfiguration(): CategoryMetadataConfiguration {
+        const config = super.createMetadataConfiguration();
+        config[CaseDataset.DATAFIELD_METADATA] = (this._DATAFIELD_INPUT.formControl.value as DatafieldMapKey).toSerializedForm();
+        return config;
+    }
+
+    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): Observable<void> {
+        const result$ = new ReplaySubject<void>(1);
+        this.datafieldOptionsInitialized$.subscribe(() => {
+            const serializedMapKey = configuration[CaseDataset.DATAFIELD_METADATA] as string;
+            this.selectDatafields(serializedMapKey, false);
+            if (!this.hasSelectedDatafields) {
+                throw new Error(`Searched data fields cannot be restored from the provided configuration (${serializedMapKey
+                }). Make sure, that the correct allowed nets are provided in this view.`);
+            }
+            super.loadConfigurationFromMetadata(configuration).subscribe(() => {
+                result$.next();
+                result$.complete();
+            });
+        });
+        return result$.asObservable();
+    }
+
+    protected deserializeOperandValue(value: unknown): Observable<any> {
+        switch (this.inputType) {
+            case SearchInputType.AUTOCOMPLETE:
+                const savedOption = value as SearchAutocompleteOption<Array<string>>;
+                return of({...savedOption, icon: CaseDataset.AUTOCOMPLETE_ICON});
+            case SearchInputType.DATE:
+            case SearchInputType.DATE_TIME:
+                return of(moment(value as string));
+            default:
+                return super.deserializeOperandValue(value);
+        }
+    }
+
+    protected createConfigurationFilterTextSegments(): Array<FilterTextSegment> {
+        return [{segment: this._configurationInputs$.value[0].formControl.value.text, bold: true}];
     }
 }

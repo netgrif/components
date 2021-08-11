@@ -1,5 +1,4 @@
 import {TestBed} from '@angular/core/testing';
-
 import {SideMenuService} from './side-menu.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

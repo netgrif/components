@@ -19,6 +19,7 @@ import {TextAreaField} from '../../data-fields/text-field/models/text-area-field
 import {Component} from '../../data-fields/models/component';
 import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
+import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 
 @Injectable({
     providedIn: 'root'
@@ -64,24 +65,24 @@ export class FieldConverterService {
                 if ( item.component && item.component.name === 'autocomplete_dynamic') {
                     return new DynamicEnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
                         item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
-                        item.type, item.component);
+                        item.type, item.validations, item.component);
                 } else {
                     return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
                         item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
-                        item.type, item.component);
+                        item.type, item.validations, item.component);
                 }
             case FieldTypeResource.ENUMERATION_MAP:
                 return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumOptions(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
-                    item.type, item.component);
+                    item.type, item.validations, item.component);
             case FieldTypeResource.MULTICHOICE:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
-                    item.type, item.component);
+                    item.type, item.validations, item.component);
             case FieldTypeResource.MULTICHOICE_MAP:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
-                    item.type, item.component);
+                    item.type, item.validations, item.component);
             case FieldTypeResource.DATE:
                 let date;
                 if (item.value) {
@@ -102,21 +103,24 @@ export class FieldConverterService {
                     user = new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
-                    item.roles, item.placeholder, item.description, item.layout, item.component);
+                    item.roles, item.placeholder, item.description, item.layout, item.validations, item.component);
             case FieldTypeResource.BUTTON:
                 /*@deprecated in 4.3.0*/
                 const typeBtn = this.resolveButtonView(item);
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
-                    item.placeholder, item.description, item.layout, typeBtn, item.component);
+                    item.placeholder, item.description, item.layout, typeBtn, item.validations, item.component);
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, null, null, item.component);
+                    item.placeholder, item.description, item.layout, null, null, item.validations, item.component);
             case FieldTypeResource.FILE_LIST:
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
                     item.placeholder, item.description, item.layout, item.validations, null, null, item.component);
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
-                    item.placeholder, item.description, item.layout);
+                    item.placeholder, item.description, item.layout, item.validations, item.component);
+            case FieldTypeResource.FILTER:
+                return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
+                    item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component);
         }
     }
 
@@ -143,6 +147,8 @@ export class FieldConverterService {
             return FieldTypeResource.TASK_REF;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
             return item.fieldType;
+        } else if (item instanceof FilterField) {
+            return FieldTypeResource.FILTER;
         }
     }
 

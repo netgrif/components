@@ -1,0 +1,6 @@
+<mat-form-field appearance="outline" class="disable-error-margin">
+    <input type="text" matInput
+           [placeholder]="'search.fullText' | translate"
+           [formControl]="fullTextFormControl"
+           (keydown.enter)="$event.target.blur()">
+</mat-form-field>

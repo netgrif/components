@@ -89,6 +89,9 @@ export class HeaderSearchService implements OnDestroy {
         if (this._searchSub) {
             this._searchSub.unsubscribe();
         }
+        for (const cat of this._typeToCategory.values()) {
+            cat.destroy();
+        }
     }
 
     public set headerService(headerService: AbstractHeaderService) {

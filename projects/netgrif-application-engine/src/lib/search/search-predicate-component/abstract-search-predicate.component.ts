@@ -8,6 +8,9 @@ import {Query} from '../models/query/query';
 import {LoggerService} from '../../logger/services/logger.service';
 import {MatSelect} from '@angular/material/select';
 import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
+import {
+    AdvancedSearchComponentInitializationService
+} from '../advanced-search-component-initialization-service/advanced-search-component-initialization.service';
 
 
 /**
@@ -15,6 +18,12 @@ import {EditableElementaryPredicate} from '../models/predicate/editable-elementa
  */
 export abstract class AbstractSearchPredicateComponent implements OnInit, OnDestroy {
 
+    /**
+     * Whether the contents displayed in this component can be edited by the user or not.
+     *
+     * Defaults to `true`
+     */
+    @Input() editable = true;
     @Input() predicate: EditableElementaryPredicate;
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;
@@ -30,7 +39,8 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
     protected _searchCategories: Array<Category<any>>;
 
     protected constructor(@Inject(NAE_SEARCH_CATEGORIES) private _naeSearchCategories: Array<Category<any>>,
-                          protected _logger: LoggerService) {
+                          protected _logger: LoggerService,
+                          protected _initializationService: AdvancedSearchComponentInitializationService) {
     }
 
     ngOnInit() {
@@ -49,12 +59,31 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
             this._logger.error('Provided predicate generator is not an allowed category from the NAE_SEARCH_CATEGORIES injection token!'
                 + ' Behavior in this case is undefined.');
         }
+
+        this.predicate.setMetadataGenerator(() => {
+            if (!!this._selectedCategory) {
+                return this._selectedCategory.createMetadata();
+            }
+            return undefined;
+        });
+
+        this.predicate.setFilterTextSegmentsGenerator(() => {
+            if (!!this._selectedCategory) {
+                return this._selectedCategory.createFilterTextSegments();
+            }
+            return [];
+        });
     }
 
     ngOnDestroy(): void {
         if (this._predicateChange && !this._predicateChange.closed) {
             this._predicateChange.unsubscribe();
         }
+        this._searchCategories.forEach(cat => {
+            if (cat !== this.generator) {
+                cat.destroy();
+            }
+        });
     }
 
     public get searchCategories(): Array<Category<any>> {
@@ -63,7 +92,7 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
 
     @ViewChild('categoryInput')
     public set categoryInput(input: MatSelect) {
-        if (input) {
+        if (input && this._initializationService.isInitialized) {
             setTimeout(() => {
                 input.focus();
                 input.open();
@@ -105,6 +134,10 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
     }
 
     public clearCategorySelection(): void {
+        if (!this.editable) {
+            return;
+        }
+
         this.categoryChanged(undefined);
     }
 
