@@ -156,13 +156,17 @@
             "notEquals": "is different from",
             "moreThan": "is more than",
             "lessThan": "is less than",
+            "lessThanEqual": "is less or equal than",
+            "moreThanEqual": "is more or equal than",
             "like": "is like",
             "isNull": "is empty"
         },
         "tooltip": {
             "toAdvanced": "Switch to advanced search",
             "toFullText": "Switch to basic search",
-            "help": "Help"
+            "help": "Help",
+            "save": "Save filter",
+            "load": "Load filter"
         },
         "help": {
             "title": "Advanced search help",
@@ -258,6 +262,7 @@
     "headers": {
         "newHeader": "Select new header",
         "date": "Choose a date",
+        "dateTime": "Choose a date and time",
         "selectUser": "Choose a user",
         "caseMeta": {
             "mongoID": "Case ID",

@@ -1,5 +1,6 @@
 import {Operator} from './operator';
 import {Query} from '../query/query';
+import {Operators} from './operators';
 
 /**
  * Operator that matches if the input is a substring of some value.
@@ -21,5 +22,9 @@ export class Substring extends Operator<string> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.substring', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.SUBSTRING;
     }
 }

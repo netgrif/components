@@ -11,6 +11,7 @@ import {TaskOperations} from '../interfaces/task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {Subject} from 'rxjs';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
+import {AfterAction} from '../../utility/call-chain/after-action';
 
 /**
  * Handles the sequence of actions that are performed when a task is being assigned, based on the task's configuration.
@@ -44,7 +45,7 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param taskOpened whether the Task was 'opened' (eg. task panel is expanding) or 'closed' (eg. task panel is collapsing)
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    public performAssignPolicy(taskOpened: boolean, afterAction: Subject<boolean> = new Subject<boolean>()): void {
+    public performAssignPolicy(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
         if (this._safeTask.assignPolicy === AssignPolicy.auto) {
             this.autoAssignPolicy(taskOpened, afterAction);
         } else {
@@ -57,7 +58,7 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param taskOpened whether the Task was 'opened' (eg. task panel is expanding) or 'closed' (eg. task panel is collapsing)
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected autoAssignPolicy(taskOpened: boolean, afterAction: Subject<boolean>): void {
+    protected autoAssignPolicy(taskOpened: boolean, afterAction: AfterAction): void {
         if (taskOpened) {
             this.autoAssignOpenedPolicy(afterAction);
         } else {
@@ -75,7 +76,7 @@ export class AssignPolicyService extends TaskHandlingService {
      *
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected autoAssignOpenedPolicy(afterAction: Subject<boolean>): void {
+    protected autoAssignOpenedPolicy(afterAction: AfterAction): void {
         this._assignTaskService.assign(
             this._callchain.create((assignSuccess => {
                 this.afterAssignOpenPolicy(assignSuccess, afterAction);
@@ -88,10 +89,9 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param assignSuccess whether the preceding assign succeeded or not
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected afterAssignOpenPolicy(assignSuccess: boolean, afterAction: Subject<boolean>): void {
+    protected afterAssignOpenPolicy(assignSuccess: boolean, afterAction: AfterAction): void {
         if (!assignSuccess) {
-            afterAction.next(false);
-            afterAction.complete();
+            afterAction.resolve(false);
             return;
         }
 
@@ -100,8 +100,7 @@ export class AssignPolicyService extends TaskHandlingService {
                 if (requestSuccessful) {
                     this._finishPolicyService.performFinishPolicy(afterAction);
                 } else {
-                    afterAction.next(false);
-                    afterAction.complete();
+                    afterAction.resolve(false);
                 }
             }),
             this._isForced
@@ -134,12 +133,11 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param taskOpened whether the Task was 'opened' (eg. task panel is expanding) or 'closed' (eg. task panel is collapsing)
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected manualAssignPolicy(taskOpened: boolean, afterAction: Subject<boolean>): void {
+    protected manualAssignPolicy(taskOpened: boolean, afterAction: AfterAction): void {
         if (taskOpened) {
             this.manualAssignOpenedPolicy(afterAction);
         } else {
-            afterAction.next(false);
-            afterAction.complete();
+            afterAction.resolve(false);
         }
     }
 
@@ -153,14 +151,13 @@ export class AssignPolicyService extends TaskHandlingService {
      *
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
-    protected manualAssignOpenedPolicy(afterAction: Subject<boolean>): void {
+    protected manualAssignOpenedPolicy(afterAction: AfterAction): void {
         this._taskDataService.initializeTaskDataFields(
             this._callchain.create((requestSuccessful) => {
                 if (requestSuccessful) {
                     this._finishPolicyService.performFinishPolicy(afterAction);
                 } else {
-                    afterAction.next(false);
-                    afterAction.complete();
+                    afterAction.resolve(false);
                 }
             }),
             this._isForced

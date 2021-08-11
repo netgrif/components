@@ -11,6 +11,12 @@ import {PredicateWithGenerator} from '../models/predicate/predicate-with-generat
  */
 export abstract class AbstractSearchClauseComponent implements OnInit, OnDestroy {
 
+    /**
+     * Whether the contents displayed in this component can be edited by the user or not.
+     *
+     * Defaults to `true`
+     */
+    @Input() editable = true;
     @Input() predicate: EditableClausePredicateWithGenerators;
     @Input() predicateId: number;
     @Input() remove$: Subject<number>;

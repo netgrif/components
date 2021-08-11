@@ -17,6 +17,10 @@ import {TaskTask} from '../models/category/task/task-task';
  *
  * Depends on {@link CategoryFactory}.
  *
+ * The created categories cannot be used to generate any predicates, as their inner state is preemptively destroyed to avoid memory leaks
+ * caused by uncompleted Subjects. They should only be used to create new Category instances with the help of the
+ * [duplicate()]{@link Category#duplicate} method.
+ *
  * @returns an Array containing the default case search categories: {@link CaseDataset}, {@link CaseTitle}, {@link CaseCreationDate},
  * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor} and {@link CaseVisualId}
  */
@@ -38,6 +42,10 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
  * Creates the default task search categories.
  *
  * Depends on {@link CategoryFactory}.
+ *
+ * The created categories cannot be used to generate any predicates, as their inner state is preemptively destroyed to avoid memory leaks
+ * caused by uncompleted Subjects. They should only be used to create new Category instances with the help of the
+ * [duplicate()]{@link Category#duplicate} method.
  *
  * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask}, {@link TaskProcess}
  * and {@link TaskRole}

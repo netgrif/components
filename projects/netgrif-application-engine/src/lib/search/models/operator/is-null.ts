@@ -1,5 +1,6 @@
 import {Operator} from './operator';
 import {Query} from '../query/query';
+import {Operators} from './operators';
 
 /**
  * An operator that can be used on any field and matches entries with null or empty string values.
@@ -73,5 +74,9 @@ export class IsNull extends Operator<any> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.isNull'];
+    }
+
+    serialize(): Operators | string {
+        return Operators.IS_NULL;
     }
 }

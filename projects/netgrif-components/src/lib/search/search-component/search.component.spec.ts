@@ -8,12 +8,18 @@ import {
     ConfigurationService,
     MaterialModule,
     MockAuthenticationService,
-    MockUserResourceService,
-    SearchService,
-    TestCaseSearchServiceFactory,
+    MockUserResourceService, NAE_BASE_FILTER,
+    SearchService, TestCaseBaseFilterProvider,
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
+    AllowedNetsService,
+    TestNoAllowedNetsFactory,
+    AllowedNetsServiceFactory,
+    NAE_SEARCH_CATEGORIES,
+    defaultCaseSearchCategoriesFactory,
+    CategoryFactory,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -35,7 +41,15 @@ describe('SearchComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestCaseSearchServiceFactory}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+                CategoryFactory,
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ]
         })
             .compileComponents();

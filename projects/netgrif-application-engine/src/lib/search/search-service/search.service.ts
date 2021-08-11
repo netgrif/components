@@ -1,18 +1,24 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BooleanOperator} from '../models/boolean-operator';
 import {Filter} from '../../filter/models/filter';
-import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
+import {BehaviorSubject, forkJoin, Observable, Subject, Subscription} from 'rxjs';
 import {Predicate} from '../models/predicate/predicate';
 import {SimpleFilter} from '../../filter/models/simple-filter';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {PredicateRemovalEvent} from '../models/predicate-removal-event';
 import {Query} from '../models/query/query';
-import {distinctUntilChanged, map} from 'rxjs/operators';
+import {distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {EditableClausePredicateWithGenerators} from '../models/predicate/editable-clause-predicate-with-generators';
 import {Category} from '../models/category/category';
-import {EditableElementaryPredicate} from '../models/predicate/editable-elementary-predicate';
-import {PredicateWithGenerator} from '../models/predicate/predicate-with-generator';
+import {PredicateTreeMetadata} from '../models/persistance/generator-metadata';
+import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
+import {BaseFilter} from '../models/base-filter';
+import {LoggerService} from '../../logger/services/logger.service';
+import {CategoryFactory} from '../category-factory/category-factory';
 import {FilterType} from '../../filter/models/filter-type';
+import {LoadingEmitter} from '../../utility/loading-emitter';
+import {FilterMetadata} from '../models/persistance/filter-metadata';
+import {FilterTextSegment} from '../models/persistance/filter-text-segment';
 
 /**
  * Holds information about the filter that is currently applied to the view component, that provides this services.
@@ -40,31 +46,44 @@ export class SearchService implements OnDestroy {
      * The index of a removed {@link Predicate} is emmited into this stream
      */
     protected _predicateRemoved$: Subject<PredicateRemovalEvent>;
+    protected _loadingFromMetadata$: LoadingEmitter;
     /**
      * The `rootPredicate` uses this stream to notify the search service about changes to the held query
      */
     private readonly _predicateQueryChanged$: Subject<void>;
-    private subFilter: Subscription;
+    private readonly subFilter: Subscription;
 
     /**
      * The {@link Predicate} tree root uses an [AND]{@link BooleanOperator#AND} operator to combine the Predicates.
+     * @param _log {@link LoggerService}
+     * @param _categoryFactory a {@link CategoryFactory} instance. This dependency is optional.
+     * It is required if we want to load predicate filter from saved metadata
      * @param baseFilter Filter that should be applied to the view when no searching is being performed.
-     * @param type
+     * Injected trough the {@link NAE_BASE_FILTER} injection token.
      */
-    constructor(baseFilter: Filter | Observable<Filter>, type: FilterType = FilterType.CASE) {
-        if (baseFilter instanceof Filter) {
-            this._baseFilter = baseFilter.clone();
-        } else if (baseFilter instanceof Observable) {
-            this._baseFilter = new SimpleFilter('', type, {process: {identifier: '__EMPTY__'}});
-            this.subFilter = baseFilter.subscribe((filter) => {
+    constructor(protected _log: LoggerService,
+                @Optional() protected _categoryFactory: CategoryFactory,
+                @Inject(NAE_BASE_FILTER) baseFilter: BaseFilter) {
+        if (baseFilter.filter instanceof Filter) {
+            this._baseFilter = baseFilter.filter.clone();
+        } else if (baseFilter.filter instanceof Observable) {
+            this._baseFilter = new SimpleFilter('', baseFilter.filterType, {process: {identifier: '__EMPTY__'}});
+        } else {
+            throw new Error('Unsupported BaseFilter input! You must provide the NAE_BASE_FILTER injection token with proper values!');
+        }
+
+        this._predicateQueryChanged$ = new Subject<void>();
+        this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$, undefined, true);
+        this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
+        this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
+        this._loadingFromMetadata$ = new LoadingEmitter();
+
+        if (baseFilter.filter instanceof Observable) {
+            this.subFilter = baseFilter.filter.subscribe((filter) => {
                 this._baseFilter = filter.clone();
                 this.updateActiveFilter();
             });
         }
-        this._predicateQueryChanged$ = new Subject<void>();
-        this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$);
-        this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
-        this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
 
         this.predicateQueryChanged$.subscribe(() => {
             this.updateActiveFilter();
@@ -78,6 +97,8 @@ export class SearchService implements OnDestroy {
         if (this.subFilter) {
             this.subFilter.unsubscribe();
         }
+        this._loadingFromMetadata$.complete();
+        this._rootPredicate.destroy();
     }
 
     /**
@@ -137,6 +158,32 @@ export class SearchService implements OnDestroy {
     }
 
     /**
+     * @returns the type of the filter held in this search service instance
+     */
+    public get filterType(): FilterType {
+        return this.baseFilter.type;
+    }
+
+    /**
+     * @returns whether the search service is currently loading its state from metadata or not.
+     *
+     * See [loadFromMetadata()]{@link SearchService#loadFromMetadata}
+     */
+    public get loadingFromMetadata(): boolean {
+        return this._loadingFromMetadata$.value;
+    }
+
+    /**
+     * @returns an `Observable` that emits `true` if the search service is currently loading its state from metadata,
+     * emits `false` otherwise.
+     *
+     * See [loadFromMetadata()]{@link SearchService#loadFromMetadata}
+     */
+    public get loadingFromMetadata$(): Observable<boolean> {
+        return this._loadingFromMetadata$.asObservable();
+    }
+
+    /**
      * @returns an Observable that emits whenever the root predicates query changes
      */
     protected get predicateQueryChanged$(): Observable<Query> {
@@ -170,15 +217,9 @@ export class SearchService implements OnDestroy {
     public addGeneratedLeafPredicate(generator: Category<any>): number {
         const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR, false);
         const branch = (
-            this._rootPredicate.getPredicateMap().get(branchId).wrappedPredicate as unknown as EditableClausePredicateWithGenerators
+            this._rootPredicate.getPredicateMap().get(branchId).getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
         );
-        const leafId = branch.addNewElementaryPredicate();
-        const leaf = (branch.getPredicateMap().get(leafId).wrappedPredicate as unknown as EditableElementaryPredicate);
-        const generatedPredicate = generator.generatedPredicate;
-        leaf.query = generatedPredicate ? generatedPredicate.query : Query.emptyQuery();
-        branch.removePredicate(leafId);
-        const withGenerator = new PredicateWithGenerator(leaf, generator);
-        branch.addPredicateWithGenerator(withGenerator);
+        branch.addNewPredicateFromGenerator(generator);
         return branchId;
     }
 
@@ -260,5 +301,68 @@ export class SearchService implements OnDestroy {
         } else {
             this._activeFilter.next(this._baseFilter.clone());
         }
+    }
+
+    /**
+     * @returns `undefined` if the predicate tree contains no complete query.
+     * Otherwise returns the serialized form of the completed queries in the predicate tree.
+     */
+    public createPredicateMetadata(): PredicateTreeMetadata | undefined {
+        return this._rootPredicate.createGeneratorMetadata() as PredicateTreeMetadata;
+    }
+
+    /**
+     * Replaces the current predicate filter by the one corresponding to the provided generator metadata.
+     *
+     * The {@link CategoryFactory} instance must be provided for this service if we want to use this method. Logs an error and does nothing.
+     *
+     * The `filterType` of this search service must match the `filterType` of the provided metadata. Otherwise an error is thrown.
+     *
+     * @param metadata the serialized state of the predicate tree that should be restored to this search service
+     */
+    public loadFromMetadata(metadata: FilterMetadata) {
+        if (this._categoryFactory === null) {
+            this._log.error('A CategoryFactory instance must be provided for the SearchService'
+                + ' if you want to reconstruct a predicate filter from saved metadata');
+            return;
+        }
+
+        if (metadata.filterType !== this.filterType) {
+            throw Error(`The filter type of the provided metadata (${metadata.filterType
+            }) does not match the filter type of the search service (${this.filterType})!`);
+        }
+
+        this.clearPredicates(true);
+        this._loadingFromMetadata$.on();
+
+        const generatorObservables = [];
+
+        for (const clause of metadata.predicateMetadata) {
+            const branchId = this._rootPredicate.addNewClausePredicate(BooleanOperator.OR);
+            const branchPredicate = (
+                this._rootPredicate.getPredicateMap().get(branchId)
+                    .getWrappedPredicate() as unknown as EditableClausePredicateWithGenerators
+            );
+            for (const predicate of clause) {
+                const localBranchReference = branchPredicate;
+                generatorObservables.push(
+                    this._categoryFactory.getFromMetadata(predicate).pipe(tap(generator => {
+                        localBranchReference.addNewPredicateFromGenerator(generator);
+                    }))
+                );
+            }
+        }
+
+        forkJoin(generatorObservables).subscribe(() => {
+            this._loadingFromMetadata$.off();
+            this.updateActiveFilter();
+        });
+    }
+
+    /**
+     * @returns an Array of filter text segments that correspond to the currently displayed completed predicates
+     */
+    public createFilterTextSegments(): Array<FilterTextSegment> {
+        return this._rootPredicate.createFilterTextSegments();
     }
 }

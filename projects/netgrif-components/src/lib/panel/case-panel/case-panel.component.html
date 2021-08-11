@@ -21,9 +21,16 @@
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="case-panel-icon panel-primary-icon"
                               *ngIf="field.icon && field.value && field.type !== 'button'">{{field.icon}}</mat-icon>
-                    <span *ngIf="field.type !== 'button'" [ngClass]="{'text-column-ellipsis': textEllipsis,
-                     'text-column-word-wrap': !textEllipsis}">{{field.value}}</span>
-                    <button *ngIf="field.type === 'button'" mat-flat-button color="primary">{{field.value}}</button>
+                    <ng-container [ngSwitch]="field.type">
+                        <span *ngSwitchDefault [ngClass]="{'text-column-ellipsis': textEllipsis,
+                         'text-column-word-wrap': !textEllipsis}">{{field.value}}</span>
+                        <button *ngSwitchCase="'button'" mat-flat-button color="primary">{{field.value}}</button>
+                        <nc-immediate-filter-text *ngSwitchCase="'filter'"
+                                                  [filterMetadata]="field.filterMetadata"
+                                                  [ellipsis]="textEllipsis"
+                                                  class="width-100">
+                        </nc-immediate-filter-text>
+                    </ng-container>
                 </span>
             </div>
         </div>

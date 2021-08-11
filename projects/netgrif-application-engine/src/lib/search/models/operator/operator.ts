@@ -2,6 +2,7 @@ import {EscapeResult} from '../escape-result';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {WrapResult} from '../wrap-result';
+import {Operators} from './operators';
 
 /**
  * Represents the low level abstraction of query generation that is responsible for the creation of queries themselves.
@@ -142,6 +143,11 @@ export abstract class Operator<T> {
      * operator name where user input is expected.
      */
     public abstract getOperatorNameTemplate(): Array<string>;
+
+    /**
+     * @returns the operator class in a serializable form
+     */
+    public abstract serialize(): Operators | string;
 
     /**
      * Checks whether the provided array contains at leas as many arguments, as is the operators number of operands.

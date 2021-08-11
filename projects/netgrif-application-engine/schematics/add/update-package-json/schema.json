@@ -1,7 +1,0 @@
-{
-    "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsUpdatePackageJson",
-    "title": "Modifies build script",
-    "type": "object",
-    "properties": {}
-}

@@ -19,12 +19,16 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
     protected _childCounter: IncrementingCounter;
     protected _query: Query;
 
-    constructor(protected _operator: BooleanOperator, parentNotifier?: Subject<void>, initiallyVisible = true) {
+    constructor(protected _operator: BooleanOperator,
+                parentNotifier?: Subject<void>,
+                initiallyVisible = true,
+                protected _bracketSubPredicateText = false) {
         super(parentNotifier, initiallyVisible);
         this._predicates = new Map<number, Predicate>();
         this._childUpdated$ = new Subject<void>();
         this._childCounter = new IncrementingCounter();
         this._query = Query.emptyQuery();
+        this.initializeFilterTextSegmentsGenerator();
 
         this._childUpdated$.subscribe(() => {
             this.updateQueryAndNotify();
@@ -127,5 +131,12 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         for (const p of this._predicates.values()) {
             p.show();
         }
+    }
+
+    private initializeFilterTextSegmentsGenerator() {
+        this._filterTextSegmentsGenerator = () => {
+            return Predicate.combineTextSegmentsWithBooleanOperator(this._predicates.values(),
+                this._operator, this._bracketSubPredicateText);
+        };
     }
 }

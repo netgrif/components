@@ -5,7 +5,7 @@ import {HeaderMode} from '../models/header-mode';
 import {SearchChangeDescription} from '../models/user-changes/search-change-description';
 import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -31,7 +31,9 @@ import {ModeChangeDescription} from '../models/user-changes/mode-change-descript
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
-import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('CaseHeaderService', () => {
     let service: CaseHeaderService;
@@ -49,21 +51,18 @@ describe('CaseHeaderService', () => {
             ],
             providers: [
                 CaseHeaderService,
-                CaseViewServiceFactory,
+                CaseViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
-                },
-                {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [CaseViewServiceFactory]
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {

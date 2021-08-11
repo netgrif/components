@@ -44,6 +44,11 @@
                 "name": "dashboard",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
+            },
+            {
+                "name": "filter",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
             }
         ]
     },
@@ -439,8 +444,9 @@
                     },
                     "access": "private",
                     "navigation": {
-                        "title": "one",
-                        "icon": "account_circle"
+                        "title": "translateNavTest",
+                        "icon": "account_circle",
+                        "translate": true
                     },
                     "routing": {
                         "path": "one"
@@ -453,8 +459,9 @@
                             },
                             "access": "private",
                             "navigation": {
-                                "title": "one-one",
-                                "icon": "account_circle"
+                                "title": "translateNav.Test",
+                                "icon": "account_circle",
+                                "translate": true
                             },
                             "routing": {
                                 "path": "one-one"
@@ -1019,8 +1026,7 @@
             "serializeExtraParams": true,
             "includeLogLevel": true,
             "publishers": [
-                "console",
-                "localStorage"
+                "console"
             ]
         },
         "auth": {

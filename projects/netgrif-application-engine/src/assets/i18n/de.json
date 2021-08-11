@@ -156,13 +156,17 @@
             "notEquals": "unterscheidet sich von",
             "moreThan": "ist größer als",
             "lessThan": "ist kleiner als",
+            "lessThanEqual": "ist kleiner oder gleich als",
+            "moreThanEqual": "ist größer oder gleich als",
             "like": "ist ähnlich wie",
             "isNull": "ist leer"
         },
         "tooltip": {
             "toAdvanced": "Wechseln zum erweiterten Suchmodus",
             "toFullText": "Wechseln zum einfachen Suchmodus",
-            "help": "Hilfe"
+            "help": "Hilfe",
+            "save": "Filter speichern",
+            "load": "Filter laden"
         },
         "help": {
             "title": "Hilfe für den erweiterten Suchmodus",
@@ -258,6 +262,7 @@
     "headers": {
         "newHeader": "Kopfzeile auswählen",
         "date": "Datum auswählen",
+        "dateTime": "Datum und Uhrzeit asuwählen",
         "selectUser": "Benutzer auswählen",
         "caseMeta": {
             "mongoID": "Fall ID",

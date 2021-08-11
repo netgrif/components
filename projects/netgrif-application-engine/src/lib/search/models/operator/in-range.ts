@@ -1,5 +1,6 @@
 import {Operator} from './operator';
 import {Query} from '../query/query';
+import {Operators} from './operators';
 
 /**
  * A range operator for numeric fields, with closed interval on both sides of the range.
@@ -16,5 +17,9 @@ export class InRange extends Operator<number> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.inRange.from', Operator.INPUT_PLACEHOLDER, 'search.operator.inRange.to', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.IN_RANGE;
     }
 }

@@ -102,6 +102,10 @@ export interface InjectedTabData {
      * `false` is emitted into this stream when the tab is switched away from.
      */
     tabSelected$: Observable<boolean>;
+    /**
+     * stream emits when the tab is closed by any means except for the destruction of the parent component
+     */
+    tabClosed$: Observable<void>;
 }
 
 

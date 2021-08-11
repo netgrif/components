@@ -1,9 +1,11 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
     CategoryFactory,
-    TaskViewServiceFactory,
     defaultTaskSearchCategoriesFactory,
+    NAE_BASE_FILTER,
     NAE_SEARCH_CATEGORIES,
     NAE_VIEW_ID_SEGMENT,
     SearchService,
@@ -15,12 +17,14 @@ import {
     HeaderComponent,
 } from '@netgrif/components';
 
-const localTaskViewServiceFactory = (factory: TaskViewServiceFactory) => {
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('<%= viewPath %>');
 };
 
-const searchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyTaskFilter());
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyTaskFilter()
+    };
 };
 
 @Component({
@@ -29,12 +33,13 @@ const searchServiceFactory = () => {
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         CategoryFactory,
-        TaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
-        {   provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [TaskViewServiceFactory]},
+        SearchService,
+        TaskViewService
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory},
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
         {   provide: NAE_VIEW_ID_SEGMENT,
             useValue: '<%= viewIdSegment %>'},
         ViewIdService,
