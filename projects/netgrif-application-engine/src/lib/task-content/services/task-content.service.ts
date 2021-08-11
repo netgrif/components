@@ -132,8 +132,8 @@ export abstract class TaskContentService implements OnDestroy {
      */
     public getInvalidTaskData(): Array<DataField<any>> {
         const invalidFields = [];
-        this._task.dataGroups.forEach(group => group.fields.filter(field =>
-            (!field.valid && !field.disabled) || (!field.validRequired && !field.disabled)).map(field => invalidFields.push(field)));
+        this._task.dataGroups.forEach(group => invalidFields.push(...group.fields.filter(field =>
+            (!field.valid && !field.disabled) || (!field.validRequired && !field.disabled))));
         return invalidFields;
     }
 
