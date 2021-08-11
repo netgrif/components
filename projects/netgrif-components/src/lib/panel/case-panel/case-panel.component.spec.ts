@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CasePanelComponent} from './case-panel.component';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
@@ -10,7 +10,7 @@ import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
     AllowedNetsService, AllowedNetsServiceFactory,
-    CaseMetaField,
+    CaseMetaField, CurrencyModule,
     HeaderColumn,
     HeaderColumnType,
     MaterialModule,
@@ -39,7 +39,8 @@ describe('CasePanelComponent', () => {
                 BrowserAnimationsModule,
                 DataFieldsComponentModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                CurrencyModule
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -79,10 +80,10 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', true, 'netid'),
     ]);
     case_ = {
         stringId: 'string',

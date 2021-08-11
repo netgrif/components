@@ -155,4 +155,33 @@ describe('TabView', () => {
         expect(thirdTabId).toBeTruthy();
         expect(thirdTabId === firstTabId).toBeTrue();
     });
+
+    it('should emit on tab close', done => {
+        const tabs = new TabView(viewService, logger, [{
+            label: {text: 'tab title'},
+            canBeClosed: true,
+            tabContentComponent: TabTestComponent
+        }, {
+            label: {text: 'tab 2 title'},
+            canBeClosed: true,
+            tabContentComponent: TabTestComponent
+        }], undefined);
+
+        expect(tabs.openedTabs.length).toBe(2);
+        let callbackCount = 0;
+        tabs.openedTabs[0].tabClosed$.subscribe(() => {
+            callbackCount++;
+            if (callbackCount === 2) {
+                done();
+            }
+        });
+        tabs.openedTabs[1].tabClosed$.subscribe(() => {
+            callbackCount++;
+            if (callbackCount === 2) {
+                done();
+            }
+        });
+        tabs.closeTabUniqueId('0');
+        tabs.closeTabIndex(0);
+    });
 });

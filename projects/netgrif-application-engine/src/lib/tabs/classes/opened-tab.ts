@@ -1,7 +1,7 @@
 import {TabContent, TabLabel} from '../interfaces';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Type} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 /**
  * Holds the information of tab opened in a tab view.
@@ -49,9 +49,13 @@ export class OpenedTab implements TabContent {
      */
     public isTabInitialized = false;
     /**
-     * The stream that is injected into each tab and is used to inform that tab whenever it is selected or deselected
+     * A stream that is injected into each tab and is used to inform that tab whenever it is selected or deselected
      */
     public tabSelected$: BehaviorSubject<boolean>;
+    /**
+     * A stream that is injected into each tab and is used to inform the tab about its termination
+     */
+    public tabClosed$: Subject<void>;
 
     /**
      * @param tabContent - content of the tab
@@ -60,6 +64,7 @@ export class OpenedTab implements TabContent {
     constructor(tabContent: TabContent, public uniqueId: string) {
         Object.assign(this, tabContent);
         this.tabSelected$ = new BehaviorSubject<boolean>(false);
+        this.tabClosed$ = new Subject();
     }
 
     /**
@@ -67,5 +72,6 @@ export class OpenedTab implements TabContent {
      */
     public destroy(): void {
         this.tabSelected$.complete();
+        this.tabClosed$.complete();
     }
 }

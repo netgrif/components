@@ -29,6 +29,8 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
 
     protected _options$: BehaviorSubject<Array<SearchAutocompleteOption<Array<T>>>>;
 
+    private readonly _timeoutId: number;
+
     protected constructor(elasticKeywords: Array<string>,
                           allowedOperators: Array<Operator<any>>,
                           translationPath: string,
@@ -39,7 +41,7 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
         this._options$ = new BehaviorSubject<Array<SearchAutocompleteOption<Array<T>>>>([]);
         // timeout is used to bypass javascript object initialization bugs.
         // Injected properties of inherited classes were not set in the function call.
-        setTimeout(() => {
+        this._timeoutId = setTimeout(() => {
             this.createOptions();
         });
     }
@@ -47,6 +49,7 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
     destroy() {
         super.destroy();
         this._options$.complete();
+        clearTimeout(this._timeoutId);
     }
 
     /**

@@ -15,7 +15,13 @@ export interface SavedFilterMetadata extends FilterMetadataAllowedNets {
      */
     filter: Filter;
     /**
-     * The filter's case object
+     * The filter's case object.
+     *
+     * Only present if the filter is loaded. When the filter is saved onle the case id is returned
      */
-    filterCase: Case;
+    filterCase?: Case;
+    /**
+     * ID of the filter's case.
+     */
+    filterCaseId: string;
 }

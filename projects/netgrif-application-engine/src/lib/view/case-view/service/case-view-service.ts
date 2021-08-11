@@ -268,7 +268,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
             return false;
         }
         if (Object.keys(net.permissions).some(role =>
-            this._user.hasRoleById(role) ? !net.permissions[role][action] : false)) {
+            this._user.hasRoleById(role) ? net.permissions[role][action] === false : false)) {
             return false;
         }
         if (!Object.keys(net.permissions).filter(role => Object.keys(net.permissions[role])

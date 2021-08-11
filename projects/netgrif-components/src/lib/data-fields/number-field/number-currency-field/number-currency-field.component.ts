@@ -1,24 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {CurrencyPipe, registerLocaleData} from '@angular/common';
-import en from '@angular/common/locales/en';
-import sk from '@angular/common/locales/sk';
-import de from '@angular/common/locales/de';
 import {AbstractCurrencyNumberFieldComponent} from '@netgrif/application-engine';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
     selector: 'nc-number-currency-field',
     templateUrl: './number-currency-field.component.html',
-    styleUrls: ['./number-currency-field.component.scss'],
-    providers: [CurrencyPipe]
+    styleUrls: ['./number-currency-field.component.scss']
 })
 export class NumberCurrencyFieldComponent extends AbstractCurrencyNumberFieldComponent implements OnInit {
 
     constructor(currencyPipe: CurrencyPipe, translate: TranslateService) {
         super(currencyPipe, translate);
-        registerLocaleData(en);
-        registerLocaleData(sk);
-        registerLocaleData(de);
     }
 
     ngOnInit() {

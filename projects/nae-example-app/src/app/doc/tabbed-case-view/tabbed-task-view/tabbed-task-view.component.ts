@@ -14,23 +14,15 @@ import {
     AllowedNetsService,
     AllowedNetsServiceFactory,
     tabbedAllowedNetsServiceFactory,
+    tabbedTaskViewConfigurationFactory,
     NAE_TASK_VIEW_CONFIGURATION
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
-import {of} from 'rxjs';
 
 const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     return {
         filter: injectedTabData.baseFilter
     };
-};
-
-const localTaskViewConfigFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
-    if (injectedTabData?.initiallyOpenOneTask !== undefined) {
-        return {initiallyOpenOneTask: of(injectedTabData.initiallyOpenOneTask)};
-    } else {
-        return {};
-    }
 };
 
 @Component({
@@ -57,7 +49,7 @@ const localTaskViewConfigFactory = (injectedTabData: InjectedTabbedTaskViewData)
         },
         {   provide: ViewIdService, useValue: null},
         {   provide: NAE_TASK_VIEW_CONFIGURATION,
-            useFactory: localTaskViewConfigFactory,
+            useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]

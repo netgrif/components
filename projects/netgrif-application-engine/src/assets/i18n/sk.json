@@ -156,6 +156,8 @@
             "notEquals": "je rôzny od",
             "moreThan": "je viac ako",
             "lessThan": "je menej ako",
+            "lessThanEqual": "je menej alebo rovné ako",
+            "moreThanEqual": "je viac alebo rovné ako",
             "like": "je podobný s",
             "isNull": "je prázdny"
         },
@@ -263,6 +265,7 @@
         "dateTime": "Zvoľte dátum a čas",
         "selectUser": "Vyberte používateľa",
         "caseMeta": {
+            "mongoID": "ID Prípadu",
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
@@ -270,6 +273,8 @@
         },
         "taskMeta": {
             "case": "Prípad",
+            "caseID": "ID Prípadu",
+            "taskID": "ID Úlohy",
             "priority": "Priorita",
             "user": "Riešiteľ",
             "assignDate": "Dátum priradenia"
@@ -277,6 +282,7 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
+            "netId": "Proces ID",
             "creationDate": "Dátum nahratia",
             "title": "Názov",
             "author": "Autor"

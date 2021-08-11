@@ -68,19 +68,23 @@ export class SearchService implements OnDestroy {
             this._baseFilter = baseFilter.filter.clone();
         } else if (baseFilter.filter instanceof Observable) {
             this._baseFilter = new SimpleFilter('', baseFilter.filterType, {process: {identifier: '__EMPTY__'}});
+        } else {
+            throw new Error('Unsupported BaseFilter input! You must provide the NAE_BASE_FILTER injection token with proper values!');
         }
+
         this._predicateQueryChanged$ = new Subject<void>();
         this._rootPredicate = new EditableClausePredicateWithGenerators(BooleanOperator.AND, this._predicateQueryChanged$, undefined, true);
         this._activeFilter = new BehaviorSubject<Filter>(this._baseFilter);
         this._predicateRemoved$ = new Subject<PredicateRemovalEvent>();
         this._loadingFromMetadata$ = new LoadingEmitter();
 
-        if(baseFilter.filter instanceof Observable){
+        if (baseFilter.filter instanceof Observable) {
             this.subFilter = baseFilter.filter.subscribe((filter) => {
                 this._baseFilter = filter.clone();
                 this.updateActiveFilter();
             });
         }
+
         this.predicateQueryChanged$.subscribe(() => {
             this.updateActiveFilter();
         });

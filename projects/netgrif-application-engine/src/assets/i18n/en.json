@@ -156,6 +156,8 @@
             "notEquals": "is different from",
             "moreThan": "is more than",
             "lessThan": "is less than",
+            "lessThanEqual": "is less or equal than",
+            "moreThanEqual": "is more or equal than",
             "like": "is like",
             "isNull": "is empty"
         },
@@ -263,6 +265,7 @@
         "dateTime": "Choose a date and time",
         "selectUser": "Choose a user",
         "caseMeta": {
+            "mongoID": "Case ID",
             "visualID": "Visual ID",
             "title": "Title",
             "author": "Author",
@@ -270,6 +273,8 @@
         },
         "taskMeta": {
             "case": "Case",
+            "caseID": "Case ID",
+            "taskID": "Task ID",
             "priority": "Priority",
             "user": "Assignee",
             "assignDate": "Assign Date"
@@ -277,6 +282,7 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
+            "netId": "Process ID",
             "creationDate": "Upload date",
             "title": "Title",
             "author": "Author"

@@ -156,6 +156,8 @@
             "notEquals": "unterscheidet sich von",
             "moreThan": "ist größer als",
             "lessThan": "ist kleiner als",
+            "lessThanEqual": "ist kleiner oder gleich als",
+            "moreThanEqual": "ist größer oder gleich als",
             "like": "ist ähnlich wie",
             "isNull": "ist leer"
         },
@@ -263,6 +265,7 @@
         "dateTime": "Datum und Uhrzeit asuwählen",
         "selectUser": "Benutzer auswählen",
         "caseMeta": {
+            "mongoID": "Fall ID",
             "visualID": "Visuelle ID",
             "title": "Fallname",
             "author": "Fallautor",
@@ -270,6 +273,8 @@
         },
         "taskMeta": {
             "case": "Fall",
+            "caseID": "Fall ID",
+            "taskID": "Aufgabe ID",
             "priority": "Priorität",
             "user": "Zugewiesener/in",
             "assignDate": "Zugewieserungsdatum"
@@ -277,6 +282,7 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
+            "netId": "Prozess ID",
             "creationDate": "Hochladungsdatum",
             "title": "Prozessname",
             "author": "Prozessautor"

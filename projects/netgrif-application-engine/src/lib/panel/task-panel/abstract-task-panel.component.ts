@@ -29,7 +29,7 @@ import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
-
+import {CurrencyPipe} from '@angular/common';
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
     /**
@@ -81,8 +81,9 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
-                          protected _translate: TranslateService) {
-        super(_translate);
+                          protected _translate: TranslateService,
+                          protected _currencyPipe: CurrencyPipe) {
+        super(_translate, _currencyPipe);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
@@ -282,6 +283,10 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
                 return {value: task.caseTitle, icon: '', type: 'meta'};
+            case TaskMetaField.CASE_ID:
+                return {value: task.caseId, icon: '', type: 'meta'};
+            case TaskMetaField.TASK_ID:
+                return {value: task.stringId, icon: '', type: 'meta'};
             case TaskMetaField.TITLE:
                 return {value: task.title, icon: '', type: 'meta'};
             case TaskMetaField.PRIORITY:

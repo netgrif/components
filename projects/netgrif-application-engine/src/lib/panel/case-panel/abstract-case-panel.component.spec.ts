@@ -1,5 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {CommonModule} from '@angular/common';
+import {CommonModule, CurrencyPipe} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -53,6 +53,7 @@ describe('AbstractCasePanelComponent', () => {
                 CaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SearchService,
+                CurrencyPipe,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
@@ -99,8 +100,9 @@ class TestCasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                 protected _log: LoggerService, @Optional() protected overflowService: OverflowService,
-                protected _userService: UserService) {
-        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService, _userService);
+                protected _userService: UserService, protected _currencyPipe: CurrencyPipe) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService,
+            _userService, _currencyPipe);
     }
 }
 
@@ -113,10 +115,10 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', true, 'netid'),
     ]);
     case_: Case = {
         stringId: 'string',

@@ -22,7 +22,6 @@ import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
-import {ReplaySubjectQueue} from '../models/queue';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {SortableView} from '../../abstract/sortable-view';
 import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
@@ -48,7 +47,6 @@ export class TaskViewService extends SortableView implements OnDestroy {
 
     // Serializing assign after cancel
     protected _allowMultiOpen: boolean;
-    protected _assignCancelQueue: ReplaySubjectQueue;
 
     private readonly _initializing: boolean = true;
 
@@ -63,7 +61,6 @@ export class TaskViewService extends SortableView implements OnDestroy {
                 @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
                 @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
         super(resolver);
-        this._assignCancelQueue = new ReplaySubjectQueue();
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
         this._changedFields$ = new Subject<ChangedFields>();
@@ -199,19 +196,6 @@ export class TaskViewService extends SortableView implements OnDestroy {
         return this._allowMultiOpen;
     }
 
-    public addToQueue(obs: ReplaySubject<boolean>): void {
-        this._assignCancelQueue.push(obs);
-    }
-
-    public isEmptyQueue(): boolean {
-        this._assignCancelQueue.removeCompleted();
-        return this._assignCancelQueue.isEmpty();
-    }
-
-    public popQueue(): Observable<boolean> {
-        return this._assignCancelQueue.pop().asObservable();
-    }
-
     public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
         if (requestContext === null || requestContext.pageNumber < 0) {
             return of({tasks: {}, requestContext});
@@ -249,7 +233,7 @@ export class TaskViewService extends SortableView implements OnDestroy {
             }),
             tap(t => {
                 if (this._pagination.totalElements && this._pagination.totalElements > 0
-                    && t.pagination.totalElements === 0 && !Array.isArray(t.content)) {
+                    && t.pagination.totalElements === 0 && !Array.isArray(t.content) && this._closeTaskTabOnNoTasks) {
                     this._closeTab$.next();
                 }
             }),

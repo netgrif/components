@@ -12,9 +12,9 @@ import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injec
 import {Category} from '../models/category/category';
 import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
-import {Observable} from 'rxjs';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
+import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -40,7 +40,20 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     private _showLoadFilterButton = true;
     private _initialSearchMode = SearchMode.FULLTEXT;
 
+    /**
+     * Set data request body, that is sent to the filter in addition to the default body.
+     * The default body is applied first and can be overridden by this argument.
+     */
+    @Input() additionalFilterData: TaskSetDataRequestBody = {};
+
+    /**
+     * The emitted data contains the filter case object
+     */
     @Output() filterLoaded: EventEmitter<SavedFilterMetadata> = new EventEmitter();
+    /**
+     * The emitted data contains only the saved case's ID
+     */
+    @Output() filterSaved: EventEmitter<SavedFilterMetadata> = new EventEmitter();
 
     protected constructor(protected _searchService: SearchService,
                           protected _logger: LoggerService,
@@ -128,14 +141,20 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
     }
 
     /**
-     * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process,
-     * or the filter could not be saved
+     * The saved filter data are emitted into the [filterSaved]{@link AbstractSearchComponent#filterSaved} `EventEmitter`
      */
-    public saveFilter(): Observable<string> {
-        return this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
-            this._searchCategories, this._viewIdService.viewId);
+    public saveFilter(): void {
+        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
+            this._searchCategories, this._viewIdService.viewId, this.additionalFilterData).subscribe(savedFilterData => {
+                if (savedFilterData) {
+                    this.filterSaved.emit(savedFilterData);
+                }
+        });
     }
 
+    /**
+     * The loaded filter data are emitted into the [filterLoaded]{@link AbstractSearchComponent#filterLoaded} `EventEmitter`
+     */
     public loadFilter(): void {
         this._userFilterService.load(this._searchService.filterType, this._filtersFilter ?? undefined).subscribe(savedFilterData => {
             if (savedFilterData) {
