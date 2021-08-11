@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine-project",
-    "version": "5.5.0",
+    "version": "5.5.2",
     "description": "Netgrif Application Engine Frontend project. Project includes angular library as base for NAE applications.",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -110,7 +110,7 @@
         "@angular/cli": "~10.2.0",
         "@angular/compiler-cli": "~10.2.3",
         "@angular/language-service": "~10.2.3",
-        "@compodoc/compodoc": "~1.1.11",
+        "@compodoc/compodoc": "1.1.13",
         "@types/jasmine": "~3.5.9",
         "@types/jasminewd2": "~2.0.3",
         "@types/moment": "~2.13.0",
