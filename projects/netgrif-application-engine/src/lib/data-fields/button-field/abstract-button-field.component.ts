@@ -61,6 +61,6 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
     }
 
     public notEmptyTitle(): boolean {
-        return !!this.dataField.title && this.dataField.title !== '';
+        return !!this.dataField.title;
     }
 }
