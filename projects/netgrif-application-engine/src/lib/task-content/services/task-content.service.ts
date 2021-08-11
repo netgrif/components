@@ -205,8 +205,13 @@ export abstract class TaskContentService implements OnDestroy {
                     Object.keys(updatedField).forEach(key => {
                         if (key === 'value') {
                             field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
-                        } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
-                            field.behavior = updatedField.behavior[this._task.transitionId];
+                        } else if (key === 'behavior') {
+                            if (updatedField.behavior[this._task.transitionId]) {
+                                field.behavior = updatedField.behavior[this._task.transitionId]; // TODO NGSD-489 fix behavior resolution
+                            } else {
+                                // ignore the behavior update, since it does not affect this task
+                                return; // continue - the field does not need updating, since nothing changed
+                            }
                         } else if (key === 'choices') {
                             const newChoices: EnumerationFieldValue[] = [];
                             if (updatedField.choices instanceof Array) {
