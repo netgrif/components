@@ -14,7 +14,7 @@ import {
     ViewIdService,
     Filter,
     NAE_NEW_CASE_CONFIGURATION,
-    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, SavedFilterMetadata
+    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, SavedFilterMetadata, OverflowService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
@@ -57,6 +57,7 @@ const newCaseConfigFactory = (injectedTabData: ExampleInjectedData) => {
         CategoryFactory,
         CaseViewService,
         SearchService,
+        OverflowService,
         ViewIdService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
@@ -74,11 +75,12 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
+                overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(caseViewService, loggerService, injectedTabData, {
+        super(caseViewService, loggerService, injectedTabData,{
             enableCaseTitle: true,
             isCaseTitleRequired: true
-        });
+        }, overflowService);
     }
 
     ngAfterViewInit(): void {

@@ -157,6 +157,8 @@
             "notEquals": "je rôzny od",
             "moreThan": "je viac ako",
             "lessThan": "je menej ako",
+            "lessThanEqual": "je menej alebo rovné ako",
+            "moreThanEqual": "je viac alebo rovné ako",
             "like": "je podobný s",
             "isNull": "je prázdny"
         },

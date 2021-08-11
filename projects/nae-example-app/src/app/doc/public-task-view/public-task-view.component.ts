@@ -23,29 +23,22 @@ import {
     PublicUrlResolverService,
     publicBaseFilterFactory,
     publicFactoryResolver,
-    Task,
-    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
     AllowedNetsService,
     AllowedNetsServiceFactory,
     NAE_VIEW_ID_SEGMENT,
-    ViewIdService
+    ViewIdService,
+    NAE_BASE_FILTER
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 
-const localTaskViewServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
+const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
     const array = [];
     if (route.snapshot.paramMap.get('petriNetId') !== null) {
         array.push(route.snapshot.paramMap.get('petriNetId'));
     }
     return factory.createFromArray(array);
-};
-
-const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
-                              caseResourceService: CaseResourceService, snackBarService: SnackBarService,
-                              translate: TranslateService) => {
-    return publicBaseFilterFactory(router, route, process, caseResourceService, snackBarService, translate);
 };
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
@@ -79,6 +72,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
     styleUrls: ['./public-task-view.component.scss'],
     providers: [
         TaskViewService,
+        SearchService,
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
@@ -98,16 +92,17 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
                 ResourceProvider, ConfigurationService]
         },
         {
-            provide: SearchService,
-            useFactory: searchServiceFactory,
+            provide: NAE_BASE_FILTER,
+            useFactory: publicBaseFilterFactory,
             deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService, TranslateService]
         },
         {
             provide: AllowedNetsService,
-            useFactory: localTaskViewServiceFactory,
+            useFactory: localAllowedNetsServiceFactory,
             deps: [AllowedNetsServiceFactory, ActivatedRoute]
         },
         {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicView'},
+        {   provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
         ViewIdService,
     ]
 })

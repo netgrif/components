@@ -18,6 +18,12 @@ import {MoreThanDateTime} from '../models/operator/more-than-date-time';
 import {NotEquals} from '../models/operator/not-equals';
 import {NotEqualsDate} from '../models/operator/not-equals-date';
 import {Substring} from '../models/operator/substring';
+import {LessThanEqual} from '../models/operator/less-than-equal';
+import {MoreThanEqual} from '../models/operator/more-than-equal';
+import {MoreThanEqualDate} from '../models/operator/more-than-equal-date';
+import {MoreThanEqualDateTime} from '../models/operator/more-than-equal-date-time';
+import {LessThanEqualDate} from '../models/operator/less-than-equal-date';
+import {LessThanEqualDateTime} from '../models/operator/less-than-equal-date-time';
 
 /**
  * A service that resolves {@link Operators} (or custom string) into a concrete (@link Operator) implementation class.
@@ -56,6 +62,12 @@ export class OperatorResolverService {
                 return LessThanDate;
             case Operators.LESS_THAN_DATE_TIME:
                 return LessThanDateTime;
+            case Operators.LESS_THAN_EQUAL:
+                return LessThanEqual;
+            case Operators.LESS_THAN_EQUAL_DATE:
+                return LessThanEqualDate;
+            case Operators.LESS_THAN_EQUAL_DATE_TIME:
+                return LessThanEqualDateTime;
             case Operators.LIKE:
                 return Like;
             case Operators.MORE_THAN:
@@ -64,6 +76,12 @@ export class OperatorResolverService {
                 return MoreThanDate;
             case Operators.MORE_THAN_DATE_TIME:
                 return MoreThanDateTime;
+            case Operators.MORE_THAN_EQUAL:
+                return MoreThanEqual;
+            case Operators.MORE_THAN_EQUAL_DATE:
+                return MoreThanEqualDate;
+            case Operators.MORE_THAN_EQUAL_DATE_TIME:
+                return MoreThanEqualDateTime;
             case Operators.NOT_EQUALS:
                 return NotEquals;
             case Operators.NOT_EQUALS_DATE:

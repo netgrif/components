@@ -83,7 +83,7 @@ export abstract class DataField<T> {
     /**
      * Whether invalid field values should be sent to backend.
      */
-    private _sendInvalidValues = false;
+    private _sendInvalidValues = true;
     /**
      * Flag that is set during reverting
      */
@@ -248,7 +248,7 @@ export abstract class DataField<T> {
     }
 
     set sendInvalidValues(value: boolean | null) {
-        this._sendInvalidValues = value !== null && value;
+        this._sendInvalidValues = value === null || value;
     }
 
     public update(): void {

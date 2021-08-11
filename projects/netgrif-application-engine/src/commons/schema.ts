@@ -221,6 +221,7 @@ export interface View {
         | {
         title?: string;
         icon?: string;
+        translate?: boolean;
         [k: string]: any;
     };
     children?: Views;

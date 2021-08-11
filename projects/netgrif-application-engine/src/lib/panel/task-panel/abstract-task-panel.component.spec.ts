@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {CommonModule} from '@angular/common';
+import {CommonModule, CurrencyPipe} from '@angular/common';
 import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {of, Subject, throwError} from 'rxjs';
@@ -53,6 +53,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {UserService} from '../../user/services/user.service';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -78,6 +79,7 @@ describe('AbtsractTaskPanelComponent', () => {
             providers: [
                 TaskViewService,
                 SideMenuService,
+                CurrencyPipe,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -175,10 +177,11 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _callChain: CallChainService,
                 protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
-                parentInjector: Injector) {
+                parentInjector: Injector,
+                protected _currencyPipe: CurrencyPipe) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined, _translate);
+            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe);
     }
 
     ngAfterViewInit() {
