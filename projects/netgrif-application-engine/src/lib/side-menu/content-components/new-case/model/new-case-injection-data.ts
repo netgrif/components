@@ -6,6 +6,9 @@ export interface NewCaseInjectionData extends SideMenuInjectionData {
     allowedNets$: Observable<Array<PetriNetReference>>;
 }
 
+/**
+ * injection token used for new case title configuration
+ */
 export interface NewCaseCreationConfigurationData {
 
     enableCaseTitle: boolean;

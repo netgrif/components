@@ -243,10 +243,10 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     isCaseTitleEnabled(): boolean {
-        return this._injectedData.newCaseCreationConfiguration.enableCaseTitle;
+        return !!this._injectedData.newCaseCreationConfiguration.enableCaseTitle;
     }
 
     isCaseTitleRequired(): boolean {
-        return this.isCaseTitleEnabled() && this._injectedData.newCaseCreationConfiguration.isCaseTitleRequired;
+        return this.isCaseTitleEnabled() && !!this._injectedData.newCaseCreationConfiguration.isCaseTitleRequired;
     }
 }

@@ -17,7 +17,7 @@ import {
     SimpleFilter,
     TabbedCaseView,
     ViewIdService
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
 
