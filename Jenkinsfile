@@ -34,13 +34,6 @@ pipeline {
       }
     }
 
-    stage('Sonar NAE') {
-        steps {
-            echo 'Sent to SonarQube analysis'
-            sh 'npm run nae:sonar'
-        }
-    }
-
     stage('Build NAE') {
       steps {
         echo 'Starting building NAE library'
@@ -72,13 +65,6 @@ pipeline {
         }
     }
 
-    stage('Sonar NC') {
-        steps {
-            echo 'Sent to SonarQube analysis'
-            sh 'npm run nc:sonar'
-        }
-    }
-
     stage('Build NC') {
         steps {
             echo 'Starting building NAE library'
@@ -90,6 +76,13 @@ pipeline {
         steps {
             echo 'Installing NAE for local pipeline use'
             sh 'npm i dist/netgrif-components --save-optional'
+        }
+    }
+
+    stage('SonarCloud') {
+        steps {
+            echo 'Sent to SonarCloud analysis'
+            sh 'npm run project:sonar'
         }
     }
 

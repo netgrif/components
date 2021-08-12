@@ -1,5 +1,6 @@
 import {AfterViewInit, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
+import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
 
 export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy {
 
@@ -9,13 +10,14 @@ export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy
     @Input() panelContent: TemplateRef<object>;
     @Input() first: boolean;
     @Input() last: boolean;
+    @Input() public caseColor: string;
 
     @Output() stopLoading: EventEmitter<object> = new EventEmitter();
     @Output() getExpansionPanelRef: EventEmitter<MatExpansionPanel> = new EventEmitter();
 
     @ViewChild('matExpansionPanel') matExpansionPanel;
 
-    protected constructor() {
+    protected constructor(protected _caseListFontColorService: CaseListFontColorService) {
     }
 
     ngOnDestroy(): void {
@@ -39,5 +41,9 @@ export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy
         if (this.preventExpand) {
             this.matExpansionPanel.close();
         }
+    }
+
+    getCaseFontColor(): string {
+        return this._caseListFontColorService.computeCaseFontColor(this.caseColor);
     }
 }

@@ -18,6 +18,7 @@ export interface NavigationNode {
     url: string;
     children?: Array<NavigationNode>;
     level?: number;
+    translate?: boolean;
 }
 
 export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
@@ -26,6 +27,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
     protected subRouter: Subscription;
+    protected subUser: Subscription;
 
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
@@ -61,12 +63,27 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
             }
             this.resolveLevels(this.dataSource.data);
+            this.subUser = this._userService.user$.subscribe(() => {
+                const uView = this._config.getViewByPath(this.viewPath);
+                if (uView && uView.children) {
+                    this.dataSource.data = this.resolveNavigationNodes(uView.children, this.parentUrl);
+                }
+                this.resolveLevels(this.dataSource.data);
+            });
+        } else {
+            this.subUser = this._userService.user$.subscribe(() => {
+                this.dataSource.data = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
+                this.resolveLevels(this.dataSource.data);
+            });
         }
     }
 
     ngOnDestroy(): void {
         if (this.subRouter) {
             this.subRouter.unsubscribe();
+        }
+        if (this.subUser) {
+            this.subUser.unsubscribe();
         }
     }
 
@@ -138,6 +155,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         node.name = this.getNodeName(view, routeSegment);
         node.icon = this.getNodeIcon(view);
         node.url = this.appendRouteSegment(parentUrl, routeSegment);
+        node.translate = this.getNodeTranslateFlag(view);
         return node;
     }
 
@@ -159,6 +177,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
      */
     protected getNodeRouteSegment(view: View): string {
         return !!view.routing && (typeof view.routing.path === 'string') ? view.routing.path : undefined;
+    }
+
+    protected getNodeTranslateFlag(view: View): boolean {
+        return view.navigation['translate'] ?? false;
     }
 
     /**

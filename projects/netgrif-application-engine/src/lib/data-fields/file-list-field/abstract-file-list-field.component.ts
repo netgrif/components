@@ -77,7 +77,9 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      */
     ngAfterViewInit(): void {
         if (this.fileUploadEl) {
-            this.fileUploadEl.nativeElement.onchange = () => this.upload();
+            this.fileUploadEl.nativeElement.onchange = () => {
+                this.upload();
+            };
         }
     }
 
@@ -108,6 +110,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             this._snackbar.openErrorSnackBar(this.maxFilesMessage ? this.maxFilesMessage :
                 this._translate.instant('dataField.snackBar.maxFilesExceeded') + this.maxFilesNumber
             );
+            this.fileUploadEl.nativeElement.value = '';
             return;
         }
 
@@ -120,6 +123,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             this._snackbar.openErrorSnackBar(
                 this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
             );
+            this.fileUploadEl.nativeElement.value = '';
+            return;
         }
 
         if (this.dataField.value && this.dataField.value.namesPaths && this.dataField.value.namesPaths.length !== 0) {
@@ -129,6 +134,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             if (filesToUpload.length === 0) {
                 this._log.error('User chose the same files that are already uploaded. Uploading skipped');
                 this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFiles'));
+                this.fileUploadEl.nativeElement.value = '';
                 return;
             }
         }
@@ -164,6 +170,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 });
                 this.dataField.touch = true;
                 this.dataField.update();
+                this.fileUploadEl.nativeElement.value = '';
             }
         }, error => {
             this.state.completed = true;
@@ -176,6 +183,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
             this.dataField.touch = true;
             this.dataField.update();
+            this.fileUploadEl.nativeElement.value = '';
         });
     }
 

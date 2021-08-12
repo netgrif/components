@@ -32,6 +32,8 @@ export interface FileState {
 
 const preview = 'preview';
 
+const fieldHeight = 105;
+
 const fieldPadding = 16;
 
 /**
@@ -129,11 +131,12 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     ngAfterViewInit() {
         if (this.fileUploadEl) {
-            this.fileUploadEl.nativeElement.onchange = () => this.upload();
+            this.fileUploadEl.nativeElement.onchange = () =>  {
+                this.upload();
+            };
         }
         if (this.filePreview) {
             if (!!this.imageDivEl) {
-                this.maxHeight = this.imageDivEl.nativeElement.parentElement.parentElement.offsetHeight - fieldPadding + 'px';
                 if (!this.isEmpty()) {
                     this.initializePreviewIfDisplayable();
                 }
@@ -173,6 +176,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this.fileUploadEl.nativeElement.files.item(0).name === this.dataField.value.name) {
             this._log.error('User chose the same file. Uploading skipped');
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFile'));
+            this.fileUploadEl.nativeElement.value = '';
             return;
         }
         if (this.dataField.maxUploadSizeInBytes &&
@@ -181,6 +185,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._snackbar.openErrorSnackBar(
                 this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
             );
+            this.fileUploadEl.nativeElement.value = '';
+            return;
         }
         this.state = this.defaultState;
         this.state.uploading = true;
@@ -213,6 +219,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.formControl.setValue(this.dataField.value.name);
                 this.dataField.touch = true;
                 this.dataField.update();
+                this.fileUploadEl.nativeElement.value = '';
             }
         }, error => {
             this.state.completed = true;
@@ -225,6 +232,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
             this.dataField.touch = true;
             this.dataField.update();
+            this.fileUploadEl.nativeElement.value = '';
         });
     }
 
@@ -295,6 +303,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
         this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).pipe(take(1)).subscribe(response => {
             if (response.success) {
+                const filename = this.dataField.value.name;
                 this.dataField.value = {};
                 this.formControl.setValue('');
                 this.name = this.constructDisplayName();
@@ -304,7 +313,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this.fileForDownload = undefined;
                 this.previewSource = undefined;
                 this.fileForPreview = undefined;
-                this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully deleted`);
+                this._log.debug(`File [${this.dataField.stringId}] ${filename} was successfully deleted`);
                 this.formControl.markAsTouched();
             } else {
                 this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
@@ -393,7 +402,6 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     public changeMaxWidth(event: ResizedEvent) {
         if (!!this.imageEl) {
-            this.imageEl.nativeElement.style.maxHeight = this.maxHeight;
             this.imageEl.nativeElement.style.maxWidth = event.newWidth + 'px';
         }
     }
@@ -405,6 +413,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             this.previewExtension = FilePreviewType[extension];
             this.initFileFieldImage();
         }
+    }
+
+    public getHeight() {
+        return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
+            (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
     }
 }
 

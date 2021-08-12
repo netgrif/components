@@ -55,13 +55,6 @@ describe('AbstractNumberFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom odd message!');
-
-        component.dataField.value = 5;
-        expect(component.getErrorMessage()).toEqual('Entered number must be even');
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });

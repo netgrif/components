@@ -1,12 +1,13 @@
 import {OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
+import {FeaturedValue} from './featured-value';
 
 
 export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
-    public featuredFieldsValues: Array<{ value: string, icon: string }> = [];
+    public featuredFieldsValues: Array<FeaturedValue> = [];
     protected _lastSelectedHeaders: Array<HeaderColumn>;
     protected sub: Subscription;
 
@@ -36,9 +37,9 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
         }
     }
 
-    protected getFeaturedValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedValue(selectedHeader: HeaderColumn): FeaturedValue {
         if (!selectedHeader) {
-            return {value: '', icon: ''};
+            return {value: '', icon: '', type: ''};
         }
         if (selectedHeader.type === HeaderColumnType.META) {
             return this.getFeaturedMetaValue(selectedHeader);
@@ -46,10 +47,10 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
         if (selectedHeader.type === HeaderColumnType.IMMEDIATE) {
             return this.getFeaturedImmediateValue(selectedHeader);
         }
-        return {value: '', icon: ''};
+        return {value: '', icon: '', type: ''};
     }
 
-    protected abstract getFeaturedMetaValue(selectedHeader: HeaderColumn);
+    protected abstract getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue;
 
-    protected abstract getFeaturedImmediateValue(selectedHeader: HeaderColumn);
+    protected abstract getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue;
 }

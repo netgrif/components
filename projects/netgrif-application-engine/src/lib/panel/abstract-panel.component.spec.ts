@@ -7,6 +7,7 @@ import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../material/material.module';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {AbstractPanelComponent} from './abstract-panel.component';
+import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
 
 describe('AbstractPanelComponent', () => {
     let component: TestPanelComponent;
@@ -47,7 +48,7 @@ describe('AbstractPanelComponent', () => {
     template: ''
 })
 class TestPanelComponent extends AbstractPanelComponent {
-    constructor() {
-        super();
+    constructor(protected _caseListFontColorService: CaseListFontColorService) {
+        super(_caseListFontColorService);
     }
 }

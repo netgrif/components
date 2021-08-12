@@ -1,0 +1,11 @@
+@import '../../side-menu.theme';
+
+.save-filter-container {
+    height: calc(100% - 64px);
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.virtual-scroll-list-padding {
+    padding-right: 4px;
+}

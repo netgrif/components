@@ -6,7 +6,6 @@ import {
     CaseResourceService,
     PublicCaseResourceService,
     PublicTaskResourceService,
-    ConfigTaskViewServiceFactory,
     SearchService,
     PublicProcessService,
     ProcessService,
@@ -22,19 +21,24 @@ import {
     FieldConverterService,
     AuthenticationService,
     PublicUrlResolverService,
-    publicSearchServiceFactory,
-    publicFactoryResolver
+    publicBaseFilterFactory,
+    publicFactoryResolver,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    NAE_VIEW_ID_SEGMENT,
+    ViewIdService,
+    NAE_BASE_FILTER
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('demo-public-view');
-};
-
-const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
-                              caseResourceService: CaseResourceService, snackBarService: SnackBarService) => {
-    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService);
+const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
+    const array = [];
+    if (route.snapshot.paramMap.get('petriNetId') !== null) {
+        array.push(route.snapshot.paramMap.get('petriNetId'));
+    }
+    return factory.createFromArray(array);
 };
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
@@ -67,7 +71,8 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
     templateUrl: './public-task-view.component.html',
     styleUrls: ['./public-task-view.component.scss'],
     providers: [
-        ConfigTaskViewServiceFactory,
+        TaskViewService,
+        SearchService,
         {
             provide: ProcessService,
             useFactory: processServiceFactory,
@@ -87,15 +92,18 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
                 ResourceProvider, ConfigurationService]
         },
         {
-            provide: SearchService,
-            useFactory: searchServiceFactory,
-            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService]
+            provide: NAE_BASE_FILTER,
+            useFactory: publicBaseFilterFactory,
+            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService, TranslateService]
         },
         {
-            provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]
+            provide: AllowedNetsService,
+            useFactory: localAllowedNetsServiceFactory,
+            deps: [AllowedNetsServiceFactory, ActivatedRoute]
         },
+        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'publicView'},
+        {   provide: AllowedNetsServiceFactory, useClass: AllowedNetsServiceFactory},
+        ViewIdService,
     ]
 })
 export class PublicTaskViewComponent extends AbstractTaskView implements AfterViewInit {

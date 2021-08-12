@@ -1,57 +1,64 @@
 import {Input, OnInit} from '@angular/core';
-import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractNumberFieldComponent} from '../abstract-number-field.component';
-import {FormControl} from '@angular/forms';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
+import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
 
+export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberErrorsComponent implements OnInit {
 
-export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberFieldComponent implements OnInit {
-    @Input() showLargeLayout: WrappedBoolean;
-    @Input() formControlRef: FormControl;
-
-    numberValue: number;
     @Input() transformedValue: string;
     fieldType: string;
 
-    constructor(protected _currencyPipe: CurrencyPipe, private _translateService: TranslateService,
-                informAboutInvalidData: boolean | null) {
-        super(_translateService, informAboutInvalidData);
+    protected constructor(protected _currencyPipe: CurrencyPipe, translateService: TranslateService) {
+        super(translateService);
     }
 
     ngOnInit() {
-        super.ngOnInit();
-        if (this.dataField.value !== undefined) {
-            this.transformedValue = this.transformCurrency(this.dataField.value.toString());
-            this.numberValue = parseFloat(this.dataField.value.toString());
-        } else {
-            this.transformedValue = '';
-            this.numberValue = 0.0;
-        }
+        this.fieldType = 'text';
+        this.transformedValue = this.transformCurrency(this.numberField.value.toString());
+        this.numberField.valueChanges().subscribe(value => {
+            if (value !== undefined) {
+                if (this.fieldType === 'text') {
+                    this.transformedValue = this.transformCurrency(value.toString());
+                }
+            } else {
+                this.transformedValue = '';
+            }
+        });
     }
 
     transformToText(event: Event) {
         const target = (event.target as HTMLInputElement);
-        this.numberValue = parseFloat(target.value);
         this.fieldType = 'text';
         this.transformedValue = this.transformCurrency(target.value);
     }
 
     transformToNumber() {
         this.fieldType = 'number';
-        this.transformedValue = this.numberValue.toString();
+        this.transformedValue = this.numberField.value.toString();
     }
 
     getCurrencySymbol(): string {
-        return getCurrencySymbol(this.dataField._formatFilter.code, 'wide', this.dataField._formatFilter.locale);
+        if (this.numberField._formatFilter === undefined) {
+            return getCurrencySymbol(this.numberField.component.properties['code'],
+                'wide', this.numberField.component.properties['locale']);
+        }
+        return getCurrencySymbol(this.numberField._formatFilter.code, 'wide', this.numberField._formatFilter.locale);
     }
 
     private transformCurrency(value: string): string {
+        if (this.numberField._formatFilter === undefined) {
+            return this._currencyPipe.transform(
+                parseFloat(value),
+                this.numberField.component.properties['code'],
+                'symbol',
+                '1.' + this.numberField.component.properties['fractionSize'] + '-' + this.numberField.component.properties['fractionSize'],
+                this.numberField.component.properties['locale']);
+        }
         return this._currencyPipe.transform(
             parseFloat(value),
-            this.dataField._formatFilter.code,
+            this.numberField._formatFilter.code,
             'symbol',
-            '1.' + this.dataField._formatFilter.fractionSize + '-' + this.dataField._formatFilter.fractionSize,
-            this.dataField._formatFilter.locale);
+            '1.' + this.numberField._formatFilter.fractionSize + '-' + this.numberField._formatFilter.fractionSize,
+            this.numberField._formatFilter.locale);
     }
 }

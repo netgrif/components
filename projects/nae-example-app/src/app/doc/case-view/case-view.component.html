@@ -3,7 +3,7 @@
     <mat-card class="case-view-search-container">
         <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayoutAlign="start center" fxFlex>
-                <nc-search class="search-width"></nc-search>
+                <nc-search class="search-width" [additionalFilterData]="additionalFilterData"></nc-search>
             </div>
             <div fxLayoutAlign="end center">
                 <button mat-mini-fab color="primary" *ngIf="hasAuthority()" (click)="createNewCase()">
@@ -18,7 +18,7 @@
             <nc-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
 
             <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="true" [width]="getWidth()"
-                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex></nc-case-list>
+                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list>
         </div>
     </div>
 </div>

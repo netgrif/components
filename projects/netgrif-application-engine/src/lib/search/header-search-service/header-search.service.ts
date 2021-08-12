@@ -89,6 +89,9 @@ export class HeaderSearchService implements OnDestroy {
         if (this._searchSub) {
             this._searchSub.unsubscribe();
         }
+        for (const cat of this._typeToCategory.values()) {
+            cat.destroy();
+        }
     }
 
     public set headerService(headerService: AbstractHeaderService) {
@@ -211,7 +214,7 @@ export class HeaderSearchService implements OnDestroy {
                 userInput: [changeDescription.searchInput]
             };
             const category = this._typeToCategory.get(changeDescription.type) as CaseSimpleDataset;
-            category.configure(changeDescription.fieldIdentifier, config.fieldType, [net.stringId]);
+            category.configure(changeDescription.fieldIdentifier, config.fieldType, [net.identifier]);
             const predicate = category.generatePredicate(config.userInput);
             this.addPredicate(changeDescription.columnIdentifier, predicate, {
                 type: HeaderColumnType.IMMEDIATE,

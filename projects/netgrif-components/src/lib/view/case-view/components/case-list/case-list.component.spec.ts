@@ -1,16 +1,15 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case-list.component';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
     CaseResourceService,
     CaseViewService,
-    ConfigCaseViewServiceFactory,
     ConfigurationService,
-    FilterType,
     MaterialModule,
-    MockAuthenticationMethodService,
+    MockAuthenticationMethodService, NAE_BASE_FILTER,
     SearchService,
-    SimpleFilter,
+    TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/application-engine';
@@ -19,13 +18,6 @@ import {of} from 'rxjs';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
-const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('cases');
-};
-
-const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
-};
 
 describe('CaseListComponent', () => {
     let component: CaseListComponent;
@@ -44,16 +36,13 @@ describe('CaseListComponent', () => {
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                ConfigCaseViewServiceFactory,
+                CaseViewService,
+                SearchService,
                 {
-                    provide: CaseViewService,
-                    useFactory: localCaseViewServiceFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
-                {
-                    provide: SearchService,
-                    useFactory: searchServiceFactory
-                }
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [CaseListComponent]
         })

@@ -15,7 +15,6 @@ export function ngAdd(): Rule {
 
         const rules = [];
         rules.push(schematic('create-nc-files', {}));
-        rules.push(schematic('update-package-json', {}));
         return chain(rules);
     };
 }

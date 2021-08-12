@@ -10,11 +10,13 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
     protected _open: Subject<void>;
     protected _close: Subject<void>;
     protected _reload: Subject<void>;
+    protected _forceReload: Subject<void>;
 
     constructor() {
         this._open = new Subject<void>();
         this._close = new Subject<void>();
         this._reload = new Subject<void>();
+        this._forceReload = new Subject<void>();
     }
 
     /**
@@ -38,6 +40,13 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
         this._reload.next();
     }
 
+    /**
+     * Emits into the [forceReload$]{@link SubjectTaskOperations#forceReload$} stream.
+     */
+    forceReload(): void {
+        this._forceReload.next();
+    }
+
     public get open$(): Observable<void> {
         return this._open.asObservable();
     }
@@ -50,6 +59,10 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
         return this._reload.asObservable();
     }
 
+    public get forceReload$(): Observable<void> {
+        return this._forceReload.asObservable();
+    }
+
     /**
      * Completes the underlying streams
      */
@@ -57,6 +70,7 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
         this._open.complete();
         this._close.complete();
         this._reload.complete();
+        this._forceReload.complete();
     }
 }
 

@@ -101,7 +101,7 @@ export class PublicPetriNetResourceService extends PetriNetResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/transitions
      */
-    public getPetriNetTranstions(netId: string): Observable<Array<Transition>> {
+    public getPetriNetTransitions(netId: string): Observable<Array<Transition>> {
         return this._resourceProvider.get$('public/petrinet/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
             .pipe(map(r => this.changeType(r, 'transitionReferences')));
     }

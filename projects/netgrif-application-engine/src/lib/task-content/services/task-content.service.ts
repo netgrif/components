@@ -11,6 +11,8 @@ import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-f
 import {FieldConverterService} from './field-converter.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
+import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
+import {Validation} from '../../data-fields/models/validation';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -30,6 +32,7 @@ export abstract class TaskContentService implements OnDestroy {
     $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
+    protected _isExpanding$: BehaviorSubject<boolean>;
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
@@ -37,6 +40,7 @@ export abstract class TaskContentService implements OnDestroy {
                           protected _logger: LoggerService) {
         this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
         this.$shouldCreateCounter = new BehaviorSubject<number>(0);
+        this._isExpanding$ = new BehaviorSubject<boolean>(false);
         this._task = undefined;
         this._taskDataReloadRequest$ = new Subject<FrontendActions>();
     }
@@ -46,6 +50,7 @@ export abstract class TaskContentService implements OnDestroy {
             this.$shouldCreate.complete();
         }
         this._taskDataReloadRequest$.complete();
+        this._isExpanding$.complete();
     }
 
     /**
@@ -74,6 +79,29 @@ export abstract class TaskContentService implements OnDestroy {
     }
 
     /**
+     * Whether the panel that the task content is contained in is currently expanding.
+     *
+     * If the task content is not contained in a panel, `isExpanding` will be always `false`.
+     */
+    public get isExpanding(): boolean {
+        return this._isExpanding$.value;
+    }
+
+    /**
+     * Changes the state of the task content to `expanding`.
+     */
+    public expansionStarted(): void {
+        this._isExpanding$.next(true);
+    }
+
+    /**
+     * Changes the state of the task content to `not expanding`.
+     */
+    public expansionFinished(): void {
+        this._isExpanding$.next(false);
+    }
+
+    /**
      * Checks the validity of all data fields in the managed {@link Task}.
      *
      * If some of the fields are invalid touches them so their validation errors will appear (if set).
@@ -96,6 +124,35 @@ export abstract class TaskContentService implements OnDestroy {
         return valid && validDisabled;
     }
 
+    public validateDynamicEnumField(): boolean {
+        if (!this._task || !this._task.dataGroups) {
+            return false;
+        }
+        const exists = this._task.dataGroups.some(group => group.fields.some( field => field instanceof DynamicEnumerationField ));
+        if (!exists) {
+            return true;
+        }
+        let valid = true;
+        for (const group of this._task.dataGroups) {
+            for (const field of group.fields) {
+                if (field instanceof DynamicEnumerationField) {
+                    if (field.choices !== undefined && field.choices.length !== 0 && field.value !== '' && field.value !== undefined) {
+                        if (!field.choices.some(choice => choice.key === field.value)) {
+                            field.value = '';
+                            if (field.behavior.required) {
+                                valid = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!valid) {
+            this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.missingRequired'));
+        }
+        return valid;
+    }
+
     /**
      * Changes the blocking state of all fields in the managed Task.
      * @param blockingState whether the field should be blocked or not
@@ -104,8 +161,10 @@ export abstract class TaskContentService implements OnDestroy {
         if (this._task && this._task.dataGroups) {
             this._task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
-                    field.initialized$.subscribe(() => {
-                        field.block = blockingState;
+                    field.initialized$.subscribe((initialized) => {
+                        if (initialized) {
+                            field.block = blockingState;
+                        }
                     });
                 });
             });
@@ -166,8 +225,12 @@ export abstract class TaskContentService implements OnDestroy {
                                 newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                             });
                             (field as EnumerationField | MultichoiceField).choices = newOptions;
+                        } else if (key === 'validations') {
+                            field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
+
                         } else if (key !== 'type') {
                             field[key] = updatedField[key];
+
                         }
                         field.update();
                     });

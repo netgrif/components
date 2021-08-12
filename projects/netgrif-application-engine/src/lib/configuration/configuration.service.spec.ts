@@ -212,7 +212,10 @@ describe('ConfigurationService', () => {
         it('should get view by path', () => {
             expect(service.getViewByPath('task')).toEqual({
                 layout: {
-                    name: 'emptyView'
+                    name: 'emptyView',
+                    params: {
+                        allowedNets: []
+                    }
                 },
                 access: 'private',
                 navigation: {

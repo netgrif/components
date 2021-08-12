@@ -156,13 +156,17 @@
             "notEquals": "unterscheidet sich von",
             "moreThan": "ist größer als",
             "lessThan": "ist kleiner als",
+            "lessThanEqual": "ist kleiner oder gleich als",
+            "moreThanEqual": "ist größer oder gleich als",
             "like": "ist ähnlich wie",
             "isNull": "ist leer"
         },
         "tooltip": {
             "toAdvanced": "Wechseln zum erweiterten Suchmodus",
             "toFullText": "Wechseln zum einfachen Suchmodus",
-            "help": "Hilfe"
+            "help": "Hilfe",
+            "save": "Filter speichern",
+            "load": "Filter laden"
         },
         "help": {
             "title": "Hilfe für den erweiterten Suchmodus",
@@ -219,6 +223,9 @@
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
+        },
+        "dynamicEnum" : {
+            "noData": "Keine Einträge entsprechen Ihrer Suchanfrage"
         }
     },
     "dialog": {
@@ -255,8 +262,10 @@
     "headers": {
         "newHeader": "Kopfzeile auswählen",
         "date": "Datum auswählen",
+        "dateTime": "Datum und Uhrzeit asuwählen",
         "selectUser": "Benutzer auswählen",
         "caseMeta": {
+            "mongoID": "Fall ID",
             "visualID": "Visuelle ID",
             "title": "Fallname",
             "author": "Fallautor",
@@ -264,6 +273,8 @@
         },
         "taskMeta": {
             "case": "Fall",
+            "caseID": "Fall ID",
+            "taskID": "Aufgabe ID",
             "priority": "Priorität",
             "user": "Zugewiesener/in",
             "assignDate": "Zugewieserungsdatum"
@@ -271,6 +282,7 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
+            "netId": "Prozess ID",
             "creationDate": "Hochladungsdatum",
             "title": "Prozessname",
             "author": "Prozessautor"
@@ -378,5 +390,10 @@
         "and": "und die",
         "privacyNotice": "Datenschutzerklärung",
         "sentenceEnd": "gelesen und akzeptiert haben"
+    },
+    "publicView": {
+        "resolving" : "Die öffentliche Ansicht wird geladen ...",
+        "netNotExist": "Der Prozess existiert nicht",
+        "errorCreate": "Fehler beim Erstellen des Falles "
     }
 }
