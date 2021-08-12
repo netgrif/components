@@ -97,6 +97,10 @@
                     "name": "Visuelle ID",
                     "placeholder": "Geben Sie die visuelle ID ein"
                 },
+                "stringId": {
+                    "name": "Fall ID",
+                    "placeholder": "Geben Sie die Fall ID ein"
+                },
                 "author": {
                     "name": "Fallautor/in",
                     "placeholder": "Geben Sie den Namen, oder das E-Mail des/er Fallautors/in ein"

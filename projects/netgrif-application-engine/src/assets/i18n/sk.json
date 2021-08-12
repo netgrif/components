@@ -98,8 +98,8 @@
                     "placeholder": "Zadajte vizuálne ID prípadu"
                 },
                 "stringId": {
-                    "name": "Textové ID prípadu",
-                    "placeholder": "Zadajte textové ID prípadu"
+                    "name": "ID prípadu",
+                    "placeholder": "Zadajte ID prípadu"
                 },
                 "author": {
                     "name": "Autor prípadu",

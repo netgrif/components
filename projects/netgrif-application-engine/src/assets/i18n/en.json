@@ -98,8 +98,8 @@
                     "placeholder": "Enter case visual ID"
                 },
                 "stringId": {
-                    "name": "Case string ID",
-                    "placeholder": "Enter case string ID"
+                    "name": "Case ID",
+                    "placeholder": "Enter case ID"
                 },
                 "author": {
                     "name": "Case author",
