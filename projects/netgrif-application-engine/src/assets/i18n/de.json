@@ -118,8 +118,8 @@
                     "placeholder": "Geben Sie das Erstellungsdatum ein"
                 },
                 "creationDateTime": {
-                    "name": "Case creation date and time",
-                    "placeholder": "Select case creation date and time"
+                    "name": "Erstellungsdatum und Uhrzeit",
+                    "placeholder": "Geben Sie das Erstellungsdatum und die Uhrzeit ein"
                 },
                 "dataset": {
                     "name": "Falldatei",
