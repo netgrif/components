@@ -53,10 +53,10 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
     additionalFilterData: TaskSetDataRequestBody;
 
     constructor(caseViewService: CaseViewService, protected overflowService: OverflowService) {
-        super(caseViewService, {
+        super(caseViewService, overflowService, undefined, {
             enableCaseTitle: true,
             isCaseTitleRequired: false
-        }, overflowService);
+        });
         this.additionalFilterData = {
             [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
                 type: 'text',

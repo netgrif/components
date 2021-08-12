@@ -23,15 +23,15 @@ export abstract class TabbedCaseView extends AbstractCaseView {
     protected constructor(caseViewService: CaseViewService,
                           protected _loggerService: LoggerService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
+                          protected _overflowService?: OverflowService,
+                          protected _autoswitchToTaskTab: boolean = true,
+                          protected _openExistingTab: boolean = true,
                           protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true
-                          },
-                          protected _overflowService?: OverflowService,
-                          protected _autoswitchToTaskTab: boolean = true,
-                          protected _openExistingTab: boolean = true) {
+                          }) {
 
-        super(caseViewService, _newCaseCreationConfig, _overflowService);
+        super(caseViewService, _overflowService, undefined, _newCaseCreationConfig);
         this._correctlyInjected = !!this._injectedTabData.tabViewComponent && this._injectedTabData.tabViewOrder !== undefined;
         if (!this._correctlyInjected) {
             this._loggerService.warn('TabbedCaseView must inject a filled object of type InjectedTabbedCaseViewData to work properly!');

@@ -80,7 +80,7 @@ export class DemoTitleConfigContent1CaseViewComponent extends TabbedCaseView imp
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(caseViewService, loggerService, injectedTabData, {
+        super(caseViewService, loggerService, injectedTabData, undefined, undefined, undefined, {
             enableCaseTitle: false,
             isCaseTitleRequired: false
         });

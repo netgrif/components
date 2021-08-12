@@ -17,12 +17,12 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public authorityToCreate: Array<string>;
 
     protected constructor(protected _caseViewService: CaseViewService,
+                          protected _overflowService?: OverflowService,
+                          protected _authority: Array<Authority> = [{authority: 'ROLE_USER'}],
                           protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true
-                          },
-                          protected _overflowService?: OverflowService,
-                          protected _authority: Array<Authority> = [{authority: 'ROLE_USER'}]) {
+                          }) {
         super(_caseViewService);
         this._caseViewService.loading$.subscribe(loading => {
             this.loading = loading;

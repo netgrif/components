@@ -52,7 +52,7 @@ export class <%= classify(className) %>Component extends AbstractCaseView implem
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     constructor(caseViewService: CaseViewService) {
-        super(caseViewService, {
+        super(caseViewService, undefined, undefined, {
               enableCaseTitle: <%= caseCreationConfig.enableCaseTitle %>,
               isCaseTitleRequired: <%= caseCreationConfig.isCaseTitleRequired %>
         });
