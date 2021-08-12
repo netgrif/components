@@ -6,6 +6,7 @@ import {Filter} from '../../filter/models/filter';
 import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {SimpleFilter} from '../../filter/models/simple-filter';
+import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 
 /**
  * Extracts the item name and item icon (if any) rom a section of the navigation item task data.
@@ -59,4 +60,15 @@ export function extractFilter(dataSection: Array<DataGroup>, taskReffed = true):
         throw new Error('Navigation entry filter could not be resolved');
     }
     return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
+}
+
+export function extractRoles(dataSection: Array<DataGroup>, taskReffed = true): Array<string> {
+    const roleIds = getField(dataSection[0].fields,
+        GroupNavigationConstants.NAVIGATION_ENTRY_ROLES_FIELD_ID_SUFFIX, taskReffed);
+
+    if (dataSection.length === 0) {
+        throw new Error('The provided task data does not belong to a Navigation menu item task. Icon and title cannot be extracted');
+    }
+
+    return (roleIds as unknown as MultichoiceField).choices.map(choice => choice.key);
 }

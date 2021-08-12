@@ -20,7 +20,7 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {refreshTree} from '../../utility/refresh-tree';
 import {getField} from '../../utility/get-field';
-import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
+import {extractIconAndTitle, extractRoles} from '../utility/navigation-item-task-utility-methods';
 import {LanguageService} from '../../translate/language.service';
 
 export interface NavigationNode {
@@ -242,7 +242,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         return routeSegment ? parentUrl + '/' + routeSegment : parentUrl;
     }
 
-    protected resolveLevels(nodes: NavigationNode[], parentLevel?: number): void {
+    protected resolveLevels(nodes: Array<NavigationNode>, parentLevel?: number): void {
         if (!nodes) {
             return;
         }
@@ -379,7 +379,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             throw new Error('The navigation configuration task contains no task ref with entries. Navigation cannot be constructed');
         }
 
-        for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {
+        for (let order = 0; order < navEntriesTaskRef.value.length; order++) {
             const index = this.transformOrderToIndex(order, firstEntryIndex);
 
             const label = extractIconAndTitle(navConfigDatagroups.slice(index,
@@ -392,8 +392,13 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 continue;
             }
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
+            const allowedRoleIds = extractRoles(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY), true);
 
-            result.push(newNode);
+            if (allowedRoleIds.some(roleId => this._userService.hasRoleById(roleId)) ||
+                allowedRoleIds.length === 0) {
+                result.push(newNode);
+            }
         }
         return result;
     }
