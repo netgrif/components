@@ -203,39 +203,47 @@ export abstract class TaskContentService implements OnDestroy {
 
                     const updatedField = chFields[field.stringId];
                     Object.keys(updatedField).forEach(key => {
-                        if (key === 'value') {
-                            field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
-                        } else if (key === 'behavior') {
-                            if (updatedField.behavior[this._task.transitionId]) {
-                                field.behavior = updatedField.behavior[this._task.transitionId]; // TODO NGSD-489 fix behavior resolution
-                            } else {
-                                // ignore the behavior update, since it does not affect this task
+                        switch (key) {
+                            case 'type':
+                                // type is just an information, not an update. A field cannot change its type
                                 return; // continue - the field does not need updating, since nothing changed
-                            }
-                        } else if (key === 'choices') {
-                            const newChoices: EnumerationFieldValue[] = [];
-                            if (updatedField.choices instanceof Array) {
-                                updatedField.choices.forEach(it => {
-                                    newChoices.push({key: it, value: it} as EnumerationFieldValue);
+                            case 'value':
+                                field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
+                                break;
+                            case 'behavior':
+                                if (updatedField.behavior[this._task.transitionId]) {
+                                    // TODO NGSD-489 fix behavior resolution
+                                    field.behavior = updatedField.behavior[this._task.transitionId];
+                                } else {
+                                    // ignore the behavior update, since it does not affect this task
+                                    return; // continue - the field does not need updating, since nothing changed
+                                }
+                                break;
+                            case 'choices':
+                                const newChoices: Array<EnumerationFieldValue> = [];
+                                if (updatedField.choices instanceof Array) {
+                                    updatedField.choices.forEach(it => {
+                                        newChoices.push({key: it, value: it} as EnumerationFieldValue);
+                                    });
+                                } else {
+                                    Object.keys(updatedField.choices).forEach(choiceKey => {
+                                        newChoices.push({key: choiceKey, value: updatedField.choices[choiceKey]} as EnumerationFieldValue);
+                                    });
+                                }
+                                (field as EnumerationField | MultichoiceField).choices = newChoices;
+                                break;
+                            case 'options':
+                                const newOptions = [];
+                                Object.keys(updatedField.options).forEach(optionKey => {
+                                    newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                                 });
-                            } else {
-                                Object.keys(updatedField.choices).forEach(choiceKey => {
-                                    newChoices.push({key: choiceKey, value: updatedField.choices[choiceKey]} as EnumerationFieldValue);
-                                });
-                            }
-                            (field as EnumerationField | MultichoiceField).choices = newChoices;
-                        } else if (key === 'options') {
-                            const newOptions = [];
-                            Object.keys(updatedField.options).forEach(optionKey => {
-                                newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
-                            });
-                            (field as EnumerationField | MultichoiceField).choices = newOptions;
-                        } else if (key === 'validations') {
-                            field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
-
-                        } else if (key !== 'type') {
-                            field[key] = updatedField[key];
-
+                                (field as EnumerationField | MultichoiceField).choices = newOptions;
+                                break;
+                            case 'validations':
+                                field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
+                                break;
+                            default:
+                                field[key] = updatedField[key];
                         }
                         field.update();
                     });
