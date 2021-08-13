@@ -22,6 +22,11 @@
         ],
         "no-string-literal": false,
         "no-input-rename": false,
-        "no-redundant-jsdoc": false
+        "no-redundant-jsdoc": false,
+        "import-blacklist": [
+            true,
+            "netgrif-application-engine",
+            [".*/netgrif-application-engine/.*"]
+        ]
     }
 }

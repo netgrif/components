@@ -6,7 +6,7 @@ import {
     NAE_SEARCH_CATEGORIES,
     SearchService, TestCaseBaseFilterProvider,
     TestConfigurationService
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 import {SearchComponentModule} from '../../search.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
