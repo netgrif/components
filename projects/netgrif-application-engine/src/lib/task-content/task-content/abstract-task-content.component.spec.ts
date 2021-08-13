@@ -1,4 +1,4 @@
-import {ComponentFixture, fakeAsync, TestBed, tick, waitForAsync} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
@@ -455,12 +455,7 @@ function createField(visible = true,
                      layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0},
                      stringId?: string,
                      booleanField = true): BooleanField | ButtonField {
-    return createMockField(
-        visible,
-        layout,
-        stringId ?? counter,
-        booleanField ? FieldTypeResource.BOOLEAN : FieldTypeResource.BUTTON
-    ) as BooleanField | ButtonField;
+    return createMockField(visible, layout, stringId ?? counter, booleanField);
 }
 
 function transformStringToGrid(gridString: string): Array<Array<string>> {
