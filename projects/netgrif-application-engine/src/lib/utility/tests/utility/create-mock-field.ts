@@ -4,6 +4,9 @@ import {ButtonField} from '../../../data-fields/button-field/models/button-field
 import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
 import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
 import {IncrementingCounter} from '../../incrementing-counter';
+import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
+import {DataField} from '../../../data-fields/models/abstract-data-field';
+import {TextField} from '../../../data-fields/text-field/models/text-field';
 
 /**
  * Creates a mock boolean or button field, with the specified properties
@@ -13,13 +16,13 @@ import {IncrementingCounter} from '../../incrementing-counter';
  * If a number is provided the fields ID will be set to 'f<number>'.
  * If an {@link IncrementingCounter} is provided the ID will follow the same pattern as for the `number` argument,
  * but the counter will be used to generate the number.
- * @param booleanField if `true` the generated field will be a {@link BooleanField} instance,
- * otherwise a {@link ButtonField} instance is generated
+ * @param fieldType determines the field type of the mocked field. Not all types are supported.
+ * Throws an error if an unsupported type is used. By default creates a boolean field.
  */
 export function createMockField(visible = true,
                                 layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0},
                                 counterOrStringId: number | IncrementingCounter | string = 0,
-                                booleanField = true): BooleanField | ButtonField {
+                                fieldType = FieldTypeResource.BOOLEAN): DataField<unknown> {
     const b = visible ? {editable: true} : {hidden: true};
     const l = {
         ...layout,
@@ -35,9 +38,14 @@ export function createMockField(visible = true,
         id = counterOrStringId;
     }
 
-    if (booleanField) {
-        return new BooleanField(id, 'title', false, b, '', '', l);
-    } else {
-        return new ButtonField(id, 'title', b, 0, '', '', l);
+    switch (fieldType) {
+        case FieldTypeResource.BOOLEAN:
+            return new BooleanField(id, 'title', false, b, '', '', l);
+        case FieldTypeResource.BUTTON:
+            return new ButtonField(id, 'title', b, 0, '', '', l);
+        case FieldTypeResource.TEXT:
+            return new TextField(id, 'title', '', b, '', '', l);
+        default:
+            throw new Error(`Field type '${fieldType}' is currently not supported by the mock!`);
     }
 }
