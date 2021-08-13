@@ -10,6 +10,7 @@ import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
 import {CaseTask} from '../models/category/case/case-task';
 import {CaseTitle} from '../models/category/case/case-title';
 import {CaseVisualId} from '../models/category/case/case-visual-id';
+import {CaseStringId} from '../models/category/case/case-string-id';
 import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
 import {TaskRole} from '../models/category/task/task-role';
@@ -51,6 +52,8 @@ export class CategoryResolverService {
                 return CaseTitle;
             case Categories.CASE_VISUAL_ID:
                 return CaseVisualId;
+            case Categories.CASE_STRING_ID:
+                return CaseStringId;
             // Task
             case Categories.TASK_ASSIGNEE:
                 return TaskAssignee;

@@ -97,6 +97,10 @@
                     "name": "Vizuálne ID prípadu",
                     "placeholder": "Zadajte vizuálne ID prípadu"
                 },
+                "stringId": {
+                    "name": "ID prípadu",
+                    "placeholder": "Zadajte ID prípadu"
+                },
                 "author": {
                     "name": "Autor prípadu",
                     "placeholder": "Zadajte meno, alebo email autora prípadu"
