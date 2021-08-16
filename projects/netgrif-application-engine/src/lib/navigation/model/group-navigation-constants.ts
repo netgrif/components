@@ -44,7 +44,12 @@ export enum GroupNavigationConstants {
      * Suffix of the text field id that contains the IDs of roles that are able to view the navigation entry.
      * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
      */
-    NAVIGATION_ENTRY_ROLES_FIELD_ID_SUFFIX = 'added_roles',
+    NAVIGATION_ENTRY_PERMITTED_ROLES_FIELD_ID_SUFFIX = 'permitted_roles',
+    /**
+     * Suffix of the text field id that contains the IDs of roles that are banned from viewing the navigation entry.
+     * Since the field itself is inserted via task ref the actual id is prefixed by the task id.
+     */
+    NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX = 'banned_roles',
     /**
      * The number of datagroups in the navigation configuration task that correspond to a single navigation entry.
      */

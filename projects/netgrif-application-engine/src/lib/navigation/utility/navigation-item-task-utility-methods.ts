@@ -62,9 +62,8 @@ export function extractFilter(dataSection: Array<DataGroup>, taskReffed = true):
     return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
 }
 
-export function extractRoles(dataSection: Array<DataGroup>, taskReffed = true): Array<string> {
-    const roleIds = getField(dataSection[0].fields,
-        GroupNavigationConstants.NAVIGATION_ENTRY_ROLES_FIELD_ID_SUFFIX, taskReffed);
+export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string, taskReffed = true): Array<string> {
+    const roleIds = getField(dataSection[0].fields, roleFieldId, taskReffed);
 
     if (dataSection.length === 0) {
         throw new Error('The provided task data does not belong to a Navigation menu item task. Icon and title cannot be extracted');
