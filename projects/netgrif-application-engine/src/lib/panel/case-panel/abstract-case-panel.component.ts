@@ -99,9 +99,6 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
             return true;
         }
 
-        /*const result = Object.keys(this.case_.users).some(user =>
-            !!this.case_.users[this._userService.user.id] ? !!this.case_.users[this._userService.user.id][action] : false
-        );*/
         let result = true;
 
         if (Object.keys(this.case_.users).length > 0
