@@ -242,7 +242,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canAssign(): boolean {
-        return this._taskEventService.canAssign();
+        return this._taskEventService.canAssign() && this.getAssignTitle() !== '';
     }
 
     public canReassign(): boolean {
@@ -250,11 +250,11 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canCancel(): boolean {
-        return this._taskEventService.canCancel();
+        return this._taskEventService.canCancel() && this.getCancelTitle() !== '';
     }
 
     public canFinish(): boolean {
-        return this._taskEventService.canFinish();
+        return this._taskEventService.canFinish() && this.getFinishTitle() !== '';
     }
 
     public canCollapse(): boolean {
@@ -262,23 +262,27 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canDo(action): boolean {
-        return this._taskEventService.canDo(action);
+        return this._taskEventService.canDo(action) && this.getDelegateTitle() !== '';
     }
 
     public getAssignTitle(): string {
-        return this.taskPanelData.task.assignTitle ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
+        return (this.taskPanelData.task.assignTitle === '' || this.taskPanelData.task.assignTitle)
+            ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
     }
 
     public getCancelTitle(): string {
-        return this.taskPanelData.task.cancelTitle ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
+        return (this.taskPanelData.task.cancelTitle === '' || this.taskPanelData.task.cancelTitle)
+            ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
     }
 
     public getDelegateTitle(): string {
-        return this.taskPanelData.task.delegateTitle ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
+        return (this.taskPanelData.task.delegateTitle === '' || this.taskPanelData.task.delegateTitle)
+            ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
     }
 
     public getFinishTitle(): string {
-        return this.taskPanelData.task.finishTitle ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
+        return (this.taskPanelData.task.finishTitle === '' || this.taskPanelData.task.finishTitle)
+            ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
     }
 
     public canDisable(type: string): boolean {
