@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import {TaskResourceService} from '../task-resource.service';
 import {FieldConverterService} from '../../../task-content/services/field-converter.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {Params, ResourceProvider} from '../../resource-provider.service';
+import {Params, ProviderProgress, ResourceProvider} from '../../resource-provider.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Observable} from 'rxjs';
 import {EventOutcome} from '../../interface/event-outcome';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {FilterType} from '../../../filter/models/filter-type';
 import {Filter} from '../../../filter/models/filter';
 import {Page} from '../../interface/page';
@@ -16,6 +16,8 @@ import {TaskReference} from '../../interface/task-reference';
 import {DataGroup, DataGroupsResource} from '../../interface/data-groups';
 import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {Task} from '../../interface/task';
+import {HttpEventType} from '@angular/common/http';
+import {MessageResource} from '../../interface/message-resource';
 
 @Injectable({
   providedIn: 'root'
@@ -156,5 +158,85 @@ export class PublicTaskResourceService extends TaskResourceService {
         params = ResourceProvider.combineParams(filterParam.getRequestParams(), params);
         return this._provider.post$('public/task/search', this.SERVER_URL, filterParam.getRequestBody(), params)
             .pipe(map(r => this.getResourcePage<Task>(r, 'tasks')));
+    }
+
+    /**
+     * Download task file field value
+     * GET
+     */
+    // {{baseUrl}}/api/task/:id/file/:field         - for file field
+    // {{baseUrl}}/api/task/:id/file/:field/:name   - for file list field
+    public downloadFile(taskId: string, fieldId: string, name?: string): Observable<ProviderProgress | Blob> {
+        const url = !!name ? `public/task/${taskId}/file/${fieldId}/${name}` : `public/task/${taskId}/file/${fieldId}`;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.DownloadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return event.body;
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value => !!value)
+        );
+    }
+
+    /**
+     * Upload file into the task
+     * POST
+     */
+    // {{baseUrl}}/api/task/:id/file/:field     - for file field
+    // {{baseUrl}}/api/task/:id/files/:field    - for file list field
+    public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
+        Observable<ProviderProgress | ChangedFieldContainer> {
+        const url = !multipleFiles ? `public/task/${taskId}/file/${fieldId}` : `public/task/${taskId}/files/${fieldId}`;
+        return this._resourceProvider.postWithEvent$<ChangedFieldContainer>(url, this.SERVER_URL, body).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.UploadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return event.body;
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value => !!value)
+        );
+    }
+
+    /**
+     * Delete file from the task
+     * DELETE
+     */
+    public deleteFile(taskId: string, fieldId: string, name?: string): Observable<MessageResource> {
+        const url = !!name ? `public/task/${taskId}/file/${fieldId}/${name}` : `public/task/${taskId}/file/${fieldId}`;
+        return this._resourceProvider.delete$(url, this.SERVER_URL).pipe(
+            map(r => this.changeType(r, undefined))
+        );
+    }
+
+    /**
+     * Download task file preview for field value
+     * GET
+     */
+    // {{baseUrl}}/api/task/:id/file_preview/:field
+    public downloadFilePreview(taskId: string, fieldId: string): Observable<ProviderProgress | Blob> {
+        const url = 'public/task/' + taskId + '/file_preview/' + fieldId;
+        return this._resourceProvider.getBlob$(url, this.SERVER_URL).pipe(
+            map(event => {
+                switch (event.type) {
+                    case HttpEventType.DownloadProgress:
+                        return ResourceProvider.getProgress(event);
+                    case HttpEventType.Response:
+                        return event.body;
+                    default:
+                        return undefined;
+                }
+            }),
+            filter(value => !!value)
+        );
     }
 }

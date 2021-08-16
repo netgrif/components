@@ -1,0 +1,27 @@
+<mat-form-field [appearance]="enumerationField.materialAppearance" class="full-width" color="primary">
+    <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}</mat-label>
+    <input type="text"
+           aria-label="Autocomplete"
+           matInput
+           #input
+           [placeholder]="enumerationField.placeholder"
+           [formControl]="formControlRef"
+           [matAutocomplete]="auto"
+           (keyup)="change()">
+    <mat-spinner *ngIf="enumerationField.loading" matSuffix diameter="30"></mat-spinner>
+    <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
+
+        <mat-option disabled *ngIf="(filteredOptions | async)?.length === 0 && !enumerationField.loading && enumerationField.value && enumerationField.value.length > 0" fxLayoutAlign="center center">
+            {{ 'dataField.dynamicEnum.noData' | translate }}
+        </mat-option>
+
+        <ng-container *ngIf="!enumerationField.loading">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (click)="change()">
+                {{option.value}}
+            </mat-option>
+        </ng-container>
+    </mat-autocomplete>
+    <mat-hint>{{enumerationField.description}}</mat-hint>
+    <mat-error *ngIf="enumerationField.isInvalid(formControlRef)">{{buildErrorMessage()}}</mat-error>
+</mat-form-field>
+

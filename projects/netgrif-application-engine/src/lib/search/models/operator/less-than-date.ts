@@ -4,6 +4,7 @@ import {OperatorService} from '../../operator-service/operator.service';
 import {Query} from '../query/query';
 import {clearTimeInformation} from '../../../utility/clear-time-information';
 import {LessThan} from './less-than';
+import {Operators} from './operators';
 
 /**
  * A strict less than operator for Date fields
@@ -26,5 +27,9 @@ export class LessThanDate extends Operator<Moment> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.lessThan', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.LESS_THAN_DATE;
     }
 }

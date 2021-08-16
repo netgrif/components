@@ -38,10 +38,22 @@
     <nc-button-field *ngSwitchCase="fieldTypeEnum.BUTTON" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-button-field>
 
+    <nc-filter-field *ngSwitchCase="fieldTypeEnum.FILTER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">
+    </nc-filter-field>
+
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">
         <div fxFlex="20" class="line-datagroup"></div>
-        <span class="margin-default">{{getDataGroupTitle()}}</span>
+        <span [ngClass]="{'margin-default': getDataGroupTitle() !== ''}">{{getDataGroupTitle()}}</span>
         <div fxFlex class="line-datagroup"></div>
+    </div>
+
+    <div *ngSwitchCase="taskElementEnum.LOADER" class="min-row-height" fxFlex fxLayout="row" fxLayoutAlign="center center">
+        <div class="phl-item">
+            <div class="phl-row" fxLayoutAlign="center center">
+                <div class="phl-col">
+                </div>
+            </div>
+        </div>
     </div>
 
     <div *ngSwitchCase="taskElementEnum.BLANK"></div>

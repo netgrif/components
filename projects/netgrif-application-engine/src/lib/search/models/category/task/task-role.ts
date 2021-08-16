@@ -6,16 +6,18 @@ import {NotEquals} from '../../operator/not-equals';
 import {TaskNetAttributeAutocompleteCategory} from './task-net-attribute-autocomplete-category';
 import {Net} from '../../../../process/net';
 import {NameIdPair} from '../name-id-pair';
+import {Categories} from '../categories';
 
 export class TaskRole extends TaskNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.task.role';
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['roles'],
-            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${TaskRole._i18n}.name`,
             logger,
+            operators,
             optionalDependencies);
     }
 
@@ -28,6 +30,10 @@ export class TaskRole extends TaskNetAttributeAutocompleteCategory {
     }
 
     duplicate(): TaskRole {
-        return new TaskRole(this._operators, this._log, this._optionalDependencies);
+        return new TaskRole(this._operatorService, this._log, this._optionalDependencies);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.TASK_ROLE;
     }
 }

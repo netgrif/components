@@ -18,6 +18,7 @@ export interface NavigationNode {
     url: string;
     children?: Array<NavigationNode>;
     level?: number;
+    translate?: boolean;
 }
 
 export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
@@ -144,6 +145,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         node.name = this.getNodeName(view, routeSegment);
         node.icon = this.getNodeIcon(view);
         node.url = this.appendRouteSegment(parentUrl, routeSegment);
+        node.translate = this.getNodeTranslateFlag(view);
         return node;
     }
 
@@ -165,6 +167,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
      */
     protected getNodeRouteSegment(view: View): string {
         return !!view.routing && (typeof view.routing.path === 'string') ? view.routing.path : undefined;
+    }
+
+    protected getNodeTranslateFlag(view: View): boolean {
+        return view.navigation['translate'] ?? false;
     }
 
     /**

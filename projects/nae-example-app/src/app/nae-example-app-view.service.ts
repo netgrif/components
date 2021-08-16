@@ -12,7 +12,6 @@ import {SidemenuExampleComponent} from './doc/sidemenu-example/sidemenu-example.
 import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-example.component';
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
-import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 import {PanelsComponent} from './doc/panels/panels.component';
 import {TaskViewComponent} from './doc/task-view/task-view.component';
@@ -31,7 +30,8 @@ import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-
 import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
 import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
-import { GroupViewComponent } from './doc/group-view/group-view.component';
+import {GroupViewComponent} from './doc/group-view/group-view.component';
+import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
 
 @Injectable({
     providedIn: 'root'
@@ -41,36 +41,36 @@ export class NaeExampleAppViewService extends ViewService {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([
-            GroupViewComponent,
-            UserInviteComponent,
-            TreeViewExampleComponent,
-            ButtonsNavComponent,
-            NavigationExampleComponent,
-            ProfileComponent,
-            FilterRepositoryExampleComponent,
-            DashboardExampleComponent,
-            WorkflowViewExampleComponent,
-            TabbedViewsExampleComponent,
-            CaseViewComponent,
-            TaskViewComponent,
-            PanelsComponent,
-            ToolbarExampleComponent,
-            ReactiveTextFieldComponent,
-            TabViewExampleComponent,
-            DialogExampleComponent,
-            SnackBarExampleComponent,
-            SidemenuExampleComponent,
-            HeadersComponent,
-            RailExampleComponent,
-            DrawerExampleComponent,
-            RegisterFormComponent,
-            PasswordFormComponent,
-            LoginFormComponent,
-            AuthenticationComponent,
-            RolesAssignComponent,
-            PublicTaskViewComponent,
-            PublicWorkflowViewComponent,
-            PublicResolverComponent,
-            ResetPasswordFormComponent], configurationService, router, loggerService);
+            {id: 'TitleConfigComponent', class: TitleConfigComponent},
+            {id: 'GroupViewComponent', class: GroupViewComponent},
+            {id: 'UserInviteComponent', class: UserInviteComponent},
+            {id: 'TreeViewExampleComponent', class: TreeViewExampleComponent},
+            {id: 'ButtonsNavComponent', class: ButtonsNavComponent},
+            {id: 'NavigationExampleComponent', class: NavigationExampleComponent},
+            {id: 'ProfileComponent', class: ProfileComponent},
+            {id: 'FilterRepositoryExampleComponent', class: FilterRepositoryExampleComponent},
+            {id: 'DashboardExampleComponent', class: DashboardExampleComponent},
+            {id: 'WorkflowViewExampleComponent', class: WorkflowViewExampleComponent},
+            {id: 'TabbedViewsExampleComponent', class: TabbedViewsExampleComponent},
+            {id: 'CaseViewComponent', class: CaseViewComponent},
+            {id: 'TaskViewComponent', class: TaskViewComponent},
+            {id: 'PanelsComponent', class: PanelsComponent},
+            {id: 'ToolbarExampleComponent', class: ToolbarExampleComponent},
+            {id: 'TabViewExampleComponent', class: TabViewExampleComponent},
+            {id: 'DialogExampleComponent', class: DialogExampleComponent},
+            {id: 'SnackBarExampleComponent', class: SnackBarExampleComponent},
+            {id: 'SidemenuExampleComponent', class: SidemenuExampleComponent},
+            {id: 'HeadersComponent', class: HeadersComponent},
+            {id: 'RailExampleComponent', class: RailExampleComponent},
+            {id: 'DrawerExampleComponent', class: DrawerExampleComponent},
+            {id: 'RegisterFormComponent', class: RegisterFormComponent},
+            {id: 'PasswordFormComponent', class: PasswordFormComponent},
+            {id: 'LoginFormComponent', class: LoginFormComponent},
+            {id: 'AuthenticationComponent', class: AuthenticationComponent},
+            {id: 'RolesAssignComponent', class: RolesAssignComponent},
+            {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
+            {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
+            {id: 'PublicResolverComponent', class: PublicResolverComponent},
+            {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent}], configurationService, router, loggerService);
     }
 }

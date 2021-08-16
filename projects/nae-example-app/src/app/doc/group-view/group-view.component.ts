@@ -1,25 +1,27 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView, CategoryFactory,
-    ConfigTaskViewServiceFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
+    defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
     SearchService,
     SimpleFilter, TaskSearchCaseQuery,
-    TaskViewService
-} from 'netgrif-application-engine';
+    TaskViewService, NAE_BASE_FILTER, AllowedNetsService, AllowedNetsServiceFactory
+} from '@netgrif/application-engine';
 import {
     HeaderComponent,
-} from 'netgrif-components';
+} from '@netgrif/components';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('group-view');
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
+    return factory.createFromConfig('group-view');
 };
 
-const searchServiceFactory = (nextGroupService: NextGroupService) => {
+const baseFilterFactory = (nextGroupService: NextGroupService) => {
     const groupIds: Array<TaskSearchCaseQuery> = [];
     nextGroupService.groupOfUser.forEach(group => {
-       groupIds.push({id: group.stringId});
+        groupIds.push({id: group.stringId});
     });
-    return new SearchService(SimpleFilter.fromTaskQuery({case: groupIds}));
+    return {
+        filter: SimpleFilter.fromTaskQuery({case: groupIds})
+    };
 };
 
 @Component({
@@ -28,14 +30,18 @@ const searchServiceFactory = (nextGroupService: NextGroupService) => {
     styleUrls: ['./group-view.component.scss'],
     providers: [
         CategoryFactory,
-        ConfigTaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory,
+        TaskViewService,
+        SearchService,
+        {
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
             deps: [NextGroupService]
         },
-        {   provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]},
+        {
+            provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]
+        },
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })

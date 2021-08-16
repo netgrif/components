@@ -1,11 +1,13 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractCaseView,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
     Case,
     CaseViewService,
     CategoryFactory,
-    ConfigCaseViewServiceFactory,
     defaultCaseSearchCategoriesFactory,
+    NAE_BASE_FILTER,
     NAE_SEARCH_CATEGORIES,
     NAE_VIEW_ID_SEGMENT,
     SearchService,
@@ -16,12 +18,14 @@ import {
     HeaderComponent
 } from '@netgrif/components';
 
-const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('<%= viewPath %>');
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
+    return factory.createFromConfig('<%= viewPath %>');
 };
 
-const searchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyCaseFilter());
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyCaseFilter()
+    };
 };
 
 @Component({
@@ -30,12 +34,13 @@ const searchServiceFactory = () => {
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
         CategoryFactory,
-        ConfigCaseViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
-        {   provide: CaseViewService,
-            useFactory: localCaseViewServiceFactory,
-            deps: [ConfigCaseViewServiceFactory]},
+        CaseViewService,
+        SearchService,
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory},
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
         {   provide: NAE_VIEW_ID_SEGMENT,
             useValue: '<%= viewIdSegment %>'},
         ViewIdService,
@@ -47,7 +52,10 @@ export class <%= classify(className) %>Component extends AbstractCaseView implem
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
     constructor(caseViewService: CaseViewService) {
-        super(caseViewService);
+        super(caseViewService, undefined, undefined, {
+              enableCaseTitle: <%= caseCreationConfig.enableCaseTitle %>,
+              isCaseTitleRequired: <%= caseCreationConfig.isCaseTitleRequired %>
+        });
     }
 
     ngAfterViewInit(): void {

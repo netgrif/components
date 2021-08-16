@@ -59,7 +59,7 @@ export interface Task {
      */
     dataGroups: DataGroup[];
     _links: object;
-    users?: UsersRef;
+    users: UsersRef;
     dataSize?: number;
     icon?: string;
     priority?: number;

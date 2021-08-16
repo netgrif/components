@@ -1,20 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {
-    CaseViewService,
-    ConfigCaseViewServiceFactory,
-    FilterType,
+    AllowedNetsService, AllowedNetsServiceFactory,
+    NAE_BASE_FILTER,
     SearchService,
     SimpleFilter,
     TaskViewService
 } from '@netgrif/application-engine';
 
-const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('case');
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
+    return factory.createFromConfig('case');
 };
 
-const searchServiceFactory = () => {
-    // TODO load/use base filter somehow
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyCaseFilter()
+    };
 };
 
 @Component({
@@ -23,15 +23,15 @@ const searchServiceFactory = () => {
     styleUrls: ['./headers.component.scss'],
     providers: [
         TaskViewService,
-        ConfigCaseViewServiceFactory,
+        SearchService,
         {
-            provide: CaseViewService,
-            useFactory: localCaseViewServiceFactory,
-            deps: [ConfigCaseViewServiceFactory]
+            provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory
         },
         {
-            provide: SearchService,
-            useFactory: searchServiceFactory
+            provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]
         },
     ],
 })

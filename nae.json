@@ -44,6 +44,11 @@
                 "name": "dashboard",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
+            },
+            {
+                "name": "filter",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
             }
         ]
     },
@@ -281,6 +286,71 @@
                 }
             }
         },
+        "demo-title-config": {
+            "layout": {
+                "name": "tabView",
+                "componentName": "Title config",
+                "params": {
+                    "tabs": [
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Default"
+                            },
+                            "canBeClosed": false,
+                            "order": -1,
+                            "enableCaseTitle": true,
+                            "isCaseTitleRequired": true
+                        },
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Viac sietí, bez title"
+                            },
+                            "canBeClosed": false,
+                            "order": 0,
+                            "enableCaseTitle": false,
+                            "isCaseTitleRequired": false
+                        },
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Jedna sieť, title optional"
+                            },
+                            "canBeClosed": false,
+                            "order": 1,
+                            "enableCaseTitle": true,
+                            "isCaseTitleRequired": false
+                        }
+                    ],
+                    "allowedNets": [
+                        "all_data"
+                    ],
+                    "defaultTaskView": {
+                        "view": {
+                            "name": "taskView"
+                        }
+                    }
+                }
+            },
+            "component": {
+                "class": "TitleConfigComponent",
+                "from": "./doc/title-config-example/title-config-example.component"
+            },
+            "access": "private",
+            "routing": {
+                "path": "titleConfig"
+            }
+        },
         "demo-workflow-view": {
             "component": {
                 "class": "WorkflowViewExampleComponent",
@@ -439,8 +509,9 @@
                     },
                     "access": "private",
                     "navigation": {
-                        "title": "one",
-                        "icon": "account_circle"
+                        "title": "translateNavTest",
+                        "icon": "account_circle",
+                        "translate": true
                     },
                     "routing": {
                         "path": "one"
@@ -453,8 +524,9 @@
                             },
                             "access": "private",
                             "navigation": {
-                                "title": "one-one",
-                                "icon": "account_circle"
+                                "title": "translateNav.Test",
+                                "icon": "account_circle",
+                                "translate": true
                             },
                             "routing": {
                                 "path": "one-one"
@@ -781,7 +853,8 @@
         "cases": {
             "layout": {
                 "name": "emptyView",
-                "componentName": "EmptyViewCustomNameTest"
+                "componentName": "EmptyViewCustomNameTest",
+                "params": {}
             },
             "access": "private",
             "navigation": {
@@ -821,7 +894,8 @@
         },
         "task": {
             "layout": {
-                "name": "emptyView"
+                "name": "emptyView",
+                "params": {}
             },
             "access": "private",
             "navigation": {
@@ -1017,8 +1091,7 @@
             "serializeExtraParams": true,
             "includeLogLevel": true,
             "publishers": [
-                "console",
-                "localStorage"
+                "console"
             ]
         },
         "auth": {

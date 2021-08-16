@@ -1,11 +1,11 @@
+import {PetriNetSearchRequest} from './case-search-request-body';
+
 /**
  * Describes objects that are used to search/filter tasks from backend. Returned tasks must fulfill all provided criteria.
  *
  * This object is used as part of a {@link Filter} object for [searchTask()]{@link TaskResourceService#searchTask}
  * method in {@link TaskResourceService}.
  */
-import {PetriNetSearchRequest} from './case-search-request-body';
-
 export interface TaskSearchRequestBody {
     /**
      * Returned tasks must have the role with the specified role ID.

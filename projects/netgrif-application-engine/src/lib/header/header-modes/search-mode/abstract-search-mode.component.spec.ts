@@ -1,13 +1,6 @@
 import {waitForAsync, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {MatInputModule} from '@angular/material/input';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
-import {MatSortModule} from '@angular/material/sort';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
@@ -18,10 +11,9 @@ import {UserValue} from '../../../data-fields/user-field/models/user-value';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {MaterialModule} from '../../../material/material.module';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
-import {ConfigCaseViewServiceFactory} from '../../../view/case-view/service/factory/config-case-view-service-factory';
 import {SearchService} from '../../../search/search-service/search.service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../../utility/tests/test-factory-methods';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
@@ -31,6 +23,9 @@ import {TestViewService} from '../../../utility/tests/test-view-service';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {ViewService} from '../../../routing/view-service/view.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
+import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbstractSearchModeComponent', () => {
     let component: TestSeaarchModeComponent;
@@ -49,18 +44,19 @@ describe('AbstractSearchModeComponent', () => {
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                ConfigCaseViewServiceFactory,
+                CaseViewService,
+                SearchService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {   provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory},
-                {   provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]},
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
+                },
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                CaseHeaderService
+                CaseHeaderService,
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [TestSeaarchModeComponent, TestWrapperComponent],
         }).compileComponents();

@@ -72,7 +72,8 @@
             "errSecond": "Title is required.",
             "errThird": "Color is required.",
             "noNets": "No allowed Nets",
-            "createCase": "Successful create new case"
+            "createCase": "Successful create new case",
+            "defaultCaseName": "with default case name"
         },
         "user": {
             "assign": "User Assign",
@@ -96,6 +97,10 @@
                 "visualId": {
                     "name": "Case visual ID",
                     "placeholder": "Enter case visual ID"
+                },
+                "stringId": {
+                    "name": "Case ID",
+                    "placeholder": "Enter case ID"
                 },
                 "author": {
                     "name": "Case author",
@@ -156,13 +161,17 @@
             "notEquals": "is different from",
             "moreThan": "is more than",
             "lessThan": "is less than",
+            "lessThanEqual": "is less or equal than",
+            "moreThanEqual": "is more or equal than",
             "like": "is like",
             "isNull": "is empty"
         },
         "tooltip": {
             "toAdvanced": "Switch to advanced search",
             "toFullText": "Switch to basic search",
-            "help": "Help"
+            "help": "Help",
+            "save": "Save filter",
+            "load": "Load filter"
         },
         "help": {
             "title": "Advanced search help",
@@ -219,6 +228,9 @@
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
             "clickToDelete": "Click to delete file"
+        },
+        "dynamicEnum" : {
+            "noData": "No items match your search"
         }
     },
     "dialog": {
@@ -255,8 +267,10 @@
     "headers": {
         "newHeader": "Select new header",
         "date": "Choose a date",
+        "dateTime": "Choose a date and time",
         "selectUser": "Choose a user",
         "caseMeta": {
+            "mongoID": "Case ID",
             "visualID": "Visual ID",
             "title": "Title",
             "author": "Author",
@@ -264,6 +278,8 @@
         },
         "taskMeta": {
             "case": "Case",
+            "caseID": "Case ID",
+            "taskID": "Task ID",
             "priority": "Priority",
             "user": "Assignee",
             "assignDate": "Assign Date"
@@ -271,6 +287,7 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
+            "netId": "Process ID",
             "creationDate": "Upload date",
             "title": "Title",
             "author": "Author"
@@ -378,5 +395,10 @@
         "and": "and",
         "privacyNotice": "Privacy Notice",
         "sentenceEnd": ""
+    },
+    "publicView": {
+        "resolving" : "Public view is loading ...",
+        "netNotExist": "The process does not exists",
+        "errorCreate": "Error while creating case "
     }
 }

@@ -8,7 +8,6 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
-    ArrayTaskViewServiceFactory,
     AssignPolicy,
     AssignPolicyService,
     AssignTaskService,
@@ -16,7 +15,8 @@ import {
     AuthenticationService,
     CancelTaskService,
     ChangedFields,
-    ConfigurationService, createMockTask,
+    ConfigurationService,
+    createMockTask,
     DataFocusPolicy,
     DataFocusPolicyService,
     DelegateTaskService,
@@ -31,7 +31,6 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     NAE_TASK_OPERATIONS,
-    noNetsTaskViewServiceFactory,
     SearchService,
     SideMenuService,
     SingleTaskContentService,
@@ -47,9 +46,14 @@ import {
     TaskResourceService,
     TaskViewService,
     TestConfigurationService,
-    TestTaskSearchServiceFactory,
     TranslateLibModule,
-    UserResourceService
+    UserResourceService,
+    NAE_BASE_FILTER,
+    TestTaskBaseFilterProvider,
+    AllowedNetsService,
+    TestTaskViewAllowedNetsFactory,
+    AllowedNetsServiceFactory,
+    CurrencyModule
 } from '@netgrif/application-engine';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -77,22 +81,22 @@ describe('TaskPanelComponent', () => {
                 HttpClientTestingModule,
                 SnackBarModule,
                 TaskContentComponentModule,
+                CurrencyModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                ArrayTaskViewServiceFactory,
+                TaskViewService,
                 SideMenuService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {
-                    provide: TaskViewService,
-                    useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]
-                },
                 {provide: TaskResourceService, useClass: MyTaskResources},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
+                },
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 TaskDataService,
                 TaskEventService,
@@ -105,6 +109,7 @@ describe('TaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 PanelComponent,

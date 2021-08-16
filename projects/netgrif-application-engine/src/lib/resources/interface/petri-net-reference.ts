@@ -1,5 +1,6 @@
 import {Author} from './author';
 import {ImmediateData} from './immediate-data';
+import {NaeDate} from '../types/nae-date-type';
 
 /**
  * Information Petri Net
@@ -34,7 +35,7 @@ export interface PetriNetReference {
     /**
      * Date import
      */
-    createdDate: Array<number>;
+    createdDate: NaeDate;
     /**
      * [Author]{@link Author}
      */

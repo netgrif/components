@@ -30,7 +30,6 @@ import {SnackBarExampleComponent} from './doc/snack-bar-example/snack-bar-exampl
 import {DialogExampleComponent} from './doc/dialog-example/dialog-example.component';
 import {TabViewExampleComponent} from './doc/tab-view-example/tab-view-example.component';
 import {ContentComponent} from './doc/tab-view-example/content/content.component';
-import {ReactiveTextFieldComponent} from './doc/reactive-text-field/reactive-text-field.component';
 import {ToolbarExampleComponent} from './doc/toolbar-example/toolbar-example.component';
 import {CaseViewComponent} from './doc/case-view/case-view.component';
 import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
@@ -87,6 +86,11 @@ import { PublicTaskViewComponent } from './doc/public-task-view/public-task-view
 import { PublicWorkflowViewComponent } from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import { GroupViewComponent } from './doc/group-view/group-view.component';
+import { DemoTitleConfigContent0TaskViewComponent } from './doc/demo-title-config/content/0/demo-title-config-content0-task-view.component';
+import { DemoTitleConfigContent1CaseViewComponent } from './doc/demo-title-config/content/1/demo-title-config-content1-case-view.component';
+import { DemoTitleConfigContent2CaseViewComponent } from './doc/demo-title-config/content/2/demo-title-config-content2-case-view.component';
+import { DemoTitleConfigContent3CaseViewComponent } from './doc/demo-title-config/content/3/demo-title-config-content3-case-view.component';
+import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -103,7 +107,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         SnackBarExampleComponent,
         DialogExampleComponent,
         TabViewExampleComponent,
-        ReactiveTextFieldComponent,
         ToolbarExampleComponent,
         TaskViewComponent,
         CaseViewComponent,
@@ -131,6 +134,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicWorkflowViewComponent,
         PublicResolverComponent,
         GroupViewComponent,
+        DemoTitleConfigContent0TaskViewComponent,
+        DemoTitleConfigContent1CaseViewComponent,
+        DemoTitleConfigContent2CaseViewComponent,
+        DemoTitleConfigContent3CaseViewComponent,
+        TitleConfigComponent,
     ],
     imports: [
         BrowserModule,
@@ -195,7 +203,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         SnackBarExampleComponent,
         DialogExampleComponent,
         TabViewExampleComponent,
-        ReactiveTextFieldComponent,
         ToolbarExampleComponent,
         PanelsComponent,
         TaskViewComponent,
@@ -214,7 +221,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicTaskViewComponent,
         PublicWorkflowViewComponent,
         PublicResolverComponent,
-        GroupViewComponent
+        GroupViewComponent,
+        DemoTitleConfigContent0TaskViewComponent,
+        DemoTitleConfigContent1CaseViewComponent,
+        DemoTitleConfigContent2CaseViewComponent,
+        DemoTitleConfigContent3CaseViewComponent,
+        TitleConfigComponent
     ],
     providers: [{
         provide: ConfigurationService,

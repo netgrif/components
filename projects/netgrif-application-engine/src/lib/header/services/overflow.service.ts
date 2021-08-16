@@ -16,8 +16,10 @@ export class OverflowService {
     private _columnWidth: number;
     private _columnCount: number;
     private _state: OverflowState;
+    private _initializedCount: boolean;
 
     constructor(@Optional() private _viewIdService: ViewIdService) {
+        this._initializedCount = false;
         this._overflowMode = this.initializeItem('overflowMode', false) === 'true';
         this._columnCount = this.checkIsNan(this.initializeItem('columnCount', this.DEFAULT_COLUMN_COUNT), this.DEFAULT_COLUMN_COUNT);
         this._columnWidth = this.checkIsNan(this.initializeItem('columnWidth', this.DEFAULT_COLUMN_WIDTH), this.DEFAULT_COLUMN_WIDTH);
@@ -45,6 +47,10 @@ export class OverflowService {
 
     set columnCount(value: number) {
         this._columnCount = value;
+    }
+
+    get initializedCount(): boolean {
+        return this._initializedCount;
     }
 
     public saveState(): void {
@@ -79,7 +85,10 @@ export class OverflowService {
         }
 
         const item = localStorage.getItem(viewId + '-' + id);
-        if (item !== undefined) {
+        if (item !== null) {
+            if (id.includes('columnCount')) {
+                this._initializedCount = true;
+            }
             return item;
         } else {
             return defaultValue;

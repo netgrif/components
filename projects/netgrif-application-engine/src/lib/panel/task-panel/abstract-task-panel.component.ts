@@ -28,6 +28,8 @@ import {Task} from '../../resources/interface/task';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
+import {FeaturedValue} from '../abstract/featured-value';
+import {CurrencyPipe} from '@angular/common';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
@@ -36,11 +38,18 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
      * Set by an @Input() on a setter function, that also resolves featured fields.
      */
     protected _taskPanelData: TaskPanelData;
+    protected _forceLoadDataOnOpen = false;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input()
+    set forceLoadDataOnOpen(force: boolean) {
+        this._forceLoadDataOnOpen = force;
+        this._assignPolicyService.forced = force;
+    }
+    @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
      */
@@ -54,6 +63,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     protected _subOperationOpen: Subscription;
     protected _subOperationClose: Subscription;
     protected _subOperationReload: Subscription;
+    protected _subOperationForceReload: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
 
@@ -72,8 +82,9 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
-                          protected _translate: TranslateService) {
-        super(_translate);
+                          protected _translate: TranslateService,
+                          protected _currencyPipe: CurrencyPipe) {
+        super(_translate, _currencyPipe);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
@@ -91,6 +102,9 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subOperationReload = _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
         });
+        this._subOperationForceReload = _taskOperations.forceReload$.subscribe(() => {
+            this._taskViewService.reloadCurrentPage(true);
+        });
         this._taskDisableButtonFunctions = {
             finish: (t: Task) => false,
             assign: (t: Task) => false,
@@ -107,7 +121,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         super.ngOnInit();
         this._taskContentService.task = this._taskPanelData.task;
 
-        // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         this.createContentPortal();
 
         this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
@@ -124,6 +137,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
+            this._taskContentService.expansionStarted();
             if (!this._taskState.isLoading()) {
                 this._assignPolicyService.performAssignPolicy(true);
             }
@@ -138,6 +152,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                 this._taskContentService.blockFields(!this.canFinish());
                 this._taskPanelData.initiallyExpanded = true;
             });
+            this._taskContentService.expansionFinished();
         });
         this.panelRef.afterCollapse.subscribe(() => {
             this._taskPanelData.initiallyExpanded = false;
@@ -201,7 +216,19 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     finish() {
-        this._finishTaskService.validateDataAndFinish();
+        if (!this._taskContentService.validateTaskData()) {
+            if (this._taskContentService.task.dataSize <= 0) {
+                this._taskDataService.initializeTaskDataFields();
+            }
+            const invalidFields = this._taskContentService.getInvalidTaskData();
+            document.getElementById(invalidFields[0].stringId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        } else {
+            this._finishTaskService.validateDataAndFinish();
+        }
     }
 
     collapse() {
@@ -215,7 +242,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canAssign(): boolean {
-        return this._taskEventService.canAssign();
+        return this._taskEventService.canAssign() && this.getAssignTitle() !== '';
     }
 
     public canReassign(): boolean {
@@ -223,11 +250,11 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canCancel(): boolean {
-        return this._taskEventService.canCancel();
+        return this._taskEventService.canCancel() && this.getCancelTitle() !== '';
     }
 
     public canFinish(): boolean {
-        return this._taskEventService.canFinish();
+        return this._taskEventService.canFinish() && this.getFinishTitle() !== '';
     }
 
     public canCollapse(): boolean {
@@ -235,23 +262,27 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canDo(action): boolean {
-        return this._taskEventService.canDo(action);
+        return this._taskEventService.canDo(action) && this.getDelegateTitle() !== '';
     }
 
     public getAssignTitle(): string {
-        return this.taskPanelData.task.assignTitle ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
+        return (this.taskPanelData.task.assignTitle === '' || this.taskPanelData.task.assignTitle)
+            ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
     }
 
     public getCancelTitle(): string {
-        return this.taskPanelData.task.cancelTitle ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
+        return (this.taskPanelData.task.cancelTitle === '' || this.taskPanelData.task.cancelTitle)
+            ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
     }
 
     public getDelegateTitle(): string {
-        return this.taskPanelData.task.delegateTitle ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
+        return (this.taskPanelData.task.delegateTitle === '' || this.taskPanelData.task.delegateTitle)
+            ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
     }
 
     public getFinishTitle(): string {
-        return this.taskPanelData.task.finishTitle ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
+        return (this.taskPanelData.task.finishTitle === '' || this.taskPanelData.task.finishTitle)
+            ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
     }
 
     public canDisable(type: string): boolean {
@@ -264,11 +295,15 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
         const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
                 return {value: task.caseTitle, icon: '', type: 'meta'};
+            case TaskMetaField.CASE_ID:
+                return {value: task.caseId, icon: '', type: 'meta'};
+            case TaskMetaField.TASK_ID:
+                return {value: task.stringId, icon: '', type: 'meta'};
             case TaskMetaField.TITLE:
                 return {value: task.title, icon: '', type: 'meta'};
             case TaskMetaField.PRIORITY:
@@ -291,7 +326,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
         if (this._taskContentService.task && this._taskContentService.task.immediateData) {
             const immediate = this._taskContentService.task.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
             return this.parseImmediateValue(immediate);
@@ -307,6 +342,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subOperationOpen.unsubscribe();
         this._subOperationClose.unsubscribe();
         this._subOperationReload.unsubscribe();
+        this._subOperationForceReload.unsubscribe();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
     }

@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine",
-    "version": "5.0.7",
+    "version": "5.5.2",
     "description": "Netgrif Application engine frontend Angular library",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -55,6 +55,7 @@
         "@ngx-translate/core": "^13.0.0",
         "@ngx-translate/http-loader": "^6.0.0",
         "@schematics/angular": "^10.2.0",
+        "angular-resizable-element": "~3.3.0",
         "angular-resize-event": "^2.0.1",
         "angular2-hotkeys": "^2.2.0",
         "hammerjs": "^2.0.8",

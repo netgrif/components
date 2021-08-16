@@ -4,12 +4,15 @@ import {ProcessService} from './process.service';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
 import {PetriNetResourceService} from '../resources/engine-endpoint/petri-net-resource.service';
-import {of, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoggerService} from '../logger/services/logger.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthenticationMethodService} from '../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
+import RolesAndPermissions from './rolesAndPermissions';
+import Transaction from './transaction';
+import Transition from './transition';
 
 describe('ProcessService', () => {
     let service: ProcessService;
@@ -40,29 +43,37 @@ describe('ProcessService', () => {
 
     it('should call one net', () => {
         const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
-        service.getNet('true').subscribe();
+        service.getNet('correct').subscribe();
         expect(getOneSpy).toHaveBeenCalled();
     });
 
     it('should call more nets', () => {
         const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
-        service.getNets(['true', 'false']).subscribe();
+        service.getNets(['correct', 'emptySecondaries']).subscribe();
         expect(getOneSpy).toHaveBeenCalledTimes(2);
     });
 
-    it('get petri net errors', () => {
-        service.getNet('false').subscribe();
+    it('get petri net errors - net without transitions/transactions/roles', () => {
+        service.getNet('emptySecondaries').subscribe();
         expect(logInfoSpy).toHaveBeenCalled();
+    });
 
-        service.getNet('error1').subscribe();
+    it('get petri net errors - roles fail to load', () => {
+        service.getNet('errorOnRoles').subscribe();
         expect(logSpy).toHaveBeenCalled();
+    });
 
-        service.getNet('error2').subscribe();
+    it('get petri net errors - transactions fail to load', () => {
+        service.getNet('errorOnTransactions').subscribe();
         expect(logSpy).toHaveBeenCalled();
+    });
 
-        service.getNet('error3').subscribe();
+    it('get petri net errors - transitions fail to load', () => {
+        service.getNet('errorOnTransitions').subscribe();
         expect(logSpy).toHaveBeenCalled();
+    });
 
+    it('get petri net errors - net fails to load', () => {
         service.getNet('err').subscribe();
         expect(logSpy).toHaveBeenCalled();
     });
@@ -75,6 +86,65 @@ describe('ProcessService', () => {
         });
     });
 
+    it('second request should return cached net', (done) => {
+        const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
+        service.getNet('correct').subscribe(net => {
+            service.getNet('correct').subscribe(net2 => {
+                expect(getOneSpy).toHaveBeenCalledTimes(1);
+                expect(net === net2).toBeTrue();
+                done();
+            });
+        });
+    });
+
+    it('force should bypass net cache', (done) => {
+        const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
+        service.getNet('correct').subscribe(net => {
+            service.getNet('correct', true).subscribe(net2 => {
+                expect(getOneSpy).toHaveBeenCalledTimes(2);
+                expect(net === net2).toBeFalse();
+                done();
+            });
+        });
+    });
+
+    it('getNetReference should load net with only roles and permissions', (done) => {
+        service.getNetReference('correct').subscribe(result => {
+            expect(result).toBeTruthy();
+            expect(Array.isArray(result.roles)).toBeTrue();
+            expect(result.roles.length > 0).toBeTrue();
+            done();
+        });
+    });
+
+    it('should call more net references', () => {
+        const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
+        service.getNetReferences(['correct', 'emptySecondaries']).subscribe();
+        expect(getOneSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('getNetReferences should emit with empty argument', (done) => {
+        service.getNetReferences([]).subscribe(result => {
+            expect(result).toEqual([]);
+            done();
+        });
+    });
+
+    it('get petri net reference errors - net without transitions/transactions/roles', () => {
+        service.getNetReference('emptySecondaries').subscribe();
+        expect(logInfoSpy).toHaveBeenCalled();
+    });
+
+    it('get petri net reference errors - roles fail to load', () => {
+        service.getNetReference('errorOnRoles').subscribe();
+        expect(logSpy).toHaveBeenCalled();
+    });
+
+    it('get petri net reference errors - net fails to load', () => {
+        service.getNetReference('err').subscribe();
+        expect(logSpy).toHaveBeenCalled();
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -82,15 +152,15 @@ describe('ProcessService', () => {
 
 class MyPetriNetResource {
     getOne(identifier, version) {
-        if (identifier === 'true' ||
-            identifier === 'false' ||
-            identifier === 'error1' ||
-            identifier === 'error2' ||
-            identifier === 'error3') {
+        if (identifier === 'correct' ||
+            identifier === 'emptySecondaries' ||
+            identifier === 'errorOnRoles' ||
+            identifier === 'errorOnTransactions' ||
+            identifier === 'errorOnTransitions') {
             return of({
                 stringId: identifier,
                 title: 'string',
-                identifier: 'string',
+                identifier,
                 version: 'string',
                 initials: 'string',
                 defaultCaseName: 'string',
@@ -105,11 +175,16 @@ class MyPetriNetResource {
         }
     }
 
-    getPetriNetTranstions(identifier) {
-        if (identifier === 'true') {
+    getPetriNetTransitions(identifier): Observable<Array<Transition>> {
+        if (identifier === 'correct') {
+            return of([{
+                stringId: 't1',
+                title: '',
+                petriNetId: 'petriNetId',
+                immediateData: []
+            }]);
+        } else if (identifier === 'emptySecondaries' || identifier === 'errorOnRoles' || identifier === 'errorOnTransactions') {
             return of([]);
-        } else if (identifier === 'false' || identifier === 'error1' || identifier === 'error2') {
-            return of({});
         } else {
             return of({error: 'error'}).pipe(map(res => {
                 throw throwError(res);
@@ -117,11 +192,14 @@ class MyPetriNetResource {
         }
     }
 
-    getPetriNetTransactions(identifier) {
-        if (identifier === 'true') {
+    getPetriNetTransactions(identifier): Observable<Array<Transaction>> {
+        if (identifier === 'correct') {
+            return of([{
+                transitions: [],
+                title: ''
+            }]);
+        } else if (identifier === 'emptySecondaries' || identifier === 'errorOnRoles') {
             return of([]);
-        } else if (identifier === 'false' || identifier === 'error1') {
-            return of({});
         } else {
             return of({error: 'error'}).pipe(map(res => {
                 throw throwError(res);
@@ -129,11 +207,17 @@ class MyPetriNetResource {
         }
     }
 
-    getPetriNetRoles(identifier) {
-        if (identifier === 'true') {
-            return of([]);
-        } else if (identifier === 'false') {
-            return of({});
+    getPetriNetRoles(identifier): Observable<RolesAndPermissions> {
+        if (identifier === 'correct') {
+            return of({
+                processRoles: [{stringId: 'roleId', name: 'role'}],
+                permissions: {}
+            });
+        } else if (identifier === 'emptySecondaries') {
+            return of({
+                processRoles: [],
+                permissions: {}
+            });
         } else {
             return of({error: 'error'}).pipe(map(res => {
                 throw throwError(res);

@@ -46,9 +46,10 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     public set maxHeaderColumns(count: number) {
         if (this.headerService) {
             this.headerService.headerColumnCount = count;
-            this.columnCountControl.setValue(count);
         } else {
             this._initHeaderCount = count;
+        }
+        if (this._overflowService === null || (this._overflowService !== null && !this._overflowService.initializedCount)) {
             this.columnCountControl.setValue(count);
         }
     }
@@ -71,6 +72,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         if (this._initResponsiveHeaders !== undefined) {
             this.headerService.responsiveHeaders = this._initResponsiveHeaders;
         }
+        this.headerService.preferenceColumnCount$.subscribe(value => this.columnCountControl.setValue(value));
     }
 
     ngOnDestroy(): void {

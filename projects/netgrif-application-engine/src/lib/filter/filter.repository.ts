@@ -7,6 +7,8 @@ import {FilterType} from './models/filter-type';
 import {SimpleFilter} from './models/simple-filter';
 import {Filter} from './models/filter';
 import {MergedFilter} from './models/merged-filter';
+
+
 /**
  * Allows access to filters defined in nae.json during runtime.
  *

@@ -1,5 +1,5 @@
 <mat-toolbar #toolbar color="primary">{{titleShortening()}}</mat-toolbar>
-<mat-vertical-stepper *ngIf="(processOne | async) === false" linear #stepper1>
+<mat-vertical-stepper *ngIf="hasMultipleNets$ | async" linear #stepper1>
     <mat-step [stepControl]="processFormControl" errorMessage="{{'side-menu.new-case.errFirst' | translate}}">
         <ng-template matStepLabel>{{'side-menu.new-case.choose' | translate}}</ng-template>
         <mat-form-field>
@@ -8,20 +8,21 @@
             <span class="version-span" *ngIf="isVersionVisible" matSuffix>{{netVersion}}</span>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
                               (optionSelected)="showVersion($event.option)">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
                     {{option.viewValue}}
                     <span class="version-span" *ngIf="isVersionVisible">{{option.version}}</span>
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
         <div>
-            <button mat-button matStepperNext>{{'side-menu.new-case.next' | translate}}</button>
+            <button *ngIf="isCaseTitleEnabled()" mat-button matStepperNext>{{'side-menu.new-case.next' | translate}}</button>
+            <button *ngIf="!isCaseTitleEnabled()" mat-button (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
         </div>
     </mat-step>
-    <mat-step [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
+    <mat-step *ngIf="isCaseTitleEnabled()" [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
         <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
         <mat-form-field>
-            <input matInput placeholder="Title" [formControl]="titleFormControl" required (keyup.enter)="nextStep()">
+            <input matInput placeholder="Title" autocomplete="off" [formControl]="titleFormControl" [required]="isCaseTitleRequired()" (keyup.enter)="nextStep()">
         </mat-form-field>
         <div>
             <button mat-button (click)="stepper1.reset()">{{'side-menu.new-case.reset' | translate}}</button>
@@ -29,11 +30,11 @@
         </div>
     </mat-step>
 </mat-vertical-stepper>
-<mat-vertical-stepper *ngIf="processOne | async" linear #stepper2>
+<mat-vertical-stepper *ngIf="(hasMultipleNets$ | async) === false" linear #stepper2>
     <mat-step [stepControl]="titleFormControl" errorMessage="{{'side-menu.new-case.errSecond' | translate}}">
         <ng-template matStepLabel>{{'side-menu.new-case.caseTitle' | translate}}</ng-template>
         <mat-form-field>
-            <input matInput placeholder="Title" [formControl]="titleFormControl" required (keyup.enter)="nextStep()">
+            <input matInput placeholder="Title" autocomplete="off" [formControl]="titleFormControl" [required]="isCaseTitleRequired()" (keyup.enter)="nextStep()">
         </mat-form-field>
         <div>
             <button mat-button (click)="stepper2.reset()">{{'side-menu.new-case.reset' | translate}}</button>
@@ -41,3 +42,6 @@
         </div>
     </mat-step>
 </mat-vertical-stepper>
+<div *ngIf="(notInitialized$ | async)" fxLayout="row" fxLayoutAlign="center center">
+    <mat-spinner class="spinner-margin"></mat-spinner>
+</div>

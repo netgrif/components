@@ -8,12 +8,12 @@
 <ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">
     <div [ngSwitch]="resolveComponent()">
         <nc-number-currency-field *ngSwitchCase="'currency'"
-                                 [dataField]="dataField"
+                                 [numberField]="dataField"
                                  [formControlRef]="formControl"
                                  [showLargeLayout] = showLargeLayout>
         </nc-number-currency-field>
         <nc-number-default-field *ngSwitchDefault
-                                 [dataField]="dataField"
+                                 [numberField]="dataField"
                                  [formControlRef]="formControl"
                                  [showLargeLayout] = showLargeLayout>
         </nc-number-default-field>
