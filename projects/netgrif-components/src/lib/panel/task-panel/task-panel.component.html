@@ -1,7 +1,7 @@
 <nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
               (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" >
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
             <div fxFlex class="text-column-div" [ngClass]="{'panel-header-padding': !textEllipsis}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="task-panel-icon panel-primary-icon">
