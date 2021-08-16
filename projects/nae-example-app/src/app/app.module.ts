@@ -225,7 +225,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicWorkflowViewComponent,
         PublicResolverComponent,
         GroupViewComponent,
-        ExampleRedirectComponent
+        ExampleRedirectComponent,
         GroupViewComponent,
         DemoTitleConfigContent0TaskViewComponent,
         DemoTitleConfigContent1CaseViewComponent,
