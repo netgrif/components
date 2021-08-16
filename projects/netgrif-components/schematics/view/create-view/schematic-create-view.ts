@@ -53,7 +53,9 @@ function findMissingView(naeViews: Views, generatedViews: Set<string>, pathPrefi
                    viewType: view.layout.name,
                    componentName: view.layout.componentName,
                    layoutParams: view.layout.params,
-                   access: view.access
+                   access: view.access,
+                   enableCaseTitle: view.layout.enableCaseTitle,
+                   isCaseTitleRequired: view.layout.isCaseTitleRequired,
                };
             }
         } else {

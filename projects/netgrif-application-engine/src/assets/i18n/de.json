@@ -72,7 +72,8 @@
             "errSecond": "Sie müssen einen Namen eingeben.",
             "errThird": "Sie müssen eine Farbe auswählen.",
             "noNets": "Es gibt keine erlaubte Netze",
-            "createCase": "Neuen Fall würde erfolgreich erzeugt"
+            "createCase": "Neuen Fall würde erfolgreich erzeugt",
+            "defaultCaseName": "mit einem Standardfallnamen"
         },
         "user": {
             "assign": "Benützer zuweisen",
@@ -96,6 +97,10 @@
                 "visualId": {
                     "name": "Visuelle ID",
                     "placeholder": "Geben Sie die visuelle ID ein"
+                },
+                "stringId": {
+                    "name": "Fall ID",
+                    "placeholder": "Geben Sie die Fall ID ein"
                 },
                 "author": {
                     "name": "Fallautor/in",

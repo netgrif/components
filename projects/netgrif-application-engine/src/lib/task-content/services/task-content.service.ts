@@ -13,6 +13,7 @@ import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {Validation} from '../../data-fields/models/validation';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -124,6 +125,18 @@ export abstract class TaskContentService implements OnDestroy {
         return valid && validDisabled;
     }
 
+    /**
+     * Finds invalid data of task
+     *
+     * @returns array of invalid datafields
+     */
+    public getInvalidTaskData(): Array<DataField<any>> {
+        const invalidFields = [];
+        this._task.dataGroups.forEach(group => invalidFields.push(...group.fields.filter(field =>
+            (!field.valid && !field.disabled) || (!field.validRequired && !field.disabled))));
+        return invalidFields;
+    }
+
     public validateDynamicEnumField(): boolean {
         if (!this._task || !this._task.dataGroups) {
             return false;
@@ -161,11 +174,7 @@ export abstract class TaskContentService implements OnDestroy {
         if (this._task && this._task.dataGroups) {
             this._task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
-                    field.initialized$.subscribe((initialized) => {
-                        if (initialized) {
-                            field.block = blockingState;
-                        }
-                    });
+                    field.block = blockingState;
                 });
             });
         }
