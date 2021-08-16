@@ -72,7 +72,8 @@
             "errSecond": "Názov je povinné pole.",
             "errThird": "Farba je povinné pole.",
             "noNets": "Žiadne povolené siete",
-            "createCase": "Uspešne vytvorený nový prípad"
+            "createCase": "Uspešne vytvorený nový prípad",
+            "defaultCaseName": "s prednastaveným názvom prípadu"
         },
         "user": {
             "assign": "Priradiť používateľa",
@@ -96,6 +97,10 @@
                 "visualId": {
                     "name": "Vizuálne ID prípadu",
                     "placeholder": "Zadajte vizuálne ID prípadu"
+                },
+                "stringId": {
+                    "name": "ID prípadu",
+                    "placeholder": "Zadajte ID prípadu"
                 },
                 "author": {
                     "name": "Autor prípadu",

@@ -77,7 +77,10 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
                 loggerService: LoggerService,
                 overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(caseViewService, loggerService, injectedTabData, overflowService);
+        super(caseViewService, loggerService, injectedTabData, overflowService, undefined, undefined, {
+            enableCaseTitle: true,
+                isCaseTitleRequired: true
+        });
     }
 
     ngAfterViewInit(): void {
