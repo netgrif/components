@@ -15,7 +15,7 @@ import {
     SavedFilterMetadata,
     SearchService,
     SimpleFilter,
-    TabbedCaseView,
+    TabbedCaseView, UserService,
     ViewIdService
 } from 'netgrif-application-engine';
 import {HeaderComponent} from '@netgrif/components';
@@ -77,8 +77,9 @@ export class DemoTitleConfigContent2CaseViewComponent extends TabbedCaseView imp
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
+                userService: UserService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(caseViewService, loggerService, injectedTabData, undefined, undefined, undefined, {
+        super(caseViewService, loggerService, injectedTabData, userService, undefined, undefined, undefined, {
             enableCaseTitle: false,
             isCaseTitleRequired: false
         });
