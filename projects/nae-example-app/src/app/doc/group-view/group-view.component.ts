@@ -5,10 +5,10 @@ import {
     SearchService,
     SimpleFilter, TaskSearchCaseQuery,
     TaskViewService, NAE_BASE_FILTER, AllowedNetsService, AllowedNetsServiceFactory
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 import {
     HeaderComponent,
-} from 'netgrif-components';
+} from '@netgrif/components';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('group-view');
