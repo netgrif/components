@@ -77,11 +77,11 @@ export abstract class TabbedCaseView extends AbstractCaseView {
 
     private viewEnabled(kaze: Case, user: User): boolean {
         const result = user.roles.some(role =>
-            !!kaze.permissions[role.stringId] && !!!kaze.permissions[role.stringId][PermissionType.VIEW]);
+            !!kaze.permissions[role.stringId] && !kaze.permissions[role.stringId][PermissionType.VIEW]);
 
         if (result) {
             return false;
         }
-        return !(!!kaze.users[user.id] && !!!kaze.permissions[user.id][PermissionType.VIEW]);
+        return !(!!kaze.users[user.id] && !kaze.permissions[user.id][PermissionType.VIEW]);
     }
 }
