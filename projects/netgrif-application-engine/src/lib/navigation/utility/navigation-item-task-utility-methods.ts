@@ -62,6 +62,13 @@ export function extractFilter(dataSection: Array<DataGroup>, taskReffed = true):
     return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
 }
 
+/**
+ * Based on provided parameter extracts allowed or banned roles into an Array of strings from a section of the navigation item task data.
+ * @param dataSection an array containing the data groups that correspond to a single navigation entry
+ * @param roleFieldId ID of field containing banned or allowed role IDs
+ * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed to NOT be task reffed by default.
+ * @returns an Array of string values representing role IDs
+ */
 export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string, taskReffed = true): Array<string> {
     const roleIds = getField(dataSection[0].fields, roleFieldId, taskReffed);
 
