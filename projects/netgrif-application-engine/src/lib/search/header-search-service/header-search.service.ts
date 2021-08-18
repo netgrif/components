@@ -149,7 +149,7 @@ export class HeaderSearchService implements OnDestroy {
                 editableCategory = this._typeToCategory.get(config.fieldIdentifier).duplicate();
                 editableCategory.selectDefaultOperator();
                 editableCategory.setOperands(config.userInput);
-            } else  {
+            } else {
                 const dataset = (this._typeToCategory.get(HeaderColumnType.IMMEDIATE) as CaseSimpleDataset);
                 editableCategory = dataset.transformToCaseDataset(config.fieldType, config.fieldTitle, config.userInput);
             }

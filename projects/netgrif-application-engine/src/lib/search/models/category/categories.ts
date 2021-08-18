@@ -5,6 +5,7 @@ export enum Categories {
     // Case categories
     CASE_AUTHOR = 'case_author',
     CASE_CREATION_DATE = 'case_creation_date',
+    CASE_CREATION_DATE_TIME = 'case_creation_date_time',
     CASE_DATASET = 'case_dataset',
     CASE_PROCESS = 'case_process',
     CASE_ROLE = 'case_role',

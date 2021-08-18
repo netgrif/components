@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AbstractSearchPredicateComponent} from './abstract-search-predicate.component';
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';

@@ -56,7 +56,7 @@
         "import-net": {
             "upload": "Upload model",
             "choose": "Choose a process file",
-            "done" : "Done"
+            "done": "Done"
         },
         "new-case": {
             "case": "New Case",
@@ -121,6 +121,10 @@
                 "creationDate": {
                     "name": "Case creation date",
                     "placeholder": "Select case creation date"
+                },
+                "creationDateTime": {
+                    "name": "Case creation date and time",
+                    "placeholder": "Select case creation date and time"
                 },
                 "dataset": {
                     "name": "Case data",
@@ -210,7 +214,7 @@
             "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it or delete existing file",
             "wontUploadSameFiles": "The selected files have already been uploaded. To update files, delete files that have already been uploaded",
             "fileUploadFailed": "The file failed to upload",
-            "fileDeleteFailed":  "The file could not be deleted",
+            "fileDeleteFailed": "The file could not be deleted",
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
             "notSelectedUser": "No user has been selected",
@@ -229,7 +233,7 @@
             "clickToDownload": "Click to download {{fileName}}",
             "clickToDelete": "Click to delete file"
         },
-        "dynamicEnum" : {
+        "dynamicEnum": {
             "noData": "No items match your search"
         }
     },
@@ -372,7 +376,7 @@
         "noTaskSelected": "No case is currently selected. Click on a node in the tree to select a case."
     },
     "dashboard": {
-        "cases" : "cases"
+        "cases": "cases"
     },
     "workflow": {
         "delete": "delete",
@@ -397,7 +401,7 @@
         "sentenceEnd": ""
     },
     "publicView": {
-        "resolving" : "Public view is loading ...",
+        "resolving": "Public view is loading ...",
         "netNotExist": "The process does not exists",
         "errorCreate": "Error while creating case "
     }

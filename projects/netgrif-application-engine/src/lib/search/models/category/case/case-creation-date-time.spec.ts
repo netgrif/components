@@ -1,33 +1,23 @@
-import {TaskAssignee} from './task-assignee';
 import {OperatorService} from '../../../operator-service/operator.service';
-import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
-import {waitForAsync} from '@angular/core/testing';
-import {ReplaySubject} from 'rxjs';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
-import {Net} from '../../../../process/net';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
-import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
-import {SearchAutocompleteOption} from '../search-autocomplete-option';
+import moment from 'moment';
+import {EqualsDate} from '../../operator/equals-date';
+import {CaseCreationDateTime} from './case-creation-date-time';
+import {EqualsDateTime} from '../../operator/equals-date-time';
 
-describe('TaskAssignee', () => {
+describe('CaseCreationDateTime', () => {
+    let category: CaseCreationDateTime;
     let operatorService: OperatorService;
-    let category: TaskAssignee;
-    let allowedNets$: ReplaySubject<Array<Net>>;
 
-    beforeAll(() => {
+    beforeEach(() => {
         operatorService = new OperatorService(new OperatorResolverService());
+        category = new CaseCreationDateTime(operatorService, null);
     });
 
-    beforeEach(waitForAsync(async () => {
-        allowedNets$ = new ReplaySubject<Array<Net>>(1);
-        allowedNets$.next([]);
-        category = await new TaskAssignee(operatorService, null, createMockDependencies(allowedNets$, operatorService));
-    }));
-
     afterEach(() => {
-        allowedNets$.complete();
         category.destroy();
     });
 
@@ -46,29 +36,31 @@ describe('TaskAssignee', () => {
     });
 
     it('should serialize complete instance', () => {
-        configureCategory(category, operatorService, Equals, [mockTaskAssigneeValue('Test User', 'userId')]);
-
-        const mockedSerializedValue = mockTaskAssigneeValue('Test User', 'userId');
-        delete mockedSerializedValue.icon;
+        configureCategory(category, operatorService, EqualsDateTime, [moment('2021-08-18 15:28')]);
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
-        expect(metadata.values).toEqual([mockedSerializedValue]);
-        expect(metadata.category).toBe(Categories.TASK_ASSIGNEE);
-        expect(metadata.configuration?.operator).toBe(Operators.EQUALS);
+        expect(metadata.values).toEqual([moment('2021-08-18 15:28').valueOf()]);
+        expect(metadata.category).toBe(Categories.CASE_CREATION_DATE_TIME);
+        expect(metadata.configuration?.operator).toBe(Operators.EQUALS_DATE_TIME);
     });
 
     it('should deserialize stored instance', (done) => {
-        configureCategory(category, operatorService, Equals, [mockTaskAssigneeValue('Test User', 'userId')]);
+        configureCategory(category, operatorService, EqualsDateTime, [moment('2021-08-18 15:28')]);
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
-        const deserialized = new TaskAssignee(operatorService, null, createMockDependencies(allowedNets$, operatorService));
+        const deserialized = new CaseCreationDateTime(operatorService, null);
         deserialized.loadFromMetadata(metadata).subscribe(() => {
             expect(deserialized.isOperatorSelected()).toBeTrue();
             expect(deserialized.providesPredicate).toBeTrue();
 
-            expect((deserialized as any)._operandsFormControls[0].value).toEqual((category as any)._operandsFormControls[0].value);
+            const originalMoment = (category as any)._operandsFormControls[0].value;
+            const deserializedMoment = (deserialized as any)._operandsFormControls[0].value;
+
+            expect(moment.isMoment(originalMoment)).toBeTrue();
+            expect(moment.isMoment(deserializedMoment)).toBeTrue();
+            expect(deserializedMoment.isSame(originalMoment)).toBeTrue();
 
             const deserializedMetadata = deserialized.createMetadata();
             expect(deserializedMetadata).toBeTruthy();
@@ -80,7 +72,3 @@ describe('TaskAssignee', () => {
         });
     });
 });
-
-function mockTaskAssigneeValue(userName: string, userId: string): SearchAutocompleteOption<Array<string>> {
-    return {text: userName, value: [userId], icon: (TaskAssignee as any).ICON};
-}

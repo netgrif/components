@@ -12,6 +12,7 @@ import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
 import {TaskRole} from '../models/category/task/task-role';
 import {TaskTask} from '../models/category/task/task-task';
+import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 
 /**
  * Creates the default case search categories.
@@ -30,6 +31,7 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
         factory.get(CaseDataset),
         factory.get(CaseTitle),
         factory.get(CaseCreationDate),
+        factory.get(CaseCreationDateTime),
         factory.get(CaseProcess),
         factory.get(CaseTask),
         factory.get(CaseAuthor),

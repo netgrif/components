@@ -15,6 +15,7 @@ import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
 import {TaskRole} from '../models/category/task/task-role';
 import {TaskTask} from '../models/category/task/task-task';
+import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 
 /**
  * A service that resolves {@link Categories} (or custom string) into a concrete {@link Category} implementation class.
@@ -38,6 +39,8 @@ export class CategoryResolverService {
                 return CaseAuthor;
             case Categories.CASE_CREATION_DATE:
                 return CaseCreationDate;
+            case Categories.CASE_CREATION_DATE_TIME:
+                return CaseCreationDateTime;
             case Categories.CASE_DATASET:
                 return CaseDataset;
             case Categories.CASE_PROCESS:

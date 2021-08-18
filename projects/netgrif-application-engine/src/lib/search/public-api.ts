@@ -27,6 +27,7 @@ export * from './models/operator/less-than-date';
 export * from './models/operator/more-than-date-time';
 export * from './models/operator/less-than-date-time';
 export * from './models/operator/not-equals-date';
+export * from './models/operator/not-equals-date-time';
 
 export * from './models/category/category';
 export * from './models/category/no-configuration-category';
@@ -41,6 +42,7 @@ export * from './models/category/case/case-process';
 export * from './models/category/case/case-role';
 export * from './models/category/case/case-task';
 export * from './models/category/case/case-creation-date';
+export * from './models/category/case/case-creation-date-time';
 export * from './models/category/case/case-dataset';
 export * from './models/category/case/case-simple-dataset';
 export * from './models/category/task/task-net-attribute-autocomplete-category';
@@ -78,6 +80,7 @@ export * from './models/operator-template-part-type';
 export * from './models/search-index';
 export * from './models/component-configuration/search-mode';
 export * from './models/operator/operators';
+export * from './models/category/case/case-search.enum';
 
 /* Services */
 export * from './search-service/search.service';
