@@ -38,7 +38,8 @@
             "delegate": "Delegovať",
             "finish": "Dokončiť",
             "cancel": "Zrušiť",
-            "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie."
+            "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
+            "redirecting": "Presmerovanie..."
         }
     },
     "side-menu": {
