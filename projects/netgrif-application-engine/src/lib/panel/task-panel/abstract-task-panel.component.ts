@@ -1,4 +1,14 @@
-import {AfterViewInit, EventEmitter, Input, OnDestroy, OnInit, Output, Type} from '@angular/core';
+import {
+    AfterViewInit,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    Type,
+    ViewChild
+} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -30,8 +40,10 @@ import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
+
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
+    @ViewChild('submitButton') submitButton: ElementRef;
     /**
      * @ignore
      * Set by an @Input() on a setter function, that also resolves featured fields.
@@ -43,11 +55,13 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+
     @Input()
     set forceLoadDataOnOpen(force: boolean) {
         this._forceLoadDataOnOpen = force;
         this._assignPolicyService.forced = force;
     }
+
     @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
@@ -112,7 +126,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             cancel: (t: Task) => false,
         };
         if (_disableFunctions) {
-             Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
+            Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
         }
     }
 
@@ -215,6 +229,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     finish() {
+        this.submitButton.nativeElement.click();
         this._finishTaskService.validateDataAndFinish();
     }
 

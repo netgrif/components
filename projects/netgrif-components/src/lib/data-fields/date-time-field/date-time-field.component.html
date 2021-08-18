@@ -9,6 +9,8 @@
         <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}</mat-label>
         <input matInput
                [ngxMatDatetimePicker]="picker"
+               [autocomplete]="dataField.autocomplete === 'off' ? dataField.autocomplete : 'on'"
+               [attr.name]="dataField.autocomplete === 'off' ? null : dataField.autocomplete"
                [required]="dataField.behavior.required"
                [placeholder]="dataField.placeholder"
                [formControl]="formControl"

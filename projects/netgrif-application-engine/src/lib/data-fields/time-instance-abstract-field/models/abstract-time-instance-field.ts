@@ -1,5 +1,5 @@
 import {Behavior} from '../../models/behavior';
-import {FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {FormControl, ValidatorFn} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
@@ -21,8 +21,8 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     public max: Moment;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                          description?: string, layout?: Layout, validations?: any, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
+                          description?: string, layout?: Layout, validations?: any, component?: Component, autocomplete?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, autocomplete);
     }
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {

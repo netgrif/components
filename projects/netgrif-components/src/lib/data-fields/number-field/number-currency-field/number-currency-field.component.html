@@ -3,6 +3,8 @@
     <input matInput
            [type]="fieldType"
            [value]="transformedValue"
+           [autocomplete]="numberField.autocomplete === 'off' ? numberField.autocomplete : 'on'"
+           [attr.name]="numberField.autocomplete === 'off' ? null : numberField.autocomplete"
            [formControl]="formControlRef"
            [placeholder]="numberField.placeholder"
            [required]="numberField.behavior.required"

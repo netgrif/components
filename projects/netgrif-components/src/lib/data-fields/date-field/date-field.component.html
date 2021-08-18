@@ -10,6 +10,8 @@
         <input matInput
                [matDatepicker]="datepicker"
                [required]="dataField.behavior.required"
+               [autocomplete]="dataField.autocomplete === 'off' ? dataField.autocomplete : 'on'"
+               [attr.name]="dataField.autocomplete === 'off' ? null : dataField.autocomplete"
                [placeholder]="dataField.placeholder"
                [formControl]="formControl"
                (click)="datepicker.open()"

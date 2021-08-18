@@ -93,6 +93,7 @@ export abstract class DataField<T> {
      * Validators resolved from field validations
      */
     protected _validators: Array<ValidatorFn>;
+
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -103,11 +104,12 @@ export abstract class DataField<T> {
      * @param _layout - information regarding the component rendering
      * @param validations
      * @param _component - component data of datafield
+     * @param _autocomplete
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout, public validations?: Validation[],
-                          private _component?: Component) {
+                          private _component?: Component, private _autocomplete?: string) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new BehaviorSubject<boolean>(false);
@@ -249,6 +251,14 @@ export abstract class DataField<T> {
 
     set sendInvalidValues(value: boolean | null) {
         this._sendInvalidValues = value === null || value;
+    }
+
+    get autocomplete(): string {
+        return this._autocomplete;
+    }
+
+    set autocomplete(autocomplete: string) {
+        this._autocomplete = autocomplete;
     }
 
     public update(): void {

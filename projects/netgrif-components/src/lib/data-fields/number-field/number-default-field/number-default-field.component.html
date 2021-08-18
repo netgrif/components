@@ -3,6 +3,8 @@
     <input matInput
            type="number"
            [formControl]="formControlRef"
+           [autocomplete]="numberField.autocomplete === 'off' ? numberField.autocomplete : 'on'"
+           [attr.name]="numberField.autocomplete === 'off' ? null : numberField.autocomplete"
            [placeholder]="numberField.placeholder"
            [required]="numberField.behavior.required">
     <mat-hint>{{numberField.description}}</mat-hint>

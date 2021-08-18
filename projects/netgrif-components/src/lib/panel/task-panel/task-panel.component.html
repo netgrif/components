@@ -1,7 +1,7 @@
 <nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
               (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" >
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
             <div fxFlex class="text-column-div" [ngClass]="{'panel-header-padding': !textEllipsis}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="task-panel-icon panel-primary-icon">
@@ -13,12 +13,12 @@
                 </span>
             </div>
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
-                  class="text-column-div"
-                  [fxHide.lt-xl]="i >= 3 && responsiveBody"
-                  [fxHide.lt-lg]="i >= 2 && responsiveBody"
-                  [fxHide.lt-md]="i >= 1 && responsiveBody"
-                  [fxHide.lt-sm]="i >= 0 && responsiveBody"
-                    [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
+                 class="text-column-div"
+                 [fxHide.lt-xl]="i >= 3 && responsiveBody"
+                 [fxHide.lt-lg]="i >= 2 && responsiveBody"
+                 [fxHide.lt-md]="i >= 1 && responsiveBody"
+                 [fxHide.lt-sm]="i >= 0 && responsiveBody"
+                 [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="task-panel-icon panel-primary-icon"
                               *ngIf="!!field.icon && !!field.value && field.type !== 'button'">{{field.icon}}</mat-icon>
@@ -65,7 +65,10 @@
     <ng-template #taskPanelContent>
         <div class="panel-main-content" fxLayout="column">
             <div class="task-panel-body" [ngClass]="{'paper-view': isPaperView()}" fxFlex="100">
-                <ng-template [cdkPortalOutlet]="portal"></ng-template>
+                <form (submit)="$event.preventDefault()">
+                    <ng-template [cdkPortalOutlet]="portal"></ng-template>
+                    <input #submitButton type="submit" style="display: none">
+                </form>
             </div>
             <mat-action-row>
                 <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100">
@@ -74,7 +77,8 @@
                     <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button
                             [disabled]="canDisable('delegate')">
                         {{ getDelegateTitle() | translate | uppercase }}</button>
-                    <button *ngIf="canReassign()" (click)="delegate()" mat-button [disabled]="canDisable('reassign')">
+                    <button *ngIf="canReassign()" (click)="delegate()" mat-button
+                            [disabled]="canDisable('reassign')">
                         {{ 'tasks.view.reassign' | translate | uppercase }}</button>
                     <button *ngIf="canCancel()" (click)="cancel()" mat-button [disabled]="canDisable('cancel')">
                         {{ getCancelTitle() | translate | uppercase }}</button>

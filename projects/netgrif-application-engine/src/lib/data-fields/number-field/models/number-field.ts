@@ -27,8 +27,8 @@ export class NumberField extends DataField<number> {
     public _formatFilter: FormatFilter;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, validations?: Validation[], placeholder?: string,
-                description?: string, layout?: Layout, format?: FormatFilter, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
+                description?: string, layout?: Layout, format?: FormatFilter, component?: Component, autocomplete?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, autocomplete);
         this._formatFilter = format;
     }
 
@@ -66,40 +66,72 @@ export class NumberField extends DataField<number> {
     }
 
     private validOdd(fc: FormControl) {
-        if ((fc.value % 2) === 0) { return ({validOdd: true}); } else { return (null); }
+        if ((fc.value % 2) === 0) {
+            return ({validOdd: true});
+        } else {
+            return (null);
+        }
     }
 
     private validEven(fc: FormControl) {
-        if ((fc.value % 2) !== 0) { return ({validEven: true}); } else { return (null); }
+        if ((fc.value % 2) !== 0) {
+            return ({validEven: true});
+        } else {
+            return (null);
+        }
     }
 
     private validPositive(fc: FormControl) {
-        if (fc.value < 0) { return ({validPositive: true}); } else { return (null); }
+        if (fc.value < 0) {
+            return ({validPositive: true});
+        } else {
+            return (null);
+        }
     }
 
     private validNegative(fc: FormControl) {
-        if (fc.value >= 0) { return ({validNegative: true}); } else { return (null); }
+        if (fc.value >= 0) {
+            return ({validNegative: true});
+        } else {
+            return (null);
+        }
     }
 
     private validDecimal(fc: FormControl) {
-        if (fc.value % 1 !== 0) { return ({validDecimal: true}); } else { return (null); }
+        if (fc.value % 1 !== 0) {
+            return ({validDecimal: true});
+        } else {
+            return (null);
+        }
     }
 
     private validInRangeSmaller(range: number): ValidatorFn {
-        return (fc: FormControl): {[key: string]: any} | null => {
-            if (fc.value > range) { return ({validInRange: true}); } else { return (null); }
+        return (fc: FormControl): { [key: string]: any } | null => {
+            if (fc.value > range) {
+                return ({validInRange: true});
+            } else {
+                return (null);
+            }
         };
     }
 
     private validInRangeBigger(range: number): ValidatorFn {
-        return (fc: FormControl): {[key: string]: any} | null => {
-            if (fc.value < range) { return ({validInRange: true}); } else { return (null); }
+        return (fc: FormControl): { [key: string]: any } | null => {
+            if (fc.value < range) {
+                return ({validInRange: true});
+            } else {
+                return (null);
+            }
         };
     }
 
     private validInRange(first: number, second: number): ValidatorFn {
-        return (fc: FormControl): {[key: string]: any} | null => {
-            if (fc.value < first || fc.value > second) { return ({validInRange: true}); } else { return (null); }
+        return (fc: FormControl): { [key: string]: any } | null => {
+            if (fc.value < first || fc.value > second) {
+                return ({validInRange: true});
+            } else {
+                return (null);
+            }
         };
     }
 }

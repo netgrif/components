@@ -4,8 +4,16 @@ import {DataField} from '../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
 import {TextField, TextFieldView} from '../../data-fields/text-field/models/text-field';
 import {NumberField} from '../../data-fields/number-field/models/number-field';
-import {EnumerationField, EnumerationFieldValue, EnumerationFieldView} from '../../data-fields/enumeration-field/models/enumeration-field';
-import {MultichoiceField, MultichoiceFieldValue, MultichoiceFieldView} from '../../data-fields/multichoice-field/models/multichoice-field';
+import {
+    EnumerationField,
+    EnumerationFieldValue,
+    EnumerationFieldView
+} from '../../data-fields/enumeration-field/models/enumeration-field';
+import {
+    MultichoiceField,
+    MultichoiceFieldValue,
+    MultichoiceFieldView
+} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
@@ -57,12 +65,12 @@ export class FieldConverterService {
                         item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, type, item.component);
+                    item.description, item.layout, item.validations, type, item.component, item.autocomplete);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
-                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item));
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.autocomplete);
             case FieldTypeResource.ENUMERATION:
-                if ( item.component && item.component.name === 'autocomplete_dynamic') {
+                if (item.component && item.component.name === 'autocomplete_dynamic') {
                     return new DynamicEnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
                         item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
                         item.type, item.validations, item.component);
@@ -89,14 +97,14 @@ export class FieldConverterService {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component);
+                    item.description, item.layout, item.validations, item.component, item.autocomplete);
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.autocomplete);
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {

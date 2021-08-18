@@ -3,6 +3,8 @@
     <input matInput
            [placeholder]="textField.placeholder"
            [required]="textField.behavior.required"
+           [autocomplete]="textField.autocomplete === 'off' ? textField.autocomplete : 'on'"
+           [attr.name]="textField.autocomplete === 'off' ? null : textField.autocomplete"
            [formControl]="formControlRef">
     <mat-hint>{{textField.description}}</mat-hint>
     <mat-error *ngIf="textField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>

@@ -35,8 +35,8 @@ export class TextField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Validation[], protected _view = TextFieldView.DEFAULT,
-                _component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component);
+                _component?: Component, autocomplete?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, autocomplete);
     }
 
     /*@deprecated in 4.3.0*/
@@ -66,7 +66,7 @@ export class TextField extends DataField<string> {
                 }
             } else if (item.validationRule.includes(TextFieldValidation.REGEX)) {
                 if (item.validationRule.startsWith('regex ')) {
-                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(6, item.validationRule.length ))));
+                    result.push(Validators.pattern(new RegExp(item.validationRule.substring(6, item.validationRule.length))));
                 } else if (item.validationRule.startsWith('regex("')) {
                     result.push(Validators.pattern(new RegExp(item.validationRule.substring(7, item.validationRule.length - 2))));
                 }
