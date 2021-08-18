@@ -30,6 +30,7 @@ import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
+
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
     /**
@@ -215,7 +216,19 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     finish() {
-        this._finishTaskService.validateDataAndFinish();
+        if (!this._taskContentService.validateTaskData()) {
+            if (this._taskContentService.task.dataSize <= 0) {
+                this._taskDataService.initializeTaskDataFields();
+            }
+            const invalidFields = this._taskContentService.getInvalidTaskData();
+            document.getElementById(invalidFields[0].stringId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        } else {
+            this._finishTaskService.validateDataAndFinish();
+        }
     }
 
     collapse() {
@@ -229,7 +242,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canAssign(): boolean {
-        return this._taskEventService.canAssign();
+        return this._taskEventService.canAssign() && this.getAssignTitle() !== '';
     }
 
     public canReassign(): boolean {
@@ -237,11 +250,11 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canCancel(): boolean {
-        return this._taskEventService.canCancel();
+        return this._taskEventService.canCancel() && this.getCancelTitle() !== '';
     }
 
     public canFinish(): boolean {
-        return this._taskEventService.canFinish();
+        return this._taskEventService.canFinish() && this.getFinishTitle() !== '';
     }
 
     public canCollapse(): boolean {
@@ -249,23 +262,27 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canDo(action): boolean {
-        return this._taskEventService.canDo(action);
+        return this._taskEventService.canDo(action) && this.getDelegateTitle() !== '';
     }
 
     public getAssignTitle(): string {
-        return this.taskPanelData.task.assignTitle ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
+        return (this.taskPanelData.task.assignTitle === '' || this.taskPanelData.task.assignTitle)
+            ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
     }
 
     public getCancelTitle(): string {
-        return this.taskPanelData.task.cancelTitle ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
+        return (this.taskPanelData.task.cancelTitle === '' || this.taskPanelData.task.cancelTitle)
+            ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
     }
 
     public getDelegateTitle(): string {
-        return this.taskPanelData.task.delegateTitle ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
+        return (this.taskPanelData.task.delegateTitle === '' || this.taskPanelData.task.delegateTitle)
+            ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
     }
 
     public getFinishTitle(): string {
-        return this.taskPanelData.task.finishTitle ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
+        return (this.taskPanelData.task.finishTitle === '' || this.taskPanelData.task.finishTitle)
+            ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
     }
 
     public canDisable(type: string): boolean {

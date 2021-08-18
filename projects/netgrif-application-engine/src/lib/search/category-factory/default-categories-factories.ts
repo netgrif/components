@@ -2,6 +2,7 @@ import {Category} from '../models/category/category';
 import {CategoryFactory} from './category-factory';
 import {CaseTitle} from '../models/category/case/case-title';
 import {CaseVisualId} from '../models/category/case/case-visual-id';
+import {CaseStringId} from '../models/category/case/case-string-id';
 import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseProcess} from '../models/category/case/case-process';
 import {CaseTask} from '../models/category/case/case-task';
@@ -23,7 +24,7 @@ import {CaseCreationDateTime} from '../models/category/case/case-creation-date-t
  * [duplicate()]{@link Category#duplicate} method.
  *
  * @returns an Array containing the default case search categories: {@link CaseDataset}, {@link CaseTitle}, {@link CaseCreationDate},
- * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor} and {@link CaseVisualId}
+ * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor}, {@link CaseVisualId} and {@link CaseStringId}
  */
 export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     const cats = [
@@ -35,6 +36,7 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
         factory.get(CaseTask),
         factory.get(CaseAuthor),
         factory.get(CaseVisualId),
+        factory.get(CaseStringId),
     ];
     cats.forEach(cat => cat.destroy());
     return cats;

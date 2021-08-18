@@ -72,7 +72,8 @@
             "errSecond": "Title is required.",
             "errThird": "Color is required.",
             "noNets": "No allowed Nets",
-            "createCase": "Successful create new case"
+            "createCase": "Successful create new case",
+            "defaultCaseName": "with default case name"
         },
         "user": {
             "assign": "User Assign",
@@ -96,6 +97,10 @@
                 "visualId": {
                     "name": "Case visual ID",
                     "placeholder": "Enter case visual ID"
+                },
+                "stringId": {
+                    "name": "Case ID",
+                    "placeholder": "Enter case ID"
                 },
                 "author": {
                     "name": "Case author",

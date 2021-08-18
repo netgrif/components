@@ -13,6 +13,7 @@ export enum Categories {
     CASE_TASK = 'case_task',
     CASE_TITLE = 'case_title',
     CASE_VISUAL_ID = 'case_visual_id',
+    CASE_STRING_ID = 'case_string_id',
 
     // Task categories
     TASK_ASSIGNEE = 'task_assignee',

@@ -15,6 +15,7 @@ import {Category} from '../models/category/category';
 import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseCreationDate} from '../models/category/case/case-creation-date';
 import {CaseTitle} from '../models/category/case/case-title';
+import {CaseStringId} from '../models/category/case/case-string-id';
 import {Predicate} from '../models/predicate/predicate';
 import {ProcessService} from '../../process/process.service';
 import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
@@ -75,7 +76,8 @@ export class HeaderSearchService implements OnDestroy {
             {k: CaseMetaField.VISUAL_ID, v: CaseVisualId},
             {k: CaseMetaField.TITLE, v: CaseTitle},
             {k: CaseMetaField.CREATION_DATE, v: CaseCreationDate},
-            {k: CaseMetaField.AUTHOR, v: CaseAuthor}
+            {k: CaseMetaField.AUTHOR, v: CaseAuthor},
+            {k: CaseMetaField.MONGO_ID, v: CaseStringId}
         ].forEach(pair => {
             this._typeToCategory.set(pair.k, this._categoryFactory.getWithDefaultOperator(pair.v));
         });
