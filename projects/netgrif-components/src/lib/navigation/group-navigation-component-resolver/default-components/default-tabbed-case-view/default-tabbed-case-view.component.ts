@@ -24,6 +24,7 @@ import {
     filterCaseTabbedDataFilterFactory,
     filterCaseTabbedDataSearchCategoriesFactory
 } from '../model/factory-methods';
+import {UserService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-default-tabbed-case-view',
@@ -57,8 +58,9 @@ export class DefaultTabbedCaseViewComponent extends TabbedCaseView implements Af
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
-                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
-        super(caseViewService, loggerService, injectedTabData);
+                @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData,
+                userService: UserService) {
+        super(caseViewService, loggerService, injectedTabData, userService);
     }
 
     ngAfterViewInit(): void {
