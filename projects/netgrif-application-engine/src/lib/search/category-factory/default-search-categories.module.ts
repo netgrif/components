@@ -11,6 +11,8 @@ import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskTask} from '../models/category/task/task-task';
 import {TaskProcess} from '../models/category/task/task-process';
 import {TaskRole} from '../models/category/task/task-role';
+import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
+import {CaseStringId} from '../models/category/case/case-string-id';
 
 
 @NgModule({
@@ -23,10 +25,12 @@ import {TaskRole} from '../models/category/task/task-role';
                 CaseDataset,
                 CaseTitle,
                 CaseCreationDate,
+                CaseCreationDateTime,
                 CaseProcess,
                 CaseTask,
                 CaseAuthor,
-                CaseVisualId
+                CaseVisualId,
+                CaseStringId,
             ]
         }, {
             provide: NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
@@ -34,7 +38,7 @@ import {TaskRole} from '../models/category/task/task-role';
                 TaskAssignee,
                 TaskTask,
                 TaskProcess,
-                TaskRole
+                TaskRole,
             ]
         }
     ]

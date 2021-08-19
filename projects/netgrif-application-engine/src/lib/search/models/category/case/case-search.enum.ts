@@ -5,6 +5,5 @@ export enum CaseSearch {
     TITLE = 'title',
     VISUAL_ID = 'visualId',
     ENABLED_ROLES = 'enabledRoles',
-    AUTHOR_EMAIL = 'authorEmail',
-    AUTHOR_NAME = 'authorName'
+    AUTHOR = 'author',
 }

@@ -110,20 +110,22 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     }
 
     protected resolveNavigation(): void {
+        let nodes;
         if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
-            this.resolveNavigationNodesWithOffsetRoot();
+            nodes = this.resolveNavigationNodesWithOffsetRoot();
         } else {
-            this.dataSource.data = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
-            this.resolveLevels(this.dataSource.data);
+            nodes = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
         }
+        this.dataSource.data = nodes;
+        this.resolveLevels(this.dataSource.data);
     }
 
-    protected resolveNavigationNodesWithOffsetRoot(): void {
+    protected resolveNavigationNodesWithOffsetRoot(): Array<NavigationNode> {
         const view = this._config.getViewByPath(this.viewPath);
         if (view && view.children) {
-            this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
+            return this.resolveNavigationNodes(view.children, this.parentUrl);
         }
-        this.resolveLevels(this.dataSource.data);
+        return this.dataSource.data;
     }
 
     protected resolveNavigationNodes(views: Views, parentUrl: string): Array<NavigationNode> {
