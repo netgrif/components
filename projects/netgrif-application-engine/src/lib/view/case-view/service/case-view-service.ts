@@ -28,6 +28,7 @@ import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-refer
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {SortableView} from '../../abstract/sortable-view';
+import {NewCaseCreationConfigurationData} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
 
 @Injectable()
 export class CaseViewService extends SortableView implements OnDestroy {
@@ -185,10 +186,14 @@ export class CaseViewService extends SortableView implements OnDestroy {
         return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
 
-    public createNewCase(): Observable<Case> {
+    public createNewCase(newCaseCreationConfiguration: NewCaseCreationConfigurationData = {
+        enableCaseTitle: true,
+        isCaseTitleRequired: true
+    }): Observable<Case> {
         const myCase = new Subject<Case>();
         this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
-            allowedNets$: this.getNewCaseAllowedNets()
+            allowedNets$: this.getNewCaseAllowedNets(),
+            newCaseCreationConfiguration
         }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
@@ -198,6 +203,24 @@ export class CaseViewService extends SortableView implements OnDestroy {
             myCase.complete();
         });
         return myCase.asObservable();
+    }
+
+    public createDefaultNewCase(): Observable<Case> {
+        const myCase = new Subject<Case>();
+        this.getNewCaseAllowedNets().subscribe((nets: PetriNetReferenceWithPermissions[]) => {
+            this._caseResourceService.createCase({
+                title: null,
+                color: 'panel-primary-icon',
+                netId: nets[0].stringId
+            }).subscribe((response: Case) => {
+                this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
+                    + ' ' + this._translate.instant('side-menu.new-case.defaultCaseName'));
+                this.reload();
+                myCase.next(response);
+                myCase.complete();
+            }, error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error));
+        });
+        return myCase;
     }
 
     protected getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
@@ -214,6 +237,10 @@ export class CaseViewService extends SortableView implements OnDestroy {
                 })
             );
         }
+    }
+
+    public getAllowedNetsCount(): number {
+        return this._allowedNetsService.allowedNets.length;
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {

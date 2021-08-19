@@ -13,6 +13,7 @@ import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {Validation} from '../../data-fields/models/validation';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -124,6 +125,18 @@ export abstract class TaskContentService implements OnDestroy {
         return valid && validDisabled;
     }
 
+    /**
+     * Finds invalid data of task
+     *
+     * @returns array of invalid datafields
+     */
+    public getInvalidTaskData(): Array<DataField<any>> {
+        const invalidFields = [];
+        this._task.dataGroups.forEach(group => invalidFields.push(...group.fields.filter(field =>
+            (!field.valid && !field.disabled) || (!field.validRequired && !field.disabled))));
+        return invalidFields;
+    }
+
     public validateDynamicEnumField(): boolean {
         if (!this._task || !this._task.dataGroups) {
             return false;
@@ -199,34 +212,47 @@ export abstract class TaskContentService implements OnDestroy {
 
                     const updatedField = chFields[field.stringId];
                     Object.keys(updatedField).forEach(key => {
-                        if (key === 'value') {
-                            field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
-                        } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
-                            field.behavior = updatedField.behavior[this._task.transitionId];
-                        } else if (key === 'choices') {
-                            const newChoices: EnumerationFieldValue[] = [];
-                            if (updatedField.choices instanceof Array) {
-                                updatedField.choices.forEach(it => {
-                                    newChoices.push({key: it, value: it} as EnumerationFieldValue);
+                        switch (key) {
+                            case 'type':
+                                // type is just an information, not an update. A field cannot change its type
+                                return; // continue - the field does not need updating, since nothing changed
+                            case 'value':
+                                field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
+                                break;
+                            case 'behavior':
+                                if (updatedField.behavior[this._task.transitionId]) {
+                                    // TODO NGSD-489 fix behavior resolution
+                                    field.behavior = updatedField.behavior[this._task.transitionId];
+                                } else {
+                                    // ignore the behavior update, since it does not affect this task
+                                    return; // continue - the field does not need updating, since nothing changed
+                                }
+                                break;
+                            case 'choices':
+                                const newChoices: Array<EnumerationFieldValue> = [];
+                                if (updatedField.choices instanceof Array) {
+                                    updatedField.choices.forEach(it => {
+                                        newChoices.push({key: it, value: it} as EnumerationFieldValue);
+                                    });
+                                } else {
+                                    Object.keys(updatedField.choices).forEach(choiceKey => {
+                                        newChoices.push({key: choiceKey, value: updatedField.choices[choiceKey]} as EnumerationFieldValue);
+                                    });
+                                }
+                                (field as EnumerationField | MultichoiceField).choices = newChoices;
+                                break;
+                            case 'options':
+                                const newOptions = [];
+                                Object.keys(updatedField.options).forEach(optionKey => {
+                                    newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                                 });
-                            } else {
-                                Object.keys(updatedField.choices).forEach(choiceKey => {
-                                    newChoices.push({key: choiceKey, value: updatedField.choices[choiceKey]} as EnumerationFieldValue);
-                                });
-                            }
-                            (field as EnumerationField | MultichoiceField).choices = newChoices;
-                        } else if (key === 'options') {
-                            const newOptions = [];
-                            Object.keys(updatedField.options).forEach(optionKey => {
-                                newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
-                            });
-                            (field as EnumerationField | MultichoiceField).choices = newOptions;
-                        } else if (key === 'validations') {
-                            field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
-
-                        } else if (key !== 'type') {
-                            field[key] = updatedField[key];
-
+                                (field as EnumerationField | MultichoiceField).choices = newOptions;
+                                break;
+                            case 'validations':
+                                field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
+                                break;
+                            default:
+                                field[key] = updatedField[key];
                         }
                         field.update();
                     });

@@ -16,7 +16,7 @@ export enum MultichoiceFieldView {
     LIST = 'list'
 }
 
-export class MultichoiceField  extends DataField<Array<string>> {
+export class MultichoiceField extends DataField<Array<string>> {
 
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,

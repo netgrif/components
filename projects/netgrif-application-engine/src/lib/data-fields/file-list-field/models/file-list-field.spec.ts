@@ -1,4 +1,4 @@
-import { FileListField } from './file-list-field';
+import {FileListField} from './file-list-field';
 
 describe('FileListField', () => {
   it('should create an instance', () => {

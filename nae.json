@@ -275,6 +275,71 @@
                 }
             }
         },
+        "demo-title-config": {
+            "layout": {
+                "name": "tabView",
+                "componentName": "Title config",
+                "params": {
+                    "tabs": [
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Default"
+                            },
+                            "canBeClosed": false,
+                            "order": -1,
+                            "enableCaseTitle": true,
+                            "isCaseTitleRequired": true
+                        },
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Viac sietí, bez title"
+                            },
+                            "canBeClosed": false,
+                            "order": 0,
+                            "enableCaseTitle": false,
+                            "isCaseTitleRequired": false
+                        },
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Jedna sieť, title optional"
+                            },
+                            "canBeClosed": false,
+                            "order": 1,
+                            "enableCaseTitle": true,
+                            "isCaseTitleRequired": false
+                        }
+                    ],
+                    "allowedNets": [
+                        "all_data"
+                    ],
+                    "defaultTaskView": {
+                        "view": {
+                            "name": "taskView"
+                        }
+                    }
+                }
+            },
+            "component": {
+                "class": "TitleConfigComponent",
+                "from": "./doc/title-config-example/title-config-example.component"
+            },
+            "access": "private",
+            "routing": {
+                "path": "titleConfig"
+            }
+        },
         "demo-workflow-view": {
             "component": {
                 "class": "WorkflowViewExampleComponent",

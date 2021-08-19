@@ -24,6 +24,7 @@ import {MoreThanEqualDate} from '../models/operator/more-than-equal-date';
 import {MoreThanEqualDateTime} from '../models/operator/more-than-equal-date-time';
 import {LessThanEqualDate} from '../models/operator/less-than-equal-date';
 import {LessThanEqualDateTime} from '../models/operator/less-than-equal-date-time';
+import {NotEqualsDateTime} from '../models/operator/not-equals-date-time';
 
 /**
  * A service that resolves {@link Operators} (or custom string) into a concrete (@link Operator) implementation class.
@@ -86,6 +87,8 @@ export class OperatorResolverService {
                 return NotEquals;
             case Operators.NOT_EQUALS_DATE:
                 return NotEqualsDate;
+            case Operators.NOT_EQUALS_DATE_TIME:
+                return NotEqualsDateTime;
             case Operators.SUBSTRING:
                 return Substring;
         }

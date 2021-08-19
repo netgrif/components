@@ -193,6 +193,8 @@ export interface Views {
 export interface View {
     layout?: {
         name: string;
+        enableCaseTitle?: boolean;
+        isCaseTitleRequired?: boolean;
         params?: {
             orientation?: string;
             [k: string]: any;
@@ -243,6 +245,7 @@ export interface Access {
     role?: Array<string> | string | RoleAccess | Array<RoleAccess>;
     group?: Array<string> | string;
     authority?: Array<string> | string;
+
     [k: string]: any;
 }
 
