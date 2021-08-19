@@ -392,18 +392,18 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 continue;
             }
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
-            const allowedRoleIds = extractRoles(navConfigDatagroups.slice(index,
+            const allowedRoles = extractRoles(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_PERMITTED_ROLES_FIELD_ID_SUFFIX, true);
 
-            const bannedRoleIds = extractRoles(navConfigDatagroups.slice(index,
+            const bannedRoles = extractRoles(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX, true);
 
 
-            if ((allowedRoleIds.some(roleId => this._userService.hasRoleById(roleId)) ||
-                allowedRoleIds.length === 0)
-                && !bannedRoleIds.some(roleId => this._userService.hasRoleById(roleId))) {
+            if ((allowedRoles.some(roleId => this._userService.hasRoleByIdentifier(roleId.split(':')[0], roleId.split(':')[1]))
+                    || allowedRoles.length === 0)
+                && !bannedRoles.some(roleId => this._userService.hasRoleByIdentifier(roleId.split(':')[0], roleId.split(':')[1]))) {
                 result.push(newNode);
             }
         }
