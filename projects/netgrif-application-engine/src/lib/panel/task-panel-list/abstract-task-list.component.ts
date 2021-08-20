@@ -1,6 +1,6 @@
 import {AfterViewInit, EventEmitter, Inject, Input, OnDestroy, Optional, Output, ViewChild} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
@@ -42,6 +42,7 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
     private redirectTaskId: string;
+    private unsubscribe$: Subject<void>;
 
     protected constructor(protected _taskViewService: TaskViewService,
                           protected _log: LoggerService,
@@ -50,6 +51,7 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
         super(injectedTabData);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.taskPanelRefs = new Map<string, MatExpansionPanel>();
+        this.unsubscribe$ = new Subject<void>();
     }
 
     ngAfterViewInit() {
@@ -59,6 +61,7 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
     ngOnDestroy(): void {
         super.ngOnDestroy();
         this.taskEvent.complete();
+        this.unsubscribe$.complete();
     }
 
     public trackBy(idx: number, item: TaskPanelData): any {
@@ -92,6 +95,7 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
                 if (!!task && !task.initiallyExpanded) {
                     this.taskPanelRefs.get(this.redirectTaskId).open();
                     this.taskPanelRefs.get(this.redirectTaskId).expanded = true;
+                    this.unsubscribe$.next();
                 }
             });
         });

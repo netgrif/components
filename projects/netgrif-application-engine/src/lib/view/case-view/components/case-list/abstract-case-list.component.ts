@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {CaseViewService} from '../../service/case-view-service';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Case} from '../../../../resources/interface/case';
 import {HeaderColumn} from '../../../../header/models/header-column';
 import {LoggerService} from '../../../../logger/services/logger.service';
@@ -17,7 +17,7 @@ import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-vi
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {filter, takeUntil} from 'rxjs/operators';
 
 export abstract class AbstractCaseListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
@@ -34,6 +34,7 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
     public cases$: Observable<Array<Case>>;
     public loading$: Observable<boolean>;
     private redirectCaseId: string;
+    private unsubscribe$: Subject<void>;
 
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _log: LoggerService,
@@ -41,6 +42,7 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
                           protected route?: ActivatedRoute) {
         super(injectedTabData);
         this.cases$ = this._caseViewService.cases$;
+        this.unsubscribe$ = new Subject<void>();
         this.loading$ = this._caseViewService.loading$;
         this.caseClick = new EventEmitter<Case>();
         this.onRedirect();
@@ -49,6 +51,7 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
     ngOnDestroy(): void {
         super.ngOnDestroy();
         this.caseClick.complete();
+        this.unsubscribe$.complete();
     }
 
     public trackBy(i): any {
@@ -77,11 +80,12 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
 
         this.route.queryParams.pipe(filter(pm => !!pm['caseId'])).subscribe(paramMap => {
                this.redirectCaseId = paramMap['caseId'];
-               this.cases$.pipe().subscribe(cases => {
+               this.cases$.pipe(takeUntil(this.unsubscribe$)).subscribe(cases => {
                    if (cases !== undefined && cases.length > 0) {
                        const _case = cases.find(c => c.stringId === this.redirectCaseId);
                        if (_case !== undefined) {
                            this.caseClick.emit(_case);
+                           this.unsubscribe$.next();
                        }
                    }
                });
