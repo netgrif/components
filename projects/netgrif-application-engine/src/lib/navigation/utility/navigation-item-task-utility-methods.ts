@@ -20,7 +20,7 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = 
         throw new Error('The provided task data does not belong to a Navigation menu item task. Icon and title cannot be extracted');
     }
 
-    // "first" datagroup has name and icon
+    // "first" datagroup has name and icon and role authorization entries
     const nameField = getField(dataSection[0].fields,
         GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX, taskReffed);
 
@@ -44,6 +44,27 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = 
 }
 
 /**
+ * Based on provided parameter extracts allowed or banned roles into an Array of strings from a section of the navigation item task data.
+ * Each item has format ROLE_IMPORT_ID:NET_IMPORT_ID
+ * @param dataSection an array containing the data groups that correspond to a single navigation entry
+ * @param roleFieldId ID of field containing banned or allowed role IDs
+ * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed to NOT be task reffed by default.
+ * @returns an Array of string values representing role IDs
+ */
+export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string, taskReffed = true): Array<string> {
+    if (dataSection.length === 0) {
+        throw new Error('The provided task data does not belong to a Navigation menu item task. Role entries cannot be extracted');
+    }
+
+    const roleIds = getField(dataSection[0].fields, roleFieldId, taskReffed);
+    if (roleIds === undefined) {
+        throw new Error('Navigation entry role authorization field could not be resolved');
+    }
+
+    return (roleIds as unknown as MultichoiceField).choices.map(choice => choice.key);
+}
+
+/**
  * Extracts the data and creates a filter object from the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
  * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed TO BE task reffed by default.
@@ -60,21 +81,4 @@ export function extractFilter(dataSection: Array<DataGroup>, taskReffed = true):
         throw new Error('Navigation entry filter could not be resolved');
     }
     return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
-}
-
-/**
- * Based on provided parameter extracts allowed or banned roles into an Array of strings from a section of the navigation item task data.
- * @param dataSection an array containing the data groups that correspond to a single navigation entry
- * @param roleFieldId ID of field containing banned or allowed role IDs
- * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed to NOT be task reffed by default.
- * @returns an Array of string values representing role IDs
- */
-export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string, taskReffed = true): Array<string> {
-    const roleIds = getField(dataSection[0].fields, roleFieldId, taskReffed);
-
-    if (dataSection.length === 0) {
-        throw new Error('The provided task data does not belong to a Navigation menu item task. Icon and title cannot be extracted');
-    }
-
-    return (roleIds as unknown as MultichoiceField).choices.map(choice => choice.key);
 }
