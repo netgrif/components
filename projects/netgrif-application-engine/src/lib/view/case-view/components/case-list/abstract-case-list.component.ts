@@ -16,7 +16,8 @@ import {LoggerService} from '../../../../logger/services/logger.service';
 import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-virtual-scroll.component';
 import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../../tabs/interfaces';
-import {ActivatedRoute, Route} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
+import {filter} from 'rxjs/operators';
 
 export abstract class AbstractCaseListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
@@ -74,10 +75,9 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
             return;
         }
 
-        this.route.queryParams.subscribe(paramMap => {
-           if (!!paramMap['caseId']) {
+        this.route.queryParams.pipe(filter(pm => !!pm['caseId'])).subscribe(paramMap => {
                this.redirectCaseId = paramMap['caseId'];
-               this.cases$.subscribe(cases => {
+               this.cases$.pipe().subscribe(cases => {
                    if (cases !== undefined && cases.length > 0) {
                        const _case = cases.find(c => c.stringId === this.redirectCaseId);
                        if (_case !== undefined) {
@@ -85,7 +85,6 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
                        }
                    }
                });
-           }
         });
     }
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, EventEmitter, Inject, Input, OnDestroy, Optional, Output, ViewChild} from '@angular/core';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
 import {Observable} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
@@ -11,6 +11,7 @@ import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injecti
 import {InjectedTabData} from '../../tabs/interfaces';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ActivatedRoute} from '@angular/router';
+import {filter} from 'rxjs/operators';
 
 export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
 
@@ -84,17 +85,15 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
     }
 
     public onRedirect() {
-        this.route.queryParams.subscribe(paramMap => {
-            if (!!paramMap['taskId']) {
-                this.redirectTaskId = paramMap['taskId'];
-                this.tasks$.subscribe(tasks => {
-                    const task = tasks.find(t => t.task.stringId === this.redirectTaskId);
-                    if (!!task && !task.initiallyExpanded) {
-                        this.taskPanelRefs.get(this.redirectTaskId).open();
-                        this.taskPanelRefs.get(this.redirectTaskId).expanded = true;
-                    }
-                });
-            }
+        this.route.queryParams.pipe(filter(pm => !!pm['taskId'])).subscribe(pm => {
+            this.redirectTaskId = pm['taskId'];
+            this.tasks$.pipe().subscribe(tasks => {
+                const task = tasks.find(t => t.task.stringId === this.redirectTaskId);
+                if (!!task && !task.initiallyExpanded) {
+                    this.taskPanelRefs.get(this.redirectTaskId).open();
+                    this.taskPanelRefs.get(this.redirectTaskId).expanded = true;
+                }
+            });
         });
     }
 }
