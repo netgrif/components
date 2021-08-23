@@ -41,7 +41,7 @@ export class NewCaseComponent extends AbstractNewCaseComponent {
     }
 
     checkVersion(viewValue: any): void {
-        const currentOption = typeof viewValue === 'string' ? undefined : viewValue.version;
+        const currentOption = typeof viewValue === 'string' || viewValue === null ? undefined : viewValue.version;
         if (currentOption === undefined) {
             this.netVersion = '';
         }

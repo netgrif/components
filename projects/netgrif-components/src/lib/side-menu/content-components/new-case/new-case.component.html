@@ -24,7 +24,7 @@
             <input matInput placeholder="Title" autocomplete="off" [formControl]="titleFormControl" required (keyup.enter)="nextStep()">
         </mat-form-field>
         <div>
-            <button mat-button (click)="stepper1.reset()">{{'side-menu.new-case.reset' | translate}}</button>
+            <button mat-button (click)="stepper1.reset(); checkVersion(processFormControl.value)">{{'side-menu.new-case.reset' | translate}}</button>
             <button mat-button (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
         </div>
     </mat-step>

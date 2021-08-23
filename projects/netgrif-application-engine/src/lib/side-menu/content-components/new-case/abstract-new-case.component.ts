@@ -89,7 +89,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         this.filteredOptions$ = combineLatest([this._options$, this.processFormControl.valueChanges.pipe(startWith(''))]).pipe(
             map(sources => {
                 const options = sources[0];
-                const input = typeof sources[1] === 'string' ? sources[1] : sources[1].viewValue;
+                const input = typeof sources[1] === 'string' || sources[1] === null ? sources[1] : sources[1].viewValue;
                 return input ? this._filter(input, options) : options.slice();
             }),
             tap(filteredOptions => {
@@ -209,7 +209,8 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         }
 
         const caze = this._translate.instant('side-menu.new-case.case');
-        const name = typeof this.processFormControl.value === 'string' ? undefined : this.processFormControl.value.viewValue;
+        const name = typeof this.processFormControl.value === 'string' || this.processFormControl.value === null ?
+            undefined : this.processFormControl.value.viewValue;
         const title = name === undefined ? caze : caze + ' - ' + name;
         if (title.length > size) {
             const tmp = title.slice(0, size);
