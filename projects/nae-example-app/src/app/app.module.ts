@@ -62,7 +62,8 @@ import {
     AuthenticationComponentModule,
     CaseViewComponentModule,
     DashboardComponentModule,
-    DataFieldsComponentModule, EmailSubmissionFormComponentModule,
+    DataFieldsComponentModule,
+    EmailSubmissionFormComponentModule,
     ForgottenPasswordFormComponentModule,
     HeaderComponentModule,
     LoginFormComponentModule,
@@ -81,11 +82,12 @@ import {
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { ResetPasswordFormComponent } from './doc/forms/reset-password-form/reset-password-form.component';
-import { PublicTaskViewComponent } from './doc/public-task-view/public-task-view.component';
-import { PublicWorkflowViewComponent } from './doc/public-workflow-view/public-workflow-view.component';
+import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
+import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
+import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
-import { GroupViewComponent } from './doc/group-view/group-view.component';
+import {GroupViewComponent} from './doc/group-view/group-view.component';
+import {AutocompleteComponent} from './doc/autocomplete/autocomplete.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -129,6 +131,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicWorkflowViewComponent,
         PublicResolverComponent,
         GroupViewComponent,
+        AutocompleteComponent,
     ],
     imports: [
         BrowserModule,
@@ -178,6 +181,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         EmailSubmissionFormComponentModule,
     ],
     entryComponents: [
+        AutocompleteComponent,
         ContentComponent,
         UserInviteComponent,
         TabbedCaseViewComponent,

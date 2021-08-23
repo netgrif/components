@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {ViewService, ConfigurationService, LoggerService} from '@netgrif/application-engine';
+import {ConfigurationService, LoggerService, ViewService} from '@netgrif/application-engine';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';
 import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
 import {PasswordFormComponent} from './doc/forms/email-form/password-form.component';
@@ -31,6 +31,7 @@ import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.c
 import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import {GroupViewComponent} from './doc/group-view/group-view.component';
+import {AutocompleteComponent} from './doc/autocomplete/autocomplete.component';
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +41,7 @@ export class NaeExampleAppViewService extends ViewService {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([
+            {id: 'AutocompleteComponent', class: AutocompleteComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
             {id: 'UserInviteComponent', class: UserInviteComponent},
             {id: 'TreeViewExampleComponent', class: TreeViewExampleComponent},
@@ -69,6 +71,9 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
             {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: PublicResolverComponent},
-            {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent}], configurationService, router, loggerService);
+            {
+                id: 'ResetPasswordFormComponent',
+                class: ResetPasswordFormComponent
+            }], configurationService, router, loggerService);
     }
 }

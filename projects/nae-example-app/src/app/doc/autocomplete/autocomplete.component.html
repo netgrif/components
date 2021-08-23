@@ -1,0 +1,17 @@
+<div class="task-tab-background full-height">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-margin full-height">
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <span class="font-size-20">{{'autocomplete.hint' | translate}}</span>
+                <button mat-mini-fab color="primary" (click)="createNewCase()">
+                    <mat-icon class="net-upload" aria-hidden="false">add</mat-icon>
+                </button>
+            </div>
+        </mat-card>
+        <nc-header #header type="task" [maxHeaderColumns]="5" [responsiveHeaders]="true"
+                   class="task-panel-padding-mini"></nc-header>
+        <nc-task-list [allowMultiOpen]="false" [tasks$]="tasks$" [loading$]="loading$" [textEllipsis]="true"
+                      [forceLoadDataOnOpen]="true" [responsiveBody]="true"
+                      [selectedHeaders$]="selectedHeaders$" fxFlex></nc-task-list>
+    </div>
+</div>

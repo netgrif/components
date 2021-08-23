@@ -13,5 +13,9 @@
     "translateNavTest": "jeden",
     "translateNav": {
         "Test": "jeden-jeden"
+    },
+    "autocomplete": {
+        "createCaseError": "Nie je nahratá sieť z identifikátorom 'autocomplete'.",
+        "hint": "Pre účely tohto testu je potrebné nahrať sieť 'autocomplete'."
     }
 }
