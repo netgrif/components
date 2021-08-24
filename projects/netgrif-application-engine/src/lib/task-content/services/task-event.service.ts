@@ -85,19 +85,11 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
      */
     public canCancel(): boolean {
         return !!this._task
-            && (
-                (
-                    !!this._task.user
-                    && this._userComparator.compareUsers(this._task.user)
-                    && ((this._task.assignedUserPolicy === undefined || this._task.assignedUserPolicy.cancel === undefined)
-                        || this._task.assignedUserPolicy.cancel)
-                ) || (
-                    !!this._task.user
-                    && this.canDo('cancel')
-                ) && (
-                    this._task.user.id === this._userService.user.id
-                )
-            );
+            && !!this._task.user
+            && this._userComparator.compareUsers(this._task.user)
+            && (this._task.assignedUserPolicy === undefined || this._task.assignedUserPolicy.cancel === undefined
+                || this._task.assignedUserPolicy.cancel)
+            && this.canDo('cancel');
     }
 
     /**
