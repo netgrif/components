@@ -33,6 +33,11 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
     private _subscription: Subscription;
+    private PanelWorkflowNet = 'panel.workflow.net';
+    private PanelWorkflowTitle = 'panel.workflow.title';
+    private PanelWorkflowVersion = 'panel.workflow.version';
+    private PanelWorkflowAuthor = 'panel.workflow.author';
+    private PanelWorkflowUpload = 'panel.workflow.upload';
 
     protected dataFieldsBehaviour: Behavior = {visible: true, editable: false};
 
@@ -42,11 +47,11 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
         super();
 
         this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
-            this.panelContent.netIdentifier.title = this._translate.instant('panel.workflow.net');
-            this.panelContent.title.title = this._translate.instant('panel.workflow.title');
-            this.panelContent.version.title = this._translate.instant('panel.workflow.version');
-            this.panelContent.author.title = this._translate.instant('panel.workflow.author');
-            this.panelContent.uploaded.title = this._translate.instant('panel.workflow.upload');
+            this.panelContent.netIdentifier.title = this._translate.instant(this.PanelWorkflowNet);
+            this.panelContent.title.title = this._translate.instant(this.PanelWorkflowTitle);
+            this.panelContent.version.title = this._translate.instant(this.PanelWorkflowVersion);
+            this.panelContent.author.title = this._translate.instant(this.PanelWorkflowAuthor);
+            this.panelContent.uploaded.title = this._translate.instant(this.PanelWorkflowUpload);
         });
     }
 
@@ -86,15 +91,15 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
      */
     protected createPanelContent(): WorkflowPanelContent {
         return {
-            netIdentifier: new TextField('', this._translate.instant('panel.workflow.net'),
+            netIdentifier: new TextField('', this._translate.instant(this.PanelWorkflowNet),
                 this.workflow.identifier, this.dataFieldsBehaviour),
-            title: new TextField('', this._translate.instant('panel.workflow.title'),
+            title: new TextField('', this._translate.instant(this.PanelWorkflowTitle),
                 this.workflow.title, this.dataFieldsBehaviour),
-            version: new TextField('', this._translate.instant('panel.workflow.version'),
+            version: new TextField('', this._translate.instant(this.PanelWorkflowVersion),
                 this.workflow.version, this.dataFieldsBehaviour),
-            author: new TextField('', this._translate.instant('panel.workflow.author'),
+            author: new TextField('', this._translate.instant(this.PanelWorkflowAuthor),
                 this.workflow.author.fullName, this.dataFieldsBehaviour),
-            uploaded: new DateTimeField('', this._translate.instant('panel.workflow.upload'),
+            uploaded: new DateTimeField('', this._translate.instant(this.PanelWorkflowUpload),
                 toMoment(this.workflow.createdDate), this.dataFieldsBehaviour)
         };
     }
