@@ -30,6 +30,7 @@ import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
@@ -54,6 +55,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
      * Emits notifications about task events
      */
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
+    @Output() panelRefOutput: EventEmitter<MatExpansionPanel>;
 
     public portal: ComponentPortal<any>;
     public panelRef: MatExpansionPanel;
@@ -86,6 +88,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _currencyPipe: CurrencyPipe) {
         super(_translate, _currencyPipe);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
+        this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
@@ -194,6 +197,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
 
     public setPanelRef(panelRef: MatExpansionPanel) {
         this.panelRef = panelRef;
+        this.panelRefOutput.emit(panelRef);
     }
 
     assign() {

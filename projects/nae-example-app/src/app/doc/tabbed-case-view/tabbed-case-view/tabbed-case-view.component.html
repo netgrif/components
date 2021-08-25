@@ -18,7 +18,7 @@
             <nc-header #header [type]="headerType" [maxHeaderColumns]="7" [responsiveHeaders]="true" class="case-header-padding" [ngStyle]="{'width': getWidth()}"></nc-header>
 
             <nc-case-list [selectedHeaders$]="selectedHeaders$" [showDeleteMenu]="true" [width]="getWidth()"
-                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true"></nc-case-list>
+                          (caseClick)="handleCaseClick($event)" [responsiveBody]="true" fxFlex [textEllipsis]="true" [redirectEnabled]="true"></nc-case-list>
         </div>
     </div>
 </div>

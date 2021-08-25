@@ -38,7 +38,8 @@
             "delegate": "Delegieren",
             "finish": "Abschließen",
             "cancel": "Stornieren",
-            "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren."
+            "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren.",
+            "redirecting": "Umleiten..."
         }
     },
     "side-menu": {

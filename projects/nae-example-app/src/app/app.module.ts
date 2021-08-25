@@ -68,7 +68,7 @@ import {
     LoginFormComponentModule,
     NavigationComponentModule,
     PanelComponentModule,
-    ProfileComponentModule,
+    ProfileComponentModule, RedirectComponentModule,
     RegistrationFormComponentModule,
     SearchComponentModule,
     SideMenuComponentModule,
@@ -91,6 +91,7 @@ import { DemoTitleConfigContent1CaseViewComponent } from './doc/demo-title-confi
 import { DemoTitleConfigContent2CaseViewComponent } from './doc/demo-title-config/content/2/demo-title-config-content2-case-view.component';
 import { DemoTitleConfigContent3CaseViewComponent } from './doc/demo-title-config/content/3/demo-title-config-content3-case-view.component';
 import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
+import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -134,6 +135,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicWorkflowViewComponent,
         PublicResolverComponent,
         GroupViewComponent,
+        ExampleRedirectComponent,
         DemoTitleConfigContent0TaskViewComponent,
         DemoTitleConfigContent1CaseViewComponent,
         DemoTitleConfigContent2CaseViewComponent,
@@ -186,6 +188,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         WorkflowViewComponentModule,
         NgxChartsModule,
         EmailSubmissionFormComponentModule,
+        RedirectComponentModule
     ],
     entryComponents: [
         ContentComponent,
@@ -221,6 +224,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicTaskViewComponent,
         PublicWorkflowViewComponent,
         PublicResolverComponent,
+        GroupViewComponent,
+        ExampleRedirectComponent,
         GroupViewComponent,
         DemoTitleConfigContent0TaskViewComponent,
         DemoTitleConfigContent1CaseViewComponent,

@@ -38,7 +38,8 @@
             "delegate": "Delegate",
             "finish": "Finish",
             "cancel": "Cancel",
-            "noData": "This task has no data. Finish to continue."
+            "noData": "This task has no data. Finish to continue.",
+            "redirecting": "Redirecting..."
         }
     },
     "side-menu": {
