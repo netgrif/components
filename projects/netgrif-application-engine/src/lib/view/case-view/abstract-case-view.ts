@@ -5,7 +5,6 @@ import {CaseViewService} from './service/case-view-service';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
 import {Authority} from '../../resources/interface/authority';
 import {OverflowService} from '../../header/services/overflow.service';
-import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 
 
 export abstract class AbstractCaseView extends ViewWithHeaders {
@@ -16,8 +15,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public loading: boolean;
     public authorityToCreate: Array<string>;
 
-    protected constructor(protected _allowedNetsService: AllowedNetsService,
-                          protected _caseViewService: CaseViewService,
+    protected constructor(protected _caseViewService: CaseViewService,
                           protected _overflowService?: OverflowService,
                           protected _authority: Array<Authority> = [{authority: 'ROLE_USER'}]) {
         super(_caseViewService);
@@ -35,7 +33,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public abstract handleCaseClick(clickedCase: Case): void;
 
     public hasAuthority(): boolean {
-        return (this._caseViewService.hasAuthority(this.authorityToCreate) && this._allowedNetsService.allowedNets.length > 0);
+        return (this._caseViewService.hasAuthority(this.authorityToCreate) && this._caseViewService.hasAllowedNets());
     }
 
     public getWidth() {

@@ -73,12 +73,11 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    constructor(allowedNetsService: AllowedNetsService,
-                caseViewService: CaseViewService,
+    constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(allowedNetsService, caseViewService, loggerService, injectedTabData, overflowService);
+        super(caseViewService, loggerService, injectedTabData, overflowService);
     }
 
     ngAfterViewInit(): void {

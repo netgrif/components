@@ -120,9 +120,8 @@ describe('AbstractCaseView', () => {
     template: ''
 })
 class TestCaseViewComponent extends AbstractCaseView {
-    constructor(allowedNetsService: AllowedNetsService,
-                caseViewService: CaseViewService) {
-        super(allowedNetsService, caseViewService);
+    constructor(caseViewService: CaseViewService) {
+        super(caseViewService);
     }
 
     handleCaseClick(clickedCase: Case): void {

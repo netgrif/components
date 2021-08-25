@@ -280,4 +280,8 @@ export class CaseViewService extends SortableView implements OnDestroy {
             this._user.hasRoleById(role) ? !!net.permissions[role][action] : false
         );
     }
+
+    public hasAllowedNets(): boolean {
+        return this._allowedNetsService.allowedNets.length > 0;
+    }
 }
