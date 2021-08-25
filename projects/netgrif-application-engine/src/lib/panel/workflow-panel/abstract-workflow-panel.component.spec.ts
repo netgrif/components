@@ -23,13 +23,13 @@ import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
-import en from 'projects/netgrif-application-engine/src/assets/i18n/en.json';
-import sk from 'projects/netgrif-application-engine/src/assets/i18n/sk.json';
+import {take} from 'rxjs/operators';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
     let oldTitle: string;
+    let translate: TranslateService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -55,6 +55,7 @@ describe('AbstractWorkflowPanelComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
+        translate = TestBed.inject(TranslateService);
     }));
 
     it('should create', () => {
@@ -65,15 +66,18 @@ describe('AbstractWorkflowPanelComponent', () => {
         expect(component.show(new MouseEvent('type'))).toEqual(false);
     });
 
-    it('should translate', () => {
-        component.translate.addLangs(['en-US', 'sk-SK', 'de-DE']);
-        component.translate.setTranslation('en-US', en, true);
-        component.translate.setTranslation('sk-SK', sk, true);
-        component.translate.use('sk-SK');
-        oldTitle = component.panelContent.netIdentifier.title;
-        expect(oldTitle).toEqual('Identifikátor siete');
-        component.translate.use('en-US');
-        expect(component.panelContent.netIdentifier.title).not.toEqual(oldTitle);
+    it('should translate', (done) => {
+        translate.onLangChange.pipe(take(2)).subscribe(() => {
+            if (translate.currentLang === 'sk-SK') {
+                oldTitle = component.panelContent.netIdentifier.title;
+                expect(oldTitle).toEqual('Identifikátor siete');
+                translate.use('en-US');
+            } else {
+                expect(component.panelContent.netIdentifier.title).not.toEqual(oldTitle);
+                done();
+            }
+        });
+        translate.use('sk-SK');
     });
 
     afterEach(() => {
@@ -86,7 +90,7 @@ describe('AbstractWorkflowPanelComponent', () => {
     template: ''
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
-    constructor(log: LoggerService, public translate: TranslateService, workflowService: WorkflowViewService) {
+    constructor(log: LoggerService, translate: TranslateService, workflowService: WorkflowViewService) {
         super(log, translate, workflowService);
     }
 }
