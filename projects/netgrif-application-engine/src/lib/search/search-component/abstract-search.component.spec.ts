@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, Type} from '@angular/core';
 import {AbstractSearchComponent} from './abstract-search.component';
 import {SearchService} from '../search-service/search.service';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -19,23 +19,18 @@ import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
-import {SideMenuService} from '../../side-menu/services/side-menu.service';
-import {NAE_SAVE_FILTER_COMPONENT} from '../../side-menu/content-components/injection-tokens';
-import {ComponentType} from '@angular/cdk/portal';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {UserFiltersService} from '../../filter/user-filters.service';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
-import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
+import {NAE_DEFAULT_CASE_SEARCH_CATEGORIES, NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
-import {defaultCaseSearchCategoriesFactory} from '../category-factory/default-categories-factories';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
 import {ViewIdService} from '../../user/services/view-id.service';
-import {NAE_FILTER_TEXT} from '../../panel/immediate/model/filter-text-injection-token';
-import {FilterType} from '../../filter/models/filter-type';
+import {DefaultSearchCategoriesModule} from '../category-factory/default-search-categories.module';
 
 describe('AbstractSearchComponent', () => {
     let component: TestSearchComponent;
@@ -48,6 +43,7 @@ describe('AbstractSearchComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
+                DefaultSearchCategoriesModule,
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -55,7 +51,7 @@ describe('AbstractSearchComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
-                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+                {provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES},
                 CategoryFactory,
                 SearchService,
                 {
@@ -104,7 +100,7 @@ class TestSearchComponent extends AbstractSearchComponent {
                 userFilterService: UserFiltersService,
                 allowedNetsService: AllowedNetsService,
                 viewIdService: ViewIdService,
-                @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Category<any>>,
+                @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Type<Category<any>>>,
                 @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
                 @Optional() @Inject(NAE_FILTERS_FILTER) filtersFilter: Filter) {
         super(searchService, logger, dialogService, translate, userFilterService, allowedNetsService, viewIdService,

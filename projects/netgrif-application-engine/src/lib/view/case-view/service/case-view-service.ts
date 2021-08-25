@@ -207,7 +207,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
 
     public createDefaultNewCase(): Observable<Case> {
         const myCase = new Subject<Case>();
-        this.getNewCaseAllowedNets().subscribe((nets: PetriNetReferenceWithPermissions[]) => {
+        this.getNewCaseAllowedNets().subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
             this._caseResourceService.createCase({
                 title: null,
                 color: 'panel-primary-icon',
@@ -306,5 +306,21 @@ export class CaseViewService extends SortableView implements OnDestroy {
         return Object.keys(net.permissions).some(role =>
             this._user.hasRoleById(role) ? !!net.permissions[role][action] : false
         );
+    }
+
+    /**
+     * Determines whether the current user has the [VIEW]{@link PermissionType#VIEW} permission on the current case
+     * @param aCase the tested case
+     * @returns `true` if the current user has the `VIEW` permission on the tested case, `false` otherwise.
+     */
+    public viewEnabled(aCase: Case): boolean {
+        const user = this._user.user;
+        const result = user.roles.some(role =>
+            !!aCase.permissions[role.stringId] && !aCase.permissions[role.stringId][PermissionType.VIEW]);
+
+        if (result) {
+            return false;
+        }
+        return !(!!aCase.users[user.id] && !aCase.permissions[user.id][PermissionType.VIEW]);
     }
 }

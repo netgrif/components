@@ -177,6 +177,14 @@ export abstract class ConfigurationService {
         }
     }
 
+    /**
+     * @returns the services configuration, or `undefined` if such configuration is not present.
+     */
+    public getServicesConfiguration(): Services | undefined {
+        const subtree = this.getConfigurationSubtree(['services']) as Services;
+        return subtree !== undefined ? this.deepCopy(subtree) as Services : undefined;
+    }
+
     private getView(searched: string, view: View): Array<string> {
         const paths = [];
         if (!!view.layout && view.layout.name === searched) {

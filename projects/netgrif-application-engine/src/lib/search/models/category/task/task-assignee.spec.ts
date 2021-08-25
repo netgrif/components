@@ -9,7 +9,7 @@ import {configureCategory} from '../../../../utility/tests/utility/configure-cat
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
-import {SearchAutocompleteOption} from '../search-autocomplete-option';
+import {mockUserAutocompleteValue} from '../../../../utility/tests/mocks/mock-user-autocomplete-value';
 
 describe('TaskAssignee', () => {
     let operatorService: OperatorService;
@@ -46,9 +46,9 @@ describe('TaskAssignee', () => {
     });
 
     it('should serialize complete instance', () => {
-        configureCategory(category, operatorService, Equals, [mockTaskAssigneeValue('Test User', 'userId')]);
+        configureCategory(category, operatorService, Equals, [mockUserAutocompleteValue('Test User', true, 'userId')]);
 
-        const mockedSerializedValue = mockTaskAssigneeValue('Test User', 'userId');
+        const mockedSerializedValue = mockUserAutocompleteValue('Test User', true, 'userId');
         delete mockedSerializedValue.icon;
 
         const metadata = category.createMetadata();
@@ -59,7 +59,7 @@ describe('TaskAssignee', () => {
     });
 
     it('should deserialize stored instance', (done) => {
-        configureCategory(category, operatorService, Equals, [mockTaskAssigneeValue('Test User', 'userId')]);
+        configureCategory(category, operatorService, Equals, [mockUserAutocompleteValue('Test User', true, 'userId')]);
 
         const metadata = category.createMetadata();
         expect(metadata).toBeTruthy();
@@ -80,7 +80,3 @@ describe('TaskAssignee', () => {
         });
     });
 });
-
-function mockTaskAssigneeValue(userName: string, userId: string): SearchAutocompleteOption<Array<string>> {
-    return {text: userName, value: [userId], icon: (TaskAssignee as any).ICON};
-}

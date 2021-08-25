@@ -152,7 +152,8 @@
                     "placeholder": "Wählen Sie die Aufgabe aus"
                 }
             },
-            "select": "Suchkategorie"
+            "select": "Suchkategorie",
+            "userMe": "ICH"
         },
         "operator": {
             "name": "Operator",
@@ -404,5 +405,8 @@
         "resolving": "Die öffentliche Ansicht wird geladen ...",
         "netNotExist": "Der Prozess existiert nicht",
         "errorCreate": "Fehler beim Erstellen des Falles "
+    },
+    "dynamicNavigation": {
+        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
     }
 }

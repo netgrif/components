@@ -152,7 +152,8 @@
                     "placeholder": "Vyberte úlohu"
                 }
             },
-            "select": "Kategória vyhľadávania"
+            "select": "Kategória vyhľadávania",
+            "userMe": "JA"
         },
         "operator": {
             "name": "Operátor",
@@ -404,5 +405,8 @@
         "resolving": "Verejné view sa načítava ...",
         "netNotExist": "Proces neexistuje",
         "errorCreate": "Chyba pri vytváraní prípadu "
+    },
+    "dynamicNavigation": {
+        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
     }
 }

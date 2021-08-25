@@ -298,6 +298,9 @@ export interface Services {
         termsOfService: string,
         privacyPolicy: string
     };
+    groupNavigation?: {
+        groupNavigationRoute: string,
+    };
 
     [k: string]: any;
 }

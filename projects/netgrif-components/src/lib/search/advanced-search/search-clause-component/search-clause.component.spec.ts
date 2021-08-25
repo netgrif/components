@@ -8,7 +8,6 @@ import {
     BooleanOperator,
     CategoryFactory,
     ConfigurationService,
-    defaultCaseSearchCategoriesFactory,
     MaterialModule,
     MockAuthenticationMethodService,
     NAE_SEARCH_CATEGORIES,
@@ -17,7 +16,12 @@ import {
     TranslateLibModule,
     AdvancedSearchComponentInitializationService,
     EditableClausePredicateWithGenerators,
-    NAE_BASE_FILTER, TestCaseBaseFilterProvider, AllowedNetsService, AllowedNetsServiceFactory, TestNoAllowedNetsFactory
+    NAE_BASE_FILTER,
+    TestCaseBaseFilterProvider,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    TestNoAllowedNetsFactory,
+    NAE_DEFAULT_CASE_SEARCH_CATEGORIES, DefaultSearchCategoriesModule
 } from '@netgrif/application-engine';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';
@@ -33,14 +37,15 @@ describe('SearchClauseComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                DefaultSearchCategoriesModule,
             ],
             declarations: [
                 TestWrapperComponent
             ],
             providers: [
                 CategoryFactory,
-                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+                {provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SearchService,
                 {
@@ -60,12 +65,12 @@ describe('SearchClauseComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
     });
 });
 
