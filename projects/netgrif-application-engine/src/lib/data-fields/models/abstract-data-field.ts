@@ -113,7 +113,7 @@ export abstract class DataField<T> {
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
-                          private _description?: string, private _layout?: Layout, public validations?: Validation[],
+                          private _description?: string, private _layout?: Layout, public validations?: Array<Validation>,
                           private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
@@ -399,7 +399,7 @@ export abstract class DataField<T> {
         return result;
     }
 
-    public replaceValidations(validations: Validation[]) {
+    public replaceValidations(validations: Array<Validation>) {
         this.clearValidators();
         this.validations = validations;
     }

@@ -1,5 +1,5 @@
 import {Behavior} from '../../models/behavior';
-import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
@@ -13,7 +13,7 @@ export enum BooleanFieldValidation {
 export class BooleanField extends DataField<boolean> {
 
     constructor(stringId: string, title: string, value: boolean, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Validation[], component?: Component) {
+                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
     }
 

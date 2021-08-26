@@ -246,7 +246,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         return routeSegment ? parentUrl + '/' + routeSegment : parentUrl;
     }
 
-    protected resolveLevels(nodes: NavigationNode[], parentLevel?: number): void {
+    protected resolveLevels(nodes: Array<NavigationNode>, parentLevel?: number): void {
         if (!nodes) {
             return;
         }

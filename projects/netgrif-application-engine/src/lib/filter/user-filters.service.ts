@@ -153,8 +153,8 @@ export class UserFiltersService implements OnDestroy {
      * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process,
      * or the filter could not be saved
      */
-    public save(searchService: SearchService, allowedNets: readonly string[],
-                searchCategories: readonly Type<Category<any>>[], viewId: string,
+    public save(searchService: SearchService, allowedNets: ReadonlyArray<string>,
+                searchCategories: ReadonlyArray<Type<Category<any>>>, viewId: string,
                 additionalData: TaskSetDataRequestBody = {}, withDefaultCategories = true,
                 inheritAllowedNets = true): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
@@ -218,8 +218,8 @@ export class UserFiltersService implements OnDestroy {
      * the {@link BaseAllowedNetsService}.
      * @returns an observable that emits the id of the created Filter case instance
      */
-    public createFilterCaseAndSetData(searchService: SearchService, allowedNets: readonly string[],
-                                      searchCategories: readonly Type<Category<any>>[], viewId: string,
+    public createFilterCaseAndSetData(searchService: SearchService, allowedNets: ReadonlyArray<string>,
+                                      searchCategories: ReadonlyArray<Type<Category<any>>>, viewId: string,
                                       additionalData: TaskSetDataRequestBody = {},
                                       withDefaultCategories = true,
                                       inheritAllowedNets = true): Observable<string> {
@@ -317,7 +317,7 @@ export class UserFiltersService implements OnDestroy {
     }
 
     protected filterMetadataFromSearchService(searchService: SearchService,
-                                              searchCategories: readonly Type<Category<any>>[],
+                                              searchCategories: ReadonlyArray<Type<Category<any>>>,
                                               withDefaultCategories: boolean,
                                               inheritAllowedNets: boolean): FilterMetadata {
         return {

@@ -74,7 +74,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             secondary?:
@@ -90,7 +90,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             warn?:
@@ -106,7 +106,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             [k: string]: any;
@@ -125,7 +125,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             secondary?:
@@ -141,7 +141,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             warn?:
@@ -157,7 +157,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             [k: string]: any;
@@ -279,7 +279,7 @@ export interface Services {
         logWithDate?: boolean;
         serializeParams?: boolean;
         includeLogLevel?: boolean;
-        publishers?: any[];
+        publishers?: Array<any>;
         [k: string]: any;
     };
     auth?: {

@@ -25,7 +25,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     titleFormControl = new FormControl('', Validators.required);
 
     options: Array<Form> = [];
-    colors: Form[] = [
+    colors: Array<Form> = [
         {value: 'panel-primary-icon', viewValue: 'Primary'},
         {value: 'panel-accent-icon', viewValue: 'Accent'},
     ];
@@ -162,7 +162,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
      * @param options that should be filtered
      * @return  return matched options
      */
-    protected _filter(value: string, options: Array<Form>): Form[] {
+    protected _filter(value: string, options: Array<Form>): Array<Form> {
         const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
         return options.filter(option => option.viewValue.toLowerCase().normalize('NFD')

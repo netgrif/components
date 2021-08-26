@@ -29,7 +29,7 @@ export abstract class TaskContentService implements OnDestroy {
     private static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
     private static readonly VALIDATE_FRONTEND_ACTION = 'validate';
 
-    $shouldCreate: ReplaySubject<DataGroup[]>;
+    $shouldCreate: ReplaySubject<Array<DataGroup>>;
     $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
@@ -39,7 +39,7 @@ export abstract class TaskContentService implements OnDestroy {
                           protected _snackBarService: SnackBarService,
                           protected _translate: TranslateService,
                           protected _logger: LoggerService) {
-        this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
+        this.$shouldCreate = new ReplaySubject<Array<DataGroup>>(1);
         this.$shouldCreateCounter = new BehaviorSubject<number>(0);
         this._isExpanding$ = new BehaviorSubject<boolean>(false);
         this._task = undefined;
