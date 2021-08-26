@@ -1,11 +1,12 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {RedirectComponent} from './redirect.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
     ConfigurationService,
-    TestConfigurationService
+    TestConfigurationService,
+    TranslateLibModule,
 } from '@netgrif/application-engine';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('RedirectComponent', () => {
     let component: RedirectComponent;
@@ -14,7 +15,9 @@ describe('RedirectComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule.withRoutes([])
+                RouterTestingModule.withRoutes([]),
+                TranslateLibModule,
+                HttpClientTestingModule,
             ],
             declarations: [RedirectComponent],
             providers: [

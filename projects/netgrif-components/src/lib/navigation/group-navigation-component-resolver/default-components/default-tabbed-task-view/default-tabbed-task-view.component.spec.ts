@@ -4,6 +4,7 @@ import {NavigationComponentModule} from '../../../navigation.module';
 import {NAE_TAB_DATA, SimpleFilter, TestMockDependenciesModule} from '@netgrif/application-engine';
 import {of} from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('DefaultTabbedTaskViewComponent', () => {
     let component: DefaultTabbedTaskViewComponent;
@@ -15,6 +16,7 @@ describe('DefaultTabbedTaskViewComponent', () => {
                 NavigationComponentModule,
                 TestMockDependenciesModule,
                 NoopAnimationsModule,
+                RouterTestingModule.withRoutes([]),
             ],
             providers: [
                 {
