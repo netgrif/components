@@ -1,4 +1,4 @@
-import {Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Inject, Input, OnDestroy, OnInit, Type, ViewChild} from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {NAE_SEARCH_CATEGORIES} from '../category-factory/search-categories-injection-token';
 import {Category} from '../models/category/category';
@@ -11,6 +11,7 @@ import {EditableElementaryPredicate} from '../models/predicate/editable-elementa
 import {
     AdvancedSearchComponentInitializationService
 } from '../advanced-search-component-initialization-service/advanced-search-component-initialization.service';
+import {CategoryFactory} from '../category-factory/category-factory';
 
 
 /**
@@ -38,21 +39,22 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
 
     protected _searchCategories: Array<Category<any>>;
 
-    protected constructor(@Inject(NAE_SEARCH_CATEGORIES) private _naeSearchCategories: Array<Category<any>>,
+    protected constructor(@Inject(NAE_SEARCH_CATEGORIES) private _naeSearchCategories: Array<Type<Category<any>>>,
                           protected _logger: LoggerService,
-                          protected _initializationService: AdvancedSearchComponentInitializationService) {
+                          protected _initializationService: AdvancedSearchComponentInitializationService,
+                          protected _categoryFactory: CategoryFactory) {
     }
 
     ngOnInit() {
         let found = false;
         this._searchCategories = this._naeSearchCategories.map(category => {
             // if the provided generator is the same class as one of the injected search categories
-            if (this.generator && this.generator.constructor === category.constructor) {
+            if (this.generator && this.generator.constructor === category) {
                 found = true;
                 this.categoryChanged(this.generator);
                 return this.generator;
             }
-            return category.duplicate();
+            return this._categoryFactory.get(category);
         });
 
         if (this.generator && !found) {

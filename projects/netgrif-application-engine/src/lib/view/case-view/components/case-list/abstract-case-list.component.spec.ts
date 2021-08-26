@@ -20,6 +20,8 @@ import {NAE_BASE_FILTER} from '../../../../search/models/base-filter-injection-t
 import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {ActivatedRoute} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
 
 
 describe('AbstractCaseListComponent', () => {
@@ -32,7 +34,8 @@ describe('AbstractCaseListComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 CaseViewService,
@@ -72,8 +75,9 @@ describe('AbstractCaseListComponent', () => {
 class TestCaseComponent extends AbstractCaseListComponent {
     constructor(protected _caseViewService: CaseViewService,
                 protected _log: LoggerService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
-        super(_caseViewService, _log, injectedTabData);
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected _route: ActivatedRoute) {
+        super(_caseViewService, _log, injectedTabData, _route);
     }
 }
 

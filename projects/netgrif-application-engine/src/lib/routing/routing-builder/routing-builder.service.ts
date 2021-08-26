@@ -1,4 +1,4 @@
-import {Injectable, Type} from '@angular/core';
+import {Inject, Injectable, Optional, Type} from '@angular/core';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {ViewService} from '../view-service/view.service';
 import {Route, Router} from '@angular/router';
@@ -10,6 +10,13 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
+import {GroupNavigationConstants} from '../../navigation/model/group-navigation-constants';
+import {
+    NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT
+} from '../../navigation/model/group-navigation-component-resolver-component-injection-token';
+import {
+    AbstractGroupNavigationComponentResolverComponent
+} from '../../navigation/group-navigation-component-resolver/abstract-group-navigation-component-resolver.component';
 
 
 /**
@@ -23,7 +30,9 @@ export class RoutingBuilderService {
     constructor(router: Router,
                 private _configService: ConfigurationService,
                 private _viewService: ViewService,
-                private _logger: LoggerService) {
+                private _logger: LoggerService,
+                @Optional() @Inject(NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT)
+                private _groupNavigationComponentResolverComponent: Type<AbstractGroupNavigationComponentResolverComponent>) {
         router.config.splice(0, router.config.length);
         for (const [pathSegment, view] of Object.entries(_configService.get().views)) {
             const route = this.constructRouteObject(view, pathSegment);
@@ -98,6 +107,9 @@ export class RoutingBuilderService {
             let className;
             if (!!view.layout.componentName) {
                 className = `${classify(view.layout.componentName)}Component`;
+            } else if (view.layout.name === GroupNavigationConstants.GROUP_NAVIGATION_OUTLET) {
+                this._logger.debug('ignoring group navigation outlet during routing construction');
+                return undefined;
             } else {
                 const classInfo = new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
                 className = classInfo.className;
@@ -118,7 +130,14 @@ export class RoutingBuilderService {
 
     private defaultRoutesRedirects(): Array<Route> {
         const result = [];
-        const servicesConfig = this._configService.get().services;
+        const servicesConfig = this._configService.getServicesConfiguration();
+        if (servicesConfig?.groupNavigation?.groupNavigationRoute !== undefined) {
+            result.push({
+                path: `${servicesConfig.groupNavigation.groupNavigationRoute}/:${GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM}`,
+                component: this._groupNavigationComponentResolverComponent,
+                canActivate: [AuthenticationGuardService]
+            });
+        }
         if (!!servicesConfig && !!servicesConfig.routing) {
             if (!!servicesConfig.routing.defaultRedirect) {
                 result.push({

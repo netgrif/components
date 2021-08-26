@@ -14,7 +14,7 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent imple
     @Input() showLargeLayout: WrappedBoolean;
     @ViewChild('input') text: ElementRef;
 
-    filteredOptions: Observable<EnumerationFieldValue[]>;
+    filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
     constructor(protected _translate: TranslateService) {
     }

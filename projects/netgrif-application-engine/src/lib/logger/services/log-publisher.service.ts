@@ -20,7 +20,7 @@ export class LogPublisherService implements OnDestroy {
     // public static instance: LogPublisherService;
 
     private readonly _log: BehaviorSubject<LogEntry>;
-    private readonly _publishers: LogPublisher[];
+    private readonly _publishers: Array<LogPublisher>;
 
     constructor(config: ConfigurationService) {
         // LogPublisherService.instance = this;
@@ -37,7 +37,7 @@ export class LogPublisherService implements OnDestroy {
         this._log.complete();
     }
 
-    get publishers(): LogPublisher[] {
+    get publishers(): Array<LogPublisher> {
         return this._publishers;
     }
 

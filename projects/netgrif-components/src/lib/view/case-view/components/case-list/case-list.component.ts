@@ -1,5 +1,6 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {AbstractCaseListComponent, CaseViewService, InjectedTabData, LoggerService, NAE_TAB_DATA} from '@netgrif/application-engine';
+import {ActivatedRoute, Route} from '@angular/router';
 
 @Component({
     selector: 'nc-case-list',
@@ -10,7 +11,8 @@ export class CaseListComponent extends AbstractCaseListComponent {
 
     constructor(protected _caseViewService: CaseViewService,
                 protected _log: LoggerService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
-        super(_caseViewService, _log, injectedTabData);
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected route?: ActivatedRoute) {
+        super(_caseViewService, _log, injectedTabData, route);
     }
 }

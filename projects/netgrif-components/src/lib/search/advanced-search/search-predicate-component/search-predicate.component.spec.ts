@@ -5,7 +5,6 @@ import {
     AuthenticationMethodService,
     CategoryFactory,
     ConfigurationService,
-    defaultCaseSearchCategoriesFactory,
     EditableElementaryPredicate,
     MaterialModule,
     MockAuthenticationMethodService,
@@ -18,7 +17,7 @@ import {
     TestCaseBaseFilterProvider,
     AllowedNetsService,
     TestNoAllowedNetsFactory,
-    AllowedNetsServiceFactory
+    AllowedNetsServiceFactory, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, DefaultSearchCategoriesModule
 } from '@netgrif/application-engine';
 import {Subject} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -36,14 +35,15 @@ describe('SearchPredicateComponent', () => {
                 HttpClientTestingModule,
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                DefaultSearchCategoriesModule,
             ],
             declarations: [
                 TestWrapperComponent
             ],
             providers: [
                 CategoryFactory,
-                {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+                {provide: NAE_SEARCH_CATEGORIES, useExisting: NAE_DEFAULT_CASE_SEARCH_CATEGORIES},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SearchService,
                 {
@@ -64,12 +64,12 @@ describe('SearchPredicateComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     afterEach(() => {
         TestBed.resetTestingModule();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
     });
 });
 

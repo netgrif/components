@@ -13,7 +13,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
     @Input() showLargeLayout: WrappedBoolean;
     @ViewChild('input') text: ElementRef;
 
-    filteredOptions: Observable<EnumerationFieldValue[]>;
+    filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
     constructor(protected _translate: TranslateService) {
     }
@@ -34,7 +34,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
      * @param  value to compare matching options
      * @return  return matched options
      */
-    private _filter(value: string): EnumerationFieldValue[] {
+    private _filter(value: string): Array<EnumerationFieldValue> {
         const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
         return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
