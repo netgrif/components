@@ -57,9 +57,9 @@ export interface Task {
     /**
      * Array [DataGroup]{@link DataGroup#}
      */
-    dataGroups: DataGroup[];
+    dataGroups: Array<DataGroup>;
     _links: object;
-    users?: UsersRef;
+    users: UsersRef;
     dataSize?: number;
     icon?: string;
     priority?: number;

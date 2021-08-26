@@ -27,11 +27,14 @@ export * from './models/operator/less-than-date';
 export * from './models/operator/more-than-date-time';
 export * from './models/operator/less-than-date-time';
 export * from './models/operator/not-equals-date';
+export * from './models/operator/not-equals-date-time';
 
 export * from './models/category/category';
 export * from './models/category/no-configuration-category';
 export * from './models/category/autocomplete-category';
+export * from './models/category/user-autocomplete';
 export * from './models/category/no-configuration-autocomplete-category';
+export * from './models/category/no-configuration-user-autocomplete-category';
 export * from './models/category/net-attribute-autocomplete-category';
 export * from './models/category/case/case-net-attribute-autocomplete-category';
 export * from './models/category/case/case-title';
@@ -41,6 +44,7 @@ export * from './models/category/case/case-process';
 export * from './models/category/case/case-role';
 export * from './models/category/case/case-task';
 export * from './models/category/case/case-creation-date';
+export * from './models/category/case/case-creation-date-time';
 export * from './models/category/case/case-dataset';
 export * from './models/category/case/case-simple-dataset';
 export * from './models/category/task/task-net-attribute-autocomplete-category';
@@ -56,7 +60,6 @@ export * from './models/configuration-input';
 /* Interfaces */
 export * from './models/escape-result';
 export * from './models/wrap-result';
-export * from './category-factory/optional-dependencies';
 export * from './models/predicate-removal-event';
 export * from './models/category/search-autocomplete-option';
 export * from './models/category/autocomplete-options';
@@ -70,6 +73,9 @@ export * from './models/persistance/saved-filter-metadata';
 export * from './models/persistance/filter-text-segment';
 export * from './models/persistance/filter-metadata-allowed-nets';
 
+export * from './category-factory/optional-dependencies';
+export * from './category-factory/category-serialisation-pair';
+
 /* Enums */
 export * from './models/boolean-operator';
 export * from './models/category/search-input-type';
@@ -78,6 +84,7 @@ export * from './models/operator-template-part-type';
 export * from './models/search-index';
 export * from './models/component-configuration/search-mode';
 export * from './models/operator/operators';
+export * from './models/category/case/case-search.enum';
 
 /* Services */
 export * from './search-service/search.service';
@@ -105,3 +112,6 @@ export * from './category-factory/default-categories-factories';
 export * from './category-factory/search-categories-injection-token';
 export * from './models/component-configuration/search-component-configuration-injection-token';
 export * from './models/base-filter-injection-token';
+
+/* Modules */
+export * from './category-factory/default-search-categories.module';

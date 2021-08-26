@@ -6,6 +6,7 @@ export abstract class ConfigurationService {
     private readonly _dataFieldConfiguration: Services['dataFields'];
 
     protected constructor(protected configuration: NetgrifApplicationEngine) {
+        this.resolveEndpointURLs();
         this._dataFieldConfiguration = this.getConfigurationSubtree(['services', 'dataFields']);
     }
 
@@ -123,6 +124,65 @@ export abstract class ConfigurationService {
             return undefined;
         }
         return {...this._dataFieldConfiguration};
+    }
+
+    /**
+     * Resolves the URL addresses of backend endpoints based on the provided configuration.
+     *
+     * If the URLs begin with either `http://`, or `https://` the provided URL will be used.
+     *
+     * If not, then the URLs are considered to be relative to the location of the frontend application and it's URL will be used
+     * as the base path. `/api` is appended automatically.
+     */
+    protected resolveEndpointURLs() {
+        if (this.configuration?.providers?.auth?.address === undefined) {
+            throw new Error(`'provider.auth.address' is a required property and must be present in the configuration!`);
+        }
+        this.configuration.providers.auth.address = this.resolveURL(this.configuration.providers.auth.address);
+
+        if (this.configuration?.providers?.resources === undefined) {
+            throw new Error(`'provider.resources' is a required property and must be present in the configuration!`);
+        }
+        if (Array.isArray(this.configuration.providers.resources)) {
+            this.configuration.providers.resources.forEach(resource => {
+                if (resource?.address === undefined) {
+                    throw new Error(`Resources defined in 'provider.resources' must define an address property!`);
+                }
+                resource.address = this.resolveURL(resource.address);
+            });
+        } else {
+            if (this.configuration?.providers?.resources?.address === undefined) {
+                throw new Error(`Resources defined in 'provider.resources' must define an address property!`);
+            }
+            this.configuration.providers.resources.address = this.resolveURL(this.configuration.providers.resources.address);
+        }
+    }
+
+    /**
+     * Resolves a single URL address.
+     *
+     * If the URL begins with either `http://`, or `https://` the provided URL will be used.
+     *
+     * If not, then the URL is considered to be relative to the location of the frontend application and it's URL will be used
+     * as the base path. `/api` is appended automatically.
+     *
+     * @param configURL value from the configuration file
+     * @returns the resolved URL
+     */
+    protected resolveURL(configURL: string): string {
+        if (configURL.startsWith('http://') || configURL.startsWith('https://')) {
+            return configURL;
+        } else {
+            return location.origin + '/api' + configURL;
+        }
+    }
+
+    /**
+     * @returns the services configuration, or `undefined` if such configuration is not present.
+     */
+    public getServicesConfiguration(): Services | undefined {
+        const subtree = this.getConfigurationSubtree(['services']) as Services;
+        return subtree !== undefined ? this.deepCopy(subtree) as Services : undefined;
     }
 
     private getView(searched: string, view: View): Array<string> {

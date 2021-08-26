@@ -1,6 +1,6 @@
 # Netgrif Application Engine
 
-This project is based on [Angular CLI](https://github.com/angular/angular-cli) version 9.0.0.
+This project is based on [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
 The project includes Netgrif Application Engine frontend library and example application to test and develop library components.
 
 ## Development server
@@ -26,7 +26,7 @@ To run complete test suite run `npm run nae:full-test`
 
 ## Further help
 
-[Official documentation](http://developer.netgrif.com/projects/engine-frontend/4.0.0/docs)
-Examples of usage of components and services is available on [HERE](http://developer.netgrif.com/projects/engine-frontend/4.0.0/examples)
+[Official documentation](http://developer.netgrif.com/projects/engine-frontend/5.6.0/docs)
+Examples of usage of components and services is available on [HERE](http://developer.netgrif.com/projects/engine-frontend/5.6.0/examples)
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

@@ -29,7 +29,7 @@ interface FileList {
 export abstract class AbstractImportNetComponent implements OnInit, AfterViewInit {
 
     public files: FileList = {};
-    public releaseTypes: string[] = ['Major', 'Minor', 'Patch'];
+    public releaseTypes: Array<string> = ['Major', 'Minor', 'Patch'];
     public releaseTypeControl = new FormControl(this.releaseTypes[0]);
 
     protected _response: PetriNetMessageResource = undefined;

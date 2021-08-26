@@ -7,13 +7,14 @@ import {NameIdPair} from '../name-id-pair';
 import {Net} from '../../../../process/net';
 import {CaseNetAttributeAutocompleteCategory} from './case-net-attribute-autocomplete-category';
 import {Categories} from '../categories';
+import {CaseSearch} from './case-search.enum';
 
 export class CaseTask extends CaseNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.case.task';
 
     constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
-        super(['taskIds'],
+        super([CaseSearch.TASK_ID],
             [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseTask._i18n}.name`,
             logger,

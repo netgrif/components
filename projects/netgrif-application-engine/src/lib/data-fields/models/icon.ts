@@ -1,7 +1,7 @@
 export interface Icon {
-   key: string;
-   type: string;
-   value: string;
+    key: string;
+    type: string;
+    value: string;
 }
 
 export enum IconType {

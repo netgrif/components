@@ -2,6 +2,7 @@ import {Category} from '../models/category/category';
 import {CategoryFactory} from './category-factory';
 import {CaseTitle} from '../models/category/case/case-title';
 import {CaseVisualId} from '../models/category/case/case-visual-id';
+import {CaseStringId} from '../models/category/case/case-string-id';
 import {CaseAuthor} from '../models/category/case/case-author';
 import {CaseProcess} from '../models/category/case/case-process';
 import {CaseTask} from '../models/category/case/case-task';
@@ -11,6 +12,7 @@ import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
 import {TaskRole} from '../models/category/task/task-role';
 import {TaskTask} from '../models/category/task/task-task';
+import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 
 /**
  * Creates the default case search categories.
@@ -22,17 +24,21 @@ import {TaskTask} from '../models/category/task/task-task';
  * [duplicate()]{@link Category#duplicate} method.
  *
  * @returns an Array containing the default case search categories: {@link CaseDataset}, {@link CaseTitle}, {@link CaseCreationDate},
- * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor} and {@link CaseVisualId}
+ * {@link CaseProcess}, {@link CaseTask}, {@link CaseAuthor}, {@link CaseVisualId} and {@link CaseStringId}
+ *
+ * @deprecated in 5.6.0 - Use the {@link NAE_DEFAULT_CASE_SEARCH_CATEGORIES} injection token instead
  */
 export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     const cats = [
         factory.get(CaseDataset),
         factory.get(CaseTitle),
         factory.get(CaseCreationDate),
+        factory.get(CaseCreationDateTime),
         factory.get(CaseProcess),
         factory.get(CaseTask),
         factory.get(CaseAuthor),
         factory.get(CaseVisualId),
+        factory.get(CaseStringId),
     ];
     cats.forEach(cat => cat.destroy());
     return cats;
@@ -49,6 +55,8 @@ export function defaultCaseSearchCategoriesFactory(factory: CategoryFactory): Ar
  *
  * @returns an Array containing the default task search categories: {@link TaskAssignee}, {@link TaskTask}, {@link TaskProcess}
  * and {@link TaskRole}
+ *
+ * @deprecated in 5.6.0 - Use the {@link NAE_DEFAULT_TASK_SEARCH_CATEGORIES} injection token instead
  */
 export function defaultTaskSearchCategoriesFactory(factory: CategoryFactory): Array<Category<any>> {
     const cats = [

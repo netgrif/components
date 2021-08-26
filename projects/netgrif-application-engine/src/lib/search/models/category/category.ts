@@ -489,6 +489,8 @@ export abstract class Category<T> {
 
     /**
      * @returns the category class in a serializable form
+     *
+     * @deprecated in 5.6.0 - Category serialisation should be done by utilising the {@link CategoryResolverService} instead
      */
     abstract serializeClass(): Categories | string;
 

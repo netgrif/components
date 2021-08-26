@@ -1,16 +1,27 @@
 import {Input, OnDestroy, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {View, Views} from '../../../commons/schema';
+import {Services, View, Views} from '../../../commons/schema';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {Subscription} from 'rxjs';
+import {forkJoin, Observable, of, ReplaySubject, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
 import {UserService} from '../../user/services/user.service';
 import {RoleGuardService} from '../../authorization/role/role-guard.service';
 import {AuthorityGuardService} from '../../authorization/authority/authority-guard.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
 import {AbstractNavigationResizableDrawerComponent} from '../navigation-drawer/abstract-navigation-resizable-drawer.component';
+import {ActiveGroupService} from '../../groups/services/active-group.service';
+import {concatMap, debounceTime, filter, map, take} from 'rxjs/operators';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {SimpleFilter} from '../../filter/models/simple-filter';
+import {hasContent} from '../../utility/pagination/page-has-content';
+import {DataGroup} from '../../resources/interface/data-groups';
+import {GroupNavigationConstants} from '../model/group-navigation-constants';
+import {refreshTree} from '../../utility/refresh-tree';
+import {getField} from '../../utility/get-field';
+import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
+import {LanguageService} from '../../translate/language.service';
 
 export interface NavigationNode {
     name: string;
@@ -27,7 +38,15 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
     protected subRouter: Subscription;
-    protected subUser: Subscription;
+    protected subUserService: Subscription;
+
+    protected _reloadNavigation: ReplaySubject<void>;
+    protected _groupNavigationConfig: Services['groupNavigation'];
+
+    private _subscriptions: Array<Subscription>;
+    private _subGroupResolution: Subscription;
+    private _subLangChange: Subscription;
+    private _groupNavNodesCount = 0;
 
     treeControl: NestedTreeControl<NavigationNode>;
     dataSource: MatTreeNestedDataSource<NavigationNode>;
@@ -38,52 +57,51 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _userService: UserService,
                           protected _roleGuard: RoleGuardService,
                           protected _authorityGuard: AuthorityGuardService,
-                          protected _groupGuard: GroupGuardService) {
+                          protected _groupGuard: GroupGuardService,
+                          protected _activeGroupService: ActiveGroupService,
+                          protected _taskResourceService: TaskResourceService,
+                          protected _languageService: LanguageService) {
         super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
+        this._groupNavigationConfig = this._config.getConfigurationSubtree(['services', 'groupNavigation']);
         this.dataSource.data = this.resolveNavigationNodes(_config.getConfigurationSubtree(['views']), '');
         this.resolveLevels(this.dataSource.data);
+        this._reloadNavigation = new ReplaySubject<void>(1);
     }
 
     ngOnInit(): void {
         super.ngOnInit();
         if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
-            this.subRouter = this._router.events.subscribe((event) => {
-                if (event instanceof NavigationEnd && this.routerChange) {
-                    const viewRoute = this._config.getViewByPath(this.viewPath);
-                    if (viewRoute && viewRoute.children) {
-                        this.dataSource.data = this.resolveNavigationNodes(viewRoute.children, this.parentUrl);
-                    }
-                    this.resolveLevels(this.dataSource.data);
-                }
-            });
-            const view = this._config.getViewByPath(this.viewPath);
-            if (view && view.children) {
-                this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
-            }
-            this.resolveLevels(this.dataSource.data);
-            this.subUser = this._userService.user$.subscribe(() => {
-                const uView = this._config.getViewByPath(this.viewPath);
-                if (uView && uView.children) {
-                    this.dataSource.data = this.resolveNavigationNodes(uView.children, this.parentUrl);
-                }
-                this.resolveLevels(this.dataSource.data);
-            });
-        } else {
-            this.subUser = this._userService.user$.subscribe(() => {
-                this.dataSource.data = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
-                this.resolveLevels(this.dataSource.data);
-            });
+            this.resolveNavigationNodesWithOffsetRoot();
         }
+
+        this._subscriptions = [
+            this._router.events.pipe(filter(event => event instanceof NavigationEnd && this.routerChange))
+                .subscribe(() => this._reloadNavigation.next()),
+            this._userService.user$.subscribe(() => this._reloadNavigation.next()),
+            this._activeGroupService.activeGroups$.subscribe(() => this._reloadNavigation.next())
+        ];
+
+        this._subscriptions.push(
+            this._reloadNavigation.pipe(debounceTime(100)).subscribe(() => {
+                this.resolveNavigation();
+            })
+        );
     }
 
     ngOnDestroy(): void {
-        if (this.subRouter) {
-            this.subRouter.unsubscribe();
+        for (const sub of this._subscriptions) {
+            if (!sub.closed) {
+                sub.unsubscribe();
+            }
         }
-        if (this.subUser) {
-            this.subUser.unsubscribe();
+        this._reloadNavigation.complete();
+        if (this._subGroupResolution !== undefined) {
+            this._subGroupResolution.unsubscribe();
+        }
+        if (this._subLangChange !== undefined) {
+            this._subLangChange.unsubscribe();
         }
     }
 
@@ -91,13 +109,47 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         return !!node.children && node.children.length > 0;
     }
 
+    protected resolveNavigation(): void {
+        let nodes;
+        if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
+            nodes = this.resolveNavigationNodesWithOffsetRoot();
+        } else {
+            nodes = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
+        }
+        this.dataSource.data = nodes;
+        this.resolveLevels(this.dataSource.data);
+    }
+
+    protected resolveNavigationNodesWithOffsetRoot(): Array<NavigationNode> {
+        const view = this._config.getViewByPath(this.viewPath);
+        if (view && view.children) {
+            return this.resolveNavigationNodes(view.children, this.parentUrl);
+        }
+        return this.dataSource.data;
+    }
+
     protected resolveNavigationNodes(views: Views, parentUrl: string): Array<NavigationNode> {
         if (!views || Object.keys(views).length === 0) {
             return null;
         }
+
+        let groupNavigationGenerated = false;
         const nodes: Array<NavigationNode> = [];
         Object.keys(views).forEach((viewKey: string) => {
             const view = views[viewKey];
+
+            if (!groupNavigationGenerated && this.isGroupNavigationNode(view)) {
+                groupNavigationGenerated = true;
+                const insertPosition = nodes.length;
+
+                this._subLangChange = this._languageService.getLangChange$().subscribe(() => {
+                    this.loadGroupNavigationNodes(insertPosition);
+                });
+                this.loadGroupNavigationNodes(insertPosition);
+
+                return; // continue
+            }
+
             if (!this.hasNavigation(view) && !this.hasSubRoutes(view)) {
                 return; // continue
             }
@@ -107,7 +159,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 throw new Error('Route segment doesnt exist in view ' + parentUrl + '/' + viewKey + ' !');
             }
 
-            if  (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
+            if (!this.canAccessView(view, this.appendRouteSegment(parentUrl, routeSegment))) {
                 return; // continue
             }
 
@@ -194,7 +246,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         return routeSegment ? parentUrl + '/' + routeSegment : parentUrl;
     }
 
-    protected resolveLevels(nodes: NavigationNode[], parentLevel?: number): void {
+    protected resolveLevels(nodes: Array<NavigationNode>, parentLevel?: number): void {
         if (!nodes) {
             return;
         }
@@ -259,4 +311,106 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         return !view.access.hasOwnProperty('group') || this._groupGuard.canAccessView(view, url);
     }
 
+    protected resolveChange() {
+        const view = this._config.getViewByPath(this.viewPath);
+        if (view && view.children) {
+            this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
+        }
+        this.resolveLevels(this.dataSource.data);
+    }
+
+    /**
+     * @returns `true` if the layout of the provided {@link View} node's name indicates it is a
+     * [group navigation outlet]{@link GroupNavigationConstants#GROUP_NAVIGATION_OUTLET}. Returns `false` otherwise.
+     */
+    protected isGroupNavigationNode(view: View): boolean {
+        return view?.layout?.name === GroupNavigationConstants.GROUP_NAVIGATION_OUTLET;
+    }
+
+    /**
+     * Forces a reload of the group navigation nodes.
+     * @param insertPosition
+     */
+    protected loadGroupNavigationNodes(insertPosition: number): void {
+        if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
+            this._subGroupResolution.unsubscribe();
+        }
+
+        this._subGroupResolution = this.generateGroupNavigationNodes().pipe(take(1)).subscribe(groupNavNodes => {
+            this.dataSource.data.splice(insertPosition, this._groupNavNodesCount, ...groupNavNodes);
+            this._groupNavNodesCount = groupNavNodes.length;
+            refreshTree(this.dataSource);
+        });
+    }
+
+    protected generateGroupNavigationNodes(): Observable<Array<NavigationNode>> {
+        return forkJoin(this._activeGroupService.activeGroups.map(groupCase => {
+            return this._taskResourceService.searchTask(SimpleFilter.fromTaskQuery(
+                {case: {id: groupCase.stringId}, transitionId: GroupNavigationConstants.NAVIGATION_CONFIG_TRANSITION_ID as string}
+            )).pipe(
+                map(taskPage => {
+                    if (hasContent(taskPage)) {
+                        return this._taskResourceService.getData(taskPage.content[0].stringId);
+                    } else {
+                        this._log.error('Group navigation configuration task was not found.'
+                            + ' Navigation for this group cannot be constructed.');
+                        return of([]);
+                    }
+                }),
+                concatMap(o => o)
+            );
+        })).pipe(
+            map((navigationConfigurations: Array<Array<DataGroup>>) => {
+                const result = [];
+                for (const navConfig of navigationConfigurations) {
+                    result.push(...this.convertDatagroupsToNavEntries(navConfig));
+                }
+                return result;
+            })
+        );
+    }
+
+    protected convertDatagroupsToNavEntries(navConfigDatagroups: Array<DataGroup>): Array<NavigationNode> {
+        const result = [];
+        const firstEntryIndex = navConfigDatagroups.findIndex(
+            group => group.fields.some(
+                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX)
+            )
+        );
+
+        let navEntriesTaskRef;
+        navConfigDatagroups.some(group => {
+            const taskRef = getField(group.fields, GroupNavigationConstants.NAVIGATION_ENTRIES_TASK_REF_FIELD_ID);
+            if (taskRef !== undefined) {
+                navEntriesTaskRef = taskRef;
+            }
+            return !!taskRef;
+        });
+
+        if (!navEntriesTaskRef) {
+            throw new Error('The navigation configuration task contains no task ref with entries. Navigation cannot be constructed');
+        }
+
+        for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {
+            const index = this.transformOrderToIndex(order, firstEntryIndex);
+
+            const label = extractIconAndTitle(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY), true);
+            const newNode: NavigationNode = {url: '', ...label};
+
+            const url = this._groupNavigationConfig?.groupNavigationRoute;
+            if (url === undefined) {
+                this._log.error(`No URL is configured in nae.json for configurable group navigation. Entry was ignored`);
+                continue;
+            }
+            newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
+
+            result.push(newNode);
+        }
+        return result;
+    }
+
+    private transformOrderToIndex(order: number, offset: number): number {
+        return offset + order * GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY;
+    }
 }
