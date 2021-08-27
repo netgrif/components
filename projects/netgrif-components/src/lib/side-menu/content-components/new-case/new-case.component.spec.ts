@@ -15,6 +15,7 @@ import {
     SuccessSnackBarComponent,
     TestConfigurationService,
     TranslateLibModule,
+    NewCaseCreationConfigurationData
 } from '@netgrif/application-engine';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
@@ -37,7 +38,13 @@ describe('NewCaseComponent', () => {
                 HotkeysService,
                 {
                     provide: NAE_SIDE_MENU_CONTROL,
-                    useValue: new SideMenuControl(undefined, undefined, () => of('close'), {allowedNets$: of([])})
+                    useValue: new SideMenuControl(undefined, undefined, () => of('close'), {
+                        allowedNets$: of([]),
+                        newCaseCreationConfiguration: {
+                            isCaseTitleRequired: true,
+                            enableCaseTitle: true
+                        } as NewCaseCreationConfigurationData
+                    })
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],

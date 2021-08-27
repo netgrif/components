@@ -44,6 +44,7 @@ import {LessThanEqualDate} from '../../operator/less-than-equal-date';
 import {MoreThanEqualDateTime} from '../../operator/more-than-equal-date-time';
 import {LessThanEqualDateTime} from '../../operator/less-than-equal-date-time';
 import {FilterTextSegment} from '../../persistance/filter-text-segment';
+import {UserAutocomplete} from '../user-autocomplete';
 
 interface Datafield {
     netIdentifier: string;
@@ -68,6 +69,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
 
     private _datafieldOptionsInitialized$: ReplaySubject<void>;
     private _allowedNetsSub: Subscription;
+    private _userAutocomplete: UserAutocomplete;
 
     public static FieldTypeToInputType(fieldType: string): SearchInputType {
         switch (fieldType) {
@@ -98,6 +100,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         this._processCategory.selectDefaultOperator();
 
         this._datafieldOptions = new Map<string, Array<Datafield>>();
+        this._userAutocomplete = new UserAutocomplete(this._optionalDependencies);
         this.createDatafieldOptions();
 
         this._DATAFIELD_INPUT = new ConfigurationInput(
@@ -130,6 +133,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
         if (this._allowedNetsSub && !this._allowedNetsSub.closed) {
             this._allowedNetsSub.unsubscribe();
         }
+        this._processCategory.destroy();
     }
 
     get configurationInputs$(): Observable<Array<ConfigurationInput>> {
@@ -278,16 +282,21 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateQuery(userInput: Array<unknown>): Query {
-        const queryGenerationStrategy = this.isSelectedOperator(IsNull) ?
-            (d, _) => this.isNullOperatorQueryGenerationStrategy(d) :
-            (d, ui) => this.standardQueryGenerationStrategy(d, ui);
+        let queryGenerationStrategy;
+        if (this.isSelectedOperator(IsNull)) {
+            queryGenerationStrategy = (d, _) => this.isNullOperatorQueryGenerationStrategy(d);
+        } else if (this.inputType === SearchInputType.AUTOCOMPLETE) {
+            queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui[0], false);
+        } else {
+            queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui);
+        }
 
         const queries = this._selectedDatafields.map(datafield => queryGenerationStrategy(datafield, userInput));
         return Query.combineQueries(queries, BooleanOperator.OR);
     }
 
-    protected standardQueryGenerationStrategy(datafield: Datafield, userInput: Array<unknown>): Query {
-        const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput);
+    protected standardQueryGenerationStrategy(datafield: Datafield, userInput: Array<unknown>, escapeInput = true): Query {
+        const valueQuery = this.selectedOperator.createQuery(this.elasticKeywords, userInput, escapeInput);
         const netQuery = this.generateNetConstraint(datafield);
         return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
     }
@@ -342,26 +351,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             throw new Error('Cannot filter options of non-autocomplete operands');
         }
 
-        return userInput.pipe(
-            startWith(''),
-            debounceTime(600),
-            switchMap(input => {
-                if (typeof input === 'string') {
-                    return this._optionalDependencies.userResourceService.search({fulltext: input}).pipe(
-                        map(page => {
-                            if (hasContent(page)) {
-                                return page.content.map(
-                                    user => ({text: user.fullName, value: [user.id], icon: CaseDataset.AUTOCOMPLETE_ICON})
-                                );
-                            }
-                            return [];
-                        })
-                    );
-                } else {
-                    return of([input]);
-                }
-            })
-        );
+        return this._userAutocomplete.filterOptions(userInput);
     }
 
     public selectDatafields(datafieldMapKey: string, selectDefaultOperator = true): void {
@@ -438,8 +428,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected serializeOperandValue(valueFormControl: FormControl): unknown {
         switch (this.inputType) {
             case SearchInputType.AUTOCOMPLETE:
-                const autocompleteValue = valueFormControl.value as SearchAutocompleteOption<unknown>;
-                return {text: autocompleteValue.text, value: autocompleteValue.value};
+                return this._userAutocomplete.serializeOperandValue(valueFormControl);
             case SearchInputType.DATE:
             case SearchInputType.DATE_TIME:
                 return (valueFormControl.value as Moment).valueOf();
@@ -474,8 +463,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     protected deserializeOperandValue(value: unknown): Observable<any> {
         switch (this.inputType) {
             case SearchInputType.AUTOCOMPLETE:
-                const savedOption = value as SearchAutocompleteOption<Array<string>>;
-                return of({...savedOption, icon: CaseDataset.AUTOCOMPLETE_ICON});
+                return this._userAutocomplete.deserializeOperandValue(value as SearchAutocompleteOption<Array<string>>);
             case SearchInputType.DATE:
             case SearchInputType.DATE_TIME:
                 return of(moment(value as string));

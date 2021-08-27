@@ -116,7 +116,7 @@ export class UserListService implements OnDestroy {
             }, {})
         );
         this._users$ = usersMap.pipe(
-            map(v => Object.values(v) as UserListItem[]),
+            map(v => Object.values(v) as Array<UserListItem>),
         );
     }
 

@@ -29,7 +29,7 @@
                                   (optionSelected)="autocompleteInput.blur()">
                     <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
                         <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
-                        <span>{{option.text}}</span>
+                        <span>{{option.text | translate}}</span>
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
