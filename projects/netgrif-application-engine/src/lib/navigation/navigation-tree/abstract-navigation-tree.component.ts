@@ -394,7 +394,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
             const allowedRoles = extractRoles(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
-                GroupNavigationConstants.NAVIGATION_ENTRY_PERMITTED_ROLES_FIELD_ID_SUFFIX, true);
+                GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX, true);
 
             const bannedRoles = extractRoles(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
