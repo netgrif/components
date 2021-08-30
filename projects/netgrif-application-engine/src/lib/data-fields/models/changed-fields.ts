@@ -34,6 +34,7 @@ export interface Change {
     behavior?: {
         [key: string]: Behavior
     };
+
     [key: string]: any;
 }
 

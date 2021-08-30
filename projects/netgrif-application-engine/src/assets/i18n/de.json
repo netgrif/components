@@ -38,7 +38,8 @@
             "delegate": "Delegieren",
             "finish": "Abschließen",
             "cancel": "Stornieren",
-            "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren."
+            "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren.",
+            "redirecting": "Umleiten..."
         }
     },
     "side-menu": {
@@ -72,7 +73,8 @@
             "errSecond": "Sie müssen einen Namen eingeben.",
             "errThird": "Sie müssen eine Farbe auswählen.",
             "noNets": "Es gibt keine erlaubte Netze",
-            "createCase": "Neuen Fall würde erfolgreich erzeugt"
+            "createCase": "Neuen Fall würde erfolgreich erzeugt",
+            "defaultCaseName": "mit einem Standardfallnamen"
         },
         "user": {
             "assign": "Benützer zuweisen",
@@ -97,6 +99,10 @@
                     "name": "Visuelle ID",
                     "placeholder": "Geben Sie die visuelle ID ein"
                 },
+                "stringId": {
+                    "name": "Fall ID",
+                    "placeholder": "Geben Sie die Fall ID ein"
+                },
                 "author": {
                     "name": "Fallautor/in",
                     "placeholder": "Geben Sie den Namen, oder das E-Mail des/er Fallautors/in ein"
@@ -116,6 +122,10 @@
                 "creationDate": {
                     "name": "Erstellungsdatum",
                     "placeholder": "Geben Sie das Erstellungsdatum ein"
+                },
+                "creationDateTime": {
+                    "name": "Erstellungsdatum und Uhrzeit",
+                    "placeholder": "Geben Sie das Erstellungsdatum und die Uhrzeit ein"
                 },
                 "dataset": {
                     "name": "Falldatei",
@@ -143,7 +153,8 @@
                     "placeholder": "Wählen Sie die Aufgabe aus"
                 }
             },
-            "select": "Suchkategorie"
+            "select": "Suchkategorie",
+            "userMe": "ICH"
         },
         "operator": {
             "name": "Operator",
@@ -205,7 +216,7 @@
             "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
             "wontUploadSameFiles": "Die ausgewählten Dateien wurden bereits hochgeladen. Löschen Sie zum Aktualisieren von Dateien bereits hochgeladene Dateien",
             "fileUploadFailed": "The file failed to upload",
-            "fileDeleteFailed":  "Die Datei konnte nicht gelöscht werden",
+            "fileDeleteFailed": "Die Datei konnte nicht gelöscht werden",
             "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
             "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
             "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
@@ -224,7 +235,7 @@
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
         },
-        "dynamicEnum" : {
+        "dynamicEnum": {
             "noData": "Keine Einträge entsprechen Ihrer Suchanfrage"
         }
     },
@@ -367,7 +378,7 @@
         "noTaskSelected": "Momentan ist keiner Fall ausgewählt. Klicken Sie einen Knoten in dem Baum an, um einen Fall auszuwählen."
     },
     "dashboard": {
-        "cases" : "Fälle"
+        "cases": "Fälle"
     },
     "workflow": {
         "delete": "löschen",
@@ -392,8 +403,11 @@
         "sentenceEnd": "gelesen und akzeptiert haben"
     },
     "publicView": {
-        "resolving" : "Die öffentliche Ansicht wird geladen ...",
+        "resolving": "Die öffentliche Ansicht wird geladen ...",
         "netNotExist": "Der Prozess existiert nicht",
         "errorCreate": "Fehler beim Erstellen des Falles "
+    },
+    "dynamicNavigation": {
+        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
     }
 }
