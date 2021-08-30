@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -53,13 +53,6 @@ describe('AbstractNumberFieldComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it('should get error message', () => {
-        expect(component.getErrorMessage()).toEqual('This is custom odd message!');
-
-        component.dataField.value = 5;
-        expect(component.getErrorMessage()).toEqual('Entered number must be even');
     });
 
     afterEach(() => {

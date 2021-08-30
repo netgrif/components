@@ -12,11 +12,18 @@ import {BooleanOperator} from '../../boolean-operator';
 import {NoConfigurationCategory} from '../no-configuration-category';
 import {CaseDataset} from './case-dataset';
 import {DatafieldMapKey} from '../../datafield-map-key';
+import {SearchIndex} from '../../search-index';
+import {Categories} from '../categories';
+import {CategoryGeneratorMetadata} from '../../persistance/generator-metadata';
+import {Observable} from 'rxjs';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
  *
  * It can only generate "equality" queries for a single field. The category must be configured before it can be used to generate queries.
+ *
+ * This category cannot be serialized. If you want to preserve this category's state convert it to {@link CaseDataset}
+ * with the [transformToCaseDataset()]{@link CaseSimpleDataset#transformToCaseDataset} method and serialize the result.
  *
  * See [configure]{@link CaseSimpleDataset#configure} for more information.
  */
@@ -27,19 +34,26 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     protected _fieldId: string;
     protected _fieldType: string;
     protected _netIdentifiers: Array<string>;
+    protected _elasticKeyword: string;
 
     protected _processCategory: CaseProcess;
 
-    constructor(protected _operators: OperatorService,
+    constructor(operators: OperatorService,
                 logger: LoggerService,
                 protected _optionalDependencies: OptionalDependencies) {
         super(undefined,
             undefined,
             `${CaseSimpleDataset._i18n}.name`,
             undefined,
-            logger);
+            logger,
+            operators);
 
         this._processCategory = _optionalDependencies.categoryFactory.getWithDefaultOperator(CaseProcess) as CaseProcess;
+    }
+
+    destroy() {
+        super.destroy();
+        this._processCategory.destroy();
     }
 
     get inputPlaceholder(): string {
@@ -54,35 +68,62 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
         this._fieldId = fieldId;
         this._fieldType = fieldType;
         this._netIdentifiers = netIdentifiers;
+        this.resolveElasticKeyword();
+    }
+
+    protected resolveElasticKeyword(): void {
+        const resolver = this._optionalDependencies.searchIndexResolver;
+        switch (this._fieldType) {
+            case 'number':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.NUMBER);
+                break;
+            case 'date':
+            case 'dateTime':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.TIMESTAMP);
+                break;
+            case 'boolean':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.BOOLEAN);
+                break;
+            case 'file':
+            case 'fileList':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FILE_NAME);
+                break;
+            case 'user':
+            case 'userList':
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.USER_ID);
+                break;
+            default:
+                this._elasticKeyword = resolver.getIndex(this._fieldId, SearchIndex.FULLTEXT);
+        }
     }
 
     protected get elasticKeywords(): Array<string> {
         if (!this._fieldId) {
             return [];
         } else {
-            return [`dataSet.${this._fieldId}.value`];
+            return [this._elasticKeyword];
         }
     }
 
     public get selectedOperator(): Operator<any> {
         switch (this._fieldType) {
             case 'number':
-                return this._operators.getOperator(Equals);
+                return this._operatorService.getOperator(Equals);
             case 'boolean':
-                return this._operators.getOperator(Equals);
+                return this._operatorService.getOperator(Equals);
             case 'user':
-                return this._operators.getOperator(Equals);
+                return this._operatorService.getOperator(Equals);
             case 'date':
-                return this._operators.getOperator(EqualsDate);
+                return this._operatorService.getOperator(EqualsDate);
             case 'dateTime':
-                return this._operators.getOperator(EqualsDateTime);
+                return this._operatorService.getOperator(EqualsDateTime);
             default:
-                return this._operators.getOperator(Substring);
+                return this._operatorService.getOperator(Substring);
         }
     }
 
     duplicate(): CaseSimpleDataset {
-        return new CaseSimpleDataset(this._operators, this._log, this._optionalDependencies);
+        return new CaseSimpleDataset(this._operatorService, this._log, this._optionalDependencies);
     }
 
     /**
@@ -108,5 +149,23 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
             BooleanOperator.OR
         );
         return Query.combineQueries([valueQuery, netsQuery], BooleanOperator.AND);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.CASE_SIMPLE_DATASET;
+    }
+
+    /**
+     * Serialization is not supported. Throws an error.
+     */
+    createMetadata(): never {
+        throw new Error('CaseSimpleDataset does not support serialization!');
+    }
+
+    /**
+     * Deserialization is not supported. Throws an error.
+     */
+    loadFromMetadata(metadata: CategoryGeneratorMetadata): Observable<void> {
+        throw new Error('CaseSimpleDataset does not support deserialization!');
     }
 }

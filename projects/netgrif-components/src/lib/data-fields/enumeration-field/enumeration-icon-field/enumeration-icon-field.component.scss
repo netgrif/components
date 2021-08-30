@@ -1,0 +1,28 @@
+.enum-icon-item {
+    font-size: 18px;
+    font-family: Asap, sans-serif;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.2px;
+    text-align: left;
+    color: #333333;
+    text-decoration: none;
+    padding: 25px 0;
+}
+
+.enum-icon-item-row:hover {
+    cursor: pointer;
+}
+
+.enum-icon-item:focus,
+.enum-icon-item-row:focus {
+    outline: none;
+}
+
+.enum-icon-divider {
+    position: relative !important;
+}
+
+.enum-icon-text {
+    padding: 0 16px;
+}

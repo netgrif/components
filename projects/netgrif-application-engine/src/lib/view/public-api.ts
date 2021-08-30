@@ -1,9 +1,11 @@
 /* INTERFACES */
 export * from './case-view/models/case-view-params';
 export * from './case-view/models/case-page-load-request-result';
+export * from './case-view/models/new-case-configuration';
 export * from './task-view/models/task-view-params';
 export * from './task-view/models/injected-tabbed-task-view-data';
 export * from './task-view/models/task-page-load-request-result';
+export * from './task-view/models/task-view-configuration';
 export * from './tree-case-view/tree-component/model/case-tree-node';
 export * from './tree-case-view/tree-component/model/case-tree-path';
 export * from './tree-case-view/tree-component/model/expansion-tree';
@@ -21,19 +23,18 @@ export * from './task-view/tabbed-task-view';
 
 export * from './abstract/view-with-headers';
 export * from './abstract/sortable-view';
-export * from './abstract/sortable-view-with-allowed-nets';
 export * from './abstract/page-load-request-context';
 
 /* INJECTION TOKENS */
+export * from './case-view/models/new-case-configuration-injection-token';
 export * from './task-view/models/injection-token-task-endpoint';
+export * from './task-view/models/task-view-configuration-injection-token';
 export * from './workflow-view/models/injection-token-workflow-service';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';
-export * from './case-view/service/factory/case-view-service-factory';
 
 export * from './task-view/service/task-view.service';
-export * from './task-view/service/factory/task-view-service-factory';
 
 export * from './workflow-view/workflow-view.service';
 

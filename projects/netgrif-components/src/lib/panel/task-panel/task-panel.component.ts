@@ -26,6 +26,7 @@ import {
 } from '@netgrif/application-engine';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
     selector: 'nc-task-panel',
@@ -65,14 +66,15 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions,
                 @Optional() @Inject(BOOLEAN_VALUE_LABEL_ENABLED) protected isEnabled: boolean,
-                protected _parentInjector: Injector) {
+                protected _parentInjector: Injector,
+                protected _currencyPipe: CurrencyPipe) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _translate);
+            _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe);
     }
 
     protected createContentPortal(): void {
-        const providers: StaticProvider[] = [
+        const providers: Array<StaticProvider> = [
             {provide: TaskContentService, useValue: this._taskContentService},
             {provide: BOOLEAN_VALUE_LABEL_ENABLED, useValue: this.isEnabled}
         ];

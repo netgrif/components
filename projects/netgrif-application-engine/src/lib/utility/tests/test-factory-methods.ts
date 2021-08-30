@@ -1,20 +1,27 @@
-import {SearchService} from '../../search/search-service/search.service';
 import {SimpleFilter} from '../../filter/models/simple-filter';
-import {CaseViewServiceFactory} from '../../view/case-view/service/factory/case-view-service-factory';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
+import {BaseFilter} from '../../search/models/base-filter';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
-export const TestCaseViewFactory = (factory: CaseViewServiceFactory) => {
+export const TestCaseViewAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('cases');
 };
 
-export const TestTaskViewFactory = (factory: TaskViewServiceFactory) => {
+export const TestTaskViewAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('task');
 };
 
-export const TestCaseSearchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyCaseFilter());
+export const TestNoAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
+    return factory.createFromArray([]);
 };
 
-export const TestTaskSearchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyTaskFilter());
+export const TestCaseBaseFilterProvider: () => BaseFilter = () => {
+    return {
+        filter: SimpleFilter.emptyCaseFilter()
+    };
+};
+
+export const TestTaskBaseFilterProvider: () => BaseFilter = () => {
+    return {
+        filter: SimpleFilter.emptyTaskFilter()
+    };
 };

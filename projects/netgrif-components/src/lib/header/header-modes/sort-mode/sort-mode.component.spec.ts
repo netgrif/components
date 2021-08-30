@@ -5,6 +5,7 @@ import {Component} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
     AuthenticationService,
     CaseHeaderService,
@@ -13,7 +14,7 @@ import {
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
-    TestConfigurationService,
+    TestConfigurationService, TestNoAllowedNetsFactory,
     TestViewService,
     TranslateLibModule,
     UserResourceService,
@@ -47,7 +48,8 @@ describe('SortModeComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: CaseViewService, useValue: {allowedNets$: of([])}}
+                {provide: CaseViewService, useValue: {allowedNets$: of([])}},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [SortModeComponent, TestWrapperComponent],
         })

@@ -5,10 +5,12 @@ import Transition from './transition';
 import Transaction from './transaction';
 import NetRole from './netRole';
 import {Permissions} from './permissions';
+import {PetriNetReferenceWithPermissions} from './petri-net-reference-with-permissions';
+
 /**
  * @ignore
  */
-export class Net {
+export class Net implements PetriNetReferenceWithPermissions {
     /**
      * @ignore
      */

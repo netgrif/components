@@ -13,5 +13,9 @@ export enum TaskElementType {
     /**
      * Marks the space occupied by a data group title
      */
-    DATA_GROUP_TITLE = 'title'
+    DATA_GROUP_TITLE = 'title',
+    /**
+     * Marks the space occupied by a temporary loading placeholder
+     */
+    LOADER = 'loader',
 }

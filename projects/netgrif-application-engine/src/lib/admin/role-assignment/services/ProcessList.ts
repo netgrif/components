@@ -66,9 +66,9 @@ export class ProcessList {
         this._resources.getAll().pipe(
             catchError(err => {
                 this._log.error('Failed to load Petri nets', err);
-                return of([] as ProcessVersion[]);
+                return of([] as Array<ProcessVersion>);
             }),
-            map(p => Array.isArray(p) ? p : [] as ProcessVersion[]),
+            map(p => Array.isArray(p) ? p : [] as Array<ProcessVersion>),
             map(ps => ps.map(p => ({
                 ...p,
                 roles: []
@@ -91,13 +91,7 @@ export class ProcessList {
                     };
                 }
                 cache[net.identifier].processes.sort((a, b) => {
-                    if (a.version < b.version) {
-                        return 1;
-                    }
-                    if (a.version > b.version) {
-                        return -1;
-                    }
-                    return 0;
+                    return b.version.localeCompare(a.version, undefined, { numeric: true });
                 });
                 cache[net.identifier].newestVersion = cache[net.identifier].processes[0].version;
             });
@@ -164,7 +158,7 @@ export class ProcessList {
         return this._resources.getPetriNetRoles(net.stringId).pipe(
             catchError(err => {
                 this._log.error('Failed to load roles for Petri net [' + net.stringId + '] ' + net.title, err);
-                return of([] as ExtendedProcessRole[]);
+                return of([] as Array<ExtendedProcessRole>);
             }),
             map((roles: RolesAndPermissions) => roles.processRoles.map(role => ({
                 ...role,

@@ -74,6 +74,9 @@ export class SideMenuService {
     private _createPortal<T>(template: ComponentType<T> | TemplateRef<T>,
                              size: SideMenuSize,
                              controlObject: SideMenuControl): PortalWrapper {
+        if (template === undefined || template === null) {
+            throw new Error('A component template must be provided to open a side menu!');
+        }
         if (template instanceof TemplateRef) {
             return new PortalWrapper(new TemplatePortal(template, null), size);
         }

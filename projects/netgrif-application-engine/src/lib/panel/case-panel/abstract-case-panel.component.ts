@@ -14,6 +14,9 @@ import {OverflowService} from '../../header/services/overflow.service';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {UserService} from '../../user/services/user.service';
 import {take} from 'rxjs/operators';
+import {getImmediateData} from '../../utility/get-immediate-data';
+import {FeaturedValue} from '../abstract/featured-value';
+import {CurrencyPipe} from '@angular/common';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -29,8 +32,9 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
 
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService) {
-        super(_translateService);
+                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
+                          protected _currencyPipe: CurrencyPipe) {
+        super(_translateService, _currencyPipe);
     }
 
     public show(event: MouseEvent): boolean {
@@ -38,8 +42,10 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         return false;
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
         switch (selectedHeader.fieldIdentifier) {
+            case CaseMetaField.MONGO_ID:
+                return {value: this.case_.stringId, icon: undefined, type: 'meta'};
             case CaseMetaField.VISUAL_ID:
                 return {value: this.case_.visualId, icon: undefined, type: 'meta'};
             case CaseMetaField.TITLE:
@@ -55,8 +61,8 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
-        const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
+        const immediate = getImmediateData(this.case_, selectedHeader.fieldIdentifier);
         return this.parseImmediateValue(immediate);
     }
 
@@ -89,15 +95,25 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         ) {
             return false;
         }
-        if (Object.keys(this.case_.permissions).length === 0) {
+        if (Object.keys(this.case_.permissions).length === 0 && Object.keys(this.case_.users).length === 0) {
             return true;
         }
 
-        const result = Object.keys(this.case_.users).some(user =>
-            !!this.case_.users ? !!this.case_.users[user][action] : false
-        );
-        return result || Object.keys(this.case_.permissions).some(role =>
-            this._userService.hasRoleById(role) ? !!this.case_.permissions[role][action] : false
-        );
+        let result = true;
+
+        if (Object.keys(this.case_.users).length > 0
+            && !!this.case_.users[this._userService.user.id]
+            && this.case_.users[this._userService.user.id][action] !== undefined) {
+            result = this.case_.users[this._userService.user.id][action];
+        }
+        this._userService.user.roles.forEach(role => {
+            if (!!this.case_.permissions[role.stringId]
+                && this.case_.permissions[role.stringId][action] !== undefined) {
+                result = result && !!this.case_.permissions[role.stringId][action];
+            }
+        });
+        return result;
     }
+
+
 }

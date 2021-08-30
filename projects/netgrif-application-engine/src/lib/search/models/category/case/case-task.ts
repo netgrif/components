@@ -6,16 +6,19 @@ import {NotEquals} from '../../operator/not-equals';
 import {NameIdPair} from '../name-id-pair';
 import {Net} from '../../../../process/net';
 import {CaseNetAttributeAutocompleteCategory} from './case-net-attribute-autocomplete-category';
+import {Categories} from '../categories';
+import {CaseSearch} from './case-search.enum';
 
 export class CaseTask extends CaseNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.case.task';
 
-    constructor(protected _operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
-        super(['taskIds'],
-            [_operators.getOperator(Equals), _operators.getOperator(NotEquals)],
+    constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
+        super([CaseSearch.TASK_ID],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseTask._i18n}.name`,
             logger,
+            operators,
             optionalDependencies);
     }
 
@@ -28,6 +31,10 @@ export class CaseTask extends CaseNetAttributeAutocompleteCategory {
     }
 
     duplicate(): CaseTask {
-        return new CaseTask(this._operators, this._log, this._optionalDependencies);
+        return new CaseTask(this._operatorService, this._log, this._optionalDependencies);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.CASE_TASK;
     }
 }

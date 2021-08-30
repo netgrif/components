@@ -26,9 +26,9 @@ export class FileListField extends DataField<FileListFieldValue> {
      * Placeholder is a substitute for the value name if not set value.
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
-                layout?: Layout, public validations?: Validation[], private _maxUploadSizeInBytes?: number,
+                layout?: Layout, validations?: Array<Validation>, private _maxUploadSizeInBytes?: number,
                 private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, component);
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
         this.downloaded = new Array<string>();
     }
@@ -66,31 +66,12 @@ export class FileListField extends DataField<FileListFieldValue> {
             return namePath['name'];
         }).join('/'));
         this.updateFormControlState(formControl);
-        this.initialized = true;
         this._initialized$.next(true);
-        this._initialized$.complete();
         this.changed = false;
     }
 
-    public updateFormControlState(formControl: FormControl): void {
-        this._update.subscribe(() => {
-            this.validRequired = this.calculateValidity(true, formControl);
-            this.valid = this.calculateValidity(false, formControl);
-        });
-        this._block.subscribe(bool => {
-            if (bool) {
-                formControl.disable();
-            } else {
-                this.disabled ? formControl.disable() : formControl.enable();
-            }
-        });
-        this._touch.subscribe(bool => {
-            if (bool) {
-                formControl.markAsTouched();
-            } else {
-                formControl.markAsUntouched();
-            }
-        });
+    protected updateFormControlState(formControl: FormControl): void {
+        this.subscribeToInnerSubjects(formControl);
         this.update();
     }
 }

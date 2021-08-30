@@ -44,17 +44,46 @@
                 "name": "dashboard",
                 "address": "http://localhost:8080/api/",
                 "format": "json"
+            },
+            {
+                "name": "filter",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
             }
         ]
     },
     "views": {
+        "demo-redirect": {
+            "component": {
+                "class": "ExampleRedirectComponent",
+                "from": "./doc/redirect/example-redirect.component"
+            },
+            "access": "public",
+            "navigation": true,
+            "routing": {
+                "path": "redirect/:view"
+            },
+            "children": {
+                "custom-redirect": {
+                    "component": {
+                        "class": "ExampleRedirectComponent",
+                        "from": "./doc/redirect/example-redirect.component"
+                    },
+                    "access": "public",
+                    "navigation": true,
+                    "routing": {
+                        "path": "**"
+                    }
+                }
+            }
+        },
         "demo-authentication": {
             "component": {
                 "class": "AuthenticationComponent",
                 "from": "./doc/authentication/authentication.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "authentication"
             }
@@ -65,7 +94,7 @@
                 "from": "./doc/user-invite/user-invite.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "user-invite"
             }
@@ -76,7 +105,7 @@
                 "from": "./doc/roles-assign/roles-assign.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "roles"
             }
@@ -87,7 +116,7 @@
                 "from": "./doc/forms/login-form/login-form.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "login"
             }
@@ -98,7 +127,7 @@
                 "from": "./doc/forms/email-form/password-form.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "signup-or-reset"
             }
@@ -109,7 +138,7 @@
                 "from": "./doc/forms/register-form/register-form.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "signup/:token"
             }
@@ -120,7 +149,7 @@
                 "from": "./doc/forms/reset-password-form/reset-password-form.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "recover/:token"
             }
@@ -131,7 +160,7 @@
                 "from": "./doc/drawer-example/drawer-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "drawer"
             }
@@ -142,7 +171,7 @@
                 "from": "./doc/rail-example/rail-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "rail"
             }
@@ -153,7 +182,7 @@
                 "from": "./doc/headers/headers.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "headers"
             }
@@ -164,7 +193,7 @@
                 "from": "./doc/sidemenu-example/sidemenu-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "sidemenu"
             }
@@ -175,7 +204,7 @@
                 "from": "./doc/snack-bar-example/snack-bar-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "snack-bar"
             }
@@ -186,7 +215,7 @@
                 "from": "./doc/dialog-example/dialog-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "dialog"
             }
@@ -197,20 +226,9 @@
                 "from": "./doc/tab-view-example/tab-view-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "tab-view"
-            }
-        },
-        "demo-reactive-forms": {
-            "component": {
-                "class": "ReactiveTextFieldComponent",
-                "from": "./doc/reactive-text-field/reactive-text-field.component"
-            },
-            "access": "private",
-            "navigation": false,
-            "routing": {
-                "path": "reactive-forms"
             }
         },
         "demo-toolbar": {
@@ -219,7 +237,7 @@
                 "from": "./doc/toolbar-example/toolbar-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "toolbar"
             }
@@ -230,7 +248,7 @@
                 "from": "./doc/panels/panels.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "panels"
             }
@@ -241,7 +259,7 @@
                 "from": "./doc/task-view/task-view.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "task-view"
             }
@@ -252,7 +270,7 @@
                 "from": "./doc/case-view/case-view.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "case-view"
             }
@@ -263,7 +281,7 @@
                 "from": "./doc/tabbed-case-view/tabbed-views-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "tabbed-views"
             },
@@ -281,13 +299,78 @@
                 }
             }
         },
+        "demo-title-config": {
+            "layout": {
+                "name": "tabView",
+                "componentName": "Title config",
+                "params": {
+                    "tabs": [
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Default"
+                            },
+                            "canBeClosed": false,
+                            "order": -1,
+                            "enableCaseTitle": true,
+                            "isCaseTitleRequired": true
+                        },
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Viac sietí, bez title"
+                            },
+                            "canBeClosed": false,
+                            "order": 0,
+                            "enableCaseTitle": false,
+                            "isCaseTitleRequired": false
+                        },
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Jedna sieť, title optional"
+                            },
+                            "canBeClosed": false,
+                            "order": 1,
+                            "enableCaseTitle": true,
+                            "isCaseTitleRequired": false
+                        }
+                    ],
+                    "allowedNets": [
+                        "all_data"
+                    ],
+                    "defaultTaskView": {
+                        "view": {
+                            "name": "taskView"
+                        }
+                    }
+                }
+            },
+            "component": {
+                "class": "TitleConfigComponent",
+                "from": "./doc/title-config-example/title-config-example.component"
+            },
+            "access": "private",
+            "routing": {
+                "path": "titleConfig"
+            }
+        },
         "demo-workflow-view": {
             "component": {
                 "class": "WorkflowViewExampleComponent",
                 "from": "./doc/workflow-view-example/workflow-view-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "workflow-view"
             }
@@ -298,7 +381,7 @@
                 "from": "./doc/dashboard-example/dashboard-example.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "dashboard-view"
             }
@@ -309,7 +392,7 @@
                 "from": "./doc/filter-repository-example/filter-repository-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "filter-repository"
             }
@@ -320,7 +403,7 @@
                 "from": "./doc/profile/profile.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "profile"
             }
@@ -331,9 +414,13 @@
                 "from": "./doc/profile/profile.component"
             },
             "access": {
-                "role": ["DevLink.Admin"],
+                "role": [
+                    "DevLink.Admin"
+                ],
                 "group": [],
-                "authority": ["ROLE_ADMIN"]
+                "authority": [
+                    "ROLE_ADMIN"
+                ]
             },
             "navigation": false,
             "routing": {
@@ -346,7 +433,7 @@
                 "from": "./doc/tree-view-example/tree-view-example.component"
             },
             "access": "private",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "tree-view"
             }
@@ -363,7 +450,9 @@
                 "from": "./doc/public-task-view/public-task-view.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": {
+                "title": "Public view - task"
+            },
             "routing": {
                 "path": "process/:petriNetId/:caseId"
             }
@@ -380,7 +469,9 @@
                 "from": "./doc/public-task-view/public-task-view.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": {
+                "title": "Public view - case"
+            },
             "routing": {
                 "path": "process/:petriNetId"
             }
@@ -397,7 +488,9 @@
                 "from": "./doc/public-workflow-view/public-workflow-view.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": {
+                "title": "Public view - process"
+            },
             "routing": {
                 "path": "process"
             }
@@ -414,7 +507,7 @@
                 "from": "./doc/public-resolver/public-resolver.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "public-resolver"
             }
@@ -439,8 +532,9 @@
                     },
                     "access": "private",
                     "navigation": {
-                        "title": "one",
-                        "icon": "account_circle"
+                        "title": "translateNavTest",
+                        "icon": "account_circle",
+                        "translate": true
                     },
                     "routing": {
                         "path": "one"
@@ -453,8 +547,9 @@
                             },
                             "access": "private",
                             "navigation": {
-                                "title": "one-one",
-                                "icon": "account_circle"
+                                "title": "translateNav.Test",
+                                "icon": "account_circle",
+                                "translate": true
                             },
                             "routing": {
                                 "path": "one-one"
@@ -529,7 +624,7 @@
             },
             "access": "private",
             "navigation": {
-                "title": "NavTest"
+                "title": "NavTest roles"
             },
             "routing": {
                 "path": "navigation-test"
@@ -588,6 +683,12 @@
                 }
             }
         },
+        "group-navigation-outlet": {
+            "layout": {
+                "name": "groupNavigation"
+            },
+            "navigation": false
+        },
         "dashboard": {
             "layout": {
                 "name": "dashboard",
@@ -627,7 +728,8 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "pie",
                             "title": "Custom",
                             "resourceType": "case",
@@ -635,7 +737,11 @@
                                 "aggs": {
                                     "result": {
                                         "terms": {
-                                            "field": "dataSet.text.value.keyword"}}}},
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    }
+                                }
+                            },
                             "filter": {},
                             "layout": {
                                 "x": 0,
@@ -643,11 +749,20 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "bar",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": {"aggs": {"result": {"terms": {"field": "dataSet.text.value.keyword"}}}},
+                            "query": {
+                                "aggs": {
+                                    "result": {
+                                        "terms": {
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    }
+                                }
+                            },
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "filter": {},
@@ -657,11 +772,25 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "line",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": {"aggs":{"result1":{"terms":{"field":"dataSet.text.value.keyword"}},"result2":{"terms":{"field":"dataSet.text.value.keyword"}}}},
+                            "query": {
+                                "aggs": {
+                                    "result1": {
+                                        "terms": {
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    },
+                                    "result2": {
+                                        "terms": {
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    }
+                                }
+                            },
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "filter": {},
@@ -671,11 +800,20 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "lineargauge",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": {"aggs": {"types_count": {"value_count": {"field": "dataSet.text.value.keyword"}}}},
+                            "query": {
+                                "aggs": {
+                                    "types_count": {
+                                        "value_count": {
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    }
+                                }
+                            },
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "units": "cases",
@@ -686,7 +824,8 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "default",
                             "layout": {
                                 "x": 2,
@@ -732,7 +871,7 @@
                 "componentName": "MyCaseView"
             },
             "access": "private",
-            "navigation": {},
+            "navigation": false,
             "routing": {
                 "path": "comp-case"
             }
@@ -785,10 +924,7 @@
                 "params": {}
             },
             "access": "private",
-            "navigation": {
-                "title": "Cases",
-                "icon": "settings"
-            },
+            "navigation": false,
             "children": {
                 "some_cases": {
                     "layout": {
@@ -796,16 +932,14 @@
                         "params": {}
                     },
                     "access": "private",
-                    "navigation": {
-                        "icon": "account_circle"
-                    },
+                    "navigation": false,
                     "children": {
                         "some_specifics": {
                             "layout": {
                                 "name": "emptyView"
                             },
                             "access": "private",
-                            "navigation": true,
+                            "navigation": false,
                             "routing": {
                                 "path": "comp-some_specifics"
                             }
@@ -826,10 +960,7 @@
                 "params": {}
             },
             "access": "private",
-            "navigation": {
-                "title": "Tasks",
-                "icon": "assignment"
-            },
+            "navigation": false,
             "children": {
                 "some_tasks": {
                     "layout": {
@@ -843,7 +974,7 @@
                                 "name": "emptyView"
                             },
                             "access": "private",
-                            "navigation": true,
+                            "navigation": false,
                             "routing": {
                                 "path": "comp-some_specifics"
                             }
@@ -1019,8 +1150,7 @@
             "serializeExtraParams": true,
             "includeLogLevel": true,
             "publishers": [
-                "console",
-                "localStorage"
+                "console"
             ]
         },
         "auth": {
@@ -1038,6 +1168,9 @@
         "legal": {
             "termsOfService": "https://netgrif.com/",
             "privacyPolicy": "https://netgrif.com/"
+        },
+        "groupNavigation": {
+            "groupNavigationRoute": "group-nav"
         }
     }
 }

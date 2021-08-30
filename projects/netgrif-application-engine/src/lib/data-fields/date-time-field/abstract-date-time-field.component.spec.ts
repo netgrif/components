@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

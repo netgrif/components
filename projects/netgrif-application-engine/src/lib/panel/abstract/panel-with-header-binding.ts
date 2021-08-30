@@ -1,12 +1,13 @@
 import {OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
+import {FeaturedValue} from './featured-value';
 
 
 export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
-    public featuredFieldsValues: Array<{ value: string, icon: string, type: string }> = [];
+    public featuredFieldsValues: Array<FeaturedValue> = [];
     protected _lastSelectedHeaders: Array<HeaderColumn>;
     protected sub: Subscription;
 
@@ -24,6 +25,16 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
+    /**
+     * If the event was cause by selecting some text, it will not propagate
+     * @param event
+     */
+    public preventSelectionClick(event: MouseEvent): void {
+        if (event.view.getSelection().type === 'Range') {
+            event.stopPropagation();
+        }
+    }
+
     protected resolveFeaturedFieldsValues(): void {
         if (!this._lastSelectedHeaders) {
             return;
@@ -36,7 +47,7 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
         }
     }
 
-    protected getFeaturedValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedValue(selectedHeader: HeaderColumn): FeaturedValue {
         if (!selectedHeader) {
             return {value: '', icon: '', type: ''};
         }
@@ -49,7 +60,7 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
         return {value: '', icon: '', type: ''};
     }
 
-    protected abstract getFeaturedMetaValue(selectedHeader: HeaderColumn);
+    protected abstract getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue;
 
-    protected abstract getFeaturedImmediateValue(selectedHeader: HeaderColumn);
+    protected abstract getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue;
 }

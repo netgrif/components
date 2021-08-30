@@ -38,7 +38,8 @@
             "delegate": "Delegate",
             "finish": "Finish",
             "cancel": "Cancel",
-            "noData": "This task has no data. Finish to continue."
+            "noData": "This task has no data. Finish to continue.",
+            "redirecting": "Redirecting..."
         }
     },
     "side-menu": {
@@ -56,7 +57,7 @@
         "import-net": {
             "upload": "Upload model",
             "choose": "Choose a process file",
-            "done" : "Done"
+            "done": "Done"
         },
         "new-case": {
             "case": "New Case",
@@ -72,7 +73,8 @@
             "errSecond": "Title is required.",
             "errThird": "Color is required.",
             "noNets": "No allowed Nets",
-            "createCase": "Successful create new case"
+            "createCase": "Successful create new case",
+            "defaultCaseName": "with default case name"
         },
         "user": {
             "assign": "User Assign",
@@ -97,6 +99,10 @@
                     "name": "Case visual ID",
                     "placeholder": "Enter case visual ID"
                 },
+                "stringId": {
+                    "name": "Case ID",
+                    "placeholder": "Enter case ID"
+                },
                 "author": {
                     "name": "Case author",
                     "placeholder": "Enter author's name or email"
@@ -116,6 +122,10 @@
                 "creationDate": {
                     "name": "Case creation date",
                     "placeholder": "Select case creation date"
+                },
+                "creationDateTime": {
+                    "name": "Case creation date and time",
+                    "placeholder": "Select case creation date and time"
                 },
                 "dataset": {
                     "name": "Case data",
@@ -143,7 +153,8 @@
                     "placeholder": "Select task"
                 }
             },
-            "select": "Search category"
+            "select": "Search category",
+            "userMe": "ME"
         },
         "operator": {
             "name": "Operator",
@@ -156,13 +167,17 @@
             "notEquals": "is different from",
             "moreThan": "is more than",
             "lessThan": "is less than",
+            "lessThanEqual": "is less or equal than",
+            "moreThanEqual": "is more or equal than",
             "like": "is like",
             "isNull": "is empty"
         },
         "tooltip": {
             "toAdvanced": "Switch to advanced search",
             "toFullText": "Switch to basic search",
-            "help": "Help"
+            "help": "Help",
+            "save": "Save filter",
+            "load": "Load filter"
         },
         "help": {
             "title": "Advanced search help",
@@ -201,7 +216,7 @@
             "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it or delete existing file",
             "wontUploadSameFiles": "The selected files have already been uploaded. To update files, delete files that have already been uploaded",
             "fileUploadFailed": "The file failed to upload",
-            "fileDeleteFailed":  "The file could not be deleted",
+            "fileDeleteFailed": "The file could not be deleted",
             "maxFilesExceeded": "Maximum number of uploadable files exceeded: ",
             "maxFilesSizeExceeded": "The maximum size of uploaded files is exceeded: ",
             "notSelectedUser": "No user has been selected",
@@ -219,6 +234,9 @@
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
             "clickToDelete": "Click to delete file"
+        },
+        "dynamicEnum": {
+            "noData": "No items match your search"
         }
     },
     "dialog": {
@@ -255,8 +273,10 @@
     "headers": {
         "newHeader": "Select new header",
         "date": "Choose a date",
+        "dateTime": "Choose a date and time",
         "selectUser": "Choose a user",
         "caseMeta": {
+            "mongoID": "Case ID",
             "visualID": "Visual ID",
             "title": "Title",
             "author": "Author",
@@ -264,6 +284,8 @@
         },
         "taskMeta": {
             "case": "Case",
+            "caseID": "Case ID",
+            "taskID": "Task ID",
             "priority": "Priority",
             "user": "Assignee",
             "assignDate": "Assign Date"
@@ -271,6 +293,7 @@
         "workflowMeta": {
             "initials": "Initials",
             "version": "Version",
+            "netId": "Process ID",
             "creationDate": "Upload date",
             "title": "Title",
             "author": "Author"
@@ -355,7 +378,7 @@
         "noTaskSelected": "No case is currently selected. Click on a node in the tree to select a case."
     },
     "dashboard": {
-        "cases" : "cases"
+        "cases": "cases"
     },
     "workflow": {
         "delete": "delete",
@@ -378,5 +401,13 @@
         "and": "and",
         "privacyNotice": "Privacy Notice",
         "sentenceEnd": ""
+    },
+    "publicView": {
+        "resolving": "Public view is loading ...",
+        "netNotExist": "The process does not exists",
+        "errorCreate": "Error while creating case "
+    },
+    "dynamicNavigation": {
+        "couldNotResolveView": "An error has occurred during the view resolution process. The view could not be displayed"
     }
 }

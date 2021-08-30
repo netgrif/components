@@ -21,12 +21,14 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {
-    TestTaskSearchServiceFactory,
-    TestTaskViewFactory
+    TestTaskBaseFilterProvider,
+    TestTaskViewAllowedNetsFactory
 } from '../../utility/tests/test-factory-methods';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('TaskHeaderService', () => {
     let service: TaskHeaderService;
@@ -43,21 +45,18 @@ describe('TaskHeaderService', () => {
             ],
             providers: [
                 TaskHeaderService,
-                TaskViewServiceFactory,
+                TaskViewService,
+                SearchService,
                 {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
-                    deps: [TaskViewServiceFactory]
-                },
-                {
-                    provide: SearchService,
-                    useFactory: TestTaskSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {

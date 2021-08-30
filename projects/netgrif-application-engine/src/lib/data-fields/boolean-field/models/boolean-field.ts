@@ -1,9 +1,9 @@
-import {DataField} from '../../models/abstract-data-field';
 import {Behavior} from '../../models/behavior';
-import {AbstractControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
+import {DataField} from '../../models/abstract-data-field';
 
 export enum BooleanFieldValidation {
     REQUIRED_TRUE = 'requiredTrue',
@@ -12,33 +12,12 @@ export enum BooleanFieldValidation {
 
 export class BooleanField extends DataField<boolean> {
 
-    private _validators: Array<ValidatorFn>;
-
     constructor(stringId: string, title: string, value: boolean, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, public validations?: Validation[], component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, component);
+                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
     }
 
-    protected resolveFormControlValidators(): Array<ValidatorFn> {
-        const result = [];
-
-        if (this.behavior.required) {
-            result.push(Validators.required);
-        }
-
-        if (this.validations) {
-            if (this._validators) {
-                result.push(...this._validators);
-            } else {
-                this._validators = this.resolveValidations();
-                result.push(...this._validators);
-            }
-        }
-
-        return result;
-    }
-
-    private resolveValidations(): Array<ValidatorFn> {
+    protected resolveValidations(): Array<ValidatorFn> {
         const result = [];
 
         this.validations.forEach(item => {

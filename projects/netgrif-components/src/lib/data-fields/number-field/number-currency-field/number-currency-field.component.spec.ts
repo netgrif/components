@@ -8,7 +8,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    ConfigurationService,
+    ConfigurationService, CurrencyModule,
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -32,7 +32,8 @@ describe('NumberCurrencyFieldComponent', () => {
                 AngularResizedEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                CurrencyModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -65,7 +66,7 @@ describe('NumberCurrencyFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-number-currency-field [dataField]="field" [formControlRef]="formControl"' +
+    template: '<nc-number-currency-field [numberField]="field" [formControlRef]="formControl"' +
         ' [showLargeLayout]="label"></nc-number-currency-field>'
 })
 class TestWrapperComponent {

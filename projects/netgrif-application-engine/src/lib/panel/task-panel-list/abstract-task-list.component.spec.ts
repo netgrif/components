@@ -17,7 +17,7 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 import {SearchService} from '../../search/search-service/search.service';
-import {TestTaskSearchServiceFactory, TestTaskViewFactory} from '../../utility/tests/test-factory-methods';
+import {TestTaskBaseFilterProvider, TestTaskViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
@@ -25,7 +25,10 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
-import {TaskViewServiceFactory} from '../../view/task-view/service/factory/task-view-service-factory';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {ActivatedRoute} from '@angular/router';
 
 
 describe('AbstractTaskListComponent', () => {
@@ -45,18 +48,18 @@ describe('AbstractTaskListComponent', () => {
             ],
             declarations: [TestTaskListComponent, TestWrapperComponent],
             providers: [
-                TaskViewServiceFactory,
+                TaskViewService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
-                {provide: ConfigurationService, useClass: TestConfigurationService},
+                SearchService,
                 {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
-                    deps: [TaskViewServiceFactory]
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
                 },
+                {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: TaskResourceService, useClass: MyResources},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         })
             .compileComponents();
@@ -82,8 +85,9 @@ describe('AbstractTaskListComponent', () => {
 class TestTaskListComponent extends AbstractTaskListComponent {
     constructor(protected _taskViewService: TaskViewService,
                 protected _log: LoggerService,
-                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData) {
-        super(_taskViewService, _log, injectedTabData);
+                @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
+                protected _route: ActivatedRoute) {
+        super(_taskViewService, _log, injectedTabData, _route);
     }
 }
 

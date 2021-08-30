@@ -11,23 +11,42 @@ import {
     SearchService,
     SimpleFilter,
     TabbedCaseView,
-    CaseViewServiceFactory,
     ViewIdService,
-    Filter
+    Filter,
+    NAE_NEW_CASE_CONFIGURATION,
+    NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, SavedFilterMetadata, OverflowService, UserService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
+interface ExampleInjectedData extends InjectedTabbedCaseViewData {
+    exampleUseCache: boolean;
+    loadFilter?: Filter;
+}
+
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createWithAllNets();
 };
 
-const searchServiceFactory = () => {
-    const filter = new Subject<Filter>();
-    setTimeout(() => {
-        filter.next(SimpleFilter.emptyCaseFilter());
-    }, 1000);
-    return new SearchService(filter.asObservable(), FilterType.CASE);
+const baseFilterFactory = (injectedData: ExampleInjectedData) => {
+    if (!injectedData.loadFilter) {
+        const filter = new Subject<Filter>();
+        setTimeout(() => {
+            filter.next(SimpleFilter.emptyCaseFilter());
+        }, 1000);
+        return {
+            filter: filter.asObservable(),
+            filterType: FilterType.CASE
+        };
+    } else {
+        return {
+            filter: injectedData.loadFilter
+        };
+    }
+};
+
+const newCaseConfigFactory = (injectedTabData: ExampleInjectedData) => {
+    return {useCachedProcesses: injectedTabData.exampleUseCache};
 };
 
 @Component({
@@ -36,14 +55,18 @@ const searchServiceFactory = () => {
     styleUrls: ['./tabbed-case-view.component.scss'],
     providers: [
         CategoryFactory,
-        CaseViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
-        {   provide: CaseViewService,
-            useFactory: localCaseViewServiceFactory,
-            deps: [CaseViewServiceFactory]},
+        CaseViewService,
+        SearchService,
+        OverflowService,
         ViewIdService,
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
+            deps: [NAE_TAB_DATA]},
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
+        {provide: NAE_NEW_CASE_CONFIGURATION, useFactory: newCaseConfigFactory, deps: [NAE_TAB_DATA]}
     ]
 })
 export class TabbedCaseViewComponent extends TabbedCaseView implements AfterViewInit {
@@ -52,12 +75,33 @@ export class TabbedCaseViewComponent extends TabbedCaseView implements AfterView
 
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
+                overflowService: OverflowService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewData) {
-        super(caseViewService, loggerService, injectedTabData);
+        super(caseViewService, loggerService, injectedTabData, overflowService, undefined, undefined, {
+            enableCaseTitle: true,
+            isCaseTitleRequired: true
+        });
     }
 
     ngAfterViewInit(): void {
         super.initializeHeader(this.caseHeaderComponent);
+    }
+
+    loadFilter(filterData: SavedFilterMetadata) {
+        this._injectedTabData.tabViewRef.openTab({
+            label: {
+                text: filterData.filter.title
+            },
+            canBeClosed: true,
+            tabContentComponent: TabbedCaseViewComponent,
+            injectedObject: {...this._injectedTabData, loadFilter: filterData.filter},
+            order: this._injectedTabData.tabViewOrder,
+            parentUniqueId: this._injectedTabData.tabUniqueId
+        }, this._autoswitchToTaskTab, this._openExistingTab);
+    }
+
+    saveFilter(filterData: SavedFilterMetadata) {
+        console.log(filterData);
     }
 
 }

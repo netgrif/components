@@ -4,17 +4,19 @@ import {SearchComponentModule} from '../../search.module';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    TaskViewServiceFactory,
     ConfigurationService,
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     SearchService,
-    TaskViewService,
     TestConfigurationService,
-    TestTaskSearchServiceFactory,
-    TestTaskViewFactory,
-    UserResourceService
+    UserResourceService,
+    NAE_BASE_FILTER,
+    TestTaskBaseFilterProvider,
+    AllowedNetsService,
+    TestNoAllowedNetsFactory,
+    AllowedNetsServiceFactory,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -31,20 +33,17 @@ describe('TaskSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
-                TaskViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestTaskSearchServiceFactory
-                },
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
-                    deps: [TaskViewServiceFactory]
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ]
         })
             .compileComponents();

@@ -7,7 +7,7 @@ import {
     MaterialModule,
     MockAuthenticationMethodService, MockAuthenticationService, MockUserResourceService, PetriNetReference, TestConfigurationService,
     TranslateLibModule, UserResourceService, WorkflowMetaField, WorkflowViewService
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -65,7 +65,7 @@ class PublicTestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.INITIALS, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.TITLE, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, WorkflowMetaField.VERSION, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'string'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', true, 'string'),
     ]);
     public workflow: PetriNetReference = {
         author: {

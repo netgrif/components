@@ -3,6 +3,7 @@ import {Moment} from 'moment';
 import {Query} from '../query/query';
 import moment from 'moment';
 import {clearTimeInformation} from '../../../utility/clear-time-information';
+import {Operators} from './operators';
 
 /**
  * Range operator for indexed fields that store a date in timestamp format.
@@ -37,5 +38,9 @@ export class InRangeDate extends Operator<Moment> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.inRange.from', Operator.INPUT_PLACEHOLDER, 'search.operator.inRange.to', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.IN_RANGE_DATE;
     }
 }

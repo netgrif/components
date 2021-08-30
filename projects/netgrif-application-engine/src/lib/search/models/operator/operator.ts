@@ -2,6 +2,7 @@ import {EscapeResult} from '../escape-result';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {WrapResult} from '../wrap-result';
+import {Operators} from './operators';
 
 /**
  * Represents the low level abstraction of query generation that is responsible for the creation of queries themselves.
@@ -22,7 +23,7 @@ export abstract class Operator<T> {
     /**
      * Reserved characters for Elasticsearch queries. These characters can be escaped with a `\` character.
      */
-    private static readonly ESCAPABLE_CHARACTERS = new Set (
+    private static readonly ESCAPABLE_CHARACTERS = new Set(
         ['+', '-', '=', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\', '/']);
 
     /**
@@ -123,10 +124,11 @@ export abstract class Operator<T> {
      * the results with an `OR` operator.
      * @returns query that wos constructed with the given arguments and keywords. Returns an empty query if no arguments are provided.
      */
-    public createQuery(elasticKeywords: Array<string>, args: Array<T>): Query {
+    public createQuery(elasticKeywords: Array<string>, args: Array<T>, escapeArgs = true): Query {
         this.checkArgumentsCount(args);
         return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
-            const escapedValue = Operator.escapeInput(args[0] as unknown as string);
+            const escapedValue = escapeArgs ?
+                Operator.escapeInput(args[0] as unknown as string) : ({value: args[0] as unknown as string, wasEscaped: false});
             const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, escapedValue.wasEscaped);
             const queryString = Operator.query(keyword, wrappedValue.value, this._operatorSymbols);
             return new Query(queryString);
@@ -142,6 +144,11 @@ export abstract class Operator<T> {
      * operator name where user input is expected.
      */
     public abstract getOperatorNameTemplate(): Array<string>;
+
+    /**
+     * @returns the operator class in a serializable form
+     */
+    public abstract serialize(): Operators | string;
 
     /**
      * Checks whether the provided array contains at leas as many arguments, as is the operators number of operands.

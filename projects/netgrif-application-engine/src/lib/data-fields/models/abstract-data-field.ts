@@ -1,11 +1,12 @@
 import {Behavior} from './behavior';
-import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
-import {distinctUntilChanged} from 'rxjs/operators';
+import {distinctUntilChanged, filter, take} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Component} from './component';
+import {Validation} from './validation';
 
 /**
  * Holds the logic common to all data field Model objects.
@@ -24,18 +25,11 @@ export abstract class DataField<T> {
     protected _previousValue: BehaviorSubject<T>;
     /**
      * @ignore
-     * Whether the data field Model object was initialized.
-     *
-     * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
-     */
-    private _initialized: boolean;
-    /**
-     * @ignore
      * Whether the data field Model object was initialized, we push that info into stream
      *
      * See [registerFormControl()]{@link DataField#registerFormControl} for more information.
      */
-    protected _initialized$: ReplaySubject<true>;
+    protected _initialized$: BehaviorSubject<boolean>;
     /**
      * @ignore
      * Whether the field fulfills all of it's validators.
@@ -60,11 +54,22 @@ export abstract class DataField<T> {
     protected _block: Subject<boolean>;
     /**
      * @ignore
+     * When a `true` value is there, the data field is disabled.
+     * When a `false` value is received, data field is disabled/enabled based on it's behavior.
+     */
+    protected _blocked: boolean;
+    /**
+     * @ignore
      * Data field subscribes this stream. Sets the state of the data field to "touched" or "untouched" (`true`/`false`).
      * Validity of the data field is not checked in an "untouched" state.
      * All fields are touched before a task is finished to check their validity.
      */
     protected _touch: Subject<boolean>;
+    protected _updateSubscription: Subscription;
+    protected _blockSubscription: Subscription;
+    protected _touchSubscription: Subscription;
+    protected _formControlValueSubscription: Subscription;
+    protected _myValueSubscription: Subscription;
     /**
      * @ignore
      * Appearance of dataFields, possible values - outline, standard, fill, legacy
@@ -78,11 +83,23 @@ export abstract class DataField<T> {
     /**
      * Whether invalid field values should be sent to backend.
      */
-    private _sendInvalidValues = false;
+    private _sendInvalidValues = true;
     /**
      * Flag that is set during reverting
      */
     private _reverting = false;
+
+    /**
+     * Validators resolved from field validations
+     */
+    protected _validators: Array<ValidatorFn>;
+
+    /**
+     * Stores the last subscription to the [_initialized$]{@link AbstractDataField#_initialized$} Stream, to prevent multiple block events
+     * from executing at the same time
+     */
+    protected _initializedSubscription: Subscription;
+
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -91,15 +108,16 @@ export abstract class DataField<T> {
      * @param _placeholder - placeholder displayed in the datafield
      * @param _description - tooltip of the datafield
      * @param _layout - information regarding the component rendering
+     * @param validations
      * @param _component - component data of datafield
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
-                          private _description?: string, private _layout?: Layout, private _component?: Component) {
+                          private _description?: string, private _layout?: Layout, public validations?: Array<Validation>,
+                          private _component?: Component) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
-        this._initialized$ = new ReplaySubject<true>(1);
-        this._initialized = false;
+        this._initialized$ = new BehaviorSubject<boolean>(false);
         this._valid = true;
         this._changed = false;
         this._update = new Subject<void>();
@@ -182,15 +200,11 @@ export abstract class DataField<T> {
         return !!this._behavior.visible && !this._behavior.editable;
     }
 
-    set initialized(set: boolean) {
-        this._initialized = set;
-    }
-
     get initialized(): boolean {
-        return this._initialized;
+        return this._initialized$.value;
     }
 
-    get initialized$(): Observable<true> {
+    get initialized$(): Observable<boolean> {
         return this._initialized$.asObservable();
     }
 
@@ -211,7 +225,12 @@ export abstract class DataField<T> {
     }
 
     set block(set: boolean) {
-        this._block.next(set);
+        if (this._initializedSubscription !== undefined && !this._initializedSubscription.closed) {
+            this._initializedSubscription.unsubscribe();
+        }
+        this._initializedSubscription = this.initialized$.pipe(filter(i => i), take(1)).subscribe(() => {
+            this._block.next(set);
+        });
     }
 
     set touch(set: boolean) {
@@ -241,7 +260,7 @@ export abstract class DataField<T> {
     }
 
     set sendInvalidValues(value: boolean | null) {
-        this._sendInvalidValues = value !== null && value;
+        this._sendInvalidValues = value === null || value;
     }
 
     public update(): void {
@@ -258,50 +277,87 @@ export abstract class DataField<T> {
         this._update.complete();
         this._touch.complete();
         this._block.complete();
+        this._initialized$.complete();
     }
 
     public registerFormControl(formControl: FormControl): void {
+        if (this.initialized) {
+            throw new Error('Data field can be initialized only once!'
+                + ' Disconnect the previous form control before initializing the data field again!');
+        }
+
         formControl.setValidators(this.resolveFormControlValidators());
-        formControl.valueChanges.pipe(
+
+        this._formControlValueSubscription = formControl.valueChanges.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
             this._valid = this._determineFormControlValidity(formControl);
             this.value = newValue;
         });
-        this._value.pipe(
+
+        this._myValueSubscription = this._value.pipe(
             distinctUntilChanged(this.valueEquality)
         ).subscribe(newValue => {
             this._valid = this._determineFormControlValidity(formControl);
             formControl.setValue(newValue);
         });
+
         this.updateFormControlState(formControl);
-        this._initialized = true;
         this._initialized$.next(true);
-        this._initialized$.complete();
         this._changed = false;
     }
 
-    public updateFormControlState(formControl: FormControl): void {
+    public disconnectFormControl(): void {
+        if (!this.initialized) {
+            return;
+        }
+        this._initialized$.next(false);
+        const subs = [
+            this._updateSubscription,
+            this._blockSubscription,
+            this._touchSubscription,
+            this._formControlValueSubscription,
+            this._myValueSubscription
+        ];
+        for (const sub of subs) {
+            if (sub) {
+                sub.unsubscribe();
+            }
+        }
+    }
+
+    protected updateFormControlState(formControl: FormControl): void {
         formControl.setValue(this.value);
-        this._update.subscribe(() => {
+        this.subscribeToInnerSubjects(formControl);
+        this.update();
+    }
+
+    protected subscribeToInnerSubjects(formControl: FormControl) {
+        this._updateSubscription = this._update.subscribe(() => {
             this.validRequired = this.calculateValidity(true, formControl);
             this.valid = this.calculateValidity(false, formControl);
-        });
-        this._block.subscribe(bool => {
-            if (bool) {
-                formControl.disable();
-            } else {
+            if (!this._blocked) {
                 this.disabled ? formControl.disable() : formControl.enable();
             }
         });
-        this._touch.subscribe(bool => {
+
+        this._blockSubscription = this._block.subscribe(bool => {
+            if (bool) {
+                this._blocked = true;
+                formControl.disable();
+            } else {
+                this._blocked = false;
+                this.disabled ? formControl.disable() : formControl.enable();
+            }
+        });
+
+        this._touchSubscription = this._touch.subscribe(bool => {
             if (bool) {
                 formControl.markAsTouched();
             } else {
                 formControl.markAsUntouched();
             }
         });
-        this.update();
     }
 
     /**
@@ -326,10 +382,34 @@ export abstract class DataField<T> {
      */
     protected resolveFormControlValidators(): Array<ValidatorFn> {
         const result = [];
+
         if (this.behavior.required) {
             result.push(Validators.required);
         }
+
+        if (this.validations) {
+            if (this._validators) {
+                result.push(...this._validators);
+            } else {
+                this._validators = this.resolveValidations();
+                result.push(...this._validators);
+            }
+        }
+
         return result;
+    }
+
+    public replaceValidations(validations: Array<Validation>) {
+        this.clearValidators();
+        this.validations = validations;
+    }
+
+    public clearValidators(): void {
+        this._validators = null;
+    }
+
+    protected resolveValidations(): Array<ValidatorFn> {
+        return [];
     }
 
     /**
@@ -386,10 +466,9 @@ export abstract class DataField<T> {
     }
 
     protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
+        const isDisabled = formControl.disabled;
         if (forValidRequired) {
             formControl.enable();
-        } else if (this.disabled) {
-            formControl.disable();
         }
         formControl.clearValidators();
         if (forValidRequired) {
@@ -398,7 +477,9 @@ export abstract class DataField<T> {
             formControl.setValidators(this.resolveFormControlValidators());
         }
         formControl.updateValueAndValidity();
-        return this._determineFormControlValidity(formControl);
+        const validity = this._determineFormControlValidity(formControl);
+        isDisabled ? formControl.disable() : formControl.enable();
+        return validity;
     }
 
     public isInvalid(formControl: FormControl): boolean {

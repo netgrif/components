@@ -1,4 +1,5 @@
 import {Operator} from './operator';
+import {Operators} from './operators';
 
 /**
  * Strict equality operator. Will match if the field has the exact same value as the input.
@@ -14,5 +15,9 @@ export class Equals extends Operator<string | number> {
 
     getOperatorNameTemplate(): Array<string> {
         return ['search.operator.equals', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.EQUALS;
     }
 }

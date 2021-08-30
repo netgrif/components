@@ -1,16 +1,15 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case-list.component';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
     CaseResourceService,
     CaseViewService,
-    CaseViewServiceFactory,
     ConfigurationService,
-    FilterType,
     MaterialModule,
-    MockAuthenticationMethodService,
+    MockAuthenticationMethodService, NAE_BASE_FILTER,
     SearchService,
-    SimpleFilter,
+    TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
     TestConfigurationService,
     TranslateLibModule
 } from '@netgrif/application-engine';
@@ -18,14 +17,9 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
 import {PanelComponentModule} from '../../../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
+import {RouterModule} from '@angular/router';
 
-const localCaseViewServiceFactory = (factory: CaseViewServiceFactory) => {
-    return factory.createFromConfig('cases');
-};
-
-const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
-};
 
 describe('CaseListComponent', () => {
     let component: CaseListComponent;
@@ -38,22 +32,21 @@ describe('CaseListComponent', () => {
                 MaterialModule,
                 TranslateLibModule,
                 PanelComponentModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                RouterModule.forRoot([]),
+                RouterTestingModule.withRoutes([])
             ],
             providers: [
                 {provide: CaseResourceService, useClass: MyResources},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                CaseViewServiceFactory,
+                CaseViewService,
+                SearchService,
                 {
-                    provide: CaseViewService,
-                    useFactory: localCaseViewServiceFactory,
-                    deps: [CaseViewServiceFactory]
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
-                {
-                    provide: SearchService,
-                    useFactory: searchServiceFactory
-                }
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [CaseListComponent]
         })

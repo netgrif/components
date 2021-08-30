@@ -1,4 +1,4 @@
-import { TextField } from './text-field';
+import {TextField} from './text-field';
 
 describe('TextField', () => {
     it('should create an instance', () => {

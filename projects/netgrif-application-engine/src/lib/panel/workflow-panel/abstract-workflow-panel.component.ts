@@ -13,6 +13,7 @@ import {Net} from '../../process/net';
 import {TranslateService} from '@ngx-translate/core';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
+import {FeaturedValue} from '../abstract/featured-value';
 
 
 export interface WorkflowPanelContent {
@@ -99,12 +100,14 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
         });
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
         switch (selectedHeader.fieldIdentifier) {
             case WorkflowMetaField.INITIALS:
                 return {value: this.workflow.initials, icon: '', type: 'meta'};
             case WorkflowMetaField.TITLE:
                 return {value: this.workflow.title, icon: '', type: 'meta'};
+            case WorkflowMetaField.NET_ID:
+                return {value: this.workflow.stringId, icon: '', type: 'meta'};
             case WorkflowMetaField.VERSION:
                 return {value: this.workflow.version, icon: '', type: 'meta'};
             case WorkflowMetaField.AUTHOR:
@@ -114,7 +117,7 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
         this._log.warn('Immediate data in workflow panel headers are currently not supported');
         return {value: '', icon: '', type: ''};
     }
