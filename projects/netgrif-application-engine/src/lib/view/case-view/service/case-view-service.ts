@@ -323,8 +323,4 @@ export class CaseViewService extends SortableView implements OnDestroy {
         }
         return !(!!aCase.users[user.id] && !aCase.permissions[user.id][PermissionType.VIEW]);
     }
-
-    public hasAllowedNets(): boolean {
-        return this._allowedNetsService.allowedNets.length > 0;
-    }
 }
