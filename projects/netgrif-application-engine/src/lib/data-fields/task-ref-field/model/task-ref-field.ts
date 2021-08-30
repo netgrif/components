@@ -7,7 +7,7 @@ import {Validation} from '../../models/validation';
 export class TaskRefField extends DataField<Array<string>> {
 
     constructor(stringId: string, title: string, initialValue: Array<string>, behavior: Behavior,
-                placeholder?: string, description?: string, layout?: Layout, validations?: Validation[], component?: Component) {
+                placeholder?: string, description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component) {
         super(stringId, title, initialValue, behavior, placeholder, description, layout, validations, component);
     }
 }

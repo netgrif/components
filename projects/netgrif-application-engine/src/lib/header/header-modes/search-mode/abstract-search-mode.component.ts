@@ -76,7 +76,7 @@ export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComp
      *
      * If no user is selected the value of the corresponding form control si cleared.
      * @param column the index of the columns that should have it's form control value set to the selected user
-     * @param component is the component that we eant to open
+     * @param component is the component that we want to open
      */
     public selectAbstractUser(column: number, component: Type<any>): void {
         let valueReturned = false;

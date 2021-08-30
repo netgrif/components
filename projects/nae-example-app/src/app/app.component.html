@@ -1,11 +1,7 @@
 <nc-side-menu-container>
     <mat-sidenav-container class="main-sidenav-container">
         <mat-sidenav #sidenav opened mode="side" disableClose class="width-sidenav" >
-            <mat-nav-list>
-                <a mat-list-item *ngFor="let routeName of routes.config" [routerLink]="['/'+routeName.path]">
-                    {{routeName.path}}
-                </a>
-            </mat-nav-list>
+            <nc-navigation-tree></nc-navigation-tree>
         </mat-sidenav>
         <div class="full-height" fxLayout="column" fxLayoutAlign="center stretch">
             <div fxLayout="row" fxLayoutAlign="center stretch" class="component-container" fxFlex="100">
