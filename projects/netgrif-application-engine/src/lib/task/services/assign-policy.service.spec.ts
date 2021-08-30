@@ -74,6 +74,7 @@ describe('AssignPolicyService', () => {
                 offset: 0
             },
             dataGroups: [],
+            users: {},
             _links: {}
         };
 

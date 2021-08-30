@@ -30,4 +30,8 @@ export class MockUserService {
         }
         return this._user.roles.some(r => r.stringId === roleStringId);
     }
+
+    hasAuthority(): boolean {
+        return true;
+    }
 }

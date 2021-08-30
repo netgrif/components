@@ -23,7 +23,7 @@ export class ButtonField extends DataField<number> {
 
     constructor(stringId: string, title: string, behavior: Behavior, value?: number, placeholder?: string,
                 description?: string, layout?: Layout, private _view = ButtonFieldView.STANDARD,
-                validations?: Validation[], component?: Component) {
+                validations?: Array<Validation>, component?: Component) {
         super(stringId, title, (value === undefined) ? 0 : value, behavior, placeholder, description, layout, validations, component);
     }
 

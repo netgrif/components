@@ -118,7 +118,7 @@ export class MergedFilter extends Filter {
      * See [Filter.bodyContainsQuery()]{@link Filter#bodyContainsQuery}
      */
     bodyContainsQuery(): boolean {
-        return this._filters.some(f => !!f.query);
+        return this._filters.some(f => f.query !== undefined && f.query !== null);
     }
 
     /**

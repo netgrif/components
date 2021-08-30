@@ -3,7 +3,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
-import {EventEmitter, Inject, Input, OnInit, Optional, Output} from '@angular/core';
+import {EventEmitter, Inject, Input, OnInit, Optional, Output, Type} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
 import {UserFiltersService} from '../../filter/user-filters.service';
@@ -62,7 +62,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _userFilterService: UserFiltersService,
                           protected _allowedNetsService: AllowedNetsService,
                           protected _viewIdService: ViewIdService,
-                          @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>,
+                          @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Type<Category<any>>>,
                           @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
                           @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter = null) {
         if (this._configuration === null) {
@@ -145,7 +145,9 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      */
     public saveFilter(): void {
         this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
-            this._searchCategories, this._viewIdService.viewId, this.additionalFilterData).subscribe(savedFilterData => {
+            this._searchCategories, this._viewIdService.viewId, this.additionalFilterData,
+            this._configuration.saveFilterWithDefaultCategories ?? true,
+            this._configuration.inheritAllowedNets ?? true).subscribe(savedFilterData => {
                 if (savedFilterData) {
                     this.filterSaved.emit(savedFilterData);
                 }

@@ -149,7 +149,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     public chooseFile() {
-        if (this.state.uploading) {
+        if (this.state.uploading || this.formControl.disabled) {
             return;
         }
         this.fileUploadEl.nativeElement.click();

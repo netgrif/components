@@ -74,7 +74,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             secondary?:
@@ -90,7 +90,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             warn?:
@@ -106,7 +106,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             [k: string]: any;
@@ -125,7 +125,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             secondary?:
@@ -141,7 +141,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             warn?:
@@ -157,7 +157,7 @@ export interface Theme {
                 '700'?: string;
                 '800'?: string;
                 '900'?: string;
-                contrast?: { 'light': string[]; 'dark': string[]; };
+                contrast?: { 'light': Array<string>; 'dark': Array<string>; };
                 [k: string]: any;
             };
             [k: string]: any;
@@ -193,6 +193,8 @@ export interface Views {
 export interface View {
     layout?: {
         name: string;
+        enableCaseTitle?: boolean;
+        isCaseTitleRequired?: boolean;
         params?: {
             orientation?: string;
             [k: string]: any;
@@ -243,6 +245,7 @@ export interface Access {
     role?: Array<string> | string | RoleAccess | Array<RoleAccess>;
     group?: Array<string> | string;
     authority?: Array<string> | string;
+
     [k: string]: any;
 }
 
@@ -276,7 +279,7 @@ export interface Services {
         logWithDate?: boolean;
         serializeParams?: boolean;
         includeLogLevel?: boolean;
-        publishers?: any[];
+        publishers?: Array<any>;
         [k: string]: any;
     };
     auth?: {
@@ -294,6 +297,9 @@ export interface Services {
     legal: {
         termsOfService: string,
         privacyPolicy: string
+    };
+    groupNavigation?: {
+        groupNavigationRoute: string,
     };
 
     [k: string]: any;
