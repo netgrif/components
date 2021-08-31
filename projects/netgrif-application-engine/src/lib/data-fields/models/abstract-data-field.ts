@@ -110,12 +110,12 @@ export abstract class DataField<T> {
      * @param _layout - information regarding the component rendering
      * @param validations
      * @param _component - component data of datafield
-     * @param _autocomplete
+     * @param _htmlAutocomplete
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
                           private _description?: string, private _layout?: Layout, public validations?: Array<Validation>,
-                          private _component?: Component, private _autocomplete?: string) {
+                          private _component?: Component, private _htmlAutocomplete = 'off') {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new BehaviorSubject<boolean>(false);
@@ -264,12 +264,12 @@ export abstract class DataField<T> {
         this._sendInvalidValues = value === null || value;
     }
 
-    get autocomplete(): string {
-        return this._autocomplete;
+    get htmlAutocomplete(): string {
+        return this._htmlAutocomplete;
     }
 
-    set autocomplete(autocomplete: string) {
-        this._autocomplete = autocomplete;
+    set htmlAutocomplete(htmlAutocomplete: string) {
+        this._htmlAutocomplete = htmlAutocomplete;
     }
 
     public update(): void {

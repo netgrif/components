@@ -65,10 +65,10 @@ export class FieldConverterService {
                         item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, type, item.component, item.autocomplete);
+                    item.description, item.layout, item.validations, type, item.component, item.htmlAutocomplete);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
-                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.autocomplete);
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.htmlAutocomplete);
             case FieldTypeResource.ENUMERATION:
             case FieldTypeResource.ENUMERATION_MAP:
                 return this.resolveEnumField(item);
@@ -86,14 +86,14 @@ export class FieldConverterService {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component, item.autocomplete);
+                    item.description, item.layout, item.validations, item.component, item.htmlAutocomplete);
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component, item.autocomplete);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.htmlAutocomplete);
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {

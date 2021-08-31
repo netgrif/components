@@ -27,7 +27,7 @@ export interface DataFieldResource {
     minDate?: string;
     validations?: Array<Validation>;
     component?: Component;
-    autocomplete?: string;
+    htmlAutocomplete?: string;
     subType?: string;
     /*@deprecated*/
     formatting?: string;

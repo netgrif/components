@@ -8,8 +8,8 @@ import {Component} from '../../models/component';
 export class DateTimeField extends AbstractTimeInstanceField {
 
     constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component, autocomplete?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, autocomplete);
+                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component, htmlAutocomplete?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, htmlAutocomplete);
     }
 
     protected valueEquality(a: Moment, b: Moment): boolean {

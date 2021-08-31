@@ -59,7 +59,7 @@
                 "from": "./doc/autocomplete/autocomplete.component"
             },
             "access": "public",
-            "navigation": false,
+            "navigation": true,
             "routing": {
                 "path": "autocomplete"
             }

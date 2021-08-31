@@ -27,8 +27,8 @@ export class NumberField extends DataField<number> {
     public _formatFilter: FormatFilter;
 
     constructor(stringId: string, title: string, value: number, behavior: Behavior, validations?: Array<Validation>, placeholder?: string,
-                description?: string, layout?: Layout, format?: FormatFilter, component?: Component, autocomplete?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, autocomplete);
+                description?: string, layout?: Layout, format?: FormatFilter, component?: Component, htmlAutocomplete?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, htmlAutocomplete);
         this._formatFilter = format;
     }
 

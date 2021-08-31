@@ -35,8 +35,8 @@ export class TextField extends DataField<string> {
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array<Validation>, protected _view = TextFieldView.DEFAULT,
-                _component?: Component, autocomplete?: string) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, autocomplete);
+                _component?: Component, htmlAutocomplete?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, htmlAutocomplete);
     }
 
     /*@deprecated in 4.3.0*/
