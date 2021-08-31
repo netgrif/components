@@ -26,6 +26,9 @@ import {SessionService} from '../../authentication/session/services/session.serv
 import {User} from '../../user/models/user';
 import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
+import {ActiveGroupService} from '../../groups/services/active-group.service';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {LanguageService} from '../../translate/language.service';
 
 describe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
@@ -354,8 +357,22 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
                 userService: UserService,
                 roleGuard: RoleGuardService,
                 authorityGuard: AuthorityGuardService,
-                groupGuard: GroupGuardService) {
-        super(config, router, log, userService, roleGuard, authorityGuard, groupGuard);
+                groupGuard: GroupGuardService,
+                activeGroupService: ActiveGroupService,
+                taskResourceService: TaskResourceService,
+                languageService: LanguageService) {
+        super(
+            config,
+            router,
+            log,
+            userService,
+            roleGuard,
+            authorityGuard,
+            groupGuard,
+            activeGroupService,
+            taskResourceService,
+            languageService
+        );
     }
 }
 

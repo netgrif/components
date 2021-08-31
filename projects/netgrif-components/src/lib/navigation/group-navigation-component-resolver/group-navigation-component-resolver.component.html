@@ -1,0 +1,16 @@
+<div *ngIf="initialized || errored; else loading" class="full-height">
+    <div *ngIf="initialized; else displayError" class="full-height">
+        <ng-template [cdkPortalOutlet]="portal"></ng-template>
+    </div>
+</div>
+
+<ng-template #loading>
+    <mat-progress-spinner></mat-progress-spinner>
+</ng-template>
+
+<ng-template #displayError>
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon color="accent" class="margin-bottom-error-icon">cancel</mat-icon>
+        <span class="font-size-20">{{'dynamicNavigation.couldNotResolveView' | translate}}</span>
+    </div>
+</ng-template>

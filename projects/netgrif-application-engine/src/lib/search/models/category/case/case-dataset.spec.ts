@@ -18,7 +18,6 @@ import {SearchAutocompleteOption} from '../search-autocomplete-option';
 import moment from 'moment';
 import {EqualsDate} from '../../operator/equals-date';
 import {EqualsDateTime} from '../../operator/equals-date-time';
-import {LoggerService} from '../../../../logger/services/logger.service';
 
 describe('CaseDataset', () => {
     let operatorService: OperatorService;

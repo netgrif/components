@@ -69,7 +69,7 @@ import {
     LoginFormComponentModule,
     NavigationComponentModule,
     PanelComponentModule,
-    ProfileComponentModule,
+    ProfileComponentModule, RedirectComponentModule,
     RegistrationFormComponentModule,
     SearchComponentModule,
     SideMenuComponentModule,
@@ -86,7 +86,13 @@ import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-
 import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.component';
 import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
-import {GroupViewComponent} from './doc/group-view/group-view.component';
+import { GroupViewComponent } from './doc/group-view/group-view.component';
+import { DemoTitleConfigContent0TaskViewComponent } from './doc/demo-title-config/content/0/demo-title-config-content0-task-view.component';
+import { DemoTitleConfigContent1CaseViewComponent } from './doc/demo-title-config/content/1/demo-title-config-content1-case-view.component';
+import { DemoTitleConfigContent2CaseViewComponent } from './doc/demo-title-config/content/2/demo-title-config-content2-case-view.component';
+import { DemoTitleConfigContent3CaseViewComponent } from './doc/demo-title-config/content/3/demo-title-config-content3-case-view.component';
+import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
+import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import {AutocompleteComponent} from './doc/autocomplete/autocomplete.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -131,6 +137,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicWorkflowViewComponent,
         PublicResolverComponent,
         GroupViewComponent,
+        ExampleRedirectComponent,
+        DemoTitleConfigContent0TaskViewComponent,
+        DemoTitleConfigContent1CaseViewComponent,
+        DemoTitleConfigContent2CaseViewComponent,
+        DemoTitleConfigContent3CaseViewComponent,
+        TitleConfigComponent,
         AutocompleteComponent,
     ],
     imports: [
@@ -179,6 +191,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         WorkflowViewComponentModule,
         NgxChartsModule,
         EmailSubmissionFormComponentModule,
+        RedirectComponentModule
     ],
     entryComponents: [
         AutocompleteComponent,
@@ -215,7 +228,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         PublicTaskViewComponent,
         PublicWorkflowViewComponent,
         PublicResolverComponent,
-        GroupViewComponent
+        GroupViewComponent,
+        ExampleRedirectComponent,
+        GroupViewComponent,
+        DemoTitleConfigContent0TaskViewComponent,
+        DemoTitleConfigContent1CaseViewComponent,
+        DemoTitleConfigContent2CaseViewComponent,
+        DemoTitleConfigContent3CaseViewComponent,
+        TitleConfigComponent
     ],
     providers: [{
         provide: ConfigurationService,

@@ -32,6 +32,8 @@ import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-wor
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import {GroupViewComponent} from './doc/group-view/group-view.component';
 import {AutocompleteComponent} from './doc/autocomplete/autocomplete.component';
+import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
+import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +44,7 @@ export class NaeExampleAppViewService extends ViewService {
         // If you want to add views to the application run the 'create-view' schematic.
         super([
             {id: 'AutocompleteComponent', class: AutocompleteComponent},
+            {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
             {id: 'UserInviteComponent', class: UserInviteComponent},
             {id: 'TreeViewExampleComponent', class: TreeViewExampleComponent},

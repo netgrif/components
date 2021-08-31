@@ -61,5 +61,9 @@
     .enum-icon-item-active {
         color: mat-color($primary) !important;
     }
+
+    .file-list-item:hover {
+        background-color: rgba(mat-color($secondary, A200), 0.3)
+    }
 }
 

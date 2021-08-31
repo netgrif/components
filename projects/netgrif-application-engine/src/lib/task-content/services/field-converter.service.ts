@@ -70,19 +70,8 @@ export class FieldConverterService {
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
                     item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.autocomplete);
             case FieldTypeResource.ENUMERATION:
-                if (item.component && item.component.name === 'autocomplete_dynamic') {
-                    return new DynamicEnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
-                        item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
-                        item.type, item.validations, item.component);
-                } else {
-                    return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
-                        item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
-                        item.type, item.validations, item.component);
-                }
             case FieldTypeResource.ENUMERATION_MAP:
-                return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumOptions(item),
-                    item.behavior, item.placeholder, item.description, item.layout, this.resolveEnumViewType(item),
-                    item.type, item.validations, item.component);
+                return this.resolveEnumField(item);
             case FieldTypeResource.MULTICHOICE:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
                     item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
@@ -222,6 +211,25 @@ export class FieldConverterService {
     }
 
     /**
+     * Resolves `enumeration` and `eunumeration_map` fields into their appropriate class instances
+     * @param enumField enumeration field resource
+     */
+    protected resolveEnumField(enumField: DataFieldResource): EnumerationField {
+        const options = enumField.type === FieldTypeResource.ENUMERATION
+            ? this.resolveEnumChoices(enumField)
+            : this.resolveEnumOptions(enumField);
+        if (enumField.component && enumField.component.name === 'autocomplete_dynamic') {
+            return new DynamicEnumerationField(enumField.stringId, enumField.name, enumField.value, options,
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
+                enumField.type, enumField.validations, enumField.component);
+        } else {
+            return new EnumerationField(enumField.stringId, enumField.name, enumField.value, options,
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
+                enumField.type, enumField.validations, enumField.component);
+        }
+    }
+
+    /**
      * @param enumField enumeration field resource object who's view type we want to resolve
      * @returns the view type defined in the field object, or default if none, or invalid type is defined
      * @deprecated in 4.3.0
@@ -289,7 +297,7 @@ export class FieldConverterService {
      * @returns the options for the multichoice field
      */
     protected resolveMultichoiceChoices(multiField: DataFieldResource): Array<MultichoiceFieldValue> {
-        const choicesMulti: MultichoiceFieldValue[] = [];
+        const choicesMulti: Array<MultichoiceFieldValue> = [];
         if (multiField.choices instanceof Array) {
             multiField.choices.forEach(it => {
                 choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);
