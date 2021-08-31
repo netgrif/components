@@ -12,6 +12,7 @@ import {
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('DefaultTabbedCaseViewComponent', () => {
     let component: DefaultTabbedCaseViewComponent;
@@ -23,6 +24,7 @@ describe('DefaultTabbedCaseViewComponent', () => {
                 NavigationComponentModule,
                 TestMockDependenciesModule,
                 NoopAnimationsModule,
+                RouterTestingModule.withRoutes([]),
             ],
             providers: [
                 {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'id'},

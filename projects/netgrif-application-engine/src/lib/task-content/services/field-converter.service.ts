@@ -289,7 +289,7 @@ export class FieldConverterService {
      * @returns the options for the multichoice field
      */
     protected resolveMultichoiceChoices(multiField: DataFieldResource): Array<MultichoiceFieldValue> {
-        const choicesMulti: MultichoiceFieldValue[] = [];
+        const choicesMulti: Array<MultichoiceFieldValue> = [];
         if (multiField.choices instanceof Array) {
             multiField.choices.forEach(it => {
                 choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);

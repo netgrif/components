@@ -3,7 +3,7 @@ import {EnumerationField} from '../models/enumeration-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 
-export class AbstractEnumerationStepperFieldComponent implements OnInit, AfterViewChecked  {
+export class AbstractEnumerationStepperFieldComponent implements OnInit, AfterViewChecked {
 
     @Input() enumerationField: EnumerationField;
     @Input() formControlRef: FormControl;

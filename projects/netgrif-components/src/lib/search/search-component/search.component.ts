@@ -44,9 +44,9 @@ import {TranslateService} from '@ngx-translate/core';
  */
 export function searchCategoryConverter(categoryResolverService: CategoryResolverService,
                                         baseFilter: BaseFilter,
-                                        defaultCaseSearchCategories: Type<Category<any>>[],
-                                        defaultTaskSearchCategories: Type<Category<any>>[],
-                                        naeSearchCategories: Category<any>[] | Type<Category<any>>[] = null
+                                        defaultCaseSearchCategories: Array<Type<Category<any>>>,
+                                        defaultTaskSearchCategories: Array<Type<Category<any>>>,
+                                        naeSearchCategories: Array<Category<any>> | Array<Type<Category<any>>> = null
 ): Array<Type<Category<any>>> {
     if (naeSearchCategories === null) {
         // categories were not provided => return the defaults
@@ -61,9 +61,11 @@ export function searchCategoryConverter(categoryResolverService: CategoryResolve
 
     // categories were provided => convert them if necessary
     if (naeSearchCategories.length !== 0 && naeSearchCategories[0] instanceof Category) {
-        return (naeSearchCategories as Category<any>[]).map(c => categoryResolverService.toClass(categoryResolverService.serialize(c)));
+        return (naeSearchCategories as Array<Category<any>>).map(c => {
+            return categoryResolverService.toClass(categoryResolverService.serialize(c));
+        });
     }
-    return naeSearchCategories as Type<Category<any>>[];
+    return naeSearchCategories as Array<Type<Category<any>>>;
 }
 
 @Component({

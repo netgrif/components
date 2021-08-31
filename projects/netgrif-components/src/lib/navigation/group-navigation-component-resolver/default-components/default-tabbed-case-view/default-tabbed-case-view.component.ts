@@ -24,6 +24,7 @@ import {
     filterCaseTabbedDataFilterFactory,
     filterCaseTabbedDataSearchCategoriesFactory
 } from '../model/factory-methods';
+import {UserService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nc-default-tabbed-case-view',

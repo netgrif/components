@@ -1,4 +1,4 @@
-import { AbstractEnumerationIconFieldComponent } from './abstract-enumeration-icon-field.component';
+import {AbstractEnumerationIconFieldComponent} from './abstract-enumeration-icon-field.component';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../../material/material.module';
 import {AngularResizedEventModule} from 'angular-resize-event';
