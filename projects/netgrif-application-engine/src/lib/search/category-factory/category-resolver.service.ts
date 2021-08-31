@@ -10,10 +10,12 @@ import {CaseSimpleDataset} from '../models/category/case/case-simple-dataset';
 import {CaseTask} from '../models/category/case/case-task';
 import {CaseTitle} from '../models/category/case/case-title';
 import {CaseVisualId} from '../models/category/case/case-visual-id';
+import {CaseStringId} from '../models/category/case/case-string-id';
 import {TaskAssignee} from '../models/category/task/task-assignee';
 import {TaskProcess} from '../models/category/task/task-process';
 import {TaskRole} from '../models/category/task/task-role';
 import {TaskTask} from '../models/category/task/task-task';
+import {CaseCreationDateTime} from '../models/category/case/case-creation-date-time';
 import {CategorySerialisationPair} from './category-serialisation-pair';
 
 /**
@@ -46,6 +48,9 @@ export class CategoryResolverService {
                 classReference: CaseCreationDate,
                 serialized: Categories.CASE_CREATION_DATE
             }, {
+                classReference: CaseCreationDateTime,
+                serialized: Categories.CASE_CREATION_DATE_TIME
+            }, {
                 classReference: CaseDataset,
                 serialized: Categories.CASE_DATASET
             }, {
@@ -66,6 +71,9 @@ export class CategoryResolverService {
             }, {
                 classReference: CaseVisualId,
                 serialized: Categories.CASE_VISUAL_ID
+            }, {
+                classReference: CaseStringId,
+                serialized: Categories.CASE_STRING_ID
             },
             // Task
             {

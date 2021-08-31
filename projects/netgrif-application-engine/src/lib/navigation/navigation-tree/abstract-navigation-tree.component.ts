@@ -37,6 +37,8 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
+    protected subRouter: Subscription;
+    protected subUserService: Subscription;
 
     protected _reloadNavigation: ReplaySubject<void>;
     protected _groupNavigationConfig: Services['groupNavigation'];
@@ -108,20 +110,22 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     }
 
     protected resolveNavigation(): void {
+        let nodes;
         if (this.viewPath && this.parentUrl !== undefined && this.routerChange) {
-            this.resolveNavigationNodesWithOffsetRoot();
+            nodes = this.resolveNavigationNodesWithOffsetRoot();
         } else {
-            this.dataSource.data = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
-            this.resolveLevels(this.dataSource.data);
+            nodes = this.resolveNavigationNodes(this._config.getConfigurationSubtree(['views']), '');
         }
+        this.dataSource.data = nodes;
+        this.resolveLevels(this.dataSource.data);
     }
 
-    protected resolveNavigationNodesWithOffsetRoot(): void {
+    protected resolveNavigationNodesWithOffsetRoot(): Array<NavigationNode> {
         const view = this._config.getViewByPath(this.viewPath);
         if (view && view.children) {
-            this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
+            return this.resolveNavigationNodes(view.children, this.parentUrl);
         }
-        this.resolveLevels(this.dataSource.data);
+        return this.dataSource.data;
     }
 
     protected resolveNavigationNodes(views: Views, parentUrl: string): Array<NavigationNode> {
@@ -276,9 +280,9 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         }
 
         return !this._userService.user.isEmpty() // AuthGuard
-            && this.passesRoleGuard(view, url)
-            && this.passesAuthorityGuard(view)
-            && this.passesGroupGuard(view, url);
+                && this.passesRoleGuard(view, url)
+                && this.passesAuthorityGuard(view)
+                && this.passesGroupGuard(view, url);
     }
 
     /**
@@ -305,6 +309,14 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
      */
     protected passesGroupGuard(view: View, url: string): boolean {
         return !view.access.hasOwnProperty('group') || this._groupGuard.canAccessView(view, url);
+    }
+
+    protected resolveChange() {
+        const view = this._config.getViewByPath(this.viewPath);
+        if (view && view.children) {
+            this.dataSource.data = this.resolveNavigationNodes(view.children, this.parentUrl);
+        }
+        this.resolveLevels(this.dataSource.data);
     }
 
     /**

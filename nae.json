@@ -53,6 +53,30 @@
         ]
     },
     "views": {
+        "demo-redirect": {
+            "component": {
+                "class": "ExampleRedirectComponent",
+                "from": "./doc/redirect/example-redirect.component"
+            },
+            "access": "public",
+            "navigation": true,
+            "routing": {
+                "path": "redirect/:view"
+            },
+            "children": {
+                "custom-redirect": {
+                    "component": {
+                        "class": "ExampleRedirectComponent",
+                        "from": "./doc/redirect/example-redirect.component"
+                    },
+                    "access": "public",
+                    "navigation": true,
+                    "routing": {
+                        "path": "**"
+                    }
+                }
+            }
+        },
         "demo-authentication": {
             "component": {
                 "class": "AuthenticationComponent",
@@ -275,6 +299,71 @@
                 }
             }
         },
+        "demo-title-config": {
+            "layout": {
+                "name": "tabView",
+                "componentName": "Title config",
+                "params": {
+                    "tabs": [
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Default"
+                            },
+                            "canBeClosed": false,
+                            "order": -1,
+                            "enableCaseTitle": true,
+                            "isCaseTitleRequired": true
+                        },
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Viac sietí, bez title"
+                            },
+                            "canBeClosed": false,
+                            "order": 0,
+                            "enableCaseTitle": false,
+                            "isCaseTitleRequired": false
+                        },
+                        {
+                            "view": {
+                                "name": "caseView"
+                            },
+                            "label": {
+                                "icon": "storage",
+                                "text": "Jedna sieť, title optional"
+                            },
+                            "canBeClosed": false,
+                            "order": 1,
+                            "enableCaseTitle": true,
+                            "isCaseTitleRequired": false
+                        }
+                    ],
+                    "allowedNets": [
+                        "all_data"
+                    ],
+                    "defaultTaskView": {
+                        "view": {
+                            "name": "taskView"
+                        }
+                    }
+                }
+            },
+            "component": {
+                "class": "TitleConfigComponent",
+                "from": "./doc/title-config-example/title-config-example.component"
+            },
+            "access": "private",
+            "routing": {
+                "path": "titleConfig"
+            }
+        },
         "demo-workflow-view": {
             "component": {
                 "class": "WorkflowViewExampleComponent",
@@ -325,9 +414,13 @@
                 "from": "./doc/profile/profile.component"
             },
             "access": {
-                "role": ["DevLink.Admin"],
+                "role": [
+                    "DevLink.Admin"
+                ],
                 "group": [],
-                "authority": ["ROLE_ADMIN"]
+                "authority": [
+                    "ROLE_ADMIN"
+                ]
             },
             "navigation": false,
             "routing": {
@@ -635,7 +728,8 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "pie",
                             "title": "Custom",
                             "resourceType": "case",
@@ -643,7 +737,11 @@
                                 "aggs": {
                                     "result": {
                                         "terms": {
-                                            "field": "dataSet.text.value.keyword"}}}},
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    }
+                                }
+                            },
                             "filter": {},
                             "layout": {
                                 "x": 0,
@@ -651,11 +749,20 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "bar",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": {"aggs": {"result": {"terms": {"field": "dataSet.text.value.keyword"}}}},
+                            "query": {
+                                "aggs": {
+                                    "result": {
+                                        "terms": {
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    }
+                                }
+                            },
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "filter": {},
@@ -665,11 +772,25 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "line",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": {"aggs":{"result1":{"terms":{"field":"dataSet.text.value.keyword"}},"result2":{"terms":{"field":"dataSet.text.value.keyword"}}}},
+                            "query": {
+                                "aggs": {
+                                    "result1": {
+                                        "terms": {
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    },
+                                    "result2": {
+                                        "terms": {
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    }
+                                }
+                            },
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "filter": {},
@@ -679,11 +800,20 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "lineargauge",
                             "title": "Custom",
                             "resourceType": "case",
-                            "query": {"aggs": {"types_count": {"value_count": {"field": "dataSet.text.value.keyword"}}}},
+                            "query": {
+                                "aggs": {
+                                    "types_count": {
+                                        "value_count": {
+                                            "field": "dataSet.text.value.keyword"
+                                        }
+                                    }
+                                }
+                            },
                             "xAxisLabel": "Country",
                             "yAxisLabel": "Population",
                             "units": "cases",
@@ -694,7 +824,8 @@
                                 "rows": 1,
                                 "cols": 1
                             }
-                        }, {
+                        },
+                        {
                             "type": "default",
                             "layout": {
                                 "x": 2,
