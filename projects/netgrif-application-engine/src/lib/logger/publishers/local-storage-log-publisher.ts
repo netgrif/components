@@ -20,7 +20,7 @@ export class LocalStorageLogPublisher extends LogPublisher {
             return;
         }
         const logString: string = localStorage.getItem(this.location);
-        let log: LogEntry[];
+        let log: Array<LogEntry>;
         if (!logString) {
             log = [];
         } else {

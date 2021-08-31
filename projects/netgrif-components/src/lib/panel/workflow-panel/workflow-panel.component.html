@@ -1,6 +1,6 @@
 <nc-app-panel [panelHeader]="header" [panelContent]="content" (getExpansionPanelRef)="setPanelRef($event)">
     <ng-template #header>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
                  [fxHide.lt-xl]="i >= 4 && responsiveBody"
                  [fxHide.lt-lg]="i >= 3 && responsiveBody"

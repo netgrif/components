@@ -1,4 +1,4 @@
-import { EditableElementaryPredicate } from './editable-elementary-predicate';
+import {EditableElementaryPredicate} from './editable-elementary-predicate';
 
 describe('EditableElementaryPredicate', () => {
   it('should create an instance', () => {

@@ -10,5 +10,21 @@ export interface FilterMetadata {
     /**
      * Serialized {@link Category} classes, that were available in the saved search component.
      */
-    searchCategories: Array<string>;
+    searchCategories?: Array<string>;
+    /**
+     * Whether the search categories default to the view the filter will be loaded in should be merged with the saved categories.
+     *
+     * Defaults to a falsy value.
+     *
+     * If falsy, only the categories stored in [searchCategories]{@link FilterMetadata#searchCategories} will be used.
+     */
+    defaultSearchCategories?: boolean;
+    /**
+     * Whether the allowed nets used to generate category metadata can be inherited from frontend providers.
+     *
+     * Defaults to a falsy value.
+     *
+     * If falsy, only the allowed nets stored in the filter data field will be used to generate category metadata.
+     */
+    inheritAllowedNets?: boolean;
 }

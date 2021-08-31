@@ -1,4 +1,4 @@
-import { MoreThanEqualDateTime } from './more-than-equal-date-time';
+import {MoreThanEqualDateTime} from './more-than-equal-date-time';
 import {OperatorResolverService} from '../../operator-service/operator-resolver.service';
 import {OperatorService} from '../../operator-service/operator.service';
 

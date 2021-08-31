@@ -118,7 +118,8 @@ class MissingEndpointsConfigurationService extends ConfigurationService {
                         verification: 'auth/verify'
                     },
                     sessionBearer: 'X-Auth-Token'
-                }
+                },
+                resources: []
             }
         } as unknown as NetgrifApplicationEngine);
     }

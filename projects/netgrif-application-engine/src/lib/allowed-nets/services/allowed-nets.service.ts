@@ -52,7 +52,7 @@ export class AllowedNetsService implements OnDestroy {
     /**
      * @returns the current value of the allowed nets. If allowed nets are yet to bee set, `undefined` is returned.
      */
-    public get allowedNets(): (readonly Net[]) | undefined {
+    public get allowedNets(): ReadonlyArray<Net> | undefined {
         return this._allowedNets;
     }
 
@@ -68,7 +68,7 @@ export class AllowedNetsService implements OnDestroy {
     /**
      * @returns the current value of the allowed nets identifiers. If allowed nets are yet to bee set, `undefined` is returned.
      */
-    public get allowedNetsIdentifiers(): (readonly string[]) | undefined {
+    public get allowedNetsIdentifiers(): ReadonlyArray<string> | undefined {
         return this._allowedNetsIdentifiers;
     }
 

@@ -252,7 +252,7 @@ export class TabView implements TabViewInterface {
                 tabClosed$: tab.tabClosed$.asObservable(),
             } as InjectedTabData);
 
-            const providers: StaticProvider[] = [
+            const providers: Array<StaticProvider> = [
                 {provide: NAE_TAB_DATA, useValue: tab.injectedObject}
             ];
             providers.push({provide: NAE_VIEW_ID_SEGMENT, useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT});

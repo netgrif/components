@@ -1,6 +1,6 @@
 import {AbstractSearchOperandInputComponent} from './abstract-search-operand-input.component';
 import {Component} from '@angular/core';
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
 
