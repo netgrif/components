@@ -11,7 +11,7 @@ import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridData} from '../model/grid-data';
-import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
+import {DataGroupCompact, DataGroupLayout, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {LoadingEmitter} from '../../utility/loading-emitter';
@@ -377,20 +377,38 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 dataField.layout.cols, fieldElement.gridAreaId, dataField.layout.rows);
         });
 
-        this.collapseGridEmptySpace(localGrid);
+        this.collapseGridEmptySpace(localGrid, dataGroup.layout);
 
         localGrid.forEach(localGridRow => gridData.grid.push(localGridRow));
     }
 
     /**
-     * Removes empty rows and shifts all grid elements up if they have enough space above them.
+     * Applies the empty row removal and field compacting rules based on the provided layout configuration.
+     *
+     * The input grid is modified in place.
+     * @param grid the state of the grid that should be modified
+     * @param layout configuration of the applied compacting rules
+     */
+    protected collapseGridEmptySpace(grid: Array<Array<string>>, layout: DataGroupLayout) {
+        if (layout.hideEmptyRows ?? true) {
+            this.removeEmptyRows(grid);
+        }
+
+        switch (layout.compactDirection ?? DataGroupCompact.NONE) {
+            case DataGroupCompact.UP:
+                this.compactFieldsUp(grid);
+                break;
+        }
+    }
+
+    /**
+     * Moves any element as far UP as it can go. Elements that were originally declared in the same row might end up in different rows.
+     * Resulting trailing empty rows are removed.
      *
      * The input grid is modified in place.
      * @param grid the state of the grid that should be modified
      */
-    protected collapseGridEmptySpace(grid: Array<Array<string>>) {
-        this.removeEmptyRows(grid);
-
+    protected compactFieldsUp(grid: Array<Array<string>>) {
         for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
             const row = grid[rowIndex];
 
