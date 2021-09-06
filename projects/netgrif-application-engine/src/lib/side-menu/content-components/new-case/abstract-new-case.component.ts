@@ -12,6 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {MatToolbar} from '@angular/material/toolbar';
 import semver from 'semver';
+import {MatOption} from '@angular/material/core';
 
 interface Form {
     value: string;
@@ -23,6 +24,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
+    netVersion: string;
 
     options: Array<Form> = [];
     colors: Array<Form> = [
@@ -249,5 +251,17 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     isCaseTitleRequired(): boolean {
         return this.isCaseTitleEnabled() && !!this._injectedData.newCaseCreationConfiguration.isCaseTitleRequired;
+    }
+
+    showVersion(option: MatOption): void {
+        if (option !== undefined && option.value !== undefined && option.value.version !== undefined)
+            this.netVersion = option.value.version;
+    }
+
+    checkVersion(viewValue: any): void {
+        const currentOption = typeof viewValue === 'string' || viewValue === null ? undefined : viewValue.version;
+        if (currentOption === undefined) {
+            this.netVersion = '';
+        }
     }
 }
