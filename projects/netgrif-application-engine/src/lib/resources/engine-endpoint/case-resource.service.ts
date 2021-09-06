@@ -69,7 +69,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * DELETE
      * {{baseUrl}}/api/workflow/case/:id
      */
-    public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<MessageResource> {
+    public deleteCase(caseID: string, deleteSubtree = false): Observable<MessageResource> {
         return this._resourceProvider.delete$('workflow/case/' + caseID,
             this.SERVER_URL,
             deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
