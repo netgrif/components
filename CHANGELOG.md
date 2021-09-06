@@ -1,3 +1,25 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10909/tab/release-report-all-issues"></a>
+## 5.6.2 (03.08.2021)
+### Bug fixes
+None
+
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10906/tab/release-report-all-issues"></a>
+## 5.6.1 (30.08.2021)
+### Bug fixes
+None
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10891/tab/release-report-all-issues"></a>
 ## 5.6.0 (26.08.2021)
 ### Bug fixes
