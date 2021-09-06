@@ -3,6 +3,8 @@ import {BasicLayout} from '../../utility/grid-layout/model/grid-element';
 
 export interface DataGroupLayout extends BasicLayout {
     type: DataGroupLayoutType;
+    hideEmptyRows?: boolean;
+    compactDirection?: DataGroupCompact;
     [k: string]: any;
 }
 
@@ -22,4 +24,18 @@ export enum DataGroupLayoutType {
      * Layouting algorithm used in NAE versions < 4.0.0
      */
     LEGACY = 'legacy'
+}
+
+/**
+ * Determines what direction(s) should be used when collapsing form layout
+ */
+export enum DataGroupCompact {
+    /**
+     * No field layout compacting occurs
+     */
+    NONE = 'none',
+    /**
+     * Fields are moved up as far as they can fit. Fields declared in the same row might end up in different rows.
+     */
+    UP = 'up',
 }
