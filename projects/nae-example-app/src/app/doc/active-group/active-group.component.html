@@ -1,14 +1,24 @@
-<div fxLayout="row" fxLayoutAlign="space-around center">
-    <mat-form-field appearance="outline">
-        <mat-label>Active group</mat-label>
-        <mat-select [formControl]="fcGroup">
-            <mat-option *ngFor="let group of options; trackBy:trackByFn" [value]="group.stringId">{{group.title}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Active groups</mat-label>
-        <mat-select [formControl]="fcGroups" multiple>
-            <mat-option *ngFor="let group of options; trackBy:trackByFn" [value]="group.stringId">{{group.title}}</mat-option>
-        </mat-select>
-    </mat-form-field>
+<div fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-form-field appearance="outline">
+            <mat-label>Active group</mat-label>
+            <mat-select [formControl]="fcGroup">
+                <mat-option *ngFor="let group of options; trackBy:trackByFn"
+                            [value]="group.stringId">{{group.title}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Active groups</mat-label>
+            <mat-select [formControl]="fcGroups" multiple>
+                <mat-option *ngFor="let group of options; trackBy:trackByFn"
+                            [value]="group.stringId">{{group.title}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <b>ActiveGroups:</b>
+        <ul>
+            <li *ngFor="let group of activeGroups">{{group}}</li>
+        </ul>
+    </div>
 </div>
