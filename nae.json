@@ -683,6 +683,17 @@
                 }
             }
         },
+        "demo-active-group": {
+            "component": {
+                "class": "ActiveGroupComponent",
+                "from": "./doc/active-group/active-group.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "active-group"
+            }
+        },
         "group-navigation-outlet": {
             "layout": {
                 "name": "groupNavigation"

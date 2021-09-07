@@ -33,6 +33,7 @@ import {PublicResolverComponent} from './doc/public-resolver/public-resolver.com
 import {GroupViewComponent} from './doc/group-view/group-view.component';
 import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
+import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +42,7 @@ export class NaeExampleAppViewService extends ViewService {
     constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
-        super([
+        super([{id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
             {id: 'UserInviteComponent', class: UserInviteComponent},
