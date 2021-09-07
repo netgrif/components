@@ -235,6 +235,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         DemoTitleConfigContent1CaseViewComponent,
         DemoTitleConfigContent2CaseViewComponent,
         DemoTitleConfigContent3CaseViewComponent,
+        TitleConfigComponent,
         ActiveGroupComponent,
         WrapperEmptyViewComponent
     ],
