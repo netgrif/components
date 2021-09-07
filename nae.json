@@ -694,13 +694,25 @@
                 "path": "active-group"
             }
         },
-        "group-navigation-outlet": {
+        "wrapper": {
             "layout": {
-                "name": "groupNavigation"
+                "name": "emptyView"
             },
+            "access": "private",
             "navigation": false,
             "routing": {
-                "path": "group-nav"
+                "path": "wrap"
+            },
+            "children": {
+                "group-navigation-outlet": {
+                    "layout": {
+                        "name": "groupNavigation"
+                    },
+                    "navigation": false,
+                    "routing": {
+                        "path": "group-nav"
+                    }
+                }
             }
         },
         "dashboard": {

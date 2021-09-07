@@ -93,6 +93,7 @@ import { DemoTitleConfigContent3CaseViewComponent } from './doc/demo-title-confi
 import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
+import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -143,6 +144,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         DemoTitleConfigContent3CaseViewComponent,
         TitleConfigComponent,
         ActiveGroupComponent,
+        WrapperEmptyViewComponent,
     ],
     imports: [
         BrowserModule,
@@ -233,7 +235,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         DemoTitleConfigContent1CaseViewComponent,
         DemoTitleConfigContent2CaseViewComponent,
         DemoTitleConfigContent3CaseViewComponent,
-        ActiveGroupComponent
+        ActiveGroupComponent,
+        WrapperEmptyViewComponent
     ],
     providers: [{
         provide: ConfigurationService,
