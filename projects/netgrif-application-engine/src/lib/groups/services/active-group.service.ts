@@ -75,10 +75,14 @@ export class ActiveGroupService implements OnDestroy {
 
     /**
      * Emits a new array into the [activeGroups$]{@link ActiveGroupService#activeGroups$} observable, that contains only
-     * the provided {@link Case} object.
+     * the provided {@link Case} object. If `undefined` is passed as argument, an empty array will be pushed into the observable.
      * @param activeGroup the new active group case reference
      */
     set activeGroup(activeGroup: Case) {
-        this._activeGroups$.next([activeGroup]);
+        if (activeGroup === undefined) {
+            this._activeGroups$.next([]);
+        } else {
+            this._activeGroups$.next([activeGroup]);
+        }
     }
 }

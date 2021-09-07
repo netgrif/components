@@ -22,6 +22,9 @@ import {refreshTree} from '../../utility/refresh-tree';
 import {getField} from '../../utility/get-field';
 import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
 import {LanguageService} from '../../translate/language.service';
+import {
+    DynamicNavigationRouteProviderService
+} from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 
 export interface NavigationNode {
     name: string;
@@ -37,8 +40,6 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
-    protected subRouter: Subscription;
-    protected subUserService: Subscription;
 
     protected _reloadNavigation: ReplaySubject<void>;
     protected _groupNavigationConfig: Services['groupNavigation'];
@@ -60,7 +61,8 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _groupGuard: GroupGuardService,
                           protected _activeGroupService: ActiveGroupService,
                           protected _taskResourceService: TaskResourceService,
-                          protected _languageService: LanguageService) {
+                          protected _languageService: LanguageService,
+                          protected _navigationRouteProvider: DynamicNavigationRouteProviderService) {
         super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
@@ -398,9 +400,9 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY), true);
             const newNode: NavigationNode = {url: '', ...label};
 
-            const url = this._groupNavigationConfig?.groupNavigationRoute;
+            const url = this._navigationRouteProvider.route;
             if (url === undefined) {
-                this._log.error(`No URL is configured in nae.json for configurable group navigation. Entry was ignored`);
+                this._log.error(`No URL is configured in nae.json for configurable group navigation. Dynamic navigation entry was ignored`);
                 continue;
             }
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;

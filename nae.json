@@ -698,7 +698,10 @@
             "layout": {
                 "name": "groupNavigation"
             },
-            "navigation": false
+            "navigation": false,
+            "routing": {
+                "path": "group-nav"
+            }
         },
         "dashboard": {
             "layout": {
