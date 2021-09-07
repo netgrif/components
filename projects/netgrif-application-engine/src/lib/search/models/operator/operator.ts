@@ -41,7 +41,7 @@ export abstract class Operator<T> {
      */
     private readonly _operatorSymbols: string;
 
-    protected constructor(numberOfOperands: number, operatorSymbols: string = '') {
+    protected constructor(numberOfOperands: number, operatorSymbols = '') {
         this._numberOfOperands = numberOfOperands;
         this._operatorSymbols = operatorSymbols;
     }
