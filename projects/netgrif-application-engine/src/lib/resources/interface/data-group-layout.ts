@@ -27,7 +27,7 @@ export enum DataGroupLayoutType {
 }
 
 /**
- * Determines what direction(s) should be used when collapsing form layout
+ * Determines what direction(s) should be used when compacting form layout
  */
 export enum DataGroupCompact {
     /**
