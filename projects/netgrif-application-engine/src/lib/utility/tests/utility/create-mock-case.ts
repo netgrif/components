@@ -6,10 +6,10 @@ import {Case} from '../../../resources/interface/case';
  * The attributes are filled with mostly empty values, if you want to make a test that uses some of them,
  * we recommend setting them yourself, as the returned object might change between versions.
  */
-export function createMockCase(stringId: string = 'stringId',
-                               processIdentifier: string = 'processIdentifier',
-                               title: string = 'title',
-                               petriNetId: string = 'petriNetId'): Case {
+export function createMockCase(stringId = 'stringId',
+                               processIdentifier = 'processIdentifier',
+                               title = 'title',
+                               petriNetId = 'petriNetId'): Case {
     return {
         lastModified: [],
         visualId: '',

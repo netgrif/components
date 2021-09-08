@@ -207,7 +207,7 @@ export class UserListService implements OnDestroy {
     /**
      * Reload page with users.
      */
-    public reload(newSearchQuery: string = ''): void {
+    public reload(newSearchQuery = ''): void {
         if (!this._users$ || !this._pagination) {
             return;
         }

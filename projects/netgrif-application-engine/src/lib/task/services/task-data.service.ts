@@ -123,7 +123,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      * @param force set to `true` if you need force reload of all task data
      */
-    public initializeTaskDataFields(afterAction: AfterAction = new AfterAction(), force: boolean = false): void {
+    public initializeTaskDataFields(afterAction: AfterAction = new AfterAction(), force = false): void {
         this._eventQueue.scheduleEvent(new QueuedEvent(
             () => {
                 return this.isTaskPresent();
