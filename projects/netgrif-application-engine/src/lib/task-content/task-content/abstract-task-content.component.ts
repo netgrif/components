@@ -11,7 +11,7 @@ import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridData} from '../model/grid-data';
-import {DataGroupCompact, DataGroupLayout, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
+import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayout, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {LoadingEmitter} from '../../utility/loading-emitter';
@@ -31,7 +31,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         enableAsyncRenderingOnTaskExpand: true
     };
     readonly DEFAULT_COMPACT_DIRECTION = DataGroupCompact.NONE;
-    readonly DEFAULT_HIDE_EMPTY_ROWS = true;
+    readonly DEFAULT_HIDE_EMPTY_ROWS = DataGroupHideEmptyRows.ALL;
 
     /**
      * Indicates whether data is being loaded from backend, or if it is being processed.
@@ -92,7 +92,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
     protected _defaultAlignment: FieldAlignment;
     protected _defaultCompactDirection: DataGroupCompact;
-    protected _defaultHideEmptyRows: boolean;
+    protected _defaultHideEmptyRows: DataGroupHideEmptyRows;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
@@ -391,13 +391,15 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * @param layout configuration of the applied compacting rules
      */
     protected collapseGridEmptySpace(grid: Array<Array<string>>, layout: DataGroupLayout) {
-        if (layout.hideEmptyRows ?? this._defaultHideEmptyRows) {
+        const hideRows = layout.hideEmptyRows ?? this._defaultHideEmptyRows;
+
+        if (hideRows === DataGroupHideEmptyRows.ALL) {
             this.removeEmptyRows(grid);
         }
 
         switch (layout.compactDirection ?? this._defaultCompactDirection) {
             case DataGroupCompact.UP:
-                this.compactFieldsUp(grid);
+                this.compactFieldsUp(grid, hideRows);
                 break;
         }
     }
@@ -408,8 +410,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      *
      * The input grid is modified in place.
      * @param grid the state of the grid that should be modified
+     * @param hideRows configuration for empty row removal during the compacting process
      */
-    protected compactFieldsUp(grid: Array<Array<string>>) {
+    protected compactFieldsUp(grid: Array<Array<string>>, hideRows: DataGroupHideEmptyRows) {
         for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
             const row = grid[rowIndex];
 
@@ -441,8 +444,10 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                     this.occupySpace(grid, foundElementRowIndex, columnIndex, elementDimensions.width, '', elementDimensions.height, false);
                     this.occupySpace(grid, rowIndex, columnIndex, elementDimensions.width, element, elementDimensions.height, false);
 
-                    // the only rows that can be totally empty are the ones we cleared by moving the grid element up
-                    this.removeEmptyRows(grid, foundElementRowIndex, foundElementRowIndex + elementDimensions.height);
+                    if (hideRows !== DataGroupHideEmptyRows.NONE) {
+                        // we only check the rows potentially cleared by moving the grid element up
+                        this.removeEmptyRows(grid, foundElementRowIndex, foundElementRowIndex + elementDimensions.height);
+                    }
                 }
             }
         }
