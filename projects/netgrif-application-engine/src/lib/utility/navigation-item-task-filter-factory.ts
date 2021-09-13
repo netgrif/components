@@ -1,6 +1,6 @@
 import {BaseFilter} from '../search/models/base-filter';
 import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../navigation/model/filter-case-injection-token';
-import {extractFilter} from '../navigation/utility/navigation-item-task-utility-methods';
+import {extractFilterFromData} from '../navigation/utility/navigation-item-task-utility-methods';
 import {DataGroup} from '../resources/interface/data-groups';
 
 /**
@@ -9,6 +9,6 @@ import {DataGroup} from '../resources/interface/data-groups';
  */
 export function navigationItemTaskFilterFactory(navigationItemTaskData: Array<DataGroup>): BaseFilter {
     return {
-        filter: extractFilter(navigationItemTaskData)
+        filter: extractFilterFromData(navigationItemTaskData)
     };
 }
