@@ -9,7 +9,7 @@ import {ReplaySubject} from 'rxjs';
     templateUrl: './tabbed-views-example.component.html',
     styleUrls: ['./tabbed-views-example.component.scss'],
     providers: [
-        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'tabbed'},
+        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'all-cases'},
         ViewIdService
     ]
 })
