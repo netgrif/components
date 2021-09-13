@@ -29,7 +29,7 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {TaskDataService} from './task-data.service';
 import {DataFocusPolicyService} from './data-focus-policy.service';
-import {TaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/task-event-outcome';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;

@@ -39,7 +39,7 @@ export class TreeViewExampleComponent {
                         };
                         this._caseResource.createCase(newCaseRequest).subscribe(newCase => {
                             this.filter = new SimpleFilter('id', FilterType.CASE, {
-                                query: 'stringId:' + (newCase.outcome as CreateCaseEventOutcome).acase.stringId
+                                query: 'stringId:' + (newCase.outcome as CreateCaseEventOutcome).aCase.stringId
                             });
                             this.loading = false;
                         });

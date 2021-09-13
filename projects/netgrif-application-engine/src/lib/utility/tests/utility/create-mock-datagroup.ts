@@ -26,6 +26,6 @@ export function createMockDataGroup(fields: Array<DataField<unknown>>,
             type: layoutType,
             rows: 0,
             cols
-        }
+        },
     };
 }

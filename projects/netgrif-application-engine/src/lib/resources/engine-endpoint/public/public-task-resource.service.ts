@@ -17,7 +17,7 @@ import {DataField} from '../../../data-fields/models/abstract-data-field';
 import {Task} from '../../interface/task';
 import {HttpEventType} from '@angular/common/http';
 import {EventOutcomeMessageResource, MessageResource} from '../../interface/message-resource';
-import {GetDataGroupsEventOutcome} from '../../event-outcomes/data-outcomes/get-data-groups-event-outcome';
+import {GetDataGroupsEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 
 @Injectable({
   providedIn: 'root'

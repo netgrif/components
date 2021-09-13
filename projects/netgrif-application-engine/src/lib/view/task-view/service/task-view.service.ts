@@ -1,7 +1,6 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription, timer} from 'rxjs';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
-import {ChangedFields} from '../../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
@@ -26,13 +25,14 @@ import {SearchIndexResolverService} from '../../../search/search-keyword-resolve
 import {SortableView} from '../../abstract/sortable-view';
 import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
 import {TaskViewConfiguration} from '../models/task-view-configuration';
+import {ChangedFieldsMap} from '../../../event/services/event.service';
 
 
 @Injectable()
 export class TaskViewService extends SortableView implements OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
-    protected _changedFields$: Subject<ChangedFields>;
+    protected _changedFields$: Subject<ChangedFieldsMap>;
     protected _requestedPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _loading$: LoadingWithFilterEmitter;
     protected _endOfData: boolean;
@@ -63,7 +63,7 @@ export class TaskViewService extends SortableView implements OnDestroy {
         super(resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
-        this._changedFields$ = new Subject<ChangedFields>();
+        this._changedFields$ = new Subject<ChangedFieldsMap>();
         this._allowMultiOpen = true;
         this._endOfData = false;
         this._pagination = {
@@ -164,7 +164,7 @@ export class TaskViewService extends SortableView implements OnDestroy {
         return this._tasks$;
     }
 
-    public get changedFields$(): Subject<ChangedFields> {
+    public get changedFields$(): Subject<ChangedFieldsMap> {
         return this._changedFields$;
     }
 

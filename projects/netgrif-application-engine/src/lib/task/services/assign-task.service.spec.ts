@@ -14,10 +14,10 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
 import {Observable, of, throwError} from 'rxjs';
-import {EventOutcomeMessageResource, MessageResource} from '../../resources/interface/message-resource';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
-import {EventOutcome, Task} from '../../resources/public-api';
+import {Task} from '../../resources/public-api';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -29,7 +29,9 @@ import {TaskEventNotification} from '../../task-content/model/task-event-notific
 import {TaskEvent} from '../../task-content/model/task-event';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
-import {TaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/task-event-outcome';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
+import {createMockCase} from '../../utility/tests/utility/create-mock-case';
+import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 
 describe('AssignTaskService', () => {
     let service: AssignTaskService;
@@ -103,13 +105,14 @@ describe('AssignTaskService', () => {
 
     it('should assign successfully', done => {
         expect(testTask.startDate).toBeTruthy();
+        const mockCase = createMockCase();
+        const mockNet = createMockNet();
         resourceService.response = {
             success: 'success',
             outcome: {
                 message: '',
-                data: {
-                    changedFields: []
-                },
+                aCase: mockCase,
+                net: mockNet,
                 task: {
                     caseId: '',
                     transitionId: '',
@@ -130,9 +133,9 @@ describe('AssignTaskService', () => {
                     dataGroups: [],
                     _links: {}
                 },
-                outcomes: []
-            } as TaskEventOutcome
-        };
+            },
+            outcomes: []
+        } as EventOutcomeMessageResource;
 
         let taskEvent: TaskEventNotification;
         taskEventService.taskEventNotifications$.subscribe(event => {
@@ -156,9 +159,6 @@ describe('AssignTaskService', () => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {
             error: 'error',
-            changedFields: {
-                changedFields: []
-            }
         };
 
         let taskEvent: TaskEventNotification;
@@ -201,7 +201,7 @@ describe('AssignTaskService', () => {
         }));
     });
 
-    // NAE-1395
+// NAE-1395
     it('should trigger AfterAction on assigned task', done => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {success: 'success'};
@@ -226,7 +226,8 @@ describe('AssignTaskService', () => {
             }));
         }));
     });
-});
+})
+;
 
 class TestTaskResourceService {
 

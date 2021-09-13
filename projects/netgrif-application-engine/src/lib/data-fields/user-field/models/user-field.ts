@@ -8,8 +8,9 @@ import {Validation} from '../../models/validation';
 
 export class UserField extends DataField<UserValue> {
     constructor(stringId: string, title: string, behavior: Behavior, value: UserValue, private _roles: Array<ProcessRole>,
-                placeholder?: string, description?: string, layout?: Layout, validations?: Validation[], component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
+                placeholder?: string, description?: string, layout?: Layout, validations?: Validation[], component?: Component,
+                parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
     get roles(): Array<ProcessRole> {

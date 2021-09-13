@@ -7,12 +7,14 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
-import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-fields';
+import {Change, ChangedFields, FrontendActions} from '../../data-fields/models/changed-fields';
 import {FieldConverterService} from './field-converter.service';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {Validation} from '../../data-fields/models/validation';
-import {TaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/task-event-outcome';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
+import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -33,6 +35,7 @@ export abstract class TaskContentService implements OnDestroy {
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
     protected _isExpanding$: BehaviorSubject<boolean>;
+    private _taskFieldsIndex: { [fieldId: string]: DataField<any> } = {};
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
@@ -76,6 +79,10 @@ export abstract class TaskContentService implements OnDestroy {
      */
     public get taskDataReloadRequest$(): Observable<FrontendActions> {
         return this._taskDataReloadRequest$.asObservable();
+    }
+
+    get taskFieldsIndex(): { [p: string]: DataField<any> } {
+        return this._taskFieldsIndex;
     }
 
     /**
@@ -190,58 +197,73 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return;
         }
-
+        // todo actions owner bude zbytočný?
         const frontendActions = chFields.frontendActionsOwner === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
 
-        for (const dataGroup of this._task.dataGroups) {
-            for (const field of dataGroup.fields) {
-                if (chFields[field.stringId]) {
-                    if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
-                        this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
-                        return;
-                    }
-
-                    const updatedField = chFields[field.stringId];
-                    Object.keys(updatedField).forEach(key => {
-                        if (key === 'value') {
-                            field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
-                        } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
-                            field.behavior = updatedField.behavior[this._task.transitionId];
-                        } else if (key === 'choices') {
-                            const newChoices: EnumerationFieldValue[] = [];
-                            if (updatedField.choices instanceof Array) {
-                                updatedField.choices.forEach(it => {
-                                    newChoices.push({key: it, value: it} as EnumerationFieldValue);
-                                });
-                            } else {
-                                Object.keys(updatedField.choices).forEach(choiceKey => {
-                                    newChoices.push({
-                                        key: choiceKey,
-                                        value: updatedField.choices[choiceKey]
-                                    } as EnumerationFieldValue);
-                                });
-                            }
-                            (field as EnumerationField | MultichoiceField).choices = newChoices;
-                        } else if (key === 'options') {
-                            const newOptions = [];
-                            Object.keys(updatedField.options).forEach(optionKey => {
-                                newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
-                            });
-                            (field as EnumerationField | MultichoiceField).choices = newOptions;
-                        } else if (key === 'validations') {
-                            field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
-
-                        } else if (key !== 'type') {
-                            field[key] = updatedField[key];
-
-                        }
-                        field.update();
-                    });
+        const referencedTaskIds: Array<string> = [];
+        Object.keys(chFields).forEach(changedField => {
+            if (!!this.taskFieldsIndex[changedField]) {
+                this.updateField(chFields, this._taskFieldsIndex[changedField], frontendActions);
+                if (this.taskFieldsIndex[changedField] instanceof TaskRefField) {
+                    referencedTaskIds.push(...this.taskFieldsIndex[changedField].value);
                 }
             }
-        }
+        });
+
+        // todo rework
+        referencedTaskIds.forEach(taskId => {
+            Object.keys(this._taskFieldsIndex).filter(fieldId => fieldId.startsWith(taskId + '-')).forEach(filteredFieldId => {
+                this.updateField(chFields, this._taskFieldsIndex[filteredFieldId], frontendActions, true, taskId);
+            });
+        });
+
         this.$shouldCreate.next(this._task.dataGroups);
         this.performFrontendAction(frontendActions);
+    }
+
+    private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change,
+                        isReferenced: boolean = false, referencedTaskId?: string): void {
+        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
+            this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
+            return;
+        }
+
+        const updatedField = isReferenced ? chFields[field.stringId.replace(referencedTaskId + '-', '')] : chFields[field.stringId];
+        Object.keys(updatedField).forEach(key => {
+            if (key === 'value') {
+                field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
+            } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
+                field.behavior = updatedField.behavior[this._task.transitionId];
+            } else if (key === 'choices') {
+                const newChoices: EnumerationFieldValue[] = [];
+                if (updatedField.choices instanceof Array) {
+                    updatedField.choices.forEach(it => {
+                        newChoices.push({key: it, value: it} as EnumerationFieldValue);
+                    });
+                } else {
+                    Object.keys(updatedField.choices).forEach(choiceKey => {
+                        newChoices.push({
+                            key: choiceKey,
+                            value: updatedField.choices[choiceKey]
+                        } as EnumerationFieldValue);
+                    });
+                }
+                (field as EnumerationField | MultichoiceField).choices = newChoices;
+            } else if (key === 'options') {
+                const newOptions = [];
+                Object.keys(updatedField.options).forEach(optionKey => {
+                    newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
+                });
+                (field as EnumerationField | MultichoiceField).choices = newOptions;
+            } else if (key === 'validations') {
+                field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
+
+            } else if (key !== 'type') {
+                field[key] = updatedField[key];
+
+            }
+            field.update();
+        });
     }
 
     /**

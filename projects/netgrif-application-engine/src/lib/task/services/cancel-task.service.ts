@@ -16,11 +16,13 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
-import {CancelTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/cancel-task-event-outcome';
+import {CancelTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/cancel-task-event-outcome';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -38,6 +40,8 @@ export class CancelTaskService extends TaskHandlingService {
                 protected _taskEvent: TaskEventService,
                 protected _taskDataService: TaskDataService,
                 protected _eventQueue: EventQueueService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 @Optional() protected _taskViewService: TaskViewService,
@@ -102,7 +106,8 @@ export class CancelTaskService extends TaskHandlingService {
                             canceledTaskId: string,
                             nextEvent: AfterAction = new AfterAction(),
                             forceReload: boolean) {
-        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe((outcomeResource: EventOutcomeMessageResource) => {
+        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe(
+            (outcomeResource: EventOutcomeMessageResource) => {
             this._taskState.stopLoading(canceledTaskId);
             if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel response could be received, discarding...');
@@ -112,14 +117,20 @@ export class CancelTaskService extends TaskHandlingService {
 
             if (outcomeResource.success) {
                 this._taskContentService.updateStateData(outcomeResource.outcome as CancelTaskEventOutcome);
-                this._taskDataService.emitChangedFields((outcomeResource.outcome as CancelTaskEventOutcome).data.changedFields);
+                // this._taskDataService.emitChangedFields((outcomeResource.outcome as CancelTaskEventOutcome).data.changedFields);
+                const changedFieldsMap: ChangedFieldsMap = this._eventService
+                    .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                if (!!changedFieldsMap) {
+                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                }
                 forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, nextEvent, true);
             } else if (outcomeResource.error !== undefined) {
                 if (outcomeResource.error !== '') {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
-                this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
+                // todo prečo sa pri error emitujú fieldy???
+                // this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
                 this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {

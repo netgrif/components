@@ -27,8 +27,9 @@ export class FileListField extends DataField<FileListFieldValue> {
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, validations?: Validation[], private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
+                component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
         this.downloaded = new Array<string>();
     }

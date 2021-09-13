@@ -32,9 +32,9 @@ import {TaskSetDataRequestBody} from '../../../resources/interface/task-set-data
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {ChangedFields} from '../../../data-fields/models/changed-fields';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
-import {SetDataEventOutcome} from '../../../resources/event-outcomes/data-outcomes/set-data-event-outcome';
-import {AssignTaskEventOutcome} from '../../../resources/event-outcomes/task-outcomes/assign-task-event-outcome';
-import {CreateCaseEventOutcome} from '../../../resources/event-outcomes/case-outcomes/create-case-event-outcome';
+import {SetDataEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
+import {AssignTaskEventOutcome} from '../../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 
 
 class MockTreeNode {
@@ -483,7 +483,7 @@ class TreeTestCaseResourceService {
                 return of({
                     success: '',
                     outcome: {
-                        acase: newCase,
+                        aCase: newCase,
                         message: '',
                         outcomes: []
                     } as CreateCaseEventOutcome
@@ -499,7 +499,7 @@ class TreeTestCaseResourceService {
                 return of({
                     success: '',
                     outcome: {
-                        acase: preparedCase,
+                        aCase: preparedCase,
                         message: '',
                         outcomes: []
                     } as CreateCaseEventOutcome

@@ -30,8 +30,8 @@ import {TaskEventNotification} from '../../task-content/model/task-event-notific
 import {TaskEvent} from '../../task-content/model/task-event';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
-import {TaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/task-event-outcome';
-import {AssignTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
+import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;

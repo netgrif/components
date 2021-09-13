@@ -17,6 +17,7 @@ import {
     NAE_BASE_FILTER,
     AllowedNetsService,
     AllowedNetsServiceFactory,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -55,6 +56,7 @@ const disableButtonsFactory = () => {
         CategoryFactory,
         TaskViewService,
         SearchService,
+        ChangedFieldsService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
         {   provide: AllowedNetsService,

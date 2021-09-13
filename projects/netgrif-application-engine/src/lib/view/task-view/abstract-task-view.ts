@@ -15,6 +15,7 @@ export abstract class AbstractTaskView extends ViewWithHeaders implements OnDest
     protected constructor(protected taskViewService: TaskViewService) {
         super(taskViewService);
         this.tasks$ = this.taskViewService.tasks$;
+        // todo delete?
         this.changedFields$ = this.taskViewService.changedFields$;
         this.loading$ = this.taskViewService.loading$;
     }

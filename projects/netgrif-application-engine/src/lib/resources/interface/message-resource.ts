@@ -26,6 +26,4 @@ export interface MessageResource {
 export interface EventOutcomeMessageResource extends MessageResource {
 
     outcome?: EventOutcome;
-
-    changedFields?: ChangedFieldContainer;
 }

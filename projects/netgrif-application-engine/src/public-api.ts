@@ -42,3 +42,5 @@ export * from './lib/groups/public-api';
 export * from './lib/legal/public-api';
 export * from './lib/allowed-nets/public-api';
 export * from './lib/event-queue/public-api';
+export * from './lib/changed-fields/public-api';
+export * from './lib/event/public-api';

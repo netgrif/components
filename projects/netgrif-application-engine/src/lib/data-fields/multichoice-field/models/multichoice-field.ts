@@ -21,8 +21,8 @@ export class MultichoiceField  extends DataField<Array<string>> {
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
                 private _view = MultichoiceFieldView.DEFAULT, private readonly _fieldType = FieldTypeResource.MULTICHOICE,
-                validations?: Validation[], component?: Component) {
-        super(stringId, title, values, behavior, placeholder, description, layout, validations, component);
+                validations?: Validation[], component?: Component, parentTaskId?: string) {
+        super(stringId, title, values, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
     set choices(choices: Array<MultichoiceFieldValue>) {

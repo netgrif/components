@@ -1,13 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {CaseResourceService} from '../case-resource.service';
 import {ResourceProvider} from '../../resource-provider.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {DataGroupsResource} from '../../interface/data-groups';
-import {Case} from '../../interface/case';
-import {CreateCaseEventOutcome} from '../../event-outcomes/case-outcomes/create-case-event-outcome';
 import {EventOutcomeMessageResource} from '../../interface/message-resource';
 
 @Injectable({

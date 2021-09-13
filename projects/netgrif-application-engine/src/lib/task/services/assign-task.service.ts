@@ -18,8 +18,10 @@ import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
-import {AssignTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
 
 
 /**
@@ -36,6 +38,8 @@ export class AssignTaskService extends TaskHandlingService {
                 protected _taskEvent: TaskEventService,
                 protected _taskDataService: TaskDataService,
                 protected _eventQueue: EventQueueService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 @Optional() protected _taskViewService: TaskViewService,
@@ -102,40 +106,45 @@ export class AssignTaskService extends TaskHandlingService {
                             assignedTaskId: string,
                             nextEvent: AfterAction = new AfterAction(),
                             forceReload: boolean) {
-        this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1)).subscribe((outcomeResource: EventOutcomeMessageResource) => {
-            this._taskState.stopLoading(assignedTaskId);
-            if (!this.isTaskRelevant(assignedTaskId)) {
-                this._log.debug('current task changed before the assign response could be received, discarding...');
-                nextEvent.resolve(false);
-                return;
-            }
+        this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1))
+            .subscribe((outcomeResource: EventOutcomeMessageResource) => {
+                this._taskState.stopLoading(assignedTaskId);
+                if (!this.isTaskRelevant(assignedTaskId)) {
+                    this._log.debug('current task changed before the assign response could be received, discarding...');
+                    nextEvent.resolve(false);
+                    return;
+                }
 
-            if (outcomeResource.success) {
-                this._taskContentService.updateStateData(outcomeResource.outcome as AssignTaskEventOutcome);
-                this._taskDataService.emitChangedFields((outcomeResource.outcome as AssignTaskEventOutcome).data.changedFields);
-                forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
-                this.completeActions(afterAction, nextEvent, true);
-                // this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
-                //     ? this._translate.instant('tasks.snackbar.assignTaskSuccess')
-                //     : outcomeResource.outcome.message);
-            } else if (outcomeResource.error) {
-                this._snackBar.openErrorSnackBar(outcomeResource.error);
-                this.completeActions(afterAction, nextEvent, false);
-            }
-        }, error => {
-            this._taskState.stopLoading(assignedTaskId);
-            this._log.debug('assigning task failed', error);
+                if (outcomeResource.success) {
+                    this._taskContentService.updateStateData(outcomeResource.outcome as AssignTaskEventOutcome);
+                    const changedFieldsMap: ChangedFieldsMap = this._eventService
+                        .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                    if (!!changedFieldsMap) {
+                        this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                    }
+                    forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
+                    this.completeActions(afterAction, nextEvent, true);
+                    // this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
+                    //     ? this._translate.instant('tasks.snackbar.assignTaskSuccess')
+                    //     : outcomeResource.outcome.message);
+                } else if (outcomeResource.error) {
+                    this._snackBar.openErrorSnackBar(outcomeResource.error);
+                    this.completeActions(afterAction, nextEvent, false);
+                }
+            }, error => {
+                this._taskState.stopLoading(assignedTaskId);
+                this._log.debug('assigning task failed', error);
 
-            if (!this.isTaskRelevant(assignedTaskId)) {
-                this._log.debug('current task changed before the assign error could be received');
-                nextEvent.resolve(false);
-                return;
-            }
+                if (!this.isTaskRelevant(assignedTaskId)) {
+                    this._log.debug('current task changed before the assign error could be received');
+                    nextEvent.resolve(false);
+                    return;
+                }
 
-            this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
+                this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.assignTask')}
              ${this._taskContentService.task} ${this._translate.instant('tasks.snackbar.failed')}`);
-            this.completeActions(afterAction, nextEvent, false);
-        });
+                this.completeActions(afterAction, nextEvent, false);
+            });
     }
 
     /**

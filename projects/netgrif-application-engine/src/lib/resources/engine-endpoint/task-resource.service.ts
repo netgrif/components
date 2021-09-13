@@ -19,7 +19,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
 import {DataGroup} from '../interface/data-groups';
 import {DataField} from '../../data-fields/models/abstract-data-field';
-import {GetDataGroupsEventOutcome} from '../event-outcomes/data-outcomes/get-data-groups-event-outcome';
+import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 
 @Injectable({
     providedIn: 'root'
@@ -221,13 +221,17 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                     });
                     fields.sort((a, b) => a.order - b.order);
                     dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
-                    result.push({
+                    const dataGroupObject = {
                         fields: dataFields,
                         stretch: dataGroupResource.stretch,
                         title: dataGroupResource.title,
                         layout: dataGroupResource.layout,
-                        alignment: dataGroupResource.alignment
-                    });
+                        alignment: dataGroupResource.alignment,
+                    };
+                    if (dataGroupResource.parentTaskId !== undefined) {
+                        dataGroupObject['parentTaskId'] = dataGroupResource.parentTaskId;
+                    }
+                    result.push(dataGroupObject);
                 });
                 return result;
             })

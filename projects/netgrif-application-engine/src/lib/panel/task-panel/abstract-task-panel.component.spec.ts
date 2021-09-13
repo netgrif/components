@@ -54,8 +54,8 @@ import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
-import {AssignTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/assign-task-event-outcome';
-import {FinishTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/finish-task-event-outcome';
+import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/finish-task-event-outcome';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;

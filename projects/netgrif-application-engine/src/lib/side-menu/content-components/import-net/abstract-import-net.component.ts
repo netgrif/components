@@ -9,7 +9,7 @@ import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadDataModel} from '../../../data-fields/file-field/models/file-field';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {PetriNetEventOutcome} from '../../../resources/event-outcomes/petrinet-outcomes/petri-net-event-outcome';
+import {PetriNetEventOutcome} from '../../../event/model/event-outcomes/petrinet-outcomes/petri-net-event-outcome';
 
 export class FileUploadModel {
     stringId: string;

@@ -4,7 +4,6 @@ import {map} from 'rxjs/operators';
 import {Params, ResourceProvider} from '../resource-provider.service';
 import {Count} from '../interface/count';
 import {Case} from '../interface/case';
-import {DataGroupsResource} from '../interface/data-groups';
 import {FileResource} from '../interface/file-resource';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {CountService} from '../abstract-endpoint/count-service';
@@ -13,8 +12,6 @@ import {FilterType} from '../../filter/models/filter-type';
 import {Page} from '../interface/page';
 import {CaseGetRequestBody} from '../interface/case-get-request-body';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
-import {CreateCaseEventOutcome} from '../event-outcomes/case-outcomes/create-case-event-outcome';
-import {DeleteCaseEventOutcome} from '../event-outcomes/case-outcomes/delete-case-event-outcome';
 import {EventOutcomeMessageResource} from '../interface/message-resource';
 import {CreateCaseRequestBody} from '../interface/create-case-request-body';
 
@@ -76,18 +73,6 @@ export class CaseResourceService extends AbstractResourceService implements Coun
             this.SERVER_URL,
             deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
             .pipe(map(r => this.changeType(r, undefined)));
-    }
-
-
-    /**
-     * Get all case data
-     * GET
-     * {{baseUrl}}/api/workflow/case/:id/data
-     */
-    public getCaseData(caseID: string): Observable<EventOutcomeMessageResource> {
-        return this._resourceProvider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(
-            map(r => this.changeType(r, undefined))
-        );
     }
 
 

@@ -23,6 +23,9 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {SelectedCaseService} from '../../../task/services/selected-case.service';
 import {Filter} from '../../../filter/models/filter';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {ChangedFieldsService} from '../../../changed-fields/services/changed-fields.service';
+import {ChangedFieldsMap} from '../../../event/services/event.service';
+import {ChangedFields} from '../../../data-fields/models/changed-fields';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -47,12 +50,17 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _callchain: CallChainService,
                 protected _logger: LoggerService,
                 protected _selectedCaseService: SelectedCaseService,
+                protected _changedFieldsService: ChangedFieldsService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: SubjectTaskOperations) {
         this._processingTaskChange = new LoadingEmitter();
         this._displayedTaskText$ = new ReplaySubject<string>();
 
-        _taskDataService.changedFields$.subscribe(changedFields => {
-            this._taskContentService.updateFromChangedFields(changedFields);
+        this._changedFieldsService.changedFields$.subscribe((changedFields: ChangedFieldsMap) => {
+            const parsedFields: ChangedFields = _changedFieldsService
+                .parseChangedFieldsByTask(this._taskContentService.task, changedFields);
+            if (!!parsedFields) {
+                this._taskContentService.updateFromChangedFields(changedFields);
+            }
         });
         _taskDataService.updateSuccess$.subscribe(result => {
             if (result) {
@@ -240,8 +248,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected resolveTaskBlockState(): void {
         const taskShouldBeBlocked = !this._taskContentService.task
-                                    || this._taskContentService.task.user === undefined
-                                    || !this._userComparator.compareUsers(this._taskContentService.task.user);
+            || this._taskContentService.task.user === undefined
+            || !this._userComparator.compareUsers(this._taskContentService.task.user);
         this._taskContentService.blockFields(taskShouldBeBlocked);
     }
 

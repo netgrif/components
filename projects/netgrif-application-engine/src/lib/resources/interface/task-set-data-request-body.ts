@@ -26,6 +26,10 @@ export interface TaskSetDataRequestBody {
          * new `filterMetadata` (for field types that support this)
          */
         filterMetadata?: FilterMetadata;
+        /**
+         * id of parent task, defined when field is load via taskRef field
+         */
+        parentTaskId?: string
     };
 }
 

@@ -15,11 +15,13 @@ import {SelectedCaseService} from './selected-case.service';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
-import {FinishTaskEventOutcome} from '../../resources/event-outcomes/task-outcomes/finish-task-event-outcome';
+import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/finish-task-event-outcome';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
 
 
 /**
@@ -37,6 +39,8 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _callChain: CallChainService,
                 protected _taskEvent: TaskEventService,
                 protected _eventQueue: EventQueueService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -130,7 +134,12 @@ export class FinishTaskService extends TaskHandlingService {
 
             if (outcomeResource.success) {
                 this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
-                this._taskDataService.emitChangedFields((outcomeResource.outcome as FinishTaskEventOutcome).data.changedFields);
+                // this._taskDataService.emitChangedFields((outcomeResource.outcome as FinishTaskEventOutcome).data.changedFields);
+                const changedFieldsMap: ChangedFieldsMap = this._eventService
+                    .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                if (!!changedFieldsMap) {
+                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                }
                 this._taskOperations.reload();
                 this.completeActions(afterAction, nextEvent, true);
                 this._taskOperations.close();
@@ -141,7 +150,9 @@ export class FinishTaskService extends TaskHandlingService {
                 if (outcomeResource.error !== '') {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
-                this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
+                // todo refactor parsing
+                // huh?
+                // this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
                 this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {

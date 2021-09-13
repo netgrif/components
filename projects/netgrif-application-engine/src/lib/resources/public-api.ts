@@ -47,17 +47,3 @@ export * from './types/nae-date-type';
 /* ABSTRACTIONS */
 export * from './abstract-endpoint/count-service';
 export * from './abstract-endpoint/abstract-resource.service';
-
-/* EVENT OUTCOMES */
-export * from './event-outcomes/case-outcomes/create-case-event-outcome';
-export * from './event-outcomes/case-outcomes/delete-case-event-outcome';
-export * from './event-outcomes/data-outcomes/get-data-event-outcome';
-export * from './event-outcomes/data-outcomes/get-data-groups-event-outcome';
-export * from './event-outcomes/data-outcomes/set-data-event-outcome';
-export * from './event-outcomes/data-outcomes/get-data-localised-event-outcome';
-export * from './event-outcomes/task-outcomes/assign-task-event-outcome';
-export * from './event-outcomes/task-outcomes/cancel-task-event-outcome';
-export * from './event-outcomes/task-outcomes/delegate-task-event-outcome';
-export * from './event-outcomes/task-outcomes/task-event-outcome';
-export * from './event-outcomes/task-outcomes/finish-task-event-outcome';
-export * from './event-outcomes/petrinet-outcomes/petri-net-event-outcome';
