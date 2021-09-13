@@ -134,7 +134,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
         params = this.addPageParams(params, requestContext.pagination);
         this._loading$.on(requestContext.filter);
 
-        return this._caseResourceService.getCases({}, params).pipe(
+        return this._caseResourceService.searchCases(requestContext.filter, params).pipe(
             catchError(err => {
                 this._log.error('Loading cases has failed!', err);
                 this._loading$.off(requestContext.filter);
