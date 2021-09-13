@@ -27,7 +27,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     titleFormControl = new FormControl('', Validators.required);
 
     options: Array<Form> = [];
-    colors: Form[] = [
+    colors: Array<Form> = [
         {value: 'panel-primary-icon', viewValue: 'Primary'},
         {value: 'panel-accent-icon', viewValue: 'Accent'},
     ];
@@ -65,7 +65,11 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         this._options$ = new ReplaySubject(1);
 
         this._allowedNetsSubscription = this._injectedData.allowedNets$.pipe(
-            map(nets => nets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}))),
+            map(nets => nets.map(petriNet => ({
+                value: petriNet.stringId,
+                viewValue: petriNet.title,
+                version: petriNet.version
+            }))),
             map(nets => {
                 if (!this._sideMenuControl.allVersionEnabled) {
                     return this.removeOldVersions(nets);
@@ -128,9 +132,9 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     public createNewCase(): void {
-        if (this.titleFormControl.valid) {
+        if (this.titleFormControl.valid || !this.isCaseTitleRequired()) {
             const newCase = {
-                title: this.titleFormControl.value,
+                title: this.titleFormControl.value === '' ? null : this.titleFormControl.value,
                 color: 'panel-primary-icon',
                 netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
             };
@@ -161,7 +165,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
      * @param options that should be filtered
      * @return  return matched options
      */
-    protected _filter(value: string, options: Array<Form>): Form[] {
+    protected _filter(value: string, options: Array<Form>): Array<Form> {
         const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
         return options.filter(option => option.viewValue.toLowerCase().normalize('NFD')
@@ -239,5 +243,13 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             newestNets.push(current);
         }
         return newestNets;
+    }
+
+    isCaseTitleEnabled(): boolean {
+        return !!this._injectedData.newCaseCreationConfiguration.enableCaseTitle;
+    }
+
+    isCaseTitleRequired(): boolean {
+        return this.isCaseTitleEnabled() && !!this._injectedData.newCaseCreationConfiguration.isCaseTitleRequired;
     }
 }

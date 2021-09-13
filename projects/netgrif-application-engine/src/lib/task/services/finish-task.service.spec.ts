@@ -87,6 +87,7 @@ describe('FinishTaskService', () => {
             layout: {rows: 1, cols: 1, offset: 0},
             dataGroups: [],
             dataSize: 0,
+            users: {},
             _links: {}
         };
         TestBed.inject(TaskContentService).task = testTask;

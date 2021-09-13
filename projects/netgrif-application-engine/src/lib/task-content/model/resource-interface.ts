@@ -15,9 +15,9 @@ export interface DataFieldResource {
     behavior: Behavior;
     layout?: Layout;
     order: number;
-    value?: string | number | string[] | boolean | Array<number> | any;
-    defaultValue?: string | number | string[] | boolean;
-    choices?: string[];
+    value?: string | number | Array<string> | boolean | Array<number> | any;
+    defaultValue?: string | number | Array<string> | boolean;
+    choices?: Array<string>;
     /*@deprecated*/
     view?: {
         /*@deprecated*/
@@ -25,13 +25,13 @@ export interface DataFieldResource {
     };
     minValue?: number;
     minDate?: string;
-    validations?: Validation[];
+    validations?: Array<Validation>;
     component?: Component;
     subType?: string;
     /*@deprecated*/
     formatting?: string;
     formatFilter?: FormatFilter;
-    roles?: any[];
+    roles?: Array<any>;
     options?: {
         [k: string]: string
     };

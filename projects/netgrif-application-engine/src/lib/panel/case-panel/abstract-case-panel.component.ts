@@ -99,15 +99,25 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         ) {
             return false;
         }
-        if (Object.keys(this.case_.permissions).length === 0) {
+        if (Object.keys(this.case_.permissions).length === 0 && Object.keys(this.case_.users).length === 0) {
             return true;
         }
 
-        const result = Object.keys(this.case_.users).some(user =>
-            !!this.case_.users ? !!this.case_.users[user][action] : false
-        );
-        return result || Object.keys(this.case_.permissions).some(role =>
-            this._userService.hasRoleById(role) ? !!this.case_.permissions[role][action] : false
-        );
+        let result = true;
+
+        if (Object.keys(this.case_.users).length > 0
+            && !!this.case_.users[this._userService.user.id]
+            && this.case_.users[this._userService.user.id][action] !== undefined) {
+            result = this.case_.users[this._userService.user.id][action];
+        }
+        this._userService.user.roles.forEach(role => {
+            if (!!this.case_.permissions[role.stringId]
+                && this.case_.permissions[role.stringId][action] !== undefined) {
+                result = result && !!this.case_.permissions[role.stringId][action];
+            }
+        });
+        return result;
     }
+
+
 }

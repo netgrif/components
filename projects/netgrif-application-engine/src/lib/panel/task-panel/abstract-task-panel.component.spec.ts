@@ -150,6 +150,21 @@ describe('AbtsractTaskPanelComponent', () => {
         expect(component.taskPanelData.task.startDate).toBe(undefined);
     });
 
+    it('should return false when event title is empty', () => {
+        component.taskPanelData.task.assignTitle = '';
+        component.taskPanelData.task.cancelTitle = '';
+        component.taskPanelData.task.delegateTitle = '';
+        component.taskPanelData.task.finishTitle = '';
+
+        expect(component.taskPanelData.task.finishTitle).toBe('');
+
+        expect(component.canAssign()).toBeFalse();
+        expect(component.canCancel()).toBeFalse();
+        expect(component.canDo('delegate')).toBeFalse();
+        expect(component.canFinish()).toBeFalse();
+    });
+
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -205,6 +220,10 @@ class TestWrapperComponent {
             caseId: 'string',
             transitionId: 'string',
             title: 'string',
+            finishTitle: 'string',
+            assignTitle: 'string',
+            cancelTitle: 'string',
+            delegateTitle: 'string',
             caseColor: 'string',
             caseTitle: 'string',
             user: undefined,
@@ -221,6 +240,7 @@ class TestWrapperComponent {
                 rows: undefined
             },
             dataGroups: [],
+            users: {},
             _links: {}
         },
         changedFields: new Subject<ChangedFields>(),

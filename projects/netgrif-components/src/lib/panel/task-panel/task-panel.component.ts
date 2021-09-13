@@ -76,7 +76,7 @@ export class TaskPanelComponent extends AbstractTaskPanelComponent {
     }
 
     protected createContentPortal(): void {
-        const providers: StaticProvider[] = [
+        const providers: Array<StaticProvider> = [
             {provide: TaskContentService, useValue: this._taskContentService},
             {provide: BOOLEAN_VALUE_LABEL_ENABLED, useValue: this.isEnabled}
         ];

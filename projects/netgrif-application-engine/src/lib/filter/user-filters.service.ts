@@ -1,4 +1,4 @@
-import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional, Type} from '@angular/core';
 import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {CaseResourceService} from '../resources/engine-endpoint/case-resource.service';
 import {TaskResourceService} from '../resources/engine-endpoint/task-resource.service';
@@ -27,6 +27,7 @@ import {MergeOperator} from './models/merge-operator';
 import {SavedFilterMetadata} from '../search/models/persistance/saved-filter-metadata';
 import {FilterMetadata} from '../search/models/persistance/filter-metadata';
 import {CreateCaseEventOutcome} from '../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {CategoryResolverService} from '../search/category-factory/category-resolver.service';
 
 /**
  * Service that manages filters created by users of the application.
@@ -45,6 +46,7 @@ export class UserFiltersService implements OnDestroy {
                 protected _callChainService: CallChainService,
                 protected _sideMenuService: SideMenuService,
                 protected _log: LoggerService,
+                protected _categoryResolverService: CategoryResolverService,
                 @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _saveFilterComponent: ComponentType<unknown>,
                 @Optional() @Inject(NAE_LOAD_FILTER_COMPONENT) protected _loadFilterComponent: ComponentType<unknown>) {
         this._initialized$ = new ReplaySubject<boolean>(1);
@@ -145,19 +147,32 @@ export class UserFiltersService implements OnDestroy {
      * @param viewId the viewId of the view which contained the filter
      * @param additionalData set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
+     * @param withDefaultCategories Whether the saved filter should be saved with
+     * the [defaultSearchCategories]{@link FilterMetadata#defaultSearchCategories} flag set to `true`, or `false`.
+     * @param inheritAllowedNets Whether the saved filter should merge its allowed nets with the allowed nets provided by
+     * the {@link BaseAllowedNetsService}.
      * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process,
      * or the filter could not be saved
      */
-    public save(searchService: SearchService, allowedNets: readonly string[],
-                searchCategories: readonly Category<any>[], viewId: string,
-                additionalData: TaskSetDataRequestBody = {}): Observable<SavedFilterMetadata> {
+    public save(searchService: SearchService, allowedNets: ReadonlyArray<string>,
+                searchCategories: ReadonlyArray<Type<Category<any>>>, viewId: string,
+                additionalData: TaskSetDataRequestBody = {}, withDefaultCategories = true,
+                inheritAllowedNets = true): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
             this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
             return of(undefined);
         }
 
         const result = new ReplaySubject<SavedFilterMetadata>(1);
-        this.createFilterCaseAndSetData(searchService, allowedNets, searchCategories, viewId, additionalData).subscribe(filterCaseId => {
+        this.createFilterCaseAndSetData(
+            searchService,
+            allowedNets,
+            searchCategories,
+            viewId,
+            additionalData,
+            withDefaultCategories,
+            inheritAllowedNets
+        ).subscribe(filterCaseId => {
             const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
                 newFilterCaseId: filterCaseId
             } as SaveFilterInjectionData);
@@ -170,7 +185,12 @@ export class UserFiltersService implements OnDestroy {
                         filterCaseId,
                         allowedNets: [...allowedNets],
                         originViewId: viewId,
-                        filterMetadata: this.filterMetadataFromSearchService(searchService, searchCategories),
+                        filterMetadata: this.filterMetadataFromSearchService(
+                            searchService,
+                            searchCategories,
+                            withDefaultCategories,
+                            inheritAllowedNets
+                        ),
                         filter: SimpleFilter.fromQuery({query: searchService.rootPredicate.query.value}, searchService.filterType)
                     });
                 }
@@ -193,11 +213,17 @@ export class UserFiltersService implements OnDestroy {
      * @param viewId the viewId of the view which contained the filter
      * @param additionalData set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
+     * @param withDefaultCategories Whether the saved filter should be saved with
+     * the [defaultSearchCategories]{@link FilterMetadata#defaultSearchCategories} flag set to `true`, or `false`.
+     * @param inheritAllowedNets Whether the saved filter should merge its allowed nets with the allowed nets provided by
+     * the {@link BaseAllowedNetsService}.
      * @returns an observable that emits the id of the created Filter case instance
      */
-    public createFilterCaseAndSetData(searchService: SearchService, allowedNets: readonly string[],
-                                      searchCategories: readonly Category<any>[], viewId: string,
-                                      additionalData: TaskSetDataRequestBody = {}): Observable<string> {
+    public createFilterCaseAndSetData(searchService: SearchService, allowedNets: ReadonlyArray<string>,
+                                      searchCategories: ReadonlyArray<Type<Category<any>>>, viewId: string,
+                                      additionalData: TaskSetDataRequestBody = {},
+                                      withDefaultCategories = true,
+                                      inheritAllowedNets = true): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized(() => {
             this._caseService.createCase({
@@ -213,7 +239,11 @@ export class UserFiltersService implements OnDestroy {
                         throw new Error('Expected filter process to contain tasks, but none were found!');
                     }
 
-                    const initTask = page.content[0];
+                    const initTask = page.content.find(task => task.transitionId === UserFilterConstants.SET_FILTER_METADATA_TRANSITION_ID);
+                    if (initTask === undefined) {
+                        throw new Error(`Expected filter process to contain task '${UserFilterConstants.SET_FILTER_METADATA_TRANSITION_ID
+                        }', but none was found!`);
+                    }
                     this.assignSetDataFinish(initTask, {
                         [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
                             type: FieldTypeResource.ENUMERATION_MAP,
@@ -223,7 +253,12 @@ export class UserFiltersService implements OnDestroy {
                             type: FieldTypeResource.FILTER,
                             value: searchService.rootPredicate.query.value,
                             allowedNets,
-                            filterMetadata: this.filterMetadataFromSearchService(searchService, searchCategories)
+                            filterMetadata: this.filterMetadataFromSearchService(
+                                searchService,
+                                searchCategories,
+                                withDefaultCategories,
+                                inheritAllowedNets
+                            )
                         },
                         [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
                             type: FieldTypeResource.TEXT,
@@ -286,11 +321,16 @@ export class UserFiltersService implements OnDestroy {
         });
     }
 
-    protected filterMetadataFromSearchService(searchService: SearchService, searchCategories: readonly Category<any>[]): FilterMetadata {
+    protected filterMetadataFromSearchService(searchService: SearchService,
+                                              searchCategories: ReadonlyArray<Type<Category<any>>>,
+                                              withDefaultCategories: boolean,
+                                              inheritAllowedNets: boolean): FilterMetadata {
         return {
             filterType: searchService.filterType,
             predicateMetadata: searchService.createPredicateMetadata(),
-            searchCategories: searchCategories.map(c => c.serializeClass())
+            searchCategories: searchCategories.map(c => this._categoryResolverService.serialize(c)),
+            defaultSearchCategories: withDefaultCategories,
+            inheritAllowedNets
         };
     }
 }

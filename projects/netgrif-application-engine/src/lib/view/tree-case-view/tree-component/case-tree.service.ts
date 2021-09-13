@@ -30,6 +30,7 @@ import {ResultWithAfterActions} from '../../../utility/result-with-after-actions
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {SetDataEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {refreshTree} from '../../../utility/refresh-tree';
 
 /**
  * An internal helper object, that is used to return two values from a function.
@@ -834,9 +835,7 @@ export class CaseTreeService implements OnDestroy {
      * Forces a rerender of the tree content
      */
     private refreshTree(): void {
-        const d = this._treeDataSource.data;
-        this._treeDataSource.data = null;
-        this._treeDataSource.data = d;
+        refreshTree(this._treeDataSource);
     }
 
     /**

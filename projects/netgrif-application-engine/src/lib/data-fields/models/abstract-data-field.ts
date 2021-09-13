@@ -2,7 +2,7 @@ import {Behavior} from './behavior';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
-import {distinctUntilChanged} from 'rxjs/operators';
+import {distinctUntilChanged, filter, take} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Component} from './component';
@@ -93,6 +93,13 @@ export abstract class DataField<T> {
      * Validators resolved from field validations
      */
     protected _validators: Array<ValidatorFn>;
+
+    /**
+     * Stores the last subscription to the [_initialized$]{@link AbstractDataField#_initialized$} Stream, to prevent multiple block events
+     * from executing at the same time
+     */
+    protected _initializedSubscription: Subscription;
+
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -107,7 +114,7 @@ export abstract class DataField<T> {
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
-                          private _description?: string, private _layout?: Layout, public validations?: Validation[],
+                          private _description?: string, private _layout?: Layout, public validations?: Array<Validation>,
                           private _component?: Component, private _parentTaskId?: string) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
@@ -223,7 +230,12 @@ export abstract class DataField<T> {
     }
 
     set block(set: boolean) {
-        this._block.next(set);
+        if (this._initializedSubscription !== undefined && !this._initializedSubscription.closed) {
+            this._initializedSubscription.unsubscribe();
+        }
+        this._initializedSubscription = this.initialized$.pipe(filter(i => i), take(1)).subscribe(() => {
+            this._block.next(set);
+        });
     }
 
     set touch(set: boolean) {
@@ -392,7 +404,7 @@ export abstract class DataField<T> {
         return result;
     }
 
-    public replaceValidations(validations: Validation[]) {
+    public replaceValidations(validations: Array<Validation>) {
         this.clearValidators();
         this.validations = validations;
     }

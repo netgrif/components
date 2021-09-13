@@ -86,6 +86,7 @@ describe('AssignTaskService', () => {
             stringId: 'taskId',
             layout: {rows: 1, cols: 1, offset: 0},
             dataGroups: [],
+            users: {},
             _links: {}
         };
         TestBed.inject(TaskContentService).task = testTask;

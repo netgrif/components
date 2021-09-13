@@ -16,7 +16,7 @@ export enum EnumerationFieldView {
     DEFAULT = 'default',
     LIST = 'list',
     AUTOCOMPLETE = 'autocomplete',
-    STEPPER= 'stepper'
+    STEPPER = 'stepper'
 }
 
 export enum EnumerationFieldValidation {
@@ -30,7 +30,7 @@ export class EnumerationField extends DataField<string> {
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, protected _view = EnumerationFieldView.DEFAULT,
                 protected readonly _fieldType = FieldTypeResource.ENUMERATION,
-                validations?: Validation[], component?: Component, parentTaskId?: string) {
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 

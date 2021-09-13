@@ -43,7 +43,8 @@
             "delegate": "Delegovať",
             "finish": "Dokončiť",
             "cancel": "Zrušiť",
-            "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie."
+            "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
+            "redirecting": "Presmerovanie..."
         }
     },
     "side-menu": {
@@ -77,7 +78,8 @@
             "errSecond": "Názov je povinné pole.",
             "errThird": "Farba je povinné pole.",
             "noNets": "Žiadne povolené siete",
-            "createCase": "Uspešne vytvorený nový prípad"
+            "createCase": "Uspešne vytvorený nový prípad",
+            "defaultCaseName": "s prednastaveným názvom prípadu"
         },
         "user": {
             "assign": "Priradiť používateľa",
@@ -102,6 +104,10 @@
                     "name": "Vizuálne ID prípadu",
                     "placeholder": "Zadajte vizuálne ID prípadu"
                 },
+                "stringId": {
+                    "name": "ID prípadu",
+                    "placeholder": "Zadajte ID prípadu"
+                },
                 "author": {
                     "name": "Autor prípadu",
                     "placeholder": "Zadajte meno, alebo email autora prípadu"
@@ -121,6 +127,10 @@
                 "creationDate": {
                     "name": "Dátum vytvorenia prípadu",
                     "placeholder": "Zadajte dátum vytvorenia prípadu"
+                },
+                "creationDateTime": {
+                    "name": "Dátum a čas vytvorenia prípadu",
+                    "placeholder": "Zadajte dátum a čas vytvorenia prípadu"
                 },
                 "dataset": {
                     "name": "Dáta prípadu",
@@ -148,7 +158,8 @@
                     "placeholder": "Vyberte úlohu"
                 }
             },
-            "select": "Kategória vyhľadávania"
+            "select": "Kategória vyhľadávania",
+            "userMe": "JA"
         },
         "operator": {
             "name": "Operátor",
@@ -210,7 +221,7 @@
             "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru alebo súbor odstránte",
             "wontUploadSameFiles": "Vybrané súbory už boli nahrané. Ak chcete súbory aktualizovať odstránte už nahrané súbory",
             "fileUploadFailed": "Súbor sa nepodarilo nahrať",
-            "fileDeleteFailed":  "Súbor sa nepodarilo vymazať",
+            "fileDeleteFailed": "Súbor sa nepodarilo vymazať",
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
             "notSelectedUser": "Nebol vybraný žiadny používateľ",
@@ -229,7 +240,7 @@
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToDelete": "Kliknutím vymažte súbor"
         },
-        "dynamicEnum" : {
+        "dynamicEnum": {
             "noData": "Vášmu vyhľadávaniu nezodpovedajú žiadne položky"
         }
     },
@@ -372,7 +383,7 @@
         "noTaskSelected": "Momentálne nie je zvolený žiaden prípad. Pre vybranie prípadu zvoľte vrchol v strome."
     },
     "dashboard": {
-        "cases" : "prípady"
+        "cases": "prípady"
     },
     "workflow": {
         "delete": "zmazať",
@@ -398,8 +409,11 @@
         "sentenceEnd": ""
     },
     "publicView": {
-        "resolving" : "Verejné view sa načítava ...",
+        "resolving": "Verejné view sa načítava ...",
         "netNotExist": "Proces neexistuje",
         "errorCreate": "Chyba pri vytváraní prípadu "
+    },
+    "dynamicNavigation": {
+        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
     }
 }

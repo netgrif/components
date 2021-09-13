@@ -30,7 +30,7 @@ export abstract class TaskContentService implements OnDestroy {
     private static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
     private static readonly VALIDATE_FRONTEND_ACTION = 'validate';
 
-    $shouldCreate: ReplaySubject<DataGroup[]>;
+    $shouldCreate: ReplaySubject<Array<DataGroup>>;
     $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
@@ -41,7 +41,7 @@ export abstract class TaskContentService implements OnDestroy {
                           protected _snackBarService: SnackBarService,
                           protected _translate: TranslateService,
                           protected _logger: LoggerService) {
-        this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
+        this.$shouldCreate = new ReplaySubject<Array<DataGroup>>(1);
         this.$shouldCreateCounter = new BehaviorSubject<number>(0);
         this._isExpanding$ = new BehaviorSubject<boolean>(false);
         this._task = undefined;
@@ -131,6 +131,18 @@ export abstract class TaskContentService implements OnDestroy {
         return valid && validDisabled;
     }
 
+    /**
+     * Finds invalid data of task
+     *
+     * @returns array of invalid datafields
+     */
+    public getInvalidTaskData(): Array<DataField<any>> {
+        const invalidFields = [];
+        this._task.dataGroups.forEach(group => invalidFields.push(...group.fields.filter(field =>
+            (!field.valid && !field.disabled) || (!field.validRequired && !field.disabled))));
+        return invalidFields;
+    }
+
     public validateDynamicEnumField(): boolean {
         if (!this._task || !this._task.dataGroups) {
             return false;
@@ -168,11 +180,7 @@ export abstract class TaskContentService implements OnDestroy {
         if (this._task && this._task.dataGroups) {
             this._task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
-                    field.initialized$.subscribe((initialized) => {
-                        if (initialized) {
-                            field.block = blockingState;
-                        }
-                    });
+                    field.block = blockingState;
                 });
             });
         }
@@ -230,12 +238,23 @@ export abstract class TaskContentService implements OnDestroy {
 
         const updatedField = isReferenced ? chFields[field.stringId.replace(referencedTaskId + '-', '')] : chFields[field.stringId];
         Object.keys(updatedField).forEach(key => {
-            if (key === 'value') {
+            switch (key) {
+                            case 'type':
+                                // type is just an information, not an update. A field cannot change its type
+                                return; // continue - the field does not need updating, since nothing changed
+                            case 'value':
                 field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
-            } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
-                field.behavior = updatedField.behavior[this._task.transitionId];
-            } else if (key === 'choices') {
-                const newChoices: EnumerationFieldValue[] = [];
+            break;
+                            case 'behavior':
+                                if ( updatedField.behavior[this._task.transitionId]) {
+                // TODO NGSD-489 fix behavior resolutionfield.behavior = updatedField.behavior[this._task.transitionId];
+            } else {
+                                    // ignore the behavior update, since it does not affect this task
+                                    return; // continue - the field does not need updating, since nothing changed
+                                }
+                                break;
+                            case 'choices':
+                const newChoices: Array<EnumerationFieldValue> = [];
                 if (updatedField.choices instanceof Array) {
                     updatedField.choices.forEach(it => {
                         newChoices.push({key: it, value: it} as EnumerationFieldValue);
@@ -249,16 +268,18 @@ export abstract class TaskContentService implements OnDestroy {
                     });
                 }
                 (field as EnumerationField | MultichoiceField).choices = newChoices;
-            } else if (key === 'options') {
+            break;
+                            case 'options':
                 const newOptions = [];
                 Object.keys(updatedField.options).forEach(optionKey => {
                     newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
                 });
                 (field as EnumerationField | MultichoiceField).choices = newOptions;
-            } else if (key === 'validations') {
+            break;
+                            case 'validations':
                 field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
-
-            } else if (key !== 'type') {
+break;
+            default:
                 field[key] = updatedField[key];
 
             }

@@ -67,7 +67,7 @@ export class FileField extends DataField<FileFieldValue> {
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number,
                 private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
-                validations?: Validation[], component?: Component, parentTaskId?: string) {
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
         this._changedFields$ = new Subject<ChangedFieldContainer>();
     }

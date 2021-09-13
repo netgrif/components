@@ -31,6 +31,8 @@ import {PublicTaskViewComponent} from './doc/public-task-view/public-task-view.c
 import {PublicWorkflowViewComponent} from './doc/public-workflow-view/public-workflow-view.component';
 import {PublicResolverComponent} from './doc/public-resolver/public-resolver.component';
 import {GroupViewComponent} from './doc/group-view/group-view.component';
+import { TitleConfigComponent } from './doc/demo-title-config/title-config.component';
+import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +42,7 @@ export class NaeExampleAppViewService extends ViewService {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
         super([
+            {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
             {id: 'UserInviteComponent', class: UserInviteComponent},
             {id: 'TreeViewExampleComponent', class: TreeViewExampleComponent},

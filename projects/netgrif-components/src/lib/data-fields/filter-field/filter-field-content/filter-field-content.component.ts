@@ -1,10 +1,10 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Type} from '@angular/core';
 import {
     AbstractFilterFieldContentComponent,
     SearchService,
     AllowedNetsService,
     AllowedNetsServiceFactory, FilterField, NAE_FILTER_FIELD, NAE_BASE_FILTER, BaseFilter,
-    SimpleFilter, CategoryFactory, NAE_SEARCH_CATEGORIES, Category
+    SimpleFilter, CategoryResolverService, NAE_SEARCH_CATEGORIES, Category, CategoryFactory
 } from '@netgrif/application-engine';
 
 export function filterFieldBaseFilterFactory(filterField: FilterField): BaseFilter {
@@ -17,10 +17,9 @@ export function filterFieldAllowedNetsFactory(factory: AllowedNetsServiceFactory
     return factory.createFromArray(filterField.allowedNets);
 }
 
-export function filterFieldCategoriesFactory(factory: CategoryFactory, filterField: FilterField): Array<Category<any>> {
-    const categories = filterField.filterMetadata.searchCategories.map(c => factory.getByNameWithDefaultOperator(c));
-    categories.forEach(c => c.destroy());
-    return categories;
+export function filterFieldCategoriesFactory(factory: CategoryResolverService, filterField: FilterField): Array<Type<Category<any>>> {
+    const result = filterField.filterMetadata.searchCategories.map(c => factory.toClass(c));
+    return result;
 }
 
 @Component({
@@ -31,7 +30,7 @@ export function filterFieldCategoriesFactory(factory: CategoryFactory, filterFie
         {provide: NAE_BASE_FILTER, useFactory: filterFieldBaseFilterFactory, deps: [NAE_FILTER_FIELD]},
         {provide: AllowedNetsService, useFactory: filterFieldAllowedNetsFactory, deps: [AllowedNetsServiceFactory, NAE_FILTER_FIELD]},
         CategoryFactory,
-        {provide: NAE_SEARCH_CATEGORIES, useFactory: filterFieldCategoriesFactory, deps: [CategoryFactory, NAE_FILTER_FIELD]},
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: filterFieldCategoriesFactory, deps: [CategoryResolverService, NAE_FILTER_FIELD]},
         SearchService
     ]
 })

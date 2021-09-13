@@ -26,7 +26,7 @@ export class FileListField extends DataField<FileListFieldValue> {
      * Placeholder is a substitute for the value name if not set value.
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
-                layout?: Layout, validations?: Validation[], private _maxUploadSizeInBytes?: number,
+                layout?: Layout, validations?: Array<Validation>, private _maxUploadSizeInBytes?: number,
                 private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
                 component?: Component, parentTaskId?: string) {
         super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);

@@ -10,7 +10,7 @@ export class FilterField extends DataField<string> {
     constructor(stringId: string, title: string,
                 initialValue: string, private _filterMetadata: FilterMetadata, private _allowedNets: Array<string>,
                 behavior: Behavior, placeholder: string, description: string, layout?: Layout,
-                validations?: Validation[], component?: Component, parentTaskId?: string) {
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
         super(stringId, title, initialValue, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
