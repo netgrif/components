@@ -10,15 +10,15 @@ import {TextField} from '../../data-fields/text-field/models/text-field';
 import {LoggerService} from '../../logger/services/logger.service';
 import {MergeOperator} from '../../filter/models/merge-operator';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
-import {map} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FilterExtractionService {
 
-    protected static readonly PARENT_FILTER_EXTRACTOR = /^.*?([a-f\d]{24})(?:-\d+)?$/;
-    protected static readonly UNTABBED_VIEW_ID_EXTRACTOR = /^.*?(-\d+)?$/;
+    protected static readonly PARENT_FILTER_EXTRACTOR = '^.*?([a-f\\d]{24})(?:-\\d+)?$';
+    protected static readonly UNTABBED_VIEW_ID_EXTRACTOR = '^.*?(-\\d+)?$';
 
     constructor(protected _filterRepository: FilterRepository,
                 protected _taskResourceService: TaskResourceService,
@@ -38,7 +38,7 @@ export class FilterExtractionService {
             return throwError('Filter segment could not be extracted from filter field');
         }
 
-        const originViewIdField = getField(dataSection[0].fields, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID, taskReffed);
+        const originViewIdField = getField(dataSection[1].fields, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID, taskReffed);
         if (originViewIdField === undefined || !(originViewIdField instanceof TextField)) {
             return throwError('Could not extract origin view id field from task data');
         }
@@ -52,9 +52,14 @@ export class FilterExtractionService {
             return this.extractAppFilter(originViewIdField.value, filterSegment);
         }
 
-        return this._taskResourceService.getData(match[1]).pipe(map(data => {
-
-        }));
+        return this._taskResourceService.getData(match[1]).pipe(
+            switchMap(data => {
+                return this.extractCompleteFilterFromData(data);
+            }),
+            map(parentFilter => {
+                return filterSegment.merge(parentFilter, MergeOperator.AND);
+            })
+        );
     }
 
     protected extractAppFilter(originViewId: string, filterSegment: Filter): Observable<Filter> {
@@ -62,7 +67,7 @@ export class FilterExtractionService {
         if (match === null) {
             return throwError('Unexpected state. View Id of origin app view could not be extracted');
         }
-        const originUntabbedViewId = originViewId.substring(0, originViewId.length - match[1].length);
+        const originUntabbedViewId = originViewId.substring(0, originViewId.length - (match[1]?.length ?? 0));
         const appOriginFilter = this._filterRepository.getFilter(originUntabbedViewId);
         if (appOriginFilter === undefined) {
             this._log.error(`Could not retrieve origin app filter with id '${originUntabbedViewId}'. Falling back to empty filter`);
