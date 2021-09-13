@@ -134,7 +134,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
         params = this.addPageParams(params, requestContext.pagination);
         this._loading$.on(requestContext.filter);
 
-        return this._caseResourceService.searchCases(requestContext.filter, params).pipe(
+        return this._caseResourceService.getCases({}, params).pipe(
             catchError(err => {
                 this._log.error('Loading cases has failed!', err);
                 this._loading$.off(requestContext.filter);
@@ -315,12 +315,14 @@ export class CaseViewService extends SortableView implements OnDestroy {
      */
     public viewEnabled(aCase: Case): boolean {
         const user = this._user.user;
-        const result = user.roles.some(role =>
-            !!aCase.permissions[role.stringId] && !aCase.permissions[role.stringId][PermissionType.VIEW]);
-
-        if (result) {
-            return false;
+        if (aCase.viewRoles.length > 0) {
+            const result = user.roles.some(role => aCase.viewRoles.includes(role.stringId));
+            if (result) {
+                return true;
+            } else {
+                return false;
+            }
         }
-        return !(!!aCase.users[user.id] && !aCase.permissions[user.id][PermissionType.VIEW]);
+        return false;
     }
 }
