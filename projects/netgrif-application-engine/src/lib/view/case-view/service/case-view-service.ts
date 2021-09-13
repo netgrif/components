@@ -316,12 +316,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
     public viewEnabled(aCase: Case): boolean {
         const user = this._user.user;
         if (aCase.viewRoles.length > 0) {
-            const result = user.roles.some(role => aCase.viewRoles.includes(role.stringId));
-            if (result) {
-                return true;
-            } else {
-                return false;
-            }
+            return user.roles.some(role => aCase.viewRoles.includes(role.stringId));
         }
         return false;
     }
