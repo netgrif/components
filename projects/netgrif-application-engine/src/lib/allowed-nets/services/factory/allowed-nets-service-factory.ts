@@ -35,7 +35,7 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
                                                             navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
-    const filterField = getField(navigationItemTaskData[navigationItemTaskData.length - 1].fields,
+    const filterField = getField(navigationItemTaskData[1].fields,
         UserFilterConstants.FILTER_FIELD_ID, true) as FilterField;
 
     if (filterField === undefined) {

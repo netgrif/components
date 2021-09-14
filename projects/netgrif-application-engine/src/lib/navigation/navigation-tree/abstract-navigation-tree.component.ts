@@ -391,10 +391,15 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     protected convertDatagroupsToNavEntries(navConfigDatagroups: Array<DataGroup>): Array<NavigationNode> {
         const result = [];
-        const firstEntryIndex = navConfigDatagroups.findIndex(
-            group => group.fields.some(
-                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX)
-            )
+        const entryDataGroupIndices = [];
+        navConfigDatagroups.forEach(
+            (group, index) => {
+                if (group.fields.some(
+                    field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX)
+                )) {
+                    entryDataGroupIndices.push(index);
+                }
+            }
         );
 
         let navEntriesTaskRef;
@@ -411,8 +416,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         }
 
         for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {
-            const index = this.transformOrderToIndex(order, firstEntryIndex);
-
+            const index = entryDataGroupIndices[order];
             const label = extractIconAndTitle(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY), true);
             const newNode: NavigationNode = {url: '', ...label};
@@ -427,9 +431,5 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             result.push(newNode);
         }
         return result;
-    }
-
-    private transformOrderToIndex(order: number, offset: number): number {
-        return offset + order * GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY;
     }
 }
