@@ -12,11 +12,15 @@ import {MergeOperator} from '../../filter/models/merge-operator';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {map, switchMap} from 'rxjs/operators';
 
+/**
+ * This service is able to load the full saved filter including all of its ancestor filters.
+ */
 @Injectable({
     providedIn: 'root'
 })
 export class FilterExtractionService {
 
+    // the same regexes are used in a backend filter process action. Please keep them in sync
     protected static readonly PARENT_FILTER_EXTRACTOR = '^.*?([a-f\\d]{24})(?:-\\d+)?$';
     protected static readonly UNTABBED_VIEW_ID_EXTRACTOR = '^.*?(-\\d+)?$';
 
