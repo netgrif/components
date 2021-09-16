@@ -47,16 +47,38 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = 
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
  * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed TO BE task reffed by default.
  */
-export function extractFilter(dataSection: Array<DataGroup>, taskReffed = true): Filter {
+export function extractFilterFromData(dataSection: Array<DataGroup>, taskReffed = true): Filter {
+    return extractFilterFromFilterField(extractFilterFieldFromData(dataSection, taskReffed));
+}
+
+/**
+ * Extracts the filter field from the navigation item task data.
+ * @param dataSection an array containing the data groups that correspond to a single navigation entry
+ * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed TO BE task reffed by default.
+ * @returns The extracted {@link FilterField} or `undefined` if it could not be extracted.
+ */
+export function extractFilterFieldFromData(dataSection: Array<DataGroup>, taskReffed = true): FilterField | undefined {
     if (dataSection.length < 2) {
-        throw new Error('The provided task data does not belong to a Navigation menu item task. Icon and title cannot be extracted');
+        throw new Error('The provided task data does not belong to a Navigation menu item task. Filter cannot be extracted');
     }
 
     // "second" datagroup has filter
     const filterField = getField(dataSection[1].fields, UserFilterConstants.FILTER_FIELD_ID, taskReffed);
 
     if (filterField === undefined || !(filterField instanceof FilterField)) {
-        throw new Error('Navigation entry filter could not be resolved');
+        return undefined;
+    }
+
+    return filterField;
+}
+
+/**
+ * @returns a {@link SimpleFilter} containing the filter stored in the provided {@link FilterField}.
+ * Throws an error if this is not possible.
+ */
+export function extractFilterFromFilterField(filterField: FilterField): Filter {
+    if (filterField === undefined || !(filterField instanceof FilterField)) {
+        throw new Error('Filter could not be resolved');
     }
     return SimpleFilter.fromQuery({query: filterField.value}, filterField.filterMetadata.filterType);
 }
