@@ -6,10 +6,7 @@
             "jasmine",
             "node"
         ],
-        "target": "ES5",
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+        "target": "ES5"
     },
     "files": [
         "src/test.ts"
