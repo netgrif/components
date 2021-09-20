@@ -17,6 +17,7 @@ import {take} from 'rxjs/operators';
 import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
+import {FieldTypeResource} from '../../task-content/model/field-type-resource';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -45,11 +46,11 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
         switch (selectedHeader.fieldIdentifier) {
             case CaseMetaField.MONGO_ID:
-                return {value: this.case_.stringId, icon: undefined, type: 'meta'};
+                return {value: this.case_.stringId, type: 'meta'};
             case CaseMetaField.VISUAL_ID:
-                return {value: this.case_.visualId, icon: undefined, type: 'meta'};
+                return {value: this.case_.visualId, type: 'meta'};
             case CaseMetaField.TITLE:
-                return {value: this.case_.title, icon: undefined, type: 'meta'};
+                return {value: this.case_.title, type: 'meta'};
             case CaseMetaField.AUTHOR:
                 return {value: this.case_.author.fullName, icon: 'account_circle', type: 'meta'};
             case CaseMetaField.CREATION_DATE:
@@ -58,11 +59,20 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
                     icon: 'event',
                     type: 'meta'
                 };
+            default:
+                throw new Error(`Featured meta value resolution for type '${selectedHeader.fieldIdentifier}' is not implemented!`);
         }
     }
 
     protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
         const immediate = getImmediateData(this.case_, selectedHeader.fieldIdentifier);
+
+        if (immediate === undefined) {
+            this._log.debug(`Featured immediate field value for field with id '${selectedHeader.fieldIdentifier}' on case with id '${
+                this.case_.stringId}' cannot be resolved because the field is not present in the case`);
+            return {value: '', type: FieldTypeResource.TEXT};
+        }
+
         return this.parseImmediateValue(immediate);
     }
 
@@ -87,7 +97,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
     }
 
-    public canDo(action): boolean {
+    public canDo(action: string): boolean {
         if (!this.case_
             || !this.case_.permissions
             || !action
@@ -95,7 +105,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         ) {
             return false;
         }
-        if (Object.keys(this.case_.permissions).length === 0 && Object.keys(this.case_.users).length === 0) {
+        if (Object.keys(this.case_.permissions).length === 0 && Object.keys(this.case_?.users ?? {}).length === 0) {
             return true;
         }
 

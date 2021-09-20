@@ -49,7 +49,7 @@ export abstract class AbstractFilterSelectorComponent implements OnDestroy {
      * @ignore
      * Currently selected filter. `undefined` if no filter is selected.
      */
-    protected _selectedFilter: Filter;
+    protected _selectedFilter: Filter | undefined;
 
     /**
      * @ignore
@@ -86,8 +86,8 @@ export abstract class AbstractFilterSelectorComponent implements OnDestroy {
                 protected _filterRepository: FilterRepository) {
         const filterConstraints = _sideMenuControl.data as FilterSelectorInjectionData;
 
-        let caseFilters = [];
-        let taskFilters = [];
+        let caseFilters: Array<Filter> = [];
+        let taskFilters: Array<Filter> = [];
         if (filterConstraints && filterConstraints.filterIdsConstraint) {
             const filters = this._filterRepository.getFilters(filterConstraints.filterIdsConstraint);
             filters.forEach(filter => {
@@ -128,7 +128,7 @@ export abstract class AbstractFilterSelectorComponent implements OnDestroy {
      * Changes the currently selected filter and publishes an event about this to the output stream in {@link SideMenuControl}.
      * @param filter the newly selected filter
      */
-    public filterSelected(filter: Filter): void {
+    public filterSelected(filter: Filter | undefined): void {
         this._selectedFilter = filter;
         this._sideMenuControl.publish({
             opened: true,

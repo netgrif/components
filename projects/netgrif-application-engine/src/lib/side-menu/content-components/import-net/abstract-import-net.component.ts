@@ -32,7 +32,7 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
     public releaseTypes: Array<string> = ['Major', 'Minor', 'Patch'];
     public releaseTypeControl = new FormControl(this.releaseTypes[0]);
 
-    protected _response: PetriNetMessageResource = undefined;
+    protected _response: PetriNetMessageResource;
     protected _fileInput: HTMLInputElement;
 
     constructor(protected _sideMenuControl: SideMenuControl,

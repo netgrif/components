@@ -48,7 +48,7 @@ export abstract class AbstractUserAssignComponent {
     }
 
     public get negativeRoles(): Array<string> | Array<ProcessRole> {
-        return this.injectedData ? this.injectedData.negativeRoles : [];
+        return this.injectedData && this.injectedData.negativeRoles ? this.injectedData.negativeRoles : [];
     }
 
     /**

@@ -30,7 +30,13 @@ export abstract class AbstractBooleanFieldComponent extends AbstractDataFieldCom
     }
 
     private resolveErrorMessage(dataField: BooleanField, search: string, generalMessage: string) {
-        const validation = dataField.validations.find(value => value.validationRule.includes(search));
+        const validation = dataField?.validations?.find(value => value.validationRule.includes(search));
+
+        if (validation === undefined) {
+            throw new Error(`Message for validation with key '${search
+            }' cannot be resolved on boolean data field with id ${dataField?.stringId}`);
+        }
+
         if (validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
         }

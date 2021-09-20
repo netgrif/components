@@ -54,8 +54,8 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
         this.unsubscribe$.complete();
     }
 
-    public trackBy(i): any {
-        return i;
+    public trackBy(index: number): any {
+        return index;
     }
 
     public get loadedDataSize(): number {
@@ -74,7 +74,7 @@ export abstract class AbstractCaseListComponent extends TabbedVirtualScrollCompo
     }
 
     public onRedirect() {
-        if (!this.redirectEnabled) {
+        if (!this.redirectEnabled || !this.route) {
             return;
         }
 

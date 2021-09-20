@@ -28,7 +28,7 @@ export abstract class AbstractAuthenticationOverlay implements OnInit, OnDestroy
         }
     }
 
-    protected redirect(bool): void {
+    protected redirect(bool: boolean): void {
         if (bool) {
             this._spinnerOverlay.spin$.next(false);
             if (this._session.verified) {

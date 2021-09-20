@@ -140,17 +140,17 @@ export class HeaderSearchService implements OnDestroy {
      * Pushes all the predicates from the headers into the search interface and clears the header inputs
      */
     protected processModeChange(): void {
-        const addedPredicateIds = [];
+        const addedPredicateIds: Array<number> = [];
         this._columnToConfiguration.forEach(config => {
             this._searchService.removePredicate(config.predicateId);
 
             let editableCategory;
             if (config.type === HeaderColumnType.META) {
-                editableCategory = this._typeToCategory.get(config.fieldIdentifier).duplicate();
+                editableCategory = this.getCategory(config.fieldIdentifier)?.duplicate();
                 editableCategory.selectDefaultOperator();
                 editableCategory.setOperands(config.userInput);
             } else {
-                const dataset = (this._typeToCategory.get(HeaderColumnType.IMMEDIATE) as CaseSimpleDataset);
+                const dataset = (this.getCategory(HeaderColumnType.IMMEDIATE) as CaseSimpleDataset);
                 editableCategory = dataset.transformToCaseDataset(config.fieldType, config.fieldTitle, config.userInput);
             }
             addedPredicateIds.push(this._searchService.addGeneratedLeafPredicate(editableCategory));
@@ -196,7 +196,7 @@ export class HeaderSearchService implements OnDestroy {
             fieldIdentifier: changeDescription.fieldIdentifier,
             userInput: [changeDescription.searchInput]
         };
-        const category = this._typeToCategory.get(config.fieldIdentifier);
+        const category = this.getCategory(config.fieldIdentifier);
         const predicate = category.generatePredicate(config.userInput);
         this.addPredicate(changeDescription.columnIdentifier, predicate, {
             type: HeaderColumnType.META,
@@ -273,5 +273,17 @@ export class HeaderSearchService implements OnDestroy {
             this._headerService.clearHeaderSearch(removedId);
         }
         this._columnToConfiguration.delete(removedId);
+    }
+
+    /**
+     * Retrieves the specified category from the map and throws an error if no mapping exists.
+     * @param headerType
+     */
+    protected getCategory(headerType: string): Category<any> {
+        const cat = this._typeToCategory.get(headerType);
+        if (cat === undefined) {
+            throw new Error(`No search category is registered for header type '${headerType}'`);
+        }
+        return cat;
     }
 }

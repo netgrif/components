@@ -92,7 +92,7 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
         this._selectedUser$.complete();
     }
 
-    public trackBy(index: number, item: UserValue): any {
+    public trackBy(_: number, item: UserValue): any {
         return item.id;
     }
 
