@@ -5,8 +5,8 @@ import {HeaderColumn} from './models/header-column';
 
 export interface HeaderStateInterface {
     mode: HeaderMode;
-    readonly selectedHeaders$: Observable<Array<HeaderColumn>>;
-    readonly selectedHeaders: Array<HeaderColumn>;
+    readonly selectedHeaders$: Observable<Array<HeaderColumn | null>>;
+    readonly selectedHeaders: Array<HeaderColumn | null>;
     saveState: () => void;
     restoreLastState: () => void;
     restoreLastMode: () => void;
@@ -20,18 +20,18 @@ export class HeaderState implements HeaderStateInterface {
     public mode: HeaderMode = HeaderMode.SORT;
 
     private _lastMode: HeaderMode = HeaderMode.SORT;
-    private _selectedHeaders$: BehaviorSubject<Array<HeaderColumn>>;
-    private _lastSelectedHeaders: Array<HeaderColumn>;
+    private _selectedHeaders$: BehaviorSubject<Array<HeaderColumn | null>>;
+    private _lastSelectedHeaders: Array<HeaderColumn | null>;
 
-    constructor(initialHeaders: Array<HeaderColumn>) {
-        this._selectedHeaders$ = new BehaviorSubject<Array<HeaderColumn>>(initialHeaders);
+    constructor(initialHeaders: Array<HeaderColumn | null>) {
+        this._selectedHeaders$ = new BehaviorSubject<Array<HeaderColumn | null>>(initialHeaders);
     }
 
-    public get selectedHeaders$(): Observable<Array<HeaderColumn>> {
+    public get selectedHeaders$(): Observable<Array<HeaderColumn | null>> {
         return this._selectedHeaders$.asObservable();
     }
 
-    public get selectedHeaders(): Array<HeaderColumn> {
+    public get selectedHeaders(): Array<HeaderColumn | null> {
         return this._selectedHeaders$.getValue();
     }
 
@@ -49,7 +49,7 @@ export class HeaderState implements HeaderStateInterface {
         this._selectedHeaders$.next(this._lastSelectedHeaders);
     }
 
-    public updateSelectedHeaders(newSelectedHeaders: Array<HeaderColumn>): void {
+    public updateSelectedHeaders(newSelectedHeaders: Array<HeaderColumn | null>): void {
         this._selectedHeaders$.next(newSelectedHeaders);
     }
 

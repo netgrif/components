@@ -13,6 +13,7 @@ import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {MatToolbar} from '@angular/material/toolbar';
 import semver from 'semver';
 import {MatOption} from '@angular/material/core';
+import {MatStepper} from '@angular/material/stepper';
 
 interface Form {
     value: string;
@@ -34,8 +35,8 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     filteredOptions$: Observable<Array<Form>>;
     @ViewChild('toolbar') toolbar: MatToolbar;
 
-    @ViewChild('stepper1') stepper1;
-    @ViewChild('stepper2') stepper2;
+    @ViewChild('stepper1') stepper1: MatStepper;
+    @ViewChild('stepper2') stepper2: MatStepper;
 
     protected _options$: ReplaySubject<Array<Form>>;
     protected _injectedData: NewCaseInjectionData;
@@ -55,7 +56,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         if (!this._injectedData) {
             this.closeNoNets();
         }
-        this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
+        this._hotkeysService.add(new Hotkey('enter', (): boolean => {
             this.nextStep();
             return false;
         }));
@@ -229,7 +230,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
     }
 
     private removeOldVersions(options: Array<Form>): Array<Form> {
-        const tempNets = Object.assign([], options);
+        const tempNets = [...options];
         const petriNetIds = new Set(options.map(form => form.value));
         const newestNets = new Array<Form>();
 

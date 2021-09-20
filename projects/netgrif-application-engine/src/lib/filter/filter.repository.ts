@@ -114,7 +114,7 @@ export class FilterRepository {
      * @returns list of filter identifiers that fulfill the given predicate
      */
     protected getFilterList(predicate: (f: Filter) => boolean): Array<string> {
-        const result = [];
+        const result: Array<string> = [];
         this._filters.forEach(filter => {
             if (predicate(filter)) {
                 result.push(filter.id);
@@ -129,7 +129,7 @@ export class FilterRepository {
      * and the array will contain less elements than the input array.
      */
     public getFilters(filterIds: Array<string>): Array<Filter> {
-        const result = [];
+        const result: Array<Filter> = [];
         filterIds.forEach(id => {
             const filter = this.getFilter(id);
             if (filter !== undefined) {

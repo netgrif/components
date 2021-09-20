@@ -65,7 +65,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         return this._headerChange$.asObservable();
     }
 
-    get selectedHeaders$(): Observable<Array<HeaderColumn>> {
+    get selectedHeaders$(): Observable<Array<HeaderColumn | null>> {
         return this._headerState.selectedHeaders$;
     }
 
@@ -250,7 +250,7 @@ export abstract class AbstractHeaderService implements OnDestroy {
         if (!preferredHeaderKeys) {
             return;
         }
-        const newHeaders = [];
+        const newHeaders: Array<HeaderColumn | null> = [];
         preferredHeaderKeys.forEach(headerKey => {
             for (const fieldGroup of this.fieldsGroup) {
                 for (const header of fieldGroup.fields) {
@@ -279,9 +279,10 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * @param direction Represent one of sort modes: asd, desc and ''
      */
     public sortHeaderChanged(columnIndex: number, active: string, direction: SortDirection): void {
-        let sortChangeDescription: SortChangeDescription;
+        let sortChangeDescription: SortChangeDescription | undefined;
         let foundFirstMatch = false; // column can feature in the header in multiple positions => we don't want to send multiple events
-        this.headerState.selectedHeaders.filter(header => !!header).forEach(header => {
+        this.headerState.selectedHeaders.filter(header => header !== null).forEach(header => {
+            header = header as HeaderColumn;
             if (header.uniqueId === active && !foundFirstMatch) {
                 sortChangeDescription = {
                     sortDirection: direction,
@@ -297,6 +298,12 @@ export abstract class AbstractHeaderService implements OnDestroy {
                 header.sortDirection = '';
             }
         });
+        if (sortChangeDescription === undefined) {
+            this._logger.error(`Sort direction for header column '${active
+            }' cannot be changed. Header with this identifier was not found among selected headers.`);
+            return;
+        }
+
         this._headerChange$.next({headerType: this.headerType, changeType: HeaderChangeType.SORT, description: sortChangeDescription});
     }
 
@@ -306,6 +313,11 @@ export abstract class AbstractHeaderService implements OnDestroy {
      */
     public headerSearchInputChanged(columnIndex: number, searchInput: any) {
         const affectedHeader = this.headerState.selectedHeaders[columnIndex];
+
+        if (affectedHeader === null) {
+            throw Error(`Header at index ${columnIndex} had its search input changed but no header is selected in this column`);
+        }
+
         affectedHeader.searchInput = searchInput;
         const searchChangeDescription: SearchChangeDescription = {
             fieldIdentifier: affectedHeader.fieldIdentifier,
@@ -327,11 +339,13 @@ export abstract class AbstractHeaderService implements OnDestroy {
      * Change active header and titles of panels
      */
     public headerColumnSelected(columnIndex: number, newHeaderColumn: HeaderColumn): void {
-        const newHeaders: Array<HeaderColumn> = [];
+        const newHeaders: Array<HeaderColumn | null> = [];
         newHeaders.push(...this._headerState.selectedHeaders);
-        if (!!newHeaders[columnIndex]) {
-            newHeaders[columnIndex].sortDirection = '';
-            newHeaders[columnIndex].searchInput = undefined;
+
+        const oldHeaderColumn = newHeaders[columnIndex];
+        if (oldHeaderColumn !== null) {
+            oldHeaderColumn.sortDirection = '';
+            oldHeaderColumn.searchInput = undefined;
         }
         newHeaders[columnIndex] = newHeaderColumn;
         this._headerState.updateSelectedHeaders(newHeaders);
@@ -454,9 +468,9 @@ export abstract class AbstractHeaderService implements OnDestroy {
         return undefined;
     }
 
-    protected abstract saveState();
+    protected abstract saveState(): void;
 
-    protected abstract saveNewState();
+    protected abstract saveNewState(): void;
 
-    protected abstract restoreLastState();
+    protected abstract restoreLastState(): void;
 }

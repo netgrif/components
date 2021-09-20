@@ -5,7 +5,7 @@ import {FilterMetadataAllowedNets} from '../../search/models/persistance/filter-
  */
 export interface FeaturedValue {
     value: string;
-    icon: string;
+    icon?: string;
     type: string;
     /**
      * Only for immediate filter fields
