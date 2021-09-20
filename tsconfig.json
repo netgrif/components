@@ -7,6 +7,19 @@
         "declaration": false,
         "downlevelIteration": true,
         "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "alwaysStrict": true,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
         "module": "esnext",
         "moduleResolution": "node",
         "importHelpers": true,
@@ -28,8 +41,7 @@
             "jszip": [
                 "./node_modules/jszip/dist/jszip.min.js"
             ]
-        },
-        "resolveJsonModule": true
+        }
     },
     "angularCompilerOptions": {
         "enableIvy": false,
