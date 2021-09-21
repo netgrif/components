@@ -3,14 +3,16 @@
         <mat-card class="fill-all-space" *ngIf="!loading">
             <div fxLayout="column" fxFlex="25" class="overflow-auto">
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <button mat-button fxFlex *ngIf="showButton()" (click)="tree.addRootChildNode()">Add root child</button>
+                    <button mat-button fxFlex *ngIf="showButton()" (click)="tree.addRootChildNode()">Add root child
+                    </button>
                     <mat-spinner *ngIf="!showButton()" [diameter]="36"></mat-spinner>
                 </div>
                 <nc-tree-component #tree fxFlex="100"
-                                    [filter]="filter"
-                                    [showTreeRoot]="false"
-                                    (treeRootLoading)="rootLoading($event)"
-                                    (treeRootAddingChild)="rootAddingChild($event)"></nc-tree-component>
+                                   [autoOpenNewNode]="false"
+                                   [filter]="filter"
+                                   [showTreeRoot]="false"
+                                   (treeRootLoading)="rootLoading($event)"
+                                   (treeRootAddingChild)="rootAddingChild($event)"></nc-tree-component>
             </div>
 
             <mat-divider [vertical]="true" class="divider-fix"></mat-divider>

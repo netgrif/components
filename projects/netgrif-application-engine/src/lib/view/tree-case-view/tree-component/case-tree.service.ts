@@ -53,6 +53,7 @@ export class CaseTreeService implements OnDestroy {
     private _treeRootLoaded$: ReplaySubject<boolean>;
     private _rootNode: CaseTreeNode;
     private _showRoot: boolean;
+    private _activeNewNode: boolean;
     /**
      * Weather the tree is eager loaded or not.
      *
@@ -74,6 +75,7 @@ export class CaseTreeService implements OnDestroy {
                 protected _sideMenuService: SideMenuService,
                 protected _translateService: TranslateService,
                 @Optional() @Inject(NAE_OPTION_SELECTOR_COMPONENT) protected _optionSelectorComponent: any) {
+        this._activeNewNode = true;
         this._treeDataSource = new MatTreeNestedDataSource<CaseTreeNode>();
         this._treeControl = new NestedTreeControl<CaseTreeNode>(node => node.children);
         _treeCaseViewService.reloadCase$.asObservable().subscribe(() => {
@@ -102,6 +104,10 @@ export class CaseTreeService implements OnDestroy {
 
     public get currentNode(): CaseTreeNode {
         return this._currentNode;
+    }
+
+    public set activeNewNode(activeNewNode: boolean) {
+        this._activeNewNode = activeNewNode;
     }
 
     /**
@@ -406,6 +412,9 @@ export class CaseTreeService implements OnDestroy {
                 this.treeControl.collapseDescendants(node.children[position]);
             }
         });
+        if (node.children.length > page.pagination.totalElements) {
+            node.children.splice(page.pagination.totalElements, node.children.length - page.pagination.totalElements);
+        }
     }
 
     /**
@@ -521,7 +530,9 @@ export class CaseTreeService implements OnDestroy {
             clickedNode.addingNode.off();
             this.expandNode(clickedNode).subscribe(expandSuccess => {
                 if (expandSuccess) {
-                    this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
+                    if (this._activeNewNode) {
+                        this.changeActiveNode(clickedNode.children[clickedNode.children.length - 1]);
+                    }
                     result.executeAfterActions();
                 }
                 operationResult.next(true);
@@ -661,7 +672,7 @@ export class CaseTreeService implements OnDestroy {
      * @param caseId string ID of the case that should have it's tree case ref set
      * @param newCaseRefValue the new value of the case ref field
      */
-    private performCaseRefCall(caseId: string, newCaseRefValue: Array<string>): Observable<Array<string> | undefined> {
+    protected performCaseRefCall(caseId: string, newCaseRefValue: Array<string>): Observable<Array<string> | undefined> {
         const result$ = new ReplaySubject<Array<string>>(1);
 
         this._taskResourceService.getTasks(SimpleFilter.fromTaskQuery({
@@ -689,6 +700,7 @@ export class CaseTreeService implements OnDestroy {
                 this._taskResourceService.setData(task.stringId, body).subscribe(changeContainer => {
                     const changedFields = changeContainer.changedFields;
                     const caseRefChanges = changedFields[TreePetriflowIdentifiers.CHILDREN_CASE_REF];
+                    this._treeCaseViewService.caseChangedFields$.next({caseId, changedFields});
                     result$.next(caseRefChanges ? caseRefChanges.value : undefined);
                     result$.complete();
                     this._taskResourceService.finishTask(task.stringId).subscribe(finishResponse => {
@@ -775,7 +787,10 @@ export class CaseTreeService implements OnDestroy {
         caseRefField.value = newCaseRefValue;
         this._caseResourceService.getOneCase(newCaseRefValue[newCaseRefValue.length - 1]).subscribe(childCase => {
             if (childCase) {
-                this._logger.debug('Pushing child node to tree', {childCase, affectedNode: affectedNode.toLoggableForm()});
+                this._logger.debug('Pushing child node to tree', {
+                    childCase,
+                    affectedNode: affectedNode.toLoggableForm()
+                });
                 const childNode = this.pushChildToTree(affectedNode, childCase);
                 result$.next(new ResultWithAfterActions(true, [() => {
                     if (this._isEagerLoaded) {

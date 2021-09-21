@@ -61,6 +61,13 @@ export class TreeTaskContentService implements OnDestroy {
             }
         });
 
+        _treeCaseService.caseChangedFields$.subscribe(caseChangedFields => {
+            const currentCaseId = this._selectedCaseService.selectedCase ? this._selectedCaseService.selectedCase.stringId : undefined;
+            if (currentCaseId === caseChangedFields.caseId) {
+                this._taskDataService.emitChangedFields(caseChangedFields.changedFields);
+            }
+        });
+
         _treeCaseService.loadTask$.asObservable().pipe(filter(selectedCase => this.taskChanged(selectedCase))).subscribe(selectedCase => {
             this.cancelAndLoadFeaturedTask(selectedCase);
         });
@@ -240,8 +247,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected resolveTaskBlockState(): void {
         const taskShouldBeBlocked = !this._taskContentService.task
-                                    || this._taskContentService.task.user === undefined
-                                    || !this._userComparator.compareUsers(this._taskContentService.task.user);
+            || this._taskContentService.task.user === undefined
+            || !this._userComparator.compareUsers(this._taskContentService.task.user);
         this._taskContentService.blockFields(taskShouldBeBlocked);
     }
 

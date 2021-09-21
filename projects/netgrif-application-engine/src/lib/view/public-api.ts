@@ -8,6 +8,7 @@ export * from './task-view/models/task-page-load-request-result';
 export * from './task-view/models/task-view-configuration';
 export * from './tree-case-view/tree-component/model/case-tree-node';
 export * from './tree-case-view/tree-component/model/case-tree-path';
+export * from './tree-case-view/tree-component/model/case-changed-fields';
 export * from './tree-case-view/tree-component/model/expansion-tree';
 
 /* ENUMS */

@@ -90,6 +90,17 @@ export abstract class AbstractTreeComponent {
     }
 
     /**
+     * Whether new node should activated.
+     *
+     * Defaults to 'true'
+     *
+     * @param autoOpen
+     */
+    @Input() set autoOpenNewNode(autoOpen: boolean) {
+        this._treeService.activeNewNode = autoOpen;
+    }
+
+    /**
      * @ignore
      */
     public get dataSource(): MatTreeNestedDataSource<CaseTreeNode> {
