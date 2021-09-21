@@ -17,28 +17,24 @@ export abstract class AbstractFieldComponentResolverComponent {
     protected constructor(protected taskContentService: TaskContentService) {
     }
 
-    protected isOffsetPresent(): boolean {
-        return !!this.taskContentService.task && !!this.taskContentService.task.layout && !!this.taskContentService.task.layout.offset;
-    }
-
     getFieldOffset(): number {
-        return this.isOffsetPresent() ? this.taskContentService.task.layout.offset : 0;
+        return this.taskContentService.task?.layout?.offset ?? 0;
     }
 
     getElementType(): TaskContentElementType {
         return this.gridElement.type as TaskContentElementType;
     }
 
-    getDataGroupTitle(): string {
+    getDataGroupTitle(): string | undefined {
         return this.gridElement.title;
     }
 
-    getDataField(): DataField<unknown> {
+    getDataField(): DataField<unknown> | undefined {
         return this.gridElement.item;
     }
 
-    getTaskId(): string {
-        return this.taskContentService.task.stringId;
+    getTaskId(): string | undefined {
+        return this.taskContentService?.task?.stringId;
     }
 
     isField(): boolean {

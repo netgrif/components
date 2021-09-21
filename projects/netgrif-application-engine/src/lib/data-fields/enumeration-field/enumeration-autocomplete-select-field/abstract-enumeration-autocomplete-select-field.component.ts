@@ -1,7 +1,7 @@
 import {ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable, of} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {Observable, of, Subject} from 'rxjs';
+import {map, startWith, takeUntil} from 'rxjs/operators';
 import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
@@ -15,18 +15,24 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
 
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
+    private _destroy$: Subject<void>;
+
     constructor(protected _translate: TranslateService) {
     }
 
     ngOnInit() {
+        this._destroy$ = new Subject<void>();
+
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
-            map(value => this._filter(value))
+            map(value => this._filter(value)),
+            takeUntil(this._destroy$)
         );
     }
 
     ngOnDestroy(): void {
-        this.filteredOptions = undefined;
+        this._destroy$.next();
+        this._destroy$.complete();
     }
 
     /**
@@ -47,10 +53,11 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
         }
     }
 
-    public renderSelection = (key) => {
+    public renderSelection = (key: string | undefined | null) => {
         if (key !== undefined && key !== '' && key !== null) {
-            if (this.enumerationField.choices.find(choice => choice.key === key)) {
-                return this.enumerationField.choices.find(choice => choice.key === key).value;
+            const selected = this.enumerationField.choices.find(choice => choice.key === key);
+            if (selected) {
+                return selected.value;
             }
         }
         return key;

@@ -31,7 +31,7 @@ export abstract class AbstractDataFieldComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.dataField.registerFormControl(this._formControl);
-        this.dataField.sendInvalidValues = this._informAboutInvalidData;
+        this.dataField.setSendInvalidValues(this._informAboutInvalidData);
     }
 
     ngOnDestroy(): void {

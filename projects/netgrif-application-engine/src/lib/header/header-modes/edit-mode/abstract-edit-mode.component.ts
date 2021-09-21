@@ -54,8 +54,8 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         }
     }
 
-    protected _filter(value): Array<HeaderOption> {
-        let filterValue;
+    protected _filter(value: string | undefined): Array<HeaderOption> {
+        let filterValue: string;
         if (typeof value === 'string') {
             filterValue = (value as string).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         } else {
@@ -82,7 +82,7 @@ export abstract class AbstractEditModeComponent extends AbstractHeaderModeCompon
         this.headerService.headerColumnSelected(columnIndex, newHeaderColumn);
     }
 
-    public renderSelection = (header) => {
+    public renderSelection = (header: {title: string}) => {
         return header ? this._translate.instant(header.title) : '';
     }
 

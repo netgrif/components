@@ -3,14 +3,12 @@ export interface Permissions {
 }
 
 export interface UsersPermissions {
-    [k: number]: Permission;
+    [k: string]: Permission;
 }
 
-export interface Permission {
-    create?: boolean;
-    delete?: boolean;
-    view?: boolean;
-}
+export type Permission = {
+    [k in PermissionType]: boolean;
+};
 
 export enum PermissionType {
     CREATE = 'create',

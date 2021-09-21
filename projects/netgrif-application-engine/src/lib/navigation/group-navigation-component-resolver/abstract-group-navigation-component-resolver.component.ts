@@ -38,8 +38,15 @@ export abstract class AbstractGroupNavigationComponentResolverComponent implemen
 
     protected resolveComponent(): void {
         this.initialized = false;
+        const pathParam = this._activatedRoute.snapshot.paramMap.get(GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM);
+
+        if (pathParam === null) {
+            this._log.errorAndThrow(new Error(`Router param '${GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM
+            }' could not be resolved from route '${this._activatedRoute.snapshot.url.join('')}'`));
+        }
+
         this._portalSub = this._componentResolverService.createResolvedViewComponentPortal(
-            this._activatedRoute.snapshot.paramMap.get(GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM),
+            pathParam,
             this._parentInjector
         ).subscribe(portal => {
             this.portal = portal;

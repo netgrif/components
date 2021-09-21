@@ -43,7 +43,7 @@ export abstract class AbstractLanguageSelectorComponent implements OnInit {
 
     flagCode(languageCode: string): string {
         if (this._flagOverrides.has(languageCode)) {
-            return this._flagOverrides.get(languageCode);
+            return this._flagOverrides.get(languageCode) as string;
         }
         if (languageCode.includes('-')) {
             return languageCode.split('-')[1].toLowerCase();

@@ -18,6 +18,7 @@ import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
 import {FieldTypeResource} from '../../task-content/model/field-type-resource';
+import {PermissionType} from '../../process/permissions';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -97,7 +98,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
     }
 
-    public canDo(action: string): boolean {
+    public canDo(action: PermissionType): boolean {
         if (!this.case_
             || !this.case_.permissions
             || !action
@@ -111,10 +112,16 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
 
         let result = true;
 
-        if (Object.keys(this.case_.users).length > 0
-            && !!this.case_.users[this._userService.user.id]
-            && this.case_.users[this._userService.user.id][action] !== undefined) {
-            result = this.case_.users[this._userService.user.id][action];
+        const userPermissions = this.case_.users;
+        if (userPermissions === undefined) {
+            this._log.debug(`Case with ID '${this.case_.stringId}' contains no user permissions. Skipping permission check...`);
+            return result;
+        }
+
+        if (Object.keys(userPermissions).length > 0
+            && !!userPermissions[this._userService.user.id]
+            && userPermissions[this._userService.user.id][action] !== undefined) {
+            result = userPermissions[this._userService.user.id][action];
         }
         this._userService.user.roles.forEach(role => {
             if (!!this.case_.permissions[role.stringId]
@@ -124,6 +131,4 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         });
         return result;
     }
-
-
 }

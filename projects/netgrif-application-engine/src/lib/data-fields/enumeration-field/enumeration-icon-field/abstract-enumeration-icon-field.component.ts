@@ -16,19 +16,19 @@ export abstract class AbstractEnumerationIconFieldComponent implements OnInit {
     }
 
     resolveIconValue(key: string) {
-        return this.enumerationField.component?.optionIcons.find(icon => icon.key === key)?.value;
+        return this.enumerationField.component?.optionIcons?.find(icon => icon.key === key)?.value;
     }
 
     resolveIconType(key: string) {
-        return this.enumerationField.component?.optionIcons.find(icon => icon.key === key)?.type;
+        return this.enumerationField.component?.optionIcons?.find(icon => icon.key === key)?.type;
     }
 
     resolveArrow(key: string) {
-        return this.enumerationField.component?.properties.arrow === 'true';
+        return this.enumerationField.component?.properties?.arrow === 'true';
     }
 
     resolveDivider(key: string) {
-        return this.enumerationField.component?.properties.divider === 'true';
+        return this.enumerationField.component?.properties?.divider === 'true';
     }
 
     setEnumValue(key: string) {

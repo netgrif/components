@@ -1,8 +1,8 @@
 import {ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {map, startWith} from 'rxjs/operators';
+import {map, startWith, takeUntil} from 'rxjs/operators';
 import {DynamicEnumerationField} from '../models/dynamic-enumeration-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
@@ -16,13 +16,18 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent imple
 
     filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
+    private _destroy$: Subject<void>;
+
     constructor(protected _translate: TranslateService) {
     }
 
     ngOnInit() {
+        this._destroy$ = new Subject();
+
         this.filteredOptions = this.formControlRef.valueChanges.pipe(
             startWith(''),
-            map(() => this.enumerationField.choices)
+            map(() => this.enumerationField.choices),
+            takeUntil(this._destroy$)
         );
 
         this.enumerationField.choicesChange$.subscribe(() => {
@@ -31,7 +36,8 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent imple
     }
 
     ngOnDestroy(): void {
-        this.filteredOptions = undefined;
+        this._destroy$.next();
+        this._destroy$.complete();
     }
 
     change() {
@@ -40,10 +46,11 @@ export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent imple
         }
     }
 
-    public renderSelection = (key) => {
+    public renderSelection = (key: string | undefined | null) => {
         if (key !== undefined && key !== '' && key !== null) {
-            if (this.enumerationField.choices.find(choice => choice.key === key)) {
-                return this.enumerationField.choices.find(choice => choice.key === key).value;
+            const selected = this.enumerationField.choices.find(choice => choice.key === key);
+            if (selected) {
+                return selected.value;
             }
         }
         return key;
