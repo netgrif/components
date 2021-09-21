@@ -10,6 +10,7 @@ import {getImmediateData} from '../../../utility/get-immediate-data';
 import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
 import {SavedFilterMetadata} from '../../../search/models/persistance/saved-filter-metadata';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
+import {FilterMetadata} from '../../../search/models/persistance/filter-metadata';
 
 export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
 
@@ -25,18 +26,25 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
     }
 
     handleCaseClick(clickedCase: Case) {
-        const immediate = getImmediateData(clickedCase, UserFilterConstants.FILTER_FIELD_ID);
+        const filterField = getImmediateData(clickedCase, UserFilterConstants.FILTER_FIELD_ID);
+        const viewIdField = getImmediateData(clickedCase, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID);
+
+        if (filterField === undefined || viewIdField === undefined) {
+            this._log.errorAndThrow(new Error(`Case with ID '${clickedCase.stringId}' does not have filter field with ID '${
+                UserFilterConstants.FILTER_FIELD_ID}' or text field with ID '${UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID}'`));
+        }
+
         this._sideMenuControl.close({
             opened: false,
             message: 'Filter selected',
             data: {
-                allowedNets: immediate.allowedNets,
-                filterMetadata: immediate.filterMetadata,
-                originViewId: getImmediateData(clickedCase, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID).value,
+                allowedNets: filterField.allowedNets,
+                filterMetadata: filterField.filterMetadata,
+                originViewId: viewIdField.value,
                 filterCase: clickedCase,
                 filterCaseId: clickedCase.stringId,
-                filter: new SimpleFilter(clickedCase.stringId, immediate.filterMetadata.filterType, {
-                    query: immediate.value
+                filter: new SimpleFilter(clickedCase.stringId, (filterField.filterMetadata as FilterMetadata).filterType, {
+                    query: filterField.value
                 }, clickedCase.title)
             } as SavedFilterMetadata
         });

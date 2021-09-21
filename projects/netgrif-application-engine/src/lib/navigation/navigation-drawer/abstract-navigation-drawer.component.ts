@@ -143,12 +143,15 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     }
 
     onResizeEvent(event: ResizeEvent): void {
-        if (event.rectangle.width > DRAWER_MAX_WIDTH) {
+        const width = event.rectangle.width;
+        if (width === undefined) {
+            this._log.warn('Resize event has no width! Drawer width will remain unchanged.');
+        } else if (width > DRAWER_MAX_WIDTH) {
             this.width = DRAWER_MAX_WIDTH;
-        } else if (event.rectangle.width < DRAWER_DEFAULT_MIN_WIDTH) {
+        } else if (width < DRAWER_DEFAULT_MIN_WIDTH) {
             this.width = DRAWER_DEFAULT_MIN_WIDTH;
         } else {
-            this.width = event.rectangle.width;
+            this.width = width;
         }
         this.userPreferenceService._drawerWidthChanged$.next(this.width);
         this.contentWidth.next(this.width);
