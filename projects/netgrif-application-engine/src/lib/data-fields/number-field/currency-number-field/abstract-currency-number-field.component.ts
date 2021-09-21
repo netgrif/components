@@ -2,6 +2,7 @@ import {Input, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
 import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
+import {FormatFilter} from '../../models/format-filter';
 
 export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberErrorsComponent implements OnInit {
 
@@ -38,27 +39,38 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
     }
 
     getCurrencySymbol(): string {
-        if (this.numberField._formatFilter === undefined) {
-            return getCurrencySymbol(this.numberField.component.properties['code'],
-                'wide', this.numberField.component.properties['locale']);
+        const config = this.getCurrencyConfiguration();
+
+        if (config === undefined) {
+            throw new Error(`No currency format configuration is provided for number field with ID '${
+                this.numberField.stringId}'! Value cannot be formatted`);
         }
-        return getCurrencySymbol(this.numberField._formatFilter.code, 'wide', this.numberField._formatFilter.locale);
+
+        return getCurrencySymbol(config?.code, 'wide', config?.locale);
     }
 
     private transformCurrency(value: string): string {
-        if (this.numberField._formatFilter === undefined) {
-            return this._currencyPipe.transform(
-                parseFloat(value),
-                this.numberField.component.properties['code'],
-                'symbol',
-                '1.' + this.numberField.component.properties['fractionSize'] + '-' + this.numberField.component.properties['fractionSize'],
-                this.numberField.component.properties['locale']);
-        }
-        return this._currencyPipe.transform(
+        const config = this.getCurrencyConfiguration();
+        const result = this._currencyPipe.transform(
             parseFloat(value),
-            this.numberField._formatFilter.code,
+            config?.code,
             'symbol',
-            '1.' + this.numberField._formatFilter.fractionSize + '-' + this.numberField._formatFilter.fractionSize,
-            this.numberField._formatFilter.locale);
+            '1.' + config?.fractionSize + '-' + config?.fractionSize,
+            config?.locale);
+
+        if (result === null) {
+            throw new Error(`CurrencyPipe could not format value of number field with ID '${this.numberField.stringId}'`);
+        }
+        return result;
+    }
+
+    private getCurrencyConfiguration(): FormatFilter | undefined {
+        let source;
+        if (this.numberField._formatFilter === undefined) {
+            source = this.numberField.component?.properties as FormatFilter;
+        } else {
+            source = this.numberField._formatFilter;
+        }
+        return source;
     }
 }

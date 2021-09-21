@@ -9,6 +9,7 @@ import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-
 import {Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {take} from 'rxjs/operators';
+import {UserPasswordRequest} from '../../authentication/sign-up/models/user-password-request';
 
 /**
  * Holds the logic that is shared between `RegistrationFormComponent` and `ForgottenPasswordFormComponent`.
@@ -103,13 +104,13 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
     }
 
     public isFieldValid(formControlName: string): boolean {
-        return this.rootFormGroup.get(formControlName).valid;
+        return !!this.rootFormGroup.get(formControlName)?.valid;
     }
 
     public getErrorMessage(formControlName: string): string {
-        const errors = this.rootFormGroup.get(formControlName).errors;
-        if (errors === null)
-            return;
+        const errors = this.rootFormGroup.get(formControlName)?.errors;
+        if (errors === null || errors === undefined)
+            return '';
         switch (Object.keys(errors)[0]) {
             case 'required':
                 return this._translate.instant('dataField.validations.required');
@@ -117,10 +118,12 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
                 return this._translate.instant('dataField.validations.minLength', {length: this.MIN_PASSWORD_LENGTH});
             case 'mismatchedPassword':
                 return this._translate.instant('forms.register.passwordsMustMatch');
+            default:
+                throw new Error(`No resolution for error message with key '${Object.keys(errors)[0]}'`);
         }
     }
 
-    protected abstract createRequestBody(): UserRegistrationRequest;
+    protected abstract createRequestBody(): UserPasswordRequest;
 
-    protected abstract callRegistration(requestBody: UserRegistrationRequest): Observable<MessageResource>;
+    protected abstract callRegistration(requestBody: UserPasswordRequest): Observable<MessageResource>;
 }

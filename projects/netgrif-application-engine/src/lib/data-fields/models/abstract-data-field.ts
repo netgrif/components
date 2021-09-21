@@ -92,7 +92,7 @@ export abstract class DataField<T> {
     /**
      * Validators resolved from field validations
      */
-    protected _validators: Array<ValidatorFn>;
+    protected _validators: Array<ValidatorFn> | null;
 
     /**
      * Stores the last subscription to the [_initialized$]{@link AbstractDataField#_initialized$} Stream, to prevent multiple block events
@@ -138,19 +138,19 @@ export abstract class DataField<T> {
         return this._title;
     }
 
-    set placeholder(placeholder: string) {
+    set placeholder(placeholder: string | undefined) {
         this._placeholder = placeholder;
     }
 
-    get placeholder(): string {
+    get placeholder(): string | undefined {
         return this._placeholder;
     }
 
-    set description(desc: string) {
+    set description(desc: string | undefined) {
         this._description = desc;
     }
 
-    get description(): string {
+    get description(): string | undefined {
         return this._description;
     }
 
@@ -188,11 +188,11 @@ export abstract class DataField<T> {
         this._value.next(value);
     }
 
-    set layout(layout: Layout) {
+    set layout(layout: Layout | undefined) {
         this._layout = layout;
     }
 
-    get layout(): Layout {
+    get layout(): Layout | undefined {
         return this._layout;
     }
 
@@ -237,7 +237,7 @@ export abstract class DataField<T> {
         this._touch.next(set);
     }
 
-    get component(): Component {
+    get component(): Component | undefined {
         return this._component;
     }
 
@@ -259,7 +259,11 @@ export abstract class DataField<T> {
         return this._sendInvalidValues;
     }
 
-    set sendInvalidValues(value: boolean | null) {
+    set sendInvalidValues(value: boolean) {
+        this._sendInvalidValues = value;
+    }
+
+    public setSendInvalidValues(value: boolean | null) {
         this._sendInvalidValues = value === null || value;
     }
 

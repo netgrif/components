@@ -1,4 +1,3 @@
-
 /* MODULES */
 export * from './sign-up.module';
 
@@ -8,3 +7,4 @@ export * from './services/sign-up.service';
 /* MODELS */
 export * from './models/user-invitation-request';
 export * from './models/user-registration-request';
+export * from './models/user-password-request';

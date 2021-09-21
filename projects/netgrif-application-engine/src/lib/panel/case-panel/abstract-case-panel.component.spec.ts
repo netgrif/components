@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -30,6 +30,7 @@ import {Case} from '../../resources/interface/case';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {PermissionType} from '../../process/permissions';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -84,7 +85,7 @@ describe('AbstractCasePanelComponent', () => {
     });
 
     it('should test canDo', () => {
-        expect(component.canDo('delete')).toBeTrue();
+        expect(component.canDo(PermissionType.DELETE)).toBeTrue();
     });
 
     afterEach(() => {

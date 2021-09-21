@@ -90,7 +90,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     /**
      * Full size file url
      */
-    public fullSource: BehaviorSubject<SafeUrl>;
+    public fullSource: BehaviorSubject<SafeUrl | undefined>;
     /**
      * Extension of file to preview
      */
@@ -114,7 +114,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                           protected _sanitizer: DomSanitizer) {
         super(informAboutInvalidData);
         this.state = this.defaultState;
-        this.fullSource = new BehaviorSubject<SafeUrl>(null);
+        this.fullSource = new BehaviorSubject<SafeUrl | undefined>(undefined);
     }
 
     /**
@@ -125,8 +125,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     ngOnInit() {
         super.ngOnInit();
         this.name = this.constructDisplayName();
-        this.filePreview = this.dataField && this.dataField.component && this.dataField.component.name
-            && this.dataField.component.name === preview;
+        this.filePreview = this.dataField?.component?.name === preview;
     }
 
     ngAfterViewInit() {
@@ -173,14 +172,14 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
         if (this.dataField.value &&
             this.dataField.value.name &&
-            this.fileUploadEl.nativeElement.files.item(0).name === this.dataField.value.name) {
+            this.fileUploadEl.nativeElement.files.item(0)?.name === this.dataField.value.name) {
             this._log.error('User chose the same file. Uploading skipped');
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFile'));
             this.fileUploadEl.nativeElement.value = '';
             return;
         }
         if (this.dataField.maxUploadSizeInBytes &&
-            this.dataField.maxUploadSizeInBytes < this.fileUploadEl.nativeElement.files.item(0).size) {
+            this.dataField.maxUploadSizeInBytes < (this.fileUploadEl.nativeElement.files.item(0)?.size ?? 0)) {
             this._log.error('File cannot be uploaded. Maximum size of file exceeded.');
             this._snackbar.openErrorSnackBar(
                 this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes

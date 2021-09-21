@@ -3,11 +3,11 @@ import {passwordValidator} from '../models/password.validator';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {FormBuilder, Validators} from '@angular/forms';
-import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {TranslateService} from '@ngx-translate/core';
 import {Input, OnDestroy} from '@angular/core';
+import {UserPasswordRequest} from '../../authentication/sign-up/models/user-password-request';
 
 export abstract class AbstractForgottenPasswordComponent extends AbstractRegistrationComponent implements OnDestroy {
 
@@ -28,16 +28,14 @@ export abstract class AbstractForgottenPasswordComponent extends AbstractRegistr
         super.ngOnDestroy();
     }
 
-    protected createRequestBody(): UserRegistrationRequest {
+    protected createRequestBody(): UserPasswordRequest {
         return {
-            token: undefined,
-            name: undefined,
-            surname: undefined,
+            token: '',
             password: this.rootFormGroup.controls['password'].value
         };
     }
 
-    protected callRegistration(requestBody: UserRegistrationRequest): Observable<MessageResource> {
+    protected callRegistration(requestBody: UserPasswordRequest): Observable<MessageResource> {
         return this._signupService.recoverPassword(requestBody.token, requestBody.password);
     }
 }

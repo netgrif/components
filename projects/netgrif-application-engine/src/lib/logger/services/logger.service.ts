@@ -58,6 +58,11 @@ export abstract class AbstractLoggerService {
         this.writeToLog(LogLevel.ERROR, message, params);
     }
 
+    public errorAndThrow(error: Error): never {
+        this.error(error.message);
+        throw error;
+    }
+
     public log(level: LogLevel, message: string, ...param: Array<any>): void {
         this.writeToLog(level, message, param);
     }

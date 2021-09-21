@@ -31,8 +31,8 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
     public subColumnCountControl: Subscription;
     public subColumnWidthControl: Subscription;
 
-    protected _initHeaderCount: number = undefined;
-    protected _initResponsiveHeaders: boolean = undefined;
+    protected _initHeaderCount: number | undefined = undefined;
+    protected _initResponsiveHeaders = false;
 
     constructor(protected _injector: Injector,
                 protected _translate: TranslateService,
@@ -110,7 +110,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         }
     }
 
-    clickStop($event) {
+    clickStop($event: MouseEvent) {
         stopPropagation($event);
     }
 
@@ -132,7 +132,7 @@ export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
         return this.buildErrorMessage(this.columnCountControl, 1);
     }
 
-    buildErrorMessage(formControlRef: FormControl, minNumber) {
+    buildErrorMessage(formControlRef: FormControl, minNumber: number) {
         if (formControlRef.hasError('required')) {
             return this._translate.instant('dataField.validations.required');
         }
