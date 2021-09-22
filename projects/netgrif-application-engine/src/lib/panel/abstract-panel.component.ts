@@ -15,7 +15,7 @@ export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy
     @Output() stopLoading: EventEmitter<object> = new EventEmitter();
     @Output() getExpansionPanelRef: EventEmitter<MatExpansionPanel> = new EventEmitter();
 
-    @ViewChild('matExpansionPanel') matExpansionPanel;
+    @ViewChild('matExpansionPanel') matExpansionPanel: MatExpansionPanel;
 
     protected constructor(protected _caseListFontColorService: CaseListFontColorService) {
     }

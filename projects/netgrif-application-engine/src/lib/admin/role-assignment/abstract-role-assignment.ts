@@ -47,8 +47,6 @@ export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, O
         this._userService.reload();
         this.subValueChanges.unsubscribe();
         this.subUsers.unsubscribe();
-        this.users = undefined;
-        this.nets = undefined;
     }
 
     public loadNextUserPage(): void {

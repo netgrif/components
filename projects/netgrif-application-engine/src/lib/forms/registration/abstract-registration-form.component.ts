@@ -35,7 +35,7 @@ export abstract class AbstractRegistrationFormComponent extends AbstractRegistra
 
     protected createRequestBody(): UserRegistrationRequest {
         return {
-            token: undefined,
+            token: '',
             name: this.rootFormGroup.controls['name'].value,
             surname: this.rootFormGroup.controls['surname'].value,
             password: this.rootFormGroup.controls['password'].value

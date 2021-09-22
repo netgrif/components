@@ -33,9 +33,15 @@ export abstract class AbstractNumberErrorsComponent {
             return this.resolveErrorMessage(NumberFieldValidation.DECIMAL, this._translate.instant('dataField.validations.decimal'));
         }
         if (this.formControlRef.hasError(NumberFieldValidation.VALID_IN_RANGE)) {
-            const tmp = this.numberField.validations.find(value =>
+            const tmp = this.numberField?.validations?.find(value =>
                 value.validationRule.includes(NumberFieldValidation.IN_RANGE)
-            ).validationRule.split(' ');
+            )?.validationRule?.split(' ');
+
+            if (tmp === undefined) {
+                throw new Error(`An IN_RANGE error was generated, but the number field '${this.numberField.stringId
+                }' has no IN_RANGE validation!`);
+            }
+
             return this.resolveErrorMessage(
                 NumberFieldValidation.IN_RANGE, this._translate.instant('dataField.validations.inrange', {range: tmp[1]})
             );
@@ -44,8 +50,8 @@ export abstract class AbstractNumberErrorsComponent {
     }
 
     resolveErrorMessage(search: string, generalMessage: string) {
-        const validation = this.numberField.validations.find(value => value.validationRule.includes(search));
-        if (validation.validationMessage && validation.validationMessage !== '') {
+        const validation = this.numberField?.validations?.find(value => value.validationRule.includes(search));
+        if (validation !== undefined && validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
         }
         return generalMessage;

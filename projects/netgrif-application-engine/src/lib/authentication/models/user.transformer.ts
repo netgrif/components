@@ -24,7 +24,8 @@ export class UserTransformer implements Transformer<UserResource, User> {
             this.transformAuthorities(user.authorities),
             user.processRoles,
             groups,
-            user.nextGroups);
+            user.nextGroups,
+            user.avatar);
 
     }
 

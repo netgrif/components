@@ -27,10 +27,10 @@ export abstract class AbstractProfileComponent implements OnInit, OnDestroy {
     }
 
     get userBanner(): string {
-        return this.user && this.user['banner'] ? this.user['banner'] : 'assets/default-user-background.jpg';
+        return this.user?.banner ?? 'assets/default-user-background.jpg';
     }
 
     get userAvatar(): string {
-        return this.user && this.user['avatar'] ? this.user['avatar'] : 'assets/default-user-avatar.png';
+        return this.user?.avatar ?? 'assets/default-user-avatar.png';
     }
 }

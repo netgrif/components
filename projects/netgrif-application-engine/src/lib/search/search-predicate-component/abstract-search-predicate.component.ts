@@ -33,7 +33,7 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
      */
     @Input() generator: Category<any> | undefined;
 
-    protected _selectedCategory: Category<any>;
+    protected _selectedCategory: Category<any> | undefined;
 
     protected _predicateChange: Subscription;
 
@@ -102,11 +102,11 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
         }
     }
 
-    public get selectedCategory(): Category<any> {
+    public get selectedCategory(): Category<any> | undefined {
         return this._selectedCategory;
     }
 
-    public set selectedCategory(newCategory: Category<any>) {
+    public set selectedCategory(newCategory: Category<any> | undefined) {
         this.categoryChanged(newCategory);
     }
 
@@ -122,7 +122,7 @@ export abstract class AbstractSearchPredicateComponent implements OnInit, OnDest
         this.remove$.next(this.predicateId);
     }
 
-    public categoryChanged(newCategory: Category<any>): void {
+    public categoryChanged(newCategory: Category<any> | undefined): void {
         if (this.selectedCategory !== undefined) {
             this.selectedCategory.reset();
         }

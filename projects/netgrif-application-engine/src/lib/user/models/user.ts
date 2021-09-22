@@ -14,7 +14,9 @@ export class User implements IUser {
         public authorities: Array<string>,
         public roles: Array<ProcessRole>,
         public groups?: Array<string>,
-        public nextGroups?: Array<string>
+        public nextGroups?: Array<string>,
+        public avatar?: string,
+        public banner?: string,
     ) {
     }
 

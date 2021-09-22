@@ -29,8 +29,9 @@
         "Štefan Renczés <renczes@netgrif.com>"
     ],
     "dependencies": {
-        "palette-creator": "^0.5.4",
         "angular2-hotkeys": "^2.2.0",
+        "palette-creator": "^0.5.4",
+        "semver": "^7.3.5",
         "tslib": "^1.11.1"
     },
     "peerDependencies": {

@@ -13,7 +13,7 @@ export abstract class AbstractSideMenuContainerComponent implements AfterViewIni
 
 
     public constructor(protected _sideMenuService: SideMenuService) {
-        this.portalWrapper = new PortalWrapper<any>(null, null);
+        this.portalWrapper = new PortalWrapper<any>(null);
     }
 
     ngAfterViewInit() {
@@ -29,7 +29,7 @@ export abstract class AbstractSideMenuContainerComponent implements AfterViewIni
         return fromPromise(context.sideMenu.close()).pipe(
             tap((result) => {
                 if (result === 'close') {
-                    context.portalWrapper = context.portalWrapper = new PortalWrapper<any>(null, null);
+                    context.portalWrapper = context.portalWrapper = new PortalWrapper<any>(null);
                 }
             })
         );

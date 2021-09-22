@@ -31,7 +31,7 @@ import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-re
  */
 export abstract class AbstractSearchComponent implements SearchComponentConfiguration, OnInit {
 
-    public advancedSearchDisplayed;
+    public advancedSearchDisplayed: boolean;
 
     private _showSearchIcon = true;
     private _showSearchToggleButton = true;
@@ -64,7 +64,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _viewIdService: ViewIdService,
                           @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Type<Category<any>>>,
                           @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
-                          @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter = null) {
+                          @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter | null = null) {
         if (this._configuration === null) {
             this._configuration = {};
         }
@@ -144,7 +144,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      * The saved filter data are emitted into the [filterSaved]{@link AbstractSearchComponent#filterSaved} `EventEmitter`
      */
     public saveFilter(): void {
-        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
+        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers ?? [],
             this._searchCategories, this._viewIdService.viewId, this.additionalFilterData,
             this._configuration.saveFilterWithDefaultCategories ?? true,
             this._configuration.inheritAllowedNets ?? true).subscribe(savedFilterData => {

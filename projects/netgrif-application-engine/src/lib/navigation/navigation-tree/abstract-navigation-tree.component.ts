@@ -22,6 +22,7 @@ import {refreshTree} from '../../utility/refresh-tree';
 import {getField} from '../../utility/get-field';
 import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
 import {LanguageService} from '../../translate/language.service';
+import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 
 export interface NavigationNode {
     name: string;
@@ -130,7 +131,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     protected resolveNavigationNodes(views: Views, parentUrl: string): Array<NavigationNode> {
         if (!views || Object.keys(views).length === 0) {
-            return null;
+            return [];
         }
 
         let groupNavigationGenerated = false;
@@ -166,12 +167,12 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             if (this.hasNavigation(view)) {
                 const node: NavigationNode = this.buildNode(view, routeSegment, parentUrl);
                 if (this.hasSubRoutes(view)) {
-                    node.children = this.resolveNavigationNodes(view.children, node.url);
+                    node.children = this.resolveNavigationNodes(view.children as Views, node.url);
                 }
                 nodes.push(node);
             } else {
                 if (this.hasSubRoutes(view)) {
-                    nodes.push(...this.resolveNavigationNodes(view.children, this.appendRouteSegment(parentUrl, routeSegment)));
+                    nodes.push(...this.resolveNavigationNodes(view.children as Views, this.appendRouteSegment(parentUrl, routeSegment)));
                 }
             }
         });
@@ -182,57 +183,66 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         if (!route.navigation) {
             return false;
         }
-        if (typeof route.navigation === 'boolean') {
-            return route.navigation;
+        const type = typeof route.navigation;
+        if (type === 'boolean') {
+            return route.navigation as boolean;
         }
-        if (typeof route.navigation === 'object') {
+        if (type === 'object') {
             return Object.keys(route.navigation).length !== 0;
         }
+        this._log.warn(`view navigation attribute has unexpected type '${type}'`);
+        return false;
     }
 
     protected hasSubRoutes(route: View): boolean {
         if (!route.children) {
             return false;
         }
-        if (typeof route.children === 'object') {
+        const type = typeof route.children;
+        if (type === 'object') {
             return Object.keys(route.children).length !== 0;
         }
+        this._log.warn(`view children attribute has unexpected type '${type}'`);
+        return false;
     }
 
     protected buildNode(view: View, routeSegment: string, parentUrl: string): NavigationNode {
-        const node: NavigationNode = {
-            name: null,
-            url: null
+        return {
+            name: this.getNodeName(view, routeSegment),
+            icon: this.getNodeIcon(view),
+            url: this.appendRouteSegment(parentUrl, routeSegment),
+            translate: this.getNodeTranslateFlag(view),
         };
-        node.name = this.getNodeName(view, routeSegment);
-        node.icon = this.getNodeIcon(view);
-        node.url = this.appendRouteSegment(parentUrl, routeSegment);
-        node.translate = this.getNodeTranslateFlag(view);
-        return node;
     }
 
     protected getNodeName(view: View, routeSegment: string): string {
-        if (view.navigation['title']) {
-            return view.navigation['title'];
+        if (typeof view.navigation !== 'object') {
+            this._log.errorAndThrow(new Error(`Cannot extract navigation node name from '${JSON.stringify(view.navigation)}'`));
+        }
+        if (view.navigation.title) {
+            return view.navigation.title;
         }
         const str = routeSegment.replace('_', ' ');
         return str.charAt(0).toUpperCase() + str.substring(1);
     }
 
-    protected getNodeIcon(view: View): string {
-        return !view.navigation['icon'] ? undefined : view.navigation['icon'];
+    protected getNodeIcon(view: View): string | undefined {
+        if (typeof view.navigation !== 'object') {
+            return undefined;
+        }
+        return !view.navigation.icon ? undefined : view.navigation.icon;
     }
 
     /**
      * @param view configuration of some view, whose routeSegment we want to determine
      * @returns the routeSegment for the provided view, or undefined if none is specified
      */
-    protected getNodeRouteSegment(view: View): string {
+    protected getNodeRouteSegment(view: View): string | undefined {
         return !!view.routing && (typeof view.routing.path === 'string') ? view.routing.path : undefined;
     }
 
     protected getNodeTranslateFlag(view: View): boolean {
-        return view.navigation['translate'] ?? false;
+        return (typeof view.navigation === 'object' && view.navigation.translate) ?? false;
     }
 
     /**
@@ -378,7 +388,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             )
         );
 
-        let navEntriesTaskRef;
+        let navEntriesTaskRef: TaskRefField | undefined;
         navConfigDatagroups.some(group => {
             const taskRef = getField(group.fields, GroupNavigationConstants.NAVIGATION_ENTRIES_TASK_REF_FIELD_ID);
             if (taskRef !== undefined) {
@@ -388,7 +398,9 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         });
 
         if (!navEntriesTaskRef) {
-            throw new Error('The navigation configuration task contains no task ref with entries. Navigation cannot be constructed');
+            this._log.errorAndThrow(
+                new Error('The navigation configuration task contains no task ref with entries. Navigation cannot be constructed')
+            );
         }
 
         for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {

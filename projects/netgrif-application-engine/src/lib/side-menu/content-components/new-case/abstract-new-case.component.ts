@@ -234,7 +234,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         for (const value of petriNetIds) {
             let current: Form = {value, version: '1.0.0', viewValue: ''};
             for (const net of tempNets) {
-                if (value === net.value && !semver.lt(net.version, current.version)) {
+                if (value === net.value && net.version !== undefined && !semver.lt(net.version, current.version as string)) {
                     current = net;
                 }
             }

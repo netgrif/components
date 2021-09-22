@@ -87,15 +87,15 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected _subTaskContent: Subscription;
     protected _subTaskEvent: Subscription;
     protected _asyncRenderingConfig: AsyncRenderingConfiguration;
-    protected _asyncRenderTimeout: number;
+    protected _asyncRenderTimeout?: number;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
                           protected _paperView: PaperViewService,
                           protected _logger: LoggerService,
-                          @Optional() protected _taskEventService: TaskEventService = null,
+                          @Optional() protected _taskEventService: TaskEventService | null = null,
                           @Optional() @Inject(NAE_ASYNC_RENDERING_CONFIGURATION)
-                              asyncRenderingConfiguration: AsyncRenderingConfiguration = null) {
+                              asyncRenderingConfiguration: AsyncRenderingConfiguration | null = null) {
         this._asyncRenderingConfig = {...this.DEFAULT_ASYNC_RENDERING_CONFIGURATION};
         if (asyncRenderingConfiguration !== null) {
             Object.assign(this._asyncRenderingConfig, asyncRenderingConfiguration);
@@ -119,7 +119,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         });
         if (this._taskEventService !== null) {
             this.taskEvent = new EventEmitter<TaskEventNotification>();
-            this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
+            this._subTaskEvent = this._taskEventService.taskEventNotifications$.subscribe(event => {
                 this.taskEvent.emit(event);
             });
         }
@@ -140,8 +140,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
     }
 
-    public get taskId(): string {
-        return this.taskContentService.task.stringId;
+    public get taskId(): string | undefined {
+        return this.taskContentService.task?.stringId;
     }
 
     public get dataSource(): Array<DatafieldGridLayoutElement> {
@@ -273,7 +273,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                     this.computeLegacyLayout(group, gridData);
                     break;
                 default:
-                    throw new Error(`Unknown task layout type '${this.taskContentService.task.layout.type}'`);
+                    throw new Error(`Unknown task layout type '${this.taskContentService.task?.layout?.type}'`);
             }
         });
 
@@ -295,8 +295,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             currentTrackByIds.add(this.trackByDatafields(index, element));
         });
 
-        const keptElements = [];
-        const newElements = [];
+        const keptElements: Array<DatafieldGridLayoutElement> = [];
+        const newElements: Array<DatafieldGridLayoutElement> = [];
         if (this.taskContentService.isExpanding && this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand) {
             newElements.push(...gridElements);
         } else {
@@ -316,15 +316,15 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                                            newElements: Array<DatafieldGridLayoutElement>,
                                            iteration = 1) {
         this._asyncRenderTimeout = undefined;
-        const fieldsInCurrentIteration = newElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
-        const placeholdersInCurrentIteration = newElements.slice(iteration * this._asyncRenderingConfig.batchSize,
-            iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
+        const fieldsInCurrentIteration = newElements.slice(0, iteration * (this._asyncRenderingConfig.batchSize as number));
+        const placeholdersInCurrentIteration = newElements.slice(iteration * (this._asyncRenderingConfig.batchSize as number),
+            iteration * (this._asyncRenderingConfig.batchSize as number) + (this._asyncRenderingConfig.numberOfPlaceholders as number));
 
         fieldsInCurrentIteration.push(
             ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
 
         this._dataSource$.next([...keptElements, ...fieldsInCurrentIteration]);
-        if (this._asyncRenderingConfig.batchSize * iteration < newElements.length) {
+        if ((this._asyncRenderingConfig.batchSize as number) * iteration < newElements.length) {
             this._asyncRenderTimeout = window.setTimeout(() => {
                 this.spreadFieldRenderingOverTime(keptElements, newElements, iteration + 1);
             }, this._asyncRenderingConfig.batchDelay);
@@ -511,7 +511,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected computeLegacyLayout(dataGroup: DataGroup, gridData: GridData) {
         if (this.formCols !== 4) {
             this.formCols = 4;
-            this._logger.warn(`Task with id '${this.taskContentService.task.stringId}' has legacy layout with a non-default number` +
+            this._logger.warn(`Task with id '${this.taskContentService.task?.stringId}' has legacy layout with a non-default number` +
                 ` of columns. If you want to use a layout with different number of columns than 2 use a different layout type instead.`);
         }
 
@@ -692,6 +692,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             case TaskElementType.DATA_GROUP_TITLE:
                 return element.title + '-' + this.taskContentService.$shouldCreateCounter.getValue();
             default:
+                if (element.item === undefined) {
+                    this._logger.errorAndThrow(new Error(`Grid element '${element.gridAreaId}' holds no item`));
+                }
                 return element.item.stringId + '-' + this.taskContentService.$shouldCreateCounter.getValue();
         }
     }

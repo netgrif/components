@@ -9,6 +9,6 @@ export interface GridLayout extends BasicLayout {
 }
 
 export interface BasicLayout {
-    rows: number;
-    cols: number;
+    rows?: number;
+    cols?: number;
 }
