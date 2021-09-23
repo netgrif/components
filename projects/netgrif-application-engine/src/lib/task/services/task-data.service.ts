@@ -400,9 +400,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskState.startUpdating(setTaskId);
 
         this._taskResourceService.setData(this._safeTask.stringId, body).pipe(take(1)).subscribe(response => {
-            this.processSuccessfulSetDataRequest(setTaskId, response, afterAction, nextEvent);
+            this.processSuccessfulSetDataRequest(setTaskId, response, afterAction, nextEvent, body);
         }, error => {
-            this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent);
+            this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent, body);
         });
     }
 
@@ -412,11 +412,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param response the resulting changed fields of the set data request
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
      */
     protected processSuccessfulSetDataRequest(setTaskId: string,
                                               response: ChangedFieldContainer,
                                               afterAction: AfterAction,
-                                              nextEvent: AfterAction) {
+                                              nextEvent: AfterAction,
+                                              body: TaskSetDataRequestBody) {
         if (!this.isTaskRelevant(setTaskId)) {
             this._log.debug('current task changed before the set data response could be received, discarding...');
             this._taskState.stopLoading(setTaskId);
@@ -429,6 +431,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
             this._changedFields$.next(response.changedFields as ChangedFields);
         }
+        this.clearWaitingForResponseFlag(body);
         this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
         this.updateStateInfo(afterAction, true, setTaskId);
         nextEvent.resolve(true);
@@ -440,11 +443,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param error the returned error
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
      */
     protected processErroneousSetDataRequest(setTaskId: string,
                                              error: HttpErrorResponse,
                                              afterAction: AfterAction,
-                                             nextEvent: AfterAction) {
+                                             nextEvent: AfterAction,
+                                             body: TaskSetDataRequestBody) {
         this._log.debug('setting task data failed', error);
 
         if (!this.isTaskRelevant(setTaskId)) {
@@ -457,6 +462,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
 
         this.revertToPreviousValue();
+        this.clearWaitingForResponseFlag(body);
         this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
         this.updateStateInfo(afterAction, false, setTaskId);
         nextEvent.resolve(false);
@@ -552,6 +558,17 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             dataGroup.fields.forEach(field => {
                 if (field.initialized && field.valid && field.changed) {
                     field.revertToPreviousValue();
+                }
+            });
+        });
+    }
+
+    private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
+        Object.keys(body).forEach(id => {
+            this._safeTask.dataGroups.forEach(dataGroup => {
+                const changed = dataGroup.fields.find(f => f.stringId === id);
+                if (changed !== undefined) {
+                    changed.waitingForResponse = false;
                 }
             });
         });
