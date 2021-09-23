@@ -276,7 +276,6 @@ export abstract class DataField<T> {
     }
 
     set waitingForResponse(value: boolean) {
-        console.log('Value changed to :' + false);
         this._waitingForResponse = value;
     }
 
