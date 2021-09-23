@@ -11,7 +11,7 @@ import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {GridData} from '../model/grid-data';
-import {DataGroupLayoutType} from '../../resources/interface/data-group-layout';
+import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayout, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
 import {LoadingEmitter} from '../../utility/loading-emitter';
@@ -30,6 +30,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         enableAsyncRenderingForNewFields: true,
         enableAsyncRenderingOnTaskExpand: true
     };
+    readonly DEFAULT_COMPACT_DIRECTION = DataGroupCompact.NONE;
+    readonly DEFAULT_HIDE_EMPTY_ROWS = DataGroupHideEmptyRows.ALL;
 
     /**
      * Indicates whether data is being loaded from backend, or if it is being processed.
@@ -43,7 +45,6 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * The number of columns used by the tasks layout
      */
     formCols = 4;
-    defaultAlignment: FieldAlignment;
 
     /**
      * Exists to allow references to the enum in the HTML
@@ -89,6 +90,10 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected _asyncRenderingConfig: AsyncRenderingConfiguration;
     protected _asyncRenderTimeout: number;
 
+    protected _defaultAlignment: FieldAlignment;
+    protected _defaultCompactDirection: DataGroupCompact;
+    protected _defaultHideEmptyRows: DataGroupHideEmptyRows;
+
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
                           protected _paperView: PaperViewService,
@@ -109,7 +114,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
         this._subTaskContent = this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
-                this.computeDefaultAlignment();
+                this.computeDefaultLayoutConfiguration();
                 this.formCols = this.getNumberOfFormColumns();
                 this.computeLayoutData(data);
             } else {
@@ -193,9 +198,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             return item.alignment;
         }
 
-        const fieldAlignment = item.item && item.item.layout && item.item.layout.alignment
-            ? item.item.layout.alignment
-            : this.defaultAlignment;
+        const fieldAlignment = item.item?.layout?.alignment ?? this._defaultAlignment;
 
         let alignment;
         switch (fieldAlignment) {
@@ -219,12 +222,10 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * If te task specifies no default value the [global default]{@link AbstractTaskContentComponent#DEFAULT_FIELD_ALIGNMENT}
      * value is returned.
      */
-    protected computeDefaultAlignment() {
-        this.defaultAlignment = this.taskContentService.task
-        && this.taskContentService.task.layout
-        && this.taskContentService.task.layout.fieldAlignment
-            ? this.taskContentService.task.layout.fieldAlignment
-            : this.DEFAULT_FIELD_ALIGNMENT;
+    protected computeDefaultLayoutConfiguration() {
+        this._defaultAlignment = this.taskContentService.task?.layout?.fieldAlignment ?? this.DEFAULT_FIELD_ALIGNMENT;
+        this._defaultCompactDirection = this.taskContentService.task?.layout?.compactDirection ?? this.DEFAULT_COMPACT_DIRECTION;
+        this._defaultHideEmptyRows = this.taskContentService.task?.layout?.hideEmptyRows ?? this.DEFAULT_HIDE_EMPTY_ROWS;
     }
 
     /**
@@ -377,20 +378,41 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 dataField.layout.cols, fieldElement.gridAreaId, dataField.layout.rows);
         });
 
-        this.collapseGridEmptySpace(localGrid);
+        this.collapseGridEmptySpace(localGrid, dataGroup.layout);
 
         localGrid.forEach(localGridRow => gridData.grid.push(localGridRow));
     }
 
     /**
-     * Removes empty rows and shifts all grid elements up if they have enough space above them.
+     * Applies the empty row removal and field compacting rules based on the provided layout configuration.
      *
      * The input grid is modified in place.
      * @param grid the state of the grid that should be modified
+     * @param layout configuration of the applied compacting rules
      */
-    protected collapseGridEmptySpace(grid: Array<Array<string>>) {
-        this.removeEmptyRows(grid);
+    protected collapseGridEmptySpace(grid: Array<Array<string>>, layout: DataGroupLayout) {
+        const hideRows = layout.hideEmptyRows ?? this._defaultHideEmptyRows;
 
+        if (hideRows === DataGroupHideEmptyRows.ALL) {
+            this.removeEmptyRows(grid);
+        }
+
+        switch (layout.compactDirection ?? this._defaultCompactDirection) {
+            case DataGroupCompact.UP:
+                this.compactFieldsUp(grid, hideRows);
+                break;
+        }
+    }
+
+    /**
+     * Moves any element as far UP as it can go. Elements that were originally declared in the same row might end up in different rows.
+     * Resulting trailing empty rows are removed.
+     *
+     * The input grid is modified in place.
+     * @param grid the state of the grid that should be modified
+     * @param hideRows configuration for empty row removal during the compacting process
+     */
+    protected compactFieldsUp(grid: Array<Array<string>>, hideRows: DataGroupHideEmptyRows) {
         for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
             const row = grid[rowIndex];
 
@@ -422,8 +444,10 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                     this.occupySpace(grid, foundElementRowIndex, columnIndex, elementDimensions.width, '', elementDimensions.height, false);
                     this.occupySpace(grid, rowIndex, columnIndex, elementDimensions.width, element, elementDimensions.height, false);
 
-                    // the only rows that can be totally empty are the ones we cleared by moving the grid element up
-                    this.removeEmptyRows(grid, foundElementRowIndex, foundElementRowIndex + elementDimensions.height);
+                    if (hideRows !== DataGroupHideEmptyRows.NONE) {
+                        // we only check the rows potentially cleared by moving the grid element up
+                        this.removeEmptyRows(grid, foundElementRowIndex, foundElementRowIndex + elementDimensions.height);
+                    }
                 }
             }
         }
