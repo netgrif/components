@@ -113,7 +113,7 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     protected autoAssignClosedPolicy(afterAction: Subject<boolean>): void {
-        if (!this._userComparatorService.compareUsers(this._task.user)) {
+        if (!this._userComparatorService.compareUsers(this._safeTask.user)) {
             this._taskOperations.close();
             afterAction.next(false);
             afterAction.complete();

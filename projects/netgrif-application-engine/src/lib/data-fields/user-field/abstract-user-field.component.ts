@@ -1,4 +1,4 @@
-import {Inject, Input, OnInit, Optional} from '@angular/core';
+import {Inject, Input, OnInit, Optional, TemplateRef} from '@angular/core';
 import {UserField} from './models/user-field';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
@@ -8,6 +8,7 @@ import {UserValue} from './models/user-value';
 import {UserListInjectedData} from '../../side-menu/content-components/user-assign/model/user-list-injected-data';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {TranslateService} from '@ngx-translate/core';
+import {ComponentType} from '@angular/cdk/portal';
 
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
@@ -44,7 +45,7 @@ export abstract class AbstractUserFieldComponent extends AbstractDataFieldCompon
      *
      * After close side menu, the snackbar info will be displayed either for the unselected user or the selected one.
      */
-    public selectAbstractUser(component) {
+    public selectAbstractUser(component: ComponentType<unknown> | TemplateRef<unknown>) {
         let valueReturned = false;
         this._sideMenuService.open(component, SideMenuSize.MEDIUM,
             {roles: this.dataField.roles, value: this.dataField.value} as UserListInjectedData).onClose.subscribe($event => {

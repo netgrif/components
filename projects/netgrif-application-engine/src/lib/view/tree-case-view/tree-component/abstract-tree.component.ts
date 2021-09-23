@@ -6,6 +6,7 @@ import {CaseTreeNode} from './model/case-tree-node';
 import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {CaseTreePath} from './model/case-tree-path';
+import {Observable} from 'rxjs';
 
 export abstract class AbstractTreeComponent {
 
@@ -34,10 +35,10 @@ export abstract class AbstractTreeComponent {
     protected constructor(protected _treeService: CaseTreeService) {
         this._treeService.treeRootLoaded$.subscribe(success => {
             if (success) {
-                this._treeService.rootNodeLoading$.subscribe(loading => {
+                (this._treeService.rootNodeLoading$ as Observable<boolean>).subscribe(loading => {
                     this.treeRootLoading.emit(loading);
                 });
-                this._treeService.rootNodeAddingChild$.subscribe(addingChild => {
+                (this._treeService.rootNodeAddingChild$ as Observable<boolean>).subscribe(addingChild => {
                     this.treeRootAddingChild.emit(addingChild);
                 });
             }

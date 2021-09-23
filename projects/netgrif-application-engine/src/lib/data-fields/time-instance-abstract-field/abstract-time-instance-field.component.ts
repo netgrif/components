@@ -17,9 +17,13 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
             return this._translate.instant('dataField.validations.required');
         }
         if (this.formControl.hasError(AbstractTimeInstanceFieldValidation.VALID_BETWEEN)) {
-            const tmp = dataField.validations.find(value =>
+            const tmp = dataField.validations?.find(value =>
                 value.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)
-            ).validationRule.split(' ');
+            )?.validationRule?.split(' ');
+            if (tmp === undefined) {
+                throw new Error(`Time instance field with ID '${dataField.stringId}
+                ' has a VALID_BETWEEN error but has no BETWEEN validation!`);
+            }
             const parts = tmp[1].split(',');
             let left = AbstractTimeInstanceField.parseDate(parts[0]);
             let right = AbstractTimeInstanceField.parseDate(parts[1]);
@@ -42,8 +46,8 @@ export abstract class AbstractTimeInstanceFieldComponent extends AbstractDataFie
     }
 
     protected resolveErrorMessage(dataField: AbstractTimeInstanceField, search: string, generalMessage: string) {
-        const validation = dataField.validations.find(value => value.validationRule.includes(search));
-        if (validation.validationMessage && validation.validationMessage !== '') {
+        const validation = dataField.validations?.find(value => value.validationRule.includes(search));
+        if (validation !== undefined && validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
         }
         return generalMessage;

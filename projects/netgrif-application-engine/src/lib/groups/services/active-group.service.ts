@@ -78,7 +78,11 @@ export class ActiveGroupService implements OnDestroy {
      * the provided {@link Case} object.
      * @param activeGroup the new active group case reference
      */
-    set activeGroup(activeGroup: Case) {
-        this._activeGroups$.next([activeGroup]);
+    set activeGroup(activeGroup: Case | undefined) {
+        if (activeGroup === undefined) {
+            this._activeGroups$.next([]);
+        } else {
+            this._activeGroups$.next([activeGroup]);
+        }
     }
 }

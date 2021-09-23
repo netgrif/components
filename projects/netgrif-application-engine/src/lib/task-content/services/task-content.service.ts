@@ -63,7 +63,7 @@ export abstract class TaskContentService implements OnDestroy {
      * Setting a Task also emits it into the stream accessible by the [task$]{@link TaskContentService#task$} getter method.
      * @param task the Task that owns the content managed by this service
      */
-    public abstract set task(task: Task);
+    public abstract set task(task: Task | undefined);
 
     /**
      * Stream returns a {@link Task} object every time this object is set.

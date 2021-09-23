@@ -29,7 +29,7 @@ export class AnonymousService implements OnDestroy {
         return this._tokenSet.asObservable();
     }
 
-    public getToken(): string {
+    public getToken(): string | null {
         return this._storage.getItem(this._jwtHeader);
     }
 

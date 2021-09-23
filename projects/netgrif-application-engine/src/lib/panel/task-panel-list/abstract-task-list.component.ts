@@ -11,7 +11,7 @@ import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injecti
 import {InjectedTabData} from '../../tabs/interfaces';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {filter, takeUntil} from 'rxjs/operators';
 
 export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
 
@@ -88,13 +88,24 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
     }
 
     public onRedirect() {
+        if (this.route === undefined) {
+            this._log.warn('Route object was not provided to the task list component. Cannot perform onRedirect. Skipping...');
+            return;
+        }
+
         this.route.queryParams.pipe(filter(pm => !!pm['taskId'])).subscribe(pm => {
             this.redirectTaskId = pm['taskId'];
-            this.tasks$.pipe().subscribe(tasks => {
+            this.tasks$.pipe(takeUntil(this.unsubscribe$)).subscribe(tasks => {
                 const task = tasks.find(t => t.task.stringId === this.redirectTaskId);
                 if (!!task && !task.initiallyExpanded) {
-                    this.taskPanelRefs.get(this.redirectTaskId).open();
-                    this.taskPanelRefs.get(this.redirectTaskId).expanded = true;
+                    const panelRef = this.taskPanelRefs.get(this.redirectTaskId);
+                    if (panelRef === undefined) {
+                        this._log.warn(`Task with ID '${this.redirectTaskId
+                        }' is not present among the task panels and cannot be expanded.`);
+                    } else {
+                        panelRef.open();
+                        panelRef.expanded = true;
+                    }
                     this.unsubscribe$.next();
                 }
             });

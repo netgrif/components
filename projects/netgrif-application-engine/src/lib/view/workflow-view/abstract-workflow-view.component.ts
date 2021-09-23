@@ -1,4 +1,4 @@
-import {AfterViewInit, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Input, TemplateRef, ViewChild} from '@angular/core';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {WorkflowViewService} from './workflow-view.service';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
@@ -9,6 +9,7 @@ import {Net} from '../../process/net';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ProcessService} from '../../process/process.service';
+import {ComponentType} from '@angular/cdk/portal';
 
 export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders implements AfterViewInit {
 
@@ -36,7 +37,7 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
         this.initializeHeader(this.workflowHeader);
     }
 
-    public importSidemenuNet(component) {
+    public importSidemenuNet(component: ComponentType<unknown> | TemplateRef<unknown>) {
         this._sideMenuService.open(component).onClose.subscribe(event => {
             if (event.data !== undefined) {
                 this._workflowViewService.reload();
@@ -47,8 +48,8 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
         });
     }
 
-    public trackBy(i): any {
-        return i;
+    public trackBy(index: number): any {
+        return index;
     }
 
     public loadNextPage(): void {

@@ -14,11 +14,11 @@ export abstract class AbstractTextErrorsComponent {
         }
         if (formControlRef.hasError(TextFieldValidation.VALID_MIN_LENGTH)) {
             return this.resolveErrorMessage(textField, TextFieldValidation.MIN_LENGTH,
-                this._translate.instant('dataField.validations.minLength', {length: formControlRef.errors.minlength.requiredLength}));
+                this._translate.instant('dataField.validations.minLength', {length: formControlRef.errors?.minlength?.requiredLength}));
         }
         if (formControlRef.hasError(TextFieldValidation.VALID_MAX_LENGTH)) {
             return this.resolveErrorMessage(textField, TextFieldValidation.MAX_LENGTH,
-                this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors.maxlength.requiredLength}));
+                this._translate.instant('dataField.validations.maxLength', {length: formControlRef.errors?.maxlength?.requiredLength}));
         }
         if (formControlRef.hasError(TextFieldValidation.PATTERN)) {
             return this.resolveErrorMessage(textField, TextFieldValidation.REGEX, this._translate.instant('dataField.validations.pattern'));
@@ -35,8 +35,8 @@ export abstract class AbstractTextErrorsComponent {
     }
 
     protected resolveErrorMessage(textField: TextField | TextAreaField, search: string, generalMessage: string) {
-        const validation = textField.validations.find(value => value.validationRule.includes(search));
-        if (validation.validationMessage && validation.validationMessage !== '') {
+        const validation = textField.validations?.find(value => value.validationRule.includes(search));
+        if (validation !== undefined && validation.validationMessage && validation.validationMessage !== '') {
             return validation.validationMessage;
         }
         return generalMessage;

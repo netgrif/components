@@ -138,7 +138,7 @@ export class AllowedNetsServiceFactory {
             throw new Error(`Cannot get filter from case '${filterCase.title}' with id '${filterCase.stringId}'`);
         }
         return new AllowedNetsService(
-            of(filterData.allowedNets),
+            of(filterData.allowedNets ?? []),
             this._processService
         );
     }

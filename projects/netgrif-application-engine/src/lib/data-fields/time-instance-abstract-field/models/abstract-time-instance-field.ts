@@ -1,5 +1,5 @@
 import {Behavior} from '../../models/behavior';
-import {FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, ValidatorFn} from '@angular/forms';
 import moment, {Moment} from 'moment';
 import {Layout} from '../../models/layout';
 import {Component} from '../../models/component';
@@ -57,12 +57,15 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
             return date.includes('today') ? moment().startOf('day') : moment();
         } else {
             const newDate = moment(date);
-            return newDate.isValid ? newDate : null;
+            return newDate.isValid() ? newDate : null;
         }
     }
 
     protected resolveValidations(): Array<ValidatorFn> {
-        const result = [];
+        if (this.validations === undefined) {
+            return [];
+        }
+        const result: Array<ValidatorFn> = [];
 
         this.validations.forEach(item => {
             if (item.validationRule.includes(AbstractTimeInstanceFieldValidation.BETWEEN)) {
@@ -96,23 +99,23 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     }
 
     protected validFromPast(range: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value > range ? {validBetween: true} : null;
+        return (fc: AbstractControl): { [key: string]: any } | null => fc.value > range ? {validBetween: true} : null;
     }
 
     protected validToFuture(range: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value < range ? {validBetween: true} : null;
+        return (fc: AbstractControl): { [key: string]: any } | null => fc.value < range ? {validBetween: true} : null;
     }
 
     protected validBetween(first: Moment, second: Moment): ValidatorFn {
-        return (fc: FormControl): { [key: string]: any } | null => fc.value < first || fc.value > second ? {validBetween: true} : null;
+        return (fc: AbstractControl): { [key: string]: any } | null => fc.value < first || fc.value > second ? {validBetween: true} : null;
     }
 
-    protected validWorkday(fc: FormControl) {
+    protected validWorkday(fc: AbstractControl) {
         const dayOfWeek = !!fc.value ? fc.value.weekday() : null;
         return dayOfWeek === 6 || dayOfWeek === 0 ? {validWorkday: true} : null;
     }
 
-    protected validWeekend(fc: FormControl) {
+    protected validWeekend(fc: AbstractControl) {
         const dayOfWeek = !!fc.value ? fc.value.weekday() : null;
         return dayOfWeek >= 1 && dayOfWeek <= 5 && dayOfWeek !== 0 ? {validWeekend: true} : null;
     }

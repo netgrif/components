@@ -23,14 +23,14 @@ import {AssignPolicyService} from '../../task/services/assign-policy.service';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
-import {DisableButtonFuntions} from './models/disable-functions';
+import {DisableButtonFunctions, TaskButton} from './models/disable-functions';
 import {Task} from '../../resources/interface/task';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
-import {ActivatedRoute, Router} from '@angular/router';
+import {getImmediateData} from '../../utility/get-immediate-data';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
@@ -67,7 +67,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     protected _subOperationReload: Subscription;
     protected _subOperationForceReload: Subscription;
     protected _subPanelUpdate: Subscription;
-    protected _taskDisableButtonFunctions: DisableButtonFuntions;
+    protected _taskDisableButtonFunctions: DisableButtonFunctions;
 
     protected constructor(protected _taskContentService: TaskContentService,
                           protected _log: LoggerService,
@@ -83,7 +83,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _assignPolicyService: AssignPolicyService,
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
-                          protected _disableFunctions: DisableButtonFuntions,
+                          protected _disableFunctions: DisableButtonFunctions,
                           protected _translate: TranslateService,
                           protected _currencyPipe: CurrencyPipe) {
         super(_translate, _currencyPipe);
@@ -93,7 +93,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             this.taskEvent.emit(event);
         });
         this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
-            changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
+            changedFields.frontendActionsOwner = (this._taskContentService.task as Task).stringId;
             this._taskPanelData.changedFields.next(changedFields);
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
@@ -178,7 +178,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         return this._taskPanelData;
     }
 
-    public get isLoading(): boolean {
+    public get isLoading(): boolean | undefined {
         return this._taskState.isLoading();
     }
 
@@ -221,11 +221,15 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
 
     finish() {
         if (!this._taskContentService.validateTaskData()) {
-            if (this._taskContentService.task.dataSize <= 0) {
+            if (this._taskContentService.task?.dataSize !== undefined && this._taskContentService.task.dataSize <= 0) {
                 this._taskDataService.initializeTaskDataFields();
             }
             const invalidFields = this._taskContentService.getInvalidTaskData();
-            document.getElementById(invalidFields[0].stringId).scrollIntoView({
+            const element = document.getElementById(invalidFields[0].stringId);
+            if (element === null) {
+                this._log.errorAndThrow(new Error(`The invalid field with id '${invalidFields[0].stringId}' is not present in DOM`));
+            }
+            element.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
                 inline: 'nearest'
@@ -265,7 +269,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         return this._taskEventService.canCollapse();
     }
 
-    public canDo(action): boolean {
+    public canDo(action: string): boolean {
         return this._taskEventService.canDo(action) && this.getDelegateTitle() !== '';
     }
 
@@ -289,14 +293,14 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
     }
 
-    public canDisable(type: string): boolean {
+    public canDisable(type: TaskButton): boolean {
         let disable = false;
         if (!!this.taskPanelData && !!this.taskPanelData.task) {
             disable = disable
                 || !!this._taskState.isLoading(this.taskPanelData.task.stringId)
                 || !!this._taskState.isUpdating(this.taskPanelData.task.stringId);
         }
-        return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
+        return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task} as Task);
     }
 
     protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
@@ -327,13 +331,17 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                     icon: 'event',
                     type: 'meta'
                 };
+            default:
+                this._log.errorAndThrow(new Error(`Unsupported meta value type '${selectedHeader.fieldIdentifier}'!`));
         }
     }
 
     protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
         if (this._taskContentService.task && this._taskContentService.task.immediateData) {
-            const immediate = this._taskContentService.task.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
-            return this.parseImmediateValue(immediate);
+            const immediate = getImmediateData(this._taskContentService.task, selectedHeader.fieldIdentifier);
+            if (immediate !== undefined) {
+                return this.parseImmediateValue(immediate);
+            }
         }
         return {value: '', icon: '', type: ''};
     }

@@ -24,8 +24,9 @@ export class AnonymousAuthenticationInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             tap(event => {
                 if (event instanceof HttpResponse) {
-                    if (event.headers.has(this._anonymousService.jwtHeader)) {
-                        this._anonymousService.setToken(event.headers.get(this._anonymousService.jwtHeader));
+                    const token = event.headers.get(this._anonymousService.jwtHeader);
+                    if (token !== null) {
+                        this._anonymousService.setToken(token);
                     }
                 }
             }),

@@ -114,6 +114,8 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
                 return {value: this.workflow.author.fullName, icon: 'account_circle', type: 'meta'};
             case WorkflowMetaField.CREATION_DATE:
                 return {value: toMoment(this.workflow.createdDate).format(DATE_TIME_FORMAT_STRING), icon: 'event', type: 'meta'};
+            default:
+                this._log.errorAndThrow(new Error(`Unsupported featured meta type '${selectedHeader.fieldIdentifier}'`));
         }
     }
 

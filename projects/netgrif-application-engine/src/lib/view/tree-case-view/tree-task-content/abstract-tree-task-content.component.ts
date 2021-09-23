@@ -50,15 +50,15 @@ export abstract class AbstractTreeTaskContentComponent implements AfterViewInit 
     }
 
     public getAssignTitle(): string {
-        return this._taskContentService.task.assignTitle ? this._taskContentService.task.assignTitle : 'tasks.view.assign';
+        return this._taskContentService.task?.assignTitle ?? 'tasks.view.assign';
     }
 
     public getCancelTitle(): string {
-        return this._taskContentService.task.cancelTitle ? this._taskContentService.task.cancelTitle : 'tasks.view.cancel';
+        return this._taskContentService.task?.cancelTitle ?? 'tasks.view.cancel';
     }
 
     public getFinishTitle(): string {
-        return this._taskContentService.task.finishTitle ? this._taskContentService.task.finishTitle : 'tasks.view.finish';
+        return this._taskContentService.task?.finishTitle ?? 'tasks.view.finish';
     }
 
     public get processingTaskChange(): boolean {
