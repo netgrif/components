@@ -111,7 +111,7 @@ export class CancelTaskService extends TaskHandlingService {
             if (eventOutcome.success) {
                 this._taskContentService.updateStateData(eventOutcome);
                 this._taskDataService.emitChangedFields(eventOutcome.changedFields);
-                forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
+                forceReload && this._taskOperations.forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, nextEvent, true);
             } else if (eventOutcome.error !== undefined) {
                 if (eventOutcome.error !== '') {

@@ -5,11 +5,11 @@ import {Case} from '../../resources/interface/case';
 @Injectable()
 export class TreeCaseViewService implements OnDestroy {
 
-    public loadTask$: BehaviorSubject<Case>;
+    public loadTask$: BehaviorSubject<Case | undefined>;
     public reloadCase$: Subject<void>;
 
     constructor() {
-        this.loadTask$ = new BehaviorSubject<Case>(undefined);
+        this.loadTask$ = new BehaviorSubject<Case | undefined>(undefined);
         this.reloadCase$ = new Subject<void>();
     }
 

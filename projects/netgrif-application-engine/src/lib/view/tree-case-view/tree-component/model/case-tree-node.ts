@@ -10,9 +10,9 @@ export class CaseTreeNode {
     public loadingChildren: LoadingEmitter;
     public removingNode: LoadingEmitter;
     public addingNode: LoadingEmitter;
-    public parent: CaseTreeNode;
+    public parent: CaseTreeNode | undefined;
 
-    constructor(nodeCase: Case, parentNode: CaseTreeNode) {
+    constructor(nodeCase: Case, parentNode: CaseTreeNode | undefined) {
         this.case = nodeCase;
         this.children = [];
         this.dirtyChildren = true;
@@ -62,23 +62,25 @@ export class CaseTreeNode {
     }
 
     /**
-     * @returns return node value, if immediate date of [immediate data field]{@link TreePetriflowIdentifiers#BEFORE_TEXT_ICON} type exists
+     * @returns return node value, if immediate date of [immediate data field]{@link TreePetriflowIdentifiers#BEFORE_TEXT_ICON} type exists.
+     * Returns `false` otherwise.
      */
-    public beforeTextIcon(): string {
+    public beforeTextIcon(): string | false {
         const immediate = this.searchImmediateData(TreePetriflowIdentifiers.BEFORE_TEXT_ICON);
         if (immediate === undefined) {
-            return undefined;
+            return false;
         }
         return immediate.value;
     }
 
     /**
-     * @returns return node value, if immediate date of [immediate data field]{@link TreePetriflowIdentifiers#TREE_ADD_ICON} type exists
+     * @returns return node value, if immediate date of [immediate data field]{@link TreePetriflowIdentifiers#TREE_ADD_ICON} type exists.
+     * Returns `false` otherwise.
      */
-    public treeAddTextIcon(): string {
+    public treeAddTextIcon(): string | false {
         const immediate = this.searchImmediateData(TreePetriflowIdentifiers.TREE_ADD_ICON);
         if (immediate === undefined) {
-            return undefined;
+            return false;
         }
         return immediate.value;
     }
@@ -86,7 +88,7 @@ export class CaseTreeNode {
     /**
      * @returns return node title, if immediate date of [immediate data field]{@link TreePetriflowIdentifiers#BEFORE_TEXT_ICON} type exists
      */
-    public beforeTextIconTitle(): string {
+    public beforeTextIconTitle(): string | undefined {
         const immediate = this.searchImmediateData(TreePetriflowIdentifiers.BEFORE_TEXT_ICON);
         if (immediate === undefined || !(immediate.name && immediate.name.defaultValue)) {
             return undefined;
@@ -97,7 +99,7 @@ export class CaseTreeNode {
     /**
      * @returns return node title if immediate date of [immediate data field]{@link TreePetriflowIdentifiers#TREE_ADD_ICON} type exists
      */
-    public treeAddTextIconTitle(): string {
+    public treeAddTextIconTitle(): string | undefined {
         const immediate = this.searchImmediateData(TreePetriflowIdentifiers.TREE_ADD_ICON);
         if (immediate === undefined || !(immediate.name && immediate.name.defaultValue)) {
             return undefined;

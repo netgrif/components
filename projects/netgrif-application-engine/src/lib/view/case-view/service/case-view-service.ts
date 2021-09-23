@@ -68,8 +68,8 @@ export class CaseViewService extends SortableView implements OnDestroy {
         this._endOfData = false;
         this._pagination = {
             size: 25,
-            totalElements: undefined,
-            totalPages: undefined,
+            totalElements: -1,
+            totalPages: -1,
             number: -1
         };
         this._nextPage$ = new BehaviorSubject<PageLoadRequestContext>(
@@ -195,7 +195,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
             allowedNets$: this.getNewCaseAllowedNets(),
             newCaseCreationConfiguration
         }).onClose.subscribe($event => {
-            this._log.debug($event.message, $event.data);
+            this._log.debug($event.message ?? '', $event.data);
             if ($event.data) {
                 this.reload();
                 myCase.next($event.data);
@@ -240,7 +240,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
     }
 
     public getAllowedNetsCount(): number {
-        return this._allowedNetsService.allowedNets.length;
+        return this._allowedNetsService.allowedNets?.length ?? 0;
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
@@ -286,7 +286,7 @@ export class CaseViewService extends SortableView implements OnDestroy {
         return this._user.hasAuthority(authority);
     }
 
-    public canDo(action: string, net: PetriNetReferenceWithPermissions): boolean {
+    public canDo(action: PermissionType, net: PetriNetReferenceWithPermissions): boolean {
         if (!net
             || !net.permissions
             || !action
@@ -321,6 +321,6 @@ export class CaseViewService extends SortableView implements OnDestroy {
         if (result) {
             return false;
         }
-        return !(!!aCase.users[user.id] && !aCase.permissions[user.id][PermissionType.VIEW]);
+        return !(aCase.users !== undefined && !!aCase.users[user.id] && !aCase.permissions[user.id][PermissionType.VIEW]);
     }
 }

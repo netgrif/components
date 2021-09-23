@@ -5,6 +5,7 @@ import {AuthenticationMethodService} from '../../authentication-method.service';
 import {Credentials} from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {UserResource} from '../../../../resources/interface/user-resource';
+import {Auth} from '../../../../../commons/schema';
 
 @Injectable()
 export class BasicAuthenticationService extends AuthenticationMethodService {
@@ -14,10 +15,15 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
     }
 
     login(credentials: Credentials = {username: '', password: ''}): Observable<UserResource> {
-        const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['login'];
-        if (!url) {
-            throwError(new Error('Login URL is not defined in the config [nae.providers.auth.endpoints.login]'));
+        const endpoints = this._config.get().providers.auth.endpoints;
+        if (endpoints === undefined) {
+            return throwError(new Error('Endpoints are not defined in the config [nae.providers.auth.endpoints]'));
         }
+        const endpoint = endpoints['login'];
+        if (endpoint === undefined) {
+            return throwError(new Error('Login URL is not defined in the config [nae.providers.auth.endpoints.login]'));
+        }
+        const url = this._config.get().providers.auth.address + endpoint;
         if (!credentials.username || !credentials.password) {
             throwError(new Error('User\'s credentials are not defined!'));
         }
@@ -33,11 +39,16 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
     }
 
     logout(): Observable<object> {
-        const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['logout'];
-        if (!url) {
-            throwError(new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]'));
-        }
 
+        const endpoints = this._config.get().providers.auth.endpoints;
+        if (endpoints === undefined) {
+            return throwError(new Error('Endpoints are not defined in the config [nae.providers.auth.endpoints]'));
+        }
+        const endpoint = endpoints['logout'];
+        if (endpoint === undefined) {
+            return throwError(new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]'));
+        }
+        const url = this._config.get().providers.auth.address + endpoint;
         return this._http.post(url, {});
     }
 }

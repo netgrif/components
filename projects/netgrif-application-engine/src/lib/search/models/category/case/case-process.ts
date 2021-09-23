@@ -58,14 +58,15 @@ export class CaseProcess extends NoConfigurationAutocompleteCategory<string> {
      * @returns `true` if the option has not yet been checked as unique. `false` if the option has been checked before.
      */
     protected isUniqueOption(key: string, value: string): boolean {
-        if (!this._uniqueOptionsMap.has(key)) {
+        const option = this._uniqueOptionsMap.get(key);
+        if (option === undefined) {
             this._uniqueOptionsMap.set(key, new Set<string>([value]));
             return true;
         }
-        if (this._uniqueOptionsMap.get(key).has(value)) {
+        if (option.has(value)) {
             return false;
         } else {
-            this._uniqueOptionsMap.get(key).add(value);
+            option.add(value);
             return true;
         }
     }

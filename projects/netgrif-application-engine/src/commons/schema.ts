@@ -45,7 +45,7 @@ export interface Auth {
     address: string;
     authentication: string;
     sessionBearer?: string;
-    endpoints?: string | { [k: string]: string };
+    endpoints?: { [k: string]: string };
 
     [k: string]: any;
 }

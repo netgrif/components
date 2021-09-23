@@ -77,13 +77,16 @@ export abstract class AbstractResourceProvider {
      * @param lowPriorityParams parameters with the lower priority
      * @returns combination of botch parameters. Uses the value of the higher priority parameters if the keys are in conflict.
      */
-    public static combineParams(highPriorityParams: Params, lowPriorityParams: Params): HttpParams {
+    public static combineParams(highPriorityParams: Params, lowPriorityParams?: Params): HttpParams {
         const importantParams = highPriorityParams instanceof HttpParams ?
             ResourceProvider.convertHttpParamsToObjectParams(highPriorityParams) :
             highPriorityParams;
-        const params = lowPriorityParams instanceof HttpParams ?
-            ResourceProvider.convertHttpParamsToObjectParams(lowPriorityParams) :
-            {...lowPriorityParams};
+        let params = {};
+        if (lowPriorityParams !== undefined) {
+            params = lowPriorityParams instanceof HttpParams ?
+                ResourceProvider.convertHttpParamsToObjectParams(lowPriorityParams) :
+                {...lowPriorityParams};
+        }
         Object.assign(params, importantParams);
         return new HttpParams({fromObject: params});
     }

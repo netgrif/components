@@ -10,7 +10,7 @@ export class BaseAllowedNetsService implements OnDestroy {
     private _sub: Subscription;
 
     constructor() {
-        this._baseAllowedNets = new BehaviorSubject([]);
+        this._baseAllowedNets = new BehaviorSubject([] as Array<string>);
     }
 
     ngOnDestroy(): void {

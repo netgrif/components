@@ -20,7 +20,7 @@ export class CallChainService {
      * The emitted value is passed as the argument.
      * @returns a subscribed `Subject` instance that performs the provided `callback` on the first emission and then completes
      */
-    public create(callback: (boolean) => void): AfterAction {
+    public create(callback: (b: boolean) => void): AfterAction {
         const chain = new AfterAction();
         chain.subscribe(result => {
             callback(result);

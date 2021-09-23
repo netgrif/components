@@ -78,7 +78,7 @@ export abstract class AbstractResourceService {
      * @param r - response object
      * @param propertiesParams - plural form of the resource name, that is used to extract the data. Eg. "cases".
      */
-    protected changeType<T>(r: any, propertiesParams: string): T {
+    protected changeType<T>(r: any, propertiesParams: string | undefined): T {
         if (!r) {
             return r;
         }

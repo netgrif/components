@@ -18,7 +18,10 @@ export class BooleanField extends DataField<boolean> {
     }
 
     protected resolveValidations(): Array<ValidatorFn> {
-        const result = [];
+        if (this.validations === undefined) {
+            return [];
+        }
+        const result: Array<ValidatorFn> = [];
 
         this.validations.forEach(item => {
             if (item.validationRule.includes(BooleanFieldValidation.REQUIRED_TRUE)) {

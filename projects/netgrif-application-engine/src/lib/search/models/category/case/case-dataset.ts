@@ -89,10 +89,10 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
-        super(undefined,
-            undefined,
+        super([],
+            [],
             `${CaseDataset._i18n}.name`,
-            undefined,
+            undefined as unknown as SearchInputType,
             logger,
             operators);
 
@@ -227,7 +227,7 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected get _selectedDatafields(): Array<Datafield> {
-        return this._datafieldOptions.get(this._DATAFIELD_INPUT.formControl.value.value);
+        return this._datafieldOptions.get(this._DATAFIELD_INPUT.formControl.value.value) ?? [];
     }
 
     public reset() {
@@ -282,11 +282,11 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
     }
 
     protected generateQuery(userInput: Array<unknown>): Query {
-        let queryGenerationStrategy;
+        let queryGenerationStrategy: (df: Datafield, ui: Array<unknown>) => Query;
         if (this.isSelectedOperator(IsNull)) {
             queryGenerationStrategy = (d, _) => this.isNullOperatorQueryGenerationStrategy(d);
         } else if (this.inputType === SearchInputType.AUTOCOMPLETE) {
-            queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui[0], false);
+            queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui[0] as Array<unknown>, false);
         } else {
             queryGenerationStrategy = (d, ui) => this.standardQueryGenerationStrategy(d, ui);
         }
@@ -372,8 +372,9 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
      * @param value the value that should be added to the map
      */
     protected addToDatafieldOptionsMap(key: string, value: Datafield): void {
-        if (this._datafieldOptions.has(key)) {
-            this._datafieldOptions.get(key).push(value);
+        const option = this._datafieldOptions.get(key);
+        if (option !== undefined) {
+            option.push(value);
         } else {
             this._datafieldOptions.set(key, [value]);
         }

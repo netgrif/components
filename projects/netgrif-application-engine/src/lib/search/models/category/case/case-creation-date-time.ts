@@ -53,7 +53,7 @@ export class CaseCreationDateTime extends NoConfigurationCategory<Moment> {
         return valueFormControl.value.valueOf();
     }
 
-    protected deserializeOperandValue(value: unknown): Observable<any> {
+    protected deserializeOperandValue(value: string): Observable<any> {
         return of(moment(value));
     }
 }

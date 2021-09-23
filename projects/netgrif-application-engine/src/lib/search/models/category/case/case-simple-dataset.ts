@@ -16,6 +16,7 @@ import {SearchIndex} from '../../search-index';
 import {Categories} from '../categories';
 import {CategoryGeneratorMetadata} from '../../persistance/generator-metadata';
 import {Observable} from 'rxjs';
+import {SearchInputType} from '../search-input-type';
 
 /**
  * This class aims to be a simpler more limited version of the {@link CaseDataset} {@link Category} implementation.
@@ -41,10 +42,10 @@ export class CaseSimpleDataset extends NoConfigurationCategory<string> {
     constructor(operators: OperatorService,
                 logger: LoggerService,
                 protected _optionalDependencies: OptionalDependencies) {
-        super(undefined,
-            undefined,
+        super([],
+            [],
             `${CaseSimpleDataset._i18n}.name`,
-            undefined,
+            undefined as unknown as SearchInputType,
             logger,
             operators);
 
