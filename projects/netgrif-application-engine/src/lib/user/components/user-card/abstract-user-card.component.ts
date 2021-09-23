@@ -12,7 +12,7 @@ export type IconStyle = 'large' | 'small';
 
 export abstract class AbstractUserCardComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
-    @Input() public user: User;
+    @Input() public user: User | null;
     @Input() public mode: Mode = 'horizontal';
     @Input() public tooltipPosition: TooltipPosition = 'below';
     @Input() public iconStyle: IconStyle = 'large';
@@ -41,7 +41,7 @@ export abstract class AbstractUserCardComponent extends AbstractNavigationResiza
     }
 
     userBannerExists(): boolean {
-        return this.user && !!this.user.banner;
+        return !!this.user && !!this.user.banner;
     }
 
     get userBanner(): string {

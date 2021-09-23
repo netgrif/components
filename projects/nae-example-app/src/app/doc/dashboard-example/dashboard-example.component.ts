@@ -14,7 +14,7 @@ export class DashboardExampleComponent {
     public portalArray = [];
 
     constructor(private _config: ConfigurationService) {
-        this.params = this._config.getViewByPath('dashboard').layout.params as DashboardParams;
+        this.params = this._config.getViewByPath('dashboard')?.layout?.params as DashboardParams;
         this.params.cards[7].portalComponent = new ComponentPortal<any>(ExamplePortalCardComponent);
     }
 

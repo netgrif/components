@@ -27,11 +27,11 @@ export class ExamplePortalCardComponent extends AbstractCustomCard implements On
     }
 
     public convertData(json: AggregationResult) {
-        json['aggregations'].result.buckets.forEach(element => {
-            /*this.single.push({
-                name: element['key'],
-                value: element['doc_count']
-            });*/
+        if (json.aggregations.result?.buckets === undefined) {
+            // TODO errorAndThrow
+            // this.loggerService.
+        }
+        json.aggregations.result.buckets.forEach(element => {
             this.single.push(new DashboardSingleData(element['key'], element['doc_count']));
         });
         this.single = [...this.single];

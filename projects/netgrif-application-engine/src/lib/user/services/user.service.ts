@@ -18,9 +18,9 @@ import {AnonymousService} from '../../authentication/anonymous/anonymous.service
 })
 export class UserService implements OnDestroy {
 
-    protected _user: User;
-    protected _userChange$: ReplaySubject<User>;
-    protected _anonymousUserChange$: ReplaySubject<User>;
+    protected _user: User | null;
+    protected _userChange$: ReplaySubject<User | null>;
+    protected _anonymousUserChange$: ReplaySubject<User | null>;
     protected _loginCalled: boolean;
     protected _subAuth: Subscription;
     protected _subAnonym: Subscription;
@@ -34,8 +34,8 @@ export class UserService implements OnDestroy {
                 protected _anonymousService: AnonymousService) {
         this._user = this.emptyUser();
         this._loginCalled = false;
-        this._userChange$ = new ReplaySubject<User>(1);
-        this._anonymousUserChange$ = new ReplaySubject<User>(1);
+        this._userChange$ = new ReplaySubject<User | null>(1);
+        this._anonymousUserChange$ = new ReplaySubject<User | null>(1);
         setTimeout(() => {
             this._subAuth = this._authService.authenticated$.subscribe(auth => {
                 if (auth && !this._loginCalled) {
@@ -56,15 +56,15 @@ export class UserService implements OnDestroy {
         });
     }
 
-    get user() {
+    get user(): User | null {
         return this._user;
     }
 
-    get user$(): Observable<User> {
+    get user$(): Observable<User | null> {
         return this._userChange$.asObservable();
     }
 
-    get anonymousUser$(): Observable<User> {
+    get anonymousUser$(): Observable<User | null> {
         return this._anonymousUserChange$.asObservable();
     }
 
@@ -82,21 +82,23 @@ export class UserService implements OnDestroy {
      *                    If calculated intersection isn't empty returns true, otherwise false.
      */
     public hasAuthority(authority: Array<string> | string): boolean {
-        if (!authority || !this._user.authorities) {
+        const user = this._user;
+        if (!authority || !user || !user.authorities) {
             return false;
         }
         if (authority instanceof Array) {
-            return authority.some(a => this._user.authorities.some(u => u === a));
+            return authority.some(a => user.authorities.some(u => u === a));
         } else {
-            return this._user.authorities.some(a => a === authority);
+            return user.authorities.some(a => a === authority);
         }
     }
 
     public hasRole(role: ProcessRole): boolean {
-        if (!role || !this._user.roles) {
+        const user = this._user;
+        if (!role || !user || !user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r === role);
+        return user.roles.some(r => r === role);
     }
 
     /**
@@ -104,10 +106,11 @@ export class UserService implements OnDestroy {
      * @param roleStringId ID of the role we want to check
      */
     public hasRoleById(roleStringId: string): boolean {
-        if (!roleStringId || !this._user.roles) {
+        const user = this._user;
+        if (!roleStringId || !user || !user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.stringId === roleStringId);
+        return user.roles.some(r => r.stringId === roleStringId);
     }
 
     /**
@@ -116,10 +119,11 @@ export class UserService implements OnDestroy {
      * @param netIdentifier identifier (import ID) of the process the role is defined in
      */
     public hasRoleByIdentifier(roleIdentifier: string, netIdentifier: string): boolean {
-        if (!roleIdentifier || !netIdentifier || !this._user.roles) {
+        const user = this._user;
+        if (!roleIdentifier || !netIdentifier || !user || !user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
+        return user.roles.some(r => r.netImportId === netIdentifier && r.importId === roleIdentifier);
     }
 
     /**
@@ -128,16 +132,17 @@ export class UserService implements OnDestroy {
      * @param netIdentifier identifier (import ID) of the process the role is defined in
      */
     public hasRoleByName(roleName: string, netIdentifier: string): boolean {
-        if (!roleName || !netIdentifier || !this._user.roles) {
+        const user = this._user;
+        if (!roleName || !netIdentifier || !user || !user.roles) {
             return false;
         }
-        return this._user.roles.some(r => r.netImportId === netIdentifier && r.name === roleName);
+        return user.roles.some(r => r.netImportId === netIdentifier && r.name === roleName);
     }
 
-    public login(credentials: Credentials): Observable<User> {
+    public login(credentials: Credentials): Observable<User | null> {
         this._loginCalled = true;
         return this._authService.login(credentials).pipe(
-            tap((authUser: User) => {
+            tap((authUser: User | null) => {
                 this._user = authUser;
                 this._loginCalled = false;
                 this.publishUserChange();

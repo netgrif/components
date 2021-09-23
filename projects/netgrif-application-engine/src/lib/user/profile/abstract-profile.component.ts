@@ -5,7 +5,7 @@ import {Subscription} from 'rxjs';
 
 export abstract class AbstractProfileComponent implements OnInit, OnDestroy {
 
-    @Input() public user: User;
+    @Input() public user: User | null;
     protected subUser: Subscription;
 
     constructor(protected _userService: UserService) {

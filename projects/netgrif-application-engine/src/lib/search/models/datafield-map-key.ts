@@ -16,10 +16,10 @@ export class DatafieldMapKey implements SearchAutocompleteOption<string> {
 
     public static parse(serializedMapKey: string): DatafieldMapKey {
         const parts = serializedMapKey.split('#');
-        return new DatafieldMapKey(parts.shift(), parts.join('#'));
+        return new DatafieldMapKey(parts.shift() as string, parts.join('#'));
     }
 
-    constructor(protected _inputType, protected _title) {
+    constructor(protected _inputType: string, protected _title: string) {
     }
 
     public get title(): string {

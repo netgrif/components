@@ -51,6 +51,6 @@ export class EventQueueService {
         }
 
         this._log.debug('Executing next event in queue.');
-        this.executeEvent(this._queue.shift());
+        this.executeEvent(this._queue.shift() as QueuedEvent);
     }
 }

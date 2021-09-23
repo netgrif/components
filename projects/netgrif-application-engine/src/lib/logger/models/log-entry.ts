@@ -18,7 +18,7 @@ export class LogEntry {
     public readonly date: Date;
     public readonly level: LogLevel;
     public readonly message: string;
-    public readonly params: object;
+    public readonly params: object | undefined;
     public readonly config: LogEntryConfiguration;
 
     /**

@@ -7,6 +7,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime} from 'rxjs/operators';
+import {MessageResource} from '../../resources/public-api';
 
 const DRAWER_DEFAULT_WIDTH = 200;
 const DRAWER_DEBOUNCE = 1000;
@@ -66,7 +67,7 @@ export class UserPreferenceService implements OnDestroy {
         this._drawerWidthChanged$.asObservable().pipe(
             debounceTime(DRAWER_DEBOUNCE)
         ).subscribe(newWidth => {
-            this.drawerWidth = newWidth;
+            this.setDrawerWidth(newWidth);
         });
     }
 
@@ -107,16 +108,16 @@ export class UserPreferenceService implements OnDestroy {
         this._savePreferences();
     }
 
-    public getLocale(): string {
+    public getLocale(): string | undefined {
         return this._preferences.locale;
     }
 
-    set drawerWidth(drawerWidth: number) {
+    public setDrawerWidth(drawerWidth: number) {
         this._preferences.drawerWidth = drawerWidth;
         this._savePreferences();
     }
 
-    get drawerWidth(): number {
+    public getDrawerWidth(): number | undefined {
         return this._preferences.drawerWidth;
     }
 
@@ -136,7 +137,7 @@ export class UserPreferenceService implements OnDestroy {
         }
     }
 
-    protected resultMessage(resultMessage): void {
+    protected resultMessage(resultMessage: MessageResource): void {
         if (typeof resultMessage.success === 'string') {
             this._snackbar.openSuccessSnackBar(this._translate.instant('preferences.snackbar.saveSuccess'));
         } else {

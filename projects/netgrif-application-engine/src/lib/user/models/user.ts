@@ -37,11 +37,4 @@ export class User implements IUser {
     public get surname(): string {
         return this.lastName;
     }
-
-    /**
-     * @returns `true` if the User object represents an empty user, `false` otherwise.
-     */
-    public isEmpty(): boolean {
-        return this.id === '';
-    }
 }

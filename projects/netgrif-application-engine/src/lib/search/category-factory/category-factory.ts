@@ -64,7 +64,11 @@ export class CategoryFactory {
      * @returns a new instance of the provided class with the default operator selected
      */
     public getByNameWithDefaultOperator(serializedCategoryClass: string): Category<any> {
-        return this.getWithDefaultOperator(this._categoryResolver.toClass(serializedCategoryClass));
+        const categoryClass = this._categoryResolver.toClass(serializedCategoryClass);
+        if (categoryClass === undefined) {
+            this._log.errorAndThrow(new Error(`Category '${serializedCategoryClass}' could not be deserialized! Cannot create instance!`));
+        }
+        return this.getWithDefaultOperator(categoryClass);
     }
 
     /**
@@ -75,7 +79,11 @@ export class CategoryFactory {
      */
     public getFromMetadata(metadata: CategoryGeneratorMetadata): Observable<Category<any>> {
         const result$ = new ReplaySubject<Category<any>>(1);
-        const category = this.get(this._categoryResolver.toClass(metadata.category));
+        const categoryClass = this._categoryResolver.toClass(metadata.category);
+        if (categoryClass === undefined) {
+            this._log.errorAndThrow(new Error(`Category '${metadata.category}' could not be deserialized! Cannot create instance!`));
+        }
+        const category = this.get(categoryClass);
         category.loadFromMetadata(metadata).subscribe(() => {
             result$.next(category);
             result$.complete();

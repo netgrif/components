@@ -315,6 +315,11 @@ export class CaseViewService extends SortableView implements OnDestroy {
      */
     public viewEnabled(aCase: Case): boolean {
         const user = this._user.user;
+        if (user === null) {
+            this._log.debug('User is not logged in. User has no permissions.');
+            return false;
+        }
+
         const result = user.roles.some(role =>
             !!aCase.permissions[role.stringId] && !aCase.permissions[role.stringId][PermissionType.VIEW]);
 

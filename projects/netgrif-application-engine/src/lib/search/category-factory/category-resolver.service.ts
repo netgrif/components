@@ -26,8 +26,13 @@ import {CategorySerialisationPair} from './category-serialisation-pair';
 })
 export class CategoryResolverService {
 
-    private readonly _classToStringTable;
-    private readonly _stringToClassTable;
+    private readonly _classToStringTable: {
+        // in reality : Type<Category<any>>
+        [k: string]: string
+    };
+    private readonly _stringToClassTable: {
+        [k: string]: Type<Category<any>>
+    };
 
     constructor() {
         this._classToStringTable = {};

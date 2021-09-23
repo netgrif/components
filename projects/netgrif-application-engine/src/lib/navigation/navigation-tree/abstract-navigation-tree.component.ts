@@ -286,10 +286,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             if (view.access !== 'private') {
                 throw new Error(`Unknown access option '${view.access}'. Only 'public' or 'private' is allowed.`);
             }
-            return !this._userService.user.isEmpty();
+            return !!this._userService.user;
         }
 
-        return !this._userService.user.isEmpty() // AuthGuard
+        return !!this._userService.user // AuthGuard
                 && this.passesRoleGuard(view, url)
                 && this.passesAuthorityGuard(view)
                 && this.passesGroupGuard(view, url);

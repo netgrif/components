@@ -16,7 +16,7 @@ export class DrawerExampleComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    openStatusChanged($event) {
+    openStatusChanged($event: boolean) {
         console.log('Drawer status:');
         console.log($event);
     }

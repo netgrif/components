@@ -24,8 +24,9 @@ export class EditablePredicateWithGenerator extends PredicateWithGenerator {
      */
     constructor(generator: Category<any>, initiallyVisible?: boolean) {
         const predicate = new EditableElementaryPredicate(undefined, initiallyVisible);
-        if (generator.providesPredicate) {
-            predicate.query = generator.generatedPredicate.query;
+        const generatedPredicate = generator.generatedPredicate;
+        if (generatedPredicate !== undefined) {
+            predicate.query = generatedPredicate.query;
         }
         super(predicate, generator, initiallyVisible);
     }

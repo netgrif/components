@@ -125,7 +125,7 @@ export abstract class Category<T> {
                 const fcs = [...formControls];
                 let first = true;
                 return parts.map(part => {
-                    const template = new OperatorTemplatePart(part ? part : fcs.shift(),
+                    const template = new OperatorTemplatePart(part ? part : fcs.shift() as FormControl,
                         this._trackByIdGenerator.next(),
                         part ? undefined : first);
                     if (!part) {
@@ -573,7 +573,7 @@ export abstract class Category<T> {
         }
         const deserializedValuesObservables = values.map(v => this.deserializeOperandValue(v));
         const result$ = new ReplaySubject<void>(1);
-        forkJoin(deserializedValuesObservables).pipe(defaultIfEmpty([])).subscribe(deserializedValues => {
+        forkJoin(deserializedValuesObservables).pipe(defaultIfEmpty([] as Array<any>)).subscribe(deserializedValues => {
             this.setOperands(deserializedValues);
             result$.next();
             result$.complete();

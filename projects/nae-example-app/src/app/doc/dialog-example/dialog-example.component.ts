@@ -25,7 +25,7 @@ export class DialogExampleComponent implements OnInit {
     question(title: string, question: string, pos: string, neg: string) {
         this.dialogService.openConfirmDialog(title, question, neg, pos)
             .afterClosed().subscribe(result => {
-            this.questionResult = result.confirmed;
+            this.questionResult = !!result?.confirmed;
         });
     }
 

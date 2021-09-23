@@ -48,8 +48,8 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
         this._endOfData = false;
         this._pagination = {
             size: 25,
-            totalElements: undefined,
-            totalPages: undefined,
+            totalElements: -1,
+            totalPages: -1,
             number: -1
         };
         this._nextPage$ = new BehaviorSubject<Pagination>(

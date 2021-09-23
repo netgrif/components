@@ -54,8 +54,9 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
      */
     public showPredicates(predicateIds: Array<number>): void {
         predicateIds.forEach(id => {
-            if (this._predicates.has(id)) {
-                this._predicates.get(id).show();
+            const predicate = this._predicates.get(id);
+            if (predicate) {
+                predicate.show();
             }
         });
     }

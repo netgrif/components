@@ -118,12 +118,19 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
             return result;
         }
 
-        if (Object.keys(userPermissions).length > 0
-            && !!userPermissions[this._userService.user.id]
-            && userPermissions[this._userService.user.id][action] !== undefined) {
-            result = userPermissions[this._userService.user.id][action];
+        const user = this._userService.user;
+        if (user === null) {
+            this._log.debug(`User is not logged in. Has no permissions.`);
+            return false;
         }
-        this._userService.user.roles.forEach(role => {
+
+        if (Object.keys(userPermissions).length > 0
+            && user
+            && !!userPermissions[user.id]
+            && userPermissions[user.id][action] !== undefined) {
+            result = userPermissions[user.id][action];
+        }
+        user.roles.forEach(role => {
             if (!!this.case_.permissions[role.stringId]
                 && this.case_.permissions[role.stringId][action] !== undefined) {
                 result = result && !!this.case_.permissions[role.stringId][action];

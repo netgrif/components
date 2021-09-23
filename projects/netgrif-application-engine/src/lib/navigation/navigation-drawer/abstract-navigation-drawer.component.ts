@@ -7,6 +7,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {ResizeEvent} from 'angular-resizable-element';
 import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {QuickPanelItem} from '../quick-panel/components/abstract-quick-panel.component';
 
 const DRAWER_DEFAULT_MIN_WIDTH = 200;
 const DRAWER_MAX_WIDTH = 450;
@@ -17,7 +18,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     @Input('user') public showUser: boolean;
     @Input('userObject') public user: User;
     @Input('quickPanel') public showQuickPanel: boolean;
-    @Input('panelItems') public quickPanelItems: Array<any>; // QuickPanelItem
+    @Input('panelItems') public quickPanelItems: Array<QuickPanelItem>;
     @Input() public navigation: boolean;
 
     @Output() public openedChange: EventEmitter<boolean>;
@@ -44,11 +45,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         this._fixed = true;
         this.opened = true;
         this.quickPanelItems = ['language', 'settings', 'logout'];
-        if (this.userPreferenceService.drawerWidth !== undefined) {
-            this.contentWidth = new BehaviorSubject<number>(this.userPreferenceService.drawerWidth);
-        } else {
-            this.contentWidth = new BehaviorSubject<number>(DRAWER_DEFAULT_MIN_WIDTH);
-        }
+        this.contentWidth = new BehaviorSubject<number>(this.getWidthFromPreferences());
     }
 
     ngOnInit(): void {
@@ -65,10 +62,9 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         });
         this.opened = this._config.opened;
         this.userPreferenceService.preferencesChanged$.subscribe(() => {
-            this.width = this.userPreferenceService.drawerWidth;
+            this.width = this.getWidthFromPreferences();
             this.contentWidth.next(this.width);
         });
-        // this.width = this.userPreferenceService.getDrawerWidth();
     }
 
     ngAfterViewInit(): void {
@@ -155,5 +151,9 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
         }
         this.userPreferenceService._drawerWidthChanged$.next(this.width);
         this.contentWidth.next(this.width);
+    }
+
+    protected getWidthFromPreferences(): number {
+        return this.userPreferenceService.getDrawerWidth() ?? DRAWER_DEFAULT_MIN_WIDTH;
     }
 }

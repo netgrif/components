@@ -49,15 +49,8 @@ export abstract class ConfigurationService {
         if (!views) {
             return undefined;
         }
-        let map: Map<string, View> = new Map();
-        map = this.getChildren(views, map, '');
-        if (map.get(url) === undefined) {
-            map.forEach((value, key) => {
-                if (key.includes('/**') && url.includes(key.split('/**')[0]))
-                    return value;
-            });
-        }
-        return map.get(url);
+        const children = this.getChildren(views, new Map(), '');
+        return children.get(url);
     }
 
     private getChildren(views: Views, map: Map<string, View>, prefix: string): Map<string, View> {
@@ -75,8 +68,9 @@ export abstract class ConfigurationService {
                         prefix + '/' + viewPath,
                     views[view]);
             }
-            if (views[view].children) {
-                this.getChildren(views[view].children, map, prefix + '/' + views[view].routing.path);
+            const children = views[view].children;
+            if (children) {
+                this.getChildren(children, map, prefix + '/' + views[view].routing.path);
             }
         });
         return map;
@@ -89,7 +83,7 @@ export abstract class ConfigurationService {
      */
     public getPathsByView(layout: string): Array<string> {
         const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
-        const result = [];
+        const result: Array<string> = [];
         if (!config.views) {
             return result;
         }

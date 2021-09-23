@@ -36,7 +36,7 @@ export interface DataGroup {
     /**
      * Name datagroup
      */
-    title: string;
+    title?: string;
     /**
      * Desing alignment
      * ***Example:*** start

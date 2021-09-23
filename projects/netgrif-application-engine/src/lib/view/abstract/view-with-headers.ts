@@ -6,13 +6,13 @@ import {OnDestroy} from '@angular/core';
 
 
 export abstract class ViewWithHeaders implements OnDestroy {
-    protected _selectedHeaders$: ReplaySubject<Array<HeaderColumn>>;
+    protected _selectedHeaders$: ReplaySubject<Array<HeaderColumn | null>>;
 
     protected constructor(private _sortableView?: SortableView) {
-        this._selectedHeaders$ = new ReplaySubject<Array<HeaderColumn>>(1);
+        this._selectedHeaders$ = new ReplaySubject<Array<HeaderColumn | null>>(1);
     }
 
-    public get selectedHeaders$(): Observable<Array<HeaderColumn>> {
+    public get selectedHeaders$(): Observable<Array<HeaderColumn | null>> {
         return this._selectedHeaders$.asObservable();
     }
 

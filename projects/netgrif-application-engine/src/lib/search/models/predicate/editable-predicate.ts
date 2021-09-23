@@ -6,7 +6,7 @@ import {Subject} from 'rxjs';
  */
 export abstract class EditablePredicate extends Predicate {
 
-    protected _parentNotifier: Subject<void>;
+    protected _parentNotifier: Subject<void> | undefined;
 
     protected constructor(parentNotifier?: Subject<void>, initiallyVisible = true) {
         super(initiallyVisible);
