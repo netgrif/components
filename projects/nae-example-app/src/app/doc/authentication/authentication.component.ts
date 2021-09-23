@@ -12,11 +12,11 @@ export class AuthenticationComponent implements OnInit {
     readonly DESCRIPTION = 'Ukážka použitia AuthenticationService...';
 
     authenticated = false;
-    user: User = null;
-    userString = null;
+    user: User | null = null;
+    userString: string | null = null;
     credentials = {
-        username: null,
-        password: null
+        username: '',
+        password: ''
     };
 
     constructor(private userService: UserService, private log: LoggerService) {
@@ -38,9 +38,6 @@ export class AuthenticationComponent implements OnInit {
     }
 
     logout() {
-        // if (!this.authenticated) {
-        //     return;
-        // }
         this.userService.logout().subscribe(response => {
             this.log.info('User logged out from the server');
             this.authenticated = false;

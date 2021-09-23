@@ -29,7 +29,7 @@ export class AuthenticationService implements OnDestroy {
         });
     }
 
-    login(credentials: Credentials): Observable<User> {
+    login(credentials: Credentials): Observable<User | null> {
         return this._auth.login(credentials).pipe(
             tap((user: UserResource) => {
                 this._authenticated$.next(!!user[AuthenticationService.IDENTIFICATION_ATTRIBUTE]);

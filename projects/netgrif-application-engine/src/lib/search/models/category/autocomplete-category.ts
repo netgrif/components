@@ -126,8 +126,9 @@ export abstract class AutocompleteCategory<T> extends Category<Array<T>> impleme
      * @param value the value that should be added to the map
      */
     protected addToMap(key: any, value: T): void {
-        if (this._optionsMap.has(key)) {
-            this._optionsMap.get(key).push(value);
+        const option = this._optionsMap.get(key);
+        if (option !== undefined) {
+            option.push(value);
         } else {
             this._optionsMap.set(key, [value]);
         }

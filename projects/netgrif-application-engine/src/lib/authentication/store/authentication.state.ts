@@ -2,7 +2,7 @@ export const AUTHENTICATION_FEATURE_KEY = 'nae-auth';
 
 export interface AuthState {
     isAuthenticated: boolean;
-    session: string;
+    session: string | null;
     error: string | null;
 }
 

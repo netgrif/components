@@ -36,8 +36,8 @@ export class BarchartCardComponent extends AbstractCustomCard implements OnInit 
     }
 
     convertData(json: AggregationResult): void {
-        json.aggregations.result.buckets.forEach(bucket => {
-            this.single.push(new DashboardSingleData(bucket.key, bucket.doc_count));
+        json.aggregations.result?.buckets?.forEach(bucket => {
+            this.single.push(new DashboardSingleData(bucket.key as string, bucket.doc_count as number));
         });
         this.single = [...this.single];
     }
