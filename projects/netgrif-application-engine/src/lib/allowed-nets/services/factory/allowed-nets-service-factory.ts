@@ -13,7 +13,7 @@ import {Case} from '../../../resources/interface/case';
 import {getImmediateData} from '../../../utility/get-immediate-data';
 import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
 import {DataGroup} from '../../../resources/public-api';
-import {getField} from '../../../utility/get-field';
+import {getFieldFromDataGroups} from '../../../utility/get-field';
 import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
 import {BaseAllowedNetsService} from '../base-allowed-nets.service';
 
@@ -35,11 +35,11 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
                                                             navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
-    const filterField = getField(navigationItemTaskData[1].fields,
-        UserFilterConstants.FILTER_FIELD_ID, true) as FilterField;
+    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID, true) as FilterField;
 
     if (filterField === undefined) {
-        throw new Error(`Provided navigation item task data does not contain a filter field! Allowed nets cannot be generated from it!`);
+        throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
+        }'! Allowed nets cannot be generated from it!`);
     }
 
     const nets = [...filterField.allowedNets];

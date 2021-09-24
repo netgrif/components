@@ -3,7 +3,7 @@ import {Observable, of, throwError} from 'rxjs';
 import {Filter} from '../../filter/models/filter';
 import {DataGroup} from '../../resources/interface/data-groups';
 import {extractFilterFieldFromData, extractFilterFromFilterField} from './navigation-item-task-utility-methods';
-import {getField} from '../../utility/get-field';
+import {getFieldFromDataGroups} from '../../utility/get-field';
 import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {FilterRepository} from '../../filter/filter.repository';
 import {TextField} from '../../data-fields/text-field/models/text-field';
@@ -42,7 +42,7 @@ export class FilterExtractionService {
             return throwError('Filter segment could not be extracted from filter field');
         }
 
-        const originViewIdField = getField(dataSection[1].fields, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID, taskReffed);
+        const originViewIdField = getFieldFromDataGroups(dataSection, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID, taskReffed);
         if (originViewIdField === undefined || !(originViewIdField instanceof TextField)) {
             return throwError('Could not extract origin view id field from task data');
         }

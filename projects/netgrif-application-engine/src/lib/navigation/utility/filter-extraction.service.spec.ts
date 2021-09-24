@@ -22,4 +22,6 @@ describe('FilterExtractionService', () => {
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
+
+    // TODO do a proper test with mocked backend case structure
 });
