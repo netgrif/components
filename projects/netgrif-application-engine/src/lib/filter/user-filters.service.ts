@@ -10,7 +10,7 @@ import {SimpleFilter} from './models/simple-filter';
 import {hasContent} from '../utility/pagination/page-has-content';
 import {Task} from '../resources/interface/task';
 import {CallChainService} from '../utility/call-chain/call-chain.service';
-import {TaskSetDataRequestBody} from '../resources/interface/task-set-data-request-body';
+import {TaskSetDataRequestBody, TaskSetDataRequestFields} from '../resources/interface/task-set-data-request-body';
 import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
 import {Net} from '../process/net';
@@ -28,6 +28,7 @@ import {SavedFilterMetadata} from '../search/models/persistance/saved-filter-met
 import {FilterMetadata} from '../search/models/persistance/filter-metadata';
 import {CreateCaseEventOutcome} from '../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {CategoryResolverService} from '../search/category-factory/category-resolver.service';
+import {EventOutcomeMessageResource} from '../resources/interface/message-resource';
 
 /**
  * Service that manages filters created by users of the application.
@@ -70,13 +71,13 @@ export class UserFiltersService implements OnDestroy {
      */
     public delete(filterCaseId: string): Observable<boolean> {
         const result$ = new ReplaySubject<boolean>(1);
-        this._caseService.deleteCase(filterCaseId).subscribe(response => {
+        this._caseService.deleteCase(filterCaseId).subscribe((response: EventOutcomeMessageResource) => {
             if (response.success) {
-                this._log.debug('Filter case delete success', response);
+                this._log.debug(response.outcome.message === undefined ? 'Filter case delete success' : response.outcome.message);
                 result$.next(true);
                 result$.complete();
             } else {
-                this._log.error('Filter case delete failure', response);
+                this._log.error(response.outcome.message === undefined ? 'Filter case delete failure' : response.outcome.message);
                 result$.next(false);
                 result$.complete();
             }
@@ -156,7 +157,7 @@ export class UserFiltersService implements OnDestroy {
      */
     public save(searchService: SearchService, allowedNets: ReadonlyArray<string>,
                 searchCategories: ReadonlyArray<Type<Category<any>>>, viewId: string,
-                additionalData: TaskSetDataRequestBody = {}, withDefaultCategories = true,
+                additionalData: TaskSetDataRequestFields = {}, withDefaultCategories = true,
                 inheritAllowedNets = true): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
             this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
@@ -221,7 +222,7 @@ export class UserFiltersService implements OnDestroy {
      */
     public createFilterCaseAndSetData(searchService: SearchService, allowedNets: ReadonlyArray<string>,
                                       searchCategories: ReadonlyArray<Type<Category<any>>>, viewId: string,
-                                      additionalData: TaskSetDataRequestBody = {},
+                                      additionalData: TaskSetDataRequestFields = {},
                                       withDefaultCategories = true,
                                       inheritAllowedNets = true): Observable<string> {
         const result = new ReplaySubject<string>(1);
@@ -245,26 +246,28 @@ export class UserFiltersService implements OnDestroy {
                         }', but none was found!`);
                     }
                     this.assignSetDataFinish(initTask, {
-                        [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
-                            type: FieldTypeResource.ENUMERATION_MAP,
-                            value: searchService.filterType
-                        },
-                        [UserFilterConstants.FILTER_FIELD_ID]: {
-                            type: FieldTypeResource.FILTER,
-                            value: searchService.rootPredicate.query.value,
-                            allowedNets,
-                            filterMetadata: this.filterMetadataFromSearchService(
-                                searchService,
-                                searchCategories,
-                                withDefaultCategories,
-                                inheritAllowedNets
-                            )
-                        },
-                        [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
-                            type: FieldTypeResource.TEXT,
-                            value: viewId
-                        },
-                        ...additionalData
+                        [initTask.stringId]: {
+                            [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
+                                type: FieldTypeResource.ENUMERATION_MAP,
+                                value: searchService.filterType
+                            },
+                            [UserFilterConstants.FILTER_FIELD_ID]: {
+                                type: FieldTypeResource.FILTER,
+                                value: searchService.rootPredicate.query.value,
+                                allowedNets,
+                                filterMetadata: this.filterMetadataFromSearchService(
+                                    searchService,
+                                    searchCategories,
+                                    withDefaultCategories,
+                                    inheritAllowedNets
+                                )
+                            },
+                            [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
+                                type: FieldTypeResource.TEXT,
+                                value: viewId
+                            },
+                            ...additionalData
+                        }
                     }, this._callChainService.create(success => {
                         if (!success) {
                             throw new Error('Filter instance could not be initialized');

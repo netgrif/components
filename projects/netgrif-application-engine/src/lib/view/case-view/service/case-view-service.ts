@@ -29,6 +29,8 @@ import {SearchIndexResolverService} from '../../../search/search-keyword-resolve
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {SortableView} from '../../abstract/sortable-view';
 import {NewCaseCreationConfigurationData} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
+import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 
 @Injectable()
 export class CaseViewService extends SortableView implements OnDestroy {
@@ -212,11 +214,11 @@ export class CaseViewService extends SortableView implements OnDestroy {
                 title: null,
                 color: 'panel-primary-icon',
                 netId: nets[0].stringId
-            }).subscribe((response: Case) => {
+            }).subscribe((response: EventOutcomeMessageResource) => {
                 this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
                     + ' ' + this._translate.instant('side-menu.new-case.defaultCaseName'));
                 this.reload();
-                myCase.next(response);
+                myCase.next((response.outcome as CreateCaseEventOutcome).aCase);
                 myCase.complete();
             }, error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error));
         });

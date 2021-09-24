@@ -22,7 +22,7 @@ export function navigationItemTaskCategoryFactory(categoryResolverService: Categ
                                                   defaultCaseSearchCategories: Array<Type<Category<any>>>,
                                                   defaultTaskSearchCategories: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
     const filterField = getField(navigationItemTaskData[navigationItemTaskData.length - 1].fields,
-        UserFilterConstants.FILTER_FIELD_ID, true) as FilterField;
+        UserFilterConstants.FILTER_FIELD_ID) as FilterField;
 
     if (filterField === undefined) {
         throw new Error(

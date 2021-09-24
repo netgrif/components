@@ -271,7 +271,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             return;
         }
 
-        const requestContext = this.createUpdateRequestContext([]);
+        const requestContext = this.createUpdateRequestContext();
 
         this._eventQueue.scheduleEvent(new QueuedEvent(
             () => this.isSetDataRequestStillValid(requestContext.body),
@@ -289,44 +289,37 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @ignore
      * Goes over all the data fields in the managed Task and if they are valid and changed adds them to the set data request
      */
-    protected createUpdateRequestContext(referencedTaskIds: Array<string>): TaskSetDataRequestContext {
+    protected createUpdateRequestContext(): TaskSetDataRequestContext {
         const context: TaskSetDataRequestContext = {
             body: {},
             previousValues: {}
         };
-
-        let filteredDataGroups: Array<DataGroup>;
-        if (referencedTaskIds !== undefined && referencedTaskIds.length > 0) {
-            filteredDataGroups = this._safeTask.dataGroups.filter(dataGroup => {
-                if (Object.keys(dataGroup).includes('parentTaskId')) {
-                    return referencedTaskIds.includes(dataGroup['parentTaskId']);
-                } else {
-                    return false;
-                }
+        context.body[this._task.stringId] = {};
+        this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId === undefined).forEach(dataGroup => {
+            dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
+                this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
             });
-        } else {
-            filteredDataGroups = this._safeTask.dataGroups.filter(dataGroup => !Object.keys(dataGroup).includes('parentTaskId'));
-        }
-        filteredDataGroups.forEach(dataGroup => {
-            dataGroup.fields.forEach(field => {
-                if (this.wasFieldUpdated(field)) {
-                    const fieldTaskId: string = field.parentTaskId !== undefined ? field.parentTaskId : undefined;
-                    const fieldValue = field instanceof TaskRefField && field.value.length > 0
-                        ? this.createUpdateRequestContext(field.value)
-                        : field.value;
-                    context.body[field.stringId] = {
-                        type: this._fieldConverterService.resolveType(field),
-                        value: fieldValue
-                    };
-                    if (fieldTaskId !== undefined) {
-                        context.body[field.stringId]['parentTaskId'] = fieldTaskId;
-                    }
-                    context.previousValues[field.stringId] = field.previousValue;
-                    field.changed = false;
-                }
+        });
+        this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId !== undefined).forEach(dataGroup => {
+            if (dataGroup.fields.some(field => this.wasFieldUpdated(field))) {
+                context.body[dataGroup.parentTaskId] = {};
+            } else {
+                return;
+            }
+            dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
+                this.addFieldToSetDataRequestBody(context, dataGroup.parentTaskId, field);
             });
         });
         return context;
+    }
+
+    protected addFieldToSetDataRequestBody(context: TaskSetDataRequestContext, taskId: string, field: DataField<any>): void {
+        context.body[taskId][field.stringId] = {
+            type: this._fieldConverterService.resolveType(field),
+            value: this._fieldConverterService.formatValueForBackend(field, field.value)
+        };
+        context.previousValues[field.stringId] = field.previousValue;
+        field.changed = false;
     }
 
     /**
@@ -353,7 +346,11 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
 
         // this iteration could be improved if we had a map of all the data fields in a task
-        const totalCount = Object.keys(request).length;
+        let totalCount = 0;
+        const taskIdsInRequest: Array<string> = Object.keys(request);
+        taskIdsInRequest.forEach(taskId => {
+            totalCount += Object.keys(request[taskId]).length;
+        });
 
         if (totalCount === 0) {
             // an empty request is handled later in the code
@@ -361,15 +358,16 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
 
         let foundCount = 0;
-
         for (const datagroup of this._safeTask.dataGroups) {
+            const dataGroupParentTaskId: string = datagroup.parentTaskId !== undefined ? datagroup.parentTaskId : this._task.stringId;
             for (const field of datagroup.fields) {
-                if (!request[field.stringId]) {
+                if (!request[dataGroupParentTaskId][field.stringId]) {
                     continue;
                 }
 
                 if (!field.behavior.editable) {
-                    this._log.debug(`Field ${field.stringId}, was meant to be set to ${JSON.stringify(request[field.stringId])
+                    this._log.debug(`Field ${field.stringId}, was meant to be set to
+                    ${JSON.stringify(request[dataGroupParentTaskId][field.stringId])
                     }, but is no loner editable.`);
                     return false;
                 }
@@ -436,7 +434,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (Object.keys(changedFieldsMap).length > 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
         }
-        this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
+        this._snackBar.openSuccessSnackBar(!!response.message ? response.message : this._translate.instant('tasks.snackbar.dataSaved'));
         this.updateStateInfo(afterAction, true, setTaskId);
         nextEvent.resolve(true);
     }

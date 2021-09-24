@@ -21,7 +21,7 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = 
 
     // "first" datagroup has name and icon
     const nameField = getField(dataSection[0].fields,
-        GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX, taskReffed);
+        GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX);
 
     if (nameField === undefined) {
         throw new Error('Navigation entry name could not be resolved');
@@ -29,10 +29,10 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = 
     result.name = nameField.value;
 
     const useIcon = getField(dataSection[0].fields,
-        GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX, taskReffed);
+        GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX);
     if (useIcon !== undefined && useIcon.value) {
         const icon = getField(dataSection[0].fields,
-            GroupNavigationConstants.NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX, taskReffed);
+            GroupNavigationConstants.NAVIGATION_ENTRY_ICON_FIELD_ID_SUFFIX);
         if (icon === undefined) {
             this._log.error('Navigation entry icon could not be resolved, but is enabled. Icon was ignored');
         } else {
@@ -53,7 +53,7 @@ export function extractFilter(dataSection: Array<DataGroup>, taskReffed = true):
     }
 
     // "second" datagroup has filter
-    const filterField = getField(dataSection[1].fields, UserFilterConstants.FILTER_FIELD_ID, taskReffed);
+    const filterField = getField(dataSection[1].fields, UserFilterConstants.FILTER_FIELD_ID);
 
     if (filterField === undefined || !(filterField instanceof FilterField)) {
         throw new Error('Navigation entry filter could not be resolved');

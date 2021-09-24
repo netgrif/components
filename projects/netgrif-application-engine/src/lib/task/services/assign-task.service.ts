@@ -124,9 +124,9 @@ export class AssignTaskService extends TaskHandlingService {
                     }
                     forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
                     this.completeActions(afterAction, nextEvent, true);
-                    // this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
-                    //     ? this._translate.instant('tasks.snackbar.assignTaskSuccess')
-                    //     : outcomeResource.outcome.message);
+                    this._snackBar.openSuccessSnackBar(!!outcomeResource.outcome.message
+                        ? outcomeResource.outcome.message
+                        : this._translate.instant('tasks.snackbar.assignTaskSuccess'));
                 } else if (outcomeResource.error) {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);
                     this.completeActions(afterAction, nextEvent, false);

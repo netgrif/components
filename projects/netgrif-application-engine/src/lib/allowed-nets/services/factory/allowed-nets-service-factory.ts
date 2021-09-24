@@ -36,7 +36,7 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
                                                             baseAllowedNets: BaseAllowedNetsService,
                                                             navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
     const filterField = getField(navigationItemTaskData[navigationItemTaskData.length - 1].fields,
-        UserFilterConstants.FILTER_FIELD_ID, true) as FilterField;
+        UserFilterConstants.FILTER_FIELD_ID) as FilterField;
 
     if (filterField === undefined) {
         throw new Error(`Provided navigation item task data does not contain a filter field! Allowed nets cannot be generated from it!`);

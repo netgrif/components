@@ -374,7 +374,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         const result = [];
         const firstEntryIndex = navConfigDatagroups.findIndex(
             group => group.fields.some(
-                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX)
+                field => field.stringId === GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX
             )
         );
 

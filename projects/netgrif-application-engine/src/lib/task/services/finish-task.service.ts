@@ -150,9 +150,6 @@ export class FinishTaskService extends TaskHandlingService {
                 if (outcomeResource.error !== '') {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
-                // todo refactor parsing
-                // huh?
-                // this._taskDataService.emitChangedFields(outcomeResource.changedFields.changedFields);
                 this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {
