@@ -4,7 +4,8 @@ import {
     defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES, NextGroupService,
     SearchService,
     SimpleFilter, TaskSearchCaseQuery,
-    TaskViewService, NAE_BASE_FILTER, AllowedNetsService, AllowedNetsServiceFactory, NAE_VIEW_ID_SEGMENT, ViewIdService
+    TaskViewService, NAE_BASE_FILTER, AllowedNetsService, AllowedNetsServiceFactory, NAE_VIEW_ID_SEGMENT, ViewIdService,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
@@ -32,6 +33,7 @@ const baseFilterFactory = (nextGroupService: NextGroupService) => {
         CategoryFactory,
         TaskViewService,
         SearchService,
+        ChangedFieldsService,
         {
             provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
