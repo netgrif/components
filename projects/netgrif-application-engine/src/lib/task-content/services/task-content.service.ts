@@ -211,18 +211,8 @@ export abstract class TaskContentService implements OnDestroy {
         Object.keys(chFields).forEach(changedField => {
             if (!!this.taskFieldsIndex[changedField]) {
                 this.updateField(chFields, this._taskFieldsIndex[changedField], frontendActions);
-                // if (this.taskFieldsIndex[changedField] instanceof TaskRefField) {
-                //     referencedTaskIds.push(...this.taskFieldsIndex[changedField].value);
-                // }
             }
         });
-
-        // todo rework
-        // referencedTaskIds.forEach(taskId => {
-        //     Object.keys(this._taskFieldsIndex).filter(fieldId => fieldId.startsWith(taskId + '-')).forEach(filteredFieldId => {
-        //         this.updateField(chFields, this._taskFieldsIndex[filteredFieldId], frontendActions, true, taskId);
-        //     });
-        // });
 
         this.$shouldCreate.next(this._task.dataGroups);
         this.performFrontendAction(frontendActions);
@@ -246,7 +236,8 @@ export abstract class TaskContentService implements OnDestroy {
                     break;
                 case 'behavior':
                     if (updatedField.behavior[this._task.transitionId]) {
-                        // TODO NGSD-489 fix behavior resolutionfield.behavior = updatedField.behavior[this._task.transitionId];
+                        // TODO NGSD-489 fix behavior resolution
+                        field.behavior = updatedField.behavior[this._task.transitionId];
                     } else {
                         // ignore the behavior update, since it does not affect this task
                         return; // continue - the field does not need updating, since nothing changed
