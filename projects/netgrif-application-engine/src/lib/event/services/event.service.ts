@@ -16,7 +16,7 @@ export class EventService {
         if ('changedFields' in outcome) {
             const setDataOutcome: SetDataEventOutcome = outcome;
             changedFieldsMap[setDataOutcome.aCase.stringId] = {
-                [setDataOutcome.task.stringId]: setDataOutcome.changedFields
+                [setDataOutcome.task.stringId]: setDataOutcome.changedFields.changedFields
             };
         }
         if (!!outcome.outcomes && outcome.outcomes.length > 0) {
