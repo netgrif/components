@@ -24,8 +24,8 @@ export abstract class TabbedCaseView extends AbstractCaseView {
                           protected _loggerService: LoggerService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
                           protected _overflowService?: OverflowService,
-                          protected _autoswitchToTaskTab: boolean = true,
-                          protected _openExistingTab: boolean = true,
+                          protected _autoswitchToTaskTab = true,
+                          protected _openExistingTab = true,
                           protected _newCaseCreationConfig: NewCaseCreationConfigurationData = {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true

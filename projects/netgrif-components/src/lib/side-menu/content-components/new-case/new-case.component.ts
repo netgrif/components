@@ -10,7 +10,6 @@ import {
     SideMenuControl,
     SnackBarService
 } from '@netgrif/application-engine';
-import {MatOption} from '@angular/material/core';
 
 @Component({
     selector: 'nc-new-case',
@@ -22,7 +21,6 @@ import {MatOption} from '@angular/material/core';
 })
 export class NewCaseComponent extends AbstractNewCaseComponent {
 
-    netVersion: string;
     isVersionVisible: boolean;
 
     constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
@@ -35,15 +33,4 @@ export class NewCaseComponent extends AbstractNewCaseComponent {
         this.isVersionVisible = _sideMenuControl.isVersionVisible;
     }
 
-    showVersion(option: MatOption): void {
-        if (option !== undefined && option.value !== undefined && option.value.version !== undefined)
-            this.netVersion = option.value.version;
-    }
-
-    checkVersion(viewValue: any): void {
-        const currentOption = typeof viewValue === 'string' ? undefined : viewValue.version;
-        if (currentOption === undefined) {
-            this.netVersion = '';
-        }
-    }
 }
