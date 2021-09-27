@@ -7,10 +7,8 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventNotification} from '../model/task-event-notification';
 import {TaskEventService} from '../services/task-event.service';
 import {DataGroup, DataGroupAlignment} from '../../resources/interface/data-groups';
-import {IncrementingCounter} from '../../utility/incrementing-counter';
 import {TaskElementType} from '../model/task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
-import {GridData} from '../model/grid-data';
 import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayout, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
@@ -21,6 +19,7 @@ import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-config
 import {AsyncRenderingConfiguration} from '../model/async-rendering-configuration';
 import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 import {SplitDataGroup} from '../model/split-data-group';
+import {Subgrid} from '../model/subgrid';
 
 export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
@@ -43,10 +42,6 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * Emits `true` if there is at least one data field, that should be displayed. Emits `false` otherwise.
      */
     hasDataToDisplay$: Observable<boolean>;
-    /**
-     * The number of columns used by the tasks layout
-     */
-    formCols = 4;
 
     /**
      * Exists to allow references to the enum in the HTML
@@ -76,17 +71,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      */
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
     /**
-     * Describes the layout of the elements
-     */
-    gridAreas: string;
-    /**
-     * Grid area identifiers that are already in use
-     */
-    protected _existingIdentifiers: Set<string>;
-    /**
      * The data fields that are currently displayed
      */
-    protected _dataSource$: BehaviorSubject<Array<DatafieldGridLayoutElement>>;
+    protected _dataSource$: BehaviorSubject<Array<Subgrid>>;
     protected _subTaskContent: Subscription;
     protected _subTaskEvent: Subscription;
     protected _asyncRenderingConfig: AsyncRenderingConfiguration;
@@ -95,6 +82,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected _defaultAlignment: FieldAlignment;
     protected _defaultCompactDirection: DataGroupCompact;
     protected _defaultHideEmptyRows: DataGroupHideEmptyRows;
+    protected _defaultNumberOfCols: number;
 
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
@@ -109,7 +97,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
 
         this.loading$ = new LoadingEmitter(true);
-        this._dataSource$ = new BehaviorSubject<Array<DatafieldGridLayoutElement>>([]); // TODO Array<Subgrid>
+        this._dataSource$ = new BehaviorSubject<Array<Subgrid>>([]);
         this.hasDataToDisplay$ = this._dataSource$.pipe(map(data => {
             return data.length !== 0;
         }));
@@ -117,7 +105,6 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         this._subTaskContent = this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
                 this.computeDefaultLayoutConfiguration();
-                this.formCols = this.getNumberOfFormColumns(); // TODO remove
                 this.computeLayoutData(data);
             } else {
                 this._dataSource$.next([]);
@@ -151,26 +138,8 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         return this.taskContentService.task.stringId;
     }
 
-    public get dataSource(): Array<DatafieldGridLayoutElement> {
+    public get dataSource(): Array<Subgrid> {
         return this._dataSource$.getValue();
-    }
-
-    /**
-     * @returns the columns configuration for the grid layout
-     */
-    public getGridColumns(): string {
-        return 'repeat(' + this.formCols + ', 1fr)';
-    }
-
-    /**
-     * @returns the rows configuration for the grid layout
-     */
-    public getGridRows(): string {
-        let rowConfig = '';
-        for (const row of this.gridAreas.split('|')) {
-            rowConfig = rowConfig.concat(row.includes('xgroup') ? 'auto' : 'minmax(105px, auto)', ' ') ;
-        }
-        return rowConfig.trim();
     }
 
     /**
@@ -228,6 +197,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         this._defaultAlignment = this.taskContentService.task?.layout?.fieldAlignment ?? this.DEFAULT_FIELD_ALIGNMENT;
         this._defaultCompactDirection = this.taskContentService.task?.layout?.compactDirection ?? this.DEFAULT_COMPACT_DIRECTION;
         this._defaultHideEmptyRows = this.taskContentService.task?.layout?.hideEmptyRows ?? this.DEFAULT_HIDE_EMPTY_ROWS;
+        this._defaultNumberOfCols = this.getNumberOfFormColumns();
     }
 
     /**
@@ -238,14 +208,12 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     public computeLayoutData(dataGroups: Array<DataGroup>) {
         if (!this.taskContentService.task) {
             this._dataSource$.next([]);
-            this.gridAreas = '';
             return;
         }
-        this._existingIdentifiers = new Set<string>();
+
+        const result = [];
 
         dataGroups = this.preprocessDataGroups(dataGroups);
-
-        const gridData: GridData = {grid: [], gridElements: [], runningTitleCount: new IncrementingCounter()};
 
         const defaultLayout = this.taskContentService.task.layout && this.taskContentService.task.layout.type
             ? this.taskContentService.task.layout.type
@@ -259,36 +227,37 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 group.layout.type = defaultLayout;
             }
 
+            const subgrid = new Subgrid(group.layout.cols ?? this._defaultNumberOfCols);
+
             if (group.title !== undefined) {
-                const title = this.groupTitleElement(group, gridData.runningTitleCount);
-                gridData.gridElements.push(title);
-                gridData.grid.push(this.newGridRow(title.gridAreaId));
+                const title = subgrid.addTitle(group);
+                subgrid.addRow(this.newGridRow(subgrid.cols, title.gridAreaId));
             }
 
             switch (group.layout.type) {
                 case DataGroupLayoutType.GRID:
-                    this.computeGridLayout(group, gridData);
+                    this.computeGridLayout(group, subgrid);
                     break;
                 case DataGroupLayoutType.FLOW:
-                    this.computeFlowLayout(group, gridData);
+                    this.computeFlowLayout(group, subgrid);
                     break;
                 case DataGroupLayoutType.LEGACY:
-                    this.computeLegacyLayout(group, gridData);
+                    this.computeLegacyLayout(group, subgrid);
                     break;
                 default:
                     throw new Error(`Unknown task layout type '${this.taskContentService.task.layout.type}'`);
             }
+
+            subgrid.finalize();
         });
 
-        this.fillEmptySpace(gridData);
-        this.renderFields(gridData.gridElements);
-        this.gridAreas = this.createGridAreasString(gridData.grid);
+        this.renderFields(result);
     }
 
-    protected renderFields(gridElements: Array<DatafieldGridLayoutElement>) {
+    protected renderFields(subgrids: Array<Subgrid>) {
         if (!this._asyncRenderingConfig.enableAsyncRenderingForNewFields
             && !(this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand && this.taskContentService.isExpanding)) {
-            this._dataSource$.next(gridElements);
+            this._dataSource$.next(subgrids);
             return;
         }
 
@@ -449,9 +418,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     /**
      * Computes the layout data for a single data group with grid layout. The resulting layout is saved into the input objects.
      * @param dataGroup the data group that should be laid out into a grid
-     * @param gridData the I/O object that holds the information about the layout that was computed so far
+     * @param subgrid the object that holds the context of the computed layouting unit
      */
-    protected computeGridLayout(dataGroup: DataGroup, gridData: GridData) {
+    protected computeGridLayout(dataGroup: DataGroup, subgrid: Subgrid) {
         const localGrid: Array<Array<string>> = [];
 
         dataGroup.fields.forEach(dataField => {
@@ -465,18 +434,17 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             }
 
             while (localGrid.length < dataField.layout.y + dataField.layout.rows) {
-                localGrid.push(this.newGridRow());
+                localGrid.push(this.newGridRow(subgrid.cols));
             }
 
-            const fieldElement = this.fieldElement(dataField);
-            gridData.gridElements.push(fieldElement);
+            const fieldElement = subgrid.addField(dataField, this._fieldConverter.resolveType(dataField));
             this.occupySpace(localGrid, dataField.layout.y, dataField.layout.x,
                 dataField.layout.cols, fieldElement.gridAreaId, dataField.layout.rows);
         });
 
-        this.collapseGridEmptySpace(localGrid, dataGroup.layout);
+        this.collapseGridEmptySpace(localGrid, dataGroup.layout, subgrid);
 
-        localGrid.forEach(localGridRow => gridData.grid.push(localGridRow));
+        localGrid.forEach(localGridRow => subgrid.addRow(localGridRow));
     }
 
     /**
@@ -485,8 +453,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * The input grid is modified in place.
      * @param grid the state of the grid that should be modified
      * @param layout configuration of the applied compacting rules
+     * @param subgrid the object that holds the context of the computed layouting unit
      */
-    protected collapseGridEmptySpace(grid: Array<Array<string>>, layout: DataGroupLayout) {
+    protected collapseGridEmptySpace(grid: Array<Array<string>>, layout: DataGroupLayout, subgrid: Subgrid) {
         const hideRows = layout.hideEmptyRows ?? this._defaultHideEmptyRows;
 
         if (hideRows === DataGroupHideEmptyRows.ALL) {
@@ -495,7 +464,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
         switch (layout.compactDirection ?? this._defaultCompactDirection) {
             case DataGroupCompact.UP:
-                this.compactFieldsUp(grid, hideRows);
+                this.compactFieldsUp(grid, hideRows, subgrid);
                 break;
         }
     }
@@ -507,8 +476,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * The input grid is modified in place.
      * @param grid the state of the grid that should be modified
      * @param hideRows configuration for empty row removal during the compacting process
+     * @param subgrid the object that holds the context of the computed layouting unit
      */
-    protected compactFieldsUp(grid: Array<Array<string>>, hideRows: DataGroupHideEmptyRows) {
+    protected compactFieldsUp(grid: Array<Array<string>>, hideRows: DataGroupHideEmptyRows, subgrid: Subgrid) {
         for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
             const row = grid[rowIndex];
 
@@ -533,7 +503,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                     continue;
                 }
 
-                const elementDimensions = this.getElementDimensions(grid, columnIndex, foundElementRowIndex);
+                const elementDimensions = this.getElementDimensions(grid, columnIndex, foundElementRowIndex, subgrid);
 
                 if (this.isAreaEmpty(grid, columnIndex, rowIndex, elementDimensions.width, foundElementRowIndex - rowIndex)) {
                     const element = grid[foundElementRowIndex][columnIndex];
@@ -578,12 +548,13 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * @param grid the grid of elements
      * @param x the X coordinate of the desired elements top-left corner
      * @param y the Y coordinate of the desired elements top-left corner
+     * @param subgrid the object that holds the context of the computed layouting unit
      * @returns the width and height of the specified element
      */
-    protected getElementDimensions(grid: Array<Array<string>>, x: number, y: number): { width: number, height: number } {
+    protected getElementDimensions(grid: Array<Array<string>>, x: number, y: number, subgrid: Subgrid): { width: number, height: number } {
         const element = grid[y][x];
         let width = 1;
-        while (x + width < this.formCols && grid[y][x + width] === element) {
+        while (x + width < subgrid.cols && grid[y][x + width] === element) {
             width++;
         }
         let height = 1;
@@ -615,10 +586,10 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     /**
      * Computes the layout data for a single data group with flow layout. The resulting layout is saved into the input objects.
      * @param dataGroup the data group that should be laid out into a grid using the flow algorithm
-     * @param gridData the I/O object that holds the information about the layout that was computed so far
+     * @param subgrid the object that holds the context of the computed layouting unit
      */
-    protected computeFlowLayout(dataGroup: DataGroup, gridData: GridData) {
-        this.flowFields(dataGroup, gridData, 1);
+    protected computeFlowLayout(dataGroup: DataGroup, subgrid: Subgrid) {
+        this.flowFields(dataGroup, subgrid, 1);
     }
 
     /**
@@ -626,16 +597,17 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      *
      * The legacy layout forces the number of columns to be 4 and logs a warning if this was not the case.
      * @param dataGroup the data group that should be laid out into a grid using the legacy algorithm used in NAE versions < 4.0.0
-     * @param gridData the I/O object that holds the information about the layout that was computed so far
+     * @param subgrid the object that holds the context of the computed layouting unit
      */
-    protected computeLegacyLayout(dataGroup: DataGroup, gridData: GridData) {
-        if (this.formCols !== 4) {
-            this.formCols = 4;
-            this._logger.warn(`Task with id '${this.taskContentService.task.stringId}' has legacy layout with a non-default number` +
-                ` of columns. If you want to use a layout with different number of columns than 2 use a different layout type instead.`);
+    protected computeLegacyLayout(dataGroup: DataGroup, subgrid: Subgrid) {
+        if (subgrid.cols !== 4) {
+            subgrid.cols = 4;
+            this._logger.warn(`Task with id '${this.taskContentService.task.stringId}' has a data group with legacy layout with a `
+                + `non-default number of columns. If you want to use a layout with different number of columns than 2 use a different `
+                + `layout type instead.`);
         }
 
-        this.flowFields(dataGroup, gridData, 2);
+        this.flowFields(dataGroup, subgrid, 2);
     }
 
     /**
@@ -644,24 +616,24 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * left aligned. The last row of fields is aligned to the left, center or right based on the data groups property.
      * If the last row cannot be aligned to the exact center it is offset one grid tile to the left.
      * @param dataGroup the data group that should be laid out into a grid
-     * @param gridData the I/O object that holds the information about the layout that was computed so far
+     * @param subgrid the object that holds the context of the computed layouting unit
      * @param fieldWidth the number of grid tiles, that should be occupied by each field
      */
-    protected flowFields(dataGroup: DataGroup, gridData: GridData, fieldWidth: number) {
-        const fieldsPerRow = Math.floor(this.formCols / fieldWidth);
+    protected flowFields(dataGroup: DataGroup, subgrid: Subgrid, fieldWidth: number) {
+        const fieldsPerRow = Math.floor(subgrid.cols / fieldWidth);
         const maxXPosition = fieldWidth * (fieldsPerRow - 1);
 
         let xPosition = 0;
+        const localGrid: Array<Array<string>> = [];
         dataGroup.fields.forEach((dataField, dataFieldCount) => {
-            const fieldElement = this.fieldElement(dataField);
-            gridData.gridElements.push(fieldElement);
+            const fieldElement = subgrid.addField(dataField, this._fieldConverter.resolveType(dataField));
             if (dataGroup.stretch) {
-                gridData.grid.push(this.newGridRow(fieldElement.gridAreaId));
+                subgrid.addRow(this.newGridRow(subgrid.cols, fieldElement.gridAreaId));
                 return; // continue
             }
             // else
             if (xPosition === 0) {
-                gridData.grid.push(this.newGridRow());
+                localGrid.push(this.newGridRow(subgrid.cols));
             }
             if (xPosition === 0 && this.isLastRow(dataFieldCount, dataGroup, fieldsPerRow)) {
                 const fieldsInLastRow = dataGroup.fields.length % fieldsPerRow;
@@ -672,70 +644,22 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                     xPosition = Math.floor((rowWidth - fieldsInLastRow * fieldWidth) / 2);
                 }
             }
-            this.occupySpace(gridData.grid, gridData.grid.length - 1, xPosition, fieldWidth, fieldElement.gridAreaId);
+            this.occupySpace(localGrid, localGrid.length - 1, xPosition, fieldWidth, fieldElement.gridAreaId);
 
             xPosition += fieldWidth;
             if (xPosition > maxXPosition) {
                 xPosition = 0;
             }
         });
+        localGrid.forEach(row => subgrid.addRow(row));
     }
 
     /**
-     * Creates a new grid row of length equivalent to the [formCols]{@link AbstractTaskContentComponent#formCols} property of this class
+     * @param width width of the row
      * @param content the value that should be used to fill all elements in the row
      */
-    protected newGridRow(content = ''): Array<string> {
-        return Array(this.formCols).fill(content);
-    }
-
-    /**
-     * @param dataGroup the data group whose title element should be created
-     * @param titleCounter the counter that is used to track the number of already created filler elements
-     * @returns an object that represents a title element of the provided data group. The provided counter is incremented by one.
-     */
-    protected groupTitleElement(dataGroup: DataGroup, titleCounter: IncrementingCounter): DatafieldGridLayoutElement {
-        return {
-            title: dataGroup.title,
-            gridAreaId: this.assureUniqueness('group' + titleCounter.next()),
-            type: TaskElementType.DATA_GROUP_TITLE
-        };
-    }
-
-    /**
-     * @param field the field whose representation should be created
-     * @returns an object that represents the provided data field in the layout
-     */
-    protected fieldElement(field: DataField<unknown>): DatafieldGridLayoutElement {
-        return {gridAreaId: this.assureUniqueness(field.stringId), type: this._fieldConverter.resolveType(field), item: field};
-    }
-
-    /**
-     * @param fillerCounter the counter that is used to track the number of already created filler elements
-     * @returns a filler element object with a unique ID. The provided counter is incremented by one.
-     */
-    protected fillerElement(fillerCounter: IncrementingCounter): DatafieldGridLayoutElement {
-        return {gridAreaId: this.assureUniqueness('blank' + fillerCounter.next()), type: TaskElementType.BLANK};
-    }
-
-    /**
-     * Assures that the provided identifier will be unique.
-     * @param identifier the base for the identifier
-     * @returns the base identifier, if it already is unique. A unique variation on the base identifier if it is already in use.
-     */
-    protected assureUniqueness(identifier: string): string {
-        const alphaNumIdentifier = 'x' + identifier.replace(/[^0-9a-zA-Z]/gi, '');
-        if (!this._existingIdentifiers.has(alphaNumIdentifier)) {
-            this._existingIdentifiers.add(alphaNumIdentifier);
-            return alphaNumIdentifier;
-        }
-        let variation;
-        const counter = new IncrementingCounter();
-        do {
-            variation = `x${counter.next()}${alphaNumIdentifier}`;
-        } while (this._existingIdentifiers.has(variation));
-        this._existingIdentifiers.add(variation);
-        return variation;
+    protected newGridRow(width: number, content = ''): Array<string> {
+        return Array(width).fill(content);
     }
 
     /**
@@ -773,32 +697,6 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      */
     protected isLastRow(index: number, dataGroup: DataGroup, fieldsPerRow: number): boolean {
         return index + fieldsPerRow >= dataGroup.fields.length;
-    }
-
-    /**
-     * Fills empty tiles in the grid with blank elements
-     * @param gridData the grid and elements that should be filled with blank data
-     */
-    protected fillEmptySpace(gridData: GridData) {
-        const runningBlanksCount = new IncrementingCounter();
-        gridData.grid.forEach(row => {
-            for (let i = 0; i < row.length; i++) {
-                if (row[i] !== '') {
-                    continue;
-                }
-                const filler = this.fillerElement(runningBlanksCount);
-                row[i] = filler.gridAreaId;
-                gridData.gridElements.push(filler);
-            }
-        });
-    }
-
-    /**
-     * Joins the provided grid of element into a string accepted by `[gdAreas]` input property of Angular flex layout
-     * @param grid the grid of elements
-     */
-    protected createGridAreasString(grid: Array<Array<string>>): string {
-        return grid.map(row => row.join(' ')).join(' | ');
     }
 
     public trackByFn = (index: number, element: DatafieldGridLayoutElement) => this.trackByDatafields(index, element);
