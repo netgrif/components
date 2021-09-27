@@ -25,11 +25,18 @@ export interface DataGroup {
      */
     stretch: boolean;
     layout?: DataGroupLayout;
-
     /**
      * String id of parent task, only set if dataGroup is loaded by {@link TaskRefField}
      */
     parentTaskId?: string;
+    /**
+     * String id of the parent task ref. Only set if the data group is loaded via a {@link TaskRefField}
+     */
+    parentTaskRefId?: string;
+    /**
+     * Level of nesting in a task reffed data group. Only set if the data group is loaded via a {@link TaskRefField}
+     */
+    nestingLevel?: number;
 }
 
 /**

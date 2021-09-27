@@ -19,6 +19,8 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {NAE_ASYNC_RENDERING_CONFIGURATION} from '../model/async-rendering-configuration-injection-token';
 import {AsyncRenderingConfiguration} from '../model/async-rendering-configuration';
+import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {SplitDataGroup} from '../model/split-data-group';
 
 export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
@@ -107,7 +109,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
 
         this.loading$ = new LoadingEmitter(true);
-        this._dataSource$ = new BehaviorSubject<Array<DatafieldGridLayoutElement>>([]);
+        this._dataSource$ = new BehaviorSubject<Array<DatafieldGridLayoutElement>>([]); // TODO Array<Subgrid>
         this.hasDataToDisplay$ = this._dataSource$.pipe(map(data => {
             return data.length !== 0;
         }));
@@ -115,7 +117,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         this._subTaskContent = this.taskContentService.$shouldCreate.subscribe(data => {
             if (data.length !== 0) {
                 this.computeDefaultLayoutConfiguration();
-                this.formCols = this.getNumberOfFormColumns();
+                this.formCols = this.getNumberOfFormColumns(); // TODO remove
                 this.computeLayoutData(data);
             } else {
                 this._dataSource$.next([]);
@@ -241,7 +243,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         }
         this._existingIdentifiers = new Set<string>();
 
-        dataGroups = this.cloneAndFilterHidden(dataGroups);
+        dataGroups = this.preprocessDataGroups(dataGroups);
 
         const gridData: GridData = {grid: [], gridElements: [], runningTitleCount: new IncrementingCounter()};
 
@@ -333,6 +335,57 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     }
 
     /**
+     * Clones the content of the data groups to prevent unintentional memory accesses to source data.
+     * Rearranges the data groups to accommodate taskrefs. Filters out hidden and forbidden fields.
+     * @param dataGroups
+     * @returns the preprocesses data groups
+     */
+    protected preprocessDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
+        dataGroups = this.cloneAndFilterHidden(dataGroups);
+
+        const result = [];
+        for (let i = 0; i < dataGroups.length; i++) {
+            const group = dataGroups[i];
+            if (!group.fields.some(f => this.isTaskRef(f))) {
+                result.push(group);
+                continue;
+            }
+            const split = this.splitDataGroupOnTaskRef(group);
+            if (split.startGroup !== undefined) {
+                result.push(split.startGroup);
+            }
+
+            if (split.taskRef.value.length === 0 || split.endGroup === undefined) {
+                if (split.endGroup !== undefined) {
+                    dataGroups.splice(i + 1, 0, split.endGroup);
+                }
+                continue;
+            }
+
+            let lastChildIndex = i + 1;
+            let lastChild = dataGroups[lastChildIndex];
+            let firstNonDescendantIndex = lastChildIndex + 1;
+            for (; firstNonDescendantIndex < dataGroups.length; firstNonDescendantIndex++) {
+                const nextGroup = dataGroups[firstNonDescendantIndex];
+                if (nextGroup.nestingLevel === undefined || nextGroup.nestingLevel < lastChild.nestingLevel) {
+                    // end of nested block
+                    break;
+                }
+                if (nextGroup.nestingLevel === lastChild.nestingLevel
+                    && nextGroup.parentTaskRefId === split.taskRef.stringId
+                    && split.taskRef.value.some(reffedTaskId => reffedTaskId === nextGroup.parentTaskId)) {
+                    lastChildIndex = firstNonDescendantIndex;
+                    lastChild = dataGroups[lastChildIndex];
+                }
+            }
+
+            dataGroups.splice(firstNonDescendantIndex, 0, split.endGroup);
+        }
+
+        return result;
+    }
+
+    /**
      * Creates a duplicate of the provided data group array and filters away any fields and data groups that are marked as hidden.
      * Because of the duplication the filtering doesn't affect the original instances and they remain unchanged.
      * @param dataGroups the data groups that should be filtered
@@ -342,12 +395,55 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         const result = dataGroups.map(group => {
             const g = {...group};
             g.fields = g.fields.filter(field => !field.behavior.hidden
-                && !field.behavior.forbidden
-                && this._fieldConverter.resolveType(field) !== FieldTypeResource.TASK_REF);
+                && !field.behavior.forbidden);
             return g;
         });
 
         return result.filter(group => group.fields.length > 0);
+    }
+
+    protected isTaskRef(field: DataField<unknown>): boolean {
+        return field instanceof TaskRefField;
+    }
+
+    /**
+     * Sorts the input data group based on the Y coordinate of the fields and splits it into parts on the first task ref.
+     * If some fields appear before the first task ref they are extracted into a new [startGroup]{@link SplitDataGroup#startGroup}.
+     * If some fields appear after the first task ref they are extracted into a new [endGroup]{@link SplitDataGroup#endGroup}.
+     * @param dataGroup
+     * @protected
+     */
+    protected splitDataGroupOnTaskRef(dataGroup: DataGroup): SplitDataGroup {
+        dataGroup.fields.sort((a, b) => a.layout.y - b.layout.y);
+        const taskRefPosition = dataGroup.fields.findIndex(f => this.isTaskRef(f));
+        const result: SplitDataGroup = {
+            taskRef: dataGroup.fields[taskRefPosition]
+        };
+
+        if (taskRefPosition !== 0) {
+            result.startGroup = {
+                title: dataGroup.title,
+                alignment: dataGroup.alignment,
+                layout: dataGroup.layout,
+                stretch: dataGroup.stretch,
+                fields: dataGroup.fields.slice(0, taskRefPosition),
+            };
+        }
+
+        if (taskRefPosition !== dataGroup.fields.length - 1) {
+            result.endGroup = {
+                title: undefined,
+                alignment: dataGroup.alignment,
+                layout: dataGroup.layout,
+                stretch: dataGroup.stretch,
+                fields: dataGroup.fields.slice(taskRefPosition + 1),
+            };
+            result.endGroup.fields.forEach(f => {
+                f.layout.y -= result.taskRef.layout.y - 1;
+            });
+        }
+
+        return result;
     }
 
     /**
