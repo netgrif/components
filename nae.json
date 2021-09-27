@@ -683,11 +683,37 @@
                 }
             }
         },
-        "group-navigation-outlet": {
-            "layout": {
-                "name": "groupNavigation"
+        "demo-active-group": {
+            "component": {
+                "class": "ActiveGroupComponent",
+                "from": "./doc/active-group/active-group.component"
             },
-            "navigation": false
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "active-group"
+            }
+        },
+        "wrapper": {
+            "layout": {
+                "name": "emptyView"
+            },
+            "access": "private",
+            "navigation": false,
+            "routing": {
+                "path": "wrap"
+            },
+            "children": {
+                "group-navigation-outlet": {
+                    "layout": {
+                        "name": "groupNavigation"
+                    },
+                    "navigation": false,
+                    "routing": {
+                        "path": "group-nav"
+                    }
+                }
+            }
         },
         "dashboard": {
             "layout": {
