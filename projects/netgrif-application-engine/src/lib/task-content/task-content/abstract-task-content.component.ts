@@ -169,7 +169,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             return item.alignment;
         }
 
-        const fieldAlignment = item.item?.layout?.alignment ?? this._defaultAlignment;
+        const fieldAlignment = item.item?.localLayout?.alignment ?? this._defaultAlignment;
 
         let alignment;
         switch (fieldAlignment) {
@@ -362,8 +362,10 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected cloneAndFilterHidden(dataGroups: Array<DataGroup>): Array<DataGroup> {
         const result = dataGroups.map(group => {
             const g = {...group};
-            g.fields = g.fields.filter(field => !field.behavior.hidden
-                && !field.behavior.forbidden);
+            g.fields = g.fields.filter(field => !field.behavior.hidden && !field.behavior.forbidden).map(field => {
+                field.resetLocalLayout();
+                return field;
+            });
             return g;
         });
 
@@ -382,7 +384,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      * @protected
      */
     protected splitDataGroupOnTaskRef(dataGroup: DataGroup): SplitDataGroup {
-        dataGroup.fields.sort((a, b) => a.layout.y - b.layout.y);
+        dataGroup.fields.sort((a, b) => a.localLayout.y - b.localLayout.y);
         const taskRefPosition = dataGroup.fields.findIndex(f => this.isTaskRef(f));
         const result: SplitDataGroup = {
             taskRef: dataGroup.fields[taskRefPosition]
@@ -407,7 +409,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 fields: dataGroup.fields.slice(taskRefPosition + 1),
             };
             result.endGroup.fields.forEach(f => {
-                f.layout.y -= result.taskRef.layout.y - 1;
+                f.localLayout.y -= result.taskRef.localLayout.y - 1;
             });
         }
 
@@ -423,22 +425,22 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
         const localGrid: Array<Array<string>> = [];
 
         dataGroup.fields.forEach(dataField => {
-            if (!dataField.layout
-                || dataField.layout.x === undefined
-                || dataField.layout.y === undefined
-                || !dataField.layout.rows
-                || !dataField.layout.cols) {
+            if (!dataField.localLayout
+                || dataField.localLayout.x === undefined
+                || dataField.localLayout.y === undefined
+                || !dataField.localLayout.rows
+                || !dataField.localLayout.cols) {
                 throw new Error(
                     `You cannot use 'grid' layout without specifying the layout of the data fields (field ID: ${dataField.stringId})`);
             }
 
-            while (localGrid.length < dataField.layout.y + dataField.layout.rows) {
+            while (localGrid.length < dataField.localLayout.y + dataField.localLayout.rows) {
                 localGrid.push(this.newGridRow(subgrid.cols));
             }
 
             const fieldElement = subgrid.addField(dataField, this._fieldConverter.resolveType(dataField));
-            this.occupySpace(localGrid, dataField.layout.y, dataField.layout.x,
-                dataField.layout.cols, fieldElement.gridAreaId, dataField.layout.rows);
+            this.occupySpace(localGrid, dataField.localLayout.y, dataField.localLayout.x,
+                dataField.localLayout.cols, fieldElement.gridAreaId, dataField.localLayout.rows);
         });
 
         this.collapseGridEmptySpace(localGrid, dataGroup.layout, subgrid);
