@@ -1,7 +1,7 @@
 import {Type} from '@angular/core';
 import {Category} from '../search/models/category/category';
 import {UserFilterConstants} from '../filter/models/user-filter-constants';
-import {getField} from './get-field';
+import {getFieldFromDataGroups} from './get-field';
 import {FilterField} from '../data-fields/filter-field/models/filter-field';
 import {DataGroup} from '../resources/interface/data-groups';
 import {CategoryResolverService} from '../search/category-factory/category-resolver.service';
@@ -21,12 +21,12 @@ export function navigationItemTaskCategoryFactory(categoryResolverService: Categ
                                                   navigationItemTaskData: Array<DataGroup>,
                                                   defaultCaseSearchCategories: Array<Type<Category<any>>>,
                                                   defaultTaskSearchCategories: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
-    const filterField = getField(navigationItemTaskData[navigationItemTaskData.length - 1].fields,
-        UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
 
     if (filterField === undefined) {
         throw new Error(
-            `Provided navigation item task data does not contain a filter field! Search categories cannot be generated from it!`);
+            `Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
+            }'! Search categories cannot be generated from it!`);
     }
 
     const merge = new Set();

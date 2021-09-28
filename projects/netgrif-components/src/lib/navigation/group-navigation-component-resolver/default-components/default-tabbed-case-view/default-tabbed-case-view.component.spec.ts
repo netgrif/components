@@ -37,7 +37,7 @@ describe('DefaultTabbedCaseViewComponent', () => {
                         tabClosed$: of(),
                         tabViewOrder: 1,
                         tabViewComponent: DefaultTabbedTaskViewComponent,
-                        navigationItemTaskData: [{}, {
+                        navigationItemTaskData: [{fields: []}, {
                             fields: [
                                 new FilterField(
                                     `${UserFilterConstants.FILTER_FIELD_ID}`,

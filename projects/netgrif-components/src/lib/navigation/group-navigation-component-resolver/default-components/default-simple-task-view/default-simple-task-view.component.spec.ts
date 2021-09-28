@@ -26,7 +26,7 @@ describe('DefaultSimpleTaskViewComponent', () => {
                 {
                     provide: NAE_NAVIGATION_ITEM_TASK_DATA,
                     useValue: [
-                        {},
+                        {fields: []},
                         {
                             fields: [
                                 new FilterField(

@@ -6,17 +6,19 @@ import {
     Category,
     navigationItemTaskAllowedNetsServiceFactory,
     navigationItemTaskFilterFactory,
-    navigationItemTaskCategoryFactory, CategoryResolverService
+    navigationItemTaskCategoryFactory, CategoryResolverService, FilterExtractionService
 } from '@netgrif/application-engine';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from './injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {Type} from '@angular/core';
 
 /**
  * Converts a navigation item case task data injected by the {@link NAE_TAB_DATA} injection token into a {@link BaseFilter} instance
+ * @param extractionService
  * @param tabData the injected data containing the navigation item case task data
  */
-export function filterCaseTabbedDataFilterFactory(tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData): BaseFilter {
-    return navigationItemTaskFilterFactory(tabData.navigationItemTaskData);
+export function filterCaseTabbedDataFilterFactory(extractionService: FilterExtractionService,
+                                                  tabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData): BaseFilter {
+    return navigationItemTaskFilterFactory(extractionService, tabData.navigationItemTaskData);
 }
 
 /**
