@@ -16,7 +16,7 @@ import {
     tabbedAllowedNetsServiceFactory,
     tabbedTaskViewConfigurationFactory,
     NAE_TASK_VIEW_CONFIGURATION,
-    ChangedFieldsService
+    ChangedFieldsService, NAE_ASYNC_RENDERING_CONFIGURATION
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -54,6 +54,10 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
             useFactory: tabbedTaskViewConfigurationFactory,
             deps: [NAE_TAB_DATA]},
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
+        {provide: NAE_ASYNC_RENDERING_CONFIGURATION, useValue: {
+                enableAsyncRenderingForNewFields: false,
+                enableAsyncRenderingOnTaskExpand: false
+            }}
     ]
 })
 export class TabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {

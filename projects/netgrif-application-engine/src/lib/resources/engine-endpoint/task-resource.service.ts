@@ -221,7 +221,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                     });
                     fields.sort((a, b) => a.order - b.order);
                     dataFields.push(...fields.map(dataFieldResource => this._fieldConverter.toClass(dataFieldResource)));
-                    const dataGroupObject = {
+                    const dataGroupObject: DataGroup = {
                         fields: dataFields,
                         stretch: dataGroupResource.stretch,
                         title: dataGroupResource.title,
@@ -229,7 +229,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                         alignment: dataGroupResource.alignment,
                     };
                     if (dataGroupResource.parentTaskId !== undefined) {
-                        dataGroupObject['parentTaskId'] = dataGroupResource.parentTaskId;
+                        dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
+                        dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
+                        dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
                     }
                     result.push(dataGroupObject);
                 });

@@ -249,6 +249,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             }
 
             subgrid.finalize();
+            result.push(subgrid);
         });
 
         this.renderFields(result);
@@ -261,47 +262,47 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             return;
         }
 
-        const currentElements = this._dataSource$.value;
-        const currentTrackByIds = new Set<string>();
-        currentElements.forEach((element, index) => {
-            currentTrackByIds.add(this.trackByDatafields(index, element));
-        });
-
-        const keptElements = [];
-        const newElements = [];
-        if (this.taskContentService.isExpanding && this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand) {
-            newElements.push(...gridElements);
-        } else {
-            gridElements.forEach((element, index) => {
-                if (currentTrackByIds.has(this.trackByDatafields(index, element))) {
-                    keptElements.push(element);
-                } else {
-                    newElements.push(element);
-                }
-            });
-        }
-
-        this.spreadFieldRenderingOverTime(keptElements, newElements);
+        // const currentElements = this._dataSource$.value;
+        // const currentTrackByIds = new Set<string>();
+        // currentElements.forEach((element, index) => {
+        //     currentTrackByIds.add(this.trackByDatafields(index, element));
+        // });
+        //
+        // const keptElements = [];
+        // const newElements = [];
+        // if (this.taskContentService.isExpanding && this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand) {
+        //     newElements.push(...gridElements);
+        // } else {
+        //     gridElements.forEach((element, index) => {
+        //         if (currentTrackByIds.has(this.trackByDatafields(index, element))) {
+        //             keptElements.push(element);
+        //         } else {
+        //             newElements.push(element);
+        //         }
+        //     });
+        // }
+        //
+        // this.spreadFieldRenderingOverTime(keptElements, newElements);
     }
 
-    protected spreadFieldRenderingOverTime(keptElements: Array<DatafieldGridLayoutElement>,
-                                           newElements: Array<DatafieldGridLayoutElement>,
-                                           iteration = 1) {
-        this._asyncRenderTimeout = undefined;
-        const fieldsInCurrentIteration = newElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
-        const placeholdersInCurrentIteration = newElements.slice(iteration * this._asyncRenderingConfig.batchSize,
-            iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
-
-        fieldsInCurrentIteration.push(
-            ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
-
-        this._dataSource$.next([...keptElements, ...fieldsInCurrentIteration]);
-        if (this._asyncRenderingConfig.batchSize * iteration < newElements.length) {
-            this._asyncRenderTimeout = window.setTimeout(() => {
-                this.spreadFieldRenderingOverTime(keptElements, newElements, iteration + 1);
-            }, this._asyncRenderingConfig.batchDelay);
-        }
-    }
+    // protected spreadFieldRenderingOverTime(keptElements: Array<DatafieldGridLayoutElement>,
+    //                                        newElements: Array<DatafieldGridLayoutElement>,
+    //                                        iteration = 1) {
+    //     this._asyncRenderTimeout = undefined;
+    //     const fieldsInCurrentIteration = newElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
+    //     const placeholdersInCurrentIteration = newElements.slice(iteration * this._asyncRenderingConfig.batchSize,
+    //         iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
+    //
+    //     fieldsInCurrentIteration.push(
+    //         ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
+    //
+    //     this._dataSource$.next([...keptElements, ...fieldsInCurrentIteration]);
+    //     if (this._asyncRenderingConfig.batchSize * iteration < newElements.length) {
+    //         this._asyncRenderTimeout = window.setTimeout(() => {
+    //             this.spreadFieldRenderingOverTime(keptElements, newElements, iteration + 1);
+    //         }, this._asyncRenderingConfig.batchDelay);
+    //     }
+    // }
 
     /**
      * Clones the content of the data groups to prevent unintentional memory accesses to source data.
@@ -331,20 +332,18 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 continue;
             }
 
-            let lastChildIndex = i + 1;
-            let lastChild = dataGroups[lastChildIndex];
-            let firstNonDescendantIndex = lastChildIndex + 1;
+            const directChild = dataGroups[i + 1]; // the data group that immediately follows IS ALWAYS a direct child
+            let firstNonDescendantIndex = i + 2;
             for (; firstNonDescendantIndex < dataGroups.length; firstNonDescendantIndex++) {
                 const nextGroup = dataGroups[firstNonDescendantIndex];
-                if (nextGroup.nestingLevel === undefined || nextGroup.nestingLevel < lastChild.nestingLevel) {
-                    // end of nested block
+                if (nextGroup.nestingLevel === undefined || nextGroup.nestingLevel < directChild.nestingLevel) {
+                    // end of the block of nested data groups
                     break;
                 }
-                if (nextGroup.nestingLevel === lastChild.nestingLevel
-                    && nextGroup.parentTaskRefId === split.taskRef.stringId
-                    && split.taskRef.value.some(reffedTaskId => reffedTaskId === nextGroup.parentTaskId)) {
-                    lastChildIndex = firstNonDescendantIndex;
-                    lastChild = dataGroups[lastChildIndex];
+                if (nextGroup.nestingLevel === directChild.nestingLevel
+                    && (nextGroup.parentTaskRefId !== split.taskRef.stringId
+                        || !split.taskRef.value.some(reffedTaskId => reffedTaskId === nextGroup.parentTaskId))) {
+                    break;
                 }
             }
 
