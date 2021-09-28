@@ -22,6 +22,7 @@ import {FinishTaskService} from './finish-task.service';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 
 describe('AssignPolicyService', () => {
     let service: AssignPolicyService;
@@ -48,6 +49,7 @@ describe('AssignPolicyService', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 FinishPolicyService,
                 FinishTaskService,
+                ChangedFieldsService,
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations}

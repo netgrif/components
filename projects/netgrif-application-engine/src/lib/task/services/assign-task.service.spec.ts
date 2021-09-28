@@ -29,9 +29,11 @@ import {TaskEventNotification} from '../../task-content/model/task-event-notific
 import {TaskEvent} from '../../task-content/model/task-event';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
-import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 
 describe('AssignTaskService', () => {
     let service: AssignTaskService;
@@ -56,6 +58,7 @@ describe('AssignTaskService', () => {
                 TaskDataService,
                 DataFocusPolicyService,
                 TaskEventService,
+                ChangedFieldsService,
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
@@ -205,7 +208,16 @@ describe('AssignTaskService', () => {
 // NAE-1395
     it('should trigger AfterAction on assigned task', done => {
         expect(testTask.startDate).toBeTruthy();
-        resourceService.response = {success: 'success'};
+        resourceService.response = {
+            success: 'success',
+            outcome: {
+                message: '',
+                outcomes: [],
+                task: createMockTask(),
+                net: createMockNet(),
+                aCase: createMockCase()
+            } as AssignTaskEventOutcome
+        };
 
         let taskEvent: TaskEventNotification;
         taskEventService.taskEventNotifications$.subscribe(event => {
@@ -243,21 +255,12 @@ class TestTaskResourceService {
 
         if (this.response.error !== undefined) {
             return of({
-                ...this.response,
-                changedFields: {}
+                ...this.response
             });
         }
 
         return of({
             ...this.response,
-            changedFields: {},
-            assignee: {
-                id: 'id',
-                email: 'email',
-                name: 'name',
-                surname: 'surname',
-                fullName: 'fullName',
-            }
         });
     }
 }

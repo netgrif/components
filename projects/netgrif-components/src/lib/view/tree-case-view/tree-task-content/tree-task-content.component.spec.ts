@@ -10,7 +10,8 @@ import {
     MockAuthenticationMethodService,
     TestConfigurationService,
     TranslateLibModule,
-    TreeCaseViewService
+    TreeCaseViewService,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 
 describe('TreeTaskContentComponent', () => {
@@ -22,6 +23,7 @@ describe('TreeTaskContentComponent', () => {
             imports: [NoopAnimationsModule, TaskContentComponentModule, MaterialModule, TranslateLibModule],
             providers: [
                 TreeCaseViewService,
+                ChangedFieldsService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
             ],

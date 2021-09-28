@@ -33,7 +33,6 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
-import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 
 /**
  * Handles the loading and updating of data fields and behaviour of

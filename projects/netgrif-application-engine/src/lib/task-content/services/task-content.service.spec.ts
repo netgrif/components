@@ -49,6 +49,8 @@ describe('TaskPanelContentService', () => {
             required: true
         };
 
+        // normally task fields index is created during processing of getData response
+        service.taskFieldsIndex[FIELD_ID] = mockTask.dataGroups[0].fields[0];
         service.task = mockTask;
 
         service.updateFromChangedFields({

@@ -13,7 +13,6 @@ import {FieldTypeResource} from '../model/field-type-resource';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {Validation} from '../../data-fields/models/validation';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
-import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 
 /**
