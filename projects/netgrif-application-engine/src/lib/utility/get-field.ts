@@ -13,12 +13,11 @@ export function getField(fields: Array<DataField<any>>, fieldId: string): DataFi
 /**
  * @param groups a list of searched data groups
  * @param fieldId the id of the desired field
- * @param taskReffed if the desired field is the content of a task ref field an ID suffix match is used instead of id equality
  * @returns a reference to the first occurrence of the datafield with the specified id or `undefined` if such datafield could not be found
  */
-export function getFieldFromDataGroups(groups: Array<DataGroup>, fieldId: string, taskReffed = false): DataField<any> | undefined {
+export function getFieldFromDataGroups(groups: Array<DataGroup>, fieldId: string): DataField<any> | undefined {
     for (const group of groups) {
-        const inGroup = getField(group.fields, fieldId, taskReffed);
+        const inGroup = getField(group.fields, fieldId);
         if (inGroup !== undefined) {
             return inGroup;
         }

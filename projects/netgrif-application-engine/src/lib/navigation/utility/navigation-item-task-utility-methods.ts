@@ -10,9 +10,8 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 /**
  * Extracts the item name and item icon (if any) rom a section of the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
- * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed to NOT be task reffed by default.
  */
-export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = false): GroupNavigationItemLabel {
+export function extractIconAndTitle(dataSection: Array<DataGroup>): GroupNavigationItemLabel {
     const result: GroupNavigationItemLabel = {name: ''};
 
     if (dataSection.length === 0) {
@@ -41,19 +40,17 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>, taskReffed = 
 /**
  * Extracts the data and creates a filter object from the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
- * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed TO BE task reffed by default.
  */
-export function extractFilterFromData(dataSection: Array<DataGroup>, taskReffed = true): Filter {
-    return extractFilterFromFilterField(extractFilterFieldFromData(dataSection, taskReffed));
+export function extractFilterFromData(dataSection: Array<DataGroup>): Filter {
+    return extractFilterFromFilterField(extractFilterFieldFromData(dataSection));
 }
 
 /**
  * Extracts the filter field from the navigation item task data.
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
- * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed TO BE task reffed by default.
  * @returns The extracted {@link FilterField} or `undefined` if it could not be extracted.
  */
-export function extractFilterFieldFromData(dataSection: Array<DataGroup>, taskReffed = true): FilterField | undefined {
+export function extractFilterFieldFromData(dataSection: Array<DataGroup>): FilterField | undefined {
     const filterField = getFieldFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID);
 
     if (filterField === undefined || !(filterField instanceof FilterField)) {

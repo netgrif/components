@@ -418,7 +418,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {
             const index = entryDataGroupIndices[order];
             const label = extractIconAndTitle(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY), true);
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY));
             const newNode: NavigationNode = {url: '', ...label};
 
             const url = this._navigationRouteProvider.route;

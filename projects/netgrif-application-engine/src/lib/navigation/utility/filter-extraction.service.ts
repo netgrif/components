@@ -29,8 +29,8 @@ export class FilterExtractionService {
                 protected _log: LoggerService) {
     }
 
-    public extractCompleteFilterFromData(dataSection: Array<DataGroup>, taskReffed = true): Observable<Filter> {
-        const field = extractFilterFieldFromData(dataSection, taskReffed);
+    public extractCompleteFilterFromData(dataSection: Array<DataGroup>): Observable<Filter> {
+        const field = extractFilterFieldFromData(dataSection);
         if (field === undefined) {
             return throwError('Could not extract filter field from task data');
         }
@@ -42,7 +42,7 @@ export class FilterExtractionService {
             return throwError('Filter segment could not be extracted from filter field');
         }
 
-        const originViewIdField = getFieldFromDataGroups(dataSection, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID, taskReffed);
+        const originViewIdField = getFieldFromDataGroups(dataSection, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID);
         if (originViewIdField === undefined || !(originViewIdField instanceof TextField)) {
             return throwError('Could not extract origin view id field from task data');
         }
