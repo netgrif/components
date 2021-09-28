@@ -21,12 +21,18 @@
                 'mat-mini-fab': resolveComponentType() === 'minifab'}"
                 color="primary"
                 [matTooltip]="dataField.description"
-                [disabled]="formControl.disabled || dataField.changed"
+                [disabled]="formControl.disabled || dataField.waitingForResponse"
                 (click)="resolveValue()">
-                <mat-icon *ngIf="dataField.changed"><mat-spinner color="primary" diameter="22"></mat-spinner></mat-icon>
-                {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : ( isIconTypeButton() ? '' : dataField.placeholder) }}
-            <mat-icon
-                *ngIf="isIconTypeButton() && !dataField.changed">{{dataField.placeholder}}</mat-icon>
+            <div class="grid-wrapper">
+                <mat-icon *ngIf="dataField.waitingForResponse" class="grid-1-1 margin-auto" >
+                    <mat-spinner color="warn" diameter="22"></mat-spinner>
+                </mat-icon>
+                <div [ngClass]="{'label-waiting': dataField.waitingForResponse}" class="grid-1-1">
+                    {{(dataField.placeholder === undefined || dataField.placeholder === '') ? dataField.title : (isIconTypeButton() ? '' : dataField.placeholder) }}
+                </div>
+                <mat-icon class="grid-1-1"
+                          *ngIf="isIconTypeButton() && !dataField.waitingForResponse">{{dataField.placeholder}}</mat-icon>
+            </div>
         </button>
 
         <mat-error *ngIf="dataField.isInvalid(formControl)">{{getErrorMessage()}}</mat-error>

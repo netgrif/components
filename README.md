@@ -26,7 +26,7 @@ To run complete test suite run `npm run nae:full-test`
 
 ## Further help
 
-[Official documentation](http://developer.netgrif.com/projects/engine-frontend/5.6.0/docs)
-Examples of usage of components and services is available on [HERE](http://developer.netgrif.com/projects/engine-frontend/5.6.0/examples)
+[Official documentation](http://developer.netgrif.com/projects/engine-frontend/5.6.1/docs)
+Examples of usage of components and services is available on [HERE](http://developer.netgrif.com/projects/engine-frontend/5.6.1/examples)
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

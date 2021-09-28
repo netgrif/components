@@ -7,9 +7,9 @@ import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../../task-content
  * The attributes are filled with mostly empty values, if you want to make a test that uses some of them,
  * we recommend setting them yourself, as the returned object might change between versions.
  */
-export function createMockTask(stringId: string = 'stringId',
-                               title: string = 'taskTitle',
-                               transitionId: string = 'transitionId',
+export function createMockTask(stringId = 'stringId',
+                               title = 'taskTitle',
+                               transitionId = 'transitionId',
                                cols = 4): Task {
     return {
         caseId: 'string',
