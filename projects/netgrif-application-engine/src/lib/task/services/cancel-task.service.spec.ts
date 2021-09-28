@@ -30,6 +30,9 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {TaskDataService} from './task-data.service';
 import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
+import {createMockCase} from '../../utility/tests/utility/create-mock-case';
+import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -53,6 +56,7 @@ describe('CancelTaskService', () => {
                 TaskRequestStateService,
                 TaskDataService,
                 DataFocusPolicyService,
+                ChangedFieldsService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -132,11 +136,11 @@ describe('CancelTaskService', () => {
                     stringId: 'taskId',
                     layout: {rows: 1, cols: 1, offset: 0},
                     dataGroups: [],
-                    _links: {}
+                    _links: {},
+                    users: []
                 },
-                data: {
-                    changedFields: []
-                }
+                aCase: createMockCase(),
+                net: createMockNet()
             } as TaskEventOutcome
         };
 
@@ -164,9 +168,7 @@ describe('CancelTaskService', () => {
         expect(testTask.user).toBeTruthy();
         resourceService.response = {
             error: 'error',
-            changedFields: {
-                changedFields: []
-            }
+            outcome: {}
         };
 
         let taskEvent: TaskEventNotification;

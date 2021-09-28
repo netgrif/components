@@ -35,6 +35,7 @@ import {EventOutcomeMessageResource} from '../../../resources/interface/message-
 import {SetDataEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {AssignTaskEventOutcome} from '../../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {createMockNet} from '../../../utility/tests/utility/create-mock-net';
 
 
 class MockTreeNode {
@@ -364,7 +365,7 @@ describe('CaseTreeService', () => {
         getImmediateData(caseResourceMock.mockCases.get('root'), TreePetriflowIdentifiers.CHILDREN_CASE_REF).value = [];
         taskResourceMock.changeNext = {};
         taskResourceMock.changeNext[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {
-            value: [subtreeToAdd.stringId, secondSubtree.stringId]
+                value: [subtreeToAdd.stringId, secondSubtree.stringId]
         };
 
         treeService.treeRootLoaded$.subscribe(loaded => {
@@ -483,6 +484,7 @@ class TreeTestCaseResourceService {
                 return of({
                     success: '',
                     outcome: {
+                        net: createMockNet(),
                         aCase: newCase,
                         message: '',
                         outcomes: []
@@ -499,6 +501,7 @@ class TreeTestCaseResourceService {
                 return of({
                     success: '',
                     outcome: {
+                        net: createMockNet(),
                         aCase: preparedCase,
                         message: '',
                         outcomes: []
@@ -561,12 +564,11 @@ class TreeTestTaskResourceService {
             success: '' + this.mockTasks.has(taskId),
             error: `Task with ID ${taskId} doesn't exist in the mock`,
             outcome: {
-                message: '',
                 outcomes: [],
-                data: {
-                    changedFields: []
-                },
-                task: this.mockTasks.get(taskId)
+                message: '',
+                task: createMockTask(),
+                aCase: createMockCase(),
+                net: createMockNet()
             } as AssignTaskEventOutcome
         });
     }
@@ -587,7 +589,10 @@ class TreeTestTaskResourceService {
                 outcome: {
                     outcomes: [],
                     message: '',
-                    data: {
+                    task: createMockTask(),
+                    aCase: createMockCase(),
+                    net: createMockNet(),
+                    changedFields: {
                         changedFields: []
                     }
                 } as SetDataEventOutcome
@@ -606,7 +611,10 @@ class TreeTestTaskResourceService {
                 outcome: {
                     outcomes: [],
                     message: '',
-                    data: {
+                    task: createMockTask(),
+                    aCase: createMockCase(),
+                    net: createMockNet(),
+                    changedFields: {
                         changedFields: change
                     }
                 } as SetDataEventOutcome

@@ -56,6 +56,9 @@ import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/all
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/finish-task-event-outcome';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {createMockCase} from '../../utility/tests/utility/create-mock-case';
+import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -82,6 +85,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 TaskViewService,
                 SideMenuService,
                 CurrencyPipe,
+                ChangedFieldsService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -195,10 +199,11 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 parentInjector: Injector,
-                protected _currencyPipe: CurrencyPipe) {
+                protected _currencyPipe: CurrencyPipe,
+                protected _changedFieldsService: ChangedFieldsService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe);
+            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService);
     }
 
     ngAfterViewInit() {
@@ -290,11 +295,12 @@ class MyTaskResources {
                             rows: undefined
                         },
                         dataGroups: [],
-                        _links: {}
+                        _links: {},
+                        users: []
                     },
-                    data: {
-                        changedFields: []
-                    }
+                    aCase: createMockCase(),
+                    net: createMockNet(),
+                    outcomes: []
                 } as AssignTaskEventOutcome
             });
         } else if (stringId === 'false') {
@@ -339,12 +345,13 @@ class MyTaskResources {
                             rows: undefined
                         },
                         dataGroups: [],
-                        _links: {}
+                        _links: {},
+                        users: []
                     },
-                    data: {
-                        changedFields: []
-                    }
-                } as FinishTaskEventOutcome
+                    aCase: createMockCase(),
+                    net: createMockNet(),
+                    outcomes: []
+                } as AssignTaskEventOutcome
             });
         } else if (stringId === 'false') {
             return of({error: 'error', changedFields: { changedFields: [] }});

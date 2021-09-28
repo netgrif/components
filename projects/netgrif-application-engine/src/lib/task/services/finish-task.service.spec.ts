@@ -32,6 +32,9 @@ import {AuthenticationMethodService} from '../../authentication/services/authent
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {createMockCase} from '../../utility/tests/utility/create-mock-case';
+import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 
 describe('FinishTaskService', () => {
     let service: FinishTaskService;
@@ -56,6 +59,7 @@ describe('FinishTaskService', () => {
                 TaskDataService,
                 DataFocusPolicyService,
                 TaskEventService,
+                ChangedFieldsService,
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
@@ -128,11 +132,11 @@ describe('FinishTaskService', () => {
                     stringId: 'taskId',
                     layout: {rows: 1, cols: 1, offset: 0},
                     dataGroups: [],
-                    _links: {}
+                    _links: {},
+                    users: []
                 },
-                data: {
-                    changedFields: []
-                }
+                aCase: createMockCase(),
+                net: createMockNet()
             } as AssignTaskEventOutcome
         };
 
@@ -159,9 +163,7 @@ describe('FinishTaskService', () => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {
             error: 'error',
-            changedFields: {
-                changedFields: []
-            }
+            outcome: {}
         };
 
         let taskEvent: TaskEventNotification;
