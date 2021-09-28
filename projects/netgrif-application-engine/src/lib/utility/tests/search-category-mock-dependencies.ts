@@ -12,9 +12,15 @@ import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.servi
 const opResolver = new OperatorResolverService();
 const opService = new OperatorService(opResolver);
 
-export const createMockDependencies: (allowedNets$?: Observable<Array<Net>>, operatorService?: OperatorService) => OptionalDependencies =
-    (allowedNets$: Observable<Array<Net>> = of([]), operatorService?: OperatorService) => {
-        const mockUserResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService;
+export const createMockDependencies: (
+    allowedNets$?: Observable<Array<Net>>,
+    operatorService?: OperatorService,
+    userResourceService?: UserResourceService) => OptionalDependencies =
+    (
+        allowedNets$: Observable<Array<Net>> = of([]),
+        operatorService?: OperatorService,
+        userResourceService = {getAll: () => of({content: [], pagination: {}})} as UserResourceService
+    ) => {
         const searchIndexResolver = new SearchIndexResolverService();
         const allowedNetsService = {allowedNets$} as AllowedNetsService;
 
@@ -25,10 +31,10 @@ export const createMockDependencies: (allowedNets$?: Observable<Array<Net>>, ope
                 searchIndexResolver,
                 new CategoryResolverService(),
                 allowedNetsService,
-                mockUserResourceService
+                userResourceService
             ),
             searchIndexResolver,
-            userResourceService: mockUserResourceService,
+            userResourceService,
             allowedNetsService
         };
     };

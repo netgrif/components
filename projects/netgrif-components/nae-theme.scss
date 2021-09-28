@@ -26,6 +26,7 @@
     @include search-predicate-theme($app-theme);
     @include search-clause-theme($app-theme);
     @include search-configuration-input-theme($app-theme);
+    @include side-menu-theme($app-theme);
 }
 
 .mat-tab-group.nae-tab-fill-height .mat-tab-body-wrapper {

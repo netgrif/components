@@ -1,11 +1,13 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AdvancedSearchComponent} from './advanced-search.component';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
+    CategoryFactory,
     ConfigurationService,
     MaterialModule, NAE_BASE_FILTER,
     NAE_SEARCH_CATEGORIES,
     SearchService, TestCaseBaseFilterProvider,
-    TestConfigurationService
+    TestConfigurationService, TestNoAllowedNetsFactory
 } from '@netgrif/application-engine';
 import {SearchComponentModule} from '../../search.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -30,7 +32,9 @@ describe('AdvancedSearchComponent', () => {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
                 },
-                {provide: NAE_SEARCH_CATEGORIES, useValue: []}
+                {provide: NAE_SEARCH_CATEGORIES, useValue: []},
+                CategoryFactory,
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
             ]
         })
             .compileComponents();
