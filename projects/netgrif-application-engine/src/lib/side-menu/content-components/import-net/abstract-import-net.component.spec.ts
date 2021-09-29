@@ -88,8 +88,15 @@ describe('AbstractImportNetComponent', () => {
 });
 
 class MyPetriNetResource {
-    importPetriNet(file) {
-        return of({success: 'success'});
+    importPetriNet(file): Observable<EventOutcomeMessageResource> {
+        return of({
+            success: 'success',
+            outcome: {
+                net: createMockNet(),
+                outcomes: [],
+                message: ''
+            } as ImportPetriNetEventOutcome
+        });
     }
 }
 
