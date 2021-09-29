@@ -20,6 +20,7 @@ import {AsyncRenderingConfiguration} from '../model/async-rendering-configuratio
 import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 import {SplitDataGroup} from '../model/split-data-group';
 import {Subgrid} from '../model/subgrid';
+import {IncrementingCounter} from '../../utility/incrementing-counter';
 
 export abstract class AbstractTaskContentComponent implements OnDestroy {
     readonly DEFAULT_LAYOUT_TYPE = DataGroupLayoutType.LEGACY;
@@ -84,6 +85,9 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected _defaultHideEmptyRows: DataGroupHideEmptyRows;
     protected _defaultNumberOfCols: number;
 
+    protected _subgridIdCounter: IncrementingCounter;
+    protected _existingSubgridIds: Set<string>;
+
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
                           protected _paperView: PaperViewService,
@@ -107,7 +111,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 this.computeDefaultLayoutConfiguration();
                 this.computeLayoutData(data);
             } else {
-                this._dataSource$.next([]);
+                this.renderContent();
             }
             this.loading$.off();
         });
@@ -207,11 +211,14 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
      */
     public computeLayoutData(dataGroups: Array<DataGroup>) {
         if (!this.taskContentService.task) {
-            this._dataSource$.next([]);
+            this.renderContent();
             return;
         }
 
-        const result = [];
+        this._subgridIdCounter = new IncrementingCounter();
+        this._existingSubgridIds = new Set<string>();
+
+        const result = new Map<string, Subgrid>();
 
         dataGroups = this.preprocessDataGroups(dataGroups);
 
@@ -227,7 +234,11 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 group.layout.type = defaultLayout;
             }
 
-            const subgrid = new Subgrid(group.layout.cols ?? this._defaultNumberOfCols);
+            const subgrid = new Subgrid(
+                this.createSubgridId(group),
+                group.layout.cols ?? this._defaultNumberOfCols,
+                this._asyncRenderingConfig
+            );
 
             if (group.title !== undefined) {
                 const title = subgrid.addTitle(group);
@@ -249,60 +260,42 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             }
 
             subgrid.finalize();
-            result.push(subgrid);
+            result.set(subgrid.subgridId, subgrid);
         });
 
         this.renderFields(result);
     }
 
-    protected renderFields(subgrids: Array<Subgrid>) {
+    protected renderFields(subgrids: Map<string, Subgrid>) {
         if (!this._asyncRenderingConfig.enableAsyncRenderingForNewFields
             && !(this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand && this.taskContentService.isExpanding)) {
-            this._dataSource$.next(subgrids);
+            this.renderContent(Array.from(subgrids.values()));
             return;
         }
 
-        // const currentElements = this._dataSource$.value;
-        // const currentTrackByIds = new Set<string>();
-        // currentElements.forEach((element, index) => {
-        //     currentTrackByIds.add(this.trackByDatafields(index, element));
-        // });
-        //
-        // const keptElements = [];
-        // const newElements = [];
-        // if (this.taskContentService.isExpanding && this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand) {
-        //     newElements.push(...gridElements);
-        // } else {
-        //     gridElements.forEach((element, index) => {
-        //         if (currentTrackByIds.has(this.trackByDatafields(index, element))) {
-        //             keptElements.push(element);
-        //         } else {
-        //             newElements.push(element);
-        //         }
-        //     });
-        // }
-        //
-        // this.spreadFieldRenderingOverTime(keptElements, newElements);
+        if (!(this.taskContentService.isExpanding && this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand)) {
+            this._dataSource$.value.forEach(oldSubgrid => {
+                if (subgrids.has(oldSubgrid.subgridId)) {
+                    subgrids.get(oldSubgrid.subgridId).determineKeptFields(oldSubgrid);
+                }
+            });
+        }
+
+        const subgridsArray = Array.from(subgrids.values());
+        this.renderContent(subgridsArray);
+        this.spreadFieldRenderingOverTime(subgridsArray);
     }
 
-    // protected spreadFieldRenderingOverTime(keptElements: Array<DatafieldGridLayoutElement>,
-    //                                        newElements: Array<DatafieldGridLayoutElement>,
-    //                                        iteration = 1) {
-    //     this._asyncRenderTimeout = undefined;
-    //     const fieldsInCurrentIteration = newElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
-    //     const placeholdersInCurrentIteration = newElements.slice(iteration * this._asyncRenderingConfig.batchSize,
-    //         iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
-    //
-    //     fieldsInCurrentIteration.push(
-    //         ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
-    //
-    //     this._dataSource$.next([...keptElements, ...fieldsInCurrentIteration]);
-    //     if (this._asyncRenderingConfig.batchSize * iteration < newElements.length) {
-    //         this._asyncRenderTimeout = window.setTimeout(() => {
-    //             this.spreadFieldRenderingOverTime(keptElements, newElements, iteration + 1);
-    //         }, this._asyncRenderingConfig.batchDelay);
-    //     }
-    // }
+    protected spreadFieldRenderingOverTime(subgrids: Array<Subgrid>, iteration = 0) {
+        this._asyncRenderTimeout = undefined;
+        if (iteration < subgrids.length) {
+            this._asyncRenderTimeout = window.setTimeout(() => {
+                subgrids[iteration].renderContentOverTime(() => {
+                    this.spreadFieldRenderingOverTime(subgrids, iteration + 1);
+                });
+            });
+        }
+    }
 
     /**
      * Clones the content of the data groups to prevent unintentional memory accesses to source data.
@@ -699,6 +692,32 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected isLastRow(index: number, dataGroup: DataGroup, fieldsPerRow: number): boolean {
         return index + fieldsPerRow >= dataGroup.fields.length;
     }
+
+    /**
+     * Destroys the previous content and pushes the new content into the stream
+     * @param content the new content
+     */
+    protected renderContent(content: Array<Subgrid> = []): void {
+        this._dataSource$.value.forEach(subgrid => subgrid.destroy());
+        this._dataSource$.next(content);
+    }
+
+    protected createSubgridId(dataGroup: DataGroup): string {
+        let idBase: string;
+        if (dataGroup.parentTaskId !== undefined) {
+            idBase = [dataGroup.parentTaskId, dataGroup.parentTaskRefId, dataGroup.nestingLevel].join('#');
+        } else {
+            idBase = 'root';
+        }
+        let id = idBase;
+        while (this._existingSubgridIds.has(id)) {
+            id = idBase + this._subgridIdCounter.next();
+        }
+        this._existingSubgridIds.add(id);
+        return id;
+    }
+
+    public trackBySubgridFn = (index: number, subgrid: Subgrid) => subgrid.subgridId;
 
     public trackByFn = (index: number, element: DatafieldGridLayoutElement) => this.trackByDatafields(index, element);
 

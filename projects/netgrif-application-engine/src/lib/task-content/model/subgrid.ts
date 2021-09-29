@@ -4,6 +4,8 @@ import {TaskElementType} from './task-content-element-type';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {FieldTypeResource} from './field-type-resource';
 import {DataGroup} from '../../resources/interface/data-groups';
+import {BehaviorSubject} from 'rxjs';
+import {AsyncRenderingConfiguration} from './async-rendering-configuration';
 
 /**
  * A configuration for one subgrid - a basic layouting unit
@@ -16,7 +18,11 @@ export class Subgrid {
     /**
      * The elements that are contained in the subgrid
      */
-    content: Array<DatafieldGridLayoutElement> = [];
+    protected _content: Array<DatafieldGridLayoutElement> = [];
+    /**
+     * The elements that are contained in the subgrid and have already been rendered to the user
+     */
+    protected _renderedContent$: BehaviorSubject<Array<DatafieldGridLayoutElement>>;
     /**
      * A 2D representation of the grid element IDs
      */
@@ -29,11 +35,28 @@ export class Subgrid {
      * Grid area identifiers that are already in use
      */
     protected _existingIdentifiers = new Set<string>();
+    protected _asyncRenderingTimeout: number;
+    protected _keptElements: Array<DatafieldGridLayoutElement>;
+    protected _newElements: Array<DatafieldGridLayoutElement>;
 
     /**
+     * @param subgridId a unique identifier of the subgrid in the task layout
      * @param cols Number of columns of the subgrid
+     * @param _asyncRenderingConfig configuration object for async rendering of data fields
      */
-    public constructor(public cols: number) {
+    public constructor(public subgridId: string, public cols: number, protected _asyncRenderingConfig: AsyncRenderingConfiguration) {
+        this._renderedContent$ = new BehaviorSubject<Array<DatafieldGridLayoutElement>>([]);
+    }
+
+    get content(): Array<DatafieldGridLayoutElement> {
+        return this._renderedContent$.value;
+    }
+
+    public destroy() {
+        this._renderedContent$.complete();
+        if (this._asyncRenderingTimeout !== undefined) {
+            window.clearTimeout(this._asyncRenderingTimeout);
+        }
     }
 
     /**
@@ -59,7 +82,7 @@ export class Subgrid {
     }
 
     public addElement(element: DatafieldGridLayoutElement): void {
-        this.content.push(element);
+        this._content.push(element);
     }
 
     public addField(field: DataField<unknown>, type: FieldTypeResource): DatafieldGridLayoutElement {
@@ -98,7 +121,7 @@ export class Subgrid {
                 }
                 const filler = this.fillerElement(runningBlanksCount);
                 row[i] = filler.gridAreaId;
-                this.content.push(filler);
+                this._content.push(filler);
             }
         });
     }
@@ -157,5 +180,45 @@ export class Subgrid {
      */
     protected createGridAreasString(): void {
         this.gridAreas = this._grid.map(row => row.join(' ')).join(' | ');
+    }
+
+    public determineKeptFields(subgrid: Subgrid): void {
+        this._keptElements = [];
+        this._newElements = [];
+
+        this._content.forEach(element => {
+            if (subgrid.content.some(el => el.gridAreaId === element.gridAreaId)) {
+                this._keptElements.push(element);
+            } else {
+                this._newElements.push(element);
+            }
+        });
+    }
+
+    public renderContentOverTime(callback: () => void) {
+        if (this._newElements === undefined) {
+            this._newElements = Array.from(this._content);
+            this._keptElements = [];
+        }
+        this.spreadFieldRenderingOverTime(callback);
+    }
+
+    protected spreadFieldRenderingOverTime(callback: () => void, iteration = 1) {
+        this._asyncRenderingTimeout = undefined;
+        const fieldsInCurrentIteration = this._newElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
+        const placeholdersInCurrentIteration = this._newElements.slice(iteration * this._asyncRenderingConfig.batchSize,
+            iteration * this._asyncRenderingConfig.batchSize + this._asyncRenderingConfig.numberOfPlaceholders);
+
+        fieldsInCurrentIteration.push(
+            ...placeholdersInCurrentIteration.map(field => ({gridAreaId: field.gridAreaId, type: TaskElementType.LOADER})));
+
+        this._renderedContent$.next([...this._keptElements, ...fieldsInCurrentIteration]);
+        if (this._asyncRenderingConfig.batchSize * iteration < this._newElements.length) {
+            this._asyncRenderingTimeout = window.setTimeout(() => {
+                this.spreadFieldRenderingOverTime(callback, iteration + 1);
+            }, this._asyncRenderingConfig.batchDelay);
+        } else {
+            callback();
+        }
     }
 }

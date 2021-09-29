@@ -4,7 +4,7 @@
 
 <ng-template #notLoading>
     <div *ngIf="hasDataToDisplay$ | async; else noContentToDisplay" [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView()}">
-        <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let subgrid of dataSource">
+        <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let subgrid of dataSource; trackBy: trackBySubgridFn">
             <div [gdAreas]="subgrid.gridAreas" [gdColumns]="subgrid.getGridColumns()" [ngStyle]="{'grid-template-rows': subgrid.getGridRows()}">
                 <div *ngFor="let item of subgrid.content; trackBy: trackByFn"
                      [gdArea]="item.gridAreaId"
