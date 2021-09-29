@@ -193,17 +193,19 @@ export class Subgrid {
                 this._newElements.push(element);
             }
         });
+
+        this._renderedContent$.next(this._keptElements);
     }
 
-    public renderContentOverTime(callback: () => void) {
+    public renderContentOverTime(callback: () => void, first: boolean = false) {
         if (this._newElements === undefined) {
             this._newElements = Array.from(this._content);
             this._keptElements = [];
         }
-        this.spreadFieldRenderingOverTime(callback);
+        this.spreadFieldRenderingOverTime(callback, first ? 1 : 0);
     }
 
-    protected spreadFieldRenderingOverTime(callback: () => void, iteration = 1) {
+    protected spreadFieldRenderingOverTime(callback: () => void, iteration = 0) {
         this._asyncRenderingTimeout = undefined;
         const fieldsInCurrentIteration = this._newElements.slice(0, iteration * this._asyncRenderingConfig.batchSize);
         const placeholdersInCurrentIteration = this._newElements.slice(iteration * this._asyncRenderingConfig.batchSize,

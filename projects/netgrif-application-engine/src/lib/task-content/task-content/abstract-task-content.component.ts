@@ -292,7 +292,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             this._asyncRenderTimeout = window.setTimeout(() => {
                 subgrids[iteration].renderContentOverTime(() => {
                     this.spreadFieldRenderingOverTime(subgrids, iteration + 1);
-                });
+                }, iteration === 0);
             });
         }
     }
