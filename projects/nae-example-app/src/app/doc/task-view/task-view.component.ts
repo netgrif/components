@@ -67,7 +67,7 @@ const disableButtonsFactory = () => {
         {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
             useFactory: disableButtonsFactory
         },
-        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'task'},
+        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'all-tasks'},
         ViewIdService,
         {   provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
         {   provide: NAE_ASYNC_RENDERING_CONFIGURATION,

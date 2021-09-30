@@ -9,7 +9,7 @@ import {
     GroupGuardService,
     ActiveGroupService,
     TaskResourceService,
-    LanguageService
+    LanguageService, DynamicNavigationRouteProviderService
 } from '@netgrif/application-engine';
 
 @Component({
@@ -28,7 +28,8 @@ export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
                 groupGuard: GroupGuardService,
                 activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,
-                languageService: LanguageService) {
+                languageService: LanguageService,
+                navigationRouteProvider: DynamicNavigationRouteProviderService) {
         super(
             config,
             router,
@@ -39,7 +40,8 @@ export class NavigationTreeComponent extends AbstractNavigationTreeComponent {
             groupGuard,
             activeGroupService,
             taskResourceService,
-            languageService
+            languageService,
+            navigationRouteProvider
         );
     }
 }

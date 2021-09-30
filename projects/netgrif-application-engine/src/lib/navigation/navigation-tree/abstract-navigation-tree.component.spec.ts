@@ -29,6 +29,9 @@ import {GroupGuardService} from '../../authorization/group/group-guard.service';
 import {ActiveGroupService} from '../../groups/services/active-group.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LanguageService} from '../../translate/language.service';
+import {
+    DynamicNavigationRouteProviderService
+} from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 
 describe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
@@ -61,6 +64,10 @@ describe('AbstractNavigationTreeComponent', () => {
         configService = TestBed.inject(ConfigurableTestConfigurationService);
         userService = TestBed.inject(TestUserService);
     }));
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 
     function initializeComponent() {
         fixture = TestBed.createComponent(TestTreeComponent);
@@ -340,10 +347,6 @@ describe('AbstractNavigationTreeComponent', () => {
         expect(component.dataSource.data[0].url).toEqual('/allowed');
         expect(component.dataSource.data[0].children).toBeFalsy();
     });
-
-    afterEach(() => {
-        TestBed.resetTestingModule();
-    });
 });
 
 @Component({
@@ -360,7 +363,8 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
                 groupGuard: GroupGuardService,
                 activeGroupService: ActiveGroupService,
                 taskResourceService: TaskResourceService,
-                languageService: LanguageService) {
+                languageService: LanguageService,
+                navigationRouteProvider: DynamicNavigationRouteProviderService) {
         super(
             config,
             router,
@@ -371,7 +375,8 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
             groupGuard,
             activeGroupService,
             taskResourceService,
-            languageService
+            languageService,
+            navigationRouteProvider
         );
     }
 }

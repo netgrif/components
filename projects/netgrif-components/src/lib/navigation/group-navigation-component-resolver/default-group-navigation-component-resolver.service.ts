@@ -1,6 +1,6 @@
 import {Injectable, Type} from '@angular/core';
 import {
-    DataGroup, extractFilter,
+    DataGroup, extractFilterFromData,
     FilterType,
     GroupNavigationComponentResolverService, LoggerService, TaskResourceService,
 } from '@netgrif/application-engine';
@@ -15,7 +15,7 @@ export class DefaultGroupNavigationComponentResolverService extends GroupNavigat
     }
 
     public resolveViewComponent(navigationItemTaskData: Array<DataGroup>): Type<any> {
-        const filter = extractFilter(navigationItemTaskData);
+        const filter = extractFilterFromData(navigationItemTaskData);
 
         if (filter === undefined) {
             throw new Error('Provided navigation item task data does not contain a filter field');
