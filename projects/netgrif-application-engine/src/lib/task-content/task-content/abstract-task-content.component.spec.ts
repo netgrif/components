@@ -148,18 +148,20 @@ describe('AbstractTaskContentComponent', () => {
                     DataGroupAlignment.START),
                 createMockDataGroup([createField(), createField(), createField(false), createField()], 'title',
                     DataGroupAlignment.CENTER),
-                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.END)
+                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title',
+                    DataGroupAlignment.END)
             ]);
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(1);
+            expect(component.dataSource.length).toEqual(3);
 
+            // Data group 1
             expect(component.dataSource[0].gridAreas).toBeTruthy();
-            expect(component.dataSource[0].content.length).toEqual(18);
+            expect(component.dataSource[0].content.length).toEqual(6);
 
-            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
-            expect(grid.length).toEqual(9);
+            let grid = transformStringToGrid(component.dataSource[0].gridAreas);
+            expect(grid.length).toEqual(3);
             expect(grid[0].length).toEqual(4);
 
             expect(grid[0][0].startsWith('xgroup')).toBeTrue();
@@ -169,20 +171,36 @@ describe('AbstractTaskContentComponent', () => {
             expect(grid[2][0].startsWith('xf')).toBeTrue();
             expect(grid[2][2].startsWith('xblank')).toBeTrue();
 
-            expect(grid[3][0].startsWith('xgroup')).toBeTrue();
-            expect(grid[4][0].startsWith('xf')).toBeTrue();
-            expect(grid[4][2].startsWith('xf')).toBeTrue();
-            expect(grid[4][0] !== grid[4][2]).toBeTrue();
-            expect(grid[5][0].startsWith('xblank')).toBeTrue();
-            expect(grid[5][1].startsWith('xf')).toBeTrue();
-            expect(grid[5][3].startsWith('xblank')).toBeTrue();
+            // Data group 2
+            expect(component.dataSource[1].gridAreas).toBeTruthy();
+            expect(component.dataSource[1].content.length).toEqual(6);
 
-            expect(grid[6][0].startsWith('xgroup')).toBeTrue();
-            expect(grid[7][0].startsWith('xf')).toBeTrue();
-            expect(grid[7][2].startsWith('xf')).toBeTrue();
-            expect(grid[7][0] !== grid[7][2]).toBeTrue();
-            expect(grid[8][1].startsWith('xblank')).toBeTrue();
-            expect(grid[8][2].startsWith('xf')).toBeTrue();
+            grid = transformStringToGrid(component.dataSource[1].gridAreas);
+            expect(grid.length).toEqual(3);
+            expect(grid[0].length).toEqual(4);
+
+            expect(grid[0][0].startsWith('xgroup')).toBeTrue();
+            expect(grid[1][0].startsWith('xf')).toBeTrue();
+            expect(grid[1][2].startsWith('xf')).toBeTrue();
+            expect(grid[1][0] !== grid[1][2]).toBeTrue();
+            expect(grid[2][0].startsWith('xblank')).toBeTrue();
+            expect(grid[2][1].startsWith('xf')).toBeTrue();
+            expect(grid[2][3].startsWith('xblank')).toBeTrue();
+
+            // Data group 3
+            expect(component.dataSource[2].gridAreas).toBeTruthy();
+            expect(component.dataSource[2].content.length).toEqual(6);
+
+            grid = transformStringToGrid(component.dataSource[2].gridAreas);
+            expect(grid.length).toEqual(3);
+            expect(grid[0].length).toEqual(4);
+
+            expect(grid[0][0].startsWith('xgroup')).toBeTrue();
+            expect(grid[1][0].startsWith('xf')).toBeTrue();
+            expect(grid[1][2].startsWith('xf')).toBeTrue();
+            expect(grid[1][0] !== grid[1][2]).toBeTrue();
+            expect(grid[2][1].startsWith('xblank')).toBeTrue();
+            expect(grid[2][2].startsWith('xf')).toBeTrue();
         });
 
         it('flow layout should work', () => {
@@ -199,13 +217,14 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(1);
+            expect(component.dataSource.length).toEqual(3);
 
+            // Data group 1
             expect(component.dataSource[0].gridAreas).toBeTruthy();
-            expect(component.dataSource[0].content.length).toEqual(27);
+            expect(component.dataSource[0].content.length).toEqual(9);
 
-            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
-            expect(grid.length).toEqual(9);
+            let grid = transformStringToGrid(component.dataSource[0].gridAreas);
+            expect(grid.length).toEqual(3);
             expect(grid[0].length).toEqual(4);
 
             expect(grid[0][0].startsWith('xgroup')).toBeTrue();
@@ -219,28 +238,44 @@ describe('AbstractTaskContentComponent', () => {
             expect(grid[2][0].startsWith('xf')).toBeTrue();
             expect(grid[2][1].startsWith('xblank')).toBeTrue();
 
-            expect(grid[3][0].startsWith('xgroup')).toBeTrue();
-            expect(grid[4][0].startsWith('xf')).toBeTrue();
-            expect(grid[4][1].startsWith('xf')).toBeTrue();
-            expect(grid[4][2].startsWith('xf')).toBeTrue();
-            expect(grid[4][3].startsWith('xf')).toBeTrue();
-            expect(grid[4][0] !== grid[4][1]).toBeTrue();
-            expect(grid[4][1] !== grid[4][2]).toBeTrue();
-            expect(grid[4][2] !== grid[4][3]).toBeTrue();
-            expect(grid[5][0].startsWith('xblank')).toBeTrue();
-            expect(grid[5][1].startsWith('xf')).toBeTrue();
-            expect(grid[5][2].startsWith('xblank')).toBeTrue();
+            // Data group 2
+            expect(component.dataSource[1].gridAreas).toBeTruthy();
+            expect(component.dataSource[1].content.length).toEqual(9);
 
-            expect(grid[6][0].startsWith('xgroup')).toBeTrue();
-            expect(grid[7][0].startsWith('xf')).toBeTrue();
-            expect(grid[7][1].startsWith('xf')).toBeTrue();
-            expect(grid[7][2].startsWith('xf')).toBeTrue();
-            expect(grid[7][3].startsWith('xf')).toBeTrue();
-            expect(grid[7][0] !== grid[7][1]).toBeTrue();
-            expect(grid[7][1] !== grid[7][2]).toBeTrue();
-            expect(grid[7][2] !== grid[7][3]).toBeTrue();
-            expect(grid[8][2].startsWith('xblank')).toBeTrue();
-            expect(grid[8][3].startsWith('xf')).toBeTrue();
+            grid = transformStringToGrid(component.dataSource[1].gridAreas);
+            expect(grid.length).toEqual(3);
+            expect(grid[0].length).toEqual(4);
+
+            expect(grid[0][0].startsWith('xgroup')).toBeTrue();
+            expect(grid[1][0].startsWith('xf')).toBeTrue();
+            expect(grid[1][1].startsWith('xf')).toBeTrue();
+            expect(grid[1][2].startsWith('xf')).toBeTrue();
+            expect(grid[1][3].startsWith('xf')).toBeTrue();
+            expect(grid[1][0] !== grid[1][1]).toBeTrue();
+            expect(grid[1][1] !== grid[1][2]).toBeTrue();
+            expect(grid[1][2] !== grid[1][3]).toBeTrue();
+            expect(grid[2][0].startsWith('xblank')).toBeTrue();
+            expect(grid[2][1].startsWith('xf')).toBeTrue();
+            expect(grid[2][2].startsWith('xblank')).toBeTrue();
+
+            // Data group 3
+            expect(component.dataSource[2].gridAreas).toBeTruthy();
+            expect(component.dataSource[2].content.length).toEqual(9);
+
+            grid = transformStringToGrid(component.dataSource[2].gridAreas);
+            expect(grid.length).toEqual(3);
+            expect(grid[0].length).toEqual(4);
+
+            expect(grid[0][0].startsWith('xgroup')).toBeTrue();
+            expect(grid[1][0].startsWith('xf')).toBeTrue();
+            expect(grid[1][1].startsWith('xf')).toBeTrue();
+            expect(grid[1][2].startsWith('xf')).toBeTrue();
+            expect(grid[1][3].startsWith('xf')).toBeTrue();
+            expect(grid[1][0] !== grid[1][1]).toBeTrue();
+            expect(grid[1][1] !== grid[1][2]).toBeTrue();
+            expect(grid[1][2] !== grid[1][3]).toBeTrue();
+            expect(grid[2][2].startsWith('xblank')).toBeTrue();
+            expect(grid[2][3].startsWith('xf')).toBeTrue();
         });
 
         it('grid layout should work', () => {
