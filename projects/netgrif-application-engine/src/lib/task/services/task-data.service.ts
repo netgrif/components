@@ -164,15 +164,30 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             nextEvent.resolve(false);
             return;
         }
+        this._taskContentService.referencedTaskAndCaseIds = {};
+        this._taskContentService.taskFieldsIndex = {};
 
         this._safeTask.dataGroups = dataGroups;
         if (dataGroups.length === 0) {
             this._log.info('Task has no data ' + this._safeTask);
             this._safeTask.dataSize = 0;
         } else {
+            this._taskContentService.referencedTaskAndCaseIds[this._safeTask.caseId] = [this._safeTask.stringId];
             dataGroups.forEach(group => {
+                const dataGroupParentCaseId: string = group.parentCaseId === undefined ? this._safeTask.caseId : group.parentCaseId;
+                if (dataGroupParentCaseId !== this._safeTask.caseId) {
+                    if (!this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId]) {
+                        this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId] = [group.parentTaskId];
+                    } else {
+                        this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
+                    }
+                }
+                const parentTaskId: string = group.parentTaskId === undefined ? this._safeTask.stringId : group.parentTaskId;
+                if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId]) {
+                    this._taskContentService.taskFieldsIndex[parentTaskId] = {};
+                }
                 group.fields.forEach(field => {
-                    this._taskContentService.taskFieldsIndex[field.stringId] = field;
+                    this._taskContentService.taskFieldsIndex[parentTaskId][field.stringId] = field;
                     field.valueChanges().subscribe(() => {
                         if (this.wasFieldUpdated(field)) {
                             if (field instanceof DynamicEnumerationField) {
@@ -186,10 +201,8 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                         }
                     });
                     if (field instanceof FileField || field instanceof FileListField) {
-                        field.changedFields$.subscribe(change => {
-                            const changedFieldsMap: ChangedFieldsMap = {};
-                            changedFieldsMap[this._task.caseId][this._task.stringId] = change.changedFields;
-                            this._changedFieldsService.changedFields$.next(changedFieldsMap);
+                        field.changedFields$.subscribe((change: ChangedFieldsMap) => {
+                            this._changedFieldsService.changedFields$.next(change);
                         });
                     }
                 });
@@ -359,6 +372,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         let foundCount = 0;
         for (const datagroup of this._safeTask.dataGroups) {
             const dataGroupParentTaskId: string = datagroup.parentTaskId !== undefined ? datagroup.parentTaskId : this._task.stringId;
+            if (!request[dataGroupParentTaskId]) {
+                continue;
+            }
             for (const field of datagroup.fields) {
                 if (!request[dataGroupParentTaskId][field.stringId]) {
                     continue;

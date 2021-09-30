@@ -183,8 +183,9 @@ describe('TaskDataService', () => {
 
                 let numOfResponses = 0;
                 changedFieldsService.changedFields$.pipe(take(2)).subscribe(changed => {
-                    const parsedFields = changedFieldsService.parseChangedFieldsByTask(taskContentService.task, changed);
-                    if (parsedFields.hasOwnProperty(FIELD_1_RESPONSE) || parsedFields.hasOwnProperty(FIELD_2_RESPONSE)) {
+                    const parsedFields = changedFieldsService.parseChangedFieldsByCaseAndTaskIds(taskContentService.task.caseId,
+                        [taskContentService.task.stringId], changed);
+                    if (parsedFields[0].hasOwnProperty(FIELD_1_RESPONSE) || parsedFields[0].hasOwnProperty(FIELD_2_RESPONSE)) {
                         numOfResponses++;
                     }
                     if (numOfResponses === 2) {

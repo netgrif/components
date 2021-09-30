@@ -34,7 +34,12 @@ export abstract class TaskContentService implements OnDestroy {
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
     protected _isExpanding$: BehaviorSubject<boolean>;
-    protected _taskFieldsIndex: { [fieldId: string]: DataField<any> } = {};
+    private _taskFieldsIndex: {
+        [taskId: string]: {
+            [fieldId: string]: DataField<any>;
+        }
+    } = {};
+    private _referencedTaskAndCaseIds: { [caseId: string]: Array<string> } = {};
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
@@ -80,8 +85,21 @@ export abstract class TaskContentService implements OnDestroy {
         return this._taskDataReloadRequest$.asObservable();
     }
 
-    get taskFieldsIndex(): { [p: string]: DataField<any> } {
+
+    get taskFieldsIndex(): { [p: string]: { [p: string]: DataField<any> } } {
         return this._taskFieldsIndex;
+    }
+
+    set taskFieldsIndex(value: { [p: string]: { [p: string]: DataField<any> } }) {
+        this._taskFieldsIndex = value;
+    }
+
+    get referencedTaskAndCaseIds(): { [p: string]: Array<string> } {
+        return this._referencedTaskAndCaseIds;
+    }
+
+    set referencedTaskAndCaseIds(value: { [p: string]: Array<string> }) {
+        this._referencedTaskAndCaseIds = value;
     }
 
     /**
@@ -204,12 +222,12 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return;
         }
-        // todo actions owner bude zbytočný?
-        const frontendActions = chFields.frontendActionsOwner === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
+        // todo actions owner zbytočný?
+        const frontendActions = chFields.taskId === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
 
         Object.keys(chFields).forEach(changedField => {
-            if (!!this.taskFieldsIndex[changedField]) {
-                this.updateField(chFields, this._taskFieldsIndex[changedField], frontendActions);
+            if (!!this.taskFieldsIndex[chFields.taskId] && !!this.taskFieldsIndex[chFields.taskId][changedField]) {
+                this.updateField(chFields, this.taskFieldsIndex[chFields.taskId][changedField], frontendActions);
             }
         });
 
@@ -217,14 +235,13 @@ export abstract class TaskContentService implements OnDestroy {
         this.performFrontendAction(frontendActions);
     }
 
-    private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change,
-                        isReferenced: boolean = false, referencedTaskId?: string): void {
+    private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
         if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
         }
 
-        const updatedField = isReferenced ? chFields[field.stringId.replace(referencedTaskId + '-', '')] : chFields[field.stringId];
+        const updatedField = chFields[field.stringId];
         Object.keys(updatedField).forEach(key => {
             switch (key) {
                 case 'type':

@@ -26,6 +26,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer} from '@angular/platform-browser';
+import {EventService} from '../../event/services/event.service';
 
 describe('AbstractFileFieldComponent', () => {
     let component: TestFileComponent;
@@ -44,6 +45,7 @@ describe('AbstractFileFieldComponent', () => {
             ],
             providers: [
                 SideMenuService,
+                EventService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -86,8 +88,9 @@ class TestFileComponent extends AbstractFileFieldComponent {
                 snackbar: SnackBarService,
                 translate: TranslateService,
                 sanitizer: DomSanitizer,
+                eventService: EventService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(taskResourceService, log, snackbar, translate, informAboutInvalidData, sanitizer);
+        super(taskResourceService, log, snackbar, translate, eventService, informAboutInvalidData, sanitizer);
     }
 }
 

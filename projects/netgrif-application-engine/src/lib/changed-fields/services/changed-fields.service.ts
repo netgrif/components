@@ -2,7 +2,6 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';
 import {ChangedFieldsMap} from '../../event/services/event.service';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
-import {Task} from '../../resources/interface/task';
 
 @Injectable()
 export class ChangedFieldsService implements OnDestroy {
@@ -28,10 +27,13 @@ export class ChangedFieldsService implements OnDestroy {
         this._changedFields$.next(changedFields);
     }
 
-    public parseChangedFieldsByTask(task: Task, changedFieldsMap: ChangedFieldsMap): ChangedFields | undefined {
-        if (!!changedFieldsMap[task.caseId] && !!changedFieldsMap[task.caseId][task.stringId]) {
-            return changedFieldsMap[task.caseId][task.stringId];
-        }
-        return undefined;
+    public parseChangedFieldsByCaseAndTaskIds(caseId: string, taskIds: Array<string>,
+                                              changedFieldsMap: ChangedFieldsMap): Array<ChangedFields> {
+        const changedFields: Array<ChangedFields> = [];
+        const filteredTaskIds: Array<string> = Object.keys(changedFieldsMap[caseId]).filter(taskId => taskIds.includes(taskId));
+        filteredTaskIds.forEach(taskId => {
+            changedFields.push(changedFieldsMap[caseId][taskId]);
+        });
+        return changedFields;
     }
 }

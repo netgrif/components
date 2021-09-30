@@ -33,8 +33,6 @@ import {CurrencyPipe} from '@angular/common';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/event.service';
 
-import {ActivatedRoute, Router} from '@angular/router';
-
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
     /**
@@ -98,16 +96,18 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
-        this._subTaskData = _changedFieldsService.changedFields$.subscribe((changedFields: ChangedFieldsMap) => {
-            // todo delete?
-            // changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
-            // todo parse changed fields related to task
-            const parsedFields: ChangedFields = this._changedFieldsService.parseChangedFieldsByTask(
-                this._taskContentService.task, changedFields
+        this._subTaskData = _changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
+            const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
             );
-            if (parsedFields !== undefined) {
-                this._taskPanelData.changedFields.next(parsedFields);
-            }
+            const changedFields: Array<ChangedFields> = [];
+            filteredCaseIds.forEach(caseId => {
+                const taskIds: Array<string> = this._taskContentService.referencedTaskAndCaseIds[caseId];
+                changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
+            });
+            changedFields.filter(fields => fields !== undefined).forEach(fields => {
+               this.taskPanelData.changedFields.next(fields);
+            });
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
             this.expand();
@@ -138,8 +138,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._taskContentService.task = this._taskPanelData.task;
 
         this.createContentPortal();
-
-        // todo tu sa robí update
         this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
             this._taskContentService.updateFromChangedFields(chFields);
         });

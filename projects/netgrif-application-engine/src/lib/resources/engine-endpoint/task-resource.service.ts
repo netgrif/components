@@ -231,6 +231,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                     if (dataGroupResource.parentTaskId !== undefined) {
                         dataGroupObject['parentTaskId'] = dataGroupResource.parentTaskId;
                     }
+                    if (dataGroupResource.parentCaseId !== undefined) {
+                        dataGroupObject['parentCaseId'] = dataGroupResource.parentCaseId;
+                    }
                     result.push(dataGroupObject);
                 });
                 return result;
@@ -279,9 +282,9 @@ export class TaskResourceService extends AbstractResourceService implements Coun
     // {{baseUrl}}/api/task/:id/file/:field     - for file field
     // {{baseUrl}}/api/task/:id/files/:field    - for file list field
     public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
-        Observable<ProviderProgress | ChangedFieldContainer> {
+        Observable<ProviderProgress | EventOutcomeMessageResource> {
         const url = !multipleFiles ? 'task/' + taskId + '/file/' + fieldId : 'task/' + taskId + '/files/' + fieldId;
-        return this._resourceProvider.postWithEvent$<ChangedFieldContainer>(url, this.SERVER_URL, body).pipe(
+        return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:

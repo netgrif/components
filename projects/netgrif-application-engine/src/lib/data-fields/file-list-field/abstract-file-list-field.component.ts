@@ -7,9 +7,10 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {FileListField, FileListFieldValidation} from './models/file-list-field';
 import {FileFieldValue} from '../file-field/models/file-field-value';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {take} from 'rxjs/operators';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
 
 export interface FilesState {
     progress: number;
@@ -49,6 +50,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
+                          protected _eventService: EventService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
         this.state = this.defaultState;
@@ -146,17 +148,17 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         filesToUpload.forEach(fileToUpload => {
             fileFormData.append('files', fileToUpload);
         });
-        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, true).subscribe(response => {
+        this._taskResourceService.uploadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+            this.dataField.stringId, fileFormData, true)
+            .subscribe((response: EventOutcomeMessageResource) => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
                 this._log.debug(
                     `Files [${this.dataField.stringId}] were successfully uploaded`
                 );
-                if (Object.keys((response as ChangedFieldContainer).changedFields).length !== 0 ||
-                    (response as ChangedFieldContainer).changedFields.constructor !== Object) {
-                    this.dataField.emitChangedFields(response as ChangedFieldContainer);
-                }
+                const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                this.dataField.emitChangedFields(changedFieldsMap);
                 this.state.completed = true;
                 this.state.error = false;
                 this.state.uploading = false;
@@ -199,7 +201,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
 
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId, fileName).subscribe(response => {
+        this._taskResourceService.downloadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+            this.dataField.stringId, fileName).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
@@ -240,7 +243,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             return;
         }
 
-        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId, fileName).pipe(take(1)).subscribe(response => {
+        this._taskResourceService.deleteFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+            this.dataField.stringId, fileName).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
                 if (this.dataField.value.namesPaths) {
