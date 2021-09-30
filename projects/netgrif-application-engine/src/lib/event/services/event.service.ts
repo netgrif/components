@@ -13,13 +13,6 @@ export class EventService {
 
     public parseChangedFieldsFromOutcomeTree(outcome: EventOutcome): ChangedFieldsMap {
         const changedFieldsMap: ChangedFieldsMap = {};
-        if ('changedFields' in outcome) {
-            const setDataOutcome: SetDataEventOutcome = outcome;
-            changedFieldsMap[setDataOutcome.aCase.stringId] = {
-                [setDataOutcome.task.stringId]: setDataOutcome.changedFields.changedFields
-            };
-            changedFieldsMap[setDataOutcome.aCase.stringId][setDataOutcome.task.stringId].taskId = setDataOutcome.task.stringId;
-        }
         if (!!outcome.outcomes && outcome.outcomes.length > 0) {
             return this.parseChangedFieldsFromOutcomeTreeRecursive(outcome.outcomes, changedFieldsMap);
         } else return changedFieldsMap;
