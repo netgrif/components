@@ -30,6 +30,10 @@ export interface DataGroup {
      */
     parentTaskId?: string;
     /**
+     * String id of parent case, only set if dataGroup is loaded by {@link TaskRefField}
+     */
+    parentCaseId?: string;
+    /**
      * String id of the parent task ref. Only set if the data group is loaded via a {@link TaskRefField}
      */
     parentTaskRefId?: string;

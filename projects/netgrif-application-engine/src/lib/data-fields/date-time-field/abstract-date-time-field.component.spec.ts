@@ -93,5 +93,5 @@ class TestWrapperComponent {
         {validationRule: 'between past,today', validationMessage: 'This is custom message!'},
         {validationRule: 'between 2020-03-03,today', validationMessage: 'This is custom message!'},
     ]);
-    changedFields = new BehaviorSubject<ChangedFields>({behavior: {editable: true}});
+    changedFields = new BehaviorSubject<ChangedFields>({behavior: {editable: true}, taskId: 'testTaskId'});
 }

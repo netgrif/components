@@ -18,6 +18,7 @@ export class EventService {
             changedFieldsMap[setDataOutcome.aCase.stringId] = {
                 [setDataOutcome.task.stringId]: setDataOutcome.changedFields.changedFields
             };
+            changedFieldsMap[setDataOutcome.aCase.stringId][setDataOutcome.task.stringId].taskId = setDataOutcome.task.stringId;
         }
         if (!!outcome.outcomes && outcome.outcomes.length > 0) {
             return this.parseChangedFieldsFromOutcomeTreeRecursive(outcome.outcomes, changedFieldsMap);
@@ -36,7 +37,9 @@ export class EventService {
                 }
                 const taskId = setDataOutcome.task.stringId;
                 if (!Object.keys(changedFieldsMap[caseId]).includes(taskId)) {
-                    changedFieldsMap[caseId][taskId] = {};
+                    changedFieldsMap[caseId][taskId] = {
+                        taskId
+                    };
                 }
                 Object.keys(outcomeChangedFields).forEach(fieldId => {
                     if (Object.keys(changedFieldsMap[caseId][taskId]).includes(fieldId)) {

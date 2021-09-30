@@ -192,9 +192,9 @@ export class PublicTaskResourceService extends TaskResourceService {
     // {{baseUrl}}/api/task/:id/file/:field     - for file field
     // {{baseUrl}}/api/task/:id/files/:field    - for file list field
     public uploadFile(taskId: string, fieldId: string, body: object, multipleFiles: boolean):
-        Observable<ProviderProgress | ChangedFieldContainer> {
+        Observable<ProviderProgress | EventOutcomeMessageResource> {
         const url = !multipleFiles ? `public/task/${taskId}/file/${fieldId}` : `public/task/${taskId}/files/${fieldId}`;
-        return this._resourceProvider.postWithEvent$<ChangedFieldContainer>(url, this.SERVER_URL, body).pipe(
+        return this._resourceProvider.postWithEvent$<EventOutcomeMessageResource>(url, this.SERVER_URL, body).pipe(
             map(event => {
                 switch (event.type) {
                     case HttpEventType.UploadProgress:

@@ -55,12 +55,18 @@ export class TreeTaskContentService implements OnDestroy {
         this._processingTaskChange = new LoadingEmitter();
         this._displayedTaskText$ = new ReplaySubject<string>();
 
-        this._changedFieldsService.changedFields$.subscribe((changedFields: ChangedFieldsMap) => {
-            const parsedFields: ChangedFields = _changedFieldsService
-                .parseChangedFieldsByTask(this._taskContentService.task, changedFields);
-            if (!!parsedFields) {
-                this._taskContentService.updateFromChangedFields(changedFields);
-            }
+        this._changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
+            const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
+            );
+            const changedFields: Array<ChangedFields> = [];
+            filteredCaseIds.forEach(caseId => {
+                const taskIds: Array<string> = this._taskContentService.referencedTaskAndCaseIds[caseId];
+                changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
+            });
+            changedFields.filter(fields => fields !== undefined).forEach(fields => {
+                this._taskContentService.updateFromChangedFields(fields);
+            });
         });
         _taskDataService.updateSuccess$.subscribe(result => {
             if (result) {

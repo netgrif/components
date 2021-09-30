@@ -30,7 +30,8 @@ describe('ChangedFieldsService', () => {
                     testField: {
                         type: 'text',
                         value: 'test'
-                    }
+                    },
+                    taskId: 'testTaskId'
                 }
             }
         };
@@ -39,8 +40,10 @@ describe('ChangedFieldsService', () => {
             expect(Object.keys(changedFields)).toContain('caseId');
             expect(Object.keys(changedFields['caseId'])).toContain('taskId');
             expect(Object.keys(changedFields['caseId']['taskId'])).toContain('testField');
+            expect(changedFields['caseId']['taskId'].taskId).toContain('testTaskId');
             expect(Object.keys(changedFields['caseId']['taskId']['testField'])).toContain('type');
             expect(Object.keys(changedFields['caseId']['taskId']['testField'])).toContain('value');
+            expect(changedFields['caseId']['taskId'].taskId).toEqual('testTaskId');
             expect(changedFields['caseId']['taskId']['testField']['type']).toEqual('text');
             expect(changedFields['caseId']['taskId']['testField']['value']).toEqual('test');
             done();
@@ -56,16 +59,22 @@ describe('ChangedFieldsService', () => {
                     testField: {
                         type: 'text',
                         value: 'test'
-                    }
+                    },
+                    taskId: 'testTaskId'
                 }
             }
         };
-        const changedFields: ChangedFields = service.parseChangedFieldsByTask(task, changedFieldsMap);
+        const changedFields: ChangedFields = service.parseChangedFieldsByCaseAndTaskIds('string', [task.stringId], changedFieldsMap)[0];
         expect(changedFields).toBeDefined();
         expect(Object.keys(changedFields)).toContain('testField');
         expect(Object.keys(changedFields['testField'])).toContain('value');
         expect(Object.keys(changedFields['testField'])).toContain('type');
+        expect(changedFields.taskId).toEqual('testTaskId');
         expect(changedFields['testField']['type']).toEqual('text');
         expect(changedFields['testField']['value']).toEqual('test');
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
