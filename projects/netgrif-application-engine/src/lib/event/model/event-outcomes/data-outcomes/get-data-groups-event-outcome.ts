@@ -3,5 +3,5 @@ import {TaskEventOutcome} from '../task-outcomes/task-event-outcome';
 
 export interface GetDataGroupsEventOutcome extends TaskEventOutcome {
 
-    data: DataGroup[];
+    data: Array<DataGroup>;
 }

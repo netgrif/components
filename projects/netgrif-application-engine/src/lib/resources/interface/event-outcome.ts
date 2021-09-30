@@ -2,5 +2,5 @@ export interface EventOutcome {
 
     message?: string;
 
-    outcomes?: EventOutcome[];
+    outcomes?: Array<EventOutcome>;
 }
