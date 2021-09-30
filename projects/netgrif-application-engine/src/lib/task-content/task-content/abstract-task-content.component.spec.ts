@@ -657,6 +657,8 @@ describe('AbstractTaskContentComponent', () => {
                     '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
             ]);
 
+            tick();
+
             expect(component.dataSource.length).toEqual(1);
             subgrid = component.dataSource[0].content;
             expect(subgrid.length).toEqual(7);
