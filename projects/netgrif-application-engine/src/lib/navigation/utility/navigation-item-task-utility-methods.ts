@@ -52,7 +52,7 @@ export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string,
         throw new Error('The provided task data does not belong to a Navigation menu item task. Role entries cannot be extracted');
     }
 
-    const roleIds = getField(dataSection[0].fields, roleFieldId, taskReffed);
+    const roleIds = getFieldFromDataGroups(dataSection, roleFieldId, taskReffed);
     if (roleIds === undefined) {
         throw new Error('Navigation entry role authorization field could not be resolved');
     }
