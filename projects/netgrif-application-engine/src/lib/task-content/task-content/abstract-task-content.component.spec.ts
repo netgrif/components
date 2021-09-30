@@ -56,8 +56,10 @@ describe('AbstractTaskContentComponent', () => {
                 imports,
                 providers: [
                     ...providers,
-                    {provide: NAE_ASYNC_RENDERING_CONFIGURATION,
-                     useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}}
+                    {
+                        provide: NAE_ASYNC_RENDERING_CONFIGURATION,
+                        useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}
+                    }
                 ],
                 declarations: [TestTaskContentComponent]
             })
@@ -77,7 +79,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('should display data group title', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup(
@@ -88,10 +89,12 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(2);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(2);
+
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
             expect(grid.length).toEqual(2);
             expect(grid[0].length).toEqual(4);
             expect(grid[0][0]).toEqual('xgroup0');
@@ -102,7 +105,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('should hide data group title', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([createField(false)], 'hello world'),
@@ -111,10 +113,12 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(3);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(3);
+
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
             expect(grid.length).toEqual(1);
             expect(grid[0].length).toEqual(4);
             expect(grid[0][0].startsWith('xf')).toBeTrue();
@@ -138,20 +142,23 @@ describe('AbstractTaskContentComponent', () => {
 
         it('legacy layout should work', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
-                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.START),
-                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.CENTER),
+                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title',
+                    DataGroupAlignment.START),
+                createMockDataGroup([createField(), createField(), createField(false), createField()], 'title',
+                    DataGroupAlignment.CENTER),
                 createMockDataGroup([createField(), createField(), createField(false), createField()], 'title', DataGroupAlignment.END)
             ]);
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(18);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(18);
+
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
             expect(grid.length).toEqual(9);
             expect(grid[0].length).toEqual(4);
 
@@ -180,7 +187,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('flow layout should work', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([createField(), createField(), createField(), createField(), createField(false), createField()],
@@ -193,10 +199,12 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(27);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(27);
+
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
             expect(grid.length).toEqual(9);
             expect(grid[0].length).toEqual(4);
 
@@ -237,7 +245,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('grid layout should work', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -251,10 +258,12 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(10);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(10);
+
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
             expect(grid.length).toEqual(4);
             expect(grid[0].length).toEqual(4);
 
@@ -282,7 +291,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('grid layout compact UP hide NONE', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -293,11 +301,12 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(11);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(11);
 
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
             expect(grid.length).toEqual(3);
             expect(grid[0].length).toEqual(4);
 
@@ -316,7 +325,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('grid layout compact UP hide COMPACTED', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -327,10 +335,11 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(7);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(7);
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
 
             expect(grid.length).toEqual(2);
             expect(grid[0].length).toEqual(4);
@@ -350,7 +359,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('grid layout compact UP hide ALL', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -361,10 +369,11 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(3);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(3);
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
 
             expect(grid.length).toEqual(1);
             expect(grid[0].length).toEqual(4);
@@ -378,7 +387,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('grid layout compact NONE hide NONE', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -389,10 +397,11 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(11);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(11);
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
 
             expect(grid.length).toEqual(3);
             expect(grid[0].length).toEqual(4);
@@ -415,7 +424,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('grid layout compact NONE hide ALL', () => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -426,10 +434,11 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
-            expect(component.dataSource.length).toEqual(7);
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.gridAreas).toBeTruthy();
-            const grid = transformStringToGrid(component.gridAreas);
+            expect(component.dataSource[0].gridAreas).toBeTruthy();
+            expect(component.dataSource[0].content.length).toEqual(7);
+            const grid = transformStringToGrid(component.dataSource[0].gridAreas);
 
             expect(grid.length).toEqual(2);
             expect(grid[0].length).toEqual(4);
@@ -474,7 +483,6 @@ describe('AbstractTaskContentComponent', () => {
 
         it('async rendering should work', fakeAsync(() => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -487,49 +495,58 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.dataSource.length).toEqual(2);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(TaskElementType.LOADER);
-
-            tick(100);
-
-            expect(component.dataSource.length).toEqual(3);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(TaskElementType.LOADER);
+            let subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(2);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(TaskElementType.LOADER);
 
             tick(100);
 
-            expect(component.dataSource.length).toEqual(4);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[3].type).toEqual(TaskElementType.LOADER);
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(3);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(TaskElementType.LOADER);
 
             tick(100);
 
-            expect(component.dataSource.length).toEqual(5);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[4].type).toEqual(TaskElementType.LOADER);
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(4);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[3].type).toEqual(TaskElementType.LOADER);
 
             tick(100);
 
-            expect(component.dataSource.length).toEqual(5);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[4].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(5);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[3].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[4].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(5);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[3].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[4].type).toEqual(FieldTypeResource.BOOLEAN);
 
         }));
 
         it('async rendering should persist existing fields', fakeAsync(() => {
             expect(component.dataSource).toEqual([]);
-            expect(component.gridAreas).toBeUndefined();
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -542,43 +559,53 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
+            expect(component.dataSource.length).toEqual(1);
 
-            expect(component.dataSource.length).toEqual(2);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(TaskElementType.LOADER);
-
-            tick(100);
-
-            expect(component.dataSource.length).toEqual(3);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(TaskElementType.LOADER);
+            let subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(2);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(TaskElementType.LOADER);
 
             tick(100);
 
-            expect(component.dataSource.length).toEqual(4);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[3].type).toEqual(TaskElementType.LOADER);
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(3);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(TaskElementType.LOADER);
 
             tick(100);
 
-            expect(component.dataSource.length).toEqual(5);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[4].type).toEqual(TaskElementType.LOADER);
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(4);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[3].type).toEqual(TaskElementType.LOADER);
 
             tick(100);
 
-            expect(component.dataSource.length).toEqual(5);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[4].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(5);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[3].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[4].type).toEqual(TaskElementType.LOADER);
+
+            tick(100);
+
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(5);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[3].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[4].type).toEqual(FieldTypeResource.BOOLEAN);
 
             component.computeLayoutData([
                 createMockDataGroup([
@@ -591,25 +618,29 @@ describe('AbstractTaskContentComponent', () => {
                     '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
             ]);
 
-            expect(component.dataSource.length).toEqual(7);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[4].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[5].type).toEqual(FieldTypeResource.BUTTON);
-            expect(component.dataSource[6].type).toEqual(TaskElementType.LOADER);
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(7);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[3].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[4].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[5].type).toEqual(FieldTypeResource.BUTTON);
+            expect(subgrid[6].type).toEqual(TaskElementType.LOADER);
 
             tick(100);
 
-            expect(component.dataSource.length).toEqual(7);
-            expect(component.dataSource[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
-            expect(component.dataSource[1].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[2].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[3].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[4].type).toEqual(FieldTypeResource.BOOLEAN);
-            expect(component.dataSource[5].type).toEqual(FieldTypeResource.BUTTON);
-            expect(component.dataSource[6].type).toEqual(FieldTypeResource.BUTTON);
+            expect(component.dataSource.length).toEqual(1);
+            subgrid = component.dataSource[0].content;
+            expect(subgrid.length).toEqual(7);
+            expect(subgrid[0].type).toEqual(TaskElementType.DATA_GROUP_TITLE);
+            expect(subgrid[1].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[2].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[3].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[4].type).toEqual(FieldTypeResource.BOOLEAN);
+            expect(subgrid[5].type).toEqual(FieldTypeResource.BUTTON);
+            expect(subgrid[6].type).toEqual(FieldTypeResource.BUTTON);
         }));
     });
 

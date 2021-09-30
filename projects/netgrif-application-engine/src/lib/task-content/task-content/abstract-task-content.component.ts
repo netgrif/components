@@ -267,9 +267,14 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     }
 
     protected renderFields(subgrids: Map<string, Subgrid>) {
+        const subgridsArray = Array.from(subgrids.values());
+
         if (!this._asyncRenderingConfig.enableAsyncRenderingForNewFields
             && !(this._asyncRenderingConfig.enableAsyncRenderingOnTaskExpand && this.taskContentService.isExpanding)) {
-            this.renderContent(Array.from(subgrids.values()));
+            subgridsArray.forEach(subgrid => {
+                subgrid.displayAllFields();
+            });
+            this.renderContent(subgridsArray);
             return;
         }
 
@@ -281,7 +286,6 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
             });
         }
 
-        const subgridsArray = Array.from(subgrids.values());
         this.renderContent(subgridsArray);
         this.spreadFieldRenderingOverTime(subgridsArray);
     }
