@@ -9,6 +9,7 @@ export * from './group-navigation-component-resolver/abstract-group-navigation-c
 
 /* SERVICES */
 export * from './group-navigation-component-resolver/group-navigation-component-resolver.service';
+export * from './utility/filter-extraction.service';
 
 /* MODELS */
 export * from './model/group-navigation-constants';

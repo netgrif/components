@@ -391,7 +391,7 @@
             "deleteCanceled": "Prozess löschen abgebrochen",
             "deleteSuccess": "Prozess erfolgreich gelöscht",
             "deleteError": "Prozess konnte nicht gelöscht werden",
-            "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden"
+            "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden."
         }
     },
     "legal": {

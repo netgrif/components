@@ -149,7 +149,8 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
             file.completed = false;
             file.error = true;
             this._log.error('Importing process file has failed!', error);
-            this._snackbar.openErrorSnackBar(this._translate.instant('workflow.snackBar.uploadFailed'));
+            this._snackbar.openErrorSnackBar(this._translate.instant('workflow.snackBar.uploadFailed') +
+                ' ' + error.error.message);
         });
     }
 

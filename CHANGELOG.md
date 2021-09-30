@@ -1,3 +1,39 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10910/tab/release-report-done"></a>
+## 5.6.3 (27.09.2021)
+### Bug fixes
+* [NAE-1451](https://netgrif.atlassian.net/browse/NAE-1451) - Configurable group navigation issues
+* [NAE-1452](https://netgrif.atlassian.net/browse/NAE-1452) - Sidemenu tab - Case Side Menu
+* [NAE-1453](https://netgrif.atlassian.net/browse/NAE-1453) - Example app sign-up broken
+
+
+### Improvements
+* [NAE-1454](https://netgrif.atlassian.net/browse/NAE-1454) - Dynamic filter chaining
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10909/tab/release-report-all-issues"></a>
+## 5.6.2 (03.08.2021)
+### Bug fixes
+None
+
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10906/tab/release-report-all-issues"></a>
+## 5.6.1 (30.08.2021)
+### Bug fixes
+None
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10891/tab/release-report-all-issues"></a>
 ## 5.6.0 (26.08.2021)
 ### Bug fixes
