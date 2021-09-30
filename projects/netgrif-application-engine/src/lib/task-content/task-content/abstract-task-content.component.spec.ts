@@ -528,6 +528,8 @@ describe('AbstractTaskContentComponent', () => {
                     '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
             ]);
 
+            tick();
+
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
             expect(component.dataSource.length).toEqual(1);
@@ -591,6 +593,8 @@ describe('AbstractTaskContentComponent', () => {
                         createField(true, {x: 3, y: 0, rows: 1, cols: 1}, 'bool4')],
                     '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
             ]);
+
+            tick();
 
             expect(component.dataSource).toBeTruthy();
             expect(Array.isArray(component.dataSource)).toBeTrue();
