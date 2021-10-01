@@ -255,7 +255,7 @@ export class Subgrid {
      * Otherwise The initial batch contains only loader elements. Being first effectively shortens the rendering by one batch, since the
      * first loader-only batch is skipped.
      */
-    public renderContentOverTime(callback: () => void, first: boolean = false) {
+    public renderContentOverTime(callback: () => void, first= false) {
         if (this._newElements === undefined) {
             this._newElements = Array.from(this._content);
             this._keptElements = [];
