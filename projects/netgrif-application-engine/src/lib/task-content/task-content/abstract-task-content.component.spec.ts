@@ -512,6 +512,35 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[1].content.length).toEqual(1);
             expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
         });
+
+        it('should correctly insert task ref', () => {
+            expect(component.dataSource).toEqual([]);
+
+            component.computeLayoutData([
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 4}),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 4}, 'taskRef', FieldTypeResource.TASK_REF, ['nestedTaskId']),
+                        createField(true, {x: 0, y: 2, rows: 1, cols: 4})],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 5}, undefined, FieldTypeResource.BUTTON)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 5,
+                    'nestedTaskId', 'taskRef', 1)
+            ]);
+
+            expect(component.dataSource).toBeTruthy();
+            expect(Array.isArray(component.dataSource)).toBeTrue();
+            expect(component.dataSource.length).toEqual(3);
+
+            expect(component.dataSource[0].content.length).toEqual(1);
+            expect(component.dataSource[0].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[1].content.length).toEqual(1);
+            expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[2].content.length).toEqual(1);
+            expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+        });
     });
 
     describe('with async datafield rendering', () => {
@@ -813,8 +842,9 @@ function createField(visible = true,
                      layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0},
                      stringId?: string,
                      fieldType: FieldTypeResource.BOOLEAN | FieldTypeResource.BUTTON | FieldTypeResource.TASK_REF
-                         = FieldTypeResource.BOOLEAN): BooleanField | ButtonField | TaskRefField {
-    return createMockField(visible, layout, stringId ?? counter, fieldType);
+                         = FieldTypeResource.BOOLEAN,
+                     taskRefValue: Array<string> = []): BooleanField | ButtonField | TaskRefField {
+    return createMockField(visible, layout, stringId ?? counter, fieldType, taskRefValue);
 }
 
 function transformStringToGrid(gridString: string): Array<Array<string>> {

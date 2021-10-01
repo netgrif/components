@@ -12,6 +12,9 @@ import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayoutType} from '../
  * @param hideRows row hiding rule for the data group
  * @param stretch whether the `stretch` property of the data group is enabled or not
  * @param cols the number of columns of the data group layout
+ * @param parentTaskId the ID of the parent task (if the data group is task-reffed)
+ * @param parentTaskRefId the ID of the parent task ref (if the data group is task-reffed)
+ * @param nestingLevel the nesting level of the data group (if the data group is task-reffed)
  */
 export function createMockDataGroup(fields: Array<DataField<unknown>>,
                                     title?: string,
@@ -20,7 +23,10 @@ export function createMockDataGroup(fields: Array<DataField<unknown>>,
                                     compact?: DataGroupCompact,
                                     hideRows?: DataGroupHideEmptyRows,
                                     stretch = false,
-                                    cols = 4): DataGroup {
+                                    cols = 4,
+                                    parentTaskId?: string,
+                                    parentTaskRefId?: string,
+                                    nestingLevel?: number): DataGroup {
     return {
         fields,
         title,
@@ -33,5 +39,8 @@ export function createMockDataGroup(fields: Array<DataField<unknown>>,
             hideEmptyRows: hideRows,
             cols
         },
+        parentTaskId,
+        parentTaskRefId,
+        nestingLevel,
     };
 }
