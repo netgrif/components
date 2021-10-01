@@ -42,7 +42,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public abstract handleCaseClick(clickedCase: Case): void;
 
     public hasAuthority(): boolean {
-        return this._caseViewService.hasAuthority(this.authorityToCreate);
+        return (this._caseViewService.hasAuthority(this.authorityToCreate) && this._caseViewService.getAllowedNetsCount() > 0);
     }
 
     public getWidth() {

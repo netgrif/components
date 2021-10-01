@@ -37,7 +37,7 @@ export abstract class DataField<T> {
     private _valid: boolean;
     /**
      * @ignore
-     * Whether the `value` of the field changed recently. The flag is cleared when changes are received from backend.
+     * Whether the `value` of the field changed recently. The flag is cleared when changes are send to backend.
      */
     private _changed: boolean;
     /**
@@ -101,6 +101,12 @@ export abstract class DataField<T> {
     protected _initializedSubscription: Subscription;
 
     /**
+     * @ignore
+     * Whether the changes from has been requested. The flag is cleared when changes are received from backend.
+     */
+    private _waitingForResponse: boolean;
+
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -122,6 +128,7 @@ export abstract class DataField<T> {
         this._initialized$ = new BehaviorSubject<boolean>(false);
         this._valid = true;
         this._changed = false;
+        this._waitingForResponse = false;
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
@@ -171,6 +178,7 @@ export abstract class DataField<T> {
     set value(value: T) {
         if (!this.valueEquality(this._value.getValue(), value) && !this._reverting) {
             this._changed = true;
+            this._waitingForResponse = true;
             this.resolvePrevValue(value);
         }
         this._value.next(value);
@@ -273,6 +281,14 @@ export abstract class DataField<T> {
         this._sendInvalidValues = value === null || value;
     }
 
+    get waitingForResponse(): boolean {
+        return this._waitingForResponse;
+    }
+
+    set waitingForResponse(value: boolean) {
+        this._waitingForResponse = value;
+    }
+
     public update(): void {
         this._update.next();
     }
@@ -315,6 +331,7 @@ export abstract class DataField<T> {
         this.updateFormControlState(formControl);
         this._initialized$.next(true);
         this._changed = false;
+        this._waitingForResponse = false;
     }
 
     public disconnectFormControl(): void {

@@ -396,7 +396,7 @@
             "deleteCanceled": "Process delete canceled",
             "deleteSuccess": "Process successfully deleted",
             "deleteError": "Process could not be deleted",
-            "uploadFailed": "Process file could not be uploaded",
+            "uploadFailed": "Process file could not be uploaded.",
             "uploadSuccess": "Process file uploaded successfully"
         }
     },

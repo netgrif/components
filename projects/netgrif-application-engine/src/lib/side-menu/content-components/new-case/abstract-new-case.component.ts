@@ -14,6 +14,7 @@ import {MatToolbar} from '@angular/material/toolbar';
 import semver from 'semver';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
+import {MatOption} from '@angular/material/core';
 
 interface Form {
     value: string;
@@ -25,6 +26,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
+    netVersion: string;
 
     options: Array<Form> = [];
     colors: Array<Form> = [
@@ -95,7 +97,7 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         this.filteredOptions$ = combineLatest([this._options$, this.processFormControl.valueChanges.pipe(startWith(''))]).pipe(
             map(sources => {
                 const options = sources[0];
-                const input = typeof sources[1] === 'string' ? sources[1] : sources[1].viewValue;
+                const input = typeof sources[1] === 'string' || sources[1] === null ? sources[1] : sources[1].viewValue;
                 return input ? this._filter(input, options) : options.slice();
             }),
             tap(filteredOptions => {
@@ -219,7 +221,8 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         }
 
         const caze = this._translate.instant('side-menu.new-case.case');
-        const name = typeof this.processFormControl.value === 'string' ? undefined : this.processFormControl.value.viewValue;
+        const name = typeof this.processFormControl.value === 'string' || this.processFormControl.value === null ?
+            undefined : this.processFormControl.value.viewValue;
         const title = name === undefined ? caze : caze + ' - ' + name;
         if (title.length > size) {
             const tmp = title.slice(0, size);
@@ -251,5 +254,17 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     isCaseTitleRequired(): boolean {
         return this.isCaseTitleEnabled() && !!(this._injectedData?.newCaseCreationConfiguration?.isCaseTitleRequired ?? true);
+    }
+
+    showVersion(option: MatOption): void {
+        if (option !== undefined && option.value !== undefined && option.value.version !== undefined)
+            this.netVersion = option.value.version;
+    }
+
+    checkVersion(viewValue: any): void {
+        const currentOption = typeof viewValue === 'string' || viewValue === null ? undefined : viewValue.version;
+        if (currentOption === undefined) {
+            this.netVersion = '';
+        }
     }
 }

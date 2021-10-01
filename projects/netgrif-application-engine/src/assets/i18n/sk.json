@@ -396,7 +396,7 @@
             "deleteCanceled": "Zmazanie procesu zrušené",
             "deleteSuccess": "Proces bol úspešne zmazaný",
             "deleteError": "Proces sa nepodarilo zmazať",
-            "uploadFailed": "Súbor procesu sa nepodarilo nahrať",
+            "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
             "uploadSuccess": "Súbor procesu bol úspešne nahraný"
         }
     },
