@@ -541,6 +541,177 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[2].content.length).toEqual(1);
             expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
         });
+
+        it('should correctly insert two task refs', () => {
+            expect(component.dataSource).toEqual([]);
+
+            component.computeLayoutData([
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 4}),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 4}, 'taskRef1', FieldTypeResource.TASK_REF, ['nestedTaskId1']),
+                        createField(true, {x: 0, y: 2, rows: 1, cols: 4}),
+                        createField(true, {x: 0, y: 3, rows: 1, cols: 4}, 'taskRef2', FieldTypeResource.TASK_REF, ['nestedTaskId2']),
+                        createField(true, {x: 0, y: 4, rows: 1, cols: 4})],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 5}, undefined, FieldTypeResource.BUTTON)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 5,
+                    'nestedTaskId1', 'taskRef1', 1),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 3}, undefined, FieldTypeResource.BUTTON)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 3,
+                    'nestedTaskId2', 'taskRef2', 1)
+            ]);
+
+            expect(component.dataSource).toBeTruthy();
+            expect(Array.isArray(component.dataSource)).toBeTrue();
+            expect(component.dataSource.length).toEqual(5);
+
+            expect(component.dataSource[0].content.length).toEqual(1);
+            expect(component.dataSource[0].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[1].content.length).toEqual(1);
+            expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[2].content.length).toEqual(1);
+            expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[3].content.length).toEqual(1);
+            expect(component.dataSource[3].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[4].content.length).toEqual(1);
+            expect(component.dataSource[4].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+        });
+
+        it('should correctly insert nested task ref', () => {
+            expect(component.dataSource).toEqual([]);
+
+            component.computeLayoutData([
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 4}),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 4}, 'taskRef', FieldTypeResource.TASK_REF, ['nestedMiddle']),
+                        createField(true, {x: 0, y: 2, rows: 1, cols: 4})],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 5}, undefined, FieldTypeResource.BUTTON),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 5}, 'taskRef', FieldTypeResource.TASK_REF, ['nestedBottom']),
+                        createField(true, {x: 0, y: 2, rows: 1, cols: 5}, undefined, FieldTypeResource.BUTTON)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 5,
+                    'nestedMiddle', 'taskRef', 1),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 3}, undefined)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 3,
+                    'nestedBottom', 'taskRef', 2)
+            ]);
+
+            expect(component.dataSource).toBeTruthy();
+            expect(Array.isArray(component.dataSource)).toBeTrue();
+            expect(component.dataSource.length).toEqual(5);
+
+            expect(component.dataSource[0].content.length).toEqual(1);
+            expect(component.dataSource[0].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[1].content.length).toEqual(1);
+            expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[2].content.length).toEqual(1);
+            expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[3].content.length).toEqual(1);
+            expect(component.dataSource[3].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[4].content.length).toEqual(1);
+            expect(component.dataSource[4].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+        });
+
+        it('should correctly insert two tasks in one task ref', () => {
+            expect(component.dataSource).toEqual([]);
+
+            component.computeLayoutData([
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 4}),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 4}, 'taskRef', FieldTypeResource.TASK_REF, ['taskOne', 'taskTwo']),
+                        createField(true, {x: 0, y: 2, rows: 1, cols: 4}, undefined, FieldTypeResource.BUTTON)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 5}, undefined, FieldTypeResource.BUTTON)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 5,
+                    'taskOne', 'taskRef', 1),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 3}, undefined)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 3,
+                    'taskTwo', 'taskRef', 1)
+            ]);
+
+            expect(component.dataSource).toBeTruthy();
+            expect(Array.isArray(component.dataSource)).toBeTrue();
+            expect(component.dataSource.length).toEqual(4);
+
+            expect(component.dataSource[0].content.length).toEqual(1);
+            expect(component.dataSource[0].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[1].content.length).toEqual(1);
+            expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[2].content.length).toEqual(1);
+            expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[3].content.length).toEqual(1);
+            expect(component.dataSource[3].content[0].type).toEqual(FieldTypeResource.BUTTON);
+        });
+
+        it('should correctly resolve complex task ref', () => {
+            expect(component.dataSource).toEqual([]);
+
+            component.computeLayoutData([
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 4}),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 4}, 'taskRef1', FieldTypeResource.TASK_REF, ['nestedMiddle']),
+                        createField(true, {x: 0, y: 2, rows: 1, cols: 4}),
+                        createField(true, {x: 0, y: 3, rows: 1, cols: 4}, 'taskRef2', FieldTypeResource.TASK_REF, ['nestedSimple']),
+                        createField(true, {x: 0, y: 4, rows: 1, cols: 4})],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 5}, undefined, FieldTypeResource.BUTTON),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 5}, 'taskRef', FieldTypeResource.TASK_REF, ['nestedBottom']),
+                        createField(true, {x: 0, y: 2, rows: 1, cols: 5}, undefined, FieldTypeResource.BUTTON)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 5,
+                    'nestedMiddle', 'taskRef1', 1),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 3}, undefined)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 3,
+                    'nestedBottom', 'taskRef', 2),
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 4}, undefined, FieldTypeResource.BUTTON)],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID, undefined, undefined, undefined, 4,
+                    'nestedSimple', 'taskRef2', 1)
+            ]);
+
+            expect(component.dataSource).toBeTruthy();
+            expect(Array.isArray(component.dataSource)).toBeTrue();
+            expect(component.dataSource.length).toEqual(7);
+
+            expect(component.dataSource[0].content.length).toEqual(1);
+            expect(component.dataSource[0].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[1].content.length).toEqual(1);
+            expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[2].content.length).toEqual(1);
+            expect(component.dataSource[2].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[3].content.length).toEqual(1);
+            expect(component.dataSource[3].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[4].content.length).toEqual(1);
+            expect(component.dataSource[4].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[5].content.length).toEqual(1);
+            expect(component.dataSource[5].content[0].type).toEqual(FieldTypeResource.BUTTON);
+
+            expect(component.dataSource[6].content.length).toEqual(1);
+            expect(component.dataSource[6].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+        });
     });
 
     describe('with async datafield rendering', () => {
