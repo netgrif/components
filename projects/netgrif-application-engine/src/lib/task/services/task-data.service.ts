@@ -583,12 +583,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
-        Object.keys(body).forEach(id => {
-            this._safeTask.dataGroups.forEach(dataGroup => {
-                const changed = dataGroup.fields.find(f => f.stringId === id);
-                if (changed !== undefined) {
-                    changed.waitingForResponse = false;
-                }
+        Object.keys(body).forEach(taskId => {
+            Object.keys(body[taskId]).forEach(fieldId => {
+                this._taskContentService.taskFieldsIndex[taskId][fieldId].waitingForResponse = false;
             });
         });
     }
