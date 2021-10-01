@@ -31,6 +31,7 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {SetDataEventOutcome} from '../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import {EventOutcome} from '../../resources/interface/event-outcome';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -230,7 +231,20 @@ class MockTaskResourceService {
             outcome: {
                 task: createMockTask(),
                 aCase: createMockCase('string'),
-                outcomes: [],
+                outcomes: [
+                    {
+                        task: createMockTask(),
+                        aCase: createMockCase('string'),
+                        outcomes: [
+                            {}
+                        ],
+                        message: '',
+                        net: createMockNet(),
+                        changedFields: {
+                            changedFields: {}
+                        }
+                    } as SetDataEventOutcome
+                ],
                 message: '',
                 net: createMockNet(),
                 changedFields: {
@@ -240,7 +254,7 @@ class MockTaskResourceService {
         };
         Object.keys(body[taskId]).forEach(key => {
             if (this._changedFieldsMap.has(key)) {
-                (response.outcome as SetDataEventOutcome).changedFields.changedFields[this._changedFieldsMap.get(key)] = {};
+                (response.outcome.outcomes[0] as SetDataEventOutcome).changedFields.changedFields[this._changedFieldsMap.get(key)] = {};
             }
         });
         return of(response).pipe(delay(this._delay));
