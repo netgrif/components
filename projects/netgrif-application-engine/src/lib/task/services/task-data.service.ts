@@ -201,7 +201,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     });
                     if (field instanceof FileField || field instanceof FileListField) {
                         field.changedFields$.subscribe((change: ChangedFieldsMap) => {
-                            this._changedFieldsService.changedFields$.next(change);
+                            this._changedFieldsService.emitChangedFields(change);
                         });
                     }
                 });

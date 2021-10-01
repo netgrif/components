@@ -43,15 +43,14 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>): GroupNavigat
  * Each item has format ROLE_IMPORT_ID:NET_IMPORT_ID
  * @param dataSection an array containing the data groups that correspond to a single navigation entry
  * @param roleFieldId ID of field containing banned or allowed role IDs
- * @param taskReffed whether the provided data is contained in a task ref field or not. Data is assumed to BE task reffed by default.
  * @returns an Array of string values representing role IDs
  */
-export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string, taskReffed = true): Array<string> {
+export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string): Array<string> {
     if (dataSection.length === 0) {
         throw new Error('The provided task data does not belong to a Navigation menu item task. Role entries cannot be extracted');
     }
 
-    const roleIds = getFieldFromDataGroups(dataSection, roleFieldId, taskReffed);
+    const roleIds = getFieldFromDataGroups(dataSection, roleFieldId);
     if (roleIds === undefined) {
         throw new Error('Navigation entry role authorization field could not be resolved');
     }

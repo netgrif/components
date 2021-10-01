@@ -21,7 +21,8 @@ export class EventService {
     private parseChangedFieldsFromOutcomeTreeRecursive(outcomes: Array<EventOutcome>,
                                                        changedFieldsMap: ChangedFieldsMap = {}): ChangedFieldsMap {
         outcomes.forEach(childOutcome => {
-            if ('changedFields' in childOutcome) {
+            if ('changedFields' in childOutcome &&
+                !!(childOutcome as SetDataEventOutcome).aCase && !!(childOutcome as SetDataEventOutcome).task) {
                 const setDataOutcome: SetDataEventOutcome = childOutcome as SetDataEventOutcome;
                 const outcomeChangedFields: ChangedFields = (childOutcome as SetDataEventOutcome).changedFields.changedFields;
                 const caseId = setDataOutcome.aCase.stringId;
