@@ -20,7 +20,7 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {refreshTree} from '../../utility/refresh-tree';
 import {getField} from '../../utility/get-field';
-import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
+import {extractIconAndTitle, extractRoles} from '../utility/navigation-item-task-utility-methods';
 import {LanguageService} from '../../translate/language.service';
 import {
     DynamicNavigationRouteProviderService
@@ -427,8 +427,20 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 continue;
             }
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
+            const allowedRoles = extractRoles(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX);
 
-            result.push(newNode);
+            const bannedRoles = extractRoles(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX);
+
+
+            if ((allowedRoles.some(roleId => this._userService.hasRoleByIdentifier(roleId.split(':')[0], roleId.split(':')[1]))
+                    || allowedRoles.length === 0)
+                && !bannedRoles.some(roleId => this._userService.hasRoleByIdentifier(roleId.split(':')[0], roleId.split(':')[1]))) {
+                result.push(newNode);
+            }
         }
         return result;
     }

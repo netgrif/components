@@ -45,6 +45,7 @@ import {CurrencyPipe} from '@angular/common';
         DataFocusPolicyService,
         AssignPolicyService,
         FinishPolicyService,
+        ChangedFieldsService,
         {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
     ]
 })

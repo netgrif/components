@@ -103,7 +103,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param afterAction if the request completes successfully emits `true` into the Subject, otherwise `false` will be emitted
      * @param force set to `true` if you need force reload of all task data
      */
-    public initializeTaskDataFields(afterAction: AfterAction = new AfterAction(), force: boolean = false): void {
+    public initializeTaskDataFields(afterAction: AfterAction = new AfterAction(), force = false): void {
         this._eventQueue.scheduleEvent(new QueuedEvent(
             () => {
                 return this.isTaskPresent();
@@ -138,7 +138,6 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         const gottenTaskId = this._safeTask.stringId;
         this._taskState.startLoading(gottenTaskId);
 
-        // todo zrejme bude potrebné vyparsovať datagroupy inak, changed fields po get data možno nebudú takto fungovať
         this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(dataGroups => {
             this.processSuccessfulGetDataRequest(gottenTaskId, dataGroups, afterAction, nextEvent);
         }, error => {
@@ -202,7 +201,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     });
                     if (field instanceof FileField || field instanceof FileListField) {
                         field.changedFields$.subscribe((change: ChangedFieldsMap) => {
-                            this._changedFieldsService.changedFields$.next(change);
+                            this._changedFieldsService.emitChangedFields(change);
                         });
                     }
                 });
@@ -418,9 +417,9 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
         this._taskResourceService.setData(this._safeTask.stringId, body).pipe(take(1))
             .subscribe((response: EventOutcomeMessageResource) => {
-                this.processSuccessfulSetDataRequest(setTaskId, response.outcome, afterAction, nextEvent);
+                this.processSuccessfulSetDataRequest(setTaskId, response.outcome, afterAction, nextEvent, body);
             }, error => {
-                this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent);
+                this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent, body);
             });
     }
 
@@ -430,11 +429,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param response the resulting Event outcome of the set data request
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
      */
     protected processSuccessfulSetDataRequest(setTaskId: string,
                                               response: EventOutcome,
                                               afterAction: AfterAction,
-                                              nextEvent: AfterAction) {
+                                              nextEvent: AfterAction,
+                                              body: TaskSetDataRequestBody) {
         if (!this.isTaskRelevant(setTaskId)) {
             this._log.debug('current task changed before the set data response could be received, discarding...');
             this._taskState.stopLoading(setTaskId);
@@ -449,6 +450,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (Object.keys(changedFieldsMap).length > 0) {
             this._changedFieldsService.emitChangedFields(changedFieldsMap);
         }
+        this.clearWaitingForResponseFlag(body);
         this._snackBar.openSuccessSnackBar(!!response.message ? response.message : this._translate.instant('tasks.snackbar.dataSaved'));
         this.updateStateInfo(afterAction, true, setTaskId);
         nextEvent.resolve(true);
@@ -460,11 +462,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param error the returned error
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
      */
     protected processErroneousSetDataRequest(setTaskId: string,
                                              error: HttpErrorResponse,
                                              afterAction: AfterAction,
-                                             nextEvent: AfterAction) {
+                                             nextEvent: AfterAction,
+                                             body: TaskSetDataRequestBody) {
         this._log.debug('setting task data failed', error);
 
         if (!this.isTaskRelevant(setTaskId)) {
@@ -477,6 +481,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
 
         this.revertToPreviousValue();
+        this.clearWaitingForResponseFlag(body);
         this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
         this.updateStateInfo(afterAction, false, setTaskId);
         nextEvent.resolve(false);
@@ -572,6 +577,17 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             dataGroup.fields.forEach(field => {
                 if (field.initialized && field.valid && field.changed) {
                     field.revertToPreviousValue();
+                }
+            });
+        });
+    }
+
+    private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
+        Object.keys(body).forEach(id => {
+            this._safeTask.dataGroups.forEach(dataGroup => {
+                const changed = dataGroup.fields.find(f => f.stringId === id);
+                if (changed !== undefined) {
+                    changed.waitingForResponse = false;
                 }
             });
         });

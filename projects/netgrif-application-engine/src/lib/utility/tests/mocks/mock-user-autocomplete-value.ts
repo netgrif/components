@@ -6,7 +6,7 @@ import {UserAutocomplete} from '../../../search/models/category/user-autocomplet
  * @param userId id of the mock user value
  * @param normalUser if not the user is the special ME user option
  */
-export function mockUserAutocompleteValue(userName: string, normalUser: boolean = true, userId?: string)
+export function mockUserAutocompleteValue(userName: string, normalUser = true, userId?: string)
     : SearchAutocompleteOption<Array<string>> {
     return {
         text: userName,

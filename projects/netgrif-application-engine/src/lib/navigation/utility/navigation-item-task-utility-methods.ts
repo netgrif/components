@@ -6,6 +6,7 @@ import {Filter} from '../../filter/models/filter';
 import {UserFilterConstants} from '../../filter/models/user-filter-constants';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
 import {SimpleFilter} from '../../filter/models/simple-filter';
+import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
 
 /**
  * Extracts the item name and item icon (if any) rom a section of the navigation item task data.
@@ -35,6 +36,26 @@ export function extractIconAndTitle(dataSection: Array<DataGroup>): GroupNavigat
         }
     }
     return result;
+}
+
+/**
+ * Based on provided parameter extracts allowed or banned roles into an Array of strings from a section of the navigation item task data.
+ * Each item has format ROLE_IMPORT_ID:NET_IMPORT_ID
+ * @param dataSection an array containing the data groups that correspond to a single navigation entry
+ * @param roleFieldId ID of field containing banned or allowed role IDs
+ * @returns an Array of string values representing role IDs
+ */
+export function extractRoles(dataSection: Array<DataGroup>, roleFieldId: string): Array<string> {
+    if (dataSection.length === 0) {
+        throw new Error('The provided task data does not belong to a Navigation menu item task. Role entries cannot be extracted');
+    }
+
+    const roleIds = getFieldFromDataGroups(dataSection, roleFieldId);
+    if (roleIds === undefined) {
+        throw new Error('Navigation entry role authorization field could not be resolved');
+    }
+
+    return (roleIds as unknown as MultichoiceField).choices.map(choice => choice.key);
 }
 
 /**

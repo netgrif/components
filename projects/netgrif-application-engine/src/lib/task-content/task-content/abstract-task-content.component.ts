@@ -88,6 +88,11 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     protected _subgridIdCounter: IncrementingCounter;
     protected _existingSubgridIds: Set<string>;
 
+    /**
+     * Defines the row height of one row in task content
+     */
+    protected rowHeight = 105;
+
     protected constructor(protected _fieldConverter: FieldConverterService,
                           public taskContentService: TaskContentService,
                           protected _paperView: PaperViewService,
@@ -190,6 +195,27 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
 
         item.alignment = 'space-between ' + alignment;
         return item.alignment;
+    }
+
+    /**
+     * Computes component height if the rows attribute of task layout is set.
+     */
+    public resolveContentHeightCss(): string {
+        if (this.scrollingNeeded()) {
+            return this.taskContentService.task.layout.rows * this.rowHeight + 'px';
+        } else {
+            return '100%';
+        }
+    }
+
+    /**
+     * Decides whether there is a fixed number of rows and it need-s scrolling
+     */
+    public scrollingNeeded(): boolean {
+        return this.taskContentService.task
+            && !!this.taskContentService.task.layout
+            && !!this.taskContentService.task.layout.rows
+            && this.taskContentService.task.layout.rows > 0;
     }
 
     /**
