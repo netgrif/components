@@ -28,6 +28,7 @@ import {TaskElementType} from '../model/task-content-element-type';
 import {ButtonField} from '../../data-fields/button-field/models/button-field';
 import {createMockDataGroup} from '../../utility/tests/utility/create-mock-datagroup';
 import {createMockField} from '../../utility/tests/utility/create-mock-field';
+import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 
 describe('AbstractTaskContentComponent', () => {
     let component: TestTaskContentComponent;
@@ -489,6 +490,28 @@ describe('AbstractTaskContentComponent', () => {
             expect(grid[1][3].startsWith('xblank')).toBeTrue();
             expect(grid[1][0] === grid[1][1]).toBeTrue();
         });
+
+        it('should not render empty task ref', () => {
+            expect(component.dataSource).toEqual([]);
+
+            component.computeLayoutData([
+                createMockDataGroup([
+                        createField(true, {x: 0, y: 0, rows: 1, cols: 4}),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 4}, undefined, FieldTypeResource.TASK_REF),
+                        createField(true, {x: 0, y: 2, rows: 1, cols: 4})],
+                    undefined, DataGroupAlignment.START, DataGroupLayoutType.GRID)
+            ]);
+
+            expect(component.dataSource).toBeTruthy();
+            expect(Array.isArray(component.dataSource)).toBeTrue();
+            expect(component.dataSource.length).toEqual(2);
+
+            expect(component.dataSource[0].content.length).toEqual(1);
+            expect(component.dataSource[0].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+
+            expect(component.dataSource[1].content.length).toEqual(1);
+            expect(component.dataSource[1].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+        });
     });
 
     describe('with async datafield rendering', () => {
@@ -654,8 +677,8 @@ describe('AbstractTaskContentComponent', () => {
                 createMockDataGroup([
                         createField(true, {x: 0, y: 0, rows: 1, cols: 1}, 'bool1'),
                         createField(true, {x: 1, y: 0, rows: 1, cols: 1}, 'bool2'),
-                        createField(true, {x: 0, y: 1, rows: 1, cols: 2}, 'btn1', false),
-                        createField(true, {x: 2, y: 1, rows: 1, cols: 2}, 'btn2', false),
+                        createField(true, {x: 0, y: 1, rows: 1, cols: 2}, 'btn1', FieldTypeResource.BUTTON),
+                        createField(true, {x: 2, y: 1, rows: 1, cols: 2}, 'btn2', FieldTypeResource.BUTTON),
                         createField(true, {x: 2, y: 0, rows: 1, cols: 1}, 'bool3'),
                         createField(true, {x: 3, y: 0, rows: 1, cols: 1}, 'bool4')],
                     '', DataGroupAlignment.START, DataGroupLayoutType.GRID)
@@ -789,8 +812,9 @@ const counter = new IncrementingCounter();
 function createField(visible = true,
                      layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0},
                      stringId?: string,
-                     booleanField = true): BooleanField | ButtonField {
-    return createMockField(visible, layout, stringId ?? counter, booleanField);
+                     fieldType: FieldTypeResource.BOOLEAN | FieldTypeResource.BUTTON | FieldTypeResource.TASK_REF
+                         = FieldTypeResource.BOOLEAN): BooleanField | ButtonField | TaskRefField {
+    return createMockField(visible, layout, stringId ?? counter, fieldType);
 }
 
 function transformStringToGrid(gridString: string): Array<Array<string>> {

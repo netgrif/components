@@ -406,7 +406,7 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
                 fields: dataGroup.fields.slice(taskRefPosition + 1),
             };
             result.endGroup.fields.forEach(f => {
-                f.localLayout.y -= result.taskRef.localLayout.y - 1;
+                f.localLayout.y = f.localLayout.y - result.taskRef.localLayout.y - 1;
             });
         }
 

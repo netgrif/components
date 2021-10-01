@@ -4,6 +4,8 @@ import {ButtonField} from '../../../data-fields/button-field/models/button-field
 import {TemplateAppearance} from '../../../data-fields/models/template-appearance';
 import {MaterialAppearance} from '../../../data-fields/models/material-appearance';
 import {IncrementingCounter} from '../../incrementing-counter';
+import {TaskRefField} from '../../../data-fields/task-ref-field/model/task-ref-field';
+import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
 
 /**
  * Creates a mock boolean or button field, with the specified properties
@@ -13,13 +15,16 @@ import {IncrementingCounter} from '../../incrementing-counter';
  * If a number is provided the fields ID will be set to 'f<number>'.
  * If an {@link IncrementingCounter} is provided the ID will follow the same pattern as for the `number` argument,
  * but the counter will be used to generate the number.
- * @param booleanField if `true` the generated field will be a {@link BooleanField} instance,
- * otherwise a {@link ButtonField} instance is generated
+ * @param fieldType determines what type of field should be generated.
+ * Currently only `boolean`, `button` and `task ref` fields are supported. If an unsupported field type is used an error is thrown.
+ * @param taskRefValue determines the value of the task ref field if a task ref field is generated
  */
 export function createMockField(visible = true,
                                 layout: GridLayout = {x: 0, y: 0, rows: 0, cols: 0},
                                 counterOrStringId: number | IncrementingCounter | string = 0,
-                                booleanField = true): BooleanField | ButtonField {
+                                fieldType: FieldTypeResource.BOOLEAN | FieldTypeResource.BUTTON | FieldTypeResource.TASK_REF
+                                    = FieldTypeResource.BOOLEAN,
+                                taskRefValue: Array<string> = []): BooleanField | ButtonField | TaskRefField {
     const b = visible ? {editable: true} : {hidden: true};
     const l = {
         ...layout,
@@ -35,9 +40,14 @@ export function createMockField(visible = true,
         id = counterOrStringId;
     }
 
-    if (booleanField) {
-        return new BooleanField(id, 'title', false, b, '', '', l);
-    } else {
-        return new ButtonField(id, 'title', b, 0, '', '', l);
+    switch (fieldType) {
+        case FieldTypeResource.BOOLEAN:
+            return new BooleanField(id, 'title', false, b, '', '', l);
+        case FieldTypeResource.BUTTON:
+            return new ButtonField(id, 'title', b, 0, '', '', l);
+        case FieldTypeResource.TASK_REF:
+            return new TaskRefField(id, 'title', taskRefValue, b, '', '', l);
+        default:
+            throw new Error(`createMockField does not currently support fields of type '${fieldType}'`);
     }
 }
