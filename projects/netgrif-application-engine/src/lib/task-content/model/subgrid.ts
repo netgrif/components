@@ -189,7 +189,7 @@ export class Subgrid {
      * @returns the base identifier, if it already is unique. A unique variation on the base identifier if it is already in use.
      */
     protected assureUniqueness(identifier: string): string {
-        const alphaNumIdentifier = 'x' + identifier.replace(/[^0-9a-zA-Z]/gi, '');
+        const alphaNumIdentifier = 'x' + identifier.replace(/[^0-9a-z]/gi, '');
         if (!this._existingIdentifiers.has(alphaNumIdentifier)) {
             this._existingIdentifiers.add(alphaNumIdentifier);
             return alphaNumIdentifier;

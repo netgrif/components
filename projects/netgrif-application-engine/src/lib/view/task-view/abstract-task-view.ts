@@ -1,7 +1,6 @@
-import {Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {OnDestroy} from '@angular/core';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
-import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {TaskViewService} from './service/task-view.service';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
 
