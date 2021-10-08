@@ -46,13 +46,13 @@ export class FieldConverterService {
                         item.description, item.layout, item.validations, type);
                 } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'area') {
                     type = TextFieldView.TEXTAREA;
-                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'htmlEditor') {
+                } else if (item.view !== undefined && item.view.value !== undefined && item.view.value === 'htmltextarea') {
                     type = TextFieldView.HTMLTEXTAREA;
                     return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                         item.description, item.layout, item.validations, type);
                 }
                 if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'editor' ||
-                    item.component.name === 'htmlEditor')) {
+                    item.component.name === 'htmltextarea')) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
                         item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component);
                 }
