@@ -53,16 +53,17 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
      * Checks whether the logged user can assign the task, managed by this service, in it's current state.
      */
     public canAssign(): boolean {
-        return !!this._task && (
-            (
-                this._task.assignPolicy === AssignPolicy.manual &&
-                !this._task.user &&
-                this.canDo('perform')
-            ) || (
-                this.isEmptyRoles() &&
-                this.isEmptyUsers()
-            )
-        );
+        return !!this._task
+            && (
+                (
+                    this._task.assignPolicy === AssignPolicy.manual
+                    && !this._task.user
+                    && this.canDo('perform')
+                ) || (
+                    this.isEmptyRoles()
+                    && this.isEmptyUsers()
+                )
+            );
     }
 
     private isEmptyUsers(): boolean {
