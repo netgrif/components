@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {SetDataEventOutcome} from '../model/event-outcomes/data-outcomes/set-data-event-outcome';
+import {ChangedFieldsMap} from './interfaces/changed-fields-map';
+import {EventConstants} from '../model/event-constants';
 
 @Injectable({
     providedIn: 'root'
@@ -19,10 +21,11 @@ export class EventService {
     }
 
     private parseChangedFieldsFromOutcomeTreeRecursive(outcomes: Array<EventOutcome>,
-                                                       changedFieldsMap: ChangedFieldsMap = {}): ChangedFieldsMap {
+                                                       changedFieldsMap: ChangedFieldsMap): ChangedFieldsMap {
         outcomes.forEach(childOutcome => {
-            if ('changedFields' in childOutcome &&
-                !!(childOutcome as SetDataEventOutcome).aCase && !!(childOutcome as SetDataEventOutcome).task) {
+            if (EventConstants.CHANGED_FIELDS in childOutcome
+                && !!(childOutcome as SetDataEventOutcome).aCase
+                && !!(childOutcome as SetDataEventOutcome).task) {
                 const setDataOutcome: SetDataEventOutcome = childOutcome as SetDataEventOutcome;
                 const outcomeChangedFields: ChangedFields = (childOutcome as SetDataEventOutcome).changedFields.changedFields;
                 const caseId = setDataOutcome.aCase.stringId;
@@ -52,10 +55,4 @@ export class EventService {
         return changedFieldsMap;
     }
 
-}
-
-export interface ChangedFieldsMap {
-    [caseId: string]: {
-        [taskId: string]: ChangedFields
-    };
 }

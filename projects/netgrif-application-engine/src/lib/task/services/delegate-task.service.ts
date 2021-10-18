@@ -25,7 +25,8 @@ import {EventQueueService} from '../../event-queue/services/event-queue.service'
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
-import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 
 /**
@@ -122,7 +123,6 @@ export class DelegateTaskService extends TaskHandlingService {
 
             if (outcomeResource.success) {
                 this._taskContentService.updateStateData(outcomeResource.outcome as DelegateTaskEventOutcome);
-                // this._taskDataService.emitChangedFields((outcomeResource.outcome as DelegateTaskEventOutcome).data.changedFields);
                 const changedFieldsMap: ChangedFieldsMap = this._eventService
                     .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
                 if (!!changedFieldsMap) {

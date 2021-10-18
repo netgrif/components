@@ -33,7 +33,7 @@ export class FieldConverterService {
         switch (item.type) {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, undefined, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.TEXT:
                 /*@deprecated in 4.3.0*/
                 let type = TextFieldView.DEFAULT;

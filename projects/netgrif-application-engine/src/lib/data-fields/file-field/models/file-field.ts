@@ -6,7 +6,7 @@ import {Observable, Subject} from 'rxjs';
 import {Component} from '../../models/component';
 import {FormControl} from '@angular/forms';
 import {Validation} from '../../models/validation';
-import {ChangedFieldsMap} from '../../../event/services/event.service';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 
 /**
  * Supported types of files a user can select through a file picker.

@@ -73,11 +73,11 @@ export class UserFiltersService implements OnDestroy {
         const result$ = new ReplaySubject<boolean>(1);
         this._caseService.deleteCase(filterCaseId).subscribe((response: EventOutcomeMessageResource) => {
             if (response.success) {
-                this._log.debug(response.outcome.message === undefined ? 'Filter case delete success' : response.outcome.message);
+                this._log.debug('Filter case delete success', response);
                 result$.next(true);
                 result$.complete();
             } else {
-                this._log.error(response.outcome.message === undefined ? 'Filter case delete failure' : response.outcome.message);
+                this._log.error('Filter case delete failure', response);
                 result$.next(false);
                 result$.complete();
             }

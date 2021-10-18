@@ -136,7 +136,7 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
                 }
             } else {
                 this._log.info(response.success);
-                this._response = (response.outcome as PetriNetEventOutcome);
+                this._response = response.outcome as PetriNetEventOutcome;
                 file.inProgress = false;
                 file.completed = true;
                 this._snackbar.openSuccessSnackBar(response.outcome.message === undefined

@@ -21,7 +21,8 @@ import {EventQueueService} from '../../event-queue/services/event-queue.service'
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
-import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 
 /**
@@ -134,7 +135,6 @@ export class FinishTaskService extends TaskHandlingService {
 
             if (outcomeResource.success) {
                 this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
-                // this._taskDataService.emitChangedFields((outcomeResource.outcome as FinishTaskEventOutcome).data.changedFields);
                 const changedFieldsMap: ChangedFieldsMap = this._eventService
                     .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
                 if (!!changedFieldsMap) {
@@ -149,6 +149,10 @@ export class FinishTaskService extends TaskHandlingService {
             } else if (outcomeResource.error !== undefined) {
                 if (outcomeResource.error !== '') {
                     this._snackBar.openErrorSnackBar(outcomeResource.error);
+                }
+                if (outcomeResource.outcome !== undefined) {
+                    const changedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
                 }
                 this.completeActions(afterAction, nextEvent, false);
             }

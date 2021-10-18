@@ -12,7 +12,9 @@ import {BehaviorSubject} from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
 import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
-import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import {DataField} from '../models/abstract-data-field';
 
 export interface FileState {
     progress: number;
@@ -187,7 +189,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         const fileFormData = new FormData();
         const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
         fileFormData.append('file', fileToUpload);
-        this._taskResourceService.uploadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+        this._taskResourceService.uploadFile(this.resolveParentTaskId(),
             this.dataField.stringId, fileFormData, false)
             .subscribe((response: EventOutcomeMessageResource) => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
@@ -240,7 +242,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
             this.dataField.stringId).subscribe(response => {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
@@ -296,7 +298,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
 
-        this._taskResourceService.deleteFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+        this._taskResourceService.deleteFile(this.resolveParentTaskId(),
             this.dataField.stringId).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 const filename = this.dataField.value.name;
@@ -414,6 +416,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     public getHeight() {
         return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
             (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
+    }
+
+    private resolveParentTaskId(): string {
+        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
     }
 }
 

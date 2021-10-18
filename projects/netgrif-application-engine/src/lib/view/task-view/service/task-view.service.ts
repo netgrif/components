@@ -25,7 +25,7 @@ import {SearchIndexResolverService} from '../../../search/search-keyword-resolve
 import {SortableView} from '../../abstract/sortable-view';
 import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
 import {TaskViewConfiguration} from '../models/task-view-configuration';
-import {ChangedFieldsMap} from '../../../event/services/event.service';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 
 
 @Injectable()
