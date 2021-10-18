@@ -77,7 +77,7 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
             && this._userComparator.compareUsers(this._task.user)
             && this.canDo('delegate')
             && ((this._task.assignedUserPolicy === undefined || this._task.assignedUserPolicy.reassign === undefined)
-            || this._task.assignedUserPolicy.reassign);
+                || this._task.assignedUserPolicy.reassign);
     }
 
     /**
@@ -85,17 +85,12 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
      */
     public canCancel(): boolean {
         return !!this._task
-            && (
-                (
-                    !!this._task.user
-                    && this._userComparator.compareUsers(this._task.user)
-                    && ((this._task.assignedUserPolicy === undefined || this._task.assignedUserPolicy.cancel === undefined)
+            && !!this._task.user
+            && ((this._userComparator.compareUsers(this._task.user)
+                    && (this._task.assignedUserPolicy === undefined || this._task.assignedUserPolicy.cancel === undefined
                         || this._task.assignedUserPolicy.cancel)
-                ) || (
-                    !!this._task.user
-                    && this.canDo('cancel')
-                )
-            );
+                    && this.canDo('cancel'))
+                || this._userService.user.authorities.includes('ROLE_ADMIN'));
     }
 
     /**

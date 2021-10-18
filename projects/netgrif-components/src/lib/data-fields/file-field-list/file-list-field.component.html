@@ -16,11 +16,11 @@
                     [class.do-not-click]="state.uploading">
                 <mat-icon>file_upload</mat-icon>
             </button>
-            <span *ngIf="uploadedFiles.length === 0" class="input-placeholder input-name-ellipsis">{{constructDisplayName()}}</span>
+            <span *ngIf="uploadedFiles.length === 0" (click)="chooseFile()" fxFlex [ngClass]="{'no-cursor': formControl.disabled}" class="input-placeholder input-name-ellipsis">{{constructDisplayName()}}</span>
             <div *ngIf="uploadedFiles.length !== 0" class="input-name-ellipsis" fxFlex>
                 <div *ngFor="let name of uploadedFiles" fxLayoutAlign="start center">
                     <span (click)="download(name)" fxFlex [matTooltip]="'dataField.file.clickToDownload' | translate : {fileName: name}"
-                          class="input-name-ellipsis">{{name}}</span>
+                          class="input-name-ellipsis file-list-item">{{name}}</span>
                     <button (click)="deleteFile(name)" [matTooltip]="'dataField.file.clickToDelete' | translate" mat-icon-button
                             *ngIf="!formControl.disabled">
                         <mat-icon color="warn">close</mat-icon>
