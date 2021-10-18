@@ -20,6 +20,7 @@ import {Component} from '../../data-fields/models/component';
 import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
+import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 
 @Injectable({
     providedIn: 'root'
@@ -110,6 +111,9 @@ export class FieldConverterService {
             case FieldTypeResource.FILTER:
                 return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component);
+            case FieldTypeResource.I18N:
+                return new I18nField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder, item.description,
+                    item.layout, item.validations, item.component);
         }
     }
 
@@ -138,6 +142,8 @@ export class FieldConverterService {
             return item.fieldType;
         } else if (item instanceof FilterField) {
             return FieldTypeResource.FILTER;
+        } else if (item instanceof I18nField) {
+            return FieldTypeResource.I18N;
         }
     }
 

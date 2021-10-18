@@ -33,6 +33,9 @@ export * from './enumeration-field/enumeration-icon-field/abstract-enumeration-i
 export * from './enumeration-field/enumeration-autocomplete-dynamic-field/abstract-enumeration-autocomplete-dynamic-field.component';
 export * from './filter-field/abstract-filter-field.component';
 export * from './filter-field/abstract-filter-field-content.component';
+export * from './i18n-field/abstract-i18n-field.component';
+export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
+export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -53,6 +56,7 @@ export * from './date-field/models/custom-date-adapter';
 export * from './task-ref-field/model/task-ref-field';
 export * from './enumeration-field/models/dynamic-enumeration-field';
 export * from './filter-field/models/filter-field';
+export * from './i18n-field/models/i18n-field';
 
 /* Interfaces */
 export * from './models/changed-fields';
