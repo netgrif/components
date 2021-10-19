@@ -30,7 +30,8 @@ import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {ChangedFieldsMap} from '../../event/services/event.service';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
@@ -45,11 +46,13 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+
     @Input()
     set forceLoadDataOnOpen(force: boolean) {
         this._forceLoadDataOnOpen = force;
         this._assignPolicyService.forced = force;
     }
+
     @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
@@ -85,16 +88,26 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
                           protected _translate: TranslateService,
-                          protected _currencyPipe: CurrencyPipe) {
+                          protected _currencyPipe: CurrencyPipe,
+                          protected _changedFieldsService: ChangedFieldsService) {
         super(_translate, _currencyPipe);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
-        this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
-            changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
-            this._taskPanelData.changedFields.next(changedFields);
+        this._subTaskData = _changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
+            const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
+            );
+            const changedFields: Array<ChangedFields> = [];
+            filteredCaseIds.forEach(caseId => {
+                const taskIds: Array<string> = this._taskContentService.referencedTaskAndCaseIds[caseId];
+                changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
+            });
+            changedFields.filter(fields => fields !== undefined).forEach(fields => {
+               this.taskPanelData.changedFields.next(fields);
+            });
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
             this.expand();
@@ -116,7 +129,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             cancel: (t: Task) => false,
         };
         if (_disableFunctions) {
-             Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
+            Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
         }
     }
 
@@ -125,7 +138,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._taskContentService.task = this._taskPanelData.task;
 
         this.createContentPortal();
-
         this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
             this._taskContentService.updateFromChangedFields(chFields);
         });

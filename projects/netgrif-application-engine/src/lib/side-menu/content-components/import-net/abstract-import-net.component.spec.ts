@@ -18,6 +18,9 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {TranslateService} from '@ngx-translate/core';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
+import {ImportPetriNetEventOutcome} from '../../../event/model/event-outcomes/petrinet-outcomes/import-petri-net-event-outcome';
+import {createMockNet} from '../../../utility/tests/utility/create-mock-net';
 
 describe('AbstractImportNetComponent', () => {
     let component: TestImportComponent;
@@ -85,8 +88,15 @@ describe('AbstractImportNetComponent', () => {
 });
 
 class MyPetriNetResource {
-    importPetriNet(file) {
-        return of({success: 'success'});
+    importPetriNet(file): Observable<EventOutcomeMessageResource> {
+        return of({
+            success: 'success',
+            outcome: {
+                net: createMockNet(),
+                outcomes: [],
+                message: ''
+            } as ImportPetriNetEventOutcome
+        });
     }
 }
 

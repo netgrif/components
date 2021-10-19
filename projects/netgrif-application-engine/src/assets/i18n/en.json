@@ -18,16 +18,21 @@
             "dataSaved": "Data saved successfully",
             "failedSave": "Saving data failed",
             "assignTask": "Assigning task",
+            "assignTaskSuccess": "Task successfully assigned",
             "delegateTask": "Delegating task",
+            "delegateTaskSuccess": "Task successfully delegated",
             "failed": "failed",
             "cancelTask": "Canceling assignment of task",
+            "cancelTaskSuccess": "Task successfully canceled",
             "finishTask": "Finishing task",
+            "finishTaskSuccess": "Task successfully finished",
             "invalidData": "Some fields have invalid values",
             "missingRequired": "Some required fields are empty",
             "noCase": "No cases found",
             "caseGetFailed": "Getting cases failed",
             "noLongerExists": "The selected task no longer exists",
             "caseDeleteFailed": "Case could not be deleted",
+            "caseDeleteSuccess": "Case successfully deleted",
             "rolesSuccessAssign": "Roles successfully assigned to selected users"
         },
         "view": {
@@ -391,7 +396,8 @@
             "deleteCanceled": "Process delete canceled",
             "deleteSuccess": "Process successfully deleted",
             "deleteError": "Process could not be deleted",
-            "uploadFailed": "Process file could not be uploaded"
+            "uploadFailed": "Process file could not be uploaded.",
+            "uploadSuccess": "Process file uploaded successfully"
         }
     },
     "legal": {

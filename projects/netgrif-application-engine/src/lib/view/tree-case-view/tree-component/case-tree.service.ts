@@ -27,6 +27,9 @@ import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {CaseTreePath} from './model/case-tree-path';
 import {ExpansionTree} from './model/expansion-tree';
 import {ResultWithAfterActions} from '../../../utility/result-with-after-actions';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
+import {SetDataEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
+import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {refreshTree} from '../../../utility/refresh-tree';
 
 /**
@@ -500,9 +503,9 @@ export class CaseTreeService implements OnDestroy {
             this._caseResourceService.createCase({
                 title: childTitle,
                 netId: net.stringId
-            }).subscribe(childCase => {
+            }).subscribe((outcomeResource: EventOutcomeMessageResource) => {
                 const caseRefField = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILDREN_CASE_REF);
-                const setCaseRefValue = [...caseRefField.value, childCase.stringId];
+                const setCaseRefValue = [...caseRefField.value, (outcomeResource.outcome as CreateCaseEventOutcome).aCase.stringId];
                 this.performCaseRefCall(clickedNode.case.stringId, setCaseRefValue).subscribe(
                     valueChange => this.updateTreeAfterChildAdd(clickedNode, valueChange ? valueChange : setCaseRefValue, operationResult)
                 );
@@ -686,8 +689,8 @@ export class CaseTreeService implements OnDestroy {
                     type: 'caseRef',
                     value: newCaseRefValue
                 };
-                this._taskResourceService.setData(task.stringId, body).subscribe(changeContainer => {
-                    const changedFields = changeContainer.changedFields;
+                this._taskResourceService.setData(task.stringId, body).subscribe((outcomeResource: EventOutcomeMessageResource) => {
+                    const changedFields = (outcomeResource.outcome as SetDataEventOutcome).changedFields.changedFields;
                     const caseRefChanges = changedFields[TreePetriflowIdentifiers.CHILDREN_CASE_REF];
                     result$.next(caseRefChanges ? caseRefChanges.value : undefined);
                     result$.complete();

@@ -49,6 +49,9 @@ describe('TaskPanelContentService', () => {
             required: true
         };
 
+        // normally task fields index is created during processing of getData response
+        service.taskFieldsIndex[mockTask.stringId] = {};
+        service.taskFieldsIndex[mockTask.stringId][FIELD_ID] = mockTask.dataGroups[0].fields[0];
         service.task = mockTask;
 
         service.updateFromChangedFields({
@@ -58,7 +61,8 @@ describe('TaskPanelContentService', () => {
                         editable: true
                     }
                 }
-            }
+            },
+            taskId: mockTask.stringId
         });
 
         // expectation testov bude nutne zmenit po opraveny bugu s vyhodnocovanim behavior NGSD-489
@@ -73,7 +77,8 @@ describe('TaskPanelContentService', () => {
                         visible: true
                     }
                 }
-            }
+            },
+            taskId: mockTask.stringId
         });
 
         expect(service.task.dataGroups[0].fields[0].behavior).toEqual({
@@ -87,7 +92,8 @@ describe('TaskPanelContentService', () => {
                         visible: true
                     }
                 }
-            }
+            },
+            taskId: mockTask.stringId
         });
 
         expect(service.task.dataGroups[0].fields[0].behavior).toEqual({

@@ -1,7 +1,7 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
-    AbstractFileFieldComponent,
+    AbstractFileFieldComponent, EventService,
     LoggerService,
     NAE_INFORM_ABOUT_INVALID_DATA,
     SnackBarService,
@@ -22,10 +22,11 @@ export class FileFieldComponent extends AbstractFileFieldComponent {
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                eventService: EventService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
                 protected _sanitizer: DomSanitizer,
                 protected dialog: MatDialog) {
-        super(taskResourceService, log, snackbar, translate, informAboutInvalidData, _sanitizer);
+        super(taskResourceService, log, snackbar, translate, eventService, informAboutInvalidData, _sanitizer);
     }
 
     public showPreviewDialog() {

@@ -18,16 +18,21 @@
             "dataSaved": "Dáta úspešne uložené",
             "failedSave": "Ukladanie dát zlyhalo",
             "assignTask": "Priradenie dát",
+            "assignTaskSuccess": "Priradenie úlohy úspešné",
             "delegateTask": "Delegovanie úlohy",
+            "delegateTaskSuccess": "Delegovanie úlohy úspešné",
             "failed": "zlyhalo",
             "cancelTask": "Ruším priradenie úlohy",
+            "cancelTaskSuccess": "Zrušenie priradenia úlohy úspešné",
             "finishTask": "Dokončujem úlohu",
+            "finishTaskSuccess": "Dokončenie úlohy úspešné",
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
             "missingRequired": "Niektoré povinné polia sú prázdne",
             "noCase": "Nenašli sa žiadne prípady",
             "caseGetFailed": "Načítanie prípadov zlyhalo",
             "noLongerExists": "Zvolená úloha už neexistuje",
             "caseDeleteFailed": "Prípad sa nepodarilo vymazať",
+            "caseDeleteSuccess": "Prípad úspešný zmazaný",
             "rolesSuccessAssign": "Roly boli úspešne priradené vybraným používateľom"
         },
         "view": {
@@ -391,7 +396,8 @@
             "deleteCanceled": "Zmazanie procesu zrušené",
             "deleteSuccess": "Proces bol úspešne zmazaný",
             "deleteError": "Proces sa nepodarilo zmazať",
-            "uploadFailed": "Súbor procesu sa nepodarilo nahrať"
+            "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
+            "uploadSuccess": "Súbor procesu bol úspešne nahraný"
         }
     },
     "legal": {

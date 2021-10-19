@@ -1,5 +1,4 @@
 import {Observable, Subject} from 'rxjs';
-import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FileUploadMIMEType} from '../../file-field/models/file-field';
@@ -8,6 +7,7 @@ import {FileListFieldValue} from './file-list-field-value';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {FormControl} from '@angular/forms';
+import {ChangedFieldsMap} from '../../../event/services/event.service';
 
 export enum FileListFieldValidation {
     MAX_FILES = 'maxFiles'
@@ -17,7 +17,7 @@ export class FileListField extends DataField<FileListFieldValue> {
     /**
      * Used to forward the result of the upload file backend call to the task content
      */
-    private _changedFields$: Subject<ChangedFieldContainer>;
+    private _changedFields$: Subject<ChangedFieldsMap>;
     public downloaded: Array<string>;
 
     /**
@@ -27,9 +27,10 @@ export class FileListField extends DataField<FileListFieldValue> {
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, validations?: Array<Validation>, private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
-        this._changedFields$ = new Subject<ChangedFieldContainer>();
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
+                component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+        this._changedFields$ = new Subject<ChangedFieldsMap>();
         this.downloaded = new Array<string>();
     }
 
@@ -41,11 +42,11 @@ export class FileListField extends DataField<FileListFieldValue> {
         return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
     }
 
-    get changedFields$(): Observable<ChangedFieldContainer> {
+    get changedFields$(): Observable<ChangedFieldsMap> {
         return this._changedFields$.asObservable();
     }
 
-    public emitChangedFields(change: ChangedFieldContainer): void {
+    public emitChangedFields(change: ChangedFieldsMap): void {
         this._changedFields$.next(change);
     }
 

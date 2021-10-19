@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    ElementRef,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    ViewChild
-} from '@angular/core';
+import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -15,12 +6,13 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {BehaviorSubject} from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
 import {take} from 'rxjs/operators';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
 
 export interface FileState {
     progress: number;
@@ -102,6 +94,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _log Logger service
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
+     * @param _eventService used for parsing of backend response
      * @param informAboutInvalidData whether the backend should be notified about invalid values.
      * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      * @param _sanitizer Sanitize url of image preview
@@ -110,6 +103,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
+                          protected _eventService: EventService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
                           protected _sanitizer: DomSanitizer) {
         super(informAboutInvalidData);
@@ -149,7 +143,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     public chooseFile() {
-        if (this.state.uploading) {
+        if (this.state.uploading || this.formControl.disabled) {
             return;
         }
         this.fileUploadEl.nativeElement.click();
@@ -193,14 +187,14 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         const fileFormData = new FormData();
         const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
         fileFormData.append('file', fileToUpload);
-        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false).subscribe(response => {
+        this._taskResourceService.uploadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+            this.dataField.stringId, fileFormData, false)
+            .subscribe((response: EventOutcomeMessageResource) => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                if (Object.keys((response as ChangedFieldContainer).changedFields).length !== 0 ||
-                    (response as ChangedFieldContainer).changedFields.constructor !== Object) {
-                    this.dataField.emitChangedFields(response as ChangedFieldContainer);
-                }
+                const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                this.dataField.emitChangedFields(changedFieldsMap);
                 this._log.debug(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
                 );
@@ -246,7 +240,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+        this._taskResourceService.downloadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+            this.dataField.stringId).subscribe(response => {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
@@ -301,7 +296,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
 
-        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).pipe(take(1)).subscribe(response => {
+        this._taskResourceService.deleteFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+            this.dataField.stringId).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 const filename = this.dataField.value.name;
                 this.dataField.value = {};

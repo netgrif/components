@@ -4,8 +4,6 @@ import {map} from 'rxjs/operators';
 import {Params, ResourceProvider} from '../resource-provider.service';
 import {Count} from '../interface/count';
 import {Case} from '../interface/case';
-import {MessageResource} from '../interface/message-resource';
-import {DataGroupsResource} from '../interface/data-groups';
 import {FileResource} from '../interface/file-resource';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {CountService} from '../abstract-endpoint/count-service';
@@ -14,6 +12,7 @@ import {FilterType} from '../../filter/models/filter-type';
 import {Page} from '../interface/page';
 import {CaseGetRequestBody} from '../interface/case-get-request-body';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
+import {EventOutcomeMessageResource} from '../interface/message-resource';
 import {CreateCaseRequestBody} from '../interface/create-case-request-body';
 
 @Injectable({
@@ -69,23 +68,11 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * DELETE
      * {{baseUrl}}/api/workflow/case/:id
      */
-    public deleteCase(caseID: string, deleteSubtree: boolean = false): Observable<MessageResource> {
+    public deleteCase(caseID: string, deleteSubtree = false): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.delete$('workflow/case/' + caseID,
             this.SERVER_URL,
             deleteSubtree ? {deleteSubtree: deleteSubtree.toString()} : {})
             .pipe(map(r => this.changeType(r, undefined)));
-    }
-
-
-    /**
-     * Get all case data
-     * GET
-     * {{baseUrl}}/api/workflow/case/:id/data
-     */
-    public getCaseData(caseID: string): Observable<Array<DataGroupsResource>> {
-        return this._resourceProvider.get$('workflow/case/' + caseID + '/data', this.SERVER_URL).pipe(
-            map(r => this.changeType(r, 'dataGroups'))
-        );
     }
 
 
@@ -106,7 +93,7 @@ export class CaseResourceService extends AbstractResourceService implements Coun
      * POST
      * {{baseUrl}}/api/workflow/case
      */
-    public createCase(body: CreateCaseRequestBody): Observable<Case> {
+    public createCase(body: CreateCaseRequestBody): Observable<EventOutcomeMessageResource> {
         return this._resourceProvider.post$('workflow/case/', this.SERVER_URL, body).pipe(map(r => this.changeType(r, undefined)));
     }
 

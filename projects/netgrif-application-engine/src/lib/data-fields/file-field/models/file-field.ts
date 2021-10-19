@@ -3,10 +3,10 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FileFieldValue} from './file-field-value';
 import {Observable, Subject} from 'rxjs';
-import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
 import {Component} from '../../models/component';
 import {FormControl} from '@angular/forms';
 import {Validation} from '../../models/validation';
+import {ChangedFieldsMap} from '../../../event/services/event.service';
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -55,7 +55,7 @@ export class FileField extends DataField<FileFieldValue> {
     /**
      * Used to forward the result of the upload file backend call to the task content
      */
-    private _changedFields$: Subject<ChangedFieldContainer>;
+    private _changedFields$: Subject<ChangedFieldsMap>;
 
     public downloaded: boolean;
 
@@ -67,9 +67,9 @@ export class FileField extends DataField<FileFieldValue> {
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number,
                 private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
-                validations?: Array<Validation>, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
-        this._changedFields$ = new Subject<ChangedFieldContainer>();
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+        this._changedFields$ = new Subject<ChangedFieldsMap>();
     }
 
     get maxUploadSizeInBytes(): number {
@@ -80,11 +80,11 @@ export class FileField extends DataField<FileFieldValue> {
         return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
     }
 
-    get changedFields$(): Observable<ChangedFieldContainer> {
+    get changedFields$(): Observable<ChangedFieldsMap> {
         return this._changedFields$.asObservable();
     }
 
-    public emitChangedFields(change: ChangedFieldContainer): void {
+    public emitChangedFields(change: ChangedFieldsMap): void {
         this._changedFields$.next(change);
     }
 
