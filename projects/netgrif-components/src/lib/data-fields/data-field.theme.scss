@@ -61,5 +61,9 @@
     .enum-icon-item-active {
         color: mat-color($primary) !important;
     }
+
+    .primary-background-color {
+        background: mat-color($primary);
+    }
 }
 

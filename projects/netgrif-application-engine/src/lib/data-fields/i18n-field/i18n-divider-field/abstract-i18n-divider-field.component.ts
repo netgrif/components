@@ -11,4 +11,22 @@ export abstract class AbstractI18nDividerFieldComponent implements OnInit {
 
     ngOnInit(): void {
     }
+
+    public getDividerColor(): string {
+        if (this.dividerPropertyEnabled('dividerColor')) {
+            return this.dividerI18nField.component.properties.dividerColor;
+        }
+    }
+
+    public getDividerFontSize(): string {
+        if (this.dividerPropertyEnabled('fontSize')) {
+            return this.dividerI18nField.component.properties.fontSize + 'px';
+        }
+    }
+
+    public dividerPropertyEnabled(property: string): boolean {
+        return !!this.dividerI18nField.component
+            && !!this.dividerI18nField.component.properties
+            && property in this.dividerI18nField.component.properties;
+    }
 }
