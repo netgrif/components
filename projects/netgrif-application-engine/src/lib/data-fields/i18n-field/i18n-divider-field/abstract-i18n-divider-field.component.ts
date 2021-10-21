@@ -25,8 +25,7 @@ export abstract class AbstractI18nDividerFieldComponent implements OnInit {
     }
 
     public dividerPropertyEnabled(property: string): boolean {
-        return !!this.dividerI18nField.component
-            && !!this.dividerI18nField.component.properties
+        return !!this.dividerI18nField?.component?.properties
             && property in this.dividerI18nField.component.properties;
     }
 }
