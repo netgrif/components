@@ -112,8 +112,8 @@ export class FieldConverterService {
                 return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component);
             case FieldTypeResource.I18N:
-                return new I18nField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder, item.description,
-                    item.layout, item.validations, item.component);
+                return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, item.component);
         }
     }
 
