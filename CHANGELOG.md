@@ -1,4 +1,22 @@
-<a name="https://netgrif.atlassian.net/projects/NAE/versions/10910/tab/release-report-done"></a>
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10901/tab/release-report-all-issues"></a>
+## 5.7.0 (29.10.2021)
+### Bug fixes
+* [NAE-1375](https://netgrif.atlassian.net/browse/NAE-1375) - Form field layouting does not respect rows
+* [NAE-1281](https://netgrif.atlassian.net/browse/NAE-1281) - Immediate file field
+* [NAE-1332](https://netgrif.atlassian.net/browse/NAE-1332) - Cancel Task po kliknutí na rozkliknutý task nekontroluje či user môže daný Task cancelnúť
+* [NAE-1380](https://netgrif.atlassian.net/browse/NAE-1380) - rxjs throwError calls are not returned
+* [NAE-1460](https://netgrif.atlassian.net/browse/NAE-1460) - Datafield Spinner Attribute Refactor
+* [NAE-1150](https://netgrif.atlassian.net/browse/NAE-1150) - Workflow panel doesn't react to language change
+
+### Improvements
+* [NAE-1390](https://netgrif.atlassian.net/browse/NAE-1390) - Update "Process file could not be uploaded" message
+* [NAE-1444](https://netgrif.atlassian.net/browse/NAE-1444) - No inferrable param types tslint rule
+
+### Features
+* [NAE-1402](https://netgrif.atlassian.net/browse/NAE-1451) - Configurable group navigation with role constraints
+* [NAE-1397](https://netgrif.atlassian.net/browse/NAE-1397) - Fix task rows
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10910/tab/release-report-all-issues"></a>
 ## 5.6.3 (27.09.2021)
 ### Bug fixes
 * [NAE-1451](https://netgrif.atlassian.net/browse/NAE-1451) - Configurable group navigation issues
