@@ -20,7 +20,7 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {refreshTree} from '../../utility/refresh-tree';
 import {getField} from '../../utility/get-field';
-import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
+import {extractIconAndTitle, extractRoles} from '../utility/navigation-item-task-utility-methods';
 import {LanguageService} from '../../translate/language.service';
 import {
     DynamicNavigationRouteProviderService
@@ -427,9 +427,42 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 continue;
             }
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
+            const allowedRoles = extractRoles(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX, true);
 
-            result.push(newNode);
+            const bannedRoles = extractRoles(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX, true);
+
+            const splitAllowedRoles = this.extractRoleAndNetId(allowedRoles);
+            const splitBannedRoles = this.extractRoleAndNetId(bannedRoles);
+
+            if ((splitAllowedRoles.length === 0
+                    || splitAllowedRoles.some(idPair => this._userService.hasRoleByIdentifier(idPair[0], idPair[1])))
+                && !splitBannedRoles.some(idPair => this._userService.hasRoleByIdentifier(idPair[0], idPair[1]))) {
+                result.push(newNode);
+            }
         }
         return result;
+    }
+
+    /**
+     * Splits the provided strings on the ':' character and returns an array of the resulting splits.
+     *
+     * If any of the input strings split into fewer or more than 2 strings an error is thrown.
+     *
+     * @param joined a list of strings in the form `<role identifier>:<net identifier>`
+     */
+    protected extractRoleAndNetId(joined: Array<string>): Array<Array<string>> {
+        const split = [];
+        for (const pair of joined) {
+            const splitPair = pair.split(':');
+            if (splitPair.length !== 2) {
+                throw new Error(`The role-net pair '${pair}' has invalid format! Cannot extract role and net identifiers.`);
+            }
+            split.push(splitPair);
+        }
+        return split;
     }
 }

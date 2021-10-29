@@ -16,15 +16,15 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
     login(credentials: Credentials = {username: '', password: ''}): Observable<UserResource> {
         const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['login'];
         if (!url) {
-            throwError(new Error('Login URL is not defined in the config [nae.providers.auth.endpoints.login]'));
+            return throwError(new Error('Login URL is not defined in the config [nae.providers.auth.endpoints.login]'));
         }
         if (!credentials.username || !credentials.password) {
-            throwError(new Error('User\'s credentials are not defined!'));
+            return throwError(new Error('User\'s credentials are not defined!'));
         }
         credentials.username = credentials.username.trim();
         credentials.password = credentials.password.trim();
         if (credentials.username === '' || credentials.password === '') {
-            throwError(new Error('User\'s credentials are empty!'));
+            return throwError(new Error('User\'s credentials are empty!'));
         }
 
         return this._http.get<UserResource>(url, {
@@ -35,7 +35,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
     logout(): Observable<object> {
         const url = this._config.get().providers.auth.address + this._config.get().providers.auth.endpoints['logout'];
         if (!url) {
-            throwError(new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]'));
+            return throwError(new Error('Logout URL is not defined in the config [nae.providers.auth.endpoints.logout]'));
         }
 
         return this._http.post(url, {});
