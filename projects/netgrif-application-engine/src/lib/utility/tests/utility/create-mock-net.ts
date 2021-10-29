@@ -16,9 +16,9 @@ export interface MockTransition {
  * The attributes are filled with mostly empty values, if you want to make a test that uses some of them,
  * we recommend setting them yourself, as the returned object might change between versions.
  */
-export function createMockNet(stringId: string = 'stringId',
-                              identifier: string = 'identifier',
-                              title: string = 'title',
+export function createMockNet(stringId = 'stringId',
+                              identifier = 'identifier',
+                              title = 'title',
                               roles: Array<NetRole> = [],
                               transitions: Array<MockTransition> = [],
                               immediateData: Array<ImmediateData> = []): Net {
