@@ -20,9 +20,10 @@ import {
     FilterType,
     NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
-    NAE_DEFAULT_TASK_SEARCH_CATEGORIES
+    NAE_DEFAULT_TASK_SEARCH_CATEGORIES, NAE_NAVIGATION_ITEM_TASK_DATA
 } from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
+import {DataGroup} from '../../../../../netgrif-application-engine/src/lib/resources/interface/data-groups';
 
 /**
  * Converts search categories provided by the {@link NAE_SEARCH_CATEGORIES}
@@ -99,8 +100,9 @@ export class SearchComponent extends AbstractSearchComponent {
                 viewIdService: ViewIdService,
                 @Inject(NAE_SEARCH_CATEGORIES) searchCategories: Array<Type<Category<any>>>,
                 @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) configuration: SearchComponentConfiguration,
-                @Optional() @Inject(NAE_FILTERS_FILTER) filtersFilter: Filter = null) {
+                @Optional() @Inject(NAE_FILTERS_FILTER) filtersFilter: Filter = null,
+                @Optional() @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) navigationItemTaskData: Array<DataGroup> = null) {
         super(searchService, logger, dialogService, translate, userFilterService, allowedNetsService,
-            viewIdService, searchCategories, configuration, filtersFilter);
+            viewIdService, searchCategories, configuration, filtersFilter, navigationItemTaskData);
     }
 }
