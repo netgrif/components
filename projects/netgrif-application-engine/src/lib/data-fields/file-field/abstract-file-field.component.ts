@@ -419,5 +419,43 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
             (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
     }
-}
 
+    public getPreviewBorderWidth(): string {
+        if (this.borderPropertyEnabled('borderWidth')) {
+            return this.dataField.component.properties.borderWidth + 'px';
+        }
+        return '0px';
+    }
+
+    public getPreviewBorderStyle(): string {
+        if (this.borderPropertyEnabled('borderStyle')) {
+            return this.dataField.component.properties.borderStyle;
+        }
+        return 'none';
+    }
+
+    public getPreviewBorderColor(): string {
+        if (this.borderPropertyEnabled('borderColor')) {
+            return this.dataField.component.properties.borderColor;
+        }
+        return 'black';
+    }
+
+    public isBorderLGBTQ(): boolean {
+        if (this.borderPropertyEnabled('borderLGBTQ')) {
+            return this.dataField.component.properties.borderLGBTQ === 'true';
+        }
+        return false;
+    }
+
+    public isBorderDefault(): boolean {
+        if (this.borderPropertyEnabled('borderEnabled')) {
+            return this.dataField.component.properties.borderEnabled === 'true';
+        }
+        return false;
+    }
+
+    public borderPropertyEnabled(property: string): boolean {
+        return !!this.dataField.component && !!this.dataField.component.properties && property in this.dataField.component.properties;
+    }
+}
