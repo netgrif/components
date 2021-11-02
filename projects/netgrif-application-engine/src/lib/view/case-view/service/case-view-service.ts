@@ -239,8 +239,12 @@ export class CaseViewService extends SortableView implements OnDestroy {
         }
     }
 
+    /**
+     * Returns number of allowed nets of case view
+     * @returns length of allowedNets array if it is defined, 0 if it is undefined
+     */
     public getAllowedNetsCount(): number {
-        return this._allowedNetsService.allowedNets.length;
+        return this._allowedNetsService.allowedNets === undefined ? 0 : this._allowedNetsService.allowedNets.length;
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
