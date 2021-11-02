@@ -435,13 +435,34 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
                 GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX, true);
 
+            const splitAllowedRoles = this.extractRoleAndNetId(allowedRoles);
+            const splitBannedRoles = this.extractRoleAndNetId(bannedRoles);
 
-            if ((allowedRoles.some(roleId => this._userService.hasRoleByIdentifier(roleId.split(':')[0], roleId.split(':')[1]))
-                    || allowedRoles.length === 0)
-                && !bannedRoles.some(roleId => this._userService.hasRoleByIdentifier(roleId.split(':')[0], roleId.split(':')[1]))) {
+            if ((splitAllowedRoles.length === 0
+                    || splitAllowedRoles.some(idPair => this._userService.hasRoleByIdentifier(idPair[0], idPair[1])))
+                && !splitBannedRoles.some(idPair => this._userService.hasRoleByIdentifier(idPair[0], idPair[1]))) {
                 result.push(newNode);
             }
         }
         return result;
+    }
+
+    /**
+     * Splits the provided strings on the ':' character and returns an array of the resulting splits.
+     *
+     * If any of the input strings split into fewer or more than 2 strings an error is thrown.
+     *
+     * @param joined a list of strings in the form `<role identifier>:<net identifier>`
+     */
+    protected extractRoleAndNetId(joined: Array<string>): Array<Array<string>> {
+        const split = [];
+        for (const pair of joined) {
+            const splitPair = pair.split(':');
+            if (splitPair.length !== 2) {
+                throw new Error(`The role-net pair '${pair}' has invalid format! Cannot extract role and net identifiers.`);
+            }
+            split.push(splitPair);
+        }
+        return split;
     }
 }

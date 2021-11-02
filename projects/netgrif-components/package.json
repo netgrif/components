@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "5.7.0-rc.1",
+    "version": "5.7.0",
     "description": "Netgrif Application Engine Angular components",
     "homepage": "https://netgrif.com",
     "repository": {
