@@ -325,6 +325,15 @@ export abstract class AbstractTaskContentComponent implements OnDestroy {
     }
 
     /**
+     * Clones the content of the data groups to prevent unintentional memory accesses to source data.
+     * @param dataGroups
+     * @returns the preprocesses data groups
+     */
+    protected preprocessDataGroups(dataGroups: Array<DataGroup>): Array<DataGroup> {
+        return this.cloneAndFilterHidden(dataGroups);
+    }
+
+    /**
      * Creates a duplicate of the provided data group array and filters away any fields and data groups that are marked as hidden.
      * Because of the duplication the filtering doesn't affect the original instances and they remain unchanged.
      * @param dataGroups the data groups that should be filtered
