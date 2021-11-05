@@ -20,10 +20,9 @@ import {
     FilterType,
     NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
-    NAE_DEFAULT_TASK_SEARCH_CATEGORIES, NAE_NAVIGATION_ITEM_TASK_DATA
+    NAE_DEFAULT_TASK_SEARCH_CATEGORIES, NAE_NAVIGATION_ITEM_TASK_DATA, DataGroup
 } from '@netgrif/application-engine';
 import {TranslateService} from '@ngx-translate/core';
-import {DataGroup} from '../../../../../netgrif-application-engine/src/lib/resources/interface/data-groups';
 
 /**
  * Converts search categories provided by the {@link NAE_SEARCH_CATEGORIES}

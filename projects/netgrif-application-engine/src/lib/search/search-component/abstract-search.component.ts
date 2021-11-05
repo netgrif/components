@@ -147,10 +147,15 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      * The saved filter data are emitted into the [filterSaved]{@link AbstractSearchComponent#filterSaved} `EventEmitter`
      */
     public saveFilter(): void {
-        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
-            this._searchCategories, this._viewIdService.viewId, this.additionalFilterData,
+        this._userFilterService.save(
+            this._searchService,
+            this._allowedNetsService.allowedNetsIdentifiers,
+            this._searchCategories,
+            this._viewIdService.viewId,
+            this.additionalFilterData,
             this._configuration.saveFilterWithDefaultCategories ?? true,
-            this._configuration.inheritAllowedNets ?? true).subscribe(savedFilterData => {
+            this._configuration.inheritAllowedNets ?? true,
+            this._navigationItemTaskData).subscribe(savedFilterData => {
                 if (savedFilterData) {
                     this.filterSaved.emit(savedFilterData);
                 }
