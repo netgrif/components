@@ -12,7 +12,6 @@ import {FilterExtractionService} from '../navigation/utility/filter-extraction.s
 export function navigationItemTaskFilterFactory(extractionService: FilterExtractionService,
                                                 navigationItemTaskData: Array<DataGroup>): BaseFilter {
     return {
-        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData),
-        filterType: extractFilterFieldFromData(navigationItemTaskData).filterMetadata.filterType
+        filter: extractionService.extractCompleteFilterFromData(navigationItemTaskData)
     };
 }
