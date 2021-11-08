@@ -1,3 +1,17 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10913/tab/release-report-all-issues"></a>
+## 5.7.1 (08.11.2021)
+### Bug Fixes
+* [NAE-1474](https://netgrif.atlassian.net/browse/NAE-1474) - HtmlEditor: okno na zadávanie URL pri nahrávaní videa sa nezobrazuje celé
+* [NAE-1487](https://netgrif.atlassian.net/browse/NAE-1487) - Assign button on assigned task
+* [NAE-1486](https://netgrif.atlassian.net/browse/NAE-1486) - Default node case name in Tree Case View
+
+### Improvements
+* [NAE-1421](https://netgrif.atlassian.net/browse/NAE-1421) - Ohraničenie náhľadu dokumentu
+* [NAE-1042](https://netgrif.atlassian.net/browse/NAE-1042) - Hide create new case button if there are no allowed nets
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10901/tab/release-report-all-issues"></a>
 ## 5.7.0 (29.10.2021)
 ### Bug fixes

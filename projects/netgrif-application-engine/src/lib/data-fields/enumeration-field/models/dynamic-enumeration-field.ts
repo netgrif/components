@@ -10,7 +10,7 @@ import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {Validation} from '../../models/validation';
 
 export class DynamicEnumerationField extends EnumerationField {
-    protected REQUEST_DEBOUNCE_TIME = 350;
+    protected REQUEST_DEBOUNCE_TIME = 600;
     protected _choicesChange$: Subject<void>;
     protected _loading: LoadingEmitter;
 

@@ -43,8 +43,13 @@
         <div *ngIf="filePreview" fxFlex="20" fxLayout="row" fxLayoutAlign="center center" #imageDiv
              (resized)="changeMaxWidth($event)"
              [ngStyle]="{'max-height': getHeight()+'px'}">
-            <img *ngIf="previewSource !== undefined && !state.downloading && isDisplayable" class="image-preview"
-                 #imageEl
+            <img *ngIf="previewSource !== undefined && !state.downloading && isDisplayable" class="image-preview" #imageEl
+                 [ngStyle]="!isBorderLGBTQ() && !isBorderDefault() && {
+                    'border-width': getPreviewBorderWidth(),
+                    'border-style': getPreviewBorderStyle(),
+                    'border-color': getPreviewBorderColor()
+                 }"
+                 [ngClass]="{'border-LGBTQ': isBorderLGBTQ(), 'border-default': isBorderDefault()}"
                  [src]="previewSource" alt="Image preview" (click)="showPreviewDialog()"/>
             <mat-spinner *ngIf="previewSource === undefined && !!state.downloading && isDisplayable"
                          [diameter]="26"></mat-spinner>
