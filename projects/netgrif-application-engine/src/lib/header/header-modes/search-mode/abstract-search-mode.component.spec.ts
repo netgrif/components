@@ -75,13 +75,13 @@ describe('AbstractSearchModeComponent', () => {
 
     it('should call search header', fakeAsync(() => {
         component.formControls[0].setValue('hladaj');
-        tick(400);
+        tick(600);
         expect(headerSpy).toHaveBeenCalledWith(0, 'hladaj');
     }));
 
     it('should transform UserValue into id', fakeAsync(() => {
         component.formControls[0].setValue(new UserValue('7', '', '', ''));
-        tick(400);
+        tick(600);
         expect(headerSpy).toHaveBeenCalledWith(0, '7');
     }));
 
