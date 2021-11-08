@@ -40,6 +40,20 @@ const fieldPadding = 16;
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    /**
+     * The width of the default file preview border in pixels. The `px` string is appended in the code.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_WIDTH = 0;
+    /**
+     * The CSS style attribute of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_STYLE = 'none';
+    /**
+     * The CSS color string of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_COLOR = 'black';
+
     /**
      * Keep display name.
      */
@@ -424,21 +438,21 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         if (this.borderPropertyEnabled('borderWidth')) {
             return this.dataField.component.properties.borderWidth + 'px';
         }
-        return '0px';
+        return `${AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_WIDTH}px`;
     }
 
     public getPreviewBorderStyle(): string {
         if (this.borderPropertyEnabled('borderStyle')) {
             return this.dataField.component.properties.borderStyle;
         }
-        return 'none';
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_STYLE;
     }
 
     public getPreviewBorderColor(): string {
         if (this.borderPropertyEnabled('borderColor')) {
             return this.dataField.component.properties.borderColor;
         }
-        return 'black';
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_COLOR;
     }
 
     public isBorderLGBTQ(): boolean {
