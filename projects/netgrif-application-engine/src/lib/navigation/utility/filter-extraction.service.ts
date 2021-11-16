@@ -63,7 +63,7 @@ export class FilterExtractionService {
         return filterSegment;
     }
 
-    protected extractViewFilter(originViewIdField: DataField<any>): Filter {
+    protected extractViewFilter(originViewIdField: DataField<any>): Filter | undefined {
         if (originViewIdField === undefined || !(originViewIdField instanceof TextField)) {
             throw new Error('Could not extract origin view id field from task data');
         }
