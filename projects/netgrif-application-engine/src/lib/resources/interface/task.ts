@@ -5,7 +5,7 @@ import {NaeDate} from '../types/nae-date-type';
 import {UserResourceSmall} from './user-resource-small';
 import {ImmediateData} from './immediate-data';
 import {AssignedUserPolicy} from './assigned-user-policy';
-import {UsersRef} from './users-ref';
+import {UserRef} from './user-ref';
 
 /**
  * Object from Backend
@@ -59,7 +59,7 @@ export interface Task {
      */
     dataGroups: Array<DataGroup>;
     _links: object;
-    users: UsersRef;
+    users: UserRef;
     dataSize?: number;
     icon?: string;
     priority?: number;
