@@ -14,7 +14,7 @@ import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
-import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
+import {TaskSetDataRequestFields} from '../../resources/interface/task-set-data-request-body';
 import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../../navigation/model/filter-case-injection-token';
 import {DataGroup} from '../../resources/interface/data-groups';
 

@@ -9,8 +9,17 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AbstractI18nTextFieldComponent} from './abstract-i18n-text-field.component';
+import {UserPreferenceService} from '../../../user/services/user-preference.service';
+import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
+import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
+import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
+import {ConfigurationService} from '../../../configuration/configuration.service';
+import {TestConfigurationService} from '../../../utility/tests/test-config';
 
-describe('AbstractI18nDividerFieldComponent', () => {
+describe('AbstractI18nTextFieldComponent', () => {
     let component: TestI18nTextComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
@@ -23,6 +32,12 @@ describe('AbstractI18nDividerFieldComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule
+            ],
+            providers: [
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: ConfigurationService, useClass: TestConfigurationService}
             ],
             declarations: [TestI18nTextComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -47,8 +62,8 @@ describe('AbstractI18nDividerFieldComponent', () => {
     template: ''
 })
 class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
-    constructor() {
-        super();
+    constructor(userPreferenceService: UserPreferenceService) {
+        super(userPreferenceService);
     }
 }
 

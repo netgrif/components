@@ -289,7 +289,7 @@ export class UserFiltersService implements OnDestroy {
                     let parentFilterCaseIdField;
                     if (navigationItemTaskData !== null && navigationItemTaskData !== undefined) {
                         parentFilterCaseIdField = getFieldFromDataGroups(navigationItemTaskData,
-                            UserFilterConstants.FILTER_CASE_ID_FIELD_ID, true);
+                            UserFilterConstants.FILTER_CASE_ID_FIELD_ID);
                     }
 
                     if (parentFilterCaseIdField !== undefined) {
