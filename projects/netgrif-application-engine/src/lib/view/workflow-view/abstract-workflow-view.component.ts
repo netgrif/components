@@ -43,6 +43,8 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
                 if (event.data?.net) {
                     this._processService.updateNet(new Net(event.data.net));
                 }
+            } else {
+                this._log.debug('');
             }
         });
     }

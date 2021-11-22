@@ -55,6 +55,9 @@ import {FilterFieldComponent} from './filter-field/filter-field.component';
 import {FilterFieldContentComponent} from './filter-field/filter-field-content/filter-field-content.component';
 import {AdvancedSearchComponentModule} from '../search/advanced-search/advanced-search.module';
 import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
+import { I18nFieldComponent } from './i18n-field/i18n-field.component';
+import { I18nDividerFieldComponent } from './i18n-field/i18n-divider-field/i18n-divider-field.component';
+import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-field.component';
 
 @NgModule({
     declarations: [
@@ -90,6 +93,9 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
         EnumerationAutocompleteDynamicFieldComponent,
         FilterFieldComponent,
         FilterFieldContentComponent,
+        I18nFieldComponent,
+        I18nDividerFieldComponent,
+        I18nTextFieldComponent,
     ],
     exports: [
         BooleanFieldComponent,
@@ -104,7 +110,8 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
         NumberFieldComponent,
         TextFieldComponent,
         UserFieldComponent,
-        FilterFieldComponent
+        FilterFieldComponent,
+        I18nFieldComponent
     ],
     imports: [
         CommonModule,

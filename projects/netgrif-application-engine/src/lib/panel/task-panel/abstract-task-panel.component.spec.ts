@@ -351,7 +351,7 @@ class MyTaskResources {
                     aCase: createMockCase(),
                     net: createMockNet(),
                     outcomes: []
-                } as AssignTaskEventOutcome
+                } as FinishTaskEventOutcome
             });
         } else if (stringId === 'false') {
             return of({error: 'error', changedFields: { changedFields: [] }});

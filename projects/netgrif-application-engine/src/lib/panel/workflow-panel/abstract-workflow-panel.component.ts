@@ -33,11 +33,11 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
     public panelRef: MatExpansionPanel;
     public panelContent: WorkflowPanelContent;
     private _subscription: Subscription;
-    private PanelWorkflowNet = 'panel.workflow.net';
-    private PanelWorkflowTitle = 'panel.workflow.title';
-    private PanelWorkflowVersion = 'panel.workflow.version';
-    private PanelWorkflowAuthor = 'panel.workflow.author';
-    private PanelWorkflowUpload = 'panel.workflow.upload';
+    private readonly TRANSLATION_NET = 'panel.workflow.net';
+    private readonly TRANSLATION_TITLE = 'panel.workflow.title';
+    private readonly TRANSLATION_VERSION = 'panel.workflow.version';
+    private readonly TRANSLATION_AUTHOR = 'panel.workflow.author';
+    private readonly TRANSLATION_UPLOAD = 'panel.workflow.upload';
 
     protected dataFieldsBehaviour: Behavior = {visible: true, editable: false};
 
@@ -47,11 +47,11 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
         super();
 
         this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
-            this.panelContent.netIdentifier.title = this._translate.instant(this.PanelWorkflowNet);
-            this.panelContent.title.title = this._translate.instant(this.PanelWorkflowTitle);
-            this.panelContent.version.title = this._translate.instant(this.PanelWorkflowVersion);
-            this.panelContent.author.title = this._translate.instant(this.PanelWorkflowAuthor);
-            this.panelContent.uploaded.title = this._translate.instant(this.PanelWorkflowUpload);
+            this.panelContent.netIdentifier.title = this._translate.instant(this.TRANSLATION_NET);
+            this.panelContent.title.title = this._translate.instant(this.TRANSLATION_TITLE);
+            this.panelContent.version.title = this._translate.instant(this.TRANSLATION_VERSION);
+            this.panelContent.author.title = this._translate.instant(this.TRANSLATION_AUTHOR);
+            this.panelContent.uploaded.title = this._translate.instant(this.TRANSLATION_UPLOAD);
         });
     }
 
@@ -91,15 +91,15 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
      */
     protected createPanelContent(): WorkflowPanelContent {
         return {
-            netIdentifier: new TextField('', this._translate.instant(this.PanelWorkflowNet),
+            netIdentifier: new TextField('', this._translate.instant(this.TRANSLATION_NET),
                 this.workflow.identifier, this.dataFieldsBehaviour),
-            title: new TextField('', this._translate.instant(this.PanelWorkflowTitle),
+            title: new TextField('', this._translate.instant(this.TRANSLATION_TITLE),
                 this.workflow.title, this.dataFieldsBehaviour),
-            version: new TextField('', this._translate.instant(this.PanelWorkflowVersion),
+            version: new TextField('', this._translate.instant(this.TRANSLATION_VERSION),
                 this.workflow.version, this.dataFieldsBehaviour),
-            author: new TextField('', this._translate.instant(this.PanelWorkflowAuthor),
+            author: new TextField('', this._translate.instant(this.TRANSLATION_AUTHOR),
                 this.workflow.author.fullName, this.dataFieldsBehaviour),
-            uploaded: new DateTimeField('', this._translate.instant(this.PanelWorkflowUpload),
+            uploaded: new DateTimeField('', this._translate.instant(this.TRANSLATION_UPLOAD),
                 toMoment(this.workflow.createdDate), this.dataFieldsBehaviour)
         };
     }

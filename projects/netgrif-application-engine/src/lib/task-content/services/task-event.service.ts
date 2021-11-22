@@ -59,13 +59,21 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
                     this._task.assignPolicy === AssignPolicy.manual
                     && !this._task.user
                     && this.canDo('perform')
-                )
-                || (
-                    this._task.roles === null
-                    || this._task.roles === undefined
-                    || Object.keys(this._task.roles).length === 0
+                ) || (
+                    this.isEmptyRoles()
+                    && this.isEmptyUsers()
                 )
             );
+    }
+
+    private isEmptyUsers(): boolean {
+        return !this._task.users
+            || Object.keys(this._task.users).length === 0;
+    }
+
+    private isEmptyRoles(): boolean {
+        return !this._task.roles
+            || Object.keys(this._task.roles).length === 0;
     }
 
     /**

@@ -7,7 +7,6 @@ import {EventOutcomeMessageResource, MessageResource} from '../interface/message
 import {filter, map} from 'rxjs/operators';
 import {TaskReference} from '../interface/task-reference';
 import {Task} from '../interface/task';
-import {ChangedFieldContainer} from '../interface/changed-field-container';
 import {CountService} from '../abstract-endpoint/count-service';
 import {Filter} from '../../filter/models/filter';
 import {FilterType} from '../../filter/models/filter-type';

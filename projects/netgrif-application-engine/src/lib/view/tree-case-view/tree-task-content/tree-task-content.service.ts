@@ -24,8 +24,8 @@ import {SelectedCaseService} from '../../../task/services/selected-case.service'
 import {Filter} from '../../../filter/models/filter';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {ChangedFieldsService} from '../../../changed-fields/services/changed-fields.service';
-import {ChangedFieldsMap} from '../../../event/services/event.service';
 import {ChangedFields} from '../../../data-fields/models/changed-fields';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -254,8 +254,8 @@ export class TreeTaskContentService implements OnDestroy {
      */
     protected resolveTaskBlockState(): void {
         const taskShouldBeBlocked = !this._taskContentService.task
-            || this._taskContentService.task.user === undefined
-            || !this._userComparator.compareUsers(this._taskContentService.task.user);
+                                    || this._taskContentService.task.user === undefined
+                                    || !this._userComparator.compareUsers(this._taskContentService.task.user);
         this._taskContentService.blockFields(taskShouldBeBlocked);
     }
 

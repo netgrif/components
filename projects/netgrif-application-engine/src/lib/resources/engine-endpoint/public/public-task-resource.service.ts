@@ -96,7 +96,6 @@ export class PublicTaskResourceService extends TaskResourceService {
      * @param taskId ID of the task who's data should be retrieved from the server
      * @returns processed data groups of the given task. If the task has no data an empty array will be returned.
      */
-    // todo opraviť
     public getData(taskId: string): Observable<Array<DataGroup>> {
         return this.rawGetData(taskId).pipe(
             map((responseOutcome: EventOutcomeMessageResource) => {

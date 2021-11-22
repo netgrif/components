@@ -14,3 +14,7 @@ export * from './model/event-outcomes/petrinet-outcomes/petri-net-event-outcome'
 
 /* EVENT SERVICE */
 export * from './services/event.service';
+export * from './services/interfaces/changed-fields-map';
+
+/* ENUMS */
+export * from './model/event-constants';

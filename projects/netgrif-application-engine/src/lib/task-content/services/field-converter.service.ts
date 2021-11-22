@@ -20,6 +20,7 @@ import {Component} from '../../data-fields/models/component';
 import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
 import {FilterField} from '../../data-fields/filter-field/models/filter-field';
+import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +34,7 @@ export class FieldConverterService {
         switch (item.type) {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, undefined, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.TEXT:
                 /*@deprecated in 4.3.0*/
                 let type = TextFieldView.DEFAULT;
@@ -52,7 +53,7 @@ export class FieldConverterService {
                         item.description, item.layout, item.validations, type);
                 }
                 if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'editor' ||
-                    item.component.name === 'htmlEditor')) {
+                    item.component.name === 'htmltextarea')) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
                         item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component,
                         item.parentTaskId);
@@ -113,6 +114,9 @@ export class FieldConverterService {
             case FieldTypeResource.FILTER:
                 return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
                     item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.I18N:
+                return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, item.component);
         }
     }
 
@@ -141,6 +145,8 @@ export class FieldConverterService {
             return item.fieldType;
         } else if (item instanceof FilterField) {
             return FieldTypeResource.FILTER;
+        } else if (item instanceof I18nField) {
+            return FieldTypeResource.I18N;
         }
     }
 

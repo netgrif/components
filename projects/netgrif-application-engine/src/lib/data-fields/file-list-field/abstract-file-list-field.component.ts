@@ -10,7 +10,8 @@ import {FileFieldValue} from '../file-field/models/file-field-value';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
-import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 export interface FilesState {
     progress: number;
@@ -148,7 +149,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         filesToUpload.forEach(fileToUpload => {
             fileFormData.append('files', fileToUpload);
         });
-        this._taskResourceService.uploadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+        this._taskResourceService.uploadFile(this.resolveParentTaskId(),
             this.dataField.stringId, fileFormData, true)
             .subscribe((response: EventOutcomeMessageResource) => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
@@ -201,7 +202,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
 
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
             this.dataField.stringId, fileName).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
@@ -243,7 +244,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             return;
         }
 
-        this._taskResourceService.deleteFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+        this._taskResourceService.deleteFile(this.resolveParentTaskId(),
             this.dataField.stringId, fileName).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
@@ -293,5 +294,9 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this.dataField.value.namesPaths = new Array<FileFieldValue>();
             }
         }
+    }
+
+    private resolveParentTaskId(): string {
+        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
     }
 }

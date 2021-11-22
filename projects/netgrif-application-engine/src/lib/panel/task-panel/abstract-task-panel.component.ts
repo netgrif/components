@@ -31,7 +31,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
-import {ChangedFieldsMap} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 

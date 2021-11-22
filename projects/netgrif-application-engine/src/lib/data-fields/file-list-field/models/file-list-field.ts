@@ -7,7 +7,7 @@ import {FileListFieldValue} from './file-list-field-value';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {FormControl} from '@angular/forms';
-import {ChangedFieldsMap} from '../../../event/services/event.service';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 
 export enum FileListFieldValidation {
     MAX_FILES = 'maxFiles'
