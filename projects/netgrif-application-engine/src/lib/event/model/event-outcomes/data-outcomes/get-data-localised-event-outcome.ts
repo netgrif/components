@@ -3,6 +3,6 @@ import {TaskEventOutcome} from '../task-outcomes/task-event-outcome';
 
 export interface GetDataLocalisedEventOutcome extends TaskEventOutcome {
 
-    data: LocalisedFields[];
+    data: Array<LocalisedFields>;
 
 }

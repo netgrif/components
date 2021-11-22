@@ -7,5 +7,5 @@ export interface EventOutcome {
     /**
      * Array of event outcomes, result of events that were triggered by parent event
      */
-    outcomes?: EventOutcome[];
+    outcomes?: Array<EventOutcome>;
 }

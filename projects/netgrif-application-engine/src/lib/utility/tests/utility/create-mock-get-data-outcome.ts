@@ -9,8 +9,8 @@ import {EventOutcome} from '../../../resources/interface/event-outcome';
 import {createMockField} from './create-mock-field';
 import {DataField} from '../../../data-fields/models/abstract-data-field';
 
-export function createMockGetDataOutcome(data: DataField<any>[] = [createMockField()], task: Task = createMockTask(),
-                                         net: Net = createMockNet(), aCase: Case = createMockCase(), outcomes: EventOutcome[] = []) {
+export function createMockGetDataOutcome(data: Array<DataField<any>> = [createMockField()], task: Task = createMockTask(),
+                                         net: Net = createMockNet(), aCase: Case = createMockCase(), outcomes: Array<EventOutcome> = []) {
     return {
         net,
         aCase,

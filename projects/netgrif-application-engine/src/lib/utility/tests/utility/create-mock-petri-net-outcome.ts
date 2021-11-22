@@ -7,7 +7,7 @@ import {EventOutcome} from '../../../resources/interface/event-outcome';
  *
  * If attributes are not specified, default values are used.
  */
-export function createMockPetriNetOutcome(net: Net = createMockNet(), outcomes: EventOutcome[] = []) {
+export function createMockPetriNetOutcome(net: Net = createMockNet(), outcomes: Array<EventOutcome> = []) {
     return {
         outcomes,
         net,

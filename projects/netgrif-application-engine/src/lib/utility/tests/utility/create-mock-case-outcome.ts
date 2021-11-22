@@ -10,7 +10,7 @@ import {createMockCase} from './create-mock-case';
  *
  * If attributes are not specified, default values are used.
  */
-export function createMockCaseOutcome(aCase: Case = createMockCase(), net: Net = createMockNet(), outcomes: EventOutcome[] = []) {
+export function createMockCaseOutcome(aCase: Case = createMockCase(), net: Net = createMockNet(), outcomes: Array<EventOutcome> = []) {
     return {
         net,
         outcomes,

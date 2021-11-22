@@ -15,7 +15,7 @@ import {ChangedFieldContainer} from '../../../resources/interface/changed-field-
  * If attributes are not specified, default values are used.
  */
 export function createMockSetDataOutcome(changedFields: ChangedFieldContainer = { changedFields: {}}, task: Task = createMockTask(),
-                                         net: Net = createMockNet(), aCase: Case = createMockCase(), outcomes: EventOutcome[] = []) {
+                                         net: Net = createMockNet(), aCase: Case = createMockCase(), outcomes: Array<EventOutcome> = []) {
     return {
         net,
         aCase,

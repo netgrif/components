@@ -13,7 +13,7 @@ import {Task} from '../../../resources/interface/task';
  * If attributes are not specified, default values are used.
  */
 export function createMockTaskOutcome(task: Task = createMockTask(), net: Net = createMockNet(),
-                                      aCase: Case = createMockCase(), outcomes: EventOutcome[] = []) {
+                                      aCase: Case = createMockCase(), outcomes: Array<EventOutcome> = []) {
     return {
         outcomes,
         task,
