@@ -1,4 +1,13 @@
-import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from '@angular/core';
 import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -34,6 +43,20 @@ const fieldPadding = 16;
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    /**
+     * The width of the default file preview border in pixels. The `px` string is appended in the code.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_WIDTH = 0;
+    /**
+     * The CSS style attribute of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_STYLE = 'none';
+    /**
+     * The CSS color string of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_COLOR = 'black';
+
     /**
      * Keep display name.
      */
@@ -418,8 +441,46 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
     }
 
-    private resolveParentTaskId(): string {
+    public getPreviewBorderWidth(): string {
+        if (this.borderPropertyEnabled('borderWidth')) {
+            return this.dataField.component.properties.borderWidth + 'px';
+        }
+        return `${AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_WIDTH}px`;
+    }
+
+    public getPreviewBorderStyle(): string {
+        if (this.borderPropertyEnabled('borderStyle')) {
+            return this.dataField.component.properties.borderStyle;
+        }
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_STYLE;
+    }
+
+    public getPreviewBorderColor(): string {
+        if (this.borderPropertyEnabled('borderColor')) {
+            return this.dataField.component.properties.borderColor;
+        }
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_COLOR;
+    }
+
+    public isBorderLGBTQ(): boolean {
+        if (this.borderPropertyEnabled('borderLGBTQ')) {
+            return this.dataField.component.properties.borderLGBTQ === 'true';
+        }
+        return false;
+    }
+
+    public isBorderDefault(): boolean {
+        if (this.borderPropertyEnabled('borderEnabled')) {
+            return this.dataField.component.properties.borderEnabled === 'true';
+        }
+        return false;
+    }
+
+    public borderPropertyEnabled(property: string): boolean {
+        return !!this.dataField.component && !!this.dataField.component.properties && property in this.dataField.component.properties;
+    }
+
+    protected resolveParentTaskId(): string {
         return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
     }
 }
-

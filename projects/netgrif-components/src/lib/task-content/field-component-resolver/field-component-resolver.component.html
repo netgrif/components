@@ -41,6 +41,9 @@
     <nc-filter-field *ngSwitchCase="fieldTypeEnum.FILTER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">
     </nc-filter-field>
 
+    <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">
+    </nc-i18n-field>
+
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">
         <div fxFlex="20" class="line-datagroup"></div>
         <span [ngClass]="{'margin-default': getDataGroupTitle() !== ''}">{{getDataGroupTitle()}}</span>

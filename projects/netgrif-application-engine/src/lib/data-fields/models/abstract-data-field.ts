@@ -107,6 +107,12 @@ export abstract class DataField<T> {
     private _waitingForResponse: boolean;
 
     /**
+     * Stores a copy of the fields layout, that can be modified by the layouting algorithm as needed
+     * without affecting the base configuration.
+     */
+    protected _localLayout: Layout;
+
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -133,6 +139,7 @@ export abstract class DataField<T> {
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
         this._validRequired = true;
+        this.resetLocalLayout();
     }
 
     get stringId(): string {
@@ -212,6 +219,10 @@ export abstract class DataField<T> {
 
     get layout(): Layout {
         return this._layout;
+    }
+
+    get localLayout(): Layout {
+        return this._localLayout;
     }
 
     get disabled(): boolean {
@@ -511,5 +522,16 @@ export abstract class DataField<T> {
 
     public isInvalid(formControl: FormControl): boolean {
         return !formControl.disabled && !formControl.valid && formControl.touched;
+    }
+
+    /**
+     * Copies the layout settings into the local layout.
+     */
+    public resetLocalLayout(): void {
+        if (this._layout !== undefined) {
+            this._localLayout = {...this._layout};
+        } else {
+            this._localLayout = undefined;
+        }
     }
 }
