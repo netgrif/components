@@ -65,5 +65,9 @@
     .file-list-item:hover {
         background-color: rgba(mat-color($secondary, A200), 0.3)
     }
+
+    .primary-background-color {
+        background: mat-color($primary);
+    }
 }
 
