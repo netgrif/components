@@ -2,7 +2,7 @@ export interface Permissions {
     [k: string]: Permission;
 }
 
-export interface UsersPermissions {
+export interface UserPermissions {
     [k: number]: Permission;
 }
 

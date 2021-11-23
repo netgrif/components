@@ -19,6 +19,7 @@ import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {PermissionService} from '../../authorization/permission/permission.service';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -39,7 +40,8 @@ export class CancelTaskService extends TaskHandlingService {
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 @Optional() protected _taskViewService: TaskViewService,
-                _taskContentService: TaskContentService) {
+                _taskContentService: TaskContentService,
+                protected permissionService: PermissionService) {
         super(_taskContentService, _selectedCaseService);
     }
 
@@ -58,7 +60,7 @@ export class CancelTaskService extends TaskHandlingService {
      */
     public cancel(afterAction: AfterAction = new AfterAction()) {
         this._eventQueue.scheduleEvent(new QueuedEvent(
-            () => this.canCancel(),
+            () => this.permissionService.canCancel(this._safeTask),
             nextEvent => {
                 this.performCancelRequest(afterAction, nextEvent, this._taskViewService !== null && !this._taskViewService.allowMultiOpen);
             },
@@ -139,13 +141,13 @@ export class CancelTaskService extends TaskHandlingService {
     /**
      * Determines whether the cancel operation can be performed.
      */
-    protected canCancel(): boolean {
-        return !!this._safeTask.user
-                && (
-                    this._userComparator.compareUsers(this._safeTask.user)
-                    || this._taskEventService.canDo('perform')
-                );
-    }
+    // protected canCancel(): boolean {
+    //     return !!this._safeTask.user
+    //             && (
+    //                 this._userComparator.compareUsers(this._safeTask.user)
+    //                 || this.permissionService.hasTaskPermission(this._safeTask, 'cancel')
+    //             );
+    // }
 
     /**
      * complete all action streams and send notification with selected boolean

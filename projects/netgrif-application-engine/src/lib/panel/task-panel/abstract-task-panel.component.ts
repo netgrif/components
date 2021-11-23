@@ -31,6 +31,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PermissionService} from '../../authorization/permission/permission.service';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
@@ -85,7 +86,8 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
                           protected _translate: TranslateService,
-                          protected _currencyPipe: CurrencyPipe) {
+                          protected _currencyPipe: CurrencyPipe,
+                          protected _permissionService: PermissionService) {
         super(_translate, _currencyPipe);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
         this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
@@ -246,27 +248,27 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canAssign(): boolean {
-        return this._taskEventService.canAssign() && this.getAssignTitle() !== '';
+        return this._permissionService.canAssign(this.taskPanelData.task) && this.getAssignTitle() !== '';
     }
 
     public canReassign(): boolean {
-        return this._taskEventService.canReassign();
+        return this._permissionService.canReassign(this.taskPanelData.task);
     }
 
     public canCancel(): boolean {
-        return this._taskEventService.canCancel() && this.getCancelTitle() !== '';
+        return this._permissionService.canCancel(this.taskPanelData.task) && this.getCancelTitle() !== '';
     }
 
     public canFinish(): boolean {
-        return this._taskEventService.canFinish() && this.getFinishTitle() !== '';
+        return this._permissionService.canFinish(this.taskPanelData.task) && this.getFinishTitle() !== '';
     }
 
     public canCollapse(): boolean {
-        return this._taskEventService.canCollapse();
+        return this._permissionService.canCollapse(this.taskPanelData.task);
     }
 
     public canDo(action): boolean {
-        return this._taskEventService.canDo(action) && this.getDelegateTitle() !== '';
+        return this._permissionService.hasTaskPermission(this.taskPanelData.task, action) && this.getDelegateTitle() !== '';
     }
 
     public getAssignTitle(): string {
