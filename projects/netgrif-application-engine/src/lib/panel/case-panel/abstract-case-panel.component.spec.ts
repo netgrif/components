@@ -30,6 +30,7 @@ import {Case} from '../../resources/interface/case';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {PermissionService} from '../../authorization/permission/permission.service';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -84,7 +85,7 @@ describe('AbstractCasePanelComponent', () => {
     });
 
     it('should test canDo', () => {
-        expect(component.canDo('delete')).toBeTrue();
+        expect(component.canDelete()).toBeTrue();
     });
 
     afterEach(() => {
@@ -100,9 +101,10 @@ class TestCasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                 protected _log: LoggerService, @Optional() protected overflowService: OverflowService,
-                protected _userService: UserService, protected _currencyPipe: CurrencyPipe) {
+                protected _userService: UserService, protected _currencyPipe: CurrencyPipe,
+                protected _permissionService: PermissionService) {
         super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService,
-            _userService, _currencyPipe);
+            _userService, _currencyPipe, _permissionService);
     }
 }
 

@@ -92,6 +92,7 @@ describe('CancelTaskService', () => {
             layout: {rows: 1, cols: 1, offset: 0},
             dataGroups: [],
             users: {},
+            userRefs: {},
             _links: {}
         };
         TestBed.inject(TaskContentService).task = testTask;

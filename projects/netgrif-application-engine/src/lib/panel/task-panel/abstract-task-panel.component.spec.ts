@@ -54,6 +54,7 @@ import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {UserService} from '../../user/services/user.service';
+import {PermissionService} from '../../authorization/permission/permission.service';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -193,10 +194,11 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 parentInjector: Injector,
-                protected _currencyPipe: CurrencyPipe) {
+                protected _currencyPipe: CurrencyPipe,
+                protected _permissionService: PermissionService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe);
+            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _permissionService);
     }
 
     ngAfterViewInit() {
@@ -239,6 +241,7 @@ class TestWrapperComponent {
             },
             dataGroups: [],
             users: {},
+            userRefs: {},
             _links: {}
         },
         changedFields: new Subject<ChangedFields>(),
