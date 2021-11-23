@@ -9,7 +9,6 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AbstractI18nTextFieldComponent} from './abstract-i18n-text-field.component';
-import {UserPreferenceService} from '../../../user/services/user-preference.service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../../authentication/services/authentication/authentication.service';
@@ -18,6 +17,7 @@ import {UserResourceService} from '../../../resources/engine-endpoint/user-resou
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
+import {TranslateService} from '@ngx-translate/core';
 
 describe('AbstractI18nTextFieldComponent', () => {
     let component: TestI18nTextComponent;
@@ -62,8 +62,8 @@ describe('AbstractI18nTextFieldComponent', () => {
     template: ''
 })
 class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
-    constructor(userPreferenceService: UserPreferenceService) {
-        super(userPreferenceService);
+    constructor(translateService: TranslateService) {
+        super(translateService);
     }
 }
 
