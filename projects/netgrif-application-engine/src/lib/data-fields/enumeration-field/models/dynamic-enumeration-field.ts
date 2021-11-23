@@ -18,8 +18,9 @@ export class DynamicEnumerationField extends EnumerationField {
                 protected _choices: Array<EnumerationFieldValue>, behavior: Behavior, placeholder?: string, description?: string,
                 layout?: Layout, protected _view = EnumerationFieldView.DEFAULT,
                 protected readonly _fieldType = FieldTypeResource.ENUMERATION,
-                validations?: Array<Validation>, component?: Component) {
-        super(stringId, title, value, _choices, behavior, placeholder, description, layout, _view, _fieldType, validations, component);
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, _choices, behavior, placeholder, description, layout,
+            _view, _fieldType, validations, component, parentTaskId);
         this._choicesChange$ = new Subject<void>();
         this._loading = new LoadingEmitter();
     }

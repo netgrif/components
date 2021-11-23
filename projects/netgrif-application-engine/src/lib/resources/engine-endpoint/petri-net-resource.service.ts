@@ -7,7 +7,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
 import {HttpEventType, HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
-import {MessageResource, PetriNetMessageResource} from '../interface/message-resource';
+import {EventOutcomeMessageResource, MessageResource} from '../interface/message-resource';
 import {PetriNetReference} from '../interface/petri-net-reference';
 import {PetriNetRequestBody} from '../interface/petri-net-request-body';
 import {Page} from '../interface/page';
@@ -128,7 +128,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/import
      */
-    public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | PetriNetMessageResource> {
+    public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | EventOutcomeMessageResource> {
         return this._resourceProvider.postWithEvent$<MessageResource>('petrinet/import', this.SERVER_URL, body, params).pipe(
             map(event => {
                 switch (event.type) {

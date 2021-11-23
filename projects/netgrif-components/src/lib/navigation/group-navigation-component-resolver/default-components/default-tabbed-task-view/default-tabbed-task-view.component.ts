@@ -11,6 +11,7 @@ import {
     AllowedNetsServiceFactory,
     ViewIdService,
     NAE_TASK_VIEW_CONFIGURATION,
+    ChangedFieldsService,
     tabbedTaskViewConfigurationFactory,
     tabbedAllowedNetsServiceFactory
 } from '@netgrif/application-engine';
@@ -30,6 +31,7 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
         CategoryFactory,
         TaskViewService,
         SearchService,
+        ChangedFieldsService,
         {   provide: ViewIdService, useValue: null},
         {
             provide: NAE_BASE_FILTER,

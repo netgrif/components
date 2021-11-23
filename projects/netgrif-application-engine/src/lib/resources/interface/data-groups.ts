@@ -1,29 +1,5 @@
-import {Fields} from './fields';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {DataGroupLayout} from './data-group-layout';
-
-/**
- * Object from Backend
- */
-export interface DataGroupsResource {
-    fields: Fields;
-    /**
-     * Name datagroup
-     */
-    title: string;
-    /**
-     * Desing alignment
-     * ***Example:*** start
-     */
-    alignment: string;
-    /**
-     * Desing stretch
-     *
-     * ***Example:*** true
-     */
-    stretch: boolean;
-    layout?: DataGroupLayout;
-}
 
 /**
  * Object from Backend
@@ -49,6 +25,16 @@ export interface DataGroup {
      */
     stretch: boolean;
     layout?: DataGroupLayout;
+
+    /**
+     * String id of parent task, only set if dataGroup is loaded by {@link TaskRefField}
+     */
+    parentTaskId?: string;
+
+    /**
+     * String id of parent case, only set if dataGroup is loaded by {@link TaskRefField}
+     */
+    parentCaseId?: string;
 }
 
 /**

@@ -395,7 +395,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         navConfigDatagroups.forEach(
             (group, index) => {
                 if (group.fields.some(
-                    field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX)
+                    field => field.stringId === GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX
                 )) {
                     entryDataGroupIndices.push(index);
                 }
@@ -418,7 +418,7 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {
             const index = entryDataGroupIndices[order];
             const label = extractIconAndTitle(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY), true);
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY));
             const newNode: NavigationNode = {url: '', ...label};
 
             const url = this._navigationRouteProvider.route;
@@ -429,11 +429,11 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
             const allowedRoles = extractRoles(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
-                GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX, true);
+                GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX);
 
             const bannedRoles = extractRoles(navConfigDatagroups.slice(index,
                 index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
-                GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX, true);
+                GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX);
 
             const splitAllowedRoles = this.extractRoleAndNetId(allowedRoles);
             const splitBannedRoles = this.extractRoleAndNetId(bannedRoles);

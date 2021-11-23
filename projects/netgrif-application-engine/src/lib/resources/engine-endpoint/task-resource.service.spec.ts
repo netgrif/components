@@ -194,13 +194,13 @@ describe('TaskResourceService', () => {
     it('should setData', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.setData('id', {}).subscribe(res => {
-                expect(res.changedFields).toBeTruthy();
+                expect(res.outcome).toBeTruthy();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
             expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({changedFields: {}});
+            reqLog.flush({outcome: {}});
         })
     );
 

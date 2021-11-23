@@ -13,7 +13,7 @@ import {
     defaultCaseSearchCategoriesFactory,
     NAE_BASE_FILTER,
     AllowedNetsServiceFactory,
-    AllowedNetsService, TaskSetDataRequestBody, UserFilterConstants
+    AllowedNetsService, UserFilterConstants, TaskSetDataRequestFields
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
@@ -50,7 +50,7 @@ export class CaseViewComponent extends AbstractCaseView implements AfterViewInit
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
-    additionalFilterData: TaskSetDataRequestBody;
+    additionalFilterData: TaskSetDataRequestFields;
 
     constructor(caseViewService: CaseViewService, protected overflowService: OverflowService) {
         super(caseViewService, overflowService, undefined, {

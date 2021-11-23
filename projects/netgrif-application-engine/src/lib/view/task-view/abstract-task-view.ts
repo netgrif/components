@@ -9,18 +9,15 @@ import {ViewWithHeaders} from '../abstract/view-with-headers';
 export abstract class AbstractTaskView extends ViewWithHeaders implements OnDestroy {
 
     public tasks$: Observable<Array<TaskPanelData>>;
-    public changedFields$: Subject<ChangedFields>;
     public loading$: Observable<boolean>;
 
     protected constructor(protected taskViewService: TaskViewService) {
         super(taskViewService);
         this.tasks$ = this.taskViewService.tasks$;
-        this.changedFields$ = this.taskViewService.changedFields$;
         this.loading$ = this.taskViewService.loading$;
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.changedFields$.complete();
     }
 }

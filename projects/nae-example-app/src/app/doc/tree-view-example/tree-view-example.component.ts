@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {CaseResourceService, Filter, FilterType, ProcessService, SimpleFilter, TreeCaseViewService} from '@netgrif/application-engine';
+import {CaseResourceService, Filter, FilterType,
+    ProcessService, SimpleFilter, TreeCaseViewService, CreateCaseEventOutcome} from '@netgrif/application-engine';
 import {HttpParams} from '@angular/common/http';
 
 @Component({
@@ -38,7 +39,7 @@ export class TreeViewExampleComponent {
                         };
                         this._caseResource.createCase(newCaseRequest).subscribe(newCase => {
                             this.filter = new SimpleFilter('id', FilterType.CASE, {
-                                query: 'stringId:' + newCase.stringId
+                                query: 'stringId:' + (newCase.outcome as CreateCaseEventOutcome).aCase.stringId
                             });
                             this.loading = false;
                         });

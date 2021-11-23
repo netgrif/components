@@ -12,6 +12,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {MatToolbar} from '@angular/material/toolbar';
 import semver from 'semver';
+import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {MatOption} from '@angular/material/core';
 
 interface Form {
@@ -141,16 +143,17 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
 
             this._caseResourceService.createCase(newCase)
                 .subscribe(
-                    response => {
-                        this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
-                            + ' ' + (newCase.title !== null
-                                    ? newCase.title
-                                    : this._translate.instant('side-menu.new-case.defaultCaseName')
-                            ));
+                    (response: EventOutcomeMessageResource) => {
+                        this._snackBarService.openSuccessSnackBar(response.outcome.message === undefined
+                            ? this._translate.instant('side-menu.new-case.createCase') + ' ' + newCase.title
+                            : response.outcome.message);
                         this._sideMenuControl.close({
                             opened: false,
-                            message: 'Confirm new case setup',
-                            data: response
+                            message: response.outcome.message === undefined
+                                ? 'Confirm new case setup'
+                                : response.outcome.message
+                            ,
+                            data: (response.outcome as CreateCaseEventOutcome).aCase
                         });
                     },
                     error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
