@@ -15,6 +15,7 @@ export * from './model/datafield-grid-layout-element';
 export * from './model/async-rendering-configuration';
 export * from './model/async-rendering-configuration-injection-token';
 export * from './model/subgrid';
+export * from './model/split-data-group';
 
 /* MODULES */
 export * from './task-content/abstract-task-content.component';
