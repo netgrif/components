@@ -69,17 +69,6 @@ export class Subgrid {
         return 'repeat(' + this.cols + ', 1fr)';
     }
 
-    /**
-     * @returns the rows configuration for the grid layout
-     */
-    public getGridRows(): string {
-        let rowConfig = '';
-        for (const row of this.gridAreas.split('|')) {
-            rowConfig = rowConfig.concat(row.includes('xgroup') ? 'auto' : 'minmax(105px, auto)', ' ') ;
-        }
-        return rowConfig.trim();
-    }
-
     public getRunningTitleCount(): IncrementingCounter {
         return this._runningTitleCount;
     }
