@@ -1,4 +1,4 @@
-export interface UsersRef {
+export interface UserRef {
     [k: number]: {
         [k: string]: boolean
     };
