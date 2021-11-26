@@ -33,15 +33,15 @@ const baseFilterFactory = () => {
 const disableButtonsFactory = () => {
     return {
         finish: (t: Task) => {
-            if (t && t.dataGroups && t.dataGroups.length) {
-                for (const dg of t.dataGroups) {
-                    const fld = dg.fields.find(field => field.title === 'Boolean');
-                    if (fld) {
-                        return fld.value;
-                    }
-                }
-            }
-            return true;
+            // if (t && t.dataGroups && t.dataGroups.length) {
+            //     for (const dg of t.dataGroups) {
+            //         const fld = dg.fields.find(field => field.title === 'Boolean');
+            //         if (fld) {
+            //             return fld.value;
+            //         }
+            //     }
+            // }
+            return false;
         },
         delegate: (t: Task) => true,
     };

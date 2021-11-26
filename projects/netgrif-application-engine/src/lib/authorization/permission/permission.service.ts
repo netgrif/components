@@ -15,49 +15,60 @@ export class PermissionService {
     }
 
     public hasTaskPermission(task: Task | undefined, permission: string): boolean {
-        if (!task
-            || (!task.roles && !task.users)
-            || !permission
-            || (!(task.roles instanceof Object) && !(task.users instanceof Object))
-        ) {
+        if (!task) {
             return false;
         }
 
-        const result = Object.keys(task.users).some(user =>
-            !!task.users ? !!task.users[user][permission] : false
-        );
+        let rolePermValue: boolean;
+        if (!!task.roles) {
+            Object.keys(task.roles).forEach(role => {
+             if (this._userService.hasRoleById(role) && task.roles[role][permission] !== undefined) {
+                 rolePermValue = rolePermValue === undefined ? task.roles[role][permission] : rolePermValue && task.roles[role][permission];
+             }
+            });
+        }
 
-        return result || Object.keys(task.roles).some(role =>
-            this._userService.hasRoleById(role) ? !!task.roles[role][permission] : false
-        );
+        let userPermValue: boolean;
+        if (!!task.users) {
+            const loggedUserId = this._userService.user.id;
+            Object.keys(task.users).forEach(user => {
+                if (user === loggedUserId && task.users[user][permission] !== undefined) {
+                    userPermValue = userPermValue === undefined ?
+                        rolePermValue || task.users[user][permission] : userPermValue && task.users[user][permission];
+                }
+            });
+        }
+
+        return userPermValue === undefined ? (rolePermValue === undefined ? false : rolePermValue) : userPermValue;
     }
 
     public hasCasePermission(case_: Case | undefined, permission: string): boolean {
-        if (!case_
-            || (!case_.permissions && !case_.users)
-            || !permission
-            || (!(case_.permissions instanceof Object) && !(case_.users instanceof Object))
-        ) {
+        if (!case_) {
             return false;
         }
-        if (Object.keys(case_.permissions).length === 0 && Object.keys(case_.users).length === 0) {
-            return true;
+
+        let rolePermValue: boolean;
+        if (!!case_.permissions) {
+            Object.keys(case_.permissions).forEach(role => {
+                if (this._userService.hasRoleById(role) && case_.permissions[role][permission] !== undefined) {
+                    rolePermValue = rolePermValue === undefined ?
+                        case_.permissions[role][permission] : rolePermValue && case_.permissions[role][permission];
+                }
+            });
         }
 
-        let result = true;
-
-        if (Object.keys(case_.users).length > 0
-            && !!case_.users[this._userService.user.id]
-            && case_.users[this._userService.user.id][permission] !== undefined) {
-            result = case_.users[this._userService.user.id][permission];
+        let userPermValue: boolean;
+        if (!!case_.users) {
+            const loggedUserId = this._userService.user.id;
+            Object.keys(case_.users).forEach(user => {
+                if (user === loggedUserId && case_.users[user][permission] !== undefined) {
+                    userPermValue = userPermValue === undefined ?
+                        rolePermValue || case_.users[user][permission] : userPermValue && case_.users[user][permission];
+                }
+            });
         }
-        this._userService.user.roles.forEach(role => {
-            if (!!case_.permissions[role.stringId]
-                && case_.permissions[role.stringId][permission] !== undefined) {
-                result = result && !!case_.permissions[role.stringId][permission];
-            }
-        });
-        return result;
+
+        return userPermValue === undefined ? (rolePermValue === undefined ? false : rolePermValue) : userPermValue;
     }
 
     public hasNetPermission(action: string, net: PetriNetReferenceWithPermissions): boolean {
@@ -90,15 +101,6 @@ export class PermissionService {
                     && !task.user
                     && this.hasTaskPermission(task, 'assign')
                 )
-                || ((
-                    task.roles === null
-                    || task.roles === undefined
-                    || Object.keys(task.roles).length === 0
-                ) && (
-                    task.users === null
-                    || task.users === undefined
-                    || Object.keys(task.users).length === 0
-                ))
             );
     }
 
