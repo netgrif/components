@@ -4,6 +4,7 @@ import {AssignPolicy} from '../../task-content/model/policy';
 import {Task} from '../../resources/interface/task';
 import {UserService} from '../../user/services/user.service';
 import {Case} from '../../resources/interface/case';
+import {PetriNetReferenceWithPermissions} from '../../process/petri-net-reference-with-permissions';
 
 @Injectable({
     providedIn: 'root'
@@ -57,6 +58,28 @@ export class PermissionService {
             }
         });
         return result;
+    }
+
+    public hasNetPermission(action: string, net: PetriNetReferenceWithPermissions): boolean {
+        if (!net
+            || !net.permissions
+            || !action
+            || !(net.permissions instanceof Object)
+        ) {
+            return false;
+        }
+        if (Object.keys(net.permissions).some(role =>
+            this._userService.hasRoleById(role) ? net.permissions[role][action] === false : false)) {
+            return false;
+        }
+        if (!Object.keys(net.permissions).filter(role => Object.keys(net.permissions[role])
+            .some(perm => perm === action)).some(role =>
+            !!net.permissions[role][action])) {
+            return true;
+        }
+        return Object.keys(net.permissions).some(role =>
+            this._userService.hasRoleById(role) ? !!net.permissions[role][action] : false
+        );
     }
 
     public canAssign(task: Task | undefined): boolean {
