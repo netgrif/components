@@ -18,6 +18,7 @@ import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
 import {PermissionService} from '../../authorization/permission/permission.service';
+import {PermissionType} from '../../process/permissions';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -80,7 +81,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     }
 
     public canDelete(): boolean {
-        return this._permissionService.hasCasePermission(this.case_, 'delete');
+        return this._permissionService.hasCasePermission(this.case_, PermissionType.DELETE);
     }
 
     private throwError(message: string) {
