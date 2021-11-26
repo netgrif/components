@@ -28,8 +28,8 @@ export class FilterExtractionService {
                 protected _log: LoggerService) {
     }
 
-    public extractCompleteFilterFromData(dataSection: Array<DataGroup>, taskReffed = true): Filter | undefined {
-        const filterIndex = getFieldIndexFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID, taskReffed);
+    public extractCompleteFilterFromData(dataSection: Array<DataGroup>): Filter | undefined {
+        const filterIndex = getFieldIndexFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID);
 
         if (filterIndex === undefined) {
             return undefined;
@@ -51,7 +51,7 @@ export class FilterExtractionService {
         }
 
         // Is the filter view rooted?
-        const rootViewIdField = getFieldFromDataGroups(dataSection, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID, taskReffed);
+        const rootViewIdField = getFieldFromDataGroups(dataSection, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID);
         if (rootViewIdField === undefined) {
             return filterSegment;
         }

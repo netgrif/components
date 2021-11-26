@@ -27,7 +27,8 @@ import {
     AllowedNetsServiceFactory,
     NAE_VIEW_ID_SEGMENT,
     ViewIdService,
-    NAE_BASE_FILTER
+    NAE_BASE_FILTER,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -73,6 +74,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
     providers: [
         TaskViewService,
         SearchService,
+        ChangedFieldsService,
         {
             provide: ProcessService,
             useFactory: processServiceFactory,

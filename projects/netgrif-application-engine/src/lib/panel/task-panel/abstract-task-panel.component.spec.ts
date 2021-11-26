@@ -1,9 +1,9 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {of, Subject, throwError} from 'rxjs';
+import {Observable, of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -53,7 +53,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
-import {UserService} from '../../user/services/user.service';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
+import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/finish-task-event-outcome';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {createMockCase} from '../../utility/tests/utility/create-mock-case';
+import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 
 describe('AbtsractTaskPanelComponent', () => {
     let component: TestTaskPanelComponent;
@@ -80,6 +85,7 @@ describe('AbtsractTaskPanelComponent', () => {
                 TaskViewService,
                 SideMenuService,
                 CurrencyPipe,
+                ChangedFieldsService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -193,10 +199,11 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 protected _translate: TranslateService,
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 parentInjector: Injector,
-                protected _currencyPipe: CurrencyPipe) {
+                protected _currencyPipe: CurrencyPipe,
+                protected _changedFieldsService: ChangedFieldsService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe);
+            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService);
     }
 
     ngAfterViewInit() {
@@ -262,25 +269,94 @@ class MyTaskResources {
         return of({changedFields: {}});
     }
 
-    assignTask(stringId) {
+    assignTask(stringId): Observable<EventOutcomeMessageResource> {
         if (stringId === 'true') {
-            return of({success: 'Success'});
+            return of({
+                success: 'Success',
+                outcome: {
+                    message: '',
+                    task: {
+                        caseId: 'string',
+                        transitionId: 'string',
+                        title: 'string',
+                        caseColor: 'string',
+                        caseTitle: 'string',
+                        user: undefined,
+                        roles: {},
+                        startDate: undefined,
+                        finishDate: undefined,
+                        assignPolicy: AssignPolicy.manual,
+                        dataFocusPolicy: DataFocusPolicy.manual,
+                        finishPolicy: FinishPolicy.manual,
+                        stringId: 'string',
+                        layout: {
+                            offset: 0,
+                            cols: undefined,
+                            rows: undefined
+                        },
+                        dataGroups: [],
+                        _links: {},
+                        users: []
+                    },
+                    aCase: createMockCase(),
+                    net: createMockNet(),
+                    outcomes: []
+                } as AssignTaskEventOutcome
+            });
         } else if (stringId === 'false') {
-            return of({error: 'error'});
+            return of({
+                error: 'error',
+                changedFields: {
+                    changedFields: []
+                }
+            });
         } else if (stringId === 'error') {
-            return of({error: 'error'}).pipe(map(res => {
+            return of({
+                error: 'error'
+            }).pipe(map(res => {
                 throw throwError(res);
             }));
         }
     }
 
-    finishTask(stringId) {
+    finishTask(stringId): Observable<EventOutcomeMessageResource> {
         if (stringId === 'true') {
-            return of({success: 'Success'});
+            return of({
+                success: 'Success',
+                outcome: {
+                    message: '',
+                    task: {
+                        caseId: 'string',
+                        transitionId: 'string',
+                        title: 'string',
+                        caseColor: 'string',
+                        caseTitle: 'string',
+                        user: undefined,
+                        roles: {},
+                        startDate: undefined,
+                        finishDate: undefined,
+                        assignPolicy: AssignPolicy.manual,
+                        dataFocusPolicy: DataFocusPolicy.manual,
+                        finishPolicy: FinishPolicy.manual,
+                        stringId: 'string',
+                        layout: {
+                            offset: 0,
+                            cols: undefined,
+                            rows: undefined
+                        },
+                        dataGroups: [],
+                        _links: {},
+                        users: []
+                    },
+                    aCase: createMockCase(),
+                    net: createMockNet(),
+                    outcomes: []
+                } as FinishTaskEventOutcome
+            });
         } else if (stringId === 'false') {
-            return of({error: 'error'});
+            return of({error: 'error', changedFields: { changedFields: [] }});
         } else if (stringId === 'error') {
-            return of({error: 'error'}).pipe(map(res => {
+            return of({error: 'error', changedFields: { changedFields: [] }}).pipe(map(res => {
                 throw throwError(res);
             }));
         }
