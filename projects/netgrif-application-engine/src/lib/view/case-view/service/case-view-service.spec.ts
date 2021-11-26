@@ -23,6 +23,7 @@ import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-toke
 import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {PermissionService} from '../../../authorization/permission/permission.service';
 
 
 describe('CaseViewService', () => {
@@ -30,6 +31,7 @@ describe('CaseViewService', () => {
     let caseService: MyResources;
     let searchService: SearchService;
     let userService: UserService;
+    let permissionService: PermissionService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -45,6 +47,7 @@ describe('CaseViewService', () => {
                 {provide: UserService, useClass: MockUserService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 SearchService,
+                PermissionService,
                 {
                     provide: NAE_BASE_FILTER,
                     useFactory: TestCaseBaseFilterProvider
@@ -56,6 +59,7 @@ describe('CaseViewService', () => {
         caseService = TestBed.inject(CaseResourceService) as unknown as MyResources;
         searchService = TestBed.inject(SearchService);
         userService = TestBed.inject(UserService);
+        permissionService = TestBed.inject(PermissionService);
     });
 
     it('should be created', () => {
@@ -75,21 +79,21 @@ describe('CaseViewService', () => {
             title: ''
         });
         net.permissions = {};
-        expect(service.canDo('create', net)).toBeTrue();
+        expect(permissionService.hasNetPermission('create', net)).toBeTrue();
 
         (userService as unknown as MockUserService).user =
             new User('', '', '', '', [], [{stringId: '12454sdasd', name: '', importId: ''}]);
         net.permissions = {'12454sdasd': {create: true}};
-        expect(service.canDo('create', net)).toBeTrue();
+        expect(permissionService.hasNetPermission('create', net)).toBeTrue();
 
         net.permissions = {'12454sdasd': {create: false}};
-        expect(service.canDo('create', net)).toBeFalse();
+        expect(permissionService.hasNetPermission('create', net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
             new User('', '', '', '', [],
                 [{stringId: '12454sdasd', name: '', importId: ''}, {stringId: '12454sddasdasd', name: '', importId: ''}]);
         net.permissions = {'12454sdasd': {create: false}, '12454sddasdasd': {create: true}};
-        expect(service.canDo('create', net)).toBeFalse();
+        expect(permissionService.hasNetPermission('create', net)).toBeFalse();
     });
 
     it('should load cases', done => {

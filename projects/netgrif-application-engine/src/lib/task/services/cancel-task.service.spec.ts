@@ -29,6 +29,7 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {TaskDataService} from './task-data.service';
 import {DataFocusPolicyService} from './data-focus-policy.service';
+import {PermissionType} from '../../process/permissions';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -81,7 +82,9 @@ describe('CancelTaskService', () => {
                 fullName: ''
             },
             roles: {
-                role: 'perform'
+                role: {
+                    finish: true
+                }
             },
             startDate: [1],
             finishDate: [1],
