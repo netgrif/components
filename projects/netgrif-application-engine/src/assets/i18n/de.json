@@ -18,16 +18,21 @@
             "dataSaved": "Daten erfolgreich gespeichert",
             "failedSave": "Beim speichern der Daten ist eine Fehler aufgetreten",
             "assignTask": "Beim zuweisen der Aufgabe",
+            "assignTaskSuccess": "Aufgabe erfolgreich zugewiesen",
             "delegateTask": "Beim delegieren der Aufgabe",
+            "delegateTaskSuccess": "Aufgabe erfolgreich delegiert",
             "failed": "ist eine Fehler aufgetreten",
             "cancelTask": "Aufgabenzuweisung wird abgebrochen",
+            "cancelTaskSuccess": "Aufgabe erfolgreich abgebrochen",
             "finishTask": "Aufgabe wird abgeschlossen",
+            "finishTaskSuccess": "Aufgabe erfolgreich abgeschlossen",
             "invalidData": "Manche Felder haben ungültige Werten",
             "missingRequired": "Einige Pflichtfelder sind leer",
             "noCase": "Keine Fälle gefunden",
             "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten",
             "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr",
             "caseDeleteFailed": "Fall konnte nicht gelöscht werden",
+            "caseDeleteSuccess": "Fall erfolgreich gelöscht",
             "rolesSuccessAssign": "Rollen, die ausgewählten Benutzern erfolgreich zugewiesen wurden"
         },
         "view": {
@@ -391,7 +396,8 @@
             "deleteCanceled": "Prozess löschen abgebrochen",
             "deleteSuccess": "Prozess erfolgreich gelöscht",
             "deleteError": "Prozess konnte nicht gelöscht werden",
-            "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden."
+            "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
+            "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"
         }
     },
     "legal": {

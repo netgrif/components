@@ -21,8 +21,8 @@ export abstract class AbstractTimeInstanceField extends DataField<Moment> {
     public max: Moment;
 
     protected constructor(stringId: string, title: string, value: Moment, behavior: Behavior, placeholder?: string,
-                          description?: string, layout?: Layout, validations?: any, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
+                          description?: string, layout?: Layout, validations?: any, component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
     public static isEqual(a: Moment, b: Moment, granularity?: moment.unitOfTime.StartOf): boolean {

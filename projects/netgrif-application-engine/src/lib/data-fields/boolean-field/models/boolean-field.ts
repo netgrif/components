@@ -13,8 +13,8 @@ export enum BooleanFieldValidation {
 export class BooleanField extends DataField<boolean> {
 
     constructor(stringId: string, title: string, value: boolean, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
+                description?: string, layout?: Layout, validations?: Array<Validation>, component?: Component,  parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
     protected resolveValidations(): Array<ValidatorFn> {

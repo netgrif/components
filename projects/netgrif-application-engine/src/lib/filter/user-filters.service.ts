@@ -10,7 +10,7 @@ import {SimpleFilter} from './models/simple-filter';
 import {hasContent} from '../utility/pagination/page-has-content';
 import {Task} from '../resources/interface/task';
 import {CallChainService} from '../utility/call-chain/call-chain.service';
-import {TaskSetDataRequestBody} from '../resources/interface/task-set-data-request-body';
+import {TaskSetDataRequestBody, TaskSetDataRequestFields} from '../resources/interface/task-set-data-request-body';
 import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
 import {Net} from '../process/net';
@@ -26,9 +26,11 @@ import {Filter} from './models/filter';
 import {MergeOperator} from './models/merge-operator';
 import {SavedFilterMetadata} from '../search/models/persistance/saved-filter-metadata';
 import {FilterMetadata} from '../search/models/persistance/filter-metadata';
+import {CreateCaseEventOutcome} from '../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {CategoryResolverService} from '../search/category-factory/category-resolver.service';
 import {DataGroup} from '../resources/interface/data-groups';
 import {getFieldFromDataGroups} from '../utility/get-field';
+import {EventOutcomeMessageResource} from '../resources/interface/message-resource';
 
 /**
  * Service that manages filters created by users of the application.
@@ -71,7 +73,7 @@ export class UserFiltersService implements OnDestroy {
      */
     public delete(filterCaseId: string): Observable<boolean> {
         const result$ = new ReplaySubject<boolean>(1);
-        this._caseService.deleteCase(filterCaseId).subscribe(response => {
+        this._caseService.deleteCase(filterCaseId).subscribe((response: EventOutcomeMessageResource) => {
             if (response.success) {
                 this._log.debug('Filter case delete success', response);
                 result$.next(true);
@@ -165,7 +167,7 @@ export class UserFiltersService implements OnDestroy {
                 allowedNets: ReadonlyArray<string>,
                 searchCategories: ReadonlyArray<Type<Category<any>>>,
                 viewId?: string,
-                additionalData: TaskSetDataRequestBody = {},
+                additionalData: TaskSetDataRequestFields = {},
                 withDefaultCategories = true,
                 inheritAllowedNets = true,
                 navigationItemTaskData: Array<DataGroup> = null): Observable<SavedFilterMetadata> {
@@ -241,7 +243,7 @@ export class UserFiltersService implements OnDestroy {
                                       allowedNets: ReadonlyArray<string>,
                                       searchCategories: ReadonlyArray<Type<Category<any>>>,
                                       viewId?: string,
-                                      additionalData: TaskSetDataRequestBody = {},
+                                      additionalData: TaskSetDataRequestFields = {},
                                       withDefaultCategories = true,
                                       inheritAllowedNets = true,
                                       navigationItemTaskData: Array<DataGroup> = null): Observable<string> {
@@ -251,7 +253,11 @@ export class UserFiltersService implements OnDestroy {
                 title: this._filterNet.defaultCaseName,
                 netId: this._filterNet.stringId
             }).subscribe(filterCase => {
-                this._taskService.getTasks(SimpleFilter.fromTaskQuery({case: {id: filterCase.stringId}})).subscribe(page => {
+                this._taskService.getTasks(SimpleFilter.fromTaskQuery({
+                    case: {
+                        id: (filterCase.outcome as CreateCaseEventOutcome).aCase.stringId
+                    }
+                })).subscribe(page => {
                     if (!hasContent(page)) {
                         throw new Error('Expected filter process to contain tasks, but none were found!');
                     }
@@ -283,7 +289,7 @@ export class UserFiltersService implements OnDestroy {
                     let parentFilterCaseIdField;
                     if (navigationItemTaskData !== null && navigationItemTaskData !== undefined) {
                         parentFilterCaseIdField = getFieldFromDataGroups(navigationItemTaskData,
-                            UserFilterConstants.FILTER_CASE_ID_FIELD_ID, true);
+                            UserFilterConstants.FILTER_CASE_ID_FIELD_ID);
                     }
 
                     if (parentFilterCaseIdField !== undefined) {
@@ -299,14 +305,16 @@ export class UserFiltersService implements OnDestroy {
                     }
 
                     this.assignSetDataFinish(initTask, {
-                        ...requestBody,
-                        ...additionalData
+                        [initTask.stringId]: {
+                            ...requestBody,
+                            ...additionalData
+                        }
                     }, this._callChainService.create(success => {
                         if (!success) {
                             throw new Error('Filter instance could not be initialized');
                         }
 
-                        result.next(filterCase.stringId);
+                        result.next((filterCase.outcome as CreateCaseEventOutcome).aCase.stringId);
                         result.complete();
                     }));
                 });

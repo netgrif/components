@@ -25,6 +25,11 @@ export interface ChangedFields {
      * Has type `Change` unless it is `frontendActionsOwner` in which case the type is `string`
      */
     [key: string]: Change | any;
+
+    /**
+     * Id of task on which the changes occured
+     */
+    taskId?: string;
 }
 
 export interface Change {

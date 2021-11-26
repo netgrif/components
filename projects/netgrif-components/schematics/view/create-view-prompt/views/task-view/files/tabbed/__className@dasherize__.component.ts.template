@@ -15,6 +15,7 @@ import {
     tabbedTaskViewConfigurationFactory,
     TaskViewService,
     ViewIdService,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
@@ -34,6 +35,7 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         CategoryFactory,
         TaskViewService,
         SearchService,
+        ChangedFieldsService
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory,
             deps: [NAE_TAB_DATA]},

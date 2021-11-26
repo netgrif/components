@@ -53,7 +53,7 @@ import {
     AllowedNetsService,
     TestTaskViewAllowedNetsFactory,
     AllowedNetsServiceFactory,
-    CurrencyModule
+    CurrencyModule, ChangedFieldsService
 } from '@netgrif/application-engine';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -87,6 +87,7 @@ describe('TaskPanelComponent', () => {
             providers: [
                 TaskViewService,
                 SideMenuService,
+                ChangedFieldsService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

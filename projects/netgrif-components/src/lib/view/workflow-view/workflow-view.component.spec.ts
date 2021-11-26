@@ -2,7 +2,6 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {WorkflowViewComponent} from './workflow-view.component';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {SideMenuContentComponentModule} from '../../side-menu/content-components/side-menu-content-component.module';
 import {RouterModule} from '@angular/router';
@@ -36,7 +35,6 @@ describe('WorkflowViewComponent', () => {
             imports: [
                 MaterialModule,
                 NoopAnimationsModule,
-                HttpClientModule,
                 PanelComponentModule,
                 HeaderComponentModule,
                 HttpClientTestingModule,
