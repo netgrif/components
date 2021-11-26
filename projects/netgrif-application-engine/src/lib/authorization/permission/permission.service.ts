@@ -5,6 +5,7 @@ import {Task} from '../../resources/interface/task';
 import {UserService} from '../../user/services/user.service';
 import {Case} from '../../resources/interface/case';
 import {PetriNetReferenceWithPermissions} from '../../process/petri-net-reference-with-permissions';
+import {Permissions, PermissionType, UserPermissions} from '../../process/permissions';
 
 @Injectable({
     providedIn: 'root'
@@ -19,27 +20,9 @@ export class PermissionService {
             return false;
         }
 
-        let rolePermValue: boolean;
-        if (!!task.roles) {
-            Object.keys(task.roles).forEach(role => {
-             if (this._userService.hasRoleById(role) && task.roles[role][permission] !== undefined) {
-                 rolePermValue = rolePermValue === undefined ? task.roles[role][permission] : rolePermValue && task.roles[role][permission];
-             }
-            });
-        }
-
-        let userPermValue: boolean;
-        if (!!task.users) {
-            const loggedUserId = this._userService.user.id;
-            Object.keys(task.users).forEach(user => {
-                if (user === loggedUserId && task.users[user][permission] !== undefined) {
-                    userPermValue = userPermValue === undefined ?
-                        rolePermValue || task.users[user][permission] : userPermValue && task.users[user][permission];
-                }
-            });
-        }
-
-        return userPermValue === undefined ? (rolePermValue === undefined ? false : rolePermValue) : userPermValue;
+        const rolePermValue = this.checkRolePerms(task.roles, permission);
+        const userPermValue = this.checkUserPerms(task.users, permission);
+        return userPermValue === undefined ? (rolePermValue === undefined ? true : rolePermValue) : userPermValue;
     }
 
     public hasCasePermission(case_: Case | undefined, permission: string): boolean {
@@ -47,28 +30,9 @@ export class PermissionService {
             return false;
         }
 
-        let rolePermValue: boolean;
-        if (!!case_.permissions) {
-            Object.keys(case_.permissions).forEach(role => {
-                if (this._userService.hasRoleById(role) && case_.permissions[role][permission] !== undefined) {
-                    rolePermValue = rolePermValue === undefined ?
-                        case_.permissions[role][permission] : rolePermValue && case_.permissions[role][permission];
-                }
-            });
-        }
-
-        let userPermValue: boolean;
-        if (!!case_.users) {
-            const loggedUserId = this._userService.user.id;
-            Object.keys(case_.users).forEach(user => {
-                if (user === loggedUserId && case_.users[user][permission] !== undefined) {
-                    userPermValue = userPermValue === undefined ?
-                        rolePermValue || case_.users[user][permission] : userPermValue && case_.users[user][permission];
-                }
-            });
-        }
-
-        return userPermValue === undefined ? (rolePermValue === undefined ? false : rolePermValue) : userPermValue;
+        const rolePermValue = this.checkRolePerms(case_.permissions, permission);
+        const userPermValue = this.checkUserPerms(case_.users, permission);
+        return userPermValue === undefined ? (rolePermValue === undefined ? true : rolePermValue) : userPermValue;
     }
 
     public hasNetPermission(action: string, net: PetriNetReferenceWithPermissions): boolean {
@@ -99,7 +63,7 @@ export class PermissionService {
                 (
                     task.assignPolicy === AssignPolicy.manual
                     && !task.user
-                    && this.hasTaskPermission(task, 'assign')
+                    && this.hasTaskPermission(task, PermissionType.ASSIGN)
                 )
             );
     }
@@ -114,7 +78,7 @@ export class PermissionService {
                         || task.assignedUserPolicy.cancel)
                 ) || (
                     !!task.user
-                    && this.hasTaskPermission(task, 'cancel')
+                    && this.hasTaskPermission(task, PermissionType.CANCEL)
                 )
             );
     }
@@ -123,7 +87,7 @@ export class PermissionService {
         return !!task
             && !!task.user
             && this.userComparator.compareUsers(task.user)
-            && this.hasTaskPermission(task, 'delegate')
+            && this.hasTaskPermission(task, PermissionType.DELEGATE)
             && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.reassign === undefined)
                 || task.assignedUserPolicy.reassign);
     }
@@ -132,11 +96,37 @@ export class PermissionService {
         return !!task
             && !!task.user
             && this.userComparator.compareUsers(task.user)
-            && this.hasTaskPermission(task, 'finish');
+            && this.hasTaskPermission(task, PermissionType.FINISH);
     }
 
     public canCollapse(task: Task | undefined): boolean {
         return !!task
             && task.assignPolicy === AssignPolicy.manual;
+    }
+
+    public checkRolePerms(roles: Permissions, permission: string): boolean | undefined {
+        let rolePermValue: boolean;
+        if (!!roles) {
+            Object.keys(roles).forEach(role => {
+                if (roles[role][permission] !== undefined && this._userService.hasRoleById(role)) {
+                    rolePermValue = rolePermValue === undefined ? roles[role][permission] : rolePermValue && roles[role][permission];
+                }
+            });
+        }
+        return rolePermValue;
+    }
+
+    public checkUserPerms(users: UserPermissions, permission): boolean | undefined {
+        let userPermValue: boolean;
+        if (!!users) {
+            const loggedUserId = this._userService.user.id;
+            Object.keys(users).forEach(user => {
+                if (user === loggedUserId && users[user][permission] !== undefined) {
+                    userPermValue = userPermValue === undefined ?
+                        users[user][permission] : userPermValue && users[user][permission];
+                }
+            });
+        }
+        return userPermValue;
     }
 }
