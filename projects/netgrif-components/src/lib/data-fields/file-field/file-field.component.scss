@@ -89,3 +89,19 @@
     height: auto;
     cursor: pointer;
 }
+
+.no-cursor {
+    cursor: default !important;
+}
+
+.border-LGBTQ {
+    border: 5px solid transparent;
+    border-image: linear-gradient(to bottom right, #B827FC 0%, #2C90FC 25%, #B8FD33 50%, #FEC837 75%, #FD1892 100%);
+    border-image-slice: 1;
+}
+
+.border-default {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}

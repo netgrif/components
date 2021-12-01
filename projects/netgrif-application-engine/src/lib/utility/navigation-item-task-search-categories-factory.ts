@@ -21,7 +21,7 @@ export function navigationItemTaskCategoryFactory(categoryResolverService: Categ
                                                   navigationItemTaskData: Array<DataGroup>,
                                                   defaultCaseSearchCategories: Array<Type<Category<any>>>,
                                                   defaultTaskSearchCategories: Array<Type<Category<any>>>): Array<Type<Category<any>>> {
-    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID, true) as FilterField;
+    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
 
     if (filterField === undefined) {
         throw new Error(

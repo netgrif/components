@@ -35,7 +35,7 @@ export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFacto
 export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                             baseAllowedNets: BaseAllowedNetsService,
                                                             navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
-    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID, true) as FilterField;
+    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
 
     if (filterField === undefined) {
         throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
@@ -48,7 +48,9 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
         nets.push(...baseAllowedNets.allowedNets);
     }
 
-    return factory.createFromArray(nets);
+    const uniqueNets = new Set<string>(nets);
+
+    return factory.createFromArray(Array.from(uniqueNets));
 }
 
 /**

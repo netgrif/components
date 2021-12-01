@@ -18,7 +18,7 @@ export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, O
     public nets: ProcessList;
     public userMultiSelect: boolean;
     public searchUserControl = new FormControl();
-    protected SEARCH_DEBOUNCE_TIME = 200;
+    protected SEARCH_DEBOUNCE_TIME = 600;
     protected subValueChanges: Subscription;
     protected subUsers: Subscription;
 

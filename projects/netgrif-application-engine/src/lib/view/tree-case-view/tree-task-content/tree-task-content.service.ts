@@ -24,6 +24,9 @@ import {SelectedCaseService} from '../../../task/services/selected-case.service'
 import {Filter} from '../../../filter/models/filter';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 import {PermissionService} from '../../../authorization/permission/permission.service';
+import {ChangedFieldsService} from '../../../changed-fields/services/changed-fields.service';
+import {ChangedFields} from '../../../data-fields/models/changed-fields';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 
 @Injectable()
 export class TreeTaskContentService implements OnDestroy {
@@ -48,13 +51,24 @@ export class TreeTaskContentService implements OnDestroy {
                 protected _callchain: CallChainService,
                 protected _logger: LoggerService,
                 protected _selectedCaseService: SelectedCaseService,
+                protected _changedFieldsService: ChangedFieldsService,
                 protected _permissionService: PermissionService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: SubjectTaskOperations) {
         this._processingTaskChange = new LoadingEmitter();
         this._displayedTaskText$ = new ReplaySubject<string>();
 
-        _taskDataService.changedFields$.subscribe(changedFields => {
-            this._taskContentService.updateFromChangedFields(changedFields);
+        this._changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
+            const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
+            );
+            const changedFields: Array<ChangedFields> = [];
+            filteredCaseIds.forEach(caseId => {
+                const taskIds: Array<string> = this._taskContentService.referencedTaskAndCaseIds[caseId];
+                changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
+            });
+            changedFields.filter(fields => fields !== undefined).forEach(fields => {
+                this._taskContentService.updateFromChangedFields(fields);
+            });
         });
         _taskDataService.updateSuccess$.subscribe(result => {
             if (result) {
