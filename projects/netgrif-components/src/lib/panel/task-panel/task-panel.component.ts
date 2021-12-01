@@ -23,7 +23,7 @@ import {
     TaskEventService,
     TaskRequestStateService,
     TaskViewService,
-    PermissionService
+    PermissionService,
     ChangedFieldsService
 } from '@netgrif/application-engine';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
