@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "5.8.0-rc.1",
+    "version": "5.8.0",
     "description": "Netgrif Application Engine Angular components",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -59,7 +59,7 @@
         "natural-orderby": "^2.0.3",
         "rxjs": "^6.6.0",
         "zone.js": "~0.10.2",
-        "@netgrif/application-engine": "5.8.0-rc.1"
+        "@netgrif/application-engine": "5.8.0"
     },
     "publishConfig": {
         "registry": "https://nexus.netgrif.com/repository/npm-private/"
