@@ -13,7 +13,7 @@ import {TaskRequestStateService} from './task-request-state.service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {SubjectTaskOperations} from '../models/subject-task-operations';
 import {UnlimitedTaskContentService} from '../../task-content/services/unlimited-task-content.service';
-import {EventOutcomeMessageResource, MessageResource} from '../../resources/interface/message-resource';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -33,7 +33,6 @@ import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/t
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
-import {PermissionType} from '../../process/permissions';
 
 describe('CancelTaskService', () => {
     let service: CancelTaskService;
@@ -88,7 +87,11 @@ describe('CancelTaskService', () => {
             },
             roles: {
                 role: {
-                    finish: true
+                    assign: true,
+                    cancel: true,
+                    finish: true,
+                    set: true,
+                    view: true
                 }
             },
             startDate: [1],
@@ -247,7 +250,10 @@ class TestTaskResourceService {
 class TestUserService {
     public get user() {
         return {
-            email: 'mail'
+            email: 'mail',
+            roles: [{
+                stringId: 'role'
+            }]
         };
     }
 

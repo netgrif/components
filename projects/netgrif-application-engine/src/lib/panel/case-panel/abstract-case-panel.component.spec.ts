@@ -31,7 +31,7 @@ import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {PermissionService} from '../../authorization/permission/permission.service';
-import {PermissionType} from '../../../../../../dist/netgrif-application-engine/lib/process/permissions';
+import {PermissionType} from '../../process/permissions';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -63,7 +63,6 @@ describe('AbstractCasePanelComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 SignUpService,
-                PermissionService,
                 {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
@@ -86,8 +85,10 @@ describe('AbstractCasePanelComponent', () => {
         expect(component.show(new MouseEvent('type'))).toEqual(false);
     });
 
-    it('should test canDo', () => {
-        expect(component.canDelete()).toBeTrue();
+    it('should test canDelete', () => {
+        const spy = spyOn(TestBed.inject(PermissionService), 'hasCasePermission');
+        component.canDelete();
+        expect(spy).toHaveBeenCalledWith(component.case_, PermissionType.DELETE);
     });
 
     afterEach(() => {
