@@ -301,7 +301,8 @@ class MyTaskResources {
                         },
                         dataGroups: [],
                         _links: {},
-                        users: []
+                        users: {},
+                        userRefs: {}
                     },
                     aCase: createMockCase(),
                     net: createMockNet(),
@@ -351,7 +352,8 @@ class MyTaskResources {
                         },
                         dataGroups: [],
                         _links: {},
-                        users: []
+                        users: {},
+                        userRefs: {}
                     },
                     aCase: createMockCase(),
                     net: createMockNet(),

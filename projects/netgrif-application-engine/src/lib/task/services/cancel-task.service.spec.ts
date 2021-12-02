@@ -130,7 +130,13 @@ describe('CancelTaskService', () => {
                     caseTitle: '',
                     user: null,
                     roles: {
-                        role: 'perform'
+                        role: {
+                            assign: true,
+                            cancel: true,
+                            finish: true,
+                            set: true,
+                            view: true
+                        }
                     },
                     startDate: null,
                     finishDate: null,
@@ -141,7 +147,8 @@ describe('CancelTaskService', () => {
                     layout: {rows: 1, cols: 1, offset: 0},
                     dataGroups: [],
                     _links: {},
-                    users: []
+                    users: {},
+                    userRefs: {}
                 },
                 aCase: createMockCase(),
                 net: createMockNet()

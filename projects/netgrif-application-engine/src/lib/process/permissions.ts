@@ -3,11 +3,11 @@ export interface Permissions {
 }
 
 export interface UserPermissions {
-    [k: number]: Permission;
+    [k: string]: Permission;
 }
 
 export interface UserRefs {
-    [k: number]: Permission;
+    [k: string]: Permission;
 }
 
 export interface Permission {

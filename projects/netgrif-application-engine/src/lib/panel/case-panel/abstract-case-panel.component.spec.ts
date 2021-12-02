@@ -31,6 +31,7 @@ import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {PermissionService} from '../../authorization/permission/permission.service';
+import {PermissionType} from '../../../../../../dist/netgrif-application-engine/lib/process/permissions';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
@@ -62,6 +63,7 @@ describe('AbstractCasePanelComponent', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 SignUpService,
+                PermissionService,
                 {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
@@ -126,7 +128,11 @@ class TestWrapperComponent {
         stringId: 'string',
         title: 'string',
         author: {email: 'email', fullName: 'fullName'},
-        permissions: {},
+        permissions: {
+            default: {
+                delete: true
+            }
+        },
         users: {},
         color: 'color',
         creationDate: [],
