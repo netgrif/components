@@ -19,6 +19,7 @@ export interface Permission {
     cancel?: boolean;
     finish?: boolean;
     delegate?: boolean;
+    set?: boolean;
 }
 
 export enum PermissionType {
@@ -28,5 +29,6 @@ export enum PermissionType {
     ASSIGN = 'assign',
     CANCEL = 'cancel',
     FINISH = 'finish',
-    DELEGATE = 'delegate'
+    DELEGATE = 'delegate',
+    SET = 'set'
 }
