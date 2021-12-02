@@ -2,7 +2,7 @@ import {Author} from './author';
 import {PetriNetObjectId} from './petri-net-object-id';
 import {ImmediateData} from './immediate-data';
 import {NaeDate} from '../types/nae-date-type';
-import {Permissions, UsersPermissions} from '../../process/permissions';
+import {Permissions, UserPermissions, UserRefs} from '../../process/permissions';
 
 /**
  * Object from Backend
@@ -116,8 +116,8 @@ export interface Case {
     /**
      * **Example:** {}
      */
-    users?: UsersPermissions;
-
+    users?: UserPermissions;
+    userRefs?: UserRefs;
     /**
      * **Example:** []
      */

@@ -63,6 +63,7 @@ describe('AssignPolicyService', () => {
             caseColor: 'string',
             caseTitle: 'string',
             user: undefined,
+            userRefs: undefined,
             roles: {},
             startDate: undefined,
             finishDate: undefined,

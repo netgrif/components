@@ -29,6 +29,7 @@ import {SearchIndexResolverService} from '../../../search/search-keyword-resolve
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
 import {SortableView} from '../../abstract/sortable-view';
 import {NewCaseCreationConfigurationData} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
+import {PermissionService} from '../../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 
@@ -57,7 +58,8 @@ export class CaseViewService extends SortableView implements OnDestroy {
                 protected _processService: ProcessService,
                 resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
-                @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration) {
+                @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
+                protected _permissionService: PermissionService) {
         super(resolver);
         this._newCaseConfiguration = {...this.DEFAULT_NEW_CASE_CONFIGURATION};
         if (newCaseConfig !== null) {
@@ -228,13 +230,13 @@ export class CaseViewService extends SortableView implements OnDestroy {
     protected getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
-                map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
+                map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
             );
         } else {
             return this._allowedNetsService.allowedNets$.pipe(
                 switchMap(allowedNets => {
                     return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
-                        map(net => net.filter(n => this.canDo(PermissionType.CREATE, n)))
+                        map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
                     );
                 })
             );
@@ -290,28 +292,6 @@ export class CaseViewService extends SortableView implements OnDestroy {
 
     public hasAuthority(authority: Array<string> | string): boolean {
         return this._user.hasAuthority(authority);
-    }
-
-    public canDo(action: string, net: PetriNetReferenceWithPermissions): boolean {
-        if (!net
-            || !net.permissions
-            || !action
-            || !(net.permissions instanceof Object)
-        ) {
-            return false;
-        }
-        if (Object.keys(net.permissions).some(role =>
-            this._user.hasRoleById(role) ? net.permissions[role][action] === false : false)) {
-            return false;
-        }
-        if (!Object.keys(net.permissions).filter(role => Object.keys(net.permissions[role])
-            .some(perm => perm === action)).some(role =>
-            !!net.permissions[role][action])) {
-            return true;
-        }
-        return Object.keys(net.permissions).some(role =>
-            this._user.hasRoleById(role) ? !!net.permissions[role][action] : false
-        );
     }
 
     /**
