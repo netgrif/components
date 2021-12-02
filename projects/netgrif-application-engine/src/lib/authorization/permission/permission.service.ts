@@ -22,7 +22,7 @@ export class PermissionService {
 
         const rolePermValue = this.checkRolePerms(task.roles, permission);
         const userPermValue = this.checkUserPerms(task.users, permission);
-        return userPermValue === undefined ? (rolePermValue === undefined ? true : rolePermValue) : userPermValue;
+        return this.resolvePermissions(rolePermValue, userPermValue);
     }
 
     public hasCasePermission(case_: Case | undefined, permission: string): boolean {
@@ -32,7 +32,11 @@ export class PermissionService {
 
         const rolePermValue = this.checkRolePerms(case_.permissions, permission);
         const userPermValue = this.checkUserPerms(case_.users, permission);
-        return userPermValue === undefined ? (rolePermValue === undefined ? true : rolePermValue) : userPermValue;
+        return this.resolvePermissions(rolePermValue, userPermValue);
+    }
+
+    public resolvePermissions(rolePermValue: boolean | undefined, userPermValue: boolean | undefined): boolean {
+        return userPermValue === undefined ? (!!rolePermValue) : userPermValue;
     }
 
     public hasNetPermission(action: string, net: PetriNetReferenceWithPermissions): boolean {
