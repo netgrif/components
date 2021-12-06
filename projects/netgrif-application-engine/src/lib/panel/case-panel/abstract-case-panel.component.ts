@@ -81,7 +81,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     public deleteCase() {
         this._caseResourceService.deleteCase(this.case_.stringId).pipe(take(1)).subscribe((data: EventOutcomeMessageResource) => {
             if (data.success) {
-                this._snackBarService.openSuccessSnackBar(data.outcome.message === undefined
+                this._snackBarService.openSuccessSnackBar(data.outcome?.message === undefined
                     ? this._translateService.instant('tasks.snackbar.caseDeleteSuccess')
                     : data.outcome.message);
                 this._caseViewService.reload();

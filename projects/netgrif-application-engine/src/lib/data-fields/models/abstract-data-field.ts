@@ -110,7 +110,7 @@ export abstract class DataField<T> {
      * Stores a copy of the fields layout, that can be modified by the layouting algorithm as needed
      * without affecting the base configuration.
      */
-    protected _localLayout: Layout;
+    protected _localLayout: Layout | undefined;
 
     /**
      * @param _stringId - ID of the data field from backend
@@ -192,11 +192,11 @@ export abstract class DataField<T> {
         this._reverting = false;
     }
 
-    get parentTaskId(): string {
+    get parentTaskId(): string | undefined {
         return this._parentTaskId;
     }
 
-    get parentCaseId(): string {
+    get parentCaseId(): string | undefined {
         return this._parentCaseId;
     }
 
@@ -221,7 +221,7 @@ export abstract class DataField<T> {
         return this._layout;
     }
 
-    get localLayout(): Layout {
+    get localLayout(): Layout | undefined {
         return this._localLayout;
     }
 

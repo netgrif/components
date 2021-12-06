@@ -26,13 +26,22 @@ export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
 
     handleCaseClick(clickedCase: Case) {
         const immediate = getImmediateData(clickedCase, UserFilterConstants.FILTER_FIELD_ID);
+        if (immediate === undefined) {
+            this._log.error(`the provided case [${clickedCase.title} - ${clickedCase.stringId
+            }] does not contain a filter field. Filter cannot be loaded!`);
+            return;
+        } else if (immediate.filterMetadata === undefined) {
+            this._log.error(`the immediate field in case [${clickedCase.title} - ${clickedCase.stringId
+            }] with id '${UserFilterConstants.FILTER_FIELD_ID}' does not contain filter metadata. Filter cannot be loaded!`);
+            return;
+        }
         this._sideMenuControl.close({
             opened: false,
             message: 'Filter selected',
             data: {
                 allowedNets: immediate.allowedNets,
                 filterMetadata: immediate.filterMetadata,
-                originViewId: getImmediateData(clickedCase, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID).value,
+                originViewId: getImmediateData(clickedCase, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID)?.value,
                 filterCase: clickedCase,
                 filterCaseId: clickedCase.stringId,
                 filter: new SimpleFilter(clickedCase.stringId, immediate.filterMetadata.filterType, {

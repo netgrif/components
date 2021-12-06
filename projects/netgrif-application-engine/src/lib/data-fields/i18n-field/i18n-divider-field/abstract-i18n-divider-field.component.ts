@@ -12,16 +12,19 @@ export abstract class AbstractI18nDividerFieldComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    public getDividerColor(): string {
+    public getDividerColor(): string | undefined {
         if (this.dividerPropertyEnabled('dividerColor')) {
-            return this.dividerI18nField.component.properties.dividerColor;
+            return this.dividerI18nField.component?.properties?.dividerColor;
         }
+        return undefined;
     }
 
-    public getDividerFontSize(): string {
+    public getDividerFontSize(): string | undefined {
         if (this.dividerPropertyEnabled('fontSize')) {
-            return this.dividerI18nField.component.properties.fontSize + 'px';
+            const fontSize = this.dividerI18nField.component?.properties?.fontSize;
+            return fontSize !== undefined ? fontSize + 'px' : undefined;
         }
+        return undefined;
     }
 
     public dividerPropertyEnabled(property: string): boolean {

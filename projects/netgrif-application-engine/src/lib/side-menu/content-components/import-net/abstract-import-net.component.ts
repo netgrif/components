@@ -49,6 +49,11 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
     ngAfterViewInit(): void {
         this._fileInput = document.getElementById('sidemenu-fileUpload') as HTMLInputElement;
         this._fileInput.onchange = () => {
+            if (this._fileInput.files === null) {
+                this._log.debug('import net file input changed but contains no files');
+                return;
+            }
+
             for (const fileIndex of Array.from(Array(this._fileInput.files.length).keys())) {
                 const file = this._fileInput.files[fileIndex];
                 if (this.files[file.name]) {
@@ -79,7 +84,9 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
     }
 
     public cancelFile(file: FileUploadModel) {
-        file.sub.unsubscribe();
+        if (file.sub !== undefined) {
+            file.sub.unsubscribe();
+        }
         this.removeFile(file);
     }
 
