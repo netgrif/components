@@ -117,6 +117,11 @@ export interface Case {
      * **Example:** {}
      */
     users?: UsersPermissions;
+
+    /**
+     * **Example:** []
+     */
+    viewRoles?: Array<string>;
 }
 
 

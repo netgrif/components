@@ -23,7 +23,15 @@ export enum UserFilterConstants {
      */
     FILTER_TYPE_FIELD_ID = 'filter_type',
     /**
-     * ID of the field containing the viewId of the filters origin
+     * ID of the field containing the viewId of the filters origin (if the filter originates from an app view)
      */
-    ORIGIN_VIEW_ID_FIELD_ID = 'origin_view_id'
+    ORIGIN_VIEW_ID_FIELD_ID = 'origin_view_id',
+    /**
+     * ID of the field containing the filter case ID
+     */
+    FILTER_CASE_ID_FIELD_ID = 'filter_case_id',
+    /**
+     * ID of the field containing the filter case ID of the parent filter (if the filter has a filter parent)
+     */
+    PARENT_FILTER_CASE_ID_FIELD_ID = 'parent_filter_id',
 }

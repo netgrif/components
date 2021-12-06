@@ -15,12 +15,15 @@ import {ProgressType, ProviderProgress} from '../../resources/resource-provider.
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {BehaviorSubject} from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
 import {take} from 'rxjs/operators';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import {DataField} from '../models/abstract-data-field';
 
 export interface FileState {
     progress: number;
@@ -40,6 +43,20 @@ const fieldPadding = 16;
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    /**
+     * The width of the default file preview border in pixels. The `px` string is appended in the code.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_WIDTH = 0;
+    /**
+     * The CSS style attribute of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_STYLE = 'none';
+    /**
+     * The CSS color string of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_COLOR = 'black';
+
     /**
      * Keep display name.
      */
@@ -102,6 +119,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * @param _log Logger service
      * @param _snackbar Snackbar service to notify user
      * @param _translate Translate service for I18N
+     * @param _eventService used for parsing of backend response
      * @param informAboutInvalidData whether the backend should be notified about invalid values.
      * Option injected trough `NAE_INFORM_ABOUT_INVALID_DATA` InjectionToken
      * @param _sanitizer Sanitize url of image preview
@@ -110,6 +128,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
+                          protected _eventService: EventService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null,
                           protected _sanitizer: DomSanitizer) {
         super(informAboutInvalidData);
@@ -192,14 +211,14 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         const fileFormData = new FormData();
         const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
         fileFormData.append('file', fileToUpload);
-        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false).subscribe(response => {
+        this._taskResourceService.uploadFile(this.resolveParentTaskId(),
+            this.dataField.stringId, fileFormData, false)
+            .subscribe((response: EventOutcomeMessageResource) => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
-                if (Object.keys((response as ChangedFieldContainer).changedFields).length !== 0 ||
-                    (response as ChangedFieldContainer).changedFields.constructor !== Object) {
-                    this.dataField.emitChangedFields(response as ChangedFieldContainer);
-                }
+                const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                this.dataField.emitChangedFields(changedFieldsMap);
                 this._log.debug(
                     `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
                 );
@@ -245,7 +264,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId).subscribe(response => {
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
+            this.dataField.stringId).subscribe(response => {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.downloadViaAnchor(response as Blob);
@@ -300,7 +320,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
 
-        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId).pipe(take(1)).subscribe(response => {
+        this._taskResourceService.deleteFile(this.resolveParentTaskId(),
+            this.dataField.stringId).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 const filename = this.dataField.value.name;
                 this.dataField.value = {};
@@ -418,5 +439,47 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
             (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
     }
-}
 
+    public getPreviewBorderWidth(): string {
+        if (this.borderPropertyEnabled('borderWidth')) {
+            return this.dataField.component.properties.borderWidth + 'px';
+        }
+        return `${AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_WIDTH}px`;
+    }
+
+    public getPreviewBorderStyle(): string {
+        if (this.borderPropertyEnabled('borderStyle')) {
+            return this.dataField.component.properties.borderStyle;
+        }
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_STYLE;
+    }
+
+    public getPreviewBorderColor(): string {
+        if (this.borderPropertyEnabled('borderColor')) {
+            return this.dataField.component.properties.borderColor;
+        }
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_COLOR;
+    }
+
+    public isBorderLGBTQ(): boolean {
+        if (this.borderPropertyEnabled('borderLGBTQ')) {
+            return this.dataField.component.properties.borderLGBTQ === 'true';
+        }
+        return false;
+    }
+
+    public isBorderDefault(): boolean {
+        if (this.borderPropertyEnabled('borderEnabled')) {
+            return this.dataField.component.properties.borderEnabled === 'true';
+        }
+        return false;
+    }
+
+    public borderPropertyEnabled(property: string): boolean {
+        return !!this.dataField.component && !!this.dataField.component.properties && property in this.dataField.component.properties;
+    }
+
+    protected resolveParentTaskId(): string {
+        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    }
+}

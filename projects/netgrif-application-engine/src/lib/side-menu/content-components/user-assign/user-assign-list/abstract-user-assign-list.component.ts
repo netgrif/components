@@ -14,7 +14,7 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
     /**
      * The time that must elapse since last keypress in search input before a search request is sent
      */
-    protected SEARCH_DEBOUNCE_TIME = 200;
+    protected SEARCH_DEBOUNCE_TIME = 600;
 
     /**
      * The user that is initially selected, or `undefined` if none is

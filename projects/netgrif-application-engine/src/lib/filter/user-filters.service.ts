@@ -10,7 +10,7 @@ import {SimpleFilter} from './models/simple-filter';
 import {hasContent} from '../utility/pagination/page-has-content';
 import {Task} from '../resources/interface/task';
 import {CallChainService} from '../utility/call-chain/call-chain.service';
-import {TaskSetDataRequestBody} from '../resources/interface/task-set-data-request-body';
+import {TaskSetDataRequestBody, TaskSetDataRequestFields} from '../resources/interface/task-set-data-request-body';
 import {FieldTypeResource} from '../task-content/model/field-type-resource';
 import {Category} from '../search/models/category/category';
 import {Net} from '../process/net';
@@ -26,7 +26,11 @@ import {Filter} from './models/filter';
 import {MergeOperator} from './models/merge-operator';
 import {SavedFilterMetadata} from '../search/models/persistance/saved-filter-metadata';
 import {FilterMetadata} from '../search/models/persistance/filter-metadata';
+import {CreateCaseEventOutcome} from '../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {CategoryResolverService} from '../search/category-factory/category-resolver.service';
+import {DataGroup} from '../resources/interface/data-groups';
+import {getFieldFromDataGroups} from '../utility/get-field';
+import {EventOutcomeMessageResource} from '../resources/interface/message-resource';
 
 /**
  * Service that manages filters created by users of the application.
@@ -69,7 +73,7 @@ export class UserFiltersService implements OnDestroy {
      */
     public delete(filterCaseId: string): Observable<boolean> {
         const result$ = new ReplaySubject<boolean>(1);
-        this._caseService.deleteCase(filterCaseId).subscribe(response => {
+        this._caseService.deleteCase(filterCaseId).subscribe((response: EventOutcomeMessageResource) => {
             if (response.success) {
                 this._log.debug('Filter case delete success', response);
                 result$.next(true);
@@ -143,20 +147,30 @@ export class UserFiltersService implements OnDestroy {
      * @param searchService search service containing a predicate filter, we want to save
      * @param allowedNets allowed nets of the view, that contains the search service
      * @param searchCategories search categories available in the saved advanced search component
-     * @param viewId the viewId of the view which contained the filter
+     * @param viewId the viewId of the view which contained the filter.
+     * If neither the `viewId` nor the `navigationItemTaskData` attribute is set the filter will be created as a new root filter
+     * without any parent filter link. This will most likely result in the filter being less restrictive than what
+     * the user sees in the current view, since the base filter of the view will NOT be saved alongside the saved filter.
      * @param additionalData set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
      * @param withDefaultCategories Whether the saved filter should be saved with
      * the [defaultSearchCategories]{@link FilterMetadata#defaultSearchCategories} flag set to `true`, or `false`.
      * @param inheritAllowedNets Whether the saved filter should merge its allowed nets with the allowed nets provided by
      * the {@link BaseAllowedNetsService}.
+     * @param navigationItemTaskData if provided then it implies the filter has a parent filter that created its host dynamic view.
+     * If this is the case the case ID of the parent filter will be set into the newly created filter case.
+     * If not set it implies this is a filter originating in an in-app view and its view id will be set into the created filter.
      * @returns an observable that emits the id of the created Filter case instance or `undefined` if the user canceled the save process,
      * or the filter could not be saved
      */
-    public save(searchService: SearchService, allowedNets: ReadonlyArray<string>,
-                searchCategories: ReadonlyArray<Type<Category<any>>>, viewId: string,
-                additionalData: TaskSetDataRequestBody = {}, withDefaultCategories = true,
-                inheritAllowedNets = true): Observable<SavedFilterMetadata> {
+    public save(searchService: SearchService,
+                allowedNets: ReadonlyArray<string>,
+                searchCategories: ReadonlyArray<Type<Category<any>>>,
+                viewId?: string,
+                additionalData: TaskSetDataRequestFields = {},
+                withDefaultCategories = true,
+                inheritAllowedNets = true,
+                navigationItemTaskData: Array<DataGroup> = null): Observable<SavedFilterMetadata> {
         if (!searchService.additionalFiltersApplied) {
             this._log.warn('The provided SearchService contains no filter besides the base filter. Nothing to save.');
             return of(undefined);
@@ -170,7 +184,8 @@ export class UserFiltersService implements OnDestroy {
             viewId,
             additionalData,
             withDefaultCategories,
-            inheritAllowedNets
+            inheritAllowedNets,
+            navigationItemTaskData
         ).subscribe(filterCaseId => {
             const ref = this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
                 newFilterCaseId: filterCaseId
@@ -209,27 +224,40 @@ export class UserFiltersService implements OnDestroy {
      * @param searchService search service containing a predicate filter, we want to save
      * @param allowedNets allowed nets of the view, that contains the search service
      * @param searchCategories search categories available in the saved advanced search component
-     * @param viewId the viewId of the view which contained the filter
+     * @param viewId the viewId of the view which contained the filter.
+     * If neither the `viewId` nor the `navigationItemTaskData` attribute is set the filter will be created as a new root filter
+     * without any parent filter link. This will most likely result in the filter being less restrictive than what
+     * the user sees in the current view, since the base filter of the view will NOT be saved alongside the saved filter.
      * @param additionalData set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
      * @param withDefaultCategories Whether the saved filter should be saved with
      * the [defaultSearchCategories]{@link FilterMetadata#defaultSearchCategories} flag set to `true`, or `false`.
      * @param inheritAllowedNets Whether the saved filter should merge its allowed nets with the allowed nets provided by
      * the {@link BaseAllowedNetsService}.
+     * @param navigationItemTaskData if provided then it implies the filter has a parent filter that created its host dynamic view.
+     * If this is the case the case ID of the parent filter will be set into the newly created filter case.
+     * If not set it implies this is a filter originating in an in-app view and its view id will be set into the created filter.
      * @returns an observable that emits the id of the created Filter case instance
      */
-    public createFilterCaseAndSetData(searchService: SearchService, allowedNets: ReadonlyArray<string>,
-                                      searchCategories: ReadonlyArray<Type<Category<any>>>, viewId: string,
-                                      additionalData: TaskSetDataRequestBody = {},
+    public createFilterCaseAndSetData(searchService: SearchService,
+                                      allowedNets: ReadonlyArray<string>,
+                                      searchCategories: ReadonlyArray<Type<Category<any>>>,
+                                      viewId?: string,
+                                      additionalData: TaskSetDataRequestFields = {},
                                       withDefaultCategories = true,
-                                      inheritAllowedNets = true): Observable<string> {
+                                      inheritAllowedNets = true,
+                                      navigationItemTaskData: Array<DataGroup> = null): Observable<string> {
         const result = new ReplaySubject<string>(1);
         this.whenInitialized(() => {
             this._caseService.createCase({
                 title: this._filterNet.defaultCaseName,
                 netId: this._filterNet.stringId
             }).subscribe(filterCase => {
-                this._taskService.getTasks(SimpleFilter.fromTaskQuery({case: {id: filterCase.stringId}})).subscribe(page => {
+                this._taskService.getTasks(SimpleFilter.fromTaskQuery({
+                    case: {
+                        id: (filterCase.outcome as CreateCaseEventOutcome).aCase.stringId
+                    }
+                })).subscribe(page => {
                     if (!hasContent(page)) {
                         throw new Error('Expected filter process to contain tasks, but none were found!');
                     }
@@ -239,7 +267,8 @@ export class UserFiltersService implements OnDestroy {
                         throw new Error(`Expected filter process to contain task '${UserFilterConstants.SET_FILTER_METADATA_TRANSITION_ID
                         }', but none was found!`);
                     }
-                    this.assignSetDataFinish(initTask, {
+
+                    const requestBody = {
                         [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
                             type: FieldTypeResource.ENUMERATION_MAP,
                             value: searchService.filterType
@@ -255,17 +284,37 @@ export class UserFiltersService implements OnDestroy {
                                 inheritAllowedNets
                             )
                         },
-                        [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
+                    };
+
+                    let parentFilterCaseIdField;
+                    if (navigationItemTaskData !== null && navigationItemTaskData !== undefined) {
+                        parentFilterCaseIdField = getFieldFromDataGroups(navigationItemTaskData,
+                            UserFilterConstants.FILTER_CASE_ID_FIELD_ID);
+                    }
+
+                    if (parentFilterCaseIdField !== undefined) {
+                        requestBody[UserFilterConstants.PARENT_FILTER_CASE_ID_FIELD_ID] = {
+                            type: FieldTypeResource.TEXT,
+                            value: parentFilterCaseIdField.value
+                        };
+                    } else if (viewId !== undefined || viewId !== '') {
+                        requestBody[UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID] = {
                             type: FieldTypeResource.TEXT,
                             value: viewId
-                        },
-                        ...additionalData
+                        };
+                    }
+
+                    this.assignSetDataFinish(initTask, {
+                        [initTask.stringId]: {
+                            ...requestBody,
+                            ...additionalData
+                        }
                     }, this._callChainService.create(success => {
                         if (!success) {
                             throw new Error('Filter instance could not be initialized');
                         }
 
-                        result.next(filterCase.stringId);
+                        result.next((filterCase.outcome as CreateCaseEventOutcome).aCase.stringId);
                         result.complete();
                     }));
                 });

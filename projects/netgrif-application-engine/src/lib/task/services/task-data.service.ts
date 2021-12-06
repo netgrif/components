@@ -9,7 +9,6 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {FieldConverterService} from '../../task-content/services/field-converter.service';
 import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
-import {DataFocusPolicyService} from './data-focus-policy.service';
 import {TaskHandlingService} from './task-handling-service';
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {TaskOperations} from '../interfaces/task-operations';
@@ -24,13 +23,17 @@ import {DataField} from '../../data-fields/models/abstract-data-field';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {take} from 'rxjs/operators';
 import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
+import {DataGroup} from '../../resources/interface/data-groups';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
-import {DataGroup} from '../../resources/interface/data-groups';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {TaskSetDataRequestContext} from '../models/task-set-data-request-context';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {EventService} from '../../event/services/event.service';
+import {EventOutcome} from '../../resources/interface/event-outcome';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -40,7 +43,6 @@ import {TaskSetDataRequestContext} from '../models/task-set-data-request-context
 export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     protected _updateSuccess$: Subject<boolean>;
-    protected _changedFields$: Subject<ChangedFields>;
     protected _dataReloadSubscription: Subscription;
 
     constructor(protected _taskState: TaskRequestStateService,
@@ -55,10 +57,11 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 _taskContentService: TaskContentService,
                 protected _afterActionFactory: CallChainService,
                 protected _eventQueue: EventQueueService,
-                protected _userComparator: UserComparatorService) {
+                protected _userComparator: UserComparatorService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService) {
         super(_taskContentService, _selectedCaseService);
         this._updateSuccess$ = new Subject<boolean>();
-        this._changedFields$ = new Subject<ChangedFields>();
         this._dataReloadSubscription = this._taskContentService.taskDataReloadRequest$.subscribe(queuedFrontendAction => {
             this.initializeTaskDataFields(this._afterActionFactory.create(success => {
                 if (success && queuedFrontendAction) {
@@ -70,7 +73,6 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
 
     ngOnDestroy(): void {
         this._updateSuccess$.complete();
-        this._changedFields$.complete();
         this._dataReloadSubscription.unsubscribe();
         if (this.isTaskPresent() && this._safeTask.dataGroups) {
             this._safeTask.dataGroups.forEach(group => {
@@ -82,32 +84,11 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     }
 
     /**
-     * Contains update information for Tasks affected byt set data requests of the Task managed by {@link TaskContentService}.
-     *
-     * A new value is emitted any time a `changedFields` object is returned in response
-     * to a successful [updateTaskDataFields]{@link TaskDataService#updateTaskDataFields} request.
-     */
-    public get changedFields$(): Observable<ChangedFields> {
-        return this._changedFields$.asObservable();
-    }
-
-    /**
      * Contains information about the success or failure of backend
      * calls in [updateTaskDataFields]{@link TaskDataService#updateTaskDataFields} method.
      */
     public get updateSuccess$(): Observable<boolean> {
         return this._updateSuccess$.asObservable();
-    }
-
-    /**
-     * Pushes the provided value into the [changedFields$]{@link TaskDataService#changedFields$} stream.
-     * @param changedFields the change object. If the provided object is empty, no value is pushed into the stream.
-     */
-    public emitChangedFields(changedFields: ChangedFields) {
-        if (changedFields === undefined || Object.keys(changedFields).length === 0) {
-            return;
-        }
-        this._changedFields$.next(changedFields);
     }
 
     /**
@@ -183,14 +164,30 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             nextEvent.resolve(false);
             return;
         }
+        this._taskContentService.referencedTaskAndCaseIds = {};
+        this._taskContentService.taskFieldsIndex = {};
 
         this._safeTask.dataGroups = dataGroups;
         if (dataGroups.length === 0) {
             this._log.info('Task has no data ' + this._safeTask);
             this._safeTask.dataSize = 0;
         } else {
+            this._taskContentService.referencedTaskAndCaseIds[this._safeTask.caseId] = [this._safeTask.stringId];
             dataGroups.forEach(group => {
+                const dataGroupParentCaseId: string = group.parentCaseId === undefined ? this._safeTask.caseId : group.parentCaseId;
+                if (dataGroupParentCaseId !== this._safeTask.caseId) {
+                    if (!this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId]) {
+                        this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId] = [group.parentTaskId];
+                    } else {
+                        this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
+                    }
+                }
+                const parentTaskId: string = group.parentTaskId === undefined ? this._safeTask.stringId : group.parentTaskId;
+                if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId]) {
+                    this._taskContentService.taskFieldsIndex[parentTaskId] = {};
+                }
                 group.fields.forEach(field => {
+                    this._taskContentService.taskFieldsIndex[parentTaskId][field.stringId] = field;
                     field.valueChanges().subscribe(() => {
                         if (this.wasFieldUpdated(field)) {
                             if (field instanceof DynamicEnumerationField) {
@@ -204,8 +201,8 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                         }
                     });
                     if (field instanceof FileField || field instanceof FileListField) {
-                        field.changedFields$.subscribe(change => {
-                            this._changedFields$.next(change.changedFields);
+                        field.changedFields$.subscribe((change: ChangedFieldsMap) => {
+                            this._changedFieldsService.emitChangedFields(change);
                         });
                     }
                 });
@@ -309,20 +306,32 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             body: {},
             previousValues: {}
         };
-
-        this._safeTask.dataGroups.forEach(dataGroup => {
-            dataGroup.fields.forEach(field => {
-                if (this.wasFieldUpdated(field)) {
-                    context.body[field.stringId] = {
-                        type: this._fieldConverterService.resolveType(field),
-                        value: this._fieldConverterService.formatValueForBackend(field, field.value)
-                    };
-                    context.previousValues[field.stringId] = field.previousValue;
-                    field.changed = false;
-                }
+        context.body[this._task.stringId] = {};
+        this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId === undefined).forEach(dataGroup => {
+            dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
+                this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
+            });
+        });
+        this._safeTask.dataGroups.filter(dataGroup => dataGroup.parentTaskId !== undefined).forEach(dataGroup => {
+            if (dataGroup.fields.some(field => this.wasFieldUpdated(field))) {
+                context.body[dataGroup.parentTaskId] = {};
+            } else {
+                return;
+            }
+            dataGroup.fields.filter(field => this.wasFieldUpdated(field)).forEach(field => {
+                this.addFieldToSetDataRequestBody(context, dataGroup.parentTaskId, field);
             });
         });
         return context;
+    }
+
+    protected addFieldToSetDataRequestBody(context: TaskSetDataRequestContext, taskId: string, field: DataField<any>): void {
+        context.body[taskId][field.stringId] = {
+            type: this._fieldConverterService.resolveType(field),
+            value: this._fieldConverterService.formatValueForBackend(field, field.value)
+        };
+        context.previousValues[field.stringId] = field.previousValue;
+        field.changed = false;
     }
 
     /**
@@ -347,38 +356,29 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (!this._userComparator.compareUsers(this._safeTask.user)) {
             return false;
         }
-
-        // this iteration could be improved if we had a map of all the data fields in a task
-        const totalCount = Object.keys(request).length;
-
-        if (totalCount === 0) {
-            // an empty request is handled later in the code
-            return true;
-        }
-
-        let foundCount = 0;
-
-        for (const datagroup of this._safeTask.dataGroups) {
-            for (const field of datagroup.fields) {
-                if (!request[field.stringId]) {
-                    continue;
+        const taskIdsInRequest: Array<string> = Object.keys(request);
+        for (const taskId of taskIdsInRequest) {
+            if (!Object.keys(this._taskContentService.taskFieldsIndex).includes(taskId)) {
+                this._log.error(`Task id ${taskId} is not present in task fields index`);
+                return false;
+            }
+            const fieldIdsOfRequest = Object.keys(request[taskId]);
+            for (const fieldId of fieldIdsOfRequest) {
+                const field = this._taskContentService.taskFieldsIndex[taskId][fieldId];
+                if (field === undefined) {
+                    this._log.error(`Unexpected state. Datafield ${fieldId} of task ${taskId
+                    } in setData request is not present in the task.`);
+                    return false;
                 }
-
                 if (!field.behavior.editable) {
-                    this._log.debug(`Field ${field.stringId}, was meant to be set to ${JSON.stringify(request[field.stringId])
+                    this._log.debug(`Field ${fieldId}, was meant to be set to
+                    ${JSON.stringify(request[taskId][fieldId])
                     }, but is no loner editable.`);
                     return false;
                 }
-
-                foundCount++;
-                if (foundCount === totalCount) {
-                    return true;
-                }
             }
         }
-
-        this._log.error('Unexpected state. Some datafield in setData request does not appear in its task.');
-        return false;
+        return true;
     }
 
     /**
@@ -399,24 +399,27 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         this._taskState.startLoading(setTaskId);
         this._taskState.startUpdating(setTaskId);
 
-        this._taskResourceService.setData(this._safeTask.stringId, body).pipe(take(1)).subscribe(response => {
-            this.processSuccessfulSetDataRequest(setTaskId, response, afterAction, nextEvent);
-        }, error => {
-            this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent);
-        });
+        this._taskResourceService.setData(this._safeTask.stringId, body).pipe(take(1))
+            .subscribe((response: EventOutcomeMessageResource) => {
+                this.processSuccessfulSetDataRequest(setTaskId, response.outcome, afterAction, nextEvent, body);
+            }, error => {
+                this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent, body);
+            });
     }
 
     /**
      * Processes a successful outcome of a `setData` request
      * @param setTaskId the Id of the task whose data was set
-     * @param response the resulting changed fields of the set data request
+     * @param response the resulting Event outcome of the set data request
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
      */
     protected processSuccessfulSetDataRequest(setTaskId: string,
-                                              response: ChangedFieldContainer,
+                                              response: EventOutcome,
                                               afterAction: AfterAction,
-                                              nextEvent: AfterAction) {
+                                              nextEvent: AfterAction,
+                                              body: TaskSetDataRequestBody) {
         if (!this.isTaskRelevant(setTaskId)) {
             this._log.debug('current task changed before the set data response could be received, discarding...');
             this._taskState.stopLoading(setTaskId);
@@ -426,10 +429,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             return;
         }
 
-        if (response.changedFields && (Object.keys(response.changedFields).length !== 0)) {
-            this._changedFields$.next(response.changedFields as ChangedFields);
+        const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response);
+
+        if (Object.keys(changedFieldsMap).length > 0) {
+            this._changedFieldsService.emitChangedFields(changedFieldsMap);
         }
-        this._snackBar.openSuccessSnackBar(this._translate.instant('tasks.snackbar.dataSaved'));
+        this.clearWaitingForResponseFlag(body);
+        this._snackBar.openSuccessSnackBar(!!response.message ? response.message : this._translate.instant('tasks.snackbar.dataSaved'));
         this.updateStateInfo(afterAction, true, setTaskId);
         nextEvent.resolve(true);
     }
@@ -440,11 +446,13 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
      * @param error the returned error
      * @param afterAction the action that should be performed after the request is processed
      * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
      */
     protected processErroneousSetDataRequest(setTaskId: string,
                                              error: HttpErrorResponse,
                                              afterAction: AfterAction,
-                                             nextEvent: AfterAction) {
+                                             nextEvent: AfterAction,
+                                             body: TaskSetDataRequestBody) {
         this._log.debug('setting task data failed', error);
 
         if (!this.isTaskRelevant(setTaskId)) {
@@ -457,6 +465,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         }
 
         this.revertToPreviousValue();
+        this.clearWaitingForResponseFlag(body);
         this._snackBar.openErrorSnackBar(this._translate.instant('tasks.snackbar.failedSave'));
         this.updateStateInfo(afterAction, false, setTaskId);
         nextEvent.resolve(false);
@@ -553,6 +562,14 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                 if (field.initialized && field.valid && field.changed) {
                     field.revertToPreviousValue();
                 }
+            });
+        });
+    }
+
+    private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
+        Object.keys(body).forEach(taskId => {
+            Object.keys(body[taskId]).forEach(fieldId => {
+                this._taskContentService.taskFieldsIndex[taskId][fieldId].waitingForResponse = false;
             });
         });
     }

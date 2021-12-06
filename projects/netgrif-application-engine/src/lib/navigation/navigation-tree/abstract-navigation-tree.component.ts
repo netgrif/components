@@ -20,8 +20,11 @@ import {DataGroup} from '../../resources/interface/data-groups';
 import {GroupNavigationConstants} from '../model/group-navigation-constants';
 import {refreshTree} from '../../utility/refresh-tree';
 import {getField} from '../../utility/get-field';
-import {extractIconAndTitle} from '../utility/navigation-item-task-utility-methods';
+import {extractIconAndTitle, extractRoles} from '../utility/navigation-item-task-utility-methods';
 import {LanguageService} from '../../translate/language.service';
+import {
+    DynamicNavigationRouteProviderService
+} from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 
 export interface NavigationNode {
     name: string;
@@ -37,8 +40,6 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
     @Input() public viewPath: string;
     @Input() public parentUrl: string;
     @Input() public routerChange: boolean;
-    protected subRouter: Subscription;
-    protected subUserService: Subscription;
 
     protected _reloadNavigation: ReplaySubject<void>;
     protected _groupNavigationConfig: Services['groupNavigation'];
@@ -60,7 +61,8 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                           protected _groupGuard: GroupGuardService,
                           protected _activeGroupService: ActiveGroupService,
                           protected _taskResourceService: TaskResourceService,
-                          protected _languageService: LanguageService) {
+                          protected _languageService: LanguageService,
+                          protected _navigationRouteProvider: DynamicNavigationRouteProviderService) {
         super();
         this.treeControl = new NestedTreeControl<NavigationNode>(node => node.children);
         this.dataSource = new MatTreeNestedDataSource<NavigationNode>();
@@ -128,7 +130,19 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         return this.dataSource.data;
     }
 
-    protected resolveNavigationNodes(views: Views, parentUrl: string): Array<NavigationNode> {
+    /**
+     * Converts the provided {@link Views} object into the corresponding navigation tree
+     * @param views navigation configuration
+     * @param parentUrl URL of the parent navigation tree node
+     * @param ancestorNodeContainer if the parent node has no navigation this attribute contains the
+     * closest ancestor that has navigation
+     * @protected
+     */
+    protected resolveNavigationNodes(
+        views: Views,
+        parentUrl: string,
+        ancestorNodeContainer?: Array<NavigationNode>
+    ): Array<NavigationNode> {
         if (!views || Object.keys(views).length === 0) {
             return null;
         }
@@ -140,12 +154,12 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
             if (!groupNavigationGenerated && this.isGroupNavigationNode(view)) {
                 groupNavigationGenerated = true;
-                const insertPosition = nodes.length;
+                const insertPosition = (ancestorNodeContainer ?? nodes).length;
 
                 this._subLangChange = this._languageService.getLangChange$().subscribe(() => {
-                    this.loadGroupNavigationNodes(insertPosition);
+                    this.loadGroupNavigationNodes(insertPosition, ancestorNodeContainer ?? nodes);
                 });
-                this.loadGroupNavigationNodes(insertPosition);
+                this.loadGroupNavigationNodes(insertPosition, ancestorNodeContainer ?? nodes);
 
                 return; // continue
             }
@@ -171,7 +185,10 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
                 nodes.push(node);
             } else {
                 if (this.hasSubRoutes(view)) {
-                    nodes.push(...this.resolveNavigationNodes(view.children, this.appendRouteSegment(parentUrl, routeSegment)));
+                    nodes.push(...this.resolveNavigationNodes(
+                        view.children,
+                        this.appendRouteSegment(parentUrl, routeSegment), ancestorNodeContainer ?? nodes)
+                    );
                 }
             }
         });
@@ -329,15 +346,17 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     /**
      * Forces a reload of the group navigation nodes.
-     * @param insertPosition
+     * @param insertPosition the position in the container where group navigation nodes reside
+     * @param nodeContainer the node container that contains the group navigation nodes
+     * (can be an inner node of the navigation tree or its root)
      */
-    protected loadGroupNavigationNodes(insertPosition: number): void {
+    protected loadGroupNavigationNodes(insertPosition: number, nodeContainer: Array<NavigationNode>): void {
         if (this._subGroupResolution !== undefined && !this._subGroupResolution.closed) {
             this._subGroupResolution.unsubscribe();
         }
 
         this._subGroupResolution = this.generateGroupNavigationNodes().pipe(take(1)).subscribe(groupNavNodes => {
-            this.dataSource.data.splice(insertPosition, this._groupNavNodesCount, ...groupNavNodes);
+            nodeContainer.splice(insertPosition, this._groupNavNodesCount, ...groupNavNodes);
             this._groupNavNodesCount = groupNavNodes.length;
             refreshTree(this.dataSource);
         });
@@ -372,10 +391,15 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
 
     protected convertDatagroupsToNavEntries(navConfigDatagroups: Array<DataGroup>): Array<NavigationNode> {
         const result = [];
-        const firstEntryIndex = navConfigDatagroups.findIndex(
-            group => group.fields.some(
-                field => field.stringId.endsWith('-' + GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX)
-            )
+        const entryDataGroupIndices = [];
+        navConfigDatagroups.forEach(
+            (group, index) => {
+                if (group.fields.some(
+                    field => field.stringId === GroupNavigationConstants.NAVIGATION_ENTRY_MARKER_FIELD_ID_SUFFIX
+                )) {
+                    entryDataGroupIndices.push(index);
+                }
+            }
         );
 
         let navEntriesTaskRef;
@@ -392,25 +416,53 @@ export abstract class AbstractNavigationTreeComponent extends AbstractNavigation
         }
 
         for (let order = 0; order < navEntriesTaskRef.value.length; order ++) {
-            const index = this.transformOrderToIndex(order, firstEntryIndex);
-
+            const index = entryDataGroupIndices[order];
             const label = extractIconAndTitle(navConfigDatagroups.slice(index,
-                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY), true);
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY));
             const newNode: NavigationNode = {url: '', ...label};
 
-            const url = this._groupNavigationConfig?.groupNavigationRoute;
+            const url = this._navigationRouteProvider.route;
             if (url === undefined) {
-                this._log.error(`No URL is configured in nae.json for configurable group navigation. Entry was ignored`);
+                this._log.error(`No URL is configured in nae.json for configurable group navigation. Dynamic navigation entry was ignored`);
                 continue;
             }
             newNode.url = `/${url}/${navEntriesTaskRef.value[order]}`;
+            const allowedRoles = extractRoles(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                GroupNavigationConstants.NAVIGATION_ENTRY_ALLOWED_ROLES_FIELD_ID_SUFFIX);
 
-            result.push(newNode);
+            const bannedRoles = extractRoles(navConfigDatagroups.slice(index,
+                index + GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY),
+                GroupNavigationConstants.NAVIGATION_ENTRY_BANNED_ROLES_FIELD_ID_SUFFIX);
+
+            const splitAllowedRoles = this.extractRoleAndNetId(allowedRoles);
+            const splitBannedRoles = this.extractRoleAndNetId(bannedRoles);
+
+            if ((splitAllowedRoles.length === 0
+                    || splitAllowedRoles.some(idPair => this._userService.hasRoleByIdentifier(idPair[0], idPair[1])))
+                && !splitBannedRoles.some(idPair => this._userService.hasRoleByIdentifier(idPair[0], idPair[1]))) {
+                result.push(newNode);
+            }
         }
         return result;
     }
 
-    private transformOrderToIndex(order: number, offset: number): number {
-        return offset + order * GroupNavigationConstants.DATAGROUPS_PER_NAVIGATION_ENTRY;
+    /**
+     * Splits the provided strings on the ':' character and returns an array of the resulting splits.
+     *
+     * If any of the input strings split into fewer or more than 2 strings an error is thrown.
+     *
+     * @param joined a list of strings in the form `<role identifier>:<net identifier>`
+     */
+    protected extractRoleAndNetId(joined: Array<string>): Array<Array<string>> {
+        const split = [];
+        for (const pair of joined) {
+            const splitPair = pair.split(':');
+            if (splitPair.length !== 2) {
+                throw new Error(`The role-net pair '${pair}' has invalid format! Cannot extract role and net identifiers.`);
+            }
+            split.push(splitPair);
+        }
+        return split;
     }
 }

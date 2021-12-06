@@ -3,12 +3,13 @@ import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {PetriNetMessageResource} from '../../../resources/interface/message-resource';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {ProgressType, ProviderProgress} from '../../../resources/resource-provider.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {FileUploadDataModel} from '../../../data-fields/file-field/models/file-field';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import {PetriNetEventOutcome} from '../../../event/model/event-outcomes/petrinet-outcomes/petri-net-event-outcome';
 
 export class FileUploadModel {
     stringId: string;
@@ -32,7 +33,7 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
     public releaseTypes: Array<string> = ['Major', 'Minor', 'Patch'];
     public releaseTypeControl = new FormControl(this.releaseTypes[0]);
 
-    protected _response: PetriNetMessageResource;
+    protected _response: PetriNetEventOutcome;
     protected _fileInput: HTMLInputElement;
 
     constructor(protected _sideMenuControl: SideMenuControl,
@@ -127,21 +128,27 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
         file.inProgress = true;
         file.completed = false;
         file.error = false;
-        file.sub = this._petriNetResource.importPetriNet(fileFormData).subscribe(response => {
+        file.sub = this._petriNetResource.importPetriNet(fileFormData).subscribe((response: EventOutcomeMessageResource) => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 file.progress = (response as ProviderProgress).progress;
                 if (file.progress === 100) {
                     file.uploaded = true;
                 }
             } else {
-                this._log.info((response as PetriNetMessageResource).success);
-                this._response = (response as PetriNetMessageResource);
+                this._log.info(response.success);
+                this._response = response.outcome as PetriNetEventOutcome;
                 file.inProgress = false;
                 file.completed = true;
+                this._snackbar.openSuccessSnackBar(response.outcome.message === undefined
+                    ? this._translate.instant('workflow.snackBar.uploadSuccess')
+                    : response.outcome.message);
                 this._sideMenuControl.publish({
                     opened: true,
-                    message: 'Process ' + file.data.name + ' successfully uploaded',
-                    data: {net: (response as PetriNetMessageResource).net}
+                    message: response.outcome.message === undefined
+                        ? 'Process ' + file.data.name + ' successfully uploaded'
+                        : response.outcome.message
+                    ,
+                    data: {net: (response.outcome as PetriNetEventOutcome).net}
                 });
             }
         }, error => {
@@ -149,7 +156,8 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
             file.completed = false;
             file.error = true;
             this._log.error('Importing process file has failed!', error);
-            this._snackbar.openErrorSnackBar(this._translate.instant('workflow.snackBar.uploadFailed'));
+            this._snackbar.openErrorSnackBar(
+                `${this._translate.instant('workflow.snackBar.uploadFailed')} ${error?.error?.message ?? ''}`);
         });
     }
 

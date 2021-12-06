@@ -31,7 +31,7 @@ export abstract class PanelWithImmediateData extends PanelWithHeaderBinding impl
                 case 'file':
                     return {value: immediate.value?.name, icon: 'insert_drive_file', type: immediate.type};
                 case 'fileList':
-                    return {value: immediate.value?.namesPaths.map(obj => obj.name).join(',\n'),
+                    return {value: immediate.value?.namesPaths.map(obj => obj.name).join(', '),
                         icon: 'file_copy', type: immediate.type};
                 case 'user':
                     return {value: immediate.value.fullName, icon: 'account_circle', type: immediate.type};

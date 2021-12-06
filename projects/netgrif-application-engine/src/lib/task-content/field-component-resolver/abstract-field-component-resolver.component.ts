@@ -38,6 +38,7 @@ export abstract class AbstractFieldComponentResolverComponent {
     }
 
     isField(): boolean {
-        return this.gridElement.type !== TaskElementType.BLANK && this.gridElement.type !== TaskElementType.DATA_GROUP_TITLE;
+        return this.gridElement.type !== TaskElementType.BLANK && this.gridElement.type !== TaskElementType.DATA_GROUP_TITLE
+            && this.gridElement.type !== FieldTypeResource.I18N;
     }
 }
