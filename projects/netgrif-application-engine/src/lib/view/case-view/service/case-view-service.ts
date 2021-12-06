@@ -300,10 +300,6 @@ export class CaseViewService extends SortableView implements OnDestroy {
      * @returns `true` if the current user has the `VIEW` permission on the tested case, `false` otherwise.
      */
     public viewEnabled(aCase: Case): boolean {
-        const user = this._user.user;
-        if (!!aCase.viewRoles && aCase.viewRoles.length > 0) {
-            return user.roles.some(role => aCase.viewRoles.includes(role.stringId));
-        }
-        return false;
+        return this._permissionService.hasCasePermission(aCase, PermissionType.VIEW);
     }
 }
