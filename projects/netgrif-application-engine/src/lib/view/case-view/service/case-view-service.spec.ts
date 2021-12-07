@@ -15,10 +15,8 @@ import {Case} from '../../../resources/interface/case';
 import {createMockCase} from '../../../utility/tests/utility/create-mock-case';
 import {ElementaryPredicate} from '../../../search/models/predicate/elementary-predicate';
 import {Query} from '../../../search/models/query/query';
-import {Net} from '../../../process/net';
 import {UserService} from '../../../user/services/user.service';
 import {MockUserService} from '../../../utility/tests/mocks/mock-user.service';
-import {User} from '../../../user/models/user';
 import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
@@ -64,36 +62,6 @@ describe('CaseViewService', () => {
 
     it('should be created', () => {
         expect(service).toBeTruthy();
-    });
-
-    it('should test canDo', () => {
-        const net = new Net( {
-            identifier: '',
-            stringId: '',
-            immediateData: [],
-            author: {email: '', fullName: ''},
-            createdDate: [],
-            defaultCaseName: '',
-            initials: '',
-            version: '',
-            title: ''
-        });
-        net.permissions = {};
-        expect(permissionService.hasNetPermission('create', net)).toBeTrue();
-
-        (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: '12454sdasd', name: '', importId: ''}]);
-        net.permissions = {'12454sdasd': {create: true}};
-        expect(permissionService.hasNetPermission('create', net)).toBeTrue();
-
-        net.permissions = {'12454sdasd': {create: false}};
-        expect(permissionService.hasNetPermission('create', net)).toBeFalse();
-
-        (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [],
-                [{stringId: '12454sdasd', name: '', importId: ''}, {stringId: '12454sddasdasd', name: '', importId: ''}]);
-        net.permissions = {'12454sdasd': {create: false}, '12454sddasdasd': {create: true}};
-        expect(permissionService.hasNetPermission('create', net)).toBeFalse();
     });
 
     it('should load cases', done => {

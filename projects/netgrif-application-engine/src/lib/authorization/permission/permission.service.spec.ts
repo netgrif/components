@@ -12,6 +12,7 @@ import {UserService} from '../../user/services/user.service';
 import {User} from '../../user/models/user';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {PermissionType} from '../../process/permissions';
+import {Net} from '../../process/net';
 
 describe('PermissionService', () => {
     let permissionService: PermissionService;
@@ -254,6 +255,36 @@ describe('PermissionService', () => {
             ]
         };
         expect(permissionService.hasCasePermission(case_, PermissionType.DELEGATE)).toBeFalse();
+    });
+
+    it('should test canDo', () => {
+        const net = new Net( {
+            identifier: '',
+            stringId: '',
+            immediateData: [],
+            author: {email: '', fullName: ''},
+            createdDate: [],
+            defaultCaseName: '',
+            initials: '',
+            version: '',
+            title: ''
+        });
+        net.permissions = {};
+        expect(permissionService.hasNetPermission('create', net)).toBeTrue();
+
+        (userService as unknown as MockUserService).user =
+            new User('', '', '', '', [], [{stringId: '12454sdasd', name: '', importId: ''}]);
+        net.permissions = {'12454sdasd': {create: true}};
+        expect(permissionService.hasNetPermission('create', net)).toBeTrue();
+
+        net.permissions = {'12454sdasd': {create: false}};
+        expect(permissionService.hasNetPermission('create', net)).toBeFalse();
+
+        (userService as unknown as MockUserService).user =
+            new User('', '', '', '', [],
+                [{stringId: '12454sdasd', name: '', importId: ''}, {stringId: '12454sddasdasd', name: '', importId: ''}]);
+        net.permissions = {'12454sdasd': {create: false}, '12454sddasdasd': {create: true}};
+        expect(permissionService.hasNetPermission('create', net)).toBeFalse();
     });
 
 

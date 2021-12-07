@@ -1,13 +1,8 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {UserService} from '../../user/services/user.service';
-import {LoggerService} from '../../logger/services/logger.service';
-import {AssignPolicy} from '../model/policy';
 import {TaskContentService} from './task-content.service';
 import {TaskHandlingService} from '../../task/services/task-handling-service';
-import {UserComparatorService} from '../../user/services/user-comparator.service';
 import {Observable, Subject} from 'rxjs';
 import {TaskEventNotification} from '../model/task-event-notification';
-import {PermissionService} from '../../authorization/permission/permission.service';
 
 /**
  * Holds logic about the available operations on a {@link Task} object based on it's state.
@@ -20,11 +15,7 @@ export class TaskEventService extends TaskHandlingService implements OnDestroy {
 
     protected _taskEventNotifications$: Subject<TaskEventNotification>;
 
-    constructor(protected _userService: UserService,
-                protected _logger: LoggerService,
-                protected _userComparator: UserComparatorService,
-                protected permissionService: PermissionService,
-                _taskContentService: TaskContentService) {
+    constructor(_taskContentService: TaskContentService) {
         super(_taskContentService);
         this._taskEventNotifications$ = new Subject<TaskEventNotification>();
     }
