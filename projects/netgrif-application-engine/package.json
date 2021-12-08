@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine",
-    "version": "5.8.0",
+    "version": "6.0.0-rc.1",
     "description": "Netgrif Application engine frontend Angular library",
     "homepage": "https://netgrif.com",
     "repository": {
