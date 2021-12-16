@@ -175,14 +175,18 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             this._taskContentService.referencedTaskAndCaseIds[this._safeTask.caseId] = [this._safeTask.stringId];
             dataGroups.forEach(group => {
                 const dataGroupParentCaseId: string = group.parentCaseId === undefined ? this._safeTask.caseId : group.parentCaseId;
+                const parentTaskId: string = group.parentTaskId === undefined ? this._safeTask.stringId : group.parentTaskId;
                 if (dataGroupParentCaseId !== this._safeTask.caseId) {
                     if (!this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId]) {
                         this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId] = [group.parentTaskId];
                     } else {
                         this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
                     }
+                } else if (dataGroupParentCaseId === this._safeTask.caseId
+                    && parentTaskId !== this._safeTask.stringId
+                    && !this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].includes(parentTaskId)) {
+                    this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
                 }
-                const parentTaskId: string = group.parentTaskId === undefined ? this._safeTask.stringId : group.parentTaskId;
                 if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId]) {
                     this._taskContentService.taskFieldsIndex[parentTaskId] = {};
                 }
