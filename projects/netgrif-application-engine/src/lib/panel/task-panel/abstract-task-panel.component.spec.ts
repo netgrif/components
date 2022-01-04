@@ -53,6 +53,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {UserService} from '../../user/services/user.service';
+import {PermissionService} from '../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/finish-task-event-outcome';
@@ -200,10 +202,12 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
                 @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
                 parentInjector: Injector,
                 protected _currencyPipe: CurrencyPipe,
-                protected _changedFieldsService: ChangedFieldsService) {
+                protected _changedFieldsService: ChangedFieldsService,
+                protected _permissionService: PermissionService) {
         super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
             _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
-            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService);
+            _assignPolicyService, _callChain, _taskOperations, undefined, _translate, _currencyPipe, _changedFieldsService,
+            _permissionService);
     }
 
     ngAfterViewInit() {
@@ -246,6 +250,7 @@ class TestWrapperComponent {
             },
             dataGroups: [],
             users: {},
+            userRefs: {},
             _links: {}
         },
         changedFields: new Subject<ChangedFields>(),
@@ -296,7 +301,8 @@ class MyTaskResources {
                         },
                         dataGroups: [],
                         _links: {},
-                        users: []
+                        users: {},
+                        userRefs: {}
                     },
                     aCase: createMockCase(),
                     net: createMockNet(),
@@ -346,7 +352,8 @@ class MyTaskResources {
                         },
                         dataGroups: [],
                         _links: {},
-                        users: []
+                        users: {},
+                        userRefs: {}
                     },
                     aCase: createMockCase(),
                     net: createMockNet(),

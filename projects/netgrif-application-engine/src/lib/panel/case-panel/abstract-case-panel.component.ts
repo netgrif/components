@@ -18,6 +18,8 @@ import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {CurrencyPipe} from '@angular/common';
+import {PermissionService} from '../../authorization/permission/permission.service';
+import {PermissionType} from '../../process/permissions';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -34,7 +36,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                           protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
-                          protected _currencyPipe: CurrencyPipe) {
+                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService) {
         super(_translateService, _currencyPipe);
     }
 
@@ -82,6 +84,10 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         });
     }
 
+    public canDelete(): boolean {
+        return this._permissionService.hasCasePermission(this.case_, PermissionType.DELETE);
+    }
+
     private throwError(message: string) {
         this._snackBarService.openErrorSnackBar(message);
         this._log.error(message);
@@ -90,34 +96,4 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     public getMinWidth() {
         return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
     }
-
-    public canDo(action): boolean {
-        if (!this.case_
-            || !this.case_.permissions
-            || !action
-            || !(this.case_.permissions instanceof Object)
-        ) {
-            return false;
-        }
-        if (Object.keys(this.case_.permissions).length === 0 && Object.keys(this.case_.users).length === 0) {
-            return true;
-        }
-
-        let result = true;
-
-        if (Object.keys(this.case_.users).length > 0
-            && !!this.case_.users[this._userService.user.id]
-            && this.case_.users[this._userService.user.id][action] !== undefined) {
-            result = this.case_.users[this._userService.user.id][action];
-        }
-        this._userService.user.roles.forEach(role => {
-            if (!!this.case_.permissions[role.stringId]
-                && this.case_.permissions[role.stringId][action] !== undefined) {
-                result = result && !!this.case_.permissions[role.stringId][action];
-            }
-        });
-        return result;
-    }
-
-
 }

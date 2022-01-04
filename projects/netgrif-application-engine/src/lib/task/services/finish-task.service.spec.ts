@@ -81,6 +81,7 @@ describe('FinishTaskService', () => {
             caseColor: '',
             caseTitle: '',
             user: undefined,
+            userRefs: undefined,
             roles: {},
             startDate: [1],
             finishDate: [1],
@@ -122,7 +123,13 @@ describe('FinishTaskService', () => {
                     caseTitle: '',
                     user: null,
                     roles: {
-                        role: 'perform'
+                        role: {
+                            assign: true,
+                            cancel: true,
+                            finish: true,
+                            set: true,
+                            view: true
+                        }
                     },
                     startDate: null,
                     finishDate: null,
@@ -133,7 +140,8 @@ describe('FinishTaskService', () => {
                     layout: {rows: 1, cols: 1, offset: 0},
                     dataGroups: [],
                     _links: {},
-                    users: []
+                    users: {},
+                    userRefs: {}
                 },
                 aCase: createMockCase(),
                 net: createMockNet()

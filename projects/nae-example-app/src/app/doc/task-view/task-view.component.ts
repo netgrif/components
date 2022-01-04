@@ -42,7 +42,7 @@ const disableButtonsFactory = () => {
                     }
                 }
             }
-            return true;
+            return false;
         },
         delegate: (t: Task) => true,
     };
