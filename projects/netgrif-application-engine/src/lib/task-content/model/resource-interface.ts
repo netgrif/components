@@ -37,4 +37,5 @@ export interface DataFieldResource {
     };
     allowedNets?: Array<string>;
     filterMetadata?: FilterMetadata;
+    parentTaskId?: string;
 }

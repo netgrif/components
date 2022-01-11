@@ -12,6 +12,7 @@ import {
     SimpleFilter,
     TaskViewService,
     ViewIdService,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
@@ -34,7 +35,8 @@ const baseFilterFactory = () => {
     providers: [
         CategoryFactory,
         SearchService,
-        TaskViewService
+        TaskViewService,
+        ChangedFieldsService
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
         {   provide: AllowedNetsService,

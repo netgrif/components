@@ -1,3 +1,14 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10920/tab/release-report-all-issues"></a>
+## 5.8.0 (26.11.2021)
+### Bug Fixes
+None
+
+### Improvements
+* [NAE-1469](https://netgrif.atlassian.net/browse/NAE-1469) - Data group layouts refactor
+
+### Features
+* [NAE-1296](https://netgrif.atlassian.net/browse/NAE-1296) - Event Outcome refactor
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10943/tab/release-report-all-issues"></a>
 ## 5.7.4 (21.12.2021)
 ### Bug Fixes
@@ -123,6 +134,17 @@ None
 
 ### Features
 * [NAE-420](https://netgrif.atlassian.net/browse/NAE-420) - Redirect to any view
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10946/tab/release-report-all-issues"></a>
+## 5.5.4 (20.12.2021)
+### Bug fixes
+* [NAE-1536](https://netgrif.atlassian.net/browse/NAE-1536) - Cez simple search nie je možné vyhľadávať hodnoty obsahujúce pomlčku
+
+### Improvements
+None
+
+### Features
+None
 
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10897/tab/release-report-all-issues"></a>
 ## 5.5.2 (19.07.2021)

@@ -38,7 +38,7 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
-            <div *ngIf="showDeleteMenu && canDo('delete')">
+            <div *ngIf="showDeleteMenu && canDelete()">
                 <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>

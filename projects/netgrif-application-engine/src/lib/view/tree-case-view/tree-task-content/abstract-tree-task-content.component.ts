@@ -6,6 +6,7 @@ import {CancelTaskService} from '../../../task/services/cancel-task.service';
 import {FinishTaskService} from '../../../task/services/finish-task.service';
 import {TreeTaskContentService} from './tree-task-content.service';
 import {Observable} from 'rxjs';
+import {PermissionService} from '../../../authorization/permission/permission.service';
 
 export abstract class AbstractTreeTaskContentComponent implements AfterViewInit {
 
@@ -16,7 +17,8 @@ export abstract class AbstractTreeTaskContentComponent implements AfterViewInit 
                 protected _assign: AssignTaskService,
                 protected _cancel: CancelTaskService,
                 protected _finish: FinishTaskService,
-                protected _taskContentService: TaskContentService) {
+                protected _taskContentService: TaskContentService,
+                protected _permissionService: PermissionService) {
     }
 
     ngAfterViewInit(): void {
@@ -26,15 +28,15 @@ export abstract class AbstractTreeTaskContentComponent implements AfterViewInit 
     }
 
     public canAssign(): boolean {
-        return this._taskEventService.canAssign();
+        return this._permissionService.canAssign(this._taskContentService.task);
     }
 
     public canCancel(): boolean {
-        return this._taskEventService.canCancel();
+        return this._permissionService.canCancel(this._taskContentService.task);
     }
 
     public canFinish(): boolean {
-        return this._taskEventService.canFinish();
+        return this._permissionService.canFinish(this._taskContentService.task);
     }
 
     public assign(): void {

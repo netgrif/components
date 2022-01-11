@@ -22,10 +22,16 @@ import {FinishTaskService} from './finish-task.service';
 import {SingleTaskContentService} from '../../task-content/services/single-task-content.service';
 import {AssignPolicy, DataFocusPolicy, FinishPolicy} from '../../task-content/model/policy';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {UserService} from '../../user/services/user.service';
+import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
+import {User} from '../../user/models/user';
+import {PermissionService} from '../../authorization/permission/permission.service';
 
 describe('AssignPolicyService', () => {
     let service: AssignPolicyService;
     let assignSpy: jasmine.Spy;
+    let userService: UserService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -48,11 +54,15 @@ describe('AssignPolicyService', () => {
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 FinishPolicyService,
                 FinishTaskService,
+                ChangedFieldsService,
+                PermissionService,
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations}
+                {provide: NAE_TASK_OPERATIONS, useClass: NullTaskOperations},
+                {provide: UserService, useClass: MockUserService}
             ]
         });
+        userService = TestBed.inject(UserService);
         service = TestBed.inject(AssignPolicyService);
         TestBed.inject(TaskContentService).task = {
             caseId: 'string',
@@ -61,7 +71,12 @@ describe('AssignPolicyService', () => {
             caseColor: 'string',
             caseTitle: 'string',
             user: undefined,
-            roles: {},
+            userRefs: undefined,
+            roles: {
+                assignRole: {
+                    assign: true
+                }
+            },
             startDate: undefined,
             finishDate: undefined,
             assignPolicy: AssignPolicy.auto,
@@ -86,6 +101,8 @@ describe('AssignPolicyService', () => {
     });
 
     it('should performAssignPolicy', () => {
+        (userService as unknown as MockUserService).user =
+            new User('', '', '', '', [], [{stringId: 'assignRole', name: '', importId: ''}]);
         service.performAssignPolicy(true);
         expect(assignSpy).toHaveBeenCalled();
     });

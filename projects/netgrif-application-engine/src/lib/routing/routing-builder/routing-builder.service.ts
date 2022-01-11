@@ -52,7 +52,7 @@ export class RoutingBuilderService {
         if (component === undefined) {
             return undefined;
         }
-        if (!view.routing || !view.routing.path) {
+        if (!view.routing) {
             this._logger.warn(`nae.json configuration is invalid. View at path '${configPath}'` +
                 ` must define a 'routing' attribute. Skipping this view for routing generation.`);
             return undefined;

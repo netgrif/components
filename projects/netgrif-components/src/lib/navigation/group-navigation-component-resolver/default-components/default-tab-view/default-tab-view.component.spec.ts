@@ -32,13 +32,13 @@ describe('DefaultTabViewComponent', () => {
                         {
                             fields: [
                                 new TextField(
-                                    `${GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX}`,
+                                    GroupNavigationConstants.NAVIGATION_ENTRY_TITLE_FIELD_ID_SUFFIX,
                                     '',
                                     'nav item title',
                                     {visible: true}
                                 ),
                                 new BooleanField(
-                                    `${GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX}`,
+                                    GroupNavigationConstants.NAVIGATION_ENTRY_ICON_ENABLED_FIELD_ID_SUFFIX,
                                     '',
                                     false,
                                     {visible: true}
@@ -48,7 +48,7 @@ describe('DefaultTabViewComponent', () => {
                         {
                             fields: [
                                 new FilterField(
-                                    `60f7b6aef68fea27e706b067-${UserFilterConstants.FILTER_FIELD_ID}`,
+                                    UserFilterConstants.FILTER_FIELD_ID,
                                     '',
                                     '',
                                     {
