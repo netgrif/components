@@ -30,6 +30,11 @@ import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PermissionService} from '../../authorization/permission/permission.service';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
     /**
@@ -43,16 +48,19 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+
     @Input()
     set forceLoadDataOnOpen(force: boolean) {
         this._forceLoadDataOnOpen = force;
         this._assignPolicyService.forced = force;
     }
+
     @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
      */
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
+    @Output() panelRefOutput: EventEmitter<MatExpansionPanel>;
 
     public portal: ComponentPortal<any>;
     public panelRef: MatExpansionPanel;
@@ -82,15 +90,27 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
                           protected _translate: TranslateService,
-                          protected _currencyPipe: CurrencyPipe) {
+                          protected _currencyPipe: CurrencyPipe,
+                          protected _changedFieldsService: ChangedFieldsService,
+                          protected _permissionService: PermissionService) {
         super(_translate, _currencyPipe);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
+        this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
-        this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
-            changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
-            this._taskPanelData.changedFields.next(changedFields);
+        this._subTaskData = _changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
+            const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
+            );
+            const changedFields: Array<ChangedFields> = [];
+            filteredCaseIds.forEach(caseId => {
+                const taskIds: Array<string> = this._taskContentService.referencedTaskAndCaseIds[caseId];
+                changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
+            });
+            changedFields.filter(fields => fields !== undefined).forEach(fields => {
+               this.taskPanelData.changedFields.next(fields);
+            });
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
             this.expand();
@@ -112,7 +132,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
             cancel: (t: Task) => false,
         };
         if (_disableFunctions) {
-             Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
+            Object.assign(this._taskDisableButtonFunctions, _disableFunctions);
         }
     }
 
@@ -121,7 +141,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._taskContentService.task = this._taskPanelData.task;
 
         this.createContentPortal();
-
         this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
             this._taskContentService.updateFromChangedFields(chFields);
         });
@@ -193,6 +212,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
 
     public setPanelRef(panelRef: MatExpansionPanel) {
         this.panelRef = panelRef;
+        this.panelRefOutput.emit(panelRef);
     }
 
     assign() {
@@ -215,7 +235,19 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     finish() {
-        this._finishTaskService.validateDataAndFinish();
+        if (!this._taskContentService.validateTaskData()) {
+            if (this._taskContentService.task.dataSize <= 0) {
+                this._taskDataService.initializeTaskDataFields();
+            }
+            const invalidFields = this._taskContentService.getInvalidTaskData();
+            document.getElementById(invalidFields[0].stringId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        } else {
+            this._finishTaskService.validateDataAndFinish();
+        }
     }
 
     collapse() {
@@ -229,43 +261,47 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canAssign(): boolean {
-        return this._taskEventService.canAssign();
+        return this._permissionService.canAssign(this.taskPanelData.task) && this.getAssignTitle() !== '';
     }
 
     public canReassign(): boolean {
-        return this._taskEventService.canReassign();
+        return this._permissionService.canReassign(this.taskPanelData.task);
     }
 
     public canCancel(): boolean {
-        return this._taskEventService.canCancel();
+        return this._permissionService.canCancel(this.taskPanelData.task) && this.getCancelTitle() !== '';
     }
 
     public canFinish(): boolean {
-        return this._taskEventService.canFinish();
+        return this._permissionService.canFinish(this.taskPanelData.task) && this.getFinishTitle() !== '';
     }
 
     public canCollapse(): boolean {
-        return this._taskEventService.canCollapse();
+        return this._permissionService.canCollapse(this.taskPanelData.task);
     }
 
     public canDo(action): boolean {
-        return this._taskEventService.canDo(action);
+        return this._permissionService.hasTaskPermission(this.taskPanelData.task, action) && this.getDelegateTitle() !== '';
     }
 
     public getAssignTitle(): string {
-        return this.taskPanelData.task.assignTitle ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
+        return (this.taskPanelData.task.assignTitle === '' || this.taskPanelData.task.assignTitle)
+            ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
     }
 
     public getCancelTitle(): string {
-        return this.taskPanelData.task.cancelTitle ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
+        return (this.taskPanelData.task.cancelTitle === '' || this.taskPanelData.task.cancelTitle)
+            ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
     }
 
     public getDelegateTitle(): string {
-        return this.taskPanelData.task.delegateTitle ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
+        return (this.taskPanelData.task.delegateTitle === '' || this.taskPanelData.task.delegateTitle)
+            ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
     }
 
     public getFinishTitle(): string {
-        return this.taskPanelData.task.finishTitle ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
+        return (this.taskPanelData.task.finishTitle === '' || this.taskPanelData.task.finishTitle)
+            ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
     }
 
     public canDisable(type: string): boolean {

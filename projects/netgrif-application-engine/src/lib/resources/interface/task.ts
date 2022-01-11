@@ -5,7 +5,7 @@ import {NaeDate} from '../types/nae-date-type';
 import {UserResourceSmall} from './user-resource-small';
 import {ImmediateData} from './immediate-data';
 import {AssignedUserPolicy} from './assigned-user-policy';
-import {UsersRef} from './users-ref';
+import {Permissions, UserPermissions, UserRefs} from '../../process/permissions';
 
 /**
  * Object from Backend
@@ -37,7 +37,7 @@ export interface Task {
      *      "perform": true
      *    }
      */
-    roles: object;
+    roles: Permissions;
     startDate: NaeDate;
     finishDate: NaeDate;
     /**
@@ -57,9 +57,10 @@ export interface Task {
     /**
      * Array [DataGroup]{@link DataGroup#}
      */
-    dataGroups: DataGroup[];
+    dataGroups: Array<DataGroup>;
     _links: object;
-    users?: UsersRef;
+    users: UserPermissions;
+    userRefs: UserRefs;
     dataSize?: number;
     icon?: string;
     priority?: number;

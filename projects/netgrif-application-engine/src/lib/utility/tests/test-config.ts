@@ -414,6 +414,9 @@ export class TestConfigurationService extends ConfigurationService {
                 legal: {
                     termsOfService: 'https://netgrif.com/',
                     privacyPolicy: 'https://netgrif.com/'
+                },
+                groupNavigation: {
+                    groupNavigationRoute: 'config-route'
                 }
             }
         });

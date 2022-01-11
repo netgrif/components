@@ -17,11 +17,12 @@ import {
     NAE_BASE_FILTER,
     AllowedNetsService,
     AllowedNetsServiceFactory,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
-    return factory.createFromConfig('case');
+    return factory.createWithAllNets();
 };
 
 const baseFilterFactory = () => {
@@ -41,7 +42,7 @@ const disableButtonsFactory = () => {
                     }
                 }
             }
-            return true;
+            return false;
         },
         delegate: (t: Task) => true,
     };
@@ -55,6 +56,7 @@ const disableButtonsFactory = () => {
         CategoryFactory,
         TaskViewService,
         SearchService,
+        ChangedFieldsService,
         {   provide: NAE_BASE_FILTER,
             useFactory: baseFilterFactory},
         {   provide: AllowedNetsService,
@@ -67,7 +69,7 @@ const disableButtonsFactory = () => {
         {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
             useFactory: disableButtonsFactory
         },
-        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'task'},
+        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'all-tasks'},
         ViewIdService,
         {   provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
         {   provide: NAE_ASYNC_RENDERING_CONFIGURATION,

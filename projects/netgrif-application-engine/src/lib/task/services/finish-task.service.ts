@@ -15,9 +15,14 @@ import {SelectedCaseService} from './selected-case.service';
 import {createTaskEventNotification} from '../../task-content/model/task-event-notification';
 import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
+import {FinishTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/finish-task-event-outcome';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 
 /**
@@ -35,6 +40,8 @@ export class FinishTaskService extends TaskHandlingService {
                 protected _callChain: CallChainService,
                 protected _taskEvent: TaskEventService,
                 protected _eventQueue: EventQueueService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 _taskContentService: TaskContentService) {
@@ -117,7 +124,8 @@ export class FinishTaskService extends TaskHandlingService {
 
         this._taskState.startLoading(finishedTaskId);
 
-        this._taskResourceService.finishTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
+        this._taskResourceService.finishTask(this._safeTask.stringId).pipe(take(1))
+            .subscribe((outcomeResource: EventOutcomeMessageResource) => {
             this._taskState.stopLoading(finishedTaskId);
             if (!this.isTaskRelevant(finishedTaskId)) {
                 this._log.debug('current task changed before the finish response could be received, discarding...');
@@ -125,17 +133,27 @@ export class FinishTaskService extends TaskHandlingService {
                 return;
             }
 
-            if (eventOutcome.success) {
-                this._taskContentService.updateStateData(eventOutcome);
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+            if (outcomeResource.success) {
+                this._taskContentService.updateStateData(outcomeResource.outcome as FinishTaskEventOutcome);
+                const changedFieldsMap: ChangedFieldsMap = this._eventService
+                    .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                if (!!changedFieldsMap) {
+                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                }
                 this._taskOperations.reload();
                 this.completeActions(afterAction, nextEvent, true);
                 this._taskOperations.close();
-            } else if (eventOutcome.error !== undefined) {
-                if (eventOutcome.error !== '') {
-                    this._snackBar.openErrorSnackBar(eventOutcome.error);
+                this._snackBar.openSuccessSnackBar(outcomeResource.outcome.message === undefined
+                    ? this._translate.instant('tasks.snackbar.finishTaskSuccess')
+                    : outcomeResource.outcome.message);
+            } else if (outcomeResource.error !== undefined) {
+                if (outcomeResource.error !== '') {
+                    this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                if (outcomeResource.outcome !== undefined) {
+                    const changedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                }
                 this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {
@@ -149,7 +167,7 @@ export class FinishTaskService extends TaskHandlingService {
             }
 
             this._snackBar.openErrorSnackBar(`${this._translate.instant('tasks.snackbar.finishTask')}
-             ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
+             ${this._task.title} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.completeActions(afterAction, nextEvent, false);
         });
     }

@@ -3,7 +3,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
-import {EventEmitter, Inject, Input, OnInit, Optional, Output} from '@angular/core';
+import {EventEmitter, Inject, Input, OnInit, Optional, Output, Type} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
 import {UserFiltersService} from '../../filter/user-filters.service';
@@ -14,7 +14,9 @@ import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
-import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
+import {TaskSetDataRequestFields} from '../../resources/interface/task-set-data-request-body';
+import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../../navigation/model/filter-case-injection-token';
+import {DataGroup} from '../../resources/interface/data-groups';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -44,7 +46,7 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      * Set data request body, that is sent to the filter in addition to the default body.
      * The default body is applied first and can be overridden by this argument.
      */
-    @Input() additionalFilterData: TaskSetDataRequestBody = {};
+    @Input() additionalFilterData: TaskSetDataRequestFields = {};
 
     /**
      * The emitted data contains the filter case object
@@ -62,9 +64,10 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _userFilterService: UserFiltersService,
                           protected _allowedNetsService: AllowedNetsService,
                           protected _viewIdService: ViewIdService,
-                          @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Category<any>>,
+                          @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Type<Category<any>>>,
                           @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
-                          @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter = null) {
+                          @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter = null,
+                          @Optional() @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup> = null) {
         if (this._configuration === null) {
             this._configuration = {};
         }
@@ -144,8 +147,15 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      * The saved filter data are emitted into the [filterSaved]{@link AbstractSearchComponent#filterSaved} `EventEmitter`
      */
     public saveFilter(): void {
-        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
-            this._searchCategories, this._viewIdService.viewId, this.additionalFilterData).subscribe(savedFilterData => {
+        this._userFilterService.save(
+            this._searchService,
+            this._allowedNetsService.allowedNetsIdentifiers,
+            this._searchCategories,
+            this._viewIdService.viewId,
+            this.additionalFilterData,
+            this._configuration.saveFilterWithDefaultCategories ?? true,
+            this._configuration.inheritAllowedNets ?? true,
+            this._navigationItemTaskData).subscribe(savedFilterData => {
                 if (savedFilterData) {
                     this.filterSaved.emit(savedFilterData);
                 }

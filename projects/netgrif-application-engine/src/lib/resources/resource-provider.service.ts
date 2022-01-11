@@ -6,7 +6,7 @@ import {MessageResource} from './interface/message-resource';
 
 export type Headers =
     HttpHeaders | {
-    [header: string]: string | string[];
+    [header: string]: string | Array<string>;
 };
 
 export type Params = HttpParams | ObjectParams;
@@ -14,7 +14,7 @@ export type Params = HttpParams | ObjectParams;
 export type ResponseType = 'json' | 'hal';
 
 export interface ObjectParams {
-    [param: string]: string | string[];
+    [param: string]: string | Array<string>;
 }
 
 export enum ProgressType {

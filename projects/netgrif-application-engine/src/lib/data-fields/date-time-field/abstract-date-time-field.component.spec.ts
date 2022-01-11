@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -93,5 +93,5 @@ class TestWrapperComponent {
         {validationRule: 'between past,today', validationMessage: 'This is custom message!'},
         {validationRule: 'between 2020-03-03,today', validationMessage: 'This is custom message!'},
     ]);
-    changedFields = new BehaviorSubject<ChangedFields>({behavior: {editable: true}});
+    changedFields = new BehaviorSubject<ChangedFields>({behavior: {editable: true}, taskId: 'testTaskId'});
 }

@@ -1,3 +1,129 @@
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10920/tab/release-report-all-issues"></a>
+## 5.8.0 (26.11.2021)
+### Bug Fixes
+None
+
+### Improvements
+* [NAE-1469](https://netgrif.atlassian.net/browse/NAE-1469) - Data group layouts refactor
+
+### Features
+* [NAE-1296](https://netgrif.atlassian.net/browse/NAE-1296) - Event Outcome refactor
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10940/tab/release-report-all-issues"></a>
+## 5.7.3 (23.11.2021)
+### Bug Fixes
+None
+
+### Improvements
+None
+
+### Features
+* [NAE-1493](https://netgrif.atlassian.net/browse/NAE-1493) - i18n divider data field
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10933/tab/release-report-all-issues"></a>
+## 5.7.2 (23.11.2021)
+### Bug Fixes
+* [NAE-1518](https://netgrif.atlassian.net/browse/NAE-1518) - Export of chained filters
+
+### Improvements
+None
+
+### Features
+* [NAE-1519](https://netgrif.atlassian.net/browse/NAE-1519) - Independent column count in data groups
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10913/tab/release-report-all-issues"></a>
+## 5.7.1 (08.11.2021)
+### Bug Fixes
+* [NAE-1474](https://netgrif.atlassian.net/browse/NAE-1474) - HtmlEditor: okno na zadávanie URL pri nahrávaní videa sa nezobrazuje celé
+* [NAE-1487](https://netgrif.atlassian.net/browse/NAE-1487) - Assign button on assigned task
+* [NAE-1486](https://netgrif.atlassian.net/browse/NAE-1486) - Default node case name in Tree Case View
+
+### Improvements
+* [NAE-1421](https://netgrif.atlassian.net/browse/NAE-1421) - Ohraničenie náhľadu dokumentu
+* [NAE-1042](https://netgrif.atlassian.net/browse/NAE-1042) - Hide create new case button if there are no allowed nets
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10901/tab/release-report-all-issues"></a>
+## 5.7.0 (29.10.2021)
+### Bug fixes
+* [NAE-1375](https://netgrif.atlassian.net/browse/NAE-1375) - Form field layouting does not respect rows
+* [NAE-1281](https://netgrif.atlassian.net/browse/NAE-1281) - Immediate file field
+* [NAE-1332](https://netgrif.atlassian.net/browse/NAE-1332) - Cancel Task po kliknutí na rozkliknutý task nekontroluje či user môže daný Task cancelnúť
+* [NAE-1380](https://netgrif.atlassian.net/browse/NAE-1380) - rxjs throwError calls are not returned
+* [NAE-1460](https://netgrif.atlassian.net/browse/NAE-1460) - Datafield Spinner Attribute Refactor
+* [NAE-1150](https://netgrif.atlassian.net/browse/NAE-1150) - Workflow panel doesn't react to language change
+
+### Improvements
+* [NAE-1390](https://netgrif.atlassian.net/browse/NAE-1390) - Update "Process file could not be uploaded" message
+* [NAE-1444](https://netgrif.atlassian.net/browse/NAE-1444) - No inferrable param types tslint rule
+
+### Features
+* [NAE-1402](https://netgrif.atlassian.net/browse/NAE-1451) - Configurable group navigation with role constraints
+* [NAE-1397](https://netgrif.atlassian.net/browse/NAE-1397) - Fix task rows
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10910/tab/release-report-all-issues"></a>
+## 5.6.3 (27.09.2021)
+### Bug fixes
+* [NAE-1451](https://netgrif.atlassian.net/browse/NAE-1451) - Configurable group navigation issues
+* [NAE-1452](https://netgrif.atlassian.net/browse/NAE-1452) - Sidemenu tab - Case Side Menu
+* [NAE-1453](https://netgrif.atlassian.net/browse/NAE-1453) - Example app sign-up broken
+
+
+### Improvements
+* [NAE-1454](https://netgrif.atlassian.net/browse/NAE-1454) - Dynamic filter chaining
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10909/tab/release-report-all-issues"></a>
+## 5.6.2 (03.08.2021)
+### Bug fixes
+None
+
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10906/tab/release-report-all-issues"></a>
+## 5.6.1 (30.08.2021)
+### Bug fixes
+None
+
+### Improvements
+None
+
+### Features
+None
+
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10891/tab/release-report-all-issues"></a>
+## 5.6.0 (26.08.2021)
+### Bug fixes
+* [NAE-1385](https://netgrif.atlassian.net/browse/NAE-1385) - Immediate data cannot be copied from case panels
+* [NAE-1377](https://netgrif.atlassian.net/browse/NAE-1377) - Creation date time filtering
+* [NAE-1356](https://netgrif.atlassian.net/browse/NAE-1356) - Nefunguje search podla ID prípadu
+* [NAE-1354](https://netgrif.atlassian.net/browse/NAE-1354) - Empty task event title does nothing
+* [NAE-1320](https://netgrif.atlassian.net/browse/NAE-1320) - Asynchronously rendered hidden fields are always blocked
+* [NAE-1312](https://netgrif.atlassian.net/browse/NAE-1312) - Merge issue from NAE-1238_usersRef
+* [NAE-1303](https://netgrif.atlassian.net/browse/NAE-1303) - Dokoncujem ulohu [object Object] zlyhalo
+* [NAE-1298](https://netgrif.atlassian.net/browse/NAE-1298) - Scrollovanie nadol pri viacerých prípadoch nefunguje
+* [NAE-1293](https://netgrif.atlassian.net/browse/NAE-1293) - Search service logs error
+* [NAE-1288](https://netgrif.atlassian.net/browse/NAE-1288) - Button overflow in Group managment
+* [NAE-1281](https://netgrif.atlassian.net/browse/NAE-1281) - Immediate file field
+* [NAE-1278](https://netgrif.atlassian.net/browse/NAE-1278) - Autogenerated navigation dissapears after site reload
+* [NAE-1277](https://netgrif.atlassian.net/browse/NAE-1277) - Scroll to invalid data field
+
+### Improvements
+* [NAE-1304](https://netgrif.atlassian.net/browse/NAE-1304) - Case title configuration
+* [NAE-1246](https://netgrif.atlassian.net/browse/NAE-1246) - URL auto resolve
+* [NAE-1104](https://netgrif.atlassian.net/browse/NAE-1104) - User filters
+
+### Features
+* [NAE-420](https://netgrif.atlassian.net/browse/NAE-420) - Redirect to any view
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10946/tab/release-report-all-issues"></a>
 ## 5.5.4 (20.12.2021)
 ### Bug fixes

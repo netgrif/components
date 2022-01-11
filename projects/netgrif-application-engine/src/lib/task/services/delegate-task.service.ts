@@ -19,9 +19,14 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskEventService} from '../../task-content/services/task-event.service';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
+import {DelegateTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/delegate-task-event-outcome';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 
 /**
@@ -39,6 +44,8 @@ export class DelegateTaskService extends TaskHandlingService {
                 protected _taskEvent: TaskEventService,
                 protected _taskDataService: TaskDataService,
                 protected _eventQueue: EventQueueService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() @Inject(NAE_USER_ASSIGN_COMPONENT) protected _userAssignComponent: any,
                 @Optional() _selectedCaseService: SelectedCaseService,
@@ -68,12 +75,12 @@ export class DelegateTaskService extends TaskHandlingService {
         this._sideMenuService.open(this._userAssignComponent, SideMenuSize.MEDIUM,
             {
                 roles: Object.keys(this._safeTask.roles).filter(role =>
-                    this._safeTask.roles[role]['assigned'] !== undefined && this._safeTask.roles[role]['assigned']),
+                    this._safeTask.roles[role]['assign'] !== undefined && this._safeTask.roles[role]['assign']),
                 value: !this._safeTask.user ? undefined : new UserValue(
                     this._safeTask.user.id, this._safeTask.user.name, this._safeTask.user.surname, this._safeTask.user.email
                 ),
                 negativeRoles: Object.keys(this._safeTask.roles).filter(role =>
-                    this._safeTask.roles[role]['assigned'] !== undefined && !this._safeTask.roles[role]['assigned'])
+                    this._safeTask.roles[role]['assign'] !== undefined && !this._safeTask.roles[role]['assign'])
             } as UserListInjectedData).onClose.subscribe(event => {
 
             this._log.debug('Delegate sidemenu event:' + event);
@@ -105,7 +112,8 @@ export class DelegateTaskService extends TaskHandlingService {
      */
     protected performDelegateRequest(afterAction: AfterAction, delegatedTaskId: string, delegatedUserId: any, nextEvent: AfterAction) {
         this._taskState.startLoading(delegatedTaskId);
-        this._taskResourceService.delegateTask(this._safeTask.stringId, delegatedUserId).pipe(take(1)).subscribe(eventOutcome => {
+        this._taskResourceService.delegateTask(this._safeTask.stringId, delegatedUserId).pipe(take(1)).subscribe(
+            (outcomeResource: EventOutcomeMessageResource) => {
             this._taskState.stopLoading(delegatedTaskId);
             if (!this.isTaskRelevant(delegatedTaskId)) {
                 this._log.debug('current task changed before the delegate response could be received, discarding...');
@@ -113,12 +121,16 @@ export class DelegateTaskService extends TaskHandlingService {
                 return;
             }
 
-            if (eventOutcome.success) {
-                this._taskContentService.updateStateData(eventOutcome);
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+            if (outcomeResource.success) {
+                this._taskContentService.updateStateData(outcomeResource.outcome as DelegateTaskEventOutcome);
+                const changedFieldsMap: ChangedFieldsMap = this._eventService
+                    .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                if (!!changedFieldsMap) {
+                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                }
                 this.completeSuccess(afterAction, nextEvent);
-            } else if (eventOutcome.error) {
-                this._snackBar.openErrorSnackBar(eventOutcome.error);
+            } else if (outcomeResource.error) {
+                this._snackBar.openErrorSnackBar(outcomeResource.error);
                 this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {

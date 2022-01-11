@@ -4,5 +4,5 @@ import {Icon} from './icon';
 export interface Component {
     name: string;
     properties?: Properties;
-    optionIcons?: Icon[];
+    optionIcons?: Array<Icon>;
 }

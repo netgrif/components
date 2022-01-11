@@ -17,3 +17,4 @@ export * from './user-assign/model/user-list-injected-data';
 export * from './save-filter/model/save-filter-injection-data';
 export * from './load-filter/model/load-filter-injection-data';
 export * from './injection-tokens';
+export * from './new-case/model/new-case-injection-data';

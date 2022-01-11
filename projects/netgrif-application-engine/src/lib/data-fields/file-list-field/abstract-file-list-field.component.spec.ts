@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -25,6 +25,7 @@ import {TaskResourceService} from '../../resources/engine-endpoint/task-resource
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {EventService} from '../../event/services/event.service';
 
 describe('AbstractFileListFieldComponent', () => {
     let component: TestFileListComponent;
@@ -42,6 +43,7 @@ describe('AbstractFileListFieldComponent', () => {
             ],
             providers: [
                 SideMenuService,
+                EventService,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
@@ -83,8 +85,9 @@ class TestFileListComponent extends AbstractFileListFieldComponent {
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                eventService: EventService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(taskResourceService, log, snackbar, translate, informAboutInvalidData);
+        super(taskResourceService, log, snackbar, translate, eventService, informAboutInvalidData);
     }
 }
 

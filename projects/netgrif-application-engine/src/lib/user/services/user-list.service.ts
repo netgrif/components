@@ -116,7 +116,7 @@ export class UserListService implements OnDestroy {
             }, {})
         );
         this._users$ = usersMap.pipe(
-            map(v => Object.values(v) as UserListItem[]),
+            map(v => Object.values(v) as Array<UserListItem>),
         );
     }
 
@@ -207,7 +207,7 @@ export class UserListService implements OnDestroy {
     /**
      * Reload page with users.
      */
-    public reload(newSearchQuery: string = ''): void {
+    public reload(newSearchQuery = ''): void {
         if (!this._users$ || !this._pagination) {
             return;
         }

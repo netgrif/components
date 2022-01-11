@@ -1,7 +1,7 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {
-    AbstractFileListFieldComponent,
+    AbstractFileListFieldComponent, EventService,
     LoggerService,
     NAE_INFORM_ABOUT_INVALID_DATA,
     SnackBarService,
@@ -19,7 +19,8 @@ export class FileListFieldComponent extends AbstractFileListFieldComponent {
                 log: LoggerService,
                 snackbar: SnackBarService,
                 translate: TranslateService,
+                eventService: EventService,
                 @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
-        super(taskResourceService, log, snackbar, translate, informAboutInvalidData);
+        super(taskResourceService, log, snackbar, translate, eventService, informAboutInvalidData);
     }
 }

@@ -7,11 +7,11 @@ import {
     NAE_TAB_DATA,
     SimpleFilter,
     FilterType
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 import {
     HeaderComponentModule,
     PanelComponentModule,
-} from 'netgrif-components';
+} from '@netgrif/components';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NaeExampleAppConfigurationService} from '../../nae-example-app-configuration.service';
 

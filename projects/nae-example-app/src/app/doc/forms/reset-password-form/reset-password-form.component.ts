@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LoggerService, MessageResource, SnackBarService} from 'netgrif-application-engine';
+import {LoggerService, MessageResource, SnackBarService} from '@netgrif/application-engine';
 
 @Component({
     selector: 'nae-app-reset-password-form',

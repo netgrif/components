@@ -9,6 +9,13 @@ import {CaseViewParams} from '../../../view/case-view/models/case-view-params';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {TaskViewParams} from '../../../view/task-view/models/task-view-params';
 import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injected-tabbed-task-view-data';
+import {Case} from '../../../resources/interface/case';
+import {getImmediateData} from '../../../utility/get-immediate-data';
+import {UserFilterConstants} from '../../../filter/models/user-filter-constants';
+import {DataGroup} from '../../../resources/public-api';
+import {getFieldFromDataGroups} from '../../../utility/get-field';
+import {FilterField} from '../../../data-fields/filter-field/models/filter-field';
+import {BaseAllowedNetsService} from '../base-allowed-nets.service';
 
 
 /**
@@ -19,6 +26,31 @@ import {InjectedTabbedTaskViewData} from '../../../view/task-view/models/injecte
 export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
                                                 tabData: InjectedTabbedTaskViewData): AllowedNetsService {
     return factory.createFromArray(tabData?.allowedNets ?? []);
+}
+
+/**
+ * Convenience method that can be used as an allowed nets factory for views that are loaded from filter process instances.
+ * It has a dependency on this class and {@link NAE_NAVIGATION_ITEM_TASK_DATA} injection token.
+ */
+export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
+                                                            baseAllowedNets: BaseAllowedNetsService,
+                                                            navigationItemTaskData: Array<DataGroup>): AllowedNetsService {
+    const filterField = getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+
+    if (filterField === undefined) {
+        throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
+        }'! Allowed nets cannot be generated from it!`);
+    }
+
+    const nets = [...filterField.allowedNets];
+
+    if (filterField.filterMetadata.inheritAllowedNets) {
+        nets.push(...baseAllowedNets.allowedNets);
+    }
+
+    const uniqueNets = new Set<string>(nets);
+
+    return factory.createFromArray(Array.from(uniqueNets));
 }
 
 /**
@@ -93,6 +125,22 @@ export class AllowedNetsServiceFactory {
     public createFromObservable(netIdentifiers$: Observable<Array<string>>): AllowedNetsService {
         return new AllowedNetsService(
             netIdentifiers$,
+            this._processService
+        );
+    }
+
+    /**
+     * Creates an instance of {@link AllowedNetsService} without having to provide all the dependencies yourself.
+     * @param filterCase a filter process instance
+     * Allowed nets are set from filter process immediate data
+     */
+    public createFromFilterCase(filterCase: Case): AllowedNetsService {
+        const filterData = getImmediateData(filterCase, UserFilterConstants.FILTER_FIELD_ID);
+        if (filterData === undefined) {
+            throw new Error(`Cannot get filter from case '${filterCase.title}' with id '${filterCase.stringId}'`);
+        }
+        return new AllowedNetsService(
+            of(filterData.allowedNets),
             this._processService
         );
     }

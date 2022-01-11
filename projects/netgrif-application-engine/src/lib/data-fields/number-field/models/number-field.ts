@@ -26,9 +26,9 @@ export enum NumberFieldValidation {
 export class NumberField extends DataField<number> {
     public _formatFilter: FormatFilter;
 
-    constructor(stringId: string, title: string, value: number, behavior: Behavior, validations?: Validation[], placeholder?: string,
-                description?: string, layout?: Layout, format?: FormatFilter, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, component);
+    constructor(stringId: string, title: string, value: number, behavior: Behavior, validations?: Array<Validation>, placeholder?: string,
+                description?: string, layout?: Layout, format?: FormatFilter, component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
         this._formatFilter = format;
     }
 

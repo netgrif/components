@@ -24,9 +24,14 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {delay, take} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {TaskSetDataRequestBody} from '../../resources/interface/task-set-data-request-body';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {FormControl} from '@angular/forms';
 import {SnackBarModule} from '../../snack-bar/snack-bar.module';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {SetDataEventOutcome} from '../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
+import {createMockCase} from '../../utility/tests/utility/create-mock-case';
+import {createMockNet} from '../../utility/tests/utility/create-mock-net';
+import {EventOutcome} from '../../resources/interface/event-outcome';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;
@@ -34,6 +39,7 @@ describe('TaskDataService', () => {
     let afterActionService: CallChainService;
     let taskResourceService: MockTaskResourceService;
     let taskStateService: TestTaskRequestStateService;
+    let changedFieldsService: ChangedFieldsService;
 
     const FIELD_1 = 'field1';
     const FIELD_2 = 'field2';
@@ -53,6 +59,7 @@ describe('TaskDataService', () => {
                 TaskDataService,
                 DataFocusPolicyService,
                 TaskEventService,
+                ChangedFieldsService,
                 {provide: TaskRequestStateService, useClass: TestTaskRequestStateService},
                 {provide: TaskContentService, useClass: UnlimitedTaskContentService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -62,6 +69,7 @@ describe('TaskDataService', () => {
             ]
         });
         service = TestBed.inject(TaskDataService);
+        changedFieldsService = TestBed.inject(ChangedFieldsService);
         taskContentService = TestBed.inject(TaskContentService);
         afterActionService = TestBed.inject(CallChainService);
         taskResourceService = TestBed.inject(TaskResourceService) as unknown as MockTaskResourceService;
@@ -136,7 +144,7 @@ describe('TaskDataService', () => {
                 expect(((mockField as any)._value as BehaviorSubject<boolean>).observers.length).toEqual(1);
                 mockField.registerFormControl(new FormControl());
 
-                service.changedFields$.pipe(take(1)).subscribe(changed => {
+                changedFieldsService.changedFields$.pipe(take(1)).subscribe(changed => {
                     expect(changed.hasOwnProperty(FIELD_1_RESPONSE));
                     done();
                 });
@@ -175,8 +183,10 @@ describe('TaskDataService', () => {
                 mockField2.registerFormControl(new FormControl());
 
                 let numOfResponses = 0;
-                service.changedFields$.pipe(take(2)).subscribe(changed => {
-                    if (changed.hasOwnProperty(FIELD_1_RESPONSE) || changed.hasOwnProperty(FIELD_2_RESPONSE)) {
+                changedFieldsService.changedFields$.pipe(take(2)).subscribe(changed => {
+                    const parsedFields = changedFieldsService.parseChangedFieldsByCaseAndTaskIds(taskContentService.task.caseId,
+                        [taskContentService.task.stringId], changed);
+                    if (parsedFields[0].hasOwnProperty(FIELD_1_RESPONSE) || parsedFields[0].hasOwnProperty(FIELD_2_RESPONSE)) {
                         numOfResponses++;
                     }
                     if (numOfResponses === 2) {
@@ -215,14 +225,39 @@ class MockTaskResourceService {
         return of(this._response).pipe(delay(this._delay));
     }
 
-    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<ChangedFieldContainer> {
-        const response = {};
-        Object.keys(body).forEach(key => {
+    public setData(taskId: string, body: TaskSetDataRequestBody): Observable<EventOutcomeMessageResource> {
+        const response: EventOutcomeMessageResource = {
+            success: 'success',
+            outcome: {
+                task: createMockTask(),
+                aCase: createMockCase('string'),
+                outcomes: [
+                    {
+                        task: createMockTask(),
+                        aCase: createMockCase('string'),
+                        outcomes: [
+                            {}
+                        ],
+                        message: '',
+                        net: createMockNet(),
+                        changedFields: {
+                            changedFields: {}
+                        }
+                    } as SetDataEventOutcome
+                ],
+                message: '',
+                net: createMockNet(),
+                changedFields: {
+                    changedFields: {}
+                }
+            } as SetDataEventOutcome
+        };
+        Object.keys(body[taskId]).forEach(key => {
             if (this._changedFieldsMap.has(key)) {
-                response[this._changedFieldsMap.get(key)] = {};
+                (response.outcome.outcomes[0] as SetDataEventOutcome).changedFields.changedFields[this._changedFieldsMap.get(key)] = {};
             }
         });
-        return of({changedFields: response}).pipe(delay(this._delay));
+        return of(response).pipe(delay(this._delay));
     }
 }
 

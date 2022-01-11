@@ -34,9 +34,9 @@ export class TextField extends DataField<string> {
     public static FIELD_HEIGHT = 105;
 
     constructor(stringId: string, title: string, value: string, behavior: Behavior, placeholder?: string,
-                description?: string, layout?: Layout, validations?: Validation[], protected _view = TextFieldView.DEFAULT,
-                _component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component);
+                description?: string, layout?: Layout, validations?: Array<Validation>, protected _view = TextFieldView.DEFAULT,
+                _component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, _component, parentTaskId);
     }
 
     /*@deprecated in 4.3.0*/

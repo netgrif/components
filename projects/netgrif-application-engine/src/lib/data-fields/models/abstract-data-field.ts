@@ -2,7 +2,7 @@ import {Behavior} from './behavior';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Change} from './changed-fields';
-import {distinctUntilChanged} from 'rxjs/operators';
+import {distinctUntilChanged, filter, take} from 'rxjs/operators';
 import {Layout} from './layout';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Component} from './component';
@@ -37,7 +37,7 @@ export abstract class DataField<T> {
     private _valid: boolean;
     /**
      * @ignore
-     * Whether the `value` of the field changed recently. The flag is cleared when changes are received from backend.
+     * Whether the `value` of the field changed recently. The flag is cleared when changes are send to backend.
      */
     private _changed: boolean;
     /**
@@ -93,6 +93,25 @@ export abstract class DataField<T> {
      * Validators resolved from field validations
      */
     protected _validators: Array<ValidatorFn>;
+
+    /**
+     * Stores the last subscription to the [_initialized$]{@link AbstractDataField#_initialized$} Stream, to prevent multiple block events
+     * from executing at the same time
+     */
+    protected _initializedSubscription: Subscription;
+
+    /**
+     * @ignore
+     * Whether the changes from has been requested. The flag is cleared when changes are received from backend.
+     */
+    private _waitingForResponse: boolean;
+
+    /**
+     * Stores a copy of the fields layout, that can be modified by the layouting algorithm as needed
+     * without affecting the base configuration.
+     */
+    protected _localLayout: Layout;
+
     /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
@@ -103,20 +122,24 @@ export abstract class DataField<T> {
      * @param _layout - information regarding the component rendering
      * @param validations
      * @param _component - component data of datafield
+     * @param _parentTaskId - stringId of parent task, only defined if field is loaded using {@link TaskRefField}
+     * @param _parentCaseId - stringId of parent case, only defined if field is loaded using {@link TaskRefField}
      */
     protected constructor(private _stringId: string, private _title: string, initialValue: T,
                           private _behavior: Behavior, private _placeholder?: string,
-                          private _description?: string, private _layout?: Layout, public validations?: Validation[],
-                          private _component?: Component) {
+                          private _description?: string, private _layout?: Layout, public validations?: Array<Validation>,
+                          private _component?: Component, private _parentTaskId?: string, private _parentCaseId?: string) {
         this._value = new BehaviorSubject<T>(initialValue);
         this._previousValue = new BehaviorSubject<T>(initialValue);
         this._initialized$ = new BehaviorSubject<boolean>(false);
         this._valid = true;
         this._changed = false;
+        this._waitingForResponse = false;
         this._update = new Subject<void>();
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
         this._validRequired = true;
+        this.resetLocalLayout();
     }
 
     get stringId(): string {
@@ -162,10 +185,19 @@ export abstract class DataField<T> {
     set value(value: T) {
         if (!this.valueEquality(this._value.getValue(), value) && !this._reverting) {
             this._changed = true;
+            this._waitingForResponse = true;
             this.resolvePrevValue(value);
         }
         this._value.next(value);
         this._reverting = false;
+    }
+
+    get parentTaskId(): string {
+        return this._parentTaskId;
+    }
+
+    get parentCaseId(): string {
+        return this._parentCaseId;
     }
 
     get previousValue() {
@@ -187,6 +219,10 @@ export abstract class DataField<T> {
 
     get layout(): Layout {
         return this._layout;
+    }
+
+    get localLayout(): Layout {
+        return this._localLayout;
     }
 
     get disabled(): boolean {
@@ -218,7 +254,12 @@ export abstract class DataField<T> {
     }
 
     set block(set: boolean) {
-        this._block.next(set);
+        if (this._initializedSubscription !== undefined && !this._initializedSubscription.closed) {
+            this._initializedSubscription.unsubscribe();
+        }
+        this._initializedSubscription = this.initialized$.pipe(filter(i => i), take(1)).subscribe(() => {
+            this._block.next(set);
+        });
     }
 
     set touch(set: boolean) {
@@ -249,6 +290,14 @@ export abstract class DataField<T> {
 
     set sendInvalidValues(value: boolean | null) {
         this._sendInvalidValues = value === null || value;
+    }
+
+    get waitingForResponse(): boolean {
+        return this._waitingForResponse;
+    }
+
+    set waitingForResponse(value: boolean) {
+        this._waitingForResponse = value;
     }
 
     public update(): void {
@@ -293,6 +342,7 @@ export abstract class DataField<T> {
         this.updateFormControlState(formControl);
         this._initialized$.next(true);
         this._changed = false;
+        this._waitingForResponse = false;
     }
 
     public disconnectFormControl(): void {
@@ -387,7 +437,7 @@ export abstract class DataField<T> {
         return result;
     }
 
-    public replaceValidations(validations: Validation[]) {
+    public replaceValidations(validations: Array<Validation>) {
         this.clearValidators();
         this.validations = validations;
     }
@@ -472,5 +522,16 @@ export abstract class DataField<T> {
 
     public isInvalid(formControl: FormControl): boolean {
         return !formControl.disabled && !formControl.valid && formControl.touched;
+    }
+
+    /**
+     * Copies the layout settings into the local layout.
+     */
+    public resetLocalLayout(): void {
+        if (this._layout !== undefined) {
+            this._localLayout = {...this._layout};
+        } else {
+            this._localLayout = undefined;
+        }
     }
 }

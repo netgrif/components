@@ -1,6 +1,6 @@
 <nc-app-panel [panelHeader]="casePanelHeader" [preventExpand]="true" [first]="first" [last]="last" [caseColor] = case_.color>
     <ng-template #casePanelHeader>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
             <div fxFlex class="text-column-div" [ngClass]="{'panel-header-padding': !textEllipsis}" [ngStyle]="{'min-width': getMinWidth()}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
                     <mat-icon class="case-panel-icon panel-primary-icon" *ngIf="showCasePanelIcon">
@@ -22,8 +22,11 @@
                     <mat-icon class="case-panel-icon panel-primary-icon"
                               *ngIf="field.icon && field.value && field.type !== 'button'">{{field.icon}}</mat-icon>
                     <ng-container [ngSwitch]="field.type">
-                        <span *ngSwitchDefault [ngClass]="{'text-column-ellipsis': textEllipsis,
-                         'text-column-word-wrap': !textEllipsis}">{{field.value}}</span>
+                        <span *ngSwitchDefault
+                              [ngClass]="{'text-column-ellipsis': textEllipsis, 'text-column-word-wrap': !textEllipsis}"
+                              [matTooltip]="field.value"
+                              [matTooltipDisabled]="!textEllipsis"
+                              [matTooltipClass]="'pre-line-dialog'">{{field.value}}</span>
                         <button *ngSwitchCase="'button'" mat-flat-button color="primary">{{field.value}}</button>
                         <nc-immediate-filter-text *ngSwitchCase="'filter'"
                                                   [filterMetadata]="field.filterMetadata"
@@ -35,7 +38,7 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
-            <div *ngIf="showDeleteMenu && canDo('delete')">
+            <div *ngIf="showDeleteMenu && canDelete()">
                 <button mat-icon-button (click)="show($event)" [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>

@@ -16,7 +16,10 @@ import {UserService} from '../../user/services/user.service';
 import {take} from 'rxjs/operators';
 import {getImmediateData} from '../../utility/get-immediate-data';
 import {FeaturedValue} from '../abstract/featured-value';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {CurrencyPipe} from '@angular/common';
+import {PermissionService} from '../../authorization/permission/permission.service';
+import {PermissionType} from '../../process/permissions';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -33,7 +36,7 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
                           protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
-                          protected _currencyPipe: CurrencyPipe) {
+                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService) {
         super(_translateService, _currencyPipe);
     }
 
@@ -67,8 +70,11 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
     }
 
     public deleteCase() {
-        this._caseResourceService.deleteCase(this.case_.stringId).pipe(take(1)).subscribe(data => {
+        this._caseResourceService.deleteCase(this.case_.stringId).pipe(take(1)).subscribe((data: EventOutcomeMessageResource) => {
             if (data.success) {
+                this._snackBarService.openSuccessSnackBar(data.outcome.message === undefined
+                    ? this._translateService.instant('tasks.snackbar.caseDeleteSuccess')
+                    : data.outcome.message);
                 this._caseViewService.reload();
             } else if (data.error) {
                 this.throwError(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
@@ -78,6 +84,10 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         });
     }
 
+    public canDelete(): boolean {
+        return this._permissionService.hasCasePermission(this.case_, PermissionType.DELETE);
+    }
+
     private throwError(message: string) {
         this._snackBarService.openErrorSnackBar(message);
         this._log.error(message);
@@ -85,25 +95,5 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
 
     public getMinWidth() {
         return (this._overflowService && this._overflowService.overflowMode) ? `${this._overflowService.columnWidth}px` : '0';
-    }
-
-    public canDo(action): boolean {
-        if (!this.case_
-            || !this.case_.permissions
-            || !action
-            || !(this.case_.permissions instanceof Object)
-        ) {
-            return false;
-        }
-        if (Object.keys(this.case_.permissions).length === 0) {
-            return true;
-        }
-
-        const result = Object.keys(this.case_.users).some(user =>
-            !!this.case_.users ? !!this.case_.users[user][action] : false
-        );
-        return result || Object.keys(this.case_.permissions).some(role =>
-            this._userService.hasRoleById(role) ? !!this.case_.permissions[role][action] : false
-        );
     }
 }

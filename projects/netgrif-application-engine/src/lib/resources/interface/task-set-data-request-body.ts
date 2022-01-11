@@ -6,6 +6,15 @@ import {FilterMetadata} from '../../search/models/persistance/filter-metadata';
  * This object is a raw request body for [setData()]{@link TaskResourceService#setData} method in {@link TaskResourceService}.
  */
 export interface TaskSetDataRequestBody {
+
+    /**
+     * ID of task, on which changes occurred
+     */
+    [taskId: string]: TaskSetDataRequestFields;
+}
+
+export interface TaskSetDataRequestFields {
+
     /**
      * ID of the field that changed it's value
      */
@@ -21,7 +30,7 @@ export interface TaskSetDataRequestBody {
         /**
          * new `allowed nets` (for field types that support this)
          */
-        allowedNets?: readonly string[];
+        allowedNets?: ReadonlyArray<string>;
         /**
          * new `filterMetadata` (for field types that support this)
          */

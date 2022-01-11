@@ -16,9 +16,15 @@ import {TaskEvent} from '../../task-content/model/task-event';
 import {TaskDataService} from './task-data.service';
 import {take} from 'rxjs/operators';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
+import {CancelTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/cancel-task-event-outcome';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventQueueService} from '../../event-queue/services/event-queue.service';
 import {QueuedEvent} from '../../event-queue/model/queued-event';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {PermissionService} from '../../authorization/permission/permission.service';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import { EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 /**
  * Service that handles the logic of canceling a task.
@@ -36,10 +42,13 @@ export class CancelTaskService extends TaskHandlingService {
                 protected _taskEvent: TaskEventService,
                 protected _taskDataService: TaskDataService,
                 protected _eventQueue: EventQueueService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
                 @Optional() _selectedCaseService: SelectedCaseService,
                 @Optional() protected _taskViewService: TaskViewService,
-                _taskContentService: TaskContentService) {
+                _taskContentService: TaskContentService,
+                protected permissionService: PermissionService) {
         super(_taskContentService, _selectedCaseService);
     }
 
@@ -58,7 +67,7 @@ export class CancelTaskService extends TaskHandlingService {
      */
     public cancel(afterAction: AfterAction = new AfterAction()) {
         this._eventQueue.scheduleEvent(new QueuedEvent(
-            () => this.canCancel(),
+            () => this.permissionService.canCancel(this._safeTask),
             nextEvent => {
                 this.performCancelRequest(afterAction, nextEvent, this._taskViewService !== null && !this._taskViewService.allowMultiOpen);
             },
@@ -100,7 +109,8 @@ export class CancelTaskService extends TaskHandlingService {
                             canceledTaskId: string,
                             nextEvent: AfterAction = new AfterAction(),
                             forceReload: boolean) {
-        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe(eventOutcome => {
+        this._taskResourceService.cancelTask(this._safeTask.stringId).pipe(take(1)).subscribe(
+            (outcomeResource: EventOutcomeMessageResource) => {
             this._taskState.stopLoading(canceledTaskId);
             if (!this.isTaskRelevant(canceledTaskId)) {
                 this._log.debug('current task changed before the cancel response could be received, discarding...');
@@ -108,16 +118,23 @@ export class CancelTaskService extends TaskHandlingService {
                 return;
             }
 
-            if (eventOutcome.success) {
-                this._taskContentService.updateStateData(eventOutcome);
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+            if (outcomeResource.success) {
+                this._taskContentService.updateStateData(outcomeResource.outcome as CancelTaskEventOutcome);
+                const changedFieldsMap: ChangedFieldsMap = this._eventService
+                    .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                if (!!changedFieldsMap) {
+                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                }
                 forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
                 this.completeActions(afterAction, nextEvent, true);
-            } else if (eventOutcome.error !== undefined) {
-                if (eventOutcome.error !== '') {
-                    this._snackBar.openErrorSnackBar(eventOutcome.error);
+            } else if (outcomeResource.error !== undefined) {
+                if (outcomeResource.error !== '') {
+                    this._snackBar.openErrorSnackBar(outcomeResource.error);
                 }
-                this._taskDataService.emitChangedFields(eventOutcome.changedFields);
+                if (outcomeResource.outcome !== undefined) {
+                    const changedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                    this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                }
                 this.completeActions(afterAction, nextEvent, false);
             }
         }, error => {
@@ -134,17 +151,6 @@ export class CancelTaskService extends TaskHandlingService {
              ${this._task} ${this._translate.instant('tasks.snackbar.failed')}`);
             this.completeActions(afterAction, nextEvent, false);
         });
-    }
-
-    /**
-     * Determines whether the cancel operation can be performed.
-     */
-    protected canCancel(): boolean {
-        return !!this._safeTask.user
-                && (
-                    this._userComparator.compareUsers(this._safeTask.user)
-                    || this._taskEventService.canDo('perform')
-                );
     }
 
     /**
