@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
@@ -15,7 +15,7 @@ describe('AbstractDataFieldTemplateComponent', () => {
     let component: TestDatafieldTemplateComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, AngularResizedEventModule, NoopAnimationsModule],
             declarations: [TestDatafieldTemplateComponent, TestWrapperComponent],

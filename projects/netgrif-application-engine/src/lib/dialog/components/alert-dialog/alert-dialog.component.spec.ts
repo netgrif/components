@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../../material/material.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -10,7 +10,7 @@ describe('SimpleDialogComponent', () => {
     let component: AlertDialogComponent;
     let fixture: ComponentFixture<AlertDialogComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, DialogModule, NoopAnimationsModule],
             declarations: [],

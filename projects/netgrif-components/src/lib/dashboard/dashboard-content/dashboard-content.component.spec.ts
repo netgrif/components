@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {DashboardContentComponent} from './dashboard-content.component';
 import {DashboardComponentModule} from '../dashboard.module';
 import {Component} from '@angular/core';
@@ -10,7 +10,7 @@ describe('DashboardContentComponent', () => {
     let component: DashboardContentComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MatGridListModule, DashboardComponentModule, NoopAnimationsModule],
             declarations: [TestWrapperComponent],

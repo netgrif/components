@@ -48,7 +48,7 @@ describe('PetriNetResourceService', () => {
 
     it('should getPetriNetTranstions', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
-            service.getPetriNetTranstions('id').subscribe(res => {
+            service.getPetriNetTransitions('id').subscribe(res => {
                 expect(res.length).toEqual(0);
             });
 
@@ -88,13 +88,13 @@ describe('PetriNetResourceService', () => {
     it('should getPetriNetRoles', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getPetriNetRoles('id').subscribe(res => {
-                expect(res.length).toEqual(0);
+                expect(res.processRoles.length).toEqual(0);
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id/roles');
             expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
+            reqLog.flush({processRoles: []});
         })
     );
 

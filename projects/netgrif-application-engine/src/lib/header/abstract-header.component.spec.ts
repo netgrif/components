@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatIconModule} from '@angular/material/icon';
@@ -28,12 +28,15 @@ import {HeaderSearchService} from '../search/header-search-service/header-search
 import {CategoryFactory} from '../search/category-factory/category-factory';
 import {TranslateService} from '@ngx-translate/core';
 import {OverflowService} from './services/overflow.service';
+import {AllowedNetsService} from '../allowed-nets/services/allowed-nets.service';
+import {TestNoAllowedNetsFactory} from '../utility/tests/test-factory-methods';
+import {AllowedNetsServiceFactory} from '../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbstractHeaderComponent', () => {
     let component: TestHeaderComponent;
     let fixture: ComponentFixture<TestHeaderComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,
@@ -52,8 +55,8 @@ describe('AbstractHeaderComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: CaseViewService, useValue: {allowedNets$: of([])}},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [TestHeaderComponent]
         }).overrideModule(BrowserDynamicTestingModule, {

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { <%= classify(className) %>Component } from './<%= dasherize(className) %>.component';
 import {
     CaseHeaderService,
@@ -20,7 +20,7 @@ describe('<%= classify(className) %>Component', () => {
     let component: <%= classify(className) %>Component;
     let fixture: ComponentFixture<<%= classify(className) %>Component>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

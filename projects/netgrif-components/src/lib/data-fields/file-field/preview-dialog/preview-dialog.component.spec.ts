@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PreviewDialogComponent} from './preview-dialog.component';
 import {
@@ -9,7 +9,7 @@ import {
     MockAuthenticationMethodService,
     TestConfigurationService,
     TranslateLibModule
-} from 'netgrif-application-engine';
+} from '@netgrif/application-engine';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -22,7 +22,7 @@ describe('PreviewDialogComponent', () => {
     let component: PreviewDialogComponent;
     let fixture: ComponentFixture<PreviewDialogComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

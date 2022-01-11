@@ -1,0 +1,26 @@
+<ng-template [ngIf]="textI18nField.disabled">
+    <ng-template [ngIf]="!isPlainText()">
+        <mat-form-field [appearance]="textI18nField.materialAppearance" class="full-width" color="primary">
+            <mat-label *ngIf="!showLargeLayout.value">{{textI18nField.title}}</mat-label>
+            <input matInput
+                   [disabled]="true"
+                   [ngModel]="getTranslation()"
+                   [placeholder]="textI18nField.placeholder"
+                   [required]="textI18nField.behavior.required">
+            <mat-hint>{{textI18nField.description}}</mat-hint>
+        </mat-form-field>
+    </ng-template>
+    <ng-template [ngIf]="isPlainText()">
+        <div class="full-width"
+             [ngStyle]="textPropertyEnabled('fontSize') && {'font-size': getTextFontSize()}">
+            <span [ngStyle]="textPropertyEnabled('textColor') && {'color': getTextColor()}">
+                {{getTranslation()}}
+            </span>
+        </div>
+    </ng-template>
+</ng-template>
+<ng-template [ngIf]="!textI18nField.disabled">
+    <div class="full-width">
+        <!-- TODO: add editable view for text component -->
+    </div>
+</ng-template>

@@ -1,15 +1,15 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {LegalNoticeComponent} from './legal-notice.component';
 import {Component} from '@angular/core';
 import {LegalNoticeModule} from './legal-notice.module';
-import {ConfigurationService, TestConfigurationService} from 'netgrif-application-engine';
+import {ConfigurationService, TestConfigurationService} from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('LegalNoticeComponent', () => {
     let component: LegalNoticeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestWrapperComponent],
             imports: [LegalNoticeModule, HttpClientTestingModule],

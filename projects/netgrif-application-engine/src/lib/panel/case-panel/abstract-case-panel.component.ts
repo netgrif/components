@@ -1,10 +1,9 @@
 import {Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Case} from '../../resources/interface/case';
-import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
+import {toMoment} from '../../resources/types/nae-date-type';
 import {HeaderColumn} from '../../header/models/header-column';
-import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
-import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
+import {DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {CaseMetaField} from '../../header/case-header/case-menta-enum';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
@@ -13,6 +12,14 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoggerService} from '../../logger/services/logger.service';
 import {OverflowService} from '../../header/services/overflow.service';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
+import {UserService} from '../../user/services/user.service';
+import {take} from 'rxjs/operators';
+import {getImmediateData} from '../../utility/get-immediate-data';
+import {FeaturedValue} from '../abstract/featured-value';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {CurrencyPipe} from '@angular/common';
+import {PermissionService} from '../../authorization/permission/permission.service';
+import {PermissionType} from '../../process/permissions';
 
 
 export abstract class AbstractCasePanelComponent extends PanelWithImmediateData {
@@ -28,8 +35,9 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
 
     protected constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                           protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                          protected _log: LoggerService, protected _overflowService: OverflowService) {
-        super(_translateService);
+                          protected _log: LoggerService, protected _overflowService: OverflowService, protected _userService: UserService,
+                          protected _currencyPipe: CurrencyPipe, protected _permissionService: PermissionService) {
+        super(_translateService, _currencyPipe);
     }
 
     public show(event: MouseEvent): boolean {
@@ -37,30 +45,36 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         return false;
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
         switch (selectedHeader.fieldIdentifier) {
+            case CaseMetaField.MONGO_ID:
+                return {value: this.case_.stringId, icon: undefined, type: 'meta'};
             case CaseMetaField.VISUAL_ID:
-                return {value: this.case_.visualId, icon: undefined};
+                return {value: this.case_.visualId, icon: undefined, type: 'meta'};
             case CaseMetaField.TITLE:
-                return {value: this.case_.title, icon: undefined};
+                return {value: this.case_.title, icon: undefined, type: 'meta'};
             case CaseMetaField.AUTHOR:
-                return {value: this.case_.author.fullName, icon: 'account_circle'};
+                return {value: this.case_.author.fullName, icon: 'account_circle', type: 'meta'};
             case CaseMetaField.CREATION_DATE:
                 return {
                     value: toMoment(this.case_.creationDate).format(DATE_TIME_FORMAT_STRING),
-                    icon: 'event'
+                    icon: 'event',
+                    type: 'meta'
                 };
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
-        const immediate = this.case_.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
+        const immediate = getImmediateData(this.case_, selectedHeader.fieldIdentifier);
         return this.parseImmediateValue(immediate);
     }
 
     public deleteCase() {
-        this._caseResourceService.deleteCase(this.case_.stringId).subscribe(data => {
+        this._caseResourceService.deleteCase(this.case_.stringId).pipe(take(1)).subscribe((data: EventOutcomeMessageResource) => {
             if (data.success) {
+                this._snackBarService.openSuccessSnackBar(data.outcome.message === undefined
+                    ? this._translateService.instant('tasks.snackbar.caseDeleteSuccess')
+                    : data.outcome.message);
                 this._caseViewService.reload();
             } else if (data.error) {
                 this.throwError(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
@@ -68,6 +82,10 @@ export abstract class AbstractCasePanelComponent extends PanelWithImmediateData 
         }, error => {
             this.throwError(this._translateService.instant('tasks.snackbar.caseDeleteFailed'));
         });
+    }
+
+    public canDelete(): boolean {
+        return this._permissionService.hasCasePermission(this.case_, PermissionType.DELETE);
     }
 
     private throwError(message: string) {

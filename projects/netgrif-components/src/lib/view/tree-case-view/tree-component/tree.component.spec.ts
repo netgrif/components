@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TreeComponent} from './tree.component';
 import {TreeCaseViewComponentModule} from '../tree-case-view.module';
 import {ConfigurationService, MaterialModule, TestConfigurationService, TreeCaseViewService} from '@netgrif/application-engine';
@@ -8,7 +8,7 @@ describe('TreeComponent', () => {
     let component: TreeComponent;
     let fixture: ComponentFixture<TreeComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, TreeCaseViewComponentModule, NoopAnimationsModule],
             providers: [

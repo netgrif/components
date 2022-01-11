@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {GenericSnackBarComponent} from './generic-snack-bar.component';
 import {MaterialModule} from '../../../material/material.module';
@@ -7,7 +7,7 @@ import {MaterialModule} from '../../../material/material.module';
 //     let component: GenericSnackBarComponent;
 //     let fixture: ComponentFixture<GenericSnackBarComponent>;
 //
-//     beforeEach(async(() => {
+//     beforeEach(waitForAsync(() => {
 //         TestBed.configureTestingModule({
 //             imports: [MaterialModule],
 //             declarations: [GenericSnackBarComponent]

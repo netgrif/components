@@ -212,7 +212,9 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
         componentName: embeddedView.view.componentName,
         isTabbed: true,
         access: 'private' as 'private',
-        isDefaultTabbedTaskView
+        isDefaultTabbedTaskView,
+        enableCaseTitle: embeddedView.enableCaseTitle === undefined ? true : embeddedView.enableCaseTitle,
+        isCaseTitleRequired: embeddedView.isCaseTitleRequired === undefined ? true : embeddedView.isCaseTitleRequired
     };
 
     result.rules.push(createViewFunctionRef(tree, createViewArguments, false));

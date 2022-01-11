@@ -1,6 +1,7 @@
 import {Operator} from './operator';
-import moment, { Moment } from 'moment';
+import moment, {Moment} from 'moment';
 import {Query} from '../query/query';
+import {Operators} from './operators';
 
 /**
  * Range operator for indexed fields that store a date time in timestamp format.
@@ -22,6 +23,7 @@ export class InRangeDateTime extends Operator<Moment> {
      * Operator instead. The two date time objects must be in ascending order, if not the behavior is undefined.
      */
     createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+        this.checkArgumentsCount(args);
         const arg1 = moment(args[0]);
         arg1.milliseconds(0);
         arg1.seconds(0);
@@ -32,5 +34,13 @@ export class InRangeDateTime extends Operator<Moment> {
         return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
             return new Query(`(${keyword}:[${arg1.valueOf()} TO ${arg2.valueOf()}})`);
         });
+    }
+
+    getOperatorNameTemplate(): Array<string> {
+        return ['search.operator.inRange.from', Operator.INPUT_PLACEHOLDER, 'search.operator.inRange.to', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.IN_RANGE_DATE_TIME;
     }
 }

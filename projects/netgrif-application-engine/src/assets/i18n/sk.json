@@ -18,16 +18,21 @@
             "dataSaved": "Dáta úspešne uložené",
             "failedSave": "Ukladanie dát zlyhalo",
             "assignTask": "Priradenie dát",
+            "assignTaskSuccess": "Úloha úspešne priradená",
             "delegateTask": "Delegovanie úlohy",
+            "delegateTaskSuccess": "Delegovanie úlohy úspešné",
             "failed": "zlyhalo",
             "cancelTask": "Ruším priradenie úlohy",
+            "cancelTaskSuccess": "Zrušenie priradenia úlohy úspešné",
             "finishTask": "Dokončujem úlohu",
+            "finishTaskSuccess": "Dokončenie úlohy úspešné",
             "invalidData": "Niektoré polia majú nepovolené hodnoty",
             "missingRequired": "Niektoré povinné polia sú prázdne",
             "noCase": "Nenašli sa žiadne prípady",
             "caseGetFailed": "Načítanie prípadov zlyhalo",
             "noLongerExists": "Zvolená úloha už neexistuje",
             "caseDeleteFailed": "Prípad sa nepodarilo vymazať",
+            "caseDeleteSuccess": "Prípad úspešný zmazaný",
             "rolesSuccessAssign": "Roly boli úspešne priradené vybraným používateľom"
         },
         "view": {
@@ -38,7 +43,8 @@
             "delegate": "Delegovať",
             "finish": "Dokončiť",
             "cancel": "Zrušiť",
-            "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie."
+            "noData": "Táto úloha nemá žiadne údaje. Stlačte dokončiť pre pokračovanie.",
+            "redirecting": "Presmerovanie..."
         }
     },
     "side-menu": {
@@ -72,7 +78,8 @@
             "errSecond": "Názov je povinné pole.",
             "errThird": "Farba je povinné pole.",
             "noNets": "Žiadne povolené siete",
-            "createCase": "Uspešne vytvorený nový prípad"
+            "createCase": "Uspešne vytvorený nový prípad",
+            "defaultCaseName": "s prednastaveným názvom prípadu"
         },
         "user": {
             "assign": "Priradiť používateľa",
@@ -97,6 +104,10 @@
                     "name": "Vizuálne ID prípadu",
                     "placeholder": "Zadajte vizuálne ID prípadu"
                 },
+                "stringId": {
+                    "name": "ID prípadu",
+                    "placeholder": "Zadajte ID prípadu"
+                },
                 "author": {
                     "name": "Autor prípadu",
                     "placeholder": "Zadajte meno, alebo email autora prípadu"
@@ -116,6 +127,10 @@
                 "creationDate": {
                     "name": "Dátum vytvorenia prípadu",
                     "placeholder": "Zadajte dátum vytvorenia prípadu"
+                },
+                "creationDateTime": {
+                    "name": "Dátum a čas vytvorenia prípadu",
+                    "placeholder": "Zadajte dátum a čas vytvorenia prípadu"
                 },
                 "dataset": {
                     "name": "Dáta prípadu",
@@ -142,11 +157,40 @@
                     "name": "Úloha",
                     "placeholder": "Vyberte úlohu"
                 }
-            }
+            },
+            "select": "Kategória vyhľadávania",
+            "userMe": "JA"
         },
-        "placeholder": {
-            "text": "Hľadajte ľubovoľný text, alebo zvoľte jednu z kategórií"
-        }
+        "operator": {
+            "name": "Operátor",
+            "substring": "obsahuje podreťazec",
+            "inRange": {
+                "from": "od",
+                "to": "do"
+            },
+            "equals": "je presne",
+            "notEquals": "je rôzny od",
+            "moreThan": "je viac ako",
+            "lessThan": "je menej ako",
+            "lessThanEqual": "je menej alebo rovné ako",
+            "moreThanEqual": "je viac alebo rovné ako",
+            "like": "je podobný s",
+            "isNull": "je prázdny"
+        },
+        "tooltip": {
+            "toAdvanced": "Prepnúť na rozšírené vyhľadávanie",
+            "toFullText": "Prepnúť na jednoduché vyhľadávanie",
+            "help": "Nápoveda",
+            "save": "Uložiť filter",
+            "load": "Načítať filter"
+        },
+        "help": {
+            "title": "Nápoveda pre rozšírené vyhľadávanie",
+            "text": "Rozšírené vyhľadávanie slúži na zostavenie komplikovanejších požiadaviek na vyhľadávanie. Na začiatku zvoľte kategóriu vyhľadávania. Kategória vyhľadávania učruje, podľa čoho má váš dopyt vyhľadávať. Niektoré kategórie, ako napríklad \"Dáta prípadu\" vyžadujú dodatočnú konfiguráciu. Po zvolení kategórie je nutné zvoliť operátor vyhľadávania. Operátor rozhoduje o tom, akým spôsobom sa hľadá zhoda s hľadaným výtazom a dátami. Operátorom je možné hľadať napríklad presnú zhodu, alebo hodnotu z rozsahu. Nakoniec je nutné zadať hľadanú hodnotu. Dopyty je možné kombinovať pomocou kľúčových slov A SÚČASNE a ALEBO. Dopyty kombinované slovom ALEBO nájdu výsledky, spĺňajúce aspoň jednu z podmienok. Dopyty kombinované slovom A SÚČASNE nájdu výsledky spĺňajúce všetky podmienky."
+        },
+        "fullText": "Zadajte hľadaný text",
+        "and": "a súčasne",
+        "or": "alebo"
     },
     "dataField": {
         "validations": {
@@ -177,7 +221,7 @@
             "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru alebo súbor odstránte",
             "wontUploadSameFiles": "Vybrané súbory už boli nahrané. Ak chcete súbory aktualizovať odstránte už nahrané súbory",
             "fileUploadFailed": "Súbor sa nepodarilo nahrať",
-            "fileDeleteFailed":  "Súbor sa nepodarilo vymazať",
+            "fileDeleteFailed": "Súbor sa nepodarilo vymazať",
             "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
             "notSelectedUser": "Nebol vybraný žiadny používateľ",
@@ -195,6 +239,9 @@
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToDelete": "Kliknutím vymažte súbor"
+        },
+        "dynamicEnum": {
+            "noData": "Vášmu vyhľadávaniu nezodpovedajú žiadne položky"
         }
     },
     "dialog": {
@@ -231,8 +278,10 @@
     "headers": {
         "newHeader": "Zvoľte novú hlavičku",
         "date": "Zvoľte dátum",
+        "dateTime": "Zvoľte dátum a čas",
         "selectUser": "Vyberte používateľa",
         "caseMeta": {
+            "mongoID": "ID Prípadu",
             "visualID": "Vizuálne ID",
             "title": "Názov",
             "author": "Autor",
@@ -240,6 +289,8 @@
         },
         "taskMeta": {
             "case": "Prípad",
+            "caseID": "ID Prípadu",
+            "taskID": "ID Úlohy",
             "priority": "Priorita",
             "user": "Riešiteľ",
             "assignDate": "Dátum priradenia"
@@ -247,6 +298,7 @@
         "workflowMeta": {
             "initials": "Iniciály",
             "version": "Verzia",
+            "netId": "Proces ID",
             "creationDate": "Dátum nahratia",
             "title": "Názov",
             "author": "Autor"
@@ -331,7 +383,7 @@
         "noTaskSelected": "Momentálne nie je zvolený žiaden prípad. Pre vybranie prípadu zvoľte vrchol v strome."
     },
     "dashboard": {
-        "cases" : "prípady"
+        "cases": "prípady"
     },
     "workflow": {
         "delete": "zmazať",
@@ -344,7 +396,8 @@
             "deleteCanceled": "Zmazanie procesu zrušené",
             "deleteSuccess": "Proces bol úspešne zmazaný",
             "deleteError": "Proces sa nepodarilo zmazať",
-            "uploadFailed": "Súbor procesu sa nepodarilo nahrať"
+            "uploadFailed": "Súbor procesu sa nepodarilo nahrať.",
+            "uploadSuccess": "Súbor procesu bol úspešne nahraný"
         }
     },
     "legal": {
@@ -354,5 +407,13 @@
         "and": "a",
         "privacyNotice": "zásady ochrany osobných údajov",
         "sentenceEnd": ""
+    },
+    "publicView": {
+        "resolving": "Verejné view sa načítava ...",
+        "netNotExist": "Proces neexistuje",
+        "errorCreate": "Chyba pri vytváraní prípadu "
+    },
+    "dynamicNavigation": {
+        "couldNotResolveView": "Počas načítania zobrazenia sa vyskytla chyba. Zobrazenie nie je možné zobraziť"
     }
 }

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {BarchartCardComponent} from './barchart-card.component';
 import {CommonModule} from '@angular/common';
@@ -10,7 +10,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 //     let component: BarchartCardComponent;
 //     let fixture: ComponentFixture<BarchartCardComponent>;
 //
-//     beforeEach(async(() => {
+//     beforeEach(waitForAsync(() => {
 //         TestBed.configureTestingModule({
 //             imports: [CommonModule, NoopAnimationsModule, NgxChartsModule, HttpClientTestingModule, MaterialModule],
 //             declarations: [BarchartCardComponent]

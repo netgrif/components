@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {UserInviteComponent} from './user-invite.component';
 import {
@@ -19,7 +19,7 @@ describe('UserInviteComponent', () => {
     let component: UserInviteComponent;
     let fixture: ComponentFixture<UserInviteComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule, NoopAnimationsModule],
             providers: [

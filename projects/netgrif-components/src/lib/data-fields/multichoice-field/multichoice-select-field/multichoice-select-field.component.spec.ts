@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MultichoiceSelectFieldComponent} from './multichoice-select-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
@@ -12,7 +12,7 @@ describe('MultichoiceSelectFieldComponent', () => {
     let component: MultichoiceSelectFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -23,12 +23,15 @@ import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum
 import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
+import {take} from 'rxjs/operators';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
+    let oldTitle: string;
+    let translate: TranslateService;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
@@ -52,6 +55,7 @@ describe('AbstractWorkflowPanelComponent', () => {
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
+        translate = TestBed.inject(TranslateService);
     }));
 
     it('should create', () => {
@@ -60,6 +64,20 @@ describe('AbstractWorkflowPanelComponent', () => {
 
     it('show', () => {
         expect(component.show(new MouseEvent('type'))).toEqual(false);
+    });
+
+    it('should translate', (done) => {
+        translate.onLangChange.pipe(take(2)).subscribe(() => {
+            if (translate.currentLang === 'sk-SK') {
+                oldTitle = component.panelContent.netIdentifier.title;
+                expect(oldTitle).toEqual('Identifikátor siete');
+                translate.use('en-US');
+            } else {
+                expect(component.panelContent.netIdentifier.title).not.toEqual(oldTitle);
+                done();
+            }
+        });
+        translate.use('sk-SK');
     });
 
     afterEach(() => {

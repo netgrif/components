@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkflowViewExampleComponent } from './workflow-view-example.component';
 
@@ -6,7 +6,7 @@ describe('WorkflowsViewExampleComponent', () => {
   let component: WorkflowViewExampleComponent;
   let fixture: ComponentFixture<WorkflowViewExampleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WorkflowViewExampleComponent ]
     })

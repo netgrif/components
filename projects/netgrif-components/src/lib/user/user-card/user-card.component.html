@@ -1,9 +1,18 @@
 <div [ngSwitch]="mode" class="no-outline">
     <div *ngSwitchCase="'full'" #fullShowcase fxLayout="column" fxLayoutAlign="start center"
-         class="full-showcase-container no-outline margin-bottom-x2"
+         class="full-showcase-container no-outline margin-bottom-x2" [style.width.px]="width"
          [routerLink]="link">
-        <div [style.backgroundImage]="'url('+userBanner+')'" class="full-width user-banner mat-elevation-z6" matRipple
-             [matRippleTrigger]="fullShowcase"></div>
+        <ng-template [ngIf]="!userBannerExists()">
+            <div class="banner-wrapper mat-elevation-z6" matRipple [matRippleTrigger]="fullShowcase">
+                <div [style.backgroundImage]="'url(assets/netgrif-cubes-upper-left.png)'" class="cube-upper-left">
+                    <div [style.backgroundImage]="'url(assets/netgrif-cubes-down-right.png)'" class="cube-down-right"></div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template [ngIf]="userBannerExists()">
+            <div [style.backgroundImage]="'url('+userBanner+')'" class="full-width user-banner mat-elevation-z6" matRipple
+                 [matRippleTrigger]="fullShowcase"></div>
+        </ng-template>
         <div class="user-avatar-large margin-bottom-default mat-elevation-z6" matRipple
              [matRippleTrigger]="fullShowcase">
             <img [src]="userAvatar" alt="user avatar" class="full-width full-height">

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EmailSubmissionFormComponent} from './email-submission-form.component';
 import {FormBuilder} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -11,7 +11,7 @@ describe('EmailSubmissionFormComponent', () => {
     let component: EmailSubmissionFormComponent;
     let fixture: ComponentFixture<EmailSubmissionFormComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

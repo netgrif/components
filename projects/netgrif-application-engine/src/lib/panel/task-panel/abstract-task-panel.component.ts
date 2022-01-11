@@ -28,6 +28,12 @@ import {Task} from '../../resources/interface/task';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
 import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
+import {FeaturedValue} from '../abstract/featured-value';
+import {CurrencyPipe} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PermissionService} from '../../authorization/permission/permission.service';
+import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
 
@@ -36,15 +42,25 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
      * Set by an @Input() on a setter function, that also resolves featured fields.
      */
     protected _taskPanelData: TaskPanelData;
+    protected _forceLoadDataOnOpen = false;
     @Input() panelContentComponent: Type<any>;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+
+    @Input()
+    set forceLoadDataOnOpen(force: boolean) {
+        this._forceLoadDataOnOpen = force;
+        this._assignPolicyService.forced = force;
+    }
+
+    @Input() textEllipsis = false;
     /**
      * Emits notifications about task events
      */
     @Output() taskEvent: EventEmitter<TaskEventNotification>;
+    @Output() panelRefOutput: EventEmitter<MatExpansionPanel>;
 
     public portal: ComponentPortal<any>;
     public panelRef: MatExpansionPanel;
@@ -54,6 +70,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     protected _subOperationOpen: Subscription;
     protected _subOperationClose: Subscription;
     protected _subOperationReload: Subscription;
+    protected _subOperationForceReload: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
 
@@ -72,15 +89,28 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
                           protected _disableFunctions: DisableButtonFuntions,
-                          protected _translate: TranslateService) {
-        super(_translate);
+                          protected _translate: TranslateService,
+                          protected _currencyPipe: CurrencyPipe,
+                          protected _changedFieldsService: ChangedFieldsService,
+                          protected _permissionService: PermissionService) {
+        super(_translate, _currencyPipe);
         this.taskEvent = new EventEmitter<TaskEventNotification>();
+        this.panelRefOutput = new EventEmitter<MatExpansionPanel>();
         this._subTaskEvent = _taskEventService.taskEventNotifications$.subscribe(event => {
             this.taskEvent.emit(event);
         });
-        this._subTaskData = _taskDataService.changedFields$.subscribe((changedFields: ChangedFields) => {
-            changedFields.frontendActionsOwner = this._taskContentService.task.stringId;
-            this._taskPanelData.changedFields.next(changedFields);
+        this._subTaskData = _changedFieldsService.changedFields$.subscribe((changedFieldsMap: ChangedFieldsMap) => {
+            const filteredCaseIds: Array<string> = Object.keys(changedFieldsMap).filter(
+                caseId => Object.keys(this._taskContentService.referencedTaskAndCaseIds).includes(caseId)
+            );
+            const changedFields: Array<ChangedFields> = [];
+            filteredCaseIds.forEach(caseId => {
+                const taskIds: Array<string> = this._taskContentService.referencedTaskAndCaseIds[caseId];
+                changedFields.push(...this._changedFieldsService.parseChangedFieldsByCaseAndTaskIds(caseId, taskIds, changedFieldsMap));
+            });
+            changedFields.filter(fields => fields !== undefined).forEach(fields => {
+               this.taskPanelData.changedFields.next(fields);
+            });
         });
         this._subOperationOpen = _taskOperations.open$.subscribe(() => {
             this.expand();
@@ -90,6 +120,9 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         });
         this._subOperationReload = _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
+        });
+        this._subOperationForceReload = _taskOperations.forceReload$.subscribe(() => {
+            this._taskViewService.reloadCurrentPage(true);
         });
         this._taskDisableButtonFunctions = {
             finish: (t: Task) => false,
@@ -107,9 +140,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         super.ngOnInit();
         this._taskContentService.task = this._taskPanelData.task;
 
-        // this._taskViewService.tasks$.subscribe(() => this.resolveFeaturedFieldsValues()); // TODO spraviť to inak ako subscribe
         this.createContentPortal();
-
         this._sub = this._taskPanelData.changedFields.subscribe(chFields => {
             this._taskContentService.updateFromChangedFields(chFields);
         });
@@ -124,6 +155,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
 
     ngAfterViewInit() {
         this.panelRef.opened.subscribe(() => {
+            this._taskContentService.expansionStarted();
             if (!this._taskState.isLoading()) {
                 this._assignPolicyService.performAssignPolicy(true);
             }
@@ -138,6 +170,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                 this._taskContentService.blockFields(!this.canFinish());
                 this._taskPanelData.initiallyExpanded = true;
             });
+            this._taskContentService.expansionFinished();
         });
         this.panelRef.afterCollapse.subscribe(() => {
             this._taskPanelData.initiallyExpanded = false;
@@ -179,6 +212,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
 
     public setPanelRef(panelRef: MatExpansionPanel) {
         this.panelRef = panelRef;
+        this.panelRefOutput.emit(panelRef);
     }
 
     assign() {
@@ -201,7 +235,19 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     finish() {
-        this._finishTaskService.validateDataAndFinish();
+        if (!this._taskContentService.validateTaskData()) {
+            if (this._taskContentService.task.dataSize <= 0) {
+                this._taskDataService.initializeTaskDataFields();
+            }
+            const invalidFields = this._taskContentService.getInvalidTaskData();
+            document.getElementById(invalidFields[0].stringId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        } else {
+            this._finishTaskService.validateDataAndFinish();
+        }
     }
 
     collapse() {
@@ -215,95 +261,108 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     }
 
     public canAssign(): boolean {
-        return this._taskEventService.canAssign();
+        return this._permissionService.canAssign(this.taskPanelData.task) && this.getAssignTitle() !== '';
     }
 
     public canReassign(): boolean {
-        return this._taskEventService.canReassign();
+        return this._permissionService.canReassign(this.taskPanelData.task);
     }
 
     public canCancel(): boolean {
-        return this._taskEventService.canCancel();
+        return this._permissionService.canCancel(this.taskPanelData.task) && this.getCancelTitle() !== '';
     }
 
     public canFinish(): boolean {
-        return this._taskEventService.canFinish();
+        return this._permissionService.canFinish(this.taskPanelData.task) && this.getFinishTitle() !== '';
     }
 
     public canCollapse(): boolean {
-        return this._taskEventService.canCollapse();
+        return this._permissionService.canCollapse(this.taskPanelData.task);
     }
 
     public canDo(action): boolean {
-        return this._taskEventService.canDo(action);
+        return this._permissionService.hasTaskPermission(this.taskPanelData.task, action) && this.getDelegateTitle() !== '';
     }
 
     public getAssignTitle(): string {
-        return this.taskPanelData.task.assignTitle ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
+        return (this.taskPanelData.task.assignTitle === '' || this.taskPanelData.task.assignTitle)
+            ? this.taskPanelData.task.assignTitle : 'tasks.view.assign';
     }
 
     public getCancelTitle(): string {
-        return this.taskPanelData.task.cancelTitle ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
+        return (this.taskPanelData.task.cancelTitle === '' || this.taskPanelData.task.cancelTitle)
+            ? this.taskPanelData.task.cancelTitle : 'tasks.view.cancel';
     }
 
     public getDelegateTitle(): string {
-        return this.taskPanelData.task.delegateTitle ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
+        return (this.taskPanelData.task.delegateTitle === '' || this.taskPanelData.task.delegateTitle)
+            ? this.taskPanelData.task.delegateTitle : 'tasks.view.delegate';
     }
 
     public getFinishTitle(): string {
-        return this.taskPanelData.task.finishTitle ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
+        return (this.taskPanelData.task.finishTitle === '' || this.taskPanelData.task.finishTitle)
+            ? this.taskPanelData.task.finishTitle : 'tasks.view.finish';
     }
 
     public canDisable(type: string): boolean {
         let disable = false;
         if (!!this.taskPanelData && !!this.taskPanelData.task) {
-            disable = disable || !!this._taskState.isLoading(this.taskPanelData.task.stringId) ||
-                !!this._taskState.isUpdating(this.taskPanelData.task.stringId);
+            disable = disable
+                || !!this._taskState.isLoading(this.taskPanelData.task.stringId)
+                || !!this._taskState.isUpdating(this.taskPanelData.task.stringId);
         }
         return disable || this._taskDisableButtonFunctions[type]({...this._taskContentService.task});
     }
 
-    protected getFeaturedMetaValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedMetaValue(selectedHeader: HeaderColumn): FeaturedValue {
         const task = this._taskPanelData.task;
         switch (selectedHeader.fieldIdentifier) {
             case TaskMetaField.CASE:
-                return {value: task.caseTitle, icon: ''};
+                return {value: task.caseTitle, icon: '', type: 'meta'};
+            case TaskMetaField.CASE_ID:
+                return {value: task.caseId, icon: '', type: 'meta'};
+            case TaskMetaField.TASK_ID:
+                return {value: task.stringId, icon: '', type: 'meta'};
             case TaskMetaField.TITLE:
-                return {value: task.title, icon: ''};
+                return {value: task.title, icon: '', type: 'meta'};
             case TaskMetaField.PRIORITY:
                 // TODO priority
                 if (!task.priority || task.priority < 2) {
-                    return {value: 'high', icon: 'error'};
+                    return {value: 'high', icon: 'error', type: 'meta'};
                 }
                 if (task.priority === 2) {
-                    return {value: 'medium', icon: 'north'};
+                    return {value: 'medium', icon: 'north', type: 'meta'};
                 }
-                return {value: 'low', icon: 'south'};
+                return {value: 'low', icon: 'south', type: 'meta'};
             case TaskMetaField.USER:
-                return {value: task.user ? task.user.fullName : '', icon: 'account_circle'};
+                return {value: task.user ? task.user.fullName : '', icon: 'account_circle', type: 'meta'};
             case TaskMetaField.ASSIGN_DATE:
                 return {
                     value: task.startDate ? toMoment(task.startDate).format(DATE_TIME_FORMAT_STRING) : '',
-                    icon: 'event'
+                    icon: 'event',
+                    type: 'meta'
                 };
         }
     }
 
-    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn) {
+    protected getFeaturedImmediateValue(selectedHeader: HeaderColumn): FeaturedValue {
         if (this._taskContentService.task && this._taskContentService.task.immediateData) {
             const immediate = this._taskContentService.task.immediateData.find(it => it.stringId === selectedHeader.fieldIdentifier);
             return this.parseImmediateValue(immediate);
         }
-        return {value: '', icon: ''};
+        return {value: '', icon: '', type: ''};
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._sub.unsubscribe();
         this._subTaskEvent.unsubscribe();
         this._subTaskData.unsubscribe();
         this._subOperationOpen.unsubscribe();
         this._subOperationClose.unsubscribe();
         this._subOperationReload.unsubscribe();
+        this._subOperationForceReload.unsubscribe();
         this._subPanelUpdate.unsubscribe();
+        this.taskEvent.complete();
     }
 }

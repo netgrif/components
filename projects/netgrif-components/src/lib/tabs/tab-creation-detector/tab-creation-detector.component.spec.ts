@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TabCreationDetectorComponent} from './tab-creation-detector.component';
 import {Component, Injector, NgModule, OnInit} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -24,7 +24,7 @@ describe('TabCreationDetectorComponent', () => {
     let component: TabCreationDetectorComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

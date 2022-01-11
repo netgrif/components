@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -14,12 +14,13 @@ import {AuthenticationMethodService} from '../services/authentication-method.ser
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {UserService} from '../../user/services/user.service';
 
 describe('AbstractAuthenticationOverlay', () => {
     let component: TestAuthenticationOverlayComponent;
     let fixture: ComponentFixture<TestAuthenticationOverlayComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestAuthenticationOverlayComponent],
             imports: [
@@ -56,7 +57,7 @@ describe('AbstractAuthenticationOverlay', () => {
 })
 class TestAuthenticationOverlayComponent extends AbstractAuthenticationOverlay {
     constructor(protected _session: SessionService, protected _spinnerOverlay: SpinnerOverlayService,
-                protected router: Router, protected redirectService: RedirectService) {
-        super(_session, _spinnerOverlay, router, redirectService);
+                protected router: Router, protected redirectService: RedirectService, protected userService: UserService) {
+        super(_session, _spinnerOverlay, router, redirectService, userService);
     }
 }

@@ -2,6 +2,7 @@ import {EscapeResult} from '../escape-result';
 import {Query} from '../query/query';
 import {BooleanOperator} from '../boolean-operator';
 import {WrapResult} from '../wrap-result';
+import {Operators} from './operators';
 
 /**
  * Represents the low level abstraction of query generation that is responsible for the creation of queries themselves.
@@ -15,9 +16,14 @@ import {WrapResult} from '../wrap-result';
 export abstract class Operator<T> {
 
     /**
+     * Represents the placeholder "block" in operator display names.
+     */
+    public static readonly INPUT_PLACEHOLDER = '';
+
+    /**
      * Reserved characters for Elasticsearch queries. These characters can be escaped with a `\` character.
      */
-    private static readonly ESCAPABLE_CHARACTERS = new Set (
+    private static readonly ESCAPABLE_CHARACTERS = new Set(
         ['+', '-', '=', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\', '/']);
 
     /**
@@ -35,7 +41,7 @@ export abstract class Operator<T> {
      */
     private readonly _operatorSymbols: string;
 
-    protected constructor(numberOfOperands: number, operatorSymbols: string = '') {
+    protected constructor(numberOfOperands: number, operatorSymbols = '') {
         this._numberOfOperands = numberOfOperands;
         this._operatorSymbols = operatorSymbols;
     }
@@ -105,21 +111,54 @@ export abstract class Operator<T> {
     }
 
     /**
+     * @returns the arity of the operator.
+     */
+    public get numberOfOperands(): number {
+        return this._numberOfOperands;
+    }
+
+    /**
      * Simple implementation of query generation. Will not be suitable for all Operator derivatives.
      *
      * Escapes the first argument from the `args` array, calls the [query()]{@link Operator#query} function for each `keyword` and combines
      * the results with an `OR` operator.
      * @returns query that wos constructed with the given arguments and keywords. Returns an empty query if no arguments are provided.
      */
-    public createQuery(elasticKeywords: Array<string>, args: Array<T>): Query {
-        if (args.length === 0) {
-            return Query.emptyQuery();
-        }
+    public createQuery(elasticKeywords: Array<string>, args: Array<T>, escapeArgs = true): Query {
+        this.checkArgumentsCount(args);
         return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
-            const escapedValue = Operator.escapeInput(args[0] as unknown as string);
+            const escapedValue = escapeArgs ?
+                Operator.escapeInput(args[0] as unknown as string) : ({value: args[0] as unknown as string, wasEscaped: false});
             const wrappedValue = Operator.wrapInputWithQuotes(escapedValue.value, escapedValue.wasEscaped);
             const queryString = Operator.query(keyword, wrappedValue.value, this._operatorSymbols);
             return new Query(queryString);
         });
+    }
+
+    /**
+     * The name template is used when generating search GUI, and so the arity of the operator should match the number of
+     * {@link INPUT_PLACEHOLDER} constant occurrences in the returned array.
+     *
+     * @returns an array of translation paths that represent the operator name, as it should be displayed to the user.
+     * The {@link INPUT_PLACEHOLDER} constant (or any falsy value) can be used to place visual input placeholder blocks in the
+     * operator name where user input is expected.
+     */
+    public abstract getOperatorNameTemplate(): Array<string>;
+
+    /**
+     * @returns the operator class in a serializable form
+     */
+    public abstract serialize(): Operators | string;
+
+    /**
+     * Checks whether the provided array contains at leas as many arguments, as is the operators number of operands.
+     * Throws an error if not enough arguments is provided.
+     * @param args an array of potential operands
+     */
+    protected checkArgumentsCount(args: Array<any>): void {
+        if (args.length < this.numberOfOperands) {
+            throw new Error(`At least ${this.numberOfOperands} arguments must be provided to `
+                + `create a query with ${this.numberOfOperands} operands!`);
+        }
     }
 }

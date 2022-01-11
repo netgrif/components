@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UserAssignItemComponent} from './user-assign-item.component';
 import {Component} from '@angular/core';
 import {MaterialModule, TranslateLibModule, UserValue} from '@netgrif/application-engine';
@@ -8,7 +8,7 @@ describe('UserAssignItemComponent', () => {
     let component: UserAssignItemComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule,
                 TranslateLibModule,

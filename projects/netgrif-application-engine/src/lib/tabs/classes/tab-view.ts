@@ -1,4 +1,4 @@
-import {TabContent, TabViewInterface} from '../interfaces';
+import {InjectedTabData, TabContent, TabViewInterface} from '../interfaces';
 import {OpenedTab} from './opened-tab';
 import {Injector, StaticProvider} from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -38,11 +38,11 @@ export class TabView implements TabViewInterface {
      */
     private tabViewInterface: TabViewInterface = {
         currentlySelectedTab: () => this.currentlySelectedTab(),
-        openTab: (tabContent: TabContent, autoswitch: boolean = false) => this.openTab(tabContent, autoswitch),
+        openTab: (tabContent: TabContent, autoswitch = false) => this.openTab(tabContent, autoswitch),
         switchToTabIndex: (index: number) => this.switchToTabIndex(index),
         switchToTabUniqueId: (uniqueId: string) => this.switchToTabUniqueId(uniqueId),
-        closeTabIndex: (index: number, force: boolean = false) => this.closeTabIndex(index, force),
-        closeTabUniqueId: (uniqueId: string, force: boolean = false) => this.closeTabUniqueId(uniqueId, force)
+        closeTabIndex: (index: number, force = false) => this.closeTabIndex(index, force),
+        closeTabUniqueId: (uniqueId: string, force = false) => this.closeTabUniqueId(uniqueId, force)
     };
 
     /**
@@ -86,7 +86,7 @@ export class TabView implements TabViewInterface {
      * @param openExisting - whether the opened tab already existing should be switched to existing one. Defaults to `true`.
      * @returns the `tabUniqueId` of the newly opened tab
      */
-    public openTab(tabContent: TabContent, autoswitch: boolean = false, openExisting: boolean = true): string {
+    public openTab(tabContent: TabContent, autoswitch = false, openExisting = true): string {
         if (tabContent.initial) {
             this._logger.warn(`'initial' attribute is not meant to be used with new tabs and will be ignored`);
             delete tabContent.initial;
@@ -194,7 +194,7 @@ export class TabView implements TabViewInterface {
      * @param index index of the tab that should be closed
      * @param force when `true` closes a tab even if it's `cantBeClosed` attribute is set to `true`
      */
-    public closeTabIndex(index: number, force: boolean = false): void {
+    public closeTabIndex(index: number, force = false): void {
         this.closeTab(index, force, `Tab at index ${index} can't be closed`);
     }
 
@@ -204,7 +204,7 @@ export class TabView implements TabViewInterface {
      * @param uniqueId - id of the tab that should be closed
      * @param force when `true` closes a tab even if it's `cantBeClosed` attribute is set to `true`
      */
-    public closeTabUniqueId(uniqueId: string, force: boolean = false): void {
+    public closeTabUniqueId(uniqueId: string, force = false): void {
         const index = this.getTabIndex(uniqueId);
         this.closeTab(index, force, `Tab with ID ${uniqueId} can't be closed`);
     }
@@ -228,6 +228,7 @@ export class TabView implements TabViewInterface {
         if (index === this.selectedIndex && this.selectedIndex + 1 < this.openedTabs.length) {
             this.openedTabs[index + 1].tabSelected$.next(true);
         }
+        this.openedTabs[index].tabClosed$.next();
         const deleted = this.openedTabs.splice(index, 1);
         deleted[0].destroy();
         if (index < this.selectedIndex) {
@@ -247,10 +248,11 @@ export class TabView implements TabViewInterface {
             Object.assign(tab.injectedObject, {
                 tabUniqueId: tab.uniqueId,
                 tabViewRef: this.tabViewInterface,
-                tabSelected$: tab.tabSelected$.asObservable()
-            });
+                tabSelected$: tab.tabSelected$.asObservable(),
+                tabClosed$: tab.tabClosed$.asObservable(),
+            } as InjectedTabData);
 
-            const providers: StaticProvider[] = [
+            const providers: Array<StaticProvider> = [
                 {provide: NAE_TAB_DATA, useValue: tab.injectedObject}
             ];
             providers.push({provide: NAE_VIEW_ID_SEGMENT, useValue: tab.initial ? tab.uniqueId : TabView.DYNAMIC_TAB_VIEW_ID_SEGMENT});

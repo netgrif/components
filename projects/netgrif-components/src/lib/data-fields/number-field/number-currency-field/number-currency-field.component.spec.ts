@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {DataFieldTemplateComponent} from '../../data-field-template/data-field-template.component';
@@ -8,7 +8,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    ConfigurationService,
+    ConfigurationService, CurrencyModule,
     MaterialModule,
     MockAuthenticationMethodService,
     MockAuthenticationService,
@@ -25,14 +25,15 @@ describe('NumberCurrencyFieldComponent', () => {
     let component: NumberCurrencyFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
                 AngularResizedEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                CurrencyModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -65,7 +66,7 @@ describe('NumberCurrencyFieldComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-number-currency-field [dataField]="field" [formControlRef]="formControl"' +
+    template: '<nc-number-currency-field [numberField]="field" [formControlRef]="formControl"' +
         ' [showLargeLayout]="label"></nc-number-currency-field>'
 })
 class TestWrapperComponent {

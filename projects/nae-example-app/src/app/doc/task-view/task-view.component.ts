@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
-    ConfigTaskViewServiceFactory,
     SearchService,
     SimpleFilter,
     TaskEventNotification,
@@ -11,16 +10,25 @@ import {
     NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
     NAE_VIEW_ID_SEGMENT,
     ViewIdService,
+    CategoryFactory,
+    NAE_SEARCH_CATEGORIES,
+    defaultTaskSearchCategoriesFactory,
+    NAE_ASYNC_RENDERING_CONFIGURATION,
+    NAE_BASE_FILTER,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('case');
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
+    return factory.createWithAllNets();
 };
 
-const searchServiceFactory = () => {
-    // TODO load/use base filter somehow
-    return new SearchService(SimpleFilter.emptyTaskFilter());
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyTaskFilter()
+    };
 };
 
 const disableButtonsFactory = () => {
@@ -34,7 +42,7 @@ const disableButtonsFactory = () => {
                     }
                 }
             }
-            return true;
+            return false;
         },
         delegate: (t: Task) => true,
     };
@@ -45,12 +53,15 @@ const disableButtonsFactory = () => {
     templateUrl: './task-view.component.html',
     styleUrls: ['./task-view.component.scss'],
     providers: [
-        ConfigTaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
-        {   provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]},
+        CategoryFactory,
+        TaskViewService,
+        SearchService,
+        ChangedFieldsService,
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory},
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
         {   provide: NAE_DEFAULT_HEADERS, useValue: [
                 'meta-case', 'meta-title', 'meta-priority', 'meta-priority',
                 'meta-user', 'all_data-number', 'all_data-text'
@@ -58,8 +69,11 @@ const disableButtonsFactory = () => {
         {   provide: NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
             useFactory: disableButtonsFactory
         },
-        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'task'},
-        ViewIdService
+        {   provide: NAE_VIEW_ID_SEGMENT, useValue: 'all-tasks'},
+        ViewIdService,
+        {   provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
+        {   provide: NAE_ASYNC_RENDERING_CONFIGURATION,
+            useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}}
     ]
 })
 export class TaskViewComponent extends AbstractTaskView implements AfterViewInit {

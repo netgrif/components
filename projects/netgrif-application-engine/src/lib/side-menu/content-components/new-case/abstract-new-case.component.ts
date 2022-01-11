@@ -1,8 +1,8 @@
-import {Inject, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Inject, OnDestroy, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {StepperSelectionEvent} from '@angular/cdk/stepper';
 import {map, startWith, tap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, ReplaySubject, Subscription} from 'rxjs';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
@@ -12,6 +12,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {MatToolbar} from '@angular/material/toolbar';
 import semver from 'semver';
+import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
+import {MatOption} from '@angular/material/core';
 
 interface Form {
     value: string;
@@ -19,64 +22,103 @@ interface Form {
     version?: string;
 }
 
-export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
+export abstract class AbstractNewCaseComponent implements OnDestroy {
 
     processFormControl = new FormControl('', Validators.required);
     titleFormControl = new FormControl('', Validators.required);
+    netVersion: string;
 
-    colors: Form[] = [
+    options: Array<Form> = [];
+    colors: Array<Form> = [
         {value: 'panel-primary-icon', viewValue: 'Primary'},
         {value: 'panel-accent-icon', viewValue: 'Accent'},
     ];
-    options: Array<Form> = [];
-    filteredOptions: Observable<Array<Form>>;
-    processOne: Promise<boolean>;
-    injectedData: NewCaseInjectionData;
+    filteredOptions$: Observable<Array<Form>>;
     @ViewChild('toolbar') toolbar: MatToolbar;
 
     @ViewChild('stepper1') stepper1;
     @ViewChild('stepper2') stepper2;
 
-    constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
-                protected _formBuilder: FormBuilder,
-                protected _snackBarService: SnackBarService,
-                protected _caseResourceService: CaseResourceService,
-                protected _hotkeysService: HotkeysService,
-                protected _translate: TranslateService) {
+    protected _options$: ReplaySubject<Array<Form>>;
+    protected _injectedData: NewCaseInjectionData;
+    protected _hasMultipleNets$: ReplaySubject<boolean>;
+    protected _notInitialized$: BehaviorSubject<boolean>;
+    private _allowedNetsSubscription: Subscription;
+
+    protected constructor(@Inject(NAE_SIDE_MENU_CONTROL) protected _sideMenuControl: SideMenuControl,
+                          protected _formBuilder: FormBuilder,
+                          protected _snackBarService: SnackBarService,
+                          protected _caseResourceService: CaseResourceService,
+                          protected _hotkeysService: HotkeysService,
+                          protected _translate: TranslateService) {
         if (this._sideMenuControl.data) {
-            this.injectedData = this._sideMenuControl.data as NewCaseInjectionData;
+            this._injectedData = this._sideMenuControl.data as NewCaseInjectionData;
+        }
+        if (!this._injectedData) {
+            this.closeNoNets();
         }
         this._hotkeysService.add(new Hotkey('enter', (event: KeyboardEvent): boolean => {
             this.nextStep();
             return false;
         }));
-    }
 
-    ngOnInit() {
-        if (!this.injectedData) {
-            this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.new-case.noNets'));
-            this._sideMenuControl.close({
-                opened: false
-            });
-        }
+        this._hasMultipleNets$ = new ReplaySubject(1);
+        this._notInitialized$ = new BehaviorSubject<boolean>(true);
+        this._options$ = new ReplaySubject(1);
 
-        this.injectedData.allowedNets$.subscribe(allowedNets => {
-            this.options = allowedNets.map(petriNet => ({value: petriNet.stringId, viewValue: petriNet.title, version: petriNet.version}));
+        this._allowedNetsSubscription = this._injectedData.allowedNets$.pipe(
+            map(nets => nets.map(petriNet => ({
+                value: petriNet.stringId,
+                viewValue: petriNet.title,
+                version: petriNet.version
+            }))),
+            map(nets => {
+                if (!this._sideMenuControl.allVersionEnabled) {
+                    return this.removeOldVersions(nets);
+                } else {
+                    return nets;
+                }
+            }),
+            tap(options => {
+                if (options.length === 0) {
+                    this.closeNoNets();
+                }
+                this.options = options;
+                this._hasMultipleNets$.next(options.length > 1);
+            })
+        ).subscribe(options => {
+            this._options$.next(options);
+            if (!this._notInitialized$.closed) {
+                this._notInitialized$.next(false);
+                this._notInitialized$.complete();
+            }
         });
 
-        if (!this._sideMenuControl.allVersionEnabled) {
-            this.removeOldVersions();
-        }
+        this.filteredOptions$ = combineLatest([this._options$, this.processFormControl.valueChanges.pipe(startWith(''))]).pipe(
+            map(sources => {
+                const options = sources[0];
+                const input = typeof sources[1] === 'string' || sources[1] === null ? sources[1] : sources[1].viewValue;
+                return input ? this._filter(input, options) : options.slice();
+            }),
+            tap(filteredOptions => {
+                if (filteredOptions.length === 1) {
+                    this.processFormControl.setValue(filteredOptions[0], {emitEvent: false});
+                }
+            })
+        );
+    }
 
-        this.filteredOptions = this.processFormControl.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => typeof value === 'string' ? value : value.viewValue),
-                map(name => name ? this._filter(name) : this.options.slice()),
-                tap(() => this.options.length === 1 ? this.processFormControl.setValue(this.options[0]) : undefined)
-            );
+    ngOnDestroy(): void {
+        this._hasMultipleNets$.complete();
+        this._allowedNetsSubscription.unsubscribe();
+    }
 
-        this.processOne = Promise.resolve(this.options.length === 1);
+    public get hasMultipleNets$(): Observable<boolean> {
+        return this._hasMultipleNets$.asObservable();
+    }
+
+    public get notInitialized$(): Observable<boolean> {
+        return this._notInitialized$.asObservable();
     }
 
     public stepChange($event: StepperSelectionEvent): void {
@@ -91,48 +133,52 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         return process && process.viewValue ? process.viewValue : '';
     }
 
-
     public createNewCase(): void {
-        if (this.titleFormControl.valid) {
+        if (this.titleFormControl.valid || !this.isCaseTitleRequired()) {
             const newCase = {
-                title: this.titleFormControl.value,
-                color: 'black',
+                title: this.titleFormControl.value === '' ? null : this.titleFormControl.value,
+                color: 'panel-primary-icon',
                 netId: this.options.length === 1 ? this.options[0].value : this.processFormControl.value.value
             };
 
             this._caseResourceService.createCase(newCase)
                 .subscribe(
-                    response => {
-                        this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
-                            + ' ' + newCase.title);
+                    (response: EventOutcomeMessageResource) => {
+                        this._snackBarService.openSuccessSnackBar(response.outcome.message === undefined
+                            ? this._translate.instant('side-menu.new-case.createCase') + ' ' + newCase.title
+                            : response.outcome.message);
                         this._sideMenuControl.close({
                             opened: false,
-                            message: 'Confirm new case setup',
-                            data: response
+                            message: response.outcome.message === undefined
+                                ? 'Confirm new case setup'
+                                : response.outcome.message
+                            ,
+                            data: (response.outcome as CreateCaseEventOutcome).aCase
                         });
                     },
-                    error => this._snackBarService.openErrorSnackBar(error)
+                    error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error)
                 );
         }
     }
 
     /**
      * Function to filter out matchless options without accent and case-sensitive differences
-     * @param  value to compare matching options
+     * @param value to compare matching options
+     * @param options that should be filtered
      * @return  return matched options
      */
-    protected _filter(value: string): Form[] {
+    protected _filter(value: string, options: Array<Form>): Array<Form> {
         const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-        return this.options.filter(option => option.viewValue.toLowerCase().normalize('NFD')
+        return options.filter(option => option.viewValue.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        this.filteredOptions = this.processFormControl.get('processFormControl').valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value))
-        );
+    protected closeNoNets() {
+        this._snackBarService.openErrorSnackBar(this._translate.instant('side-menu.new-case.noNets'));
+        this._sideMenuControl.close({
+            opened: false
+        });
     }
 
     nextStep() {
@@ -175,8 +221,9 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         }
 
         const caze = this._translate.instant('side-menu.new-case.case');
-        const name = this.options.length === 1 ? this.options[0].viewValue : this.processFormControl.value.viewValue;
-        const title = caze + '-' + name;
+        const name = typeof this.processFormControl.value === 'string' || this.processFormControl.value === null ?
+            undefined : this.processFormControl.value.viewValue;
+        const title = name === undefined ? caze : caze + ' - ' + name;
         if (title.length > size) {
             const tmp = title.slice(0, size);
             return tmp + '...';
@@ -184,9 +231,9 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
         return title;
     }
 
-    private removeOldVersions() {
-        const tempNets = Object.assign([], this.options);
-        const petriNetIds = new Set(this.options.map(form => form.value));
+    private removeOldVersions(options: Array<Form>): Array<Form> {
+        const tempNets = Object.assign([], options);
+        const petriNetIds = new Set(options.map(form => form.value));
         const newestNets = new Array<Form>();
 
         for (const value of petriNetIds) {
@@ -198,6 +245,26 @@ export abstract class AbstractNewCaseComponent implements OnInit, OnChanges {
             }
             newestNets.push(current);
         }
-        this.options = Object.assign([], newestNets);
+        return newestNets;
+    }
+
+    isCaseTitleEnabled(): boolean {
+        return !!(this._injectedData?.newCaseCreationConfiguration?.enableCaseTitle ?? true);
+    }
+
+    isCaseTitleRequired(): boolean {
+        return this.isCaseTitleEnabled() && !!(this._injectedData?.newCaseCreationConfiguration?.isCaseTitleRequired ?? true);
+    }
+
+    showVersion(option: MatOption): void {
+        if (option !== undefined && option.value !== undefined && option.value.version !== undefined)
+            this.netVersion = option.value.version;
+    }
+
+    checkVersion(viewValue: any): void {
+        const currentOption = typeof viewValue === 'string' || viewValue === null ? undefined : viewValue.version;
+        if (currentOption === undefined) {
+            this.netVersion = '';
+        }
     }
 }

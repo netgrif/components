@@ -2,6 +2,8 @@ import {Operator} from './operator';
 import {Moment} from 'moment';
 import {Query} from '../query/query';
 import moment from 'moment';
+import {clearTimeInformation} from '../../../utility/clear-time-information';
+import {Operators} from './operators';
 
 /**
  * Range operator for indexed fields that store a date in timestamp format.
@@ -23,24 +25,22 @@ export class InRangeDate extends Operator<Moment> {
      * if you want a date time query instead. The two dates must be in ascending order, if not the behavior is undefined.
      */
     createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+        this.checkArgumentsCount(args);
         const arg1 = moment(args[0]);
-        this.clearTimeInformation(arg1);
+        clearTimeInformation(arg1);
         const arg2 = moment(args[1]);
-        this.clearTimeInformation(arg2);
+        clearTimeInformation(arg2);
         arg2.date(arg2.date() + 1); // moment handles rollover
         return Operator.forEachKeyword(elasticKeywords, (keyword: string) => {
             return new Query(`(${keyword}:[${arg1.valueOf()} TO ${arg2.valueOf()}})`);
         });
     }
 
-    /**
-     * Sets milliseconds, seconds, minutes and hours of the provided Moment object to 0
-     * @param date object that
-     */
-    protected clearTimeInformation(date: Moment): void {
-        date.milliseconds(0);
-        date.seconds(0);
-        date.minutes(0);
-        date.hours(0);
+    getOperatorNameTemplate(): Array<string> {
+        return ['search.operator.inRange.from', Operator.INPUT_PLACEHOLDER, 'search.operator.inRange.to', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.IN_RANGE_DATE;
     }
 }

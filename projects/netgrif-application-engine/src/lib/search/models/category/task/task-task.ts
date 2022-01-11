@@ -1,51 +1,40 @@
-import {AutocompleteCategory} from '../autocomplete-category';
-import {NetTaskPair} from '../net-task-pair';
-import {TaskProcess} from './task-process';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 import {Equals} from '../../operator/equals';
-import {Query} from '../../query/query';
-import {BooleanOperator} from '../../boolean-operator';
+import {NotEquals} from '../../operator/not-equals';
+import {TaskNetAttributeAutocompleteCategory} from './task-net-attribute-autocomplete-category';
+import {Net} from '../../../../process/net';
+import {NameIdPair} from '../name-id-pair';
+import {Categories} from '../categories';
 
 
-export class TaskTask extends AutocompleteCategory<NetTaskPair> {
+export class TaskTask extends TaskNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.task.task';
-    protected _processCategory: TaskProcess;
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+    constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
         super(['transitionId'],
-            [operators.getOperator(Equals)],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${TaskTask._i18n}.name`,
-            logger);
-        this._processCategory = this._optionalDependencies.categoryFactory.get(TaskProcess) as TaskProcess;
-        this._processCategory.selectDefaultOperator();
+            logger,
+            operators,
+            optionalDependencies);
     }
 
-    protected createOptions(): void {
-        this._optionalDependencies.taskViewService.allowedNets$.subscribe(allowedNets => {
-            allowedNets.forEach(petriNet => {
-                petriNet.transitions.forEach(transition => {
-                    this.addToMap(transition.title, {
-                        netId: petriNet.stringId,
-                        taskId: transition.stringId
-                    });
-                });
-            });
-        });
-    }
-
-    protected generateQuery(userInput: Array<NetTaskPair>): Query {
-        const queries = userInput.map(pair => {
-            const taskQuery = this._selectedOperator.createQuery(this.elasticKeywords, [pair.taskId]);
-            const netQuery = this._processCategory.generatePredicate([pair.netId]).query;
-            return Query.combineQueries([taskQuery, netQuery], BooleanOperator.AND);
-        });
-        return Query.combineQueries(queries, BooleanOperator.OR);
+    protected extractAttributes(petriNet: Net): Array<NameIdPair> {
+        return petriNet.transitions.map(t => ({id: t.stringId, name: t.title}));
     }
 
     get inputPlaceholder(): string {
         return `${TaskTask._i18n}.placeholder`;
+    }
+
+    duplicate(): TaskTask {
+        return new TaskTask(this._operatorService, this._log, this._optionalDependencies);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.TASK_TASK;
     }
 }

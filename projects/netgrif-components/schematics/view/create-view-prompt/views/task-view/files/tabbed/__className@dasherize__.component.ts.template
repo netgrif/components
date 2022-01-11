@@ -1,20 +1,30 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
-    ArrayTaskViewServiceFactory,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    CategoryFactory,
+    defaultTaskSearchCategoriesFactory,
     InjectedTabbedTaskViewData,
+    NAE_BASE_FILTER,
+    NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
+    NAE_TASK_VIEW_CONFIGURATION,
     SearchService,
     TabbedTaskView,
+    tabbedAllowedNetsServiceFactory,
+    tabbedTaskViewConfigurationFactory,
     TaskViewService,
-    tabbedTaskViewServiceFactory,
     ViewIdService,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
 } from '@netgrif/components';
 
-const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
-    return new SearchService(injectedTabData.baseFilter);
+const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
+    return {
+        filter: injectedTabData.baseFilter
+    };
 };
 
 @Component({
@@ -22,15 +32,22 @@ const searchServiceFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     templateUrl: './<%= dasherize(className) %>.component.html',
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
-        ArrayTaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory,
+        CategoryFactory,
+        TaskViewService,
+        SearchService,
+        ChangedFieldsService
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory,
             deps: [NAE_TAB_DATA]},
-        {   provide: TaskViewService,
-            useFactory: tabbedTaskViewServiceFactory,
-            deps: [ArrayTaskViewServiceFactory, NAE_TAB_DATA]},<% if(isDefaultTabbedTaskView) { %>
+        {   provide: AllowedNetsService,
+            useFactory: tabbedAllowedNetsServiceFactory,
+            deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]},
+        {   provide: NAE_TASK_VIEW_CONFIGURATION,
+            useFactory: tabbedTaskViewConfigurationFactory,
+            deps: [NAE_TAB_DATA]},<% if(isDefaultTabbedTaskView) { %>
         {   provide: ViewIdService, useValue: null},<% } else { %>
         ViewIdService,<% } %>
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
 export class <%= classify(className) %>Component extends TabbedTaskView implements AfterViewInit {

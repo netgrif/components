@@ -1,6 +1,8 @@
 export interface Preferences {
     locale?: string;
 
+    drawerWidth?: number;
+
     taskFilters: {
         [viewId: string]: Array<string>
     };

@@ -16,6 +16,9 @@ export class ContentComponent implements OnInit {
               console.log(`Tab with id ${injected.tabUniqueId} deselected`);
           }
       });
+      injected.tabClosed$.subscribe(() => {
+          console.log(`Tab with id ${injected.tabUniqueId} closed`);
+      });
   }
 
   ngOnInit(): void {

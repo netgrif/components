@@ -60,6 +60,7 @@ export class UnlimitedTaskContentService extends TaskContentService implements O
      * Completes the underling stream.
      */
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._task$.complete();
     }
 }

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HtmlTextareaFieldComponent} from './html-textarea-field.component';
 import {QuillModule} from 'ngx-quill';
@@ -27,7 +27,7 @@ describe('HtmlTextareaFieldComponent', () => {
     let component: HtmlTextareaFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

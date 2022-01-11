@@ -1,5 +1,5 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {CommonModule} from '@angular/common';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {CommonModule, CurrencyPipe} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -17,8 +17,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {CaseResourceService} from '../../resources/engine-endpoint/case-resource.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {TestCaseSearchServiceFactory, TestCaseViewFactory} from '../../utility/tests/test-factory-methods';
-import {ConfigCaseViewServiceFactory} from '../../view/case-view/service/factory/config-case-view-service-factory';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {SearchService} from '../../search/search-service/search.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
@@ -26,12 +25,19 @@ import {AuthenticationService} from '../../authentication/services/authenticatio
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {OverflowService} from '../../header/services/overflow.service';
+import {UserService} from '../../user/services/user.service';
+import {Case} from '../../resources/interface/case';
+import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
+import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {PermissionService} from '../../authorization/permission/permission.service';
+import {PermissionType} from '../../process/permissions';
 
 describe('AbstractCasePanelComponent', () => {
     let component: TestCasePanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
@@ -46,20 +52,18 @@ describe('AbstractCasePanelComponent', () => {
                 LoggerService,
                 TranslateService,
                 CaseResourceService,
+                CaseViewService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                SearchService,
+                CurrencyPipe,
                 {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
-                },
-                ConfigCaseViewServiceFactory,
-                {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                SignUpService
+                SignUpService,
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 TestCasePanelComponent,
@@ -81,6 +85,12 @@ describe('AbstractCasePanelComponent', () => {
         expect(component.show(new MouseEvent('type'))).toEqual(false);
     });
 
+    it('should test canDelete', () => {
+        const spy = spyOn(TestBed.inject(PermissionService), 'hasCasePermission');
+        component.canDelete();
+        expect(spy).toHaveBeenCalledWith(component.case_, PermissionType.DELETE);
+    });
+
     afterEach(() => {
         TestBed.resetTestingModule();
     });
@@ -93,8 +103,11 @@ describe('AbstractCasePanelComponent', () => {
 class TestCasePanelComponent extends AbstractCasePanelComponent {
     constructor(protected _caseResourceService: CaseResourceService, protected _caseViewService: CaseViewService,
                 protected _snackBarService: SnackBarService, protected _translateService: TranslateService,
-                protected _log: LoggerService, @Optional() protected overflowService: OverflowService) {
-        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService);
+                protected _log: LoggerService, @Optional() protected overflowService: OverflowService,
+                protected _userService: UserService, protected _currencyPipe: CurrencyPipe,
+                protected _permissionService: PermissionService) {
+        super(_caseResourceService, _caseViewService, _snackBarService, _translateService, _log, overflowService,
+            _userService, _currencyPipe, _permissionService);
     }
 }
 
@@ -107,20 +120,37 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', true, 'netid'),
     ]);
-    case_ = {
+    case_: Case = {
         stringId: 'string',
         title: 'string',
-        identifier: 'string',
-        version: 'string',
-        initials: 'string',
-        defaultCaseName: 'string',
-        createdDate: [2020, 1, 1, 10, 10],
         author: {email: 'email', fullName: 'fullName'},
+        permissions: {
+            default: {
+                delete: true
+            }
+        },
+        users: {},
+        color: 'color',
+        creationDate: [],
+        lastModified: [],
+        visualId: '',
+        resetArcTokens: {},
+        processIdentifier: '',
+        petriNetId: '',
+        petriNetObjectId: {
+            counter: 0,
+            date: 0,
+            machineIdentifier: 0,
+            processIdentifier: 0,
+            time: 0,
+            timeSecond: 0,
+            timestamp: 0
+        },
         immediateData: [
             {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
             {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},

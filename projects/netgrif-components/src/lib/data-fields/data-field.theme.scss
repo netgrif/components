@@ -53,5 +53,21 @@
         color: mat-color($primary) !important;
         font-weight: 700 !important;
     }
+
+    .enum-icon-item:hover {
+        color: mat-color($primary) !important;
+    }
+
+    .enum-icon-item-active {
+        color: mat-color($primary) !important;
+    }
+
+    .file-list-item:hover {
+        background-color: rgba(mat-color($secondary, A200), 0.3)
+    }
+
+    .primary-background-color {
+        background: mat-color($primary);
+    }
 }
 

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -7,12 +7,13 @@ import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../material/material.module';
 import {TranslateLibModule} from '../translate/translate-lib.module';
 import {AbstractPanelComponent} from './abstract-panel.component';
+import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
 
 describe('AbstractPanelComponent', () => {
     let component: TestPanelComponent;
     let fixture: ComponentFixture<TestPanelComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
@@ -47,7 +48,7 @@ describe('AbstractPanelComponent', () => {
     template: ''
 })
 class TestPanelComponent extends AbstractPanelComponent {
-    constructor() {
-        super();
+    constructor(protected _caseListFontColorService: CaseListFontColorService) {
+        super(_caseListFontColorService);
     }
 }

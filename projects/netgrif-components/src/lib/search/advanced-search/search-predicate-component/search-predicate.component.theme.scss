@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@mixin search-predicate-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .predicate-body-color {
+        background: mat-color($primary, 50);
+    }
+}

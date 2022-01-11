@@ -1,7 +1,7 @@
-import {EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 
-export abstract class AbstractNavigationRailComponent implements OnInit {
+export abstract class AbstractNavigationRailComponent implements OnDestroy {
 
     @Input() public expandOnHover: boolean;
     @Output() public expandChange: EventEmitter<boolean>;
@@ -16,7 +16,8 @@ export abstract class AbstractNavigationRailComponent implements OnInit {
         this._expanded = false;
     }
 
-    ngOnInit(): void {
+    ngOnDestroy(): void {
+        this.expandChange.complete();
     }
 
     get expanded(): boolean {

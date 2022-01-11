@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@mixin search-configuration-input-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .argument-placeholder-color {
+        background: mat-color($primary, 50);
+    }
+}

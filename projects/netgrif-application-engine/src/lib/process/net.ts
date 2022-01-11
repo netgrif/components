@@ -4,10 +4,13 @@ import {ImmediateData} from '../resources/interface/immediate-data';
 import Transition from './transition';
 import Transaction from './transaction';
 import NetRole from './netRole';
+import {Permissions} from './permissions';
+import {PetriNetReferenceWithPermissions} from './petri-net-reference-with-permissions';
+
 /**
  * @ignore
  */
-export class Net {
+export class Net implements PetriNetReferenceWithPermissions {
     /**
      * @ignore
      */
@@ -56,6 +59,10 @@ export class Net {
      * @ignore
      */
     private _roles: Array<NetRole>;
+    /**
+     * @ignore
+     */
+    private _permissions: Permissions;
     /**
      * @ignore
      */
@@ -168,5 +175,13 @@ export class Net {
 
     set roles(value: Array<NetRole>) {
         this._roles = value;
+    }
+
+    get permissions(): Permissions {
+        return this._permissions;
+    }
+
+    set permissions(value: Permissions) {
+        this._permissions = value;
     }
 }

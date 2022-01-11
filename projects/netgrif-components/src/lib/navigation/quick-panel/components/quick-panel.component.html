@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" class="quick-panel">
+<div fxLayout="row" fxLayoutAlign="space-between center" class="quick-panel" [style.width.px]="width">
     <nc-language-selector *ngIf="items.includes('language')" [language]="getLang()"></nc-language-selector>
     <nc-internal-link *ngIf="items.includes('settings')" icon="settings" link="/settings"></nc-internal-link>
     <nc-logout-shortcut *ngIf="items.includes('logout')"></nc-logout-shortcut>

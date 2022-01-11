@@ -1,23 +1,31 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
     AbstractTaskView,
-    ConfigTaskViewServiceFactory,
+    AllowedNetsService,
+    AllowedNetsServiceFactory,
+    CategoryFactory,
+    defaultTaskSearchCategoriesFactory,
+    NAE_BASE_FILTER,
+    NAE_SEARCH_CATEGORIES,
+    NAE_VIEW_ID_SEGMENT,
     SearchService,
     SimpleFilter,
     TaskViewService,
-    NAE_VIEW_ID_SEGMENT,
     ViewIdService,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 import {
     HeaderComponent,
 } from '@netgrif/components';
 
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('<%= viewPath %>');
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
+    return factory.createFromConfig('<%= viewPath %>');
 };
 
-const searchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyTaskFilter());
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyTaskFilter()
+    };
 };
 
 @Component({
@@ -25,15 +33,19 @@ const searchServiceFactory = () => {
     templateUrl: './<%= dasherize(className) %>.component.html',
     styleUrls: ['./<%= dasherize(className) %>.component.scss'],
     providers: [
-        ConfigTaskViewServiceFactory,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
-        {   provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]},
+        CategoryFactory,
+        SearchService,
+        TaskViewService,
+        ChangedFieldsService
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory},
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
         {   provide: NAE_VIEW_ID_SEGMENT,
             useValue: '<%= viewIdSegment %>'},
         ViewIdService,
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
 export class <%= classify(className) %>Component extends AbstractTaskView implements AfterViewInit {

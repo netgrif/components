@@ -65,6 +65,7 @@ export class SingleTaskContentService extends TaskContentService implements OnDe
      * Completes the underling stream.
      */
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         if (!this._task$.closed) {
             this._task$.complete();
         }

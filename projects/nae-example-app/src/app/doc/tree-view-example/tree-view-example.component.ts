@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {CaseResourceService, Filter, FilterType, ProcessService, SimpleFilter, TreeCaseViewService} from '@netgrif/application-engine';
+import {CaseResourceService, Filter, FilterType,
+    ProcessService, SimpleFilter, TreeCaseViewService, CreateCaseEventOutcome} from '@netgrif/application-engine';
 import {HttpParams} from '@angular/common/http';
 
 @Component({
@@ -22,7 +23,7 @@ export class TreeViewExampleComponent {
         let params: HttpParams = new HttpParams();
         params = params.set('sort', 'creationDateSortable,asc');
         this._caseResource.searchCases(
-            new SimpleFilter('', FilterType.CASE, {petriNet: {identifier: 'tree_test'}, query: '(title:root)'}), params)
+            new SimpleFilter('', FilterType.CASE, {process: {identifier: 'tree_test'}, query: '(title:root)'}), params)
             .subscribe(page => {
                 if (page && page.content && Array.isArray(page.content) && page.content.length > 0) {
                     this.filter = new SimpleFilter('id', FilterType.CASE, {
@@ -38,7 +39,7 @@ export class TreeViewExampleComponent {
                         };
                         this._caseResource.createCase(newCaseRequest).subscribe(newCase => {
                             this.filter = new SimpleFilter('id', FilterType.CASE, {
-                                query: 'stringId:' + newCase.stringId
+                                query: 'stringId:' + (newCase.outcome as CreateCaseEventOutcome).aCase.stringId
                             });
                             this.loading = false;
                         });

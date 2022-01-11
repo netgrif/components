@@ -7,13 +7,13 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import Transition from '../../process/transition';
 import {HttpEventType, HttpParams} from '@angular/common/http';
 import Transaction from '../../process/transaction';
-import NetRole from '../../process/netRole';
-import {MessageResource, PetriNetMessageResource} from '../interface/message-resource';
+import {EventOutcomeMessageResource, MessageResource} from '../interface/message-resource';
 import {PetriNetReference} from '../interface/petri-net-reference';
 import {PetriNetRequestBody} from '../interface/petri-net-request-body';
 import {Page} from '../interface/page';
 import {processMessageResponse} from '../../utility/process-message-response';
 import {AbstractResourceService} from '../abstract-endpoint/abstract-resource.service';
+import RolesAndPermissions from '../../process/rolesAndPermissions';
 
 @Injectable({
     providedIn: 'root'
@@ -55,7 +55,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/transitions
      */
-    public getPetriNetTranstions(netId: string): Observable<Array<Transition>> {
+    public getPetriNetTransitions(netId: string): Observable<Array<Transition>> {
         return this._resourceProvider.get$('/petrinet/transitions', this.SERVER_URL, new HttpParams().set('ids', netId))
             .pipe(map(r => this.changeType(r, 'transitionReferences')));
     }
@@ -79,9 +79,9 @@ export class PetriNetResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/{id}/roles
      */
-    public getPetriNetRoles(netId: string, params?: Params): Observable<Array<NetRole>> {
+    public getPetriNetRoles(netId: string, params?: Params): Observable<RolesAndPermissions> {
         return this._resourceProvider.get$('/petrinet/' + netId + '/roles', this.SERVER_URL, params)
-            .pipe(map(r => this.changeType(r, 'processRoles')));
+            .pipe(map(r => this.changeType(r, undefined)));
     }
 
     /**
@@ -128,7 +128,7 @@ export class PetriNetResourceService extends AbstractResourceService {
      *
      * **Request URL:** {{baseUrl}}/api/petrinet/import
      */
-    public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | PetriNetMessageResource> {
+    public importPetriNet(body: FormData, params?: Params): Observable<ProviderProgress | EventOutcomeMessageResource> {
         return this._resourceProvider.postWithEvent$<MessageResource>('petrinet/import', this.SERVER_URL, body, params).pipe(
             map(event => {
                 switch (event.type) {

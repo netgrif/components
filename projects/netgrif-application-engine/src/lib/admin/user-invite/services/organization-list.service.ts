@@ -4,6 +4,7 @@ import {LoadingEmitter} from '../../../utility/loading-emitter';
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {Observable, of} from 'rxjs';
+import {take} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -39,7 +40,7 @@ export class OrganizationListService {
             return;
         }
         this._loading$.on();
-        this._resource.getAllGroups().subscribe(groups => {
+        this._resource.getAllGroups().pipe(take(1)).subscribe(groups => {
             if (Array.isArray(groups.groups) && groups.groups.length !== 0) {
                 this._groups = groups.groups;
                 this._loading$.off();

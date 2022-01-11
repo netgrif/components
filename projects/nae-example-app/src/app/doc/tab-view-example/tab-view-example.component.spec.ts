@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TabViewExampleComponent} from './tab-view-example.component';
 import {MaterialModule} from '@netgrif/application-engine';
@@ -8,7 +8,7 @@ describe('TabViewExampleComponent', () => {
     let component: TabViewExampleComponent;
     let fixture: ComponentFixture<TabViewExampleComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, HttpClientTestingModule],
             declarations: [TabViewExampleComponent],

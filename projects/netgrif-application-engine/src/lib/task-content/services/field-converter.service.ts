@@ -18,6 +18,9 @@ import {FileListField} from '../../data-fields/file-list-field/models/file-list-
 import {TextAreaField} from '../../data-fields/text-field/models/text-area-field';
 import {Component} from '../../data-fields/models/component';
 import {TaskRefField} from '../../data-fields/task-ref-field/model/task-ref-field';
+import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
+import {FilterField} from '../../data-fields/filter-field/models/filter-field';
+import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 
 @Injectable({
     providedIn: 'root'
@@ -31,63 +34,70 @@ export class FieldConverterService {
         switch (item.type) {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.TEXT:
                 if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'textarea' ||
                     item.component.name === 'richtextarea' || item.component.name === 'htmltextarea')) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
-                        item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component);
+                        item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.NUMBER:
                 return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
-                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item));
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
             case FieldTypeResource.ENUMERATION:
-                return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, item.type, item.component);
             case FieldTypeResource.ENUMERATION_MAP:
-                return new EnumerationField(item.stringId, item.name, item.value, this.resolveEnumOptions(item),
-                    item.behavior, item.placeholder, item.description, item.layout, item.type, item.component);
+                return this.resolveEnumField(item);
             case FieldTypeResource.MULTICHOICE:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
-                    item.behavior, item.placeholder, item.description, item.layout, item.type, item.component);
+                    item.behavior, item.placeholder, item.description, item.layout, item.type, item.validations, item.component,
+                    item.parentTaskId);
             case FieldTypeResource.MULTICHOICE_MAP:
                 return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
-                    item.behavior, item.placeholder, item.description, item.layout, item.type, item.component);
+                    item.behavior, item.placeholder, item.description, item.layout, item.type, item.validations, item.component,
+                    item.parentTaskId);
             case FieldTypeResource.DATE:
                 let date;
                 if (item.value) {
                     date = moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
                 }
                 return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
-                    item.description, item.layout, item.validations, item.component);
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.DATE_TIME:
                 let dateTime;
                 if (item.value) {
                     dateTime = moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
                 }
                 return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, item.component);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.USER:
                 let user;
                 if (item.value) {
                     user = new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
                 }
                 return new UserField(item.stringId, item.name, item.behavior, user,
-                    item.roles, item.placeholder, item.description, item.layout, item.component);
+                    item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.BUTTON:
                 return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
-                    item.placeholder, item.description, item.layout, item.component);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.FILE:
                 return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, null, null, item.component);
+                    item.placeholder, item.description, item.layout, null, null, item.validations, item.component,
+                    item.parentTaskId);
             case FieldTypeResource.FILE_LIST:
                 return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
-                    item.placeholder, item.description, item.layout, item.validations, null, null, item.component);
+                    item.placeholder, item.description, item.layout, item.validations, null, null, item.component,
+                    item.parentTaskId);
             case FieldTypeResource.TASK_REF:
                 return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
-                    item.placeholder, item.description, item.layout);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.FILTER:
+                return new FilterField(item.stringId, item.name, item.value ?? '', item.filterMetadata, item.allowedNets,
+                    item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.I18N:
+                return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: ''}, item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, item.component);
         }
     }
 
@@ -114,6 +124,10 @@ export class FieldConverterService {
             return FieldTypeResource.TASK_REF;
         } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
             return item.fieldType;
+        } else if (item instanceof FilterField) {
+            return FieldTypeResource.FILTER;
+        } else if (item instanceof I18nField) {
+            return FieldTypeResource.I18N;
         }
     }
 
@@ -155,6 +169,44 @@ export class FieldConverterService {
     }
 
     /**
+     * Resolves `enumeration` and `eunumeration_map` fields into their appropriate class instances
+     * @param enumField enumeration field resource
+     */
+    protected resolveEnumField(enumField: DataFieldResource): EnumerationField {
+        const options = enumField.type === FieldTypeResource.ENUMERATION
+            ? this.resolveEnumChoices(enumField)
+            : this.resolveEnumOptions(enumField);
+        if (enumField.component && enumField.component.name === 'autocomplete_dynamic') {
+            return new DynamicEnumerationField(enumField.stringId, enumField.name, enumField.value, options,
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
+                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
+        } else {
+            return new EnumerationField(enumField.stringId, enumField.name, enumField.value, options,
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
+                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
+        }
+    }
+
+    /**
+     * @param enumField enumeration field resource object who's view type we want to resolve
+     * @returns the view type defined in the field object, or default if none, or invalid type is defined
+     * @deprecated in 4.3.0
+     */
+    protected resolveEnumViewType(enumField: DataFieldResource): EnumerationFieldView {
+        let typeEnum = EnumerationFieldView.DEFAULT;
+        if (enumField.view && enumField.view.value !== undefined) {
+            if (enumField.view.value === 'list') {
+                typeEnum = EnumerationFieldView.LIST;
+            } else if (enumField.view.value === 'autocomplete') {
+                typeEnum = EnumerationFieldView.AUTOCOMPLETE;
+            } else if (enumField.view.value === 'stepper') {
+                typeEnum = EnumerationFieldView.STEPPER;
+            }
+        }
+        return typeEnum;
+    }
+
+    /**
      * This function is used to parse enumeration options from the `choices` attribute
      * @param enumField enumeration field resource object who's choices we want to resolve
      * @returns the options for the enumeration field
@@ -188,7 +240,7 @@ export class FieldConverterService {
      * @returns the options for the multichoice field
      */
     protected resolveMultichoiceChoices(multiField: DataFieldResource): Array<MultichoiceFieldValue> {
-        const choicesMulti: MultichoiceFieldValue[] = [];
+        const choicesMulti: Array<MultichoiceFieldValue> = [];
         if (multiField.choices instanceof Array) {
             multiField.choices.forEach(it => {
                 choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);

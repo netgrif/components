@@ -1,23 +1,27 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CasePanelComponent} from './case-panel.component';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldsComponentModule} from '../../data-fields/data-fields.module';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PanelComponent} from '../panel.component';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CaseMetaField, HeaderColumn, HeaderColumnType, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {
+    AllowedNetsService, AllowedNetsServiceFactory,
+    CaseMetaField, CurrencyModule,
+    HeaderColumn,
+    HeaderColumnType,
+    MaterialModule,
+    NAE_BASE_FILTER, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
+    TranslateLibModule
+} from '@netgrif/application-engine';
 import {
     TestConfigurationService,
     ConfigurationService,
     CaseViewService,
-    TestCaseViewFactory,
-    ConfigCaseViewServiceFactory,
     SearchService,
-    TestCaseSearchServiceFactory,
     AuthenticationMethodService,
     MockAuthenticationMethodService
 } from '@netgrif/application-engine';
@@ -26,7 +30,7 @@ describe('CasePanelComponent', () => {
     let component: CasePanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
@@ -35,21 +39,19 @@ describe('CasePanelComponent', () => {
                 BrowserAnimationsModule,
                 DataFieldsComponentModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                CurrencyModule
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
+                CaseViewService,
+                SearchService,
                 {
-                    provide: CaseViewService,
-                    useFactory: TestCaseViewFactory,
-                    deps: [ConfigCaseViewServiceFactory]
-                },
-                ConfigCaseViewServiceFactory,
-                {
-                    provide: SearchService,
-                    useFactory: TestCaseSearchServiceFactory
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [CasePanelComponent, PanelComponent, TestWrapperComponent],
             schemas: [NO_ERRORS_SCHEMA]
@@ -78,10 +80,10 @@ class TestWrapperComponent {
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.VISUAL_ID, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.AUTHOR, 'string', 'string'),
         new HeaderColumn(HeaderColumnType.META, CaseMetaField.TITLE, 'string', 'string'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', 'netid'),
-        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'date', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'string', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'dateTime', 'string', 'string', true, 'netid'),
+        new HeaderColumn(HeaderColumnType.IMMEDIATE, 'enum', 'string', 'string', true, 'netid'),
     ]);
     case_ = {
         stringId: 'string',

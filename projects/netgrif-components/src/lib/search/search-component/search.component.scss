@@ -1,3 +1,27 @@
+.button-margin {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.clause-margin {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.disable-error-margin .mat-form-field-wrapper {
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.search-buttons-margin {
+    margin-left: 8px;
+}
+
+.search-icon {
+    padding-right: 8px;
+    font-size: xx-large;
+}
+
 .search-input {
     width: 100%;
 }
@@ -9,7 +33,6 @@
 .search-input-md {
     width: 80%;
 }
-
 
 .search-input-sm {
     width: 100%;

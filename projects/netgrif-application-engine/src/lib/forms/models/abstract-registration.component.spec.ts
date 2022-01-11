@@ -5,7 +5,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable, of, throwError} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
 import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -23,7 +23,7 @@ describe('AbstractRegistrationComponent', () => {
     let fixture: ComponentFixture<TestRegFormComponent>;
     let mockSignupService: MockSignUpService;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,

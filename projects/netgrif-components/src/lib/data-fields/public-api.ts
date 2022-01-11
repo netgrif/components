@@ -13,5 +13,7 @@ export * from './multichoice-field/multichoice-field.component';
 export * from './number-field/number-field.component';
 export * from './text-field/text-field.component';
 export * from './user-field/user-field.component';
+export * from './filter-field/filter-field.component';
+export * from './i18n-field/i18n-field.component';
 
 /* Class */

@@ -57,4 +57,20 @@ export class Query {
     public static emptyQuery(): Query {
         return new Query('', true);
     }
+
+    /**
+     * @param query the query that should be compared
+     * @returns `true` if and only if the queries are equal.
+     * Returns `false` if the queries are not equal, or if attempting to tell the queries apart is too complicated.
+     * More specifically the method can always tell apart empty queries and if poth queries are non-empty then their values are compared.
+     */
+    public equals(query: Query): boolean {
+        if (this.isEmpty && query.isEmpty) {
+            return true;
+        }
+        if (this.isEmpty || query.isEmpty) {
+            return false;
+        }
+        return this.value === query.value;
+    }
 }

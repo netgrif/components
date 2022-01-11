@@ -1,5 +1,5 @@
 import {TaskContentComponent} from './task-content.component';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {PanelComponentModule} from '../../panel/panel.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
@@ -17,7 +17,7 @@ describe('TaskContentComponent', () => {
     let component: TaskContentComponent;
     let fixture: ComponentFixture<TaskContentComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MatExpansionModule,

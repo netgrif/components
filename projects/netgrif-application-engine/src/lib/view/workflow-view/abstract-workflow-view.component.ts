@@ -38,11 +38,13 @@ export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders impl
 
     public importSidemenuNet(component) {
         this._sideMenuService.open(component).onClose.subscribe(event => {
-            if (event.data !== undefined) {
+            if (event.data?.net !== undefined) {
                 this._workflowViewService.reload();
-                if (event.data.net) {
+                if (event.data?.net) {
                     this._processService.updateNet(new Net(event.data.net));
                 }
+            } else {
+                this._log.debug('');
             }
         });
     }

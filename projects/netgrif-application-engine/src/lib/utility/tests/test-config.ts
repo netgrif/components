@@ -223,7 +223,10 @@ export class TestConfigurationService extends ConfigurationService {
                 },
                 task: {
                     layout: {
-                        name: 'emptyView'
+                        name: 'emptyView',
+                        params: {
+                            allowedNets: []
+                        }
                     },
                     access: 'private',
                     navigation: {
@@ -397,7 +400,6 @@ export class TestConfigurationService extends ConfigurationService {
             ],
             services: {
                 log: {
-                    level: 'ALL',
                     logWithDate: true,
                     serializeExtraParams: true,
                     includeLogLevel: true,
@@ -412,6 +414,9 @@ export class TestConfigurationService extends ConfigurationService {
                 legal: {
                     termsOfService: 'https://netgrif.com/',
                     privacyPolicy: 'https://netgrif.com/'
+                },
+                groupNavigation: {
+                    groupNavigationRoute: 'config-route'
                 }
             }
         });

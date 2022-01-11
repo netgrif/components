@@ -6,7 +6,7 @@ import {ImmediateData} from '../../../resources/interface/immediate-data';
  * The attributes are filled with mostly empty values, if you want to make a test that uses some of them,
  * we recommend setting them yourself, as the returned object might change between versions.
  */
-export function createMockImmediateData(importId: string = 'importId', value: any = '', allowedNets?: Array<string>): ImmediateData {
+export function createMockImmediateData(importId = 'importId', value: any = '', allowedNets?: Array<string>): ImmediateData {
     return {
         stringId: importId,
         type: '',

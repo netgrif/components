@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NewCaseComponent} from './new-case.component';
 import {CommonModule} from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -15,6 +15,7 @@ import {
     SuccessSnackBarComponent,
     TestConfigurationService,
     TranslateLibModule,
+    NewCaseCreationConfigurationData
 } from '@netgrif/application-engine';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
@@ -22,7 +23,7 @@ describe('NewCaseComponent', () => {
     let component: NewCaseComponent;
     let fixture: ComponentFixture<NewCaseComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
@@ -37,7 +38,13 @@ describe('NewCaseComponent', () => {
                 HotkeysService,
                 {
                     provide: NAE_SIDE_MENU_CONTROL,
-                    useValue: new SideMenuControl(undefined, undefined, () => of('close'), {allowedNets$: of([])})
+                    useValue: new SideMenuControl(undefined, undefined, () => of('close'), {
+                        allowedNets$: of([]),
+                        newCaseCreationConfiguration: {
+                            isCaseTitleRequired: true,
+                            enableCaseTitle: true
+                        } as NewCaseCreationConfigurationData
+                    })
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService}
             ],

@@ -1,24 +1,42 @@
 <nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"
               (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
-        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95">
-            <span fxLayoutAlign="start center" fxFlex>
-                <mat-icon class="task-panel-icon panel-primary-icon">
-                    {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
-                <span>{{firstFeaturedValue}}</span>
-            </span>
-            <span *ngFor="let field of featuredFieldsValues; let i = index" fxLayoutAlign="start center" fxFlex
+        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
+            <div fxFlex class="text-column-div" [ngClass]="{'panel-header-padding': !textEllipsis}">
+                <span class="text-column-margin" fxLayoutAlign="start center">
+                    <mat-icon class="task-panel-icon panel-primary-icon">
+                        {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
+                    <span [ngClass]="{
+                                     'text-column-ellipsis': textEllipsis,
+                                     'text-column-word-wrap': !textEllipsis
+                              }">{{firstFeaturedValue}}</span>
+                </span>
+            </div>
+            <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
+                  class="text-column-div"
                   [fxHide.lt-xl]="i >= 3 && responsiveBody"
                   [fxHide.lt-lg]="i >= 2 && responsiveBody"
                   [fxHide.lt-md]="i >= 1 && responsiveBody"
-                  [fxHide.lt-sm]="i >= 0 && responsiveBody">
-                <mat-icon class="task-panel-icon panel-primary-icon"
-                          *ngIf="!!field.icon && !!field.value">{{field.icon}}</mat-icon>
-                {{field.value}}
-            </span>
+                  [fxHide.lt-sm]="i >= 0 && responsiveBody"
+                    [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
+                <span class="text-column-margin" fxLayoutAlign="start center">
+                    <mat-icon class="task-panel-icon panel-primary-icon"
+                              *ngIf="!!field.icon && !!field.value && field.type !== 'button'">{{field.icon}}</mat-icon>
+                    <button *ngIf="field.type === 'button'" mat-flat-button color="primary">{{field.value}}</button>
+                    <span [ngClass]="{
+                                 'text-column-ellipsis': textEllipsis,
+                                 'text-column-word-wrap': !textEllipsis
+                              }" [matTooltip]="field.value"
+                          [matTooltipDisabled]="!textEllipsis"
+                          [matTooltipClass]="'pre-line-dialog'"
+                    >{{field.type === 'button' ? '' : field.value }}</span>
+                </span>
+            </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
-            <button mat-icon-button (click)="preventPanelOpen($event)" *ngIf="!isLoading" [matMenuTriggerFor]="menu">
+            <button mat-icon-button (click)="preventPanelOpen($event)"
+                    *ngIf="!isLoading && (canAssign() || canDo('delegate') || canReassign() || canCancel() || canFinish())"
+                    [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -56,8 +74,7 @@
                 <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100">
                     <button *ngIf="canAssign()" (click)="assign()" mat-button [disabled]="canDisable('assign')">
                         {{ getAssignTitle() | translate | uppercase }}</button>
-                    <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button
-                            [disabled]="canDisable('delegate')">
+                    <button *ngIf="canDo('delegate')" (click)="delegate()" mat-button [disabled]="canDisable('delegate')">
                         {{ getDelegateTitle() | translate | uppercase }}</button>
                     <button *ngIf="canReassign()" (click)="delegate()" mat-button [disabled]="canDisable('reassign')">
                         {{ 'tasks.view.reassign' | translate | uppercase }}</button>

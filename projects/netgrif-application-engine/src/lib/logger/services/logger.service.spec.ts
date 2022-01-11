@@ -1,11 +1,10 @@
 import {TestBed} from '@angular/core/testing';
-
 import {LoggerService} from './logger.service';
 import {LocalStorageLogPublisher} from '../publishers/local-storage-log-publisher';
 import {LogLevel} from './log-level';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
 
 describe('LoggerService', () => {
     const testString = 'Testing string to log: ';
@@ -15,7 +14,7 @@ describe('LoggerService', () => {
         TestBed.configureTestingModule({
             imports: [NoopAnimationsModule],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: ConfigurationService, useClass: TestLoggingConfigurationService}
             ]
         });
         service = TestBed.inject(LoggerService);

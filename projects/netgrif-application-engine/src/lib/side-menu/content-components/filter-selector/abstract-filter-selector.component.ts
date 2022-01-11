@@ -157,15 +157,15 @@ export abstract class AbstractFilterSelectorComponent implements OnDestroy {
      * @param event list change event published byt the material component
      */
     public caseFilterSelected(event: MatSelectionListChange): void {
-        if (event.option.selected) {
-            this.filterSelected(event.option.value);
+        if (event.options[0].selected) {
+            this.filterSelected(event.options[0].value);
             if (this.taskFilterList) {
                 this.taskFilterList.deselectAll();
             }
             // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML,
             //  once Covalent supports material 9.1.0 or above
             this.caseFilterList.deselectAll();
-            event.option.selected = true;
+            event.options[0].selected = true;
         } else {
             this.filterSelected(undefined);
         }
@@ -177,15 +177,15 @@ export abstract class AbstractFilterSelectorComponent implements OnDestroy {
      * @param event list change event published byt the material component
      */
     public taskFilterSelected(event: MatSelectionListChange): void {
-        if (event.option.selected) {
-            this.filterSelected(event.option.value);
+        if (event.options[0].selected) {
+            this.filterSelected(event.options[0].value);
             if (this.caseFilterList) {
                 this.caseFilterList.deselectAll();
             }
             // TODO 20.4.2020 - change to [multiple] input attribute on MatSelectionList in HTML,
             //  once Covalent supports material 9.1.0 or above
             this.taskFilterList.deselectAll();
-            event.option.selected = true;
+            event.options[0].selected = true;
         } else {
             this.filterSelected(undefined);
         }

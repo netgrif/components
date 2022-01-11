@@ -5,7 +5,7 @@ import {AuthenticationModule} from '../../authentication/authentication.module';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Observable} from 'rxjs';
-import {View} from '../../configuration/interfaces/schema';
+import {View} from '../../../commons/schema';
 
 @Injectable({
     providedIn: AuthenticationModule

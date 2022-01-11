@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IframeCardComponent} from './iframe-card.component';
 import {Component} from '@angular/core';
 import {DashboardCardTypes, IframeCard} from '@netgrif/application-engine';
@@ -10,7 +10,7 @@ describe('IframeCardComponent', () => {
     let component: IframeCardComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MatCardModule, FlexLayoutModule, NoopAnimationsModule],
             declarations: [IframeCardComponent, TestWrapperComponent]

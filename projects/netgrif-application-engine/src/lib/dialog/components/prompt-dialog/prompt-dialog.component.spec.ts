@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../../material/material.module';
 import {PromptDialogComponent} from './prompt-dialog.component';
@@ -12,7 +12,7 @@ describe('QuestionDialogWithAnswerComponent', () => {
     let component: PromptDialogComponent;
     let fixture: ComponentFixture<PromptDialogComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MaterialModule, DialogModule, NoopAnimationsModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [],

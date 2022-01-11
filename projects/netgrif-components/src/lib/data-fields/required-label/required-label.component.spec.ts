@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RequiredLabelComponent} from './required-label.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -7,7 +7,7 @@ describe('RequiredLabelComponent', () => {
     let component: RequiredLabelComponent;
     let fixture: ComponentFixture<RequiredLabelComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NoopAnimationsModule],
             declarations: [RequiredLabelComponent]

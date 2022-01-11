@@ -3,12 +3,17 @@
 </div>
 
 <ng-template #notLoading>
-    <div *ngIf="hasDataToDisplay$ | async; else noContentToDisplay" [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView()}">
-        <div [gdAreas]="gridAreas" [gdColumns]="getGridColumns()">
-            <div *ngFor="let item of dataSource"
-                 [gdArea]="item.gridAreaId"
-                 class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
-                <nc-field-component-resolver [gridElement]="item" fxFlex></nc-field-component-resolver>
+    <div *ngIf="hasDataToDisplay$ | async; else noContentToDisplay"
+         [ngClass]="{'paper-view-content mat-elevation-z10': isPaperView(), 'scrolling_data': this.scrollingNeeded()}"
+         [ngStyle]="{'max-height': this.resolveContentHeightCss()}">
+        <div fxLayout="column" fxLayoutAlign="start stretch"
+             *ngFor="let subgrid of dataSource; trackBy: trackBySubgridFn">
+            <div [gdAreas]="subgrid.gridAreas" [gdColumns]="subgrid.getGridColumns()" class="grid-rows-auto">
+                <div *ngFor="let item of subgrid.content; trackBy: trackByFn"
+                     [gdArea]="item.gridAreaId"
+                     class="border" fxLayout="row" [fxLayoutAlign]="getItemAlignment(item)">
+                    <nc-field-component-resolver [id]="item?.item?.stringId" [gridElement]="item" fxFlex></nc-field-component-resolver>
+                </div>
             </div>
         </div>
     </div>

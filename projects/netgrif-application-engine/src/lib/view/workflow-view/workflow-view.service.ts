@@ -18,6 +18,7 @@ import {DialogService} from '../../dialog/services/dialog.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {arrayToObservable} from '../../utility/array-to-observable';
+import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
 
 
 @Injectable()
@@ -38,9 +39,10 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
                 protected _dialogService: DialogService,
                 protected _snackBarService: SnackBarService,
                 protected _translate: TranslateService,
+                resolver: SearchIndexResolverService,
                 @Optional() @Inject(NAE_WORKFLOW_SERVICE_FILTER) injectedBaseFilter: PetriNetRequestBody,
                 @Optional() @Inject(NAE_WORKFLOW_SERVICE_CONFIRM_DELETE) confirmDelete: boolean) {
-        super();
+        super(resolver);
         this._loading$ = new LoadingEmitter();
         this._clear = false;
         this._endOfData = false;
@@ -95,6 +97,7 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._loading$.complete();
         this._nextPage$.complete();
     }

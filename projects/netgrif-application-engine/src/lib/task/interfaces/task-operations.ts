@@ -25,4 +25,11 @@ export interface TaskOperations {
      * Eg. the current page of a task list is reloaded
      */
     reload: () => void;
+    /**
+     * A function that reloads the Task's representation.
+     * If the representation contains more Tasks it is advised to reload all of them.
+     *
+     * Eg. the current page of a task list is reloaded
+     */
+    forceReload?: () => void;
 }

@@ -9,7 +9,7 @@ import {ReplaySubject} from 'rxjs';
     templateUrl: './tabbed-views-example.component.html',
     styleUrls: ['./tabbed-views-example.component.scss'],
     providers: [
-        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'tabbed'},
+        {provide: NAE_VIEW_ID_SEGMENT, useValue: 'all-cases'},
         ViewIdService
     ]
 })
@@ -24,7 +24,7 @@ export class TabbedViewsExampleComponent implements OnInit {
         this.tabs = [
             {
                 label: {
-                    text: 'WRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR',
+                    text: 'process cache enabled WRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR',
                     icon: 'storage',
                     count: stream
                 },
@@ -32,19 +32,21 @@ export class TabbedViewsExampleComponent implements OnInit {
                 tabContentComponent: TabbedCaseViewComponent,
                 injectedObject: {
                     tabViewComponent: TabbedTaskViewComponent,
-                    tabViewOrder: 0
+                    tabViewOrder: 0,
+                    exampleUseCache: true
                 }
             },
             {
                 label: {
-                    text: 'cases 2: electric boogaloo',
+                    text: 'process cache disabled',
                     icon: 'storage'
                 },
                 canBeClosed: false,
                 tabContentComponent: TabbedCaseViewComponent,
                 injectedObject: {
                     tabViewComponent: TabbedTaskViewComponent,
-                    tabViewOrder: 0
+                    tabViewOrder: 0,
+                    exampleUseCache: false
                 }
             }
         ];

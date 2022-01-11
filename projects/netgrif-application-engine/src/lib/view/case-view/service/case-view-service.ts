@@ -7,12 +7,10 @@ import {Case} from '../../../resources/interface/case';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {SearchService} from '../../../search/search-service/search.service';
-import {Net} from '../../../process/net';
 import {SideMenuSize} from '../../../side-menu/models/side-menu-size';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
 import {Pagination} from '../../../resources/interface/pagination';
-import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
 import {CaseMetaField} from '../../../header/case-header/case-menta-enum';
 import {NAE_NEW_CASE_COMPONENT} from '../../../side-menu/content-components/injection-tokens';
 import {PageLoadRequestContext} from '../../abstract/page-load-request-context';
@@ -22,17 +20,34 @@ import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emi
 import {CasePageLoadRequestResult} from '../models/case-page-load-request-result';
 import {UserService} from '../../../user/services/user.service';
 import {arrayToObservable} from '../../../utility/array-to-observable';
+import {PermissionType} from '../../../process/permissions';
+import {NAE_NEW_CASE_CONFIGURATION} from '../models/new-case-configuration-injection-token';
+import {NewCaseConfiguration} from '../models/new-case-configuration';
+import {ProcessService} from '../../../process/process.service';
+import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-reference-with-permissions';
+import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
+import {SortableView} from '../../abstract/sortable-view';
+import {NewCaseCreationConfigurationData} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
+import {PermissionService} from '../../../authorization/permission/permission.service';
+import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
+import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 
 @Injectable()
-export class CaseViewService extends SortableViewWithAllowedNets implements OnDestroy {
+export class CaseViewService extends SortableView implements OnDestroy {
+
+    readonly DEFAULT_NEW_CASE_CONFIGURATION: NewCaseConfiguration = {
+        useCachedProcesses: true
+    };
 
     protected _loading$: LoadingWithFilterEmitter;
     protected _cases$: Observable<Array<Case>>;
     protected _nextPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
+    protected _newCaseConfiguration: NewCaseConfiguration;
 
-    constructor(allowedNets: Observable<Array<Net>>,
+    constructor(protected _allowedNetsService: AllowedNetsService,
                 protected _sideMenuService: SideMenuService,
                 protected _caseResourceService: CaseResourceService,
                 protected _log: LoggerService,
@@ -40,8 +55,16 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
                 protected _searchService: SearchService,
                 protected _translate: TranslateService,
                 protected _user: UserService,
-                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any) {
-        super(allowedNets);
+                protected _processService: ProcessService,
+                resolver: SearchIndexResolverService,
+                @Optional() @Inject(NAE_NEW_CASE_COMPONENT) protected _newCaseComponent: any,
+                @Optional() @Inject(NAE_NEW_CASE_CONFIGURATION) newCaseConfig: NewCaseConfiguration,
+                protected _permissionService: PermissionService) {
+        super(resolver);
+        this._newCaseConfiguration = {...this.DEFAULT_NEW_CASE_CONFIGURATION};
+        if (newCaseConfig !== null) {
+            Object.assign(this._newCaseConfiguration, newCaseConfig);
+        }
         this._loading$ = new LoadingWithFilterEmitter();
         this._searchService.activeFilter$.subscribe(() => {
             this.reload();
@@ -85,6 +108,7 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._loading$.complete();
         this._nextPage$.complete();
     }
@@ -166,10 +190,15 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
         return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
 
-    public createNewCase(): Observable<Case> {
+    public createNewCase(newCaseCreationConfiguration: NewCaseCreationConfigurationData = {
+        enableCaseTitle: true,
+        isCaseTitleRequired: true
+    }): Observable<Case> {
         const myCase = new Subject<Case>();
-        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM,
-            {allowedNets$: this.allowedNets$}).onClose.subscribe($event => {
+        this._sideMenuService.open(this._newCaseComponent, SideMenuSize.MEDIUM, {
+            allowedNets$: this.getNewCaseAllowedNets(),
+            newCaseCreationConfiguration
+        }).onClose.subscribe($event => {
             this._log.debug($event.message, $event.data);
             if ($event.data) {
                 this.reload();
@@ -178,6 +207,48 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
             myCase.complete();
         });
         return myCase.asObservable();
+    }
+
+    public createDefaultNewCase(): Observable<Case> {
+        const myCase = new Subject<Case>();
+        this.getNewCaseAllowedNets().subscribe((nets: Array<PetriNetReferenceWithPermissions>) => {
+            this._caseResourceService.createCase({
+                title: null,
+                color: 'panel-primary-icon',
+                netId: nets[0].stringId
+            }).subscribe((response: EventOutcomeMessageResource) => {
+                this._snackBarService.openSuccessSnackBar(this._translate.instant('side-menu.new-case.createCase')
+                    + ' ' + this._translate.instant('side-menu.new-case.defaultCaseName'));
+                this.reload();
+                myCase.next((response.outcome as CreateCaseEventOutcome).aCase);
+                myCase.complete();
+            }, error => this._snackBarService.openErrorSnackBar(error.message ? error.message : error));
+        });
+        return myCase;
+    }
+
+    protected getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
+        if (this._newCaseConfiguration.useCachedProcesses) {
+            return this._allowedNetsService.allowedNets$.pipe(
+                map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
+            );
+        } else {
+            return this._allowedNetsService.allowedNets$.pipe(
+                switchMap(allowedNets => {
+                    return this._processService.getNetReferences(allowedNets.map(net => net.identifier)).pipe(
+                        map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
+                    );
+                })
+            );
+        }
+    }
+
+    /**
+     * Returns number of allowed nets of case view
+     * @returns length of allowedNets array if it is defined, 0 if it is undefined
+     */
+    public getAllowedNetsCount(): number {
+        return this._allowedNetsService.allowedNets === undefined ? 0 : this._allowedNetsService.allowedNets.length;
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
@@ -193,7 +264,9 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
     protected getMetaFieldSortId(): string {
         switch (this._lastHeaderSearchState.fieldIdentifier) {
             case CaseMetaField.TITLE:
-                return 'titleSortable';
+                return 'title.keyword';
+            case CaseMetaField.VISUAL_ID:
+                return 'visualId.keyword';
             case CaseMetaField.CREATION_DATE:
                 return 'creationDateSortable';
             default:
@@ -219,5 +292,14 @@ export class CaseViewService extends SortableViewWithAllowedNets implements OnDe
 
     public hasAuthority(authority: Array<string> | string): boolean {
         return this._user.hasAuthority(authority);
+    }
+
+    /**
+     * Determines whether the current user has the [VIEW]{@link PermissionType#VIEW} permission on the current case
+     * @param aCase the tested case
+     * @returns `true` if the current user has the `VIEW` permission on the tested case, `false` otherwise.
+     */
+    public viewEnabled(aCase: Case): boolean {
+        return this._permissionService.hasCasePermission(aCase, PermissionType.VIEW);
     }
 }

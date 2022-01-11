@@ -14,6 +14,7 @@
 
 .text-column-word-wrap {
     word-break: break-word !important;
+    white-space: pre-line !important;
 }
 
 .text-column-margin {
@@ -28,4 +29,12 @@
 
 .panel-header-padding {
     padding: 12px 0 !important;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.pre-line-dialog {
+    white-space: pre-line !important;
 }

@@ -29,7 +29,9 @@ export function createLoginView(tree: Tree, args: CreateViewArguments, addViewTo
 
     updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
-        new ImportToAdd('LoginFormComponentModule', '@netgrif/components')]);
+        new ImportToAdd('LoginFormComponentModule', '@netgrif/components'),
+        new ImportToAdd('AuthenticationComponentModule', '@netgrif/components'),
+        new ImportToAdd('AuthenticationModule', '@netgrif/application-engine')]);
 
     if (addViewToService) {
         addViewToViewService(tree, view);

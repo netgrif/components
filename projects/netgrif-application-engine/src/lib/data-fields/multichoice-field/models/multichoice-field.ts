@@ -3,6 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FieldTypeResource} from '../../../task-content/model/field-type-resource';
 import {Component} from '../../models/component';
+import {Validation} from '../../models/validation';
 
 export interface MultichoiceFieldValue {
     key: string;
@@ -13,9 +14,9 @@ export class MultichoiceField  extends DataField<Array<string>> {
 
     constructor(stringId: string, title: string, values: Array<string>, private _choices: Array<MultichoiceFieldValue>,
                 behavior: Behavior, placeholder?: string, description?: string, layout?: Layout,
-                private readonly _fieldType = FieldTypeResource.MULTICHOICE,
-                component?: Component) {
-        super(stringId, title, values, behavior, placeholder, description, layout, component);
+                private readonly _fieldType = FieldTypeResource.MULTICHOICE, validations?: Array<Validation>,
+                component?: Component, parentTaskId?: string) {
+        super(stringId, title, values, behavior, placeholder, description, layout, validations, component, parentTaskId);
     }
 
     set choices(choices: Array<MultichoiceFieldValue>) {

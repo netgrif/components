@@ -1,4 +1,4 @@
-import {ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -6,14 +6,14 @@ import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} fro
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 
-export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implements OnInit {
+export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implements OnInit, OnDestroy {
 
     @Input() enumerationField: EnumerationField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
     @ViewChild('input') text: ElementRef;
 
-    filteredOptions: Observable<EnumerationFieldValue[]>;
+    filteredOptions: Observable<Array<EnumerationFieldValue>>;
 
     constructor(protected _translate: TranslateService) {
     }
@@ -25,12 +25,16 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
         );
     }
 
+    ngOnDestroy(): void {
+        this.filteredOptions = undefined;
+    }
+
     /**
      * Function to filter out matchless options without accent and case-sensitive differences
      * @param  value to compare matching options
      * @return  return matched options
      */
-    private _filter(value: string): EnumerationFieldValue[] {
+    private _filter(value: string): Array<EnumerationFieldValue> {
         const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
         return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')

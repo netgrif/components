@@ -1,50 +1,40 @@
-import {AutocompleteCategory} from '../autocomplete-category';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {LoggerService} from '../../../../logger/services/logger.service';
 import {Equals} from '../../operator/equals';
-import {Query} from '../../query/query';
 import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
-import {CaseProcess} from './case-process';
-import {BooleanOperator} from '../../boolean-operator';
-import {NetRolePair} from '../net-role-pair';
+import {NotEquals} from '../../operator/not-equals';
+import {Net} from '../../../../process/net';
+import {NameIdPair} from '../name-id-pair';
+import {CaseNetAttributeAutocompleteCategory} from './case-net-attribute-autocomplete-category';
+import {Categories} from '../categories';
+import {CaseSearch} from './case-search.enum';
 
-export class CaseRole extends AutocompleteCategory<NetRolePair> {
+export class CaseRole extends CaseNetAttributeAutocompleteCategory {
 
     private static readonly _i18n = 'search.category.case.role';
-    protected _processCategory: CaseProcess;
 
-    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
-        super(['enabledRoles'],
-            [operators.getOperator(Equals)],
+    constructor(operators: OperatorService, logger: LoggerService, optionalDependencies: OptionalDependencies) {
+        super([CaseSearch.ENABLED_ROLES],
+            [operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseRole._i18n}.name`,
-            logger);
-        this._processCategory = this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
-        this._processCategory.selectDefaultOperator();
+            logger,
+            operators,
+            optionalDependencies);
     }
 
-    protected createOptions(): void {
-        this._optionalDependencies.caseViewService.allowedNets$.subscribe(allowedNets => {
-            allowedNets.forEach(petriNet => {
-                petriNet.roles.forEach(processRole => {
-                    this.addToMap(processRole.name, {
-                        netId: petriNet.stringId,
-                        roleId: processRole.stringId
-                    });
-                });
-            });
-        });
-    }
-
-    protected generateQuery(userInput: Array<NetRolePair>): Query {
-        const queries = userInput.map(pair => {
-            const roleQuery = this._selectedOperator.createQuery(this.elasticKeywords, [pair.roleId]);
-            const netQuery = this._processCategory.generatePredicate([pair.netId]).query;
-            return Query.combineQueries([roleQuery, netQuery], BooleanOperator.AND);
-        });
-        return Query.combineQueries(queries, BooleanOperator.OR);
+    protected extractAttributes(petriNet: Net): Array<NameIdPair> {
+        return petriNet.roles.map(r => ({id: r.stringId, name: r.name}));
     }
 
     get inputPlaceholder(): string {
         return `${CaseRole._i18n}.placeholder`;
+    }
+
+    duplicate(): CaseRole {
+        return new CaseRole(this._operatorService, this._log, this._optionalDependencies);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.CASE_ROLE;
     }
 }

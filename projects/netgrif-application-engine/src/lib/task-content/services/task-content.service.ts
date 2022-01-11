@@ -1,16 +1,19 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {DataGroup} from '../../resources/interface/data-groups';
-import {Observable, ReplaySubject, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject, timer} from 'rxjs';
 import {Task} from '../../resources/interface/task';
 import {LoggerService} from '../../logger/services/logger.service';
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
 import {MultichoiceField} from '../../data-fields/multichoice-field/models/multichoice-field';
-import {ChangedFields, FrontendActions} from '../../data-fields/models/changed-fields';
+import {Change, ChangedFields, FrontendActions} from '../../data-fields/models/changed-fields';
 import {FieldConverterService} from './field-converter.service';
-import {EventOutcome} from '../../resources/interface/event-outcome';
 import {FieldTypeResource} from '../model/field-type-resource';
+import {DynamicEnumerationField} from '../../data-fields/enumeration-field/models/dynamic-enumeration-field';
+import {Validation} from '../../data-fields/models/validation';
+import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
+import {DataField} from '../../data-fields/models/abstract-data-field';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -26,15 +29,25 @@ export abstract class TaskContentService implements OnDestroy {
     private static readonly FRONTEND_ACTIONS_KEY = '_frontend_actions';
     private static readonly VALIDATE_FRONTEND_ACTION = 'validate';
 
-    $shouldCreate: ReplaySubject<DataGroup[]>;
+    $shouldCreate: ReplaySubject<Array<DataGroup>>;
+    $shouldCreateCounter: BehaviorSubject<number>;
     protected _task: Task;
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
+    protected _isExpanding$: BehaviorSubject<boolean>;
+    private _taskFieldsIndex: {
+        [taskId: string]: {
+            [fieldId: string]: DataField<any>;
+        }
+    } = {};
+    private _referencedTaskAndCaseIds: { [caseId: string]: Array<string> } = {};
 
     protected constructor(protected _fieldConverterService: FieldConverterService,
                           protected _snackBarService: SnackBarService,
                           protected _translate: TranslateService,
                           protected _logger: LoggerService) {
-        this.$shouldCreate = new ReplaySubject<DataGroup[]>(1);
+        this.$shouldCreate = new ReplaySubject<Array<DataGroup>>(1);
+        this.$shouldCreateCounter = new BehaviorSubject<number>(0);
+        this._isExpanding$ = new BehaviorSubject<boolean>(false);
         this._task = undefined;
         this._taskDataReloadRequest$ = new Subject<FrontendActions>();
     }
@@ -44,6 +57,7 @@ export abstract class TaskContentService implements OnDestroy {
             this.$shouldCreate.complete();
         }
         this._taskDataReloadRequest$.complete();
+        this._isExpanding$.complete();
     }
 
     /**
@@ -71,6 +85,46 @@ export abstract class TaskContentService implements OnDestroy {
         return this._taskDataReloadRequest$.asObservable();
     }
 
+
+    get taskFieldsIndex(): { [p: string]: { [p: string]: DataField<any> } } {
+        return this._taskFieldsIndex;
+    }
+
+    set taskFieldsIndex(value: { [p: string]: { [p: string]: DataField<any> } }) {
+        this._taskFieldsIndex = value;
+    }
+
+    get referencedTaskAndCaseIds(): { [p: string]: Array<string> } {
+        return this._referencedTaskAndCaseIds;
+    }
+
+    set referencedTaskAndCaseIds(value: { [p: string]: Array<string> }) {
+        this._referencedTaskAndCaseIds = value;
+    }
+
+    /**
+     * Whether the panel that the task content is contained in is currently expanding.
+     *
+     * If the task content is not contained in a panel, `isExpanding` will be always `false`.
+     */
+    public get isExpanding(): boolean {
+        return this._isExpanding$.value;
+    }
+
+    /**
+     * Changes the state of the task content to `expanding`.
+     */
+    public expansionStarted(): void {
+        this._isExpanding$.next(true);
+    }
+
+    /**
+     * Changes the state of the task content to `not expanding`.
+     */
+    public expansionFinished(): void {
+        this._isExpanding$.next(false);
+    }
+
     /**
      * Checks the validity of all data fields in the managed {@link Task}.
      *
@@ -95,6 +149,47 @@ export abstract class TaskContentService implements OnDestroy {
     }
 
     /**
+     * Finds invalid data of task
+     *
+     * @returns array of invalid datafields
+     */
+    public getInvalidTaskData(): Array<DataField<any>> {
+        const invalidFields = [];
+        this._task.dataGroups.forEach(group => invalidFields.push(...group.fields.filter(field =>
+            (!field.valid && !field.disabled) || (!field.validRequired && !field.disabled))));
+        return invalidFields;
+    }
+
+    public validateDynamicEnumField(): boolean {
+        if (!this._task || !this._task.dataGroups) {
+            return false;
+        }
+        const exists = this._task.dataGroups.some(group => group.fields.some(field => field instanceof DynamicEnumerationField));
+        if (!exists) {
+            return true;
+        }
+        let valid = true;
+        for (const group of this._task.dataGroups) {
+            for (const field of group.fields) {
+                if (field instanceof DynamicEnumerationField) {
+                    if (field.choices !== undefined && field.choices.length !== 0 && field.value !== '' && field.value !== undefined) {
+                        if (!field.choices.some(choice => choice.key === field.value)) {
+                            field.value = '';
+                            if (field.behavior.required) {
+                                valid = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!valid) {
+            this._snackBarService.openErrorSnackBar(this._translate.instant('tasks.snackbar.missingRequired'));
+        }
+        return valid;
+    }
+
+    /**
      * Changes the blocking state of all fields in the managed Task.
      * @param blockingState whether the field should be blocked or not
      */
@@ -102,9 +197,7 @@ export abstract class TaskContentService implements OnDestroy {
         if (this._task && this._task.dataGroups) {
             this._task.dataGroups.forEach(group => {
                 group.fields.forEach(field => {
-                    field.initialized$.subscribe(() => {
-                        field.block = blockingState;
-                    });
+                    field.block = blockingState;
                 });
             });
         }
@@ -113,11 +206,11 @@ export abstract class TaskContentService implements OnDestroy {
     /**
      * Clears the assignee, start date and finish date from the managed Task.
      */
-    public updateStateData(eventOutcome: EventOutcome): void {
+    public updateStateData(eventOutcome: TaskEventOutcome): void {
         if (this._task) {
-            this._task.user = eventOutcome.assignee;
-            this._task.startDate = eventOutcome.startDate;
-            this._task.finishDate = eventOutcome.finishDate;
+            this._task.user = eventOutcome.task.user;
+            this._task.startDate = eventOutcome.task.startDate;
+            this._task.finishDate = eventOutcome.task.finishDate;
         }
     }
 
@@ -129,51 +222,75 @@ export abstract class TaskContentService implements OnDestroy {
         if (!this._task || !this._task.dataGroups) {
             return;
         }
+        // todo actions owner zbytočný?
+        const frontendActions = chFields.taskId === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
 
-        const frontendActions = chFields.frontendActionsOwner === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
-
-        for (const dataGroup of this._task.dataGroups) {
-            for (const field of dataGroup.fields) {
-                if (chFields[field.stringId]) {
-                    if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
-                        this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
-                        return;
-                    }
-
-                    const updatedField = chFields[field.stringId];
-                    Object.keys(updatedField).forEach(key => {
-                        if (key === 'value') {
-                            field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
-                        } else if (key === 'behavior' && updatedField.behavior[this._task.transitionId]) {
-                            field.behavior = updatedField.behavior[this._task.transitionId];
-                        } else if (key === 'choices') {
-                            const newChoices: EnumerationFieldValue[] = [];
-                            if (updatedField.choices instanceof Array) {
-                                updatedField.choices.forEach(it => {
-                                    newChoices.push({key: it, value: it} as EnumerationFieldValue);
-                                });
-                            } else {
-                                Object.keys(updatedField.choices).forEach(choiceKey => {
-                                    newChoices.push({key: choiceKey, value: updatedField.choices[choiceKey]} as EnumerationFieldValue);
-                                });
-                            }
-                            (field as EnumerationField | MultichoiceField).choices = newChoices;
-                        } else if (key === 'options') {
-                            const newOptions = [];
-                            Object.keys(updatedField.options).forEach(optionKey => {
-                                newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
-                            });
-                            (field as EnumerationField | MultichoiceField).choices = newOptions;
-                        } else if (key !== 'type') {
-                            field[key] = updatedField[key];
-                        }
-                        field.update();
-                    });
-                }
+        Object.keys(chFields).forEach(changedField => {
+            if (!!this.taskFieldsIndex[chFields.taskId] && !!this.taskFieldsIndex[chFields.taskId][changedField]) {
+                this.updateField(chFields, this.taskFieldsIndex[chFields.taskId][changedField], frontendActions);
             }
-        }
+        });
+
         this.$shouldCreate.next(this._task.dataGroups);
         this.performFrontendAction(frontendActions);
+    }
+
+    private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
+        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
+            this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
+            return;
+        }
+
+        const updatedField = chFields[field.stringId];
+        Object.keys(updatedField).forEach(key => {
+            switch (key) {
+                case 'type':
+                    // type is just an information, not an update. A field cannot change its type
+                    return; // continue - the field does not need updating, since nothing changed
+                case 'value':
+                    field.valueWithoutChange(this._fieldConverterService.formatValueFromBackend(field, updatedField[key]));
+                    break;
+                case 'behavior':
+                    if (updatedField.behavior[this._task.transitionId]) {
+                        // TODO NGSD-489 fix behavior resolution
+                        field.behavior = updatedField.behavior[this._task.transitionId];
+                    } else {
+                        // ignore the behavior update, since it does not affect this task
+                        return; // continue - the field does not need updating, since nothing changed
+                    }
+                    break;
+                case 'choices':
+                    const newChoices: Array<EnumerationFieldValue> = [];
+                    if (updatedField.choices instanceof Array) {
+                        updatedField.choices.forEach(it => {
+                            newChoices.push({key: it, value: it} as EnumerationFieldValue);
+                        });
+                    } else {
+                        Object.keys(updatedField.choices).forEach(choiceKey => {
+                            newChoices.push({
+                                key: choiceKey,
+                                value: updatedField.choices[choiceKey]
+                            } as EnumerationFieldValue);
+                        });
+                    }
+                    (field as EnumerationField | MultichoiceField).choices = newChoices;
+                    break;
+                case 'options':
+                    const newOptions = [];
+                    Object.keys(updatedField.options).forEach(optionKey => {
+                        newOptions.push({key: optionKey, value: updatedField.options[optionKey]});
+                    });
+                    (field as EnumerationField | MultichoiceField).choices = newOptions;
+                    break;
+                case 'validations':
+                    field.replaceValidations(updatedField.validations.map(it => (it as Validation)));
+                    break;
+                default:
+                    field[key] = updatedField[key];
+
+            }
+            field.update();
+        });
     }
 
     /**

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NavigationDrawerComponent} from './navigation-drawer.component';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
@@ -6,15 +6,30 @@ import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {NavigationTreeComponent} from '../navigation-tree/navigation-tree.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ConfigurationService, MaterialModule, TestConfigurationService, TranslateLibModule} from '@netgrif/application-engine';
+import {
+    AuthenticationMethodService,
+    AuthenticationService,
+    ConfigurationService,
+    MaterialModule,
+    MockAuthenticationMethodService,
+    MockAuthenticationService,
+    MockUserPreferenceService,
+    MockUserResourceService,
+    TestConfigurationService,
+    TranslateLibModule,
+    UserPreferenceService,
+    UserResourceService
+} from '@netgrif/application-engine';
 import {UserComponentModule} from '../../user/user.module';
 import {RouterTestingModule} from '@angular/router/testing';
+import {ResizableModule} from 'angular-resizable-element';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('NavigationDrawerComponent', () => {
     let component: NavigationDrawerComponent;
     let fixture: ComponentFixture<NavigationDrawerComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [NavigationDrawerComponent, NavigationTreeComponent],
             imports: [
@@ -27,11 +42,17 @@ describe('NavigationDrawerComponent', () => {
                 UserComponentModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                ResizableModule
             ],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ]
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: UserPreferenceService, useClass: MockUserPreferenceService}
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
     }));

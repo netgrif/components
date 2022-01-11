@@ -1,5 +1,4 @@
 import {Observable, Subject} from 'rxjs';
-import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
 import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FileUploadMIMEType} from '../../file-field/models/file-field';
@@ -8,6 +7,7 @@ import {FileListFieldValue} from './file-list-field-value';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {FormControl} from '@angular/forms';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 
 export enum FileListFieldValidation {
     MAX_FILES = 'maxFiles'
@@ -17,7 +17,7 @@ export class FileListField extends DataField<FileListFieldValue> {
     /**
      * Used to forward the result of the upload file backend call to the task content
      */
-    private _changedFields$: Subject<ChangedFieldContainer>;
+    private _changedFields$: Subject<ChangedFieldsMap>;
     public downloaded: Array<string>;
 
     /**
@@ -26,10 +26,11 @@ export class FileListField extends DataField<FileListFieldValue> {
      * Placeholder is a substitute for the value name if not set value.
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileListFieldValue, placeholder?: string, description?: string,
-                layout?: Layout, public validations?: Validation[], private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, component);
-        this._changedFields$ = new Subject<ChangedFieldContainer>();
+                layout?: Layout, validations?: Array<Validation>, private _maxUploadSizeInBytes?: number,
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
+                component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+        this._changedFields$ = new Subject<ChangedFieldsMap>();
         this.downloaded = new Array<string>();
     }
 
@@ -41,11 +42,11 @@ export class FileListField extends DataField<FileListFieldValue> {
         return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
     }
 
-    get changedFields$(): Observable<ChangedFieldContainer> {
+    get changedFields$(): Observable<ChangedFieldsMap> {
         return this._changedFields$.asObservable();
     }
 
-    public emitChangedFields(change: ChangedFieldContainer): void {
+    public emitChangedFields(change: ChangedFieldsMap): void {
         this._changedFields$.next(change);
     }
 
@@ -66,31 +67,12 @@ export class FileListField extends DataField<FileListFieldValue> {
             return namePath['name'];
         }).join('/'));
         this.updateFormControlState(formControl);
-        this.initialized = true;
         this._initialized$.next(true);
-        this._initialized$.complete();
         this.changed = false;
     }
 
-    public updateFormControlState(formControl: FormControl): void {
-        this._update.subscribe(() => {
-            this.validRequired = this.calculateValidity(true, formControl);
-            this.valid = this.calculateValidity(false, formControl);
-        });
-        this._block.subscribe(bool => {
-            if (bool) {
-                formControl.disable();
-            } else {
-                this.disabled ? formControl.disable() : formControl.enable();
-            }
-        });
-        this._touch.subscribe(bool => {
-            if (bool) {
-                formControl.markAsTouched();
-            } else {
-                formControl.markAsUntouched();
-            }
-        });
+    protected updateFormControlState(formControl: FormControl): void {
+        this.subscribeToInnerSubjects(formControl);
         this.update();
     }
 }

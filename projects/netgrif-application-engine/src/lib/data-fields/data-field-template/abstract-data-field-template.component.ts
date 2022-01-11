@@ -1,5 +1,4 @@
-import {Input, OnInit, TemplateRef} from '@angular/core';
-import {ResizedEvent} from 'angular-resize-event';
+import {ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
@@ -36,6 +35,7 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      * Field offset defined by task
      */
     @Input() public offset = 0;
+    @ViewChild('dataFieldContainer') container: ElementRef;
 
     protected _dataField: DataField<any>;
     protected _isConfiguredNetgrifTemplate = true;
@@ -87,8 +87,12 @@ export abstract class AbstractDataFieldTemplateComponent implements OnInit {
      * determines whether the "small" or "large" layout should be displayed.
      * @param event - event containing the new width of this Component
      */
-    public evaluateTemplateCondition(event: ResizedEvent): void {
-        this._showLargeLayout.value = event.newWidth >= this.layoutChangeWidthBreakpoint && this.evaluateTemplate();
+    public evaluateTemplateCondition(): boolean {
+        (this.container && this.container.nativeElement && this.container.nativeElement.offsetWidth) ?
+            this._showLargeLayout.value =
+                this.container.nativeElement.offsetWidth  >= this.layoutChangeWidthBreakpoint && this.evaluateTemplate() :
+            this._showLargeLayout.value = this.evaluateTemplate();
+        return this._showLargeLayout.value;
     }
 
     /**

@@ -1,10 +1,9 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {MatSortModule} from '@angular/material/sort';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {of} from 'rxjs';
 import {Component} from '@angular/core';
 import {AbstractSortModeComponent} from './abstract-sort-mode.component';
 import {CaseHeaderService} from '../../case-header/case-header.service';
@@ -16,18 +15,20 @@ import {AuthenticationService} from '../../../authentication/services/authentica
 import {UserResourceService} from '../../../resources/engine-endpoint/user-resource.service';
 import {TestViewService} from '../../../utility/tests/test-view-service';
 import {ViewService} from '../../../routing/view-service/view.service';
-import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-resource.service';
 import {MockAuthenticationService} from '../../../utility/tests/mocks/mock-authentication.service';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
+import {TestNoAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
+import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
 
 describe('AbstractSortModeComponent', () => {
     let component: TestSortModeComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
     let headerSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 FlexModule,
@@ -46,7 +47,7 @@ describe('AbstractSortModeComponent', () => {
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: ViewService, useClass: TestViewService},
-                {provide: CaseViewService, useValue: {allowedNets$: of([])}}
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [TestSortModeComponent, TestWrapperComponent],
         }).compileComponents();

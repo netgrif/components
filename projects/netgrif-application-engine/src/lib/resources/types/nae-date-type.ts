@@ -1,5 +1,4 @@
-import { Moment } from 'moment';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 
 /**
  * [year month day hour minute second timestamp]

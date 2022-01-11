@@ -14,7 +14,7 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
     /**
      * The time that must elapse since last keypress in search input before a search request is sent
      */
-    protected SEARCH_DEBOUNCE_TIME = 200;
+    protected SEARCH_DEBOUNCE_TIME = 600;
 
     /**
      * The user that is initially selected, or `undefined` if none is
@@ -29,7 +29,12 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
     /**
      * Roles for user search
      */
-    @Input() roles: RolesObject;
+    @Input() roles: RolesObject | Array<string>;
+
+    /**
+     * Negative Roles for user search
+     */
+    @Input() negativeRoles: RolesObject | Array<string>;
 
     /**
      * Emit selected user to parent component.
@@ -75,6 +80,11 @@ export abstract class AbstractUserAssignListComponent implements OnInit, OnDestr
             this._userListService.rolesQuery = this.roles;
         } else if (this.roles !== undefined && this.roles !== null) {
             this._userListService.rolesQuery = Object.keys(this.roles);
+        }
+        if (this.negativeRoles instanceof Array) {
+            this._userListService.negativeRolesQuery = this.negativeRoles;
+        } else if (this.negativeRoles !== undefined && this.negativeRoles !== null) {
+            this._userListService.negativeRolesQuery = Object.keys(this.negativeRoles);
         }
     }
 

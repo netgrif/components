@@ -4,7 +4,10 @@
         "codelyzer"
     ],
     "rules": {
-        "array-type": false,
+        "array-type": {
+            "severity": "warning",
+            "options": "generic"
+        },
         "arrow-parens": false,
         "arrow-return-shorthand": true,
         "curly": false,
@@ -44,8 +47,7 @@
         ],
         "no-empty": false,
         "no-inferrable-types": [
-            true,
-            "ignore-params"
+            true
         ],
         "no-non-null-assertion": true,
         "no-redundant-jsdoc": true,

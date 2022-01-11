@@ -5,7 +5,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NetgrifApplicationEngine} from '../../../configuration/interfaces/schema';
+import {NetgrifApplicationEngine} from '../../../../commons/schema';
 
 describe('SignUpService', () => {
     let service: SignUpService;
@@ -118,7 +118,8 @@ class MissingEndpointsConfigurationService extends ConfigurationService {
                         verification: 'auth/verify'
                     },
                     sessionBearer: 'X-Auth-Token'
-                }
+                },
+                resources: []
             }
         } as unknown as NetgrifApplicationEngine);
     }

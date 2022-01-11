@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from 'rxjs';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {Pagination} from '../../resources/interface/pagination';
@@ -33,7 +33,7 @@ interface RoleObject {
  * Performs paged loading users from backend for [UserAssignComponent]{@link AbstractUserAssignComponent}.
  */
 @Injectable()
-export class UserListService {
+export class UserListService implements OnDestroy {
 
     /**
      * UserValue array stream, that represents users loading from backend.
@@ -67,6 +67,10 @@ export class UserListService {
      * Roles that should be applied to the request
      */
     public rolesQuery: Array<string>;
+    /**
+     * negative Roles that should be applied to the request
+     */
+    public negativeRolesQuery: Array<string>;
     private _updateProgress$: LoadingEmitter;
     private _usersReload$: Subject<void>;
 
@@ -98,6 +102,7 @@ export class UserListService {
         this._clear = false;
         this._searchQuery = '';
         this.rolesQuery = new Array<string>();
+        this.negativeRolesQuery = new Array<string>();
 
         const usersMap = this._nextPage$.pipe(
             mergeMap(p => this.loadPage(p)),
@@ -111,8 +116,15 @@ export class UserListService {
             }, {})
         );
         this._users$ = usersMap.pipe(
-            map(v => Object.values(v) as UserListItem[]),
+            map(v => Object.values(v) as Array<UserListItem>),
         );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._updateProgress$.complete();
+        this._usersReload$.complete();
+        this._nextPage$.complete();
     }
 
     public get loading(): boolean {
@@ -150,7 +162,8 @@ export class UserListService {
         let params: HttpParams = new HttpParams();
         params = this.addPageParams(params, page);
         this._loading$.on();
-        return this._resources.search({fulltext: this._searchQuery, roles: this.rolesQuery}, params).pipe(
+        return this._resources.search(
+            {fulltext: this._searchQuery, roles: this.rolesQuery, negativeRoles: this.negativeRolesQuery}, params).pipe(
             catchError(err => {
                 this._log.error('Loading users has failed on page ' + this._pagination.number, err);
                 return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
@@ -194,7 +207,7 @@ export class UserListService {
     /**
      * Reload page with users.
      */
-    public reload(newSearchQuery: string = ''): void {
+    public reload(newSearchQuery = ''): void {
         if (!this._users$ || !this._pagination) {
             return;
         }

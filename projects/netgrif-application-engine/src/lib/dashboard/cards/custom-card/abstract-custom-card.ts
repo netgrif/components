@@ -1,7 +1,6 @@
-import {Injector, Input, OnInit} from '@angular/core';
+import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {CustomCard} from '../model/custom-dashboard-model/custom-card';
-import {DashboardCardTypes} from '../model/dashboard-card-types';
 import {DashboardResourceService} from '../../../resources/engine-endpoint/dashboard-resource.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LoadingEmitter} from '../../../utility/loading-emitter';
@@ -10,7 +9,7 @@ import {DashboardMultiData} from '../model/custom-dashboard-model/dashboard-mult
 import {LoggerService} from '../../../logger/services/logger.service';
 import {AggregationResult} from '../model/custom-dashboard-model/aggregation-result';
 
-export abstract class AbstractCustomCard implements OnInit {
+export abstract class AbstractCustomCard implements OnInit, OnDestroy {
 
     @Input() public card: CustomCard;
     protected _filter: Filter;
@@ -54,6 +53,10 @@ export abstract class AbstractCustomCard implements OnInit {
         }, error => {
             this.loggerService.error('Error occurred when calling dashboard resource service');
         });
+    }
+
+    ngOnDestroy(): void {
+        this.loading.complete();
     }
 
     public getResourceTypeAsString(): string {

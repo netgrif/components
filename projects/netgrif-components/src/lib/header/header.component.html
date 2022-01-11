@@ -37,7 +37,7 @@
                             <mat-icon>search</mat-icon>
                             {{ 'headers.searchMode' | translate}}
                         </button>
-                        <button mat-menu-item (click)="headerService.changeMode(headerModeEnum.EDIT)"> <!-- [ngClass]="{'active-header-item': headerService.headerState.mode === headerModeEnum.EDIT}" -->
+                        <button mat-menu-item (click)="headerService.changeMode(headerModeEnum.EDIT)">
                             <mat-icon>edit</mat-icon>
                             {{ 'headers.editMode' | translate}}
                         </button>

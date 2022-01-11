@@ -3,6 +3,7 @@ import {Moment} from 'moment';
 import {Query} from '../query/query';
 import {OperatorService} from '../../operator-service/operator.service';
 import {InRangeDate} from './in-range-date';
+import {Operators} from './operators';
 
 /**
  * Equality operator for indexed fields that store a date in timestamp format.
@@ -20,6 +21,15 @@ export class EqualsDate extends Operator<Moment> {
     }
 
     createQuery(elasticKeywords: Array<string>, args: Array<Moment>): Query {
+        this.checkArgumentsCount(args);
         return this.dateRange.createQuery(elasticKeywords, [args[0], args[0]]);
+    }
+
+    getOperatorNameTemplate(): Array<string> {
+        return ['search.operator.equals', Operator.INPUT_PLACEHOLDER];
+    }
+
+    serialize(): Operators | string {
+        return Operators.EQUALS_DATE;
     }
 }

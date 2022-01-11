@@ -1,15 +1,12 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
 import {BehaviorSubject, Observable, of, ReplaySubject, Subject, Subscription, timer} from 'rxjs';
 import {TaskPanelData} from '../../../panel/task-panel-list/task-panel-data/task-panel-data';
-import {ChangedFields} from '../../../data-fields/models/changed-fields';
 import {TaskResourceService} from '../../../resources/engine-endpoint/task-resource.service';
 import {UserService} from '../../../user/services/user.service';
 import {SnackBarService} from '../../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
-import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, map, mergeMap, scan, switchMap, take, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
-import {SortableViewWithAllowedNets} from '../../abstract/sortable-view-with-allowed-nets';
-import {Net} from '../../../process/net';
 import {Pagination} from '../../../resources/interface/pagination';
 import {Task} from '../../../resources/interface/task';
 import {SearchService} from '../../../search/search-service/search.service';
@@ -24,25 +21,32 @@ import {Filter} from '../../../filter/models/filter';
 import {TaskPageLoadRequestResult} from '../models/task-page-load-request-result';
 import {LoadingWithFilterEmitter} from '../../../utility/loading-with-filter-emitter';
 import {arrayToObservable} from '../../../utility/array-to-observable';
+import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {SortableView} from '../../abstract/sortable-view';
+import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
+import {TaskViewConfiguration} from '../models/task-view-configuration';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 
 
 @Injectable()
-export class TaskViewService extends SortableViewWithAllowedNets implements OnDestroy {
+export class TaskViewService extends SortableView implements OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;
-    protected _changedFields$: Subject<ChangedFields>;
+    protected _changedFields$: Subject<ChangedFieldsMap>;
     protected _requestedPage$: BehaviorSubject<PageLoadRequestContext>;
     protected _loading$: LoadingWithFilterEmitter;
     protected _endOfData: boolean;
     protected _pagination: Pagination;
     protected _initiallyOpenOneTask: boolean;
     protected _closeTaskTabOnNoTasks: boolean;
-
-    // Kovy fix
     protected _panelUpdate$: BehaviorSubject<Array<TaskPanelData>>;
     protected _closeTab$: ReplaySubject<void>;
     protected _subInitiallyOpen: Subscription;
     protected _subCloseTask: Subscription;
+    protected _subSearch: Subscription;
+
+    // Serializing assign after cancel
+    protected _allowMultiOpen: boolean;
 
     private readonly _initializing: boolean = true;
 
@@ -53,14 +57,14 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                 protected _searchService: SearchService,
                 private _log: LoggerService,
                 private _userComparator: UserComparatorService,
-                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint,
-                allowedNets: Observable<Array<Net>> = of([]),
-                initiallyOpenOneTask: Observable<boolean> = of(true),
-                closeTaskTabOnNoTasks: Observable<boolean> = of(true)) {
-        super(allowedNets);
+                resolver: SearchIndexResolverService,
+                @Optional() @Inject(NAE_PREFERRED_TASK_ENDPOINT) protected readonly _preferredEndpoint: TaskEndpoint = null,
+                @Optional() @Inject(NAE_TASK_VIEW_CONFIGURATION) taskViewConfig: TaskViewConfiguration = null) {
+        super(resolver);
         this._tasks$ = new Subject<Array<TaskPanelData>>();
         this._loading$ = new LoadingWithFilterEmitter();
-        this._changedFields$ = new Subject<ChangedFields>();
+        this._changedFields$ = new Subject<ChangedFieldsMap>();
+        this._allowMultiOpen = true;
         this._endOfData = false;
         this._pagination = {
             size: 50,
@@ -73,13 +77,11 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         );
         this._panelUpdate$ = new BehaviorSubject<Array<TaskPanelData>>([]);
         this._closeTab$ = new ReplaySubject<void>(1);
-        if (this._preferredEndpoint === undefined || this._preferredEndpoint === null) {
-            this._preferredEndpoint = TaskEndpoint.MONGO;
-        }
+        this._preferredEndpoint = taskViewConfig?.preferredEndpoint ?? (this._preferredEndpoint ?? TaskEndpoint.MONGO);
 
         this._initializing = false;
 
-        this._searchService.activeFilter$.subscribe(() => {
+        this._subSearch = this._searchService.activeFilter$.subscribe(() => {
             this.reload();
         });
 
@@ -106,9 +108,9 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
                         if (!pageLoadResult.tasks[taskId]) {
                             delete acc[taskId];
                         } else {
-                            this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
                             pageLoadResult.tasks[taskId].task.dataGroups = acc[taskId].task.dataGroups;
                             pageLoadResult.tasks[taskId].initiallyExpanded = acc[taskId].initiallyExpanded;
+                            this.updateTask(acc[taskId].task, pageLoadResult.tasks[taskId].task);
                             this.blockTaskFields(acc[taskId].task, !(acc[taskId].task.user
                                 && this._userComparator.compareUsers(acc[taskId].task.user)));
                             delete pageLoadResult.tasks[taskId];
@@ -138,29 +140,31 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
             }),
             tap(v => this._panelUpdate$.next(v)));
 
-        this._subInitiallyOpen = initiallyOpenOneTask.subscribe(bool => {
+        this._subInitiallyOpen = (taskViewConfig?.initiallyOpenOneTask ?? of(true)).subscribe(bool => {
             this._initiallyOpenOneTask = bool;
         });
 
-        this._subCloseTask = closeTaskTabOnNoTasks.subscribe(bool => {
+        this._subCloseTask = (taskViewConfig?.closeTaskTabOnNoTasks ?? of(true)).subscribe(bool => {
             this._closeTaskTabOnNoTasks = bool;
         });
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this._changedFields$.complete();
         this._requestedPage$.complete();
         this._panelUpdate$.complete();
         this._closeTab$.complete();
         this._subInitiallyOpen.unsubscribe();
         this._subCloseTask.unsubscribe();
+        this._subSearch.unsubscribe();
     }
 
     public get tasks$(): Observable<Array<TaskPanelData>> {
         return this._tasks$;
     }
 
-    public get changedFields$(): Subject<ChangedFields> {
+    public get changedFields$(): Subject<ChangedFieldsMap> {
         return this._changedFields$;
     }
 
@@ -184,6 +188,14 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         return this._searchService.activeFilter;
     }
 
+    public set allowMultiOpen(bool: boolean) {
+        this._allowMultiOpen = bool;
+    }
+
+    public get allowMultiOpen(): boolean {
+        return this._allowMultiOpen;
+    }
+
     public loadPage(requestContext: PageLoadRequestContext): Observable<TaskPageLoadRequestResult> {
         if (requestContext === null || requestContext.pageNumber < 0) {
             return of({tasks: {}, requestContext});
@@ -196,10 +208,10 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         let request: Observable<Page<Task>>;
         if (requestContext.filter.bodyContainsQuery() || this._preferredEndpoint === TaskEndpoint.ELASTIC) {
             request = timer(200).pipe(
-                switchMap(() => this._taskService.searchTask(requestContext.filter, params))
+                switchMap(() => this._taskService.searchTask(requestContext.filter, params).pipe(take(1)))
             );
         } else {
-            request = this._taskService.getTasks(requestContext.filter, params);
+            request = this._taskService.getTasks(requestContext.filter, params).pipe(take(1));
         }
         return request.pipe(
             catchError(err => {
@@ -221,7 +233,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
             }),
             tap(t => {
                 if (this._pagination.totalElements && this._pagination.totalElements > 0
-                    && t.pagination.totalElements === 0 && !Array.isArray(t.content)) {
+                    && t.pagination.totalElements === 0 && !Array.isArray(t.content) && this._closeTaskTabOnNoTasks) {
                     this._closeTab$.next();
                 }
             }),
@@ -248,6 +260,11 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     private updateTask(old: Task, neww: Task) {
+        Object.keys(old).forEach(key => {
+            if (!neww.hasOwnProperty(key)) {
+                delete old[key];
+            }
+        });
         Object.keys(neww).forEach(key => {
             if (neww[key] !== undefined && neww[key] !== null) {
                 old[key] = neww[key];
@@ -279,7 +296,7 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
-        return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
+        return requestContext === undefined || (this._loading$.isActiveWithFilter(requestContext.filter) && !requestContext.force);
     }
 
     public reload(): void {
@@ -298,13 +315,13 @@ export class TaskViewService extends SortableViewWithAllowedNets implements OnDe
         this.nextPage(range, 0, requestContext);
     }
 
-    public reloadCurrentPage(): void {
+    public reloadCurrentPage(force?: boolean): void {
         if (!this._tasks$ || !this._pagination) {
             return;
         }
 
         this._endOfData = false;
-        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, false, true);
+        const requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination, false, true, force);
         requestContext.pagination.number = 0; // TODO [BUG] - Reloading only first page
         const range = {
             start: -1,

@@ -1,3 +1,5 @@
+import {PetriNetSearchRequest} from './case-search-request-body';
+
 /**
  * Describes objects that are used to search/filter tasks from backend. Returned tasks must fulfill all provided criteria.
  *
@@ -34,7 +36,7 @@ export interface TaskSearchRequestBody {
      *
      * If more than one process ID is specified, the returned tasks must be of one of them.
      */
-    process?: string | Array<string>;
+    process?: PetriNetSearchRequest | Array<PetriNetSearchRequest>;
     /**
      * A full text query on all index fields, that available for full text searching.
      *

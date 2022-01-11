@@ -1,20 +1,22 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TaskSearchComponent} from './task-search.component';
 import {SearchComponentModule} from '../../search.module';
 import {
     AuthenticationMethodService,
     AuthenticationService,
-    ConfigTaskViewServiceFactory,
     ConfigurationService,
     MockAuthenticationMethodService,
     MockAuthenticationService,
     MockUserResourceService,
     SearchService,
-    TaskViewService,
     TestConfigurationService,
-    TestTaskSearchServiceFactory,
-    TestTaskViewFactory,
-    UserResourceService
+    UserResourceService,
+    NAE_BASE_FILTER,
+    TestTaskBaseFilterProvider,
+    AllowedNetsService,
+    TestNoAllowedNetsFactory,
+    AllowedNetsServiceFactory,
+    ViewIdService
 } from '@netgrif/application-engine';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -23,7 +25,7 @@ describe('TaskSearchComponent', () => {
     let component: TaskSearchComponent;
     let fixture: ComponentFixture<TaskSearchComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 SearchComponentModule,
@@ -31,20 +33,17 @@ describe('TaskSearchComponent', () => {
                 NoopAnimationsModule,
             ],
             providers: [
-                ConfigTaskViewServiceFactory,
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                SearchService,
                 {
-                    provide: SearchService,
-                    useFactory: TestTaskSearchServiceFactory
-                },
-                {
-                    provide: TaskViewService,
-                    useFactory: TestTaskViewFactory,
-                    deps: [ConfigTaskViewServiceFactory]
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
                 },
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                {provide: ViewIdService, useValue: {viewId: 'test_view_id'}}
             ]
         })
             .compileComponents();

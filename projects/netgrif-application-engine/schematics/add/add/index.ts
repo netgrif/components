@@ -16,7 +16,6 @@ export function ngAdd(): Rule {
         const rules = [];
         rules.push(createMinimalNaeJson());
         rules.push(schematic('create-nae-files', {}));
-        rules.push(schematic('update-package-json', {}));
         return chain(rules);
     };
 }

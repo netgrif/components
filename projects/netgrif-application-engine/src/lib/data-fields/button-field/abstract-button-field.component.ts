@@ -4,6 +4,7 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DialogService} from '../../dialog/services/dialog.service';
+import {take} from 'rxjs/operators';
 
 export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComponent {
 
@@ -22,6 +23,25 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
     }
 
     /**
+     * This function resolve type of component for HTML
+     * @returns type of component in string
+     */
+    public resolveComponentType(): string {
+        if (this.dataField.component && this.dataField.component.name !== undefined) {
+            return this.dataField.component.name;
+        }
+        return this.dataField.view;
+    }
+
+    /**
+     * Function checks if button is icon type
+     * @returns true if component type is 'fab', 'minifab' or 'icon'
+     */
+    public isIconTypeButton(): boolean {
+        return this.resolveComponentType() === 'fab' || this.resolveComponentType() === 'minifab' || this.resolveComponentType() === 'icon';
+    }
+
+    /**
      * This function depends on type of component, if had dialogText provided in component, then its open a dialog with that text
      */
     public resolveValue(): void {
@@ -30,7 +50,7 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
             const dialogRef = this._dialogService.openConfirmDialog(this.dataField.component.properties.dialogTitle,
                 this.dataField.component.properties.dialogText, this._translate.instant('dialog.close'),
                 this._translate.instant('dialog.submit'));
-            dialogRef.afterClosed().subscribe(result => {
+            dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
                 if (result && result.confirmed) {
                     this.formControl.setValue(this.formControl.value + 1);
                 }

@@ -116,9 +116,10 @@ export class CaseTreeNode {
      */
     public toLoggableForm(): object {
         return {
-            ...this,
-            ...{parent: this.parent ? this.parent.case.stringId : this.parent},
-            ...{children: this.children.map(c => c.case.stringId)}
+            case: this.case,
+            dirtyChildren: this.dirtyChildren,
+            parent: this.parent ? this.parent.case.stringId : this.parent,
+            children: this.children.map(c => c.case.stringId),
         };
     }
 }

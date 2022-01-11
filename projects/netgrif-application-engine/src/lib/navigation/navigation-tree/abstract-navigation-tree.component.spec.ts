@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -18,13 +18,20 @@ import {AuthorityGuardService} from '../../authorization/authority/authority-gua
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
-import {Views} from '../../configuration/interfaces/schema';
+import {Views} from '../../../commons/schema';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
 import {UserTransformer} from '../../authentication/models/user.transformer';
 import {SessionService} from '../../authentication/session/services/session.service';
 import {User} from '../../user/models/user';
+import {AnonymousService} from '../../authentication/anonymous/anonymous.service';
 import {GroupGuardService} from '../../authorization/group/group-guard.service';
+import {ActiveGroupService} from '../../groups/services/active-group.service';
+import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
+import {LanguageService} from '../../translate/language.service';
+import {
+    DynamicNavigationRouteProviderService
+} from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 
 describe('AbstractNavigationTreeComponent', () => {
     let component: TestTreeComponent;
@@ -32,7 +39,7 @@ describe('AbstractNavigationTreeComponent', () => {
     let configService: ConfigurableTestConfigurationService;
     let userService: TestUserService;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestTreeComponent],
             providers: [
@@ -57,6 +64,10 @@ describe('AbstractNavigationTreeComponent', () => {
         configService = TestBed.inject(ConfigurableTestConfigurationService);
         userService = TestBed.inject(TestUserService);
     }));
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 
     function initializeComponent() {
         fixture = TestBed.createComponent(TestTreeComponent);
@@ -336,10 +347,6 @@ describe('AbstractNavigationTreeComponent', () => {
         expect(component.dataSource.data[0].url).toEqual('/allowed');
         expect(component.dataSource.data[0].children).toBeFalsy();
     });
-
-    afterEach(() => {
-        TestBed.resetTestingModule();
-    });
 });
 
 @Component({
@@ -353,8 +360,24 @@ class TestTreeComponent extends AbstractNavigationTreeComponent {
                 userService: UserService,
                 roleGuard: RoleGuardService,
                 authorityGuard: AuthorityGuardService,
-                groupGuard: GroupGuardService) {
-        super(config, router, log, userService, roleGuard, authorityGuard, groupGuard);
+                groupGuard: GroupGuardService,
+                activeGroupService: ActiveGroupService,
+                taskResourceService: TaskResourceService,
+                languageService: LanguageService,
+                navigationRouteProvider: DynamicNavigationRouteProviderService) {
+        super(
+            config,
+            router,
+            log,
+            userService,
+            roleGuard,
+            authorityGuard,
+            groupGuard,
+            activeGroupService,
+            taskResourceService,
+            languageService,
+            navigationRouteProvider
+        );
     }
 }
 
@@ -379,8 +402,9 @@ class TestUserService extends UserService {
                 userResource: UserResourceService,
                 userTransform: UserTransformer,
                 log: LoggerService,
-                session: SessionService) {
-        super(authService, userResource, userTransform, log, session);
+                session: SessionService,
+                anonymousService: AnonymousService) {
+        super(authService, userResource, userTransform, log, session, anonymousService);
     }
 
     public setUser(user: User) {

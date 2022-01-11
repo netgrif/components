@@ -6,8 +6,8 @@ import {Query} from '../query/query';
  */
 export class ElementaryPredicate extends Predicate {
 
-    constructor(private _query: Query) {
-        super();
+    constructor(protected _query: Query, initiallyVisible = true) {
+        super(initiallyVisible);
     }
 
     get query(): Query {

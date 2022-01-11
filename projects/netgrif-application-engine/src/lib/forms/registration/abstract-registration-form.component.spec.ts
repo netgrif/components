@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -21,7 +21,7 @@ describe('AbstractRegistrationPanelComponent', () => {
     let fixture: ComponentFixture<TestRegFormComponent>;
     let mockSignupService: MockSignUpService;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
@@ -52,21 +52,23 @@ describe('AbstractRegistrationPanelComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should submit', () => {
+    it('should submit', (done) => {
         component.rootFormGroup.controls['name'].setValue('name');
         component.rootFormGroup.controls['surname'].setValue('surname');
-        component.rootFormGroup.controls['password'].setValue('passwd');
-        component.rootFormGroup.controls['confirmPassword'].setValue('passwd');
+        component.rootFormGroup.controls['password'].setValue('password');
+        component.rootFormGroup.controls['confirmPassword'].setValue('password');
+        expect(component.rootFormGroup.valid).toBeTrue();
         component.formSubmit.subscribe( event => {
             expect(event).toEqual({
                 token: undefined,
                 name: 'name',
                 surname: 'surname',
-                password: 'passwd'
+                password: 'password'
             });
         });
         component.register.subscribe(event => {
             expect(event).toEqual({error: 'Provided token undefined is not valid'});
+            done();
         });
         component.onSubmit();
     });

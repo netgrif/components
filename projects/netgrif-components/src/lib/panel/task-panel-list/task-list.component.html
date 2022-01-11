@@ -10,8 +10,8 @@
         <mat-accordion [multi]="allowMultiOpen" class="full-width" fxFlex="100">
             <cdk-virtual-scroll-viewport itemSize="52" (scrolledIndexChange)="loadNextPage()"
                                          class="task-panel-scroll-container full-width full-height">
-
                 <nc-task-panel
+                    [textEllipsis]="textEllipsis"
                     *cdkVirtualFor="let task of tasks;
                                     let i = index;
                                     let first = first;
@@ -19,8 +19,10 @@
                                     trackBy: trackBy;
                                     templateCacheSize: 0"
                     [taskPanelData]="task" [selectedHeaders$]="selectedHeaders$" [first]="first" [last]="last"
+                    [forceLoadDataOnOpen]="forceLoadDataOnOpen"
                     [responsiveBody]="responsiveBody"
                     (taskEvent)="emitTaskEvent($event)"
+                    (panelRefOutput)="addToPanelRefs(task, $event)"
                     class="panel-expanded-spacing">
                 </nc-task-panel>
 

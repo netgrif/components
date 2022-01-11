@@ -70,6 +70,6 @@ function copyFiles(sourcePrefix, destinationPrefix, target, relativePath = '') {
     });
 }
 
-function isDir(path) {
-    return fs.lstatSync(path).isDirectory();
+function isDir(pathos) {
+    return fs.lstatSync(pathos).isDirectory();
 }

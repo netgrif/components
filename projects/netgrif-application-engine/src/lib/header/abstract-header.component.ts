@@ -1,4 +1,4 @@
-import {Injector, Input, OnInit} from '@angular/core';
+import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
@@ -10,8 +10,9 @@ import {FormControl, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {OverflowService} from './services/overflow.service';
 import {stopPropagation} from '../utility/stop-propagation';
+import {Subscription} from 'rxjs';
 
-export abstract class AbstractHeaderComponent implements OnInit {
+export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected readonly DEFAULT_COLUMN_COUNT = 6;
     protected readonly DEFAULT_COLUMN_WIDTH = 190;
@@ -26,6 +27,9 @@ export abstract class AbstractHeaderComponent implements OnInit {
     public columnCountControl: FormControl;
     public columnWidthControl: FormControl;
     public canOverflow: boolean;
+    public subOverflowControl: Subscription;
+    public subColumnCountControl: Subscription;
+    public subColumnWidthControl: Subscription;
 
     protected _initHeaderCount: number = undefined;
     protected _initResponsiveHeaders: boolean = undefined;
@@ -42,9 +46,10 @@ export abstract class AbstractHeaderComponent implements OnInit {
     public set maxHeaderColumns(count: number) {
         if (this.headerService) {
             this.headerService.headerColumnCount = count;
-            this.columnCountControl.setValue(count);
         } else {
             this._initHeaderCount = count;
+        }
+        if (this._overflowService === null || (this._overflowService !== null && !this._overflowService.initializedCount)) {
             this.columnCountControl.setValue(count);
         }
     }
@@ -66,6 +71,15 @@ export abstract class AbstractHeaderComponent implements OnInit {
         }
         if (this._initResponsiveHeaders !== undefined) {
             this.headerService.responsiveHeaders = this._initResponsiveHeaders;
+        }
+        this.headerService.preferenceColumnCount$.subscribe(value => this.columnCountControl.setValue(value));
+    }
+
+    ngOnDestroy(): void {
+        if (this.canOverflow) {
+            this.subColumnWidthControl.unsubscribe();
+            this.subColumnCountControl.unsubscribe();
+            this.subOverflowControl.unsubscribe();
         }
     }
 
@@ -144,10 +158,10 @@ export abstract class AbstractHeaderComponent implements OnInit {
     }
 
     protected initializeValueChanges() {
-        this.overflowControl.valueChanges.subscribe(value => {
+        this.subOverflowControl = this.overflowControl.valueChanges.subscribe(value => {
             this._overflowService.overflowMode = value;
         });
-        this.columnCountControl.valueChanges.subscribe(value => {
+        this.subColumnCountControl = this.columnCountControl.valueChanges.subscribe(value => {
             if (this.columnCountControl.valid) {
                 this._overflowService.columnCount = value;
                 if (this.headerService && this.type === HeaderType.CASE) {
@@ -156,7 +170,7 @@ export abstract class AbstractHeaderComponent implements OnInit {
                 }
             }
         });
-        this.columnWidthControl.valueChanges.subscribe(value => {
+        this.subColumnWidthControl = this.columnWidthControl.valueChanges.subscribe(value => {
             if (this.columnWidthControl.valid) {
                 this._overflowService.columnWidth = value;
                 if (this.headerService && this.type === HeaderType.CASE) {

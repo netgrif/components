@@ -4,7 +4,7 @@ import {UserService} from '../../user/services/user.service';
 import {AuthenticationModule} from '../../authentication/authentication.module';
 import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Access, RoleAccess, View} from '../../configuration/interfaces/schema';
+import {Access, RoleAccess, View} from '../../../commons/schema';
 import {LoggerService} from '../../logger/services/logger.service';
 import {Observable} from 'rxjs';
 

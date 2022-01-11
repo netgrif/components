@@ -1,24 +1,11 @@
-import {MessageResource} from './message-resource';
-import {ChangedFieldContainer} from './changed-field-container';
-import {NaeDate} from '../types/nae-date-type';
-import {UserResourceSmall} from './user-resource-small';
-
-export interface EventOutcome extends MessageResource, ChangedFieldContainer {
+export interface EventOutcome {
     /**
-     * Information regarding the assignee of the task after the operation was performed.
-     *
-     * If the value is `undefined` it can either mean, that the task has no assignee, or that the task no longer exists.
-     * Reloading the task is recommended in this case.
+     * Message associated with triggered event, defined in petri net xml file.
      */
-    assignee?: UserResourceSmall;
+    message?: string;
 
     /**
-     * The start date of the task.
+     * Array of event outcomes, result of events that were triggered by parent event
      */
-    startDate?: NaeDate;
-
-    /**
-     * The finish date of the task.
-     */
-    finishDate?: NaeDate;
+    outcomes?: Array<EventOutcome>;
 }

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AddChildNodeComponent} from './add-child-node.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -18,7 +18,7 @@ describe('AddChildNodeComponent', () => {
     let component: AddChildNodeComponent;
     let fixture: ComponentFixture<TestComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
@@ -71,5 +71,5 @@ class TestComponent {
         stringId: '',
         title: '',
         visualId: '',
-        immediateData: []}, undefined);
+        immediateData: [], permissions: {}}, undefined);
 }

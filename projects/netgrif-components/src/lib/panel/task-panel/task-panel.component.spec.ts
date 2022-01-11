@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule} from '@angular/common';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
@@ -8,7 +8,6 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {
-    ArrayTaskViewServiceFactory,
     AssignPolicy,
     AssignPolicyService,
     AssignTaskService,
@@ -17,6 +16,7 @@ import {
     CancelTaskService,
     ChangedFields,
     ConfigurationService,
+    createMockTask,
     DataFocusPolicy,
     DataFocusPolicyService,
     DelegateTaskService,
@@ -31,7 +31,6 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     NAE_TASK_OPERATIONS,
-    noNetsTaskViewServiceFactory,
     SearchService,
     SideMenuService,
     SingleTaskContentService,
@@ -47,9 +46,14 @@ import {
     TaskResourceService,
     TaskViewService,
     TestConfigurationService,
-    TestTaskSearchServiceFactory,
     TranslateLibModule,
-    UserResourceService
+    UserResourceService,
+    NAE_BASE_FILTER,
+    TestTaskBaseFilterProvider,
+    AllowedNetsService,
+    TestTaskViewAllowedNetsFactory,
+    AllowedNetsServiceFactory,
+    CurrencyModule, ChangedFieldsService
 } from '@netgrif/application-engine';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -61,7 +65,7 @@ describe('TaskPanelComponent', () => {
     let component: TaskPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const mockAssignPolicyService = {
             performAssignPolicy: () => {
             }
@@ -77,22 +81,23 @@ describe('TaskPanelComponent', () => {
                 HttpClientTestingModule,
                 SnackBarModule,
                 TaskContentComponentModule,
+                CurrencyModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
-                ArrayTaskViewServiceFactory,
+                TaskViewService,
                 SideMenuService,
+                ChangedFieldsService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
-                {
-                    provide: TaskViewService,
-                    useFactory: noNetsTaskViewServiceFactory,
-                    deps: [ArrayTaskViewServiceFactory]
-                },
                 {provide: TaskResourceService, useClass: MyTaskResources},
                 {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: SearchService, useFactory: TestTaskSearchServiceFactory},
+                SearchService,
+                {
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestTaskBaseFilterProvider
+                },
                 {provide: TaskContentService, useClass: SingleTaskContentService},
                 TaskDataService,
                 TaskEventService,
@@ -105,6 +110,7 @@ describe('TaskPanelComponent', () => {
                 AssignPolicyService,
                 FinishPolicyService,
                 {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+                {provide: AllowedNetsService, useFactory: TestTaskViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 PanelComponent,
@@ -143,28 +149,7 @@ describe('TaskPanelComponent', () => {
 })
 class TestWrapperComponent {
     taskPanel: TaskPanelData = {
-        task: {
-            caseId: 'string',
-            transitionId: 'string',
-            title: 'string',
-            caseColor: 'string',
-            caseTitle: 'string',
-            user: undefined,
-            roles: {},
-            startDate: undefined,
-            finishDate: undefined,
-            assignPolicy: AssignPolicy.manual,
-            dataFocusPolicy: DataFocusPolicy.manual,
-            finishPolicy: FinishPolicy.manual,
-            stringId: 'string',
-            layout: {
-                offset: 0,
-                cols: undefined,
-                rows: undefined
-            },
-            dataGroups: [],
-            _links: {}
-        },
+        task: createMockTask(),
         changedFields: new Subject<ChangedFields>(),
         initiallyExpanded: false
     };
@@ -255,6 +240,7 @@ class MyTaskResources {
             caseTitle: 'string',
             user: undefined,
             roles: {},
+            users: {},
             startDate: undefined,
             finishDate: undefined,
             assignPolicy: AssignPolicy.manual,

@@ -18,16 +18,21 @@
             "dataSaved": "Daten erfolgreich gespeichert",
             "failedSave": "Beim speichern der Daten ist eine Fehler aufgetreten",
             "assignTask": "Beim zuweisen der Aufgabe",
+            "assignTaskSuccess": "Aufgabe erfolgreich zugewiesen",
             "delegateTask": "Beim delegieren der Aufgabe",
+            "delegateTaskSuccess": "Aufgabe erfolgreich delegiert",
             "failed": "ist eine Fehler aufgetreten",
             "cancelTask": "Aufgabenzuweisung wird abgebrochen",
+            "cancelTaskSuccess": "Aufgabe erfolgreich abgebrochen",
             "finishTask": "Aufgabe wird abgeschlossen",
+            "finishTaskSuccess": "Aufgabe erfolgreich abgeschlossen",
             "invalidData": "Manche Felder haben ungültige Werten",
             "missingRequired": "Einige Pflichtfelder sind leer",
             "noCase": "Keine Fälle gefunden",
             "caseGetFailed": "Beim laden der Fälle ist eine Fehler aufgetreten",
             "noLongerExists": "Die ausgewählte Aufgabe existiert nicht mehr",
             "caseDeleteFailed": "Fall konnte nicht gelöscht werden",
+            "caseDeleteSuccess": "Fall erfolgreich gelöscht",
             "rolesSuccessAssign": "Rollen, die ausgewählten Benutzern erfolgreich zugewiesen wurden"
         },
         "view": {
@@ -38,7 +43,8 @@
             "delegate": "Delegieren",
             "finish": "Abschließen",
             "cancel": "Stornieren",
-            "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren."
+            "noData": "Diese Aufgabe hat keine Dateien. Schließen Sie die Aufgabe ab, um fortzufahren.",
+            "redirecting": "Umleiten..."
         }
     },
     "side-menu": {
@@ -72,7 +78,8 @@
             "errSecond": "Sie müssen einen Namen eingeben.",
             "errThird": "Sie müssen eine Farbe auswählen.",
             "noNets": "Es gibt keine erlaubte Netze",
-            "createCase": "Neuen Fall würde erfolgreich erzeugt"
+            "createCase": "Neuen Fall würde erfolgreich erzeugt",
+            "defaultCaseName": "mit einem Standardfallnamen"
         },
         "user": {
             "assign": "Benützer zuweisen",
@@ -97,6 +104,10 @@
                     "name": "Visuelle ID",
                     "placeholder": "Geben Sie die visuelle ID ein"
                 },
+                "stringId": {
+                    "name": "Fall ID",
+                    "placeholder": "Geben Sie die Fall ID ein"
+                },
                 "author": {
                     "name": "Fallautor/in",
                     "placeholder": "Geben Sie den Namen, oder das E-Mail des/er Fallautors/in ein"
@@ -116,6 +127,10 @@
                 "creationDate": {
                     "name": "Erstellungsdatum",
                     "placeholder": "Geben Sie das Erstellungsdatum ein"
+                },
+                "creationDateTime": {
+                    "name": "Erstellungsdatum und Uhrzeit",
+                    "placeholder": "Geben Sie das Erstellungsdatum und die Uhrzeit ein"
                 },
                 "dataset": {
                     "name": "Falldatei",
@@ -142,11 +157,40 @@
                     "name": "Aufgabe",
                     "placeholder": "Wählen Sie die Aufgabe aus"
                 }
-            }
+            },
+            "select": "Suchkategorie",
+            "userMe": "ICH"
         },
-        "placeholder": {
-            "text": "Suchen oder Suchkategorie auswählen"
-        }
+        "operator": {
+            "name": "Operator",
+            "substring": "enthält Teilzeichenfolge",
+            "inRange": {
+                "from": "von",
+                "to": "bis"
+            },
+            "equals": "ist genau",
+            "notEquals": "unterscheidet sich von",
+            "moreThan": "ist größer als",
+            "lessThan": "ist kleiner als",
+            "lessThanEqual": "ist kleiner oder gleich als",
+            "moreThanEqual": "ist größer oder gleich als",
+            "like": "ist ähnlich wie",
+            "isNull": "ist leer"
+        },
+        "tooltip": {
+            "toAdvanced": "Wechseln zum erweiterten Suchmodus",
+            "toFullText": "Wechseln zum einfachen Suchmodus",
+            "help": "Hilfe",
+            "save": "Filter speichern",
+            "load": "Filter laden"
+        },
+        "help": {
+            "title": "Hilfe für den erweiterten Suchmodus",
+            "text": "Man kann den erweiterten Suchmodus verwenden, um komplexere Suchanfragen zu erstellen. Beginnen Sie mit der Auswahl einer Suchkategorie. Die Suchkategorie definiert, wonach Sie suchen. Manche Suchkategorien benötigen zusätzliche Konfiguration (z.B. die Falldatei Suchkategorie). Nachdem Sie die Suchkategorie auswählen, mussen Sie den Operator auswählen. Der Operator stellt fest, wie die Daten mit der Suchanfrage übereinstimmen müssen. Mit verschiedenen Operatoren kann man nach einer genauen Übereinstimmung oder nach Werten aus einem Bereich suchen. Nach der Operatorasuwahl muss man das gesuchte Wert eingeben. Die Suchanfragen können mit den Stichwörtern UND oder ODER verbunden werden. Das ODER Stichwort findet Einträge, die mindestens eines der kombinierten Suchanfragen erfühlen. Das UND Stichwort findet Einträge, die alle der kombinierten Suchanfragen, erfühlen."
+        },
+        "fullText": "Geben Sie den gesuchten Text ein",
+        "and": "und",
+        "or": "oder"
     },
     "dataField": {
         "validations": {
@@ -177,7 +221,7 @@
             "wontUploadSameFile": "The file already exists. If you want to update the file, please renamed it",
             "wontUploadSameFiles": "Die ausgewählten Dateien wurden bereits hochgeladen. Löschen Sie zum Aktualisieren von Dateien bereits hochgeladene Dateien",
             "fileUploadFailed": "The file failed to upload",
-            "fileDeleteFailed":  "Die Datei konnte nicht gelöscht werden",
+            "fileDeleteFailed": "Die Datei konnte nicht gelöscht werden",
             "maxFilesExceeded": "Die maximale Anzahl hochladbarer Dateien ist überschritten: ",
             "maxFilesSizeExceeded": "Die maximale Größe der hochgeladenen Dateien wird überschritten: ",
             "notSelectedUser": "Es wurde kein Benutzer ausgewählt",
@@ -195,6 +239,9 @@
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
+        },
+        "dynamicEnum": {
+            "noData": "Keine Einträge entsprechen Ihrer Suchanfrage"
         }
     },
     "dialog": {
@@ -231,8 +278,10 @@
     "headers": {
         "newHeader": "Kopfzeile auswählen",
         "date": "Datum auswählen",
+        "dateTime": "Datum und Uhrzeit asuwählen",
         "selectUser": "Benutzer auswählen",
         "caseMeta": {
+            "mongoID": "Fall ID",
             "visualID": "Visuelle ID",
             "title": "Fallname",
             "author": "Fallautor",
@@ -240,6 +289,8 @@
         },
         "taskMeta": {
             "case": "Fall",
+            "caseID": "Fall ID",
+            "taskID": "Aufgabe ID",
             "priority": "Priorität",
             "user": "Zugewiesener/in",
             "assignDate": "Zugewieserungsdatum"
@@ -247,6 +298,7 @@
         "workflowMeta": {
             "initials": "Initialen",
             "version": "Version",
+            "netId": "Prozess ID",
             "creationDate": "Hochladungsdatum",
             "title": "Prozessname",
             "author": "Prozessautor"
@@ -331,7 +383,7 @@
         "noTaskSelected": "Momentan ist keiner Fall ausgewählt. Klicken Sie einen Knoten in dem Baum an, um einen Fall auszuwählen."
     },
     "dashboard": {
-        "cases" : "Fälle"
+        "cases": "Fälle"
     },
     "workflow": {
         "delete": "löschen",
@@ -344,7 +396,8 @@
             "deleteCanceled": "Prozess löschen abgebrochen",
             "deleteSuccess": "Prozess erfolgreich gelöscht",
             "deleteError": "Prozess konnte nicht gelöscht werden",
-            "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden"
+            "uploadFailed": "Prozessdatei konnte nicht hochgeladen werden.",
+            "uploadSuccess": "Prozessdatei erfolgreich hochgeladen"
         }
     },
     "legal": {
@@ -354,5 +407,13 @@
         "and": "und die",
         "privacyNotice": "Datenschutzerklärung",
         "sentenceEnd": "gelesen und akzeptiert haben"
+    },
+    "publicView": {
+        "resolving": "Die öffentliche Ansicht wird geladen ...",
+        "netNotExist": "Der Prozess existiert nicht",
+        "errorCreate": "Fehler beim Erstellen des Falles "
+    },
+    "dynamicNavigation": {
+        "couldNotResolveView": "Ein Fehler ist aufgetreten während des Ansichtauflösungsprocess. Der Ansicht kann nicht angezeigt werden"
     }
 }

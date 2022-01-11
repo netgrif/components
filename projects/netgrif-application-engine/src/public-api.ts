@@ -1,10 +1,12 @@
 /*
  * Public API Surface of netgrif-application-engine
  */
+export * from './commons/schema';
 
 /* MODULES */
 export * from './lib/material/material.module';
 export * from './lib/covalent/covalent.module';
+export * from './lib/currency/currency.module';
 
 /* APIS */
 export * from './lib/logger/public-api';
@@ -35,6 +37,10 @@ export * from './lib/task-content/public-api';
 export * from './lib/task/public-api';
 export * from './lib/moment/public-api';
 export * from './lib/authorization/public-api';
+export * from './lib/public/public-api';
 export * from './lib/groups/public-api';
 export * from './lib/legal/public-api';
-
+export * from './lib/allowed-nets/public-api';
+export * from './lib/event-queue/public-api';
+export * from './lib/changed-fields/public-api';
+export * from './lib/event/public-api';

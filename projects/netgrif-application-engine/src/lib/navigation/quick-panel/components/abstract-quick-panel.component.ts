@@ -1,17 +1,20 @@
 import {Input, OnInit} from '@angular/core';
 import {LanguageService} from '../../../translate/language.service';
 import {PaperViewService} from './paper-view.service';
+import {AbstractNavigationResizableDrawerComponent} from '../../navigation-drawer/abstract-navigation-resizable-drawer.component';
 
 export type QuickPanelItem = 'language' | 'settings' | 'logout';
 
-export abstract class AbstractQuickPanelComponent implements OnInit {
+export abstract class AbstractQuickPanelComponent extends AbstractNavigationResizableDrawerComponent implements OnInit {
 
     @Input() public items: Array<QuickPanelItem>;
 
     constructor(protected _select: LanguageService, protected _paperView: PaperViewService) {
+        super();
     }
 
     ngOnInit(): void {
+        super.ngOnInit();
     }
 
     getLang(): string {

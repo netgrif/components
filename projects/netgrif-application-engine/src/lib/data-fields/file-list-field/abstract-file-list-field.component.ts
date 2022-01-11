@@ -7,8 +7,11 @@ import {AbstractDataFieldComponent} from '../models/abstract-data-field-componen
 import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 import {FileListField, FileListFieldValidation} from './models/file-list-field';
 import {FileFieldValue} from '../file-field/models/file-field-value';
-import {ChangedFieldContainer} from '../../resources/interface/changed-field-container';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
+import {take} from 'rxjs/operators';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 export interface FilesState {
     progress: number;
@@ -48,6 +51,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                           protected _log: LoggerService,
                           protected _snackbar: SnackBarService,
                           protected _translate: TranslateService,
+                          protected _eventService: EventService,
                           @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
         super(informAboutInvalidData);
         this.state = this.defaultState;
@@ -76,12 +80,14 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      */
     ngAfterViewInit(): void {
         if (this.fileUploadEl) {
-            this.fileUploadEl.nativeElement.onchange = () => this.upload();
+            this.fileUploadEl.nativeElement.onchange = () => {
+                this.upload();
+            };
         }
     }
 
     public chooseFile() {
-        if (this.state.uploading) {
+        if (this.state.uploading || this.formControl.disabled) {
             return;
         }
         this.fileUploadEl.nativeElement.click();
@@ -107,6 +113,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             this._snackbar.openErrorSnackBar(this.maxFilesMessage ? this.maxFilesMessage :
                 this._translate.instant('dataField.snackBar.maxFilesExceeded') + this.maxFilesNumber
             );
+            this.fileUploadEl.nativeElement.value = '';
             return;
         }
 
@@ -119,6 +126,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             this._snackbar.openErrorSnackBar(
                 this._translate.instant('dataField.snackBar.maxFilesSizeExceeded') + this.dataField.maxUploadSizeInBytes
             );
+            this.fileUploadEl.nativeElement.value = '';
+            return;
         }
 
         if (this.dataField.value && this.dataField.value.namesPaths && this.dataField.value.namesPaths.length !== 0) {
@@ -128,6 +137,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             if (filesToUpload.length === 0) {
                 this._log.error('User chose the same files that are already uploaded. Uploading skipped');
                 this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.wontUploadSameFiles'));
+                this.fileUploadEl.nativeElement.value = '';
                 return;
             }
         }
@@ -139,17 +149,17 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         filesToUpload.forEach(fileToUpload => {
             fileFormData.append('files', fileToUpload);
         });
-        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, true).subscribe(response => {
+        this._taskResourceService.uploadFile(this.resolveParentTaskId(),
+            this.dataField.stringId, fileFormData, true)
+            .subscribe((response: EventOutcomeMessageResource) => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
                 this._log.debug(
                     `Files [${this.dataField.stringId}] were successfully uploaded`
                 );
-                if (Object.keys((response as ChangedFieldContainer).changedFields).length !== 0 ||
-                    (response as ChangedFieldContainer).changedFields.constructor !== Object) {
-                    this.dataField.emitChangedFields(response as ChangedFieldContainer);
-                }
+                const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                this.dataField.emitChangedFields(changedFieldsMap);
                 this.state.completed = true;
                 this.state.error = false;
                 this.state.uploading = false;
@@ -163,6 +173,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 });
                 this.dataField.touch = true;
                 this.dataField.update();
+                this.fileUploadEl.nativeElement.value = '';
             }
         }, error => {
             this.state.completed = true;
@@ -175,6 +186,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
             this.dataField.touch = true;
             this.dataField.update();
+            this.fileUploadEl.nativeElement.value = '';
         });
     }
 
@@ -190,7 +202,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
 
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(this.taskId, this.dataField.stringId, fileName).subscribe(response => {
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
+            this.dataField.stringId, fileName).subscribe(response => {
             if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.DOWNLOAD) {
                 this.state.progress = (response as ProviderProgress).progress;
             } else {
@@ -231,7 +244,8 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             return;
         }
 
-        this._taskResourceService.deleteFile(this.taskId, this.dataField.stringId, fileName).subscribe(response => {
+        this._taskResourceService.deleteFile(this.resolveParentTaskId(),
+            this.dataField.stringId, fileName).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
                 if (this.dataField.value.namesPaths) {
@@ -280,5 +294,9 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
                 this.dataField.value.namesPaths = new Array<FileFieldValue>();
             }
         }
+    }
+
+    private resolveParentTaskId(): string {
+        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
     }
 }

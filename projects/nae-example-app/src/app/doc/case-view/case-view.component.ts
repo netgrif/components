@@ -3,22 +3,28 @@ import {
     AbstractCaseView,
     Case,
     CaseViewService,
-    SearchChipService,
     SearchService,
     SimpleFilter,
-    AllNetsCaseViewServiceFactory,
     OverflowService,
     NAE_VIEW_ID_SEGMENT,
-    ViewIdService
+    ViewIdService,
+    CategoryFactory,
+    NAE_SEARCH_CATEGORIES,
+    defaultCaseSearchCategoriesFactory,
+    NAE_BASE_FILTER,
+    AllowedNetsServiceFactory,
+    AllowedNetsService, UserFilterConstants, TaskSetDataRequestFields
 } from '@netgrif/application-engine';
 import {HeaderComponent} from '@netgrif/components';
 
-const localCaseViewServiceFactory = (factory: AllNetsCaseViewServiceFactory) => {
-    return factory.create();
+const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
+    return factory.createWithAllNets();
 };
 
-const searchServiceFactory = () => {
-    return new SearchService(SimpleFilter.emptyCaseFilter());
+const baseFilterFactory = () => {
+    return {
+        filter: SimpleFilter.emptyCaseFilter()
+    };
 };
 
 @Component({
@@ -26,24 +32,37 @@ const searchServiceFactory = () => {
     templateUrl: './case-view.component.html',
     styleUrls: ['./case-view.component.scss'],
     providers: [
-        SearchChipService,
-        AllNetsCaseViewServiceFactory,
+        CategoryFactory,
+        CaseViewService,
         OverflowService,
-        {   provide: SearchService,
-            useFactory: searchServiceFactory},
-        {   provide: CaseViewService,
-            useFactory: localCaseViewServiceFactory,
-            deps: [AllNetsCaseViewServiceFactory]},
+        SearchService,
+        {   provide: NAE_BASE_FILTER,
+            useFactory: baseFilterFactory},
+        {   provide: AllowedNetsService,
+            useFactory: localAllowedNetsFactory,
+            deps: [AllowedNetsServiceFactory]},
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'case'},
-        ViewIdService
+        ViewIdService,
+        {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
 })
 export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
+    additionalFilterData: TaskSetDataRequestFields;
+
     constructor(caseViewService: CaseViewService, protected overflowService: OverflowService) {
-        super(caseViewService, overflowService);
+        super(caseViewService, overflowService, undefined, {
+            enableCaseTitle: true,
+            isCaseTitleRequired: false
+        });
+        this.additionalFilterData = {
+            [UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID]: {
+                type: 'text',
+                value: 'override'
+            }
+        };
     }
 
     ngAfterViewInit(): void {

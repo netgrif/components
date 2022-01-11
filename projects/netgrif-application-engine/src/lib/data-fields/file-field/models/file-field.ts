@@ -3,9 +3,10 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {FileFieldValue} from './file-field-value';
 import {Observable, Subject} from 'rxjs';
-import {ChangedFieldContainer} from '../../../resources/interface/changed-field-container';
 import {Component} from '../../models/component';
 import {FormControl} from '@angular/forms';
+import {Validation} from '../../models/validation';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -54,7 +55,7 @@ export class FileField extends DataField<FileFieldValue> {
     /**
      * Used to forward the result of the upload file backend call to the task content
      */
-    private _changedFields$: Subject<ChangedFieldContainer>;
+    private _changedFields$: Subject<ChangedFieldsMap>;
 
     public downloaded: boolean;
 
@@ -65,9 +66,10 @@ export class FileField extends DataField<FileFieldValue> {
      */
     constructor(stringId: string, title: string, behavior: Behavior, value?: FileFieldValue, placeholder?: string, description?: string,
                 layout?: Layout, private _maxUploadSizeInBytes?: number,
-                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>, component?: Component) {
-        super(stringId, title, value, behavior, placeholder, description, layout, component);
-        this._changedFields$ = new Subject<ChangedFieldContainer>();
+                private _allowTypes?: string | FileUploadMIMEType | Array<FileUploadMIMEType>,
+                validations?: Array<Validation>, component?: Component, parentTaskId?: string) {
+        super(stringId, title, value, behavior, placeholder, description, layout, validations, component, parentTaskId);
+        this._changedFields$ = new Subject<ChangedFieldsMap>();
     }
 
     get maxUploadSizeInBytes(): number {
@@ -78,11 +80,11 @@ export class FileField extends DataField<FileFieldValue> {
         return this._allowTypes instanceof Array ? this._allowTypes.toString() : this._allowTypes;
     }
 
-    get changedFields$(): Observable<ChangedFieldContainer> {
+    get changedFields$(): Observable<ChangedFieldsMap> {
         return this._changedFields$.asObservable();
     }
 
-    public emitChangedFields(change: ChangedFieldContainer): void {
+    public emitChangedFields(change: ChangedFieldsMap): void {
         this._changedFields$.next(change);
     }
 
@@ -97,31 +99,12 @@ export class FileField extends DataField<FileFieldValue> {
     public registerFormControl(formControl: FormControl): void {
         formControl.setValue(!this.value || !this.value.name ? '' : this.value.name);
         this.updateFormControlState(formControl);
-        this.initialized = true;
         this._initialized$.next(true);
-        this._initialized$.complete();
         this.changed = false;
     }
 
-    public updateFormControlState(formControl: FormControl): void {
-        this._update.subscribe(() => {
-            this.validRequired = this.calculateValidity(true, formControl);
-            this.valid = this.calculateValidity(false, formControl);
-        });
-        this._block.subscribe(bool => {
-            if (bool) {
-                formControl.disable();
-            } else {
-                this.disabled ? formControl.disable() : formControl.enable();
-            }
-        });
-        this._touch.subscribe(bool => {
-            if (bool) {
-                formControl.markAsTouched();
-            } else {
-                formControl.markAsUntouched();
-            }
-        });
+    protected updateFormControlState(formControl: FormControl): void {
+        this.subscribeToInnerSubjects(formControl);
         this.update();
     }
 }

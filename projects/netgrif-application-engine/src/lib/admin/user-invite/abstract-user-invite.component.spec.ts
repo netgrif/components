@@ -1,5 +1,5 @@
 import { AbstractUserInviteComponent } from './abstract-user-invite.component';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {UserInviteService} from './services/user-invite.service';
@@ -16,7 +16,7 @@ describe('AbstractUserInviteComponent', () => {
     let component: TestUserInviteComponent;
     let fixture: ComponentFixture<TestUserInviteComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
             declarations: [ TestUserInviteComponent ],

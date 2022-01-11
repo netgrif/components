@@ -9,6 +9,7 @@ import {SignUpService} from '../../authentication/sign-up/services/sign-up.servi
 import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {UserInvitationRequest} from '../../authentication/sign-up/models/user-invitation-request';
 import {OnInit} from '@angular/core';
+import {take} from 'rxjs/operators';
 
 export abstract class AbstractUserInviteComponent implements OnInit {
 
@@ -68,23 +69,23 @@ export abstract class AbstractUserInviteComponent implements OnInit {
     }
 
     public invite(): void {
-            if (!this.invitedEmailControl.valid) {
+        if (!this.invitedEmailControl.valid) {
             this._snackBar.openErrorSnackBar(this._translate.instant('admin.user-invite.emailFieldMandatory'));
             return;
         }
-            if (this.invitedGroups.length === 0) {
+        if (this.invitedGroups.length === 0) {
             this._snackBar.openErrorSnackBar(this._translate.instant('admin.user-invite.oneOrMoreOrganization'));
             return;
         }
 
-            const invitation: UserInvitationRequest = {
+        const invitation: UserInvitationRequest = {
             email: this.invitedEmailControl.value,
             groups: this.invitedGroups.map(org => org.id),
             processRoles: this.invitedRoles.map(role => role.stringId)
         };
 
-            this.loading.on();
-            this._signUpService.invite(invitation).subscribe(success => {
+        this.loading.on();
+        this._signUpService.invite(invitation).pipe(take(1)).subscribe(success => {
             if (success) {
                 this._snackBar.openSuccessSnackBar(this._translate.instant('admin.user-invite.inviteSent'));
                 this.invitedEmailControl.setValue('');

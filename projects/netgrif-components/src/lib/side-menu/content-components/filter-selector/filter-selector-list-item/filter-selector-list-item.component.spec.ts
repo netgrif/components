@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FilterSelectorListItemComponent} from './filter-selector-list-item.component';
 import {Component} from '@angular/core';
 import {FilterType, SimpleFilter} from '@netgrif/application-engine';
@@ -8,7 +8,7 @@ describe('FilterSelectorListItemComponent', () => {
     let component: FilterSelectorListItemComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule],

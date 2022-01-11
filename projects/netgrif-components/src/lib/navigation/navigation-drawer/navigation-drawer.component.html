@@ -1,14 +1,19 @@
-<mat-sidenav-container class="drawer-container" (panright)="swipeRight()" (panleft)="swipeLeft()">
+<mat-sidenav-container class="drawer-container" (panright)="swipeRight()" (panleft)="swipeLeft()" autosize>
     <mat-sidenav #sidenav [mode]="config.mode" [(opened)]="opened" position="start"
-                 [disableClose]="config.disableClose" class="drawer-content mat-elevation-z10">
+                 [disableClose]="config.disableClose" class="drawer-content mat-elevation-z10"
+                 mwlResizable
+                 [style.width.px]="width"
+                 [resizeCursorPrecision]="10"
+                 [resizeEdges]="{ right: true }"
+                 (resizing)="onResizeEvent($event)">
         <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-            <nc-user-card *ngIf="showUser" [user]="user" mode="full"></nc-user-card>
+            <nc-user-card *ngIf="showUser" [user]="user" mode="full" [contentWidth]="contentWidth"></nc-user-card>
             <mat-divider *ngIf="showUser" class="drawer-divider"></mat-divider>
 
-            <nc-quick-panel *ngIf="showQuickPanel" [items]="quickPanelItems"></nc-quick-panel>
+            <nc-quick-panel *ngIf="showQuickPanel" [items]="quickPanelItems" [contentWidth]="contentWidth"></nc-quick-panel>
             <mat-divider *ngIf="showQuickPanel" class="drawer-divider"></mat-divider>
 
-            <nc-navigation-tree *ngIf="navigation"></nc-navigation-tree>
+            <nc-navigation-tree *ngIf="navigation" [contentWidth]="contentWidth"></nc-navigation-tree>
         </div>
     </mat-sidenav>
 

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HeaderComponent} from './header.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {of} from 'rxjs';
@@ -8,6 +8,7 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {MatIconModule} from '@angular/material/icon';
 import {HeaderComponentModule} from './header.module';
 import {
+    AllowedNetsService, AllowedNetsServiceFactory,
     AuthenticationMethodService,
     AuthenticationService,
     CaseViewService,
@@ -17,7 +18,7 @@ import {
     MockAuthenticationService,
     MockUserResourceService,
     SuccessSnackBarComponent,
-    TestConfigurationService,
+    TestConfigurationService, TestNoAllowedNetsFactory,
     TestViewService,
     TranslateLibModule,
     UserResourceService,
@@ -28,7 +29,7 @@ describe('HeaderComponent', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 HeaderComponentModule,
@@ -45,6 +46,7 @@ describe('HeaderComponent', () => {
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: CaseViewService, useValue: {allowedNets$: of([])}},
                 {provide: ViewService, useClass: TestViewService},
+                {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ],
             declarations: [
                 ErrorSnackBarComponent,

@@ -1,11 +1,12 @@
-import {EventEmitter, Input, Output} from '@angular/core';
+import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
 import {UserService} from '../../user/services/user.service';
 import {User} from '../../user/models/user';
 import {LoadingEmitter} from '../../utility/loading-emitter';
+import {take} from 'rxjs/operators';
 
-export abstract class AbstractLoginFormComponent implements HasForm {
+export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
 
     public rootFormGroup: FormGroup;
     public hidePassword = true;
@@ -30,6 +31,14 @@ export abstract class AbstractLoginFormComponent implements HasForm {
         this.loading = new LoadingEmitter();
     }
 
+    ngOnDestroy(): void {
+        this.loading.complete();
+        this.login.complete();
+        this.resetPassword.complete();
+        this.signUp.complete();
+        this.formSubmit.complete();
+    }
+
     onSubmit() {
         if (!this.rootFormGroup.valid || this.loading.isActive) {
             return;
@@ -38,7 +47,7 @@ export abstract class AbstractLoginFormComponent implements HasForm {
 
         this.loading.on();
         this.formSubmit.emit(credential);
-        this._userService.login(credential).subscribe((user: User) => {
+        this._userService.login(credential).pipe(take(1)).subscribe((user: User) => {
             this.login.emit(user);
             this.loading.off();
         });

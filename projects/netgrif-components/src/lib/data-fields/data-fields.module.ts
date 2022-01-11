@@ -5,7 +5,8 @@ import {
     MaterialModule,
     CovalentModule,
     TranslateLibModule,
-    CustomDateAdapter
+    CustomDateAdapter,
+    CurrencyModule
 } from '@netgrif/application-engine';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
@@ -36,15 +37,27 @@ import {RichTextareaFieldComponent} from './text-field/rich-textarea-field/rich-
 import {SimpleTextFieldComponent} from './text-field/simple-text-field/simple-text-field.component';
 import {UserFieldComponent} from './user-field/user-field.component';
 import {RequiredLabelComponent} from './required-label/required-label.component';
-import {SideMenuContentComponentModule} from '../side-menu/content-components/side-menu-content-component.module';
 import {HtmlTextareaFieldComponent} from './text-field/html-textarea-field/html-textarea-field.component';
 import {QuillModule} from 'ngx-quill';
-import { NumberCurrencyFieldComponent } from './number-field/number-currency-field/number-currency-field.component';
-import { NumberDefaultFieldComponent } from './number-field/number-default-field/number-default-field.component';
-import { PasswordTextFieldComponent } from './text-field/password-text-field/password-text-field.component';
-import { PreviewDialogComponent } from './file-field/preview-dialog/preview-dialog.component';
+import {NumberCurrencyFieldComponent} from './number-field/number-currency-field/number-currency-field.component';
+import {NumberDefaultFieldComponent} from './number-field/number-default-field/number-default-field.component';
+import {PasswordTextFieldComponent} from './text-field/password-text-field/password-text-field.component';
+import {PreviewDialogComponent} from './file-field/preview-dialog/preview-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { EnumerationStepperFieldComponent } from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
+import {EnumerationStepperFieldComponent} from './enumeration-field/enumeration-stepper-field/enumeration-stepper-field.component';
+import {EnumerationIconFieldComponent} from './enumeration-field/enumeration-icon-field/enumeration-icon-field.component';
+import {
+    EnumerationAutocompleteDynamicFieldComponent
+} from './enumeration-field/enumeration-autocomplete-dynamic-field/enumeration-autocomplete-dynamic-field.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+import {FilterFieldComponent} from './filter-field/filter-field.component';
+import {FilterFieldContentComponent} from './filter-field/filter-field-content/filter-field-content.component';
+import {AdvancedSearchComponentModule} from '../search/advanced-search/advanced-search.module';
+import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
+import { I18nFieldComponent } from './i18n-field/i18n-field.component';
+import { I18nDividerFieldComponent } from './i18n-field/i18n-divider-field/i18n-divider-field.component';
+import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-field.component';
 
 @NgModule({
     declarations: [
@@ -75,7 +88,14 @@ import { EnumerationStepperFieldComponent } from './enumeration-field/enumeratio
         NumberDefaultFieldComponent,
         PreviewDialogComponent,
         NumberDefaultFieldComponent,
-        EnumerationStepperFieldComponent
+        EnumerationStepperFieldComponent,
+        EnumerationIconFieldComponent,
+        EnumerationAutocompleteDynamicFieldComponent,
+        FilterFieldComponent,
+        FilterFieldContentComponent,
+        I18nFieldComponent,
+        I18nDividerFieldComponent,
+        I18nTextFieldComponent,
     ],
     exports: [
         BooleanFieldComponent,
@@ -89,7 +109,9 @@ import { EnumerationStepperFieldComponent } from './enumeration-field/enumeratio
         MultichoiceFieldComponent,
         NumberFieldComponent,
         TextFieldComponent,
-        UserFieldComponent
+        UserFieldComponent,
+        FilterFieldComponent,
+        I18nFieldComponent
     ],
     imports: [
         CommonModule,
@@ -102,15 +124,19 @@ import { EnumerationStepperFieldComponent } from './enumeration-field/enumeratio
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         TranslateLibModule,
-        SideMenuContentComponentModule,
+        SideMenuUserAssignComponentModule,
         QuillModule.forRoot(),
-        MatDialogModule
+        MatDialogModule,
+        AdvancedSearchComponentModule,
+        MatProgressSpinnerModule,
+        CurrencyModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}
     ],
     entryComponents: [
-        PreviewDialogComponent
+        PreviewDialogComponent,
+        FilterFieldContentComponent
     ]
 })
 export class DataFieldsComponentModule {

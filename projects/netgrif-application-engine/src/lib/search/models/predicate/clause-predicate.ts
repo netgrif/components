@@ -19,12 +19,19 @@ export class ClausePredicate extends Predicate {
     /**
      * @param predicates Predicates that should be combined into one
      * @param _operator Operator that is used to combine the predicates
+     * @param initiallyVisible whether the predicate should be initially displayed or not
+     * @param _bracketSubPredicateText whether the individual sub predicates are wrapped in brackets when a textual representation
+     * is generated
      */
-    constructor(predicates: Array<Predicate>, protected _operator: BooleanOperator) {
-        super();
+    constructor(predicates: Array<Predicate>,
+                protected _operator: BooleanOperator,
+                initiallyVisible = true,
+                protected _bracketSubPredicateText = false) {
+        super(initiallyVisible);
         this._predicates = [];
         this._predicates.push(...predicates);
         this.updateQuery();
+        this.initializeFilterTextSegmentsGenerator();
     }
 
     get query(): Query {
@@ -59,6 +66,14 @@ export class ClausePredicate extends Predicate {
     }
 
     /**
+     * Sets this predicate and all its sub-predicates to visible.
+     */
+    public showAll(): void {
+        this.show();
+        this._predicates.forEach(p => p.show());
+    }
+
+    /**
      * Updates the value of the [_query]{@link ClausePredicate#_query} attribute.
      *
      * See [combineQueries()]{@link Query#combineQueries} for more information.
@@ -72,5 +87,11 @@ export class ClausePredicate extends Predicate {
      */
     protected get queries(): Array<Query> {
         return this._predicates.map(p => p.query);
+    }
+
+    private initializeFilterTextSegmentsGenerator() {
+        this._filterTextSegmentsGenerator = () => {
+            return Predicate.combineTextSegmentsWithBooleanOperator(this._predicates, this._operator, this._bracketSubPredicateText);
+        };
     }
 }

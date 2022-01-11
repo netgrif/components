@@ -1,7 +1,7 @@
-<div class="fill-all-space" (resized)="evaluateTemplateCondition($event)">
+<div class="fill-all-space" #dataFieldContainer>
 
     <!-- Large layout -->
-    <ng-template [ngIf]="showLargeLayout.value" [ngIfElse]="elseTemplate">
+    <ng-template [ngIf]="evaluateTemplateCondition()" [ngIfElse]="elseTemplate">
         <div fxLayout="row" fxLayoutAlign="start center" class="fill-all-space" [ngClass]="{'padding-16px': isPaperView(), 'padding-32px': !isPaperView()}">
             <div fxFlex="{{offset}}"></div>
             <div fxFlex="{{47.5 - offset}}" class="cell-padding">

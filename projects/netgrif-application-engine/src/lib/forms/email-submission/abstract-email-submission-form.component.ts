@@ -1,8 +1,8 @@
-import {EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
 
-export abstract class AbstractEmailSubmissionFormComponent implements OnInit, HasForm {
+export abstract class AbstractEmailSubmissionFormComponent implements HasForm, OnDestroy {
 
     public rootFormGroup: FormGroup;
 
@@ -19,7 +19,9 @@ export abstract class AbstractEmailSubmissionFormComponent implements OnInit, Ha
         this.goBackButton = new EventEmitter<void>();
     }
 
-    public ngOnInit() {
+    ngOnDestroy(): void {
+        this.formSubmit.complete();
+        this.goBackButton.complete();
     }
 
     public emitGoBack() {

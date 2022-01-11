@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TreeTaskContentComponent} from './tree-task-content.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -10,18 +10,20 @@ import {
     MockAuthenticationMethodService,
     TestConfigurationService,
     TranslateLibModule,
-    TreeCaseViewService
+    TreeCaseViewService,
+    ChangedFieldsService
 } from '@netgrif/application-engine';
 
 describe('TreeTaskContentComponent', () => {
     let component: TreeTaskContentComponent;
     let fixture: ComponentFixture<TreeTaskContentComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NoopAnimationsModule, TaskContentComponentModule, MaterialModule, TranslateLibModule],
             providers: [
                 TreeCaseViewService,
+                ChangedFieldsService,
                 {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService}
             ],

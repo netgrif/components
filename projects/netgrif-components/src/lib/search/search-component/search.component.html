@@ -1,116 +1,36 @@
-<div fxLayout="row" fxLayoutAlign="start center">
-    <div [ngSwitch]="shownInput$ | async" ngClass.gt-md="search-input-lg" ngClass.lt-lg="search-input-md"
-         ngClass.lt-md="search-input-sm">
-        <ng-template [ngSwitchCase]="'text'">
-            <mat-form-field class="search-input">
-                <mat-chip-list #chipList selectable="false">
-                    <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true"
-                              (removed)="removeChip(i)">
-                        {{chip.text}}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input type="text" matInput
-                           #autocompleteInput
-                           #autocompleteTrigger="matAutocompleteTrigger"
-                           [placeholder]="(inputPlaceholder$ | async) | translate"
-                           [formControl]="formControls['text']"
-                           [matAutocomplete]="searchAutocomplete"
-                           (keydown.enter)="$event.target.blur(); confirmUserInput(); autocompleteTrigger.closePanel()"
-                           [matChipInputFor]="chipList">
-                </mat-chip-list>
-                <mat-autocomplete #searchAutocomplete="matAutocomplete" [displayWith]="renderSelection"
-                                  (optionSelected)="autocompleteInput.blur(); confirmUserInput()">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        <mat-icon *ngIf="option.icon">{{option.icon}}</mat-icon>
-                        <span>{{option.translationPath ? (option.translationPath | translate) : option.text}}</span>
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </ng-template>
-        <ng-template [ngSwitchCase]="'date'">
-            <mat-form-field class="search-input">
-                <mat-chip-list #chipList selectable="false">
-                    <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true"
-                              (removed)="removeChip(i)">
-                        {{chip.text}}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input matInput
-                           [placeholder]="(inputPlaceholder$ | async) | translate"
-                           [formControl]="formControls['date']"
-                           [matDatepicker]="searchDatepicker"
-                           (click)="searchDatepicker.open()"
-                           [matChipInputFor]="chipList"
-                           (keydown.enter)="searchDatepicker.close(); confirmUserInput()">
-                </mat-chip-list>
-                <mat-datepicker-toggle matPrefix [for]="searchDatepicker"></mat-datepicker-toggle>
-                <mat-datepicker #searchDatepicker></mat-datepicker>
-            </mat-form-field>
-        </ng-template>
-        <ng-template [ngSwitchCase]="'dateTime'">
-            <mat-form-field class="search-input">
-                <mat-chip-list #chipList selectable="false">
-                    <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true"
-                              (removed)="removeChip(i)">
-                        {{chip.text}}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input matInput
-                           [placeholder]="(inputPlaceholder$ | async) | translate"
-                           [formControl]="formControls['dateTime']"
-                           [ngxMatDatetimePicker]="searchDateTimepicker"
-                           (click)="searchDateTimepicker.open()"
-                           [matChipInputFor]="chipList"
-                           (keydown.enter)="searchDateTimepicker.close(); confirmUserInput()">
-                </mat-chip-list>
-                <mat-datepicker-toggle matPrefix [for]="searchDateTimepicker">
-                    <mat-icon matDatepickerToggleIcon>schedule</mat-icon>
-                </mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #searchDateTimepicker
-                                         [showSpinners]="true"
-                                         [showSeconds]="false"
-                                         [stepHour]="1"
-                                         [stepMinute]="5"
-                                         [color]="'primary'"
-                                         [enableMeridian]="false"></ngx-mat-datetime-picker>
-            </mat-form-field>
-        </ng-template>
-        <ng-template [ngSwitchCase]="'number'">
-            <mat-form-field class="search-input">
-                <mat-chip-list #chipList selectable="false">
-                    <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true"
-                              (removed)="removeChip(i)">
-                        {{chip.text}}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input type="number" matInput
-                           [placeholder]="(inputPlaceholder$ | async) | translate"
-                           [formControl]="formControls['number']"
-                           [matChipInputFor]="chipList"
-                           (keydown.enter)="$event.target.blur(); confirmUserInput()">
-                </mat-chip-list>
-            </mat-form-field>
-        </ng-template>
-        <ng-template [ngSwitchCase]="'boolean'">
-            <div fxLayout="row">
-                <mat-form-field floatLabel="always" class="search-input">
-                    <mat-chip-list #chipList selectable="false">
-                        <mat-chip *ngFor="let chip of searchChips; let i = index" removable="true"
-                                  (removed)="removeChip(i)">
-                            {{chip.text}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <mat-slide-toggle
-                            [formControl]="formControls['boolean']">{{(inputPlaceholder$ | async) | translate}}</mat-slide-toggle>
-                        <input type="text" hidden
-                               [placeholder]="(inputPlaceholder$ | async) | translate"
-                               [matChipInputFor]="chipList">
-                    </mat-chip-list>
-                </mat-form-field>
-            </div>
-        </ng-template>
+<div fxLayout="row wrap" fxLayoutAlign="start center">
+    <div class="search-icon" fxLayout="row" fxLayoutAlign="start center" *ngIf="showSearchIcon">
+        <mat-icon [inline]="true">search</mat-icon>
     </div>
-    <button mat-icon-button (click)="confirmUserInput()">
-        <mat-icon>search</mat-icon>
+
+    <div *ngIf="advancedSearchDisplayed; then advancedSearch; else fullTextSearch"></div>
+
+    <ng-template #advancedSearch>
+        <nc-advanced-search></nc-advanced-search>
+    </ng-template>
+
+    <ng-template #fullTextSearch>
+        <nc-fulltext-search></nc-fulltext-search>
+    </ng-template>
+
+    <button mat-icon-button class="search-buttons-margin" *ngIf="showSearchToggleButton"
+            [matTooltip]="(advancedSearchDisplayed ? 'search.tooltip.toFullText' : 'search.tooltip.toAdvanced') | translate"
+            (click)="toggleSearchMode()">
+        <mat-icon>youtube_searched_for</mat-icon>
+    </button>
+
+    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showSaveFilterButton"
+            [matTooltip]="'search.tooltip.save' | translate" (click)="saveFilter()">
+        <mat-icon>save</mat-icon>
+    </button>
+
+    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showLoadFilterButton"
+            [matTooltip]="'search.tooltip.load' | translate" (click)="loadFilter()">
+        <mat-icon>open_in_browser</mat-icon>
+    </button>
+
+    <button mat-icon-button class="search-buttons-margin" *ngIf="advancedSearchDisplayed && showAdvancedSearchHelp"
+            [matTooltip]="'search.tooltip.help' | translate" (click)="showHelp()">
+        <mat-icon>help</mat-icon>
     </button>
 </div>

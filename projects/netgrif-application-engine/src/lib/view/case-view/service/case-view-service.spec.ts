@@ -6,10 +6,7 @@ import {MaterialModule} from '../../../material/material.module';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {Observable, of} from 'rxjs';
 import {CaseResourceService} from '../../../resources/engine-endpoint/case-resource.service';
-import {ConfigCaseViewServiceFactory} from './factory/config-case-view-service-factory';
 import {SearchService} from '../../../search/search-service/search.service';
-import {SimpleFilter} from '../../../filter/models/simple-filter';
-import {FilterType} from '../../../filter/models/filter-type';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Page} from '../../../resources/interface/page';
@@ -18,21 +15,21 @@ import {Case} from '../../../resources/interface/case';
 import {createMockCase} from '../../../utility/tests/utility/create-mock-case';
 import {ElementaryPredicate} from '../../../search/models/predicate/elementary-predicate';
 import {Query} from '../../../search/models/query/query';
-import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
-import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
+import {UserService} from '../../../user/services/user.service';
+import {MockUserService} from '../../../utility/tests/mocks/mock-user.service';
+import {NAE_BASE_FILTER} from '../../../search/models/base-filter-injection-token';
+import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../../utility/tests/test-factory-methods';
+import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
+import {AllowedNetsServiceFactory} from '../../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {PermissionService} from '../../../authorization/permission/permission.service';
 
-const localCaseViewServiceFactory = (factory: ConfigCaseViewServiceFactory) => {
-    return factory.create('cases');
-};
-
-const searchServiceFactory = () => {
-    return new SearchService(new SimpleFilter('', FilterType.CASE, {}));
-};
 
 describe('CaseViewService', () => {
     let service: CaseViewService;
     let caseService: MyResources;
     let searchService: SearchService;
+    let userService: UserService;
+    let permissionService: PermissionService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -43,24 +40,24 @@ describe('CaseViewService', () => {
                 NoopAnimationsModule
             ],
             providers: [
+                CaseViewService,
                 {provide: CaseResourceService, useClass: MyResources},
+                {provide: UserService, useClass: MockUserService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                ConfigCaseViewServiceFactory,
-                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                SearchService,
+                PermissionService,
                 {
-                    provide: CaseViewService,
-                    useFactory: localCaseViewServiceFactory,
-                    deps: [ConfigCaseViewServiceFactory]
+                    provide: NAE_BASE_FILTER,
+                    useFactory: TestCaseBaseFilterProvider
                 },
-                {
-                    provide: SearchService,
-                    useFactory: searchServiceFactory
-                }
+                {provide: AllowedNetsService, useFactory: TestCaseViewAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
             ]
         });
         service = TestBed.inject(CaseViewService);
         caseService = TestBed.inject(CaseResourceService) as unknown as MyResources;
         searchService = TestBed.inject(SearchService);
+        userService = TestBed.inject(UserService);
+        permissionService = TestBed.inject(PermissionService);
     });
 
     it('should be created', () => {

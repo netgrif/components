@@ -1,23 +1,32 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {Component} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AbstractNavigationDrawerComponent} from './abstract-navigation-drawer.component';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {LoggerService} from '../../logger/services/logger.service';
 import {RouterTestingModule} from '@angular/router/testing';
+import {UserPreferenceService} from '../../user/services/user-preference.service';
+import {MockUserPreferenceService} from '../../utility/tests/mocks/mock-user-preference.service';
+import {ResizableModule} from 'angular-resizable-element';
+import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
+import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
+import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
+import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
+import {UserResourceService} from '../../resources/engine-endpoint/user-resource.service';
+import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
+import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
 
 describe('AbstractNavigationDrawerComponent', () => {
     let component: TestDrawerComponent;
     let fixture: ComponentFixture<TestDrawerComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestDrawerComponent],
             imports: [
@@ -28,11 +37,17 @@ describe('AbstractNavigationDrawerComponent', () => {
                 FlexLayoutModule,
                 NoopAnimationsModule,
                 TranslateLibModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                ResizableModule
             ],
             providers: [
-                {provide: ConfigurationService, useClass: TestConfigurationService}
-            ]
+                {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: ConfigurationService, useClass: TestLoggingConfigurationService},
+                {provide: AuthenticationService, useClass: MockAuthenticationService},
+                {provide: UserResourceService, useClass: MockUserResourceService},
+                {provide: UserPreferenceService, useClass: MockUserPreferenceService}
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
         spyOn(console, 'info');
     }));
@@ -84,8 +99,10 @@ describe('AbstractNavigationDrawerComponent', () => {
         '</mat-sidenav-container>'
 })
 class TestDrawerComponent extends AbstractNavigationDrawerComponent {
-    constructor(protected breakpoint: BreakpointObserver, protected _log: LoggerService) {
-        super(breakpoint, _log);
+    constructor(protected breakpoint: BreakpointObserver,
+                protected _log: LoggerService,
+                protected userPreferenceService: UserPreferenceService) {
+        super(breakpoint, _log, userPreferenceService);
     }
 }
 

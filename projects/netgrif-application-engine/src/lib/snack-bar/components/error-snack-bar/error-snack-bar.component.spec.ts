@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ErrorSnackBarComponent} from './error-snack-bar.component';
 import {MaterialModule} from '../../../material/material.module';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -7,7 +7,7 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 //     let component: ErrorSnackBarComponent;
 //     let fixture: ComponentFixture<ErrorSnackBarComponent>;
 //
-//     beforeEach(async(() => {
+//     beforeEach(waitForAsync(() => {
 //         TestBed.configureTestingModule({
 //             imports: [MaterialModule],
 //             declarations: [ErrorSnackBarComponent]

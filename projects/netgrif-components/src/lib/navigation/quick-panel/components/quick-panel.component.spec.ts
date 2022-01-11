@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {QuickPanelComponent} from './quick-panel.component';
 import {CommonModule} from '@angular/common';
 import {LanguageSelectorComponent} from './language-selector/language-selector.component';
@@ -25,7 +25,7 @@ describe('QuickPanelComponent', () => {
     let component: QuickPanelComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
