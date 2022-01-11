@@ -47,6 +47,7 @@ export * from './models/category/case/case-creation-date';
 export * from './models/category/case/case-creation-date-time';
 export * from './models/category/case/case-dataset';
 export * from './models/category/case/case-simple-dataset';
+export * from './models/category/case/case-string-id';
 export * from './models/category/task/task-net-attribute-autocomplete-category';
 export * from './models/category/task/task-assignee';
 export * from './models/category/task/task-process';

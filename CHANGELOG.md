@@ -9,6 +9,17 @@ None
 ### Features
 * [NAE-1296](https://netgrif.atlassian.net/browse/NAE-1296) - Event Outcome refactor
 
+<a name="https://netgrif.atlassian.net/projects/NAE/versions/10943/tab/release-report-all-issues"></a>
+## 5.7.4 (21.12.2021)
+### Bug Fixes
+* [NAE-1534](https://netgrif.atlassian.net/browse/NAE-1534) - CaseStringId search category is not exported
+
+### Improvements
+None
+
+### Features
+None
+
 <a name="https://netgrif.atlassian.net/projects/NAE/versions/10940/tab/release-report-all-issues"></a>
 ## 5.7.3 (23.11.2021)
 ### Bug Fixes
