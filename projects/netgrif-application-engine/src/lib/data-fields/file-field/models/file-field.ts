@@ -7,6 +7,7 @@ import {Component} from '../../models/component';
 import {FormControl} from '@angular/forms';
 import {Validation} from '../../models/validation';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
+import {distinctUntilChanged} from 'rxjs/operators';
 
 /**
  * Supported types of files a user can select through a file picker.
@@ -59,6 +60,25 @@ export class FileField extends DataField<FileFieldValue> {
 
     public downloaded: boolean;
 
+    set value(value: FileFieldValue) {
+        if (!this.valueEquality(this._value.getValue(), value) && !this.reverting) {
+            this.changed = true;
+            this.waitingForResponse = true;
+            this.resolvePrevValue(value ?? {});
+        }
+        this._value.next(value ?? {});
+        this.reverting = false;
+    }
+
+    get value(): FileFieldValue {
+        return this._value.getValue();
+    }
+
+    public valueWithoutChange(value: FileFieldValue) {
+        this.changed = false;
+        this._value.next(value ?? {});
+    }
+
     /**
      * Create new instance for file field with all his properties.
      *
@@ -97,10 +117,25 @@ export class FileField extends DataField<FileFieldValue> {
     }
 
     public registerFormControl(formControl: FormControl): void {
-        formControl.setValue(!this.value || !this.value.name ? '' : this.value.name);
+        if (this.initialized) {
+            throw new Error('Data field can be initialized only once!'
+                + ' Disconnect the previous form control before initializing the data field again!');
+        }
+
+        formControl.setValidators(this.resolveFormControlValidators());
+
+        this._myValueSubscription = this._value.pipe(
+            distinctUntilChanged(this.valueEquality)
+        ).subscribe(newValue => {
+            this.valid = this._determineFormControlValidity(formControl);
+            formControl.setValue(newValue?.name ?? '');
+            this.update();
+        });
+
         this.updateFormControlState(formControl);
         this._initialized$.next(true);
         this.changed = false;
+        this.waitingForResponse = false;
     }
 
     protected updateFormControlState(formControl: FormControl): void {

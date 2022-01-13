@@ -321,14 +321,17 @@ export class FieldConverterService {
     }
 
     public formatValueFromBackend(field: DataField<any>, value: any): any {
+        if (value === null) {
+            return null;
+        }
+        if (value === undefined) {
+            return;
+        }
         if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
         }
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return atob(value);
-        }
-        if (value === undefined || value === null) {
-            return;
         }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));

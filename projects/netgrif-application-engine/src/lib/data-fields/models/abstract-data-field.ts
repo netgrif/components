@@ -308,6 +308,14 @@ export abstract class DataField<T> {
         return this._value.asObservable();
     }
 
+    set reverting(set: boolean) {
+        this._reverting = set;
+    }
+
+    get reverting(): boolean {
+        return this._reverting;
+    }
+
     public destroy(): void {
         this._value.complete();
         this._previousValue.complete();

@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    ElementRef,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    ViewChild
-} from '@angular/core';
+import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -23,7 +14,6 @@ import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
-import {DataField} from '../models/abstract-data-field';
 
 export interface FileState {
     progress: number;
@@ -57,10 +47,6 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     public static readonly DEFAULT_PREVIEW_BORDER_COLOR = 'black';
 
-    /**
-     * Keep display name.
-     */
-    public name: string;
     public state: FileState;
     /**
      * Task mongo string id is binding property from parent component.
@@ -143,14 +129,13 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     ngOnInit() {
         super.ngOnInit();
-        this.name = this.constructDisplayName();
         this.filePreview = this.dataField && this.dataField.component && this.dataField.component.name
             && this.dataField.component.name === preview;
     }
 
     ngAfterViewInit() {
         if (this.fileUploadEl) {
-            this.fileUploadEl.nativeElement.onchange = () =>  {
+            this.fileUploadEl.nativeElement.onchange = () => {
                 this.upload();
             };
         }
@@ -212,47 +197,45 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         const fileFormData = new FormData();
         const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
         fileFormData.append('file', fileToUpload);
-        this._taskResourceService.uploadFile(this.resolveParentTaskId(),
-            this.dataField.stringId, fileFormData, false)
+        this._taskResourceService.uploadFile(this.resolveParentTaskId(), this.dataField.stringId, fileFormData, false)
             .subscribe((response: EventOutcomeMessageResource) => {
-            if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
-                this.state.progress = (response as ProviderProgress).progress;
-            } else {
-                const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                this.dataField.emitChangedFields(changedFieldsMap);
-                this._log.debug(
-                    `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
-                );
+                if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
+                    this.state.progress = (response as ProviderProgress).progress;
+                } else {
+                    const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                    this.dataField.emitChangedFields(changedFieldsMap);
+                    this._log.debug(
+                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
+                    );
+                    this.state.completed = true;
+                    this.state.error = false;
+                    this.state.uploading = false;
+                    this.state.progress = 0;
+                    this.dataField.downloaded = false;
+                    this.dataField.value.name = fileToUpload.name;
+                    if (this.filePreview) {
+                        this.initializePreviewIfDisplayable();
+                    }
+                    this.fullSource.next(undefined);
+                    this.fileForDownload = undefined;
+                    this.formControl.setValue(this.dataField.value.name);
+                    this.dataField.touch = true;
+                    this.dataField.update();
+                    this.fileUploadEl.nativeElement.value = '';
+                }
+            }, error => {
                 this.state.completed = true;
-                this.state.error = false;
+                this.state.error = true;
                 this.state.uploading = false;
                 this.state.progress = 0;
-                this.dataField.downloaded = false;
-                this.dataField.value.name = fileToUpload.name;
-                if (this.filePreview) {
-                    this.initializePreviewIfDisplayable();
-                }
-                this.fullSource.next(undefined);
-                this.fileForDownload = undefined;
-                this.name = this.constructDisplayName();
-                this.formControl.setValue(this.dataField.value.name);
+                this._log.error(
+                    `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
+                );
+                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
                 this.dataField.touch = true;
                 this.dataField.update();
                 this.fileUploadEl.nativeElement.value = '';
-            }
-        }, error => {
-            this.state.completed = true;
-            this.state.error = true;
-            this.state.uploading = false;
-            this.state.progress = 0;
-            this._log.error(
-                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
-            );
-            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
-            this.dataField.touch = true;
-            this.dataField.update();
-            this.fileUploadEl.nativeElement.value = '';
-        });
+            });
     }
 
     public download() {
@@ -279,7 +262,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
-            this._snackbar.openErrorSnackBar(this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail'));
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+            );
             this.state.downloading = false;
             this.state.progress = 0;
         });
@@ -327,7 +312,6 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 const filename = this.dataField.value.name;
                 this.dataField.value = {};
                 this.formControl.setValue('');
-                this.name = this.constructDisplayName();
                 this.dataField.update();
                 this.dataField.downloaded = false;
                 this.fullSource.next(undefined);
@@ -337,7 +321,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._log.debug(`File [${this.dataField.stringId}] ${filename} was successfully deleted`);
                 this.formControl.markAsTouched();
             } else {
-                this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
+                this._log.error(`Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
                 this._snackbar.openErrorSnackBar(
                     this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.fileDeleteFailed')
                 );
@@ -362,9 +346,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     /**
      * Construct display name.
      */
-    protected constructDisplayName(): string {
-        return this.dataField.value && this.dataField.value.name ? this.dataField.value.name :
-            (this.dataField.placeholder ? this.dataField.placeholder : this._translate.instant('dataField.file.noFile'));
+    public constructDisplayName(): string {
+        return this.dataField?.value?.name ?? (this.dataField?.placeholder ?? this._translate.instant('dataField.file.noFile'));
     }
 
     /**
@@ -386,7 +369,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
-            this._snackbar.openErrorSnackBar(this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail'));
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+            );
             this.state.downloading = false;
             this.state.progress = 0;
         });
