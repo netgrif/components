@@ -27,10 +27,7 @@ export abstract class AbstractButtonFieldComponent extends AbstractDataFieldComp
      * @returns type of component in string
      */
     public resolveComponentType(): string {
-        if (this.dataField.component && this.dataField.component.name !== undefined) {
-            return this.dataField.component.name;
-        }
-        return this.dataField.view;
+        return this.dataField.getComponentType();
     }
 
     /**

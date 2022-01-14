@@ -74,7 +74,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     // BUTTON FIELD
     @ViewChild('buttonFieldComponent') naeButtonField: ButtonFieldComponent;
     buttonField = new ButtonField('buttonFieldId', 'Reactive button field',
-        {visible: true, editable: true}, undefined,  undefined, 'test', undefined, {name: 'stroked'});
+        {visible: true, editable: true}, undefined,  undefined, 'test', undefined, undefined, {name: 'stroked'}, '');
 
     // NUMBER FIELD
     @ViewChild('numberFieldComponent') naeNumberField: NumberFieldComponent;
@@ -99,19 +99,19 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
     @ViewChild('enumListFieldComponent') naeEnumListField: EnumerationFieldComponent;
     enumListField = new EnumerationField('enumListFieldId', 'Reactive enum list field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', undefined, FieldTypeResource.ENUMERATION, {name: 'list'});
+        '', '', undefined, FieldTypeResource.ENUMERATION, undefined, {name: 'list'}, '');
 
     // ENUM AUTO COMPLETE FIELD
     @ViewChild('enumAutoFieldComponent') naeEnumAutoField: EnumerationFieldComponent;
     enumAutoField = new EnumerationField('enumAutoFieldId', 'Reactive enum autocomplete field', '',
         [{key: 'option1', value: 'Option1'}, { key: 'option2', value: 'Option2'}], {visible: true, editable: true},
-        '', '', undefined, FieldTypeResource.ENUMERATION, {name: 'autocomplete'});
+        '', '', undefined, FieldTypeResource.ENUMERATION, undefined, {name: 'autocomplete'}, '');
 
     // MULTICHOICE LIST FIELD
     @ViewChild('multichoiceListFieldComponent') naeMultichoiceListField: MultichoiceFieldComponent;
     multichoiceListField = new MultichoiceField('multichoiceListFieldId', 'Reactive multichoice list field', ['a', 'b'],
         [{key: 'a', value: 'Alice'}, {key: 'b', value: 'Bob'}, {key: 'c', value: 'Claire'}], {visible: true, editable: true},
-        undefined, undefined, undefined, FieldTypeResource.MULTICHOICE, {name: 'list'});
+        undefined, undefined, undefined, FieldTypeResource.MULTICHOICE, undefined, {name: 'list'}, '');
 
     // MULTICHOICE SELECT FIELD
     @ViewChild('multichoiceSelectFieldComponent') naeMultichoiceSelectField: MultichoiceFieldComponent;
@@ -212,7 +212,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         this.fieldGroupControl.addControl(field.stringId, field.component.formControl);
     }
 
-    private constructFormBuilderObject(prefix: string, dataField: DataField<any>, includeValue: boolean = true) {
+    private constructFormBuilderObject(prefix: string, dataField: DataField<any>, includeValue = true) {
         const result = {};
         if (includeValue) {
             result[`${prefix}FieldValue`] = [dataField.value];
@@ -223,7 +223,7 @@ export class ReactiveTextFieldComponent implements AfterViewInit {
         return result;
     }
 
-    private constructChangeObject(prefix: string, includeValue: boolean = true): any {
+    private constructChangeObject(prefix: string, includeValue = true): any {
         const result = {
             behavior: {
                 required: this.changeGroupControl.get(`${prefix}FieldRequired`).value,

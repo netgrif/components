@@ -5,13 +5,6 @@ import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {DataField} from '../../models/abstract-data-field';
 
-export enum TextFieldView {
-    DEFAULT = 'default',
-    TEXTAREA = 'textarea',
-    RICHTEXTAREA = 'richtextarea',
-    HTMLTEXTAREA = 'htmltextarea'
-}
-
 export enum TextAreaHeight {
     OUTLINE = 27,
     FILL_STANDARD = 34

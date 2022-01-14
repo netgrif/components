@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {DataFieldResource} from '../model/resource-interface';
 import {DataField} from '../../data-fields/models/abstract-data-field';
 import {BooleanField} from '../../data-fields/boolean-field/models/boolean-field';
-import {TextField, TextFieldView} from '../../data-fields/text-field/models/text-field';
+import {TextField} from '../../data-fields/text-field/models/text-field';
 import {NumberField} from '../../data-fields/number-field/models/number-field';
 import {EnumerationField, EnumerationFieldValue} from '../../data-fields/enumeration-field/models/enumeration-field';
-import {MultichoiceField, MultichoiceFieldValue,} from '../../data-fields/multichoice-field/models/multichoice-field';
+import {MultichoiceField, MultichoiceFieldValue} from '../../data-fields/multichoice-field/models/multichoice-field';
 import {DateField} from '../../data-fields/date-field/models/date-field';
 import {DateTimeField} from '../../data-fields/date-time-field/models/date-time-field';
 import {UserField} from '../../data-fields/user-field/models/user-field';
@@ -38,8 +38,8 @@ export class FieldConverterService {
             case FieldTypeResource.TEXT:
                 if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'textarea' ||
                     item.component.name === 'richtextarea' || item.component.name === 'htmltextarea')) {
-                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
-                        item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior,
+                        item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
                 }
                 return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
                     item.description, item.layout, item.validations, item.component, item.parentTaskId);
@@ -178,32 +178,13 @@ export class FieldConverterService {
             : this.resolveEnumOptions(enumField);
         if (enumField.component && enumField.component.name === 'autocomplete_dynamic') {
             return new DynamicEnumerationField(enumField.stringId, enumField.name, enumField.value, options,
-                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
-                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, enumField.type,
+                enumField.validations, enumField.component, enumField.parentTaskId);
         } else {
             return new EnumerationField(enumField.stringId, enumField.name, enumField.value, options,
-                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
-                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, enumField.type,
+                enumField.validations, enumField.component, enumField.parentTaskId);
         }
-    }
-
-    /**
-     * @param enumField enumeration field resource object who's view type we want to resolve
-     * @returns the view type defined in the field object, or default if none, or invalid type is defined
-     * @deprecated in 4.3.0
-     */
-    protected resolveEnumViewType(enumField: DataFieldResource): EnumerationFieldView {
-        let typeEnum = EnumerationFieldView.DEFAULT;
-        if (enumField.view && enumField.view.value !== undefined) {
-            if (enumField.view.value === 'list') {
-                typeEnum = EnumerationFieldView.LIST;
-            } else if (enumField.view.value === 'autocomplete') {
-                typeEnum = EnumerationFieldView.AUTOCOMPLETE;
-            } else if (enumField.view.value === 'stepper') {
-                typeEnum = EnumerationFieldView.STEPPER;
-            }
-        }
-        return typeEnum;
     }
 
     /**

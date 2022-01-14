@@ -44,8 +44,8 @@ describe('FieldConvertorService', () => {
             order: 0,
             value: undefined,
             choices: [],
-            view: {
-                value: 'area'
+            component: {
+                name: 'textarea'
             },
             validations: undefined
         };
@@ -89,8 +89,8 @@ describe('FieldConvertorService', () => {
             order: 0,
             value: true,
             choices: ['ABC'],
-            view: {
-                value: 'editor'
+            component: {
+                name: 'richtextarea'
             },
             validations: undefined,
             subType: 'area'
@@ -106,20 +106,20 @@ describe('FieldConvertorService', () => {
         expect(service.resolveType(service.toClass(dataField))).toEqual('number');
 
         dataField.type = FieldTypeResource.ENUMERATION;
-        dataField.view.value = 'list';
+        dataField.component.name = 'list';
         expect(service.resolveType(service.toClass(dataField))).toEqual('enumeration');
 
         dataField.type = FieldTypeResource.MULTICHOICE;
-        dataField.view.value = 'list';
+        dataField.component.name = 'list';
         expect(service.resolveType(service.toClass(dataField))).toEqual('multichoice');
 
         dataField.type = FieldTypeResource.ENUMERATION;
-        dataField.view.value = 'autocomplete';
+        dataField.component.name = 'autocomplete';
         dataField.choices = {abc: 'abc'} as any;
         expect(service.resolveType(service.toClass(dataField))).toEqual('enumeration');
 
         dataField.type = FieldTypeResource.MULTICHOICE;
-        dataField.view.value = 'list';
+        dataField.component.name = 'list';
         expect(service.resolveType(service.toClass(dataField))).toEqual('multichoice');
 
         dataField.type = FieldTypeResource.DATE;
