@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {Subject} from 'rxjs';
-import {ChangedFieldsMap} from '../../event/services/event.service';
+import {Observable, Subject} from 'rxjs';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 @Injectable()
 export class ChangedFieldsService implements OnDestroy {
@@ -16,8 +16,8 @@ export class ChangedFieldsService implements OnDestroy {
         this._changedFields$ = new Subject<ChangedFieldsMap>();
     }
 
-    get changedFields$(): Subject<ChangedFieldsMap> {
-        return this._changedFields$;
+    get changedFields$(): Observable<ChangedFieldsMap> {
+        return this._changedFields$.asObservable();
     }
 
     public emitChangedFields(changedFields: ChangedFieldsMap): void {

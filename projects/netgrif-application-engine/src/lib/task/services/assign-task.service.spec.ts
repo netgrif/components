@@ -34,6 +34,7 @@ import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
+import {createMockTaskOutcome} from '../../utility/tests/utility/create-mock-task-outcome';
 
 describe('AssignTaskService', () => {
     let service: AssignTaskService;
@@ -80,6 +81,7 @@ describe('AssignTaskService', () => {
             caseColor: '',
             caseTitle: '',
             user: undefined,
+            userRefs: undefined,
             roles: {},
             startDate: [1],
             finishDate: [1],
@@ -210,13 +212,7 @@ describe('AssignTaskService', () => {
         expect(testTask.startDate).toBeTruthy();
         resourceService.response = {
             success: 'success',
-            outcome: {
-                message: '',
-                outcomes: [],
-                task: createMockTask(),
-                net: createMockNet(),
-                aCase: createMockCase()
-            } as AssignTaskEventOutcome
+            outcome: createMockTaskOutcome(createMockTask()) as AssignTaskEventOutcome
         };
 
         let taskEvent: TaskEventNotification;
@@ -239,8 +235,7 @@ describe('AssignTaskService', () => {
             }));
         }));
     });
-})
-;
+});
 
 class TestTaskResourceService {
 

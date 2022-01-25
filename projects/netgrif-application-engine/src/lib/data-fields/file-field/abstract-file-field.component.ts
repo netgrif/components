@@ -12,7 +12,8 @@ import {BehaviorSubject} from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
 import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
-import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 export interface FileState {
     progress: number;
@@ -32,10 +33,20 @@ const fieldPadding = 16;
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+
     /**
-     * Keep display name.
+     * The width of the default file preview border in pixels. The `px` string is appended in the code.
      */
-    public name: string;
+    public static readonly DEFAULT_PREVIEW_BORDER_WIDTH = 0;
+    /**
+     * The CSS style attribute of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_STYLE = 'none';
+    /**
+     * The CSS color string of the default file preview border.
+     */
+    public static readonly DEFAULT_PREVIEW_BORDER_COLOR = 'black';
+
     public state: FileState;
     /**
      * Task mongo string id is binding property from parent component.
@@ -118,14 +129,13 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      */
     ngOnInit() {
         super.ngOnInit();
-        this.name = this.constructDisplayName();
         this.filePreview = this.dataField && this.dataField.component && this.dataField.component.name
             && this.dataField.component.name === preview;
     }
 
     ngAfterViewInit() {
         if (this.fileUploadEl) {
-            this.fileUploadEl.nativeElement.onchange = () =>  {
+            this.fileUploadEl.nativeElement.onchange = () => {
                 this.upload();
             };
         }
@@ -187,47 +197,45 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         const fileFormData = new FormData();
         const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
         fileFormData.append('file', fileToUpload);
-        this._taskResourceService.uploadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
-            this.dataField.stringId, fileFormData, false)
+        this._taskResourceService.uploadFile(this.resolveParentTaskId(), this.dataField.stringId, fileFormData, false)
             .subscribe((response: EventOutcomeMessageResource) => {
-            if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
-                this.state.progress = (response as ProviderProgress).progress;
-            } else {
-                const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
-                this.dataField.emitChangedFields(changedFieldsMap);
-                this._log.debug(
-                    `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
-                );
+                if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
+                    this.state.progress = (response as ProviderProgress).progress;
+                } else {
+                    const changedFieldsMap: ChangedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(response.outcome);
+                    this.dataField.emitChangedFields(changedFieldsMap);
+                    this._log.debug(
+                        `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0).name} was successfully uploaded`
+                    );
+                    this.state.completed = true;
+                    this.state.error = false;
+                    this.state.uploading = false;
+                    this.state.progress = 0;
+                    this.dataField.downloaded = false;
+                    this.dataField.value.name = fileToUpload.name;
+                    if (this.filePreview) {
+                        this.initializePreviewIfDisplayable();
+                    }
+                    this.fullSource.next(undefined);
+                    this.fileForDownload = undefined;
+                    this.formControl.setValue(this.dataField.value.name);
+                    this.dataField.touch = true;
+                    this.dataField.update();
+                    this.fileUploadEl.nativeElement.value = '';
+                }
+            }, error => {
                 this.state.completed = true;
-                this.state.error = false;
+                this.state.error = true;
                 this.state.uploading = false;
                 this.state.progress = 0;
-                this.dataField.downloaded = false;
-                this.dataField.value.name = fileToUpload.name;
-                if (this.filePreview) {
-                    this.initializePreviewIfDisplayable();
-                }
-                this.fullSource.next(undefined);
-                this.fileForDownload = undefined;
-                this.name = this.constructDisplayName();
-                this.formControl.setValue(this.dataField.value.name);
+                this._log.error(
+                    `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
+                );
+                this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
                 this.dataField.touch = true;
                 this.dataField.update();
                 this.fileUploadEl.nativeElement.value = '';
-            }
-        }, error => {
-            this.state.completed = true;
-            this.state.error = true;
-            this.state.uploading = false;
-            this.state.progress = 0;
-            this._log.error(
-                `File [${this.dataField.stringId}] ${this.fileUploadEl.nativeElement.files.item(0)} uploading has failed!`, error
-            );
-            this._snackbar.openErrorSnackBar(this._translate.instant('dataField.snackBar.fileUploadFailed'));
-            this.dataField.touch = true;
-            this.dataField.update();
-            this.fileUploadEl.nativeElement.value = '';
-        });
+            });
     }
 
     public download() {
@@ -240,7 +248,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         }
         this.state = this.defaultState;
         this.state.downloading = true;
-        this._taskResourceService.downloadFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+        this._taskResourceService.downloadFile(this.resolveParentTaskId(),
             this.dataField.stringId).subscribe(response => {
             if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
                 this._log.debug(`File [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
@@ -254,7 +262,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
-            this._snackbar.openErrorSnackBar(this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail'));
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+            );
             this.state.downloading = false;
             this.state.progress = 0;
         });
@@ -296,13 +306,12 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
 
-        this._taskResourceService.deleteFile(!!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId,
+        this._taskResourceService.deleteFile(this.resolveParentTaskId(),
             this.dataField.stringId).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 const filename = this.dataField.value.name;
                 this.dataField.value = {};
                 this.formControl.setValue('');
-                this.name = this.constructDisplayName();
                 this.dataField.update();
                 this.dataField.downloaded = false;
                 this.fullSource.next(undefined);
@@ -312,7 +321,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 this._log.debug(`File [${this.dataField.stringId}] ${filename} was successfully deleted`);
                 this.formControl.markAsTouched();
             } else {
-                this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
+                this._log.error(`Deleting file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, response.error);
                 this._snackbar.openErrorSnackBar(
                     this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.fileDeleteFailed')
                 );
@@ -337,9 +346,8 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     /**
      * Construct display name.
      */
-    protected constructDisplayName(): string {
-        return this.dataField.value && this.dataField.value.name ? this.dataField.value.name :
-            (this.dataField.placeholder ? this.dataField.placeholder : this._translate.instant('dataField.file.noFile'));
+    public constructDisplayName(): string {
+        return this.dataField?.value?.name ?? (this.dataField?.placeholder ?? this._translate.instant('dataField.file.noFile'));
     }
 
     /**
@@ -361,7 +369,9 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             }
         }, error => {
             this._log.error(`Downloading file [${this.dataField.stringId}] ${this.dataField.value.name} has failed!`, error);
-            this._snackbar.openErrorSnackBar(this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail'));
+            this._snackbar.openErrorSnackBar(
+                this.dataField.value.name + ' ' + this._translate.instant('dataField.snackBar.downloadFail')
+            );
             this.state.downloading = false;
             this.state.progress = 0;
         });
@@ -415,5 +425,47 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         return this.dataField.layout && this.dataField.layout.rows && this.dataField.layout.rows !== 1 ?
             (this.dataField.layout.rows) * fieldHeight - fieldPadding : fieldHeight - fieldPadding;
     }
-}
 
+    public getPreviewBorderWidth(): string {
+        if (this.borderPropertyEnabled('borderWidth')) {
+            return this.dataField.component.properties.borderWidth + 'px';
+        }
+        return `${AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_WIDTH}px`;
+    }
+
+    public getPreviewBorderStyle(): string {
+        if (this.borderPropertyEnabled('borderStyle')) {
+            return this.dataField.component.properties.borderStyle;
+        }
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_STYLE;
+    }
+
+    public getPreviewBorderColor(): string {
+        if (this.borderPropertyEnabled('borderColor')) {
+            return this.dataField.component.properties.borderColor;
+        }
+        return AbstractFileFieldComponent.DEFAULT_PREVIEW_BORDER_COLOR;
+    }
+
+    public isBorderLGBTQ(): boolean {
+        if (this.borderPropertyEnabled('borderLGBTQ')) {
+            return this.dataField.component.properties.borderLGBTQ === 'true';
+        }
+        return false;
+    }
+
+    public isBorderDefault(): boolean {
+        if (this.borderPropertyEnabled('borderEnabled')) {
+            return this.dataField.component.properties.borderEnabled === 'true';
+        }
+        return false;
+    }
+
+    public borderPropertyEnabled(property: string): boolean {
+        return !!this.dataField.component && !!this.dataField.component.properties && property in this.dataField.component.properties;
+    }
+
+    protected resolveParentTaskId(): string {
+        return !!this.dataField.parentTaskId ? this.dataField.parentTaskId : this.taskId;
+    }
+}

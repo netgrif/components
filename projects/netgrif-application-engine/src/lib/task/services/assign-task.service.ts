@@ -21,7 +21,8 @@ import {AfterAction} from '../../utility/call-chain/after-action';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
-import {ChangedFieldsMap, EventService} from '../../event/services/event.service';
+import {EventService} from '../../event/services/event.service';
+import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
 
 /**
@@ -128,7 +129,13 @@ export class AssignTaskService extends TaskHandlingService {
                         ? outcomeResource.outcome.message
                         : this._translate.instant('tasks.snackbar.assignTaskSuccess'));
                 } else if (outcomeResource.error) {
-                    this._snackBar.openErrorSnackBar(outcomeResource.error);
+                    if (outcomeResource.error !== '') {
+                        this._snackBar.openErrorSnackBar(outcomeResource.error);
+                    }
+                    if (outcomeResource.outcome !== undefined) {
+                        const changedFieldsMap = this._eventService.parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                        this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                    }
                     this.completeActions(afterAction, nextEvent, false);
                 }
             }, error => {

@@ -136,7 +136,7 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
                 }
             } else {
                 this._log.info(response.success);
-                this._response = (response.outcome as PetriNetEventOutcome);
+                this._response = response.outcome as PetriNetEventOutcome;
                 file.inProgress = false;
                 file.completed = true;
                 this._snackbar.openSuccessSnackBar(response.outcome.message === undefined
@@ -156,8 +156,8 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
             file.completed = false;
             file.error = true;
             this._log.error('Importing process file has failed!', error);
-            this._snackbar.openErrorSnackBar(this._translate.instant('workflow.snackBar.uploadFailed') +
-                ' ' + error.error.message);
+            this._snackbar.openErrorSnackBar(
+                `${this._translate.instant('workflow.snackBar.uploadFailed')} ${error?.error?.message ?? ''}`);
         });
     }
 

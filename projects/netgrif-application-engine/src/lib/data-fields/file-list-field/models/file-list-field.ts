@@ -7,7 +7,8 @@ import {FileListFieldValue} from './file-list-field-value';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
 import {FormControl} from '@angular/forms';
-import {ChangedFieldsMap} from '../../../event/services/event.service';
+import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
+import {distinctUntilChanged} from 'rxjs/operators';
 
 export enum FileListFieldValidation {
     MAX_FILES = 'maxFiles'
@@ -19,6 +20,25 @@ export class FileListField extends DataField<FileListFieldValue> {
      */
     private _changedFields$: Subject<ChangedFieldsMap>;
     public downloaded: Array<string>;
+
+    set value(value: FileListFieldValue) {
+        if (!this.valueEquality(this._value.getValue(), value) && !this.reverting) {
+            this.changed = true;
+            this.waitingForResponse = true;
+            this.resolvePrevValue(value ?? {namesPaths: []});
+        }
+        this._value.next(value ?? {namesPaths: []});
+        this.reverting = false;
+    }
+
+    get value(): FileListFieldValue {
+        return this._value.getValue();
+    }
+
+    public valueWithoutChange(value: FileListFieldValue) {
+        this.changed = false;
+        this._value.next(value ?? {namesPaths: []});
+    }
 
     /**
      * Create new instance for file field with all his properties.
@@ -63,12 +83,27 @@ export class FileListField extends DataField<FileListFieldValue> {
     }
 
     public registerFormControl(formControl: FormControl): void {
-        formControl.setValue(!this.value || !this.value.namesPaths ? '' : this.value.namesPaths.map(namePath => {
-            return namePath['name'];
-        }).join('/'));
+        if (this.initialized) {
+            throw new Error('Data field can be initialized only once!'
+                + ' Disconnect the previous form control before initializing the data field again!');
+        }
+
+        formControl.setValidators(this.resolveFormControlValidators());
+
+        this._myValueSubscription = this._value.pipe(
+            distinctUntilChanged(this.valueEquality)
+        ).subscribe(newValue => {
+            this.valid = this._determineFormControlValidity(formControl);
+            formControl.setValue(!newValue || !newValue.namesPaths ? '' : newValue.namesPaths.map(namePath => {
+                return namePath.name;
+            }).join('/'));
+            this.update();
+        });
+
         this.updateFormControlState(formControl);
         this._initialized$.next(true);
         this.changed = false;
+        this.waitingForResponse = false;
     }
 
     protected updateFormControlState(formControl: FormControl): void {

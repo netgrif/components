@@ -18,7 +18,7 @@
             "dataSaved": "Data saved successfully",
             "failedSave": "Saving data failed",
             "assignTask": "Assigning task",
-            "assignTaskSuccess": "Task successfully assigned",
+            "assignTaskSuccess": "Task assigned successfully",
             "delegateTask": "Delegating task",
             "delegateTaskSuccess": "Task successfully delegated",
             "failed": "failed",

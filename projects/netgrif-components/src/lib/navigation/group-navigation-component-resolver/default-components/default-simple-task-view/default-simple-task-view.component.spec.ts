@@ -30,7 +30,7 @@ describe('DefaultSimpleTaskViewComponent', () => {
                         {
                             fields: [
                                 new FilterField(
-                                    `${UserFilterConstants.FILTER_FIELD_ID}`,
+                                    UserFilterConstants.FILTER_FIELD_ID,
                                     '',
                                     '',
                                     {

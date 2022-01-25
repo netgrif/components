@@ -12,6 +12,8 @@ import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {Subject} from 'rxjs';
 import {UserComparatorService} from '../../user/services/user-comparator.service';
 import {AfterAction} from '../../utility/call-chain/after-action';
+import {PermissionService} from '../../authorization/permission/permission.service';
+import {PermissionType} from '../../process/permissions';
 
 /**
  * Handles the sequence of actions that are performed when a task is being assigned, based on the task's configuration.
@@ -28,7 +30,8 @@ export class AssignPolicyService extends TaskHandlingService {
                 protected _callchain: CallChainService,
                 protected _userComparatorService: UserComparatorService,
                 @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
-                taskContentService: TaskContentService) {
+                taskContentService: TaskContentService,
+                protected _permissionService: PermissionService) {
         super(taskContentService);
     }
 
@@ -46,7 +49,8 @@ export class AssignPolicyService extends TaskHandlingService {
      * @param afterAction the action that should be performed when the assign policy (and all following policies) finishes
      */
     public performAssignPolicy(taskOpened: boolean, afterAction: AfterAction = new AfterAction()): void {
-        if (this._safeTask.assignPolicy === AssignPolicy.auto) {
+        if (this._safeTask.assignPolicy === AssignPolicy.auto
+            && this._permissionService.hasTaskPermission(this._safeTask, PermissionType.ASSIGN)) {
             this.autoAssignPolicy(taskOpened, afterAction);
         } else {
             this.manualAssignPolicy(taskOpened, afterAction);

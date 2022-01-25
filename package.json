@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/application-engine-project",
-    "version": "5.6.3",
+    "version": "6.0.0-rc.4",
     "description": "Netgrif Application Engine Frontend project. Project includes angular library as base for NAE applications.",
     "homepage": "https://netgrif.com",
     "repository": {
@@ -38,12 +38,12 @@
         "nae:normalize-coverage-summary": "node scripts/normalize-file-paths.js coverage/netgrif-application-engine/coverage-summary.json",
         "nae:typedoc": "typedoc --tsconfig projects/netgrif-application-engine/tsconfig.lib.json  projects/netgrif-application-engine/src/lib",
         "nae:doc": "npm run nae:normalize-coverage-summary && compodoc -c projects/netgrif-application-engine/.compodocrc.json",
-        "nae:local-build": "npm run nae:build && npm i dist/netgrif-application-engine --save-optional",
+        "nae:local-build": "npm run nae:build && npm i ./dist/netgrif-application-engine --save-optional",
         "nae:prod-build": "npm run nae:full-test && npm run nae:sonar && npm run nae:build && npm run nae:doc",
         "nae:prod-build-without-tests": "ng lint netgrif-application-engine && npm run nae:sonar && npm run nae:build && npm run nae:doc",
         "nc:clean": "node projects/netgrif-components/src/scripts/delete-local-build-link.js",
         "nc:build": "npm run nc:clean && ng build netgrif-components --prod && npm run nc:build-schematics",
-        "nc:local-build": "npm run nc:build && npm i dist/netgrif-components --save-optional",
+        "nc:local-build": "npm run nc:build && npm i ./dist/netgrif-components --save-optional",
         "nc:build-schematics": "node projects/netgrif-components/src/scripts/build-schematics.js",
         "nc:lint": "ng lint netgrif-components",
         "nc:test": "ng test netgrif-components",

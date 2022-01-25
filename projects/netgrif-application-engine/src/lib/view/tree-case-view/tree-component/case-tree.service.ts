@@ -461,11 +461,9 @@ export class CaseTreeService implements OnDestroy {
         }
 
         const ret = new ReplaySubject<boolean>(1);
-        const childTitleImmediate = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILD_NODE_TITLE);
-        const childTitle = childTitleImmediate ? childTitleImmediate.value : this._translateService.instant('caseTree.newNodeDefaultName');
 
         if (caseRefField.allowedNets.length === 1) {
-            this.createAndAddChildCase(caseRefField.allowedNets[0], childTitle, clickedNode, ret);
+            this.createAndAddChildCase(caseRefField.allowedNets[0], clickedNode, ret);
         } else {
             this._processService.getNets(caseRefField.allowedNets).subscribe(nets => {
                 const sideMeuRef = this._sideMenuService.open(this._optionSelectorComponent, SideMenuSize.MEDIUM, {
@@ -475,7 +473,7 @@ export class CaseTreeService implements OnDestroy {
                 let sideMenuSubscription: Subscription;
                 sideMenuSubscription = sideMeuRef.onClose.subscribe(event => {
                     if (!!event.data) {
-                        this.createAndAddChildCase(event.data.value, childTitle, clickedNode, ret);
+                        this.createAndAddChildCase(event.data.value, clickedNode, ret);
                         sideMenuSubscription.unsubscribe();
                     } else {
                         clickedNode.addingNode.off();
@@ -491,15 +489,20 @@ export class CaseTreeService implements OnDestroy {
     /**
      * Creates a new case and adds it to the children of the specified node
      * @param processIdentifier identifier of the process that should be created
-     * @param childTitle the title of the new case
      * @param clickedNode the node that is the parent of the new case
      * @param operationResult the result of the operation will be emitted into this stream when the operation completes
      */
     protected createAndAddChildCase(processIdentifier: string,
-                                    childTitle: string,
                                     clickedNode: CaseTreeNode,
                                     operationResult: Subject<boolean>) {
         this._processService.getNet(processIdentifier).subscribe(net => {
+            const childTitleImmediate = getImmediateData(clickedNode.case, TreePetriflowIdentifiers.CHILD_NODE_TITLE);
+            let childTitle = this._translateService.instant('caseTree.newNodeDefaultName');
+            if (!!childTitleImmediate) {
+                childTitle = childTitleImmediate.value;
+            } else if (!!net.defaultCaseName) {
+                childTitle = net.defaultCaseName;
+            }
             this._caseResourceService.createCase({
                 title: childTitle,
                 netId: net.stringId

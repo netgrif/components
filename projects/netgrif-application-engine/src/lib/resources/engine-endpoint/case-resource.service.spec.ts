@@ -75,29 +75,6 @@ describe('CaseResourceService', () => {
         })
     );
 
-    // todo delete
-    // it('should getCaseData', inject([HttpTestingController],
-    //     (httpMock: HttpTestingController) => {
-    //         service.getCaseData('id').subscribe(res => {
-    //             expect(res.outcome).toEqual({
-    //                 message: '',
-    //                 outcomes: []
-    //             });
-    //         });
-    //
-    //         const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/data');
-    //         expect(reqLog.request.method).toEqual('GET');
-    //
-    //         reqLog.flush({
-    //             outcome: {
-    //                 message: '',
-    //                 outcomes: []
-    //             },
-    //             success: ''
-    //         });
-    //     })
-    // );
-
     it('should getCaseFile', inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getCaseFile('id', 'id').subscribe(res => {

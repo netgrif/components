@@ -48,7 +48,9 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
         nets.push(...baseAllowedNets.allowedNets);
     }
 
-    return factory.createFromArray(nets);
+    const uniqueNets = new Set<string>(nets);
+
+    return factory.createFromArray(Array.from(uniqueNets));
 }
 
 /**

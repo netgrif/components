@@ -14,9 +14,9 @@ import {SavedFilterMetadata} from '../models/persistance/saved-filter-metadata';
 import {ViewIdService} from '../../user/services/view-id.service';
 import {NAE_FILTERS_FILTER} from '../../filter/models/filters-filter-injection-token';
 import {Filter} from '../../filter/models/filter';
-import {
-    TaskSetDataRequestFields
-} from '../../resources/interface/task-set-data-request-body';
+import {TaskSetDataRequestFields} from '../../resources/interface/task-set-data-request-body';
+import {NAE_NAVIGATION_ITEM_TASK_DATA} from '../../navigation/model/filter-case-injection-token';
+import {DataGroup} from '../../resources/interface/data-groups';
 
 /**
  * A universal search component that can be used to interactively create search predicates for anything with supported categories.
@@ -66,7 +66,8 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
                           protected _viewIdService: ViewIdService,
                           @Inject(NAE_SEARCH_CATEGORIES) protected _searchCategories: Array<Type<Category<any>>>,
                           @Optional() @Inject(NAE_SEARCH_COMPONENT_CONFIGURATION) protected _configuration: SearchComponentConfiguration,
-                          @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter = null) {
+                          @Optional() @Inject(NAE_FILTERS_FILTER) protected _filtersFilter: Filter = null,
+                          @Optional() @Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup> = null) {
         if (this._configuration === null) {
             this._configuration = {};
         }
@@ -146,10 +147,15 @@ export abstract class AbstractSearchComponent implements SearchComponentConfigur
      * The saved filter data are emitted into the [filterSaved]{@link AbstractSearchComponent#filterSaved} `EventEmitter`
      */
     public saveFilter(): void {
-        this._userFilterService.save(this._searchService, this._allowedNetsService.allowedNetsIdentifiers,
-            this._searchCategories, this._viewIdService.viewId, this.additionalFilterData,
+        this._userFilterService.save(
+            this._searchService,
+            this._allowedNetsService.allowedNetsIdentifiers,
+            this._searchCategories,
+            this._viewIdService.viewId,
+            this.additionalFilterData,
             this._configuration.saveFilterWithDefaultCategories ?? true,
-            this._configuration.inheritAllowedNets ?? true).subscribe(savedFilterData => {
+            this._configuration.inheritAllowedNets ?? true,
+            this._navigationItemTaskData).subscribe(savedFilterData => {
                 if (savedFilterData) {
                     this.filterSaved.emit(savedFilterData);
                 }

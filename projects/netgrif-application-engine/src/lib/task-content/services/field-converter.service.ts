@@ -34,7 +34,7 @@ export class FieldConverterService {
         switch (item.type) {
             case FieldTypeResource.BOOLEAN:
                 return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
-                    item.placeholder, item.description, item.layout, item.validations, undefined, item.parentTaskId);
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
             case FieldTypeResource.TEXT:
                 /*@deprecated in 4.3.0*/
                 let type = TextFieldView.DEFAULT;
@@ -53,7 +53,7 @@ export class FieldConverterService {
                         item.description, item.layout, item.validations, type);
                 }
                 if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'editor' ||
-                    item.component.name === 'htmlEditor')) {
+                    item.component.name === 'htmltextarea')) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
                         item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component,
                         item.parentTaskId);
@@ -321,14 +321,17 @@ export class FieldConverterService {
     }
 
     public formatValueFromBackend(field: DataField<any>, value: any): any {
+        if (value === null) {
+            return null;
+        }
+        if (value === undefined) {
+            return;
+        }
         if (this.resolveType(field) === FieldTypeResource.TEXT && value === null) {
             return null;
         }
         if (this.resolveType(field) === FieldTypeResource.TEXT && field.component && field.component.name === 'password') {
             return atob(value);
-        }
-        if (value === undefined || value === null) {
-            return;
         }
         if (this.resolveType(field) === FieldTypeResource.DATE) {
             return moment(new Date(value[0], value[1] - 1, value[2]));

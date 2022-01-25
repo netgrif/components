@@ -12,7 +12,7 @@ export abstract class AbstractSearchModeComponent extends AbstractHeaderModeComp
     /**
      * The time that must elapse since last keypress in search input before a search request is sent
      */
-    protected SEARCH_DEBOUNCE_TIME = 350;
+    protected SEARCH_DEBOUNCE_TIME = 600;
     protected subHeaderColumn: Subscription;
     protected subClearHeader: Subscription;
 
