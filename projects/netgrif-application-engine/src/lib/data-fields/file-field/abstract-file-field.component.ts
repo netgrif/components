@@ -149,6 +149,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this.fullSource.complete();
     }
 
