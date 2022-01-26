@@ -73,7 +73,7 @@ export class PermissionService {
     }
 
     public canCancel(task: Task | undefined): boolean {
-        return !!task && !!task.user && this.userComparator.compareUsers(task.user)
+        return !!task && !!task.user
             && this.hasTaskPermission(task, PermissionType.CANCEL)
             && ((task.assignedUserPolicy === undefined || task.assignedUserPolicy.cancel === undefined)
                 || task.assignedUserPolicy.cancel);
