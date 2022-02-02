@@ -3,6 +3,7 @@
     "version": "6.0.0-rc.5",
     "description": "Netgrif Application Engine Frontend project. Project includes angular library as base for NAE applications.",
     "homepage": "https://netgrif.com",
+    "license": "NETGRIF Community License",
     "repository": {
         "type": "git",
         "url": "https://bitbucket.org/netgrif/nae-frontend.git"
@@ -76,10 +77,10 @@
         "@ngx-translate/http-loader": "~6.0.0",
         "@schematics/angular": "~10.2.0",
         "@swimlane/ngx-charts": "~16.0.0",
+        "@types/mousetrap": "1.6.3",
         "angular-resizable-element": "~3.3.0",
         "angular-resize-event": "~2.0.1",
         "angular2-hotkeys": "~2.2.0",
-        "@types/mousetrap": "1.6.3",
         "hammerjs": "~2.0.8",
         "json-schema-to-typescript": "~8.1.0",
         "jszip": "~3.2.2",
