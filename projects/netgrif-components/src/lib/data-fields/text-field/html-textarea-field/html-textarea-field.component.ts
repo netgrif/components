@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractHtmlTextareaFieldComponent} from '@netgrif/application-engine';
+import {AbstractHtmlTextareaFieldComponent} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer} from '@angular/platform-browser';
 

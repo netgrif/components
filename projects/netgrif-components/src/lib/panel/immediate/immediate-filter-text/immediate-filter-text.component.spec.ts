@@ -6,7 +6,7 @@ import {
     TestConfigurationService,
     FilterMetadataAllowedNets,
     FilterType
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {PanelComponentModule} from '../../panel.module';
 import {Component} from '@angular/core';
 

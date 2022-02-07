@@ -1,23 +1,47 @@
 {
     "name": "@netgrif/components",
     "version": "6.0.0-rc.5",
-    "description": "Netgrif Application Engine Angular components",
-    "homepage": "https://netgrif.com",
+    "description": "Netgrif Application Engine frontend Angular components",
+    "homepage": "https://components.netgrif.com",
     "license": "NETGRIF Community License",
     "repository": {
         "type": "git",
-        "url": "https://bitbucket.org/netgrif/nae-frontend.git"
+        "url": "https://github.com/netgrif/components.git"
     },
     "bugs": {
-        "url": "https://netgrif.atlassian.net/browse/NAE"
+        "url": "https://github.com/netgrif/components/issues"
+    },
+    "author": {
+        "name": "NETGRIF, s.r.o.",
+        "email": "oss@netgrif.com",
+        "url": "https://netgrif.com"
     },
     "keywords": [
+        "netgrif",
+        "application engine",
+        "nae",
+        "engine",
+        "workflow engine",
+        "components",
         "netgrif components",
-        "application engine components",
         "nae components",
-        "angular",
-        "nae"
+        "nae frontend"
     ],
+    "scripts": {
+        "nc:clean": "node projects/netgrif-components/src/scripts/delete-local-build-link.js",
+        "nc:build": "npm run nc:clean && ng build netgrif-components --prod && npm run nc:build-schematics",
+        "nc:local-build": "npm run nc:build && npm i ./dist/netgrif-components --save-optional",
+        "nc:build-schematics": "node projects/netgrif-components/src/scripts/build-schematics.js",
+        "nc:lint": "ng lint netgrif-components",
+        "nc:test": "ng test netgrif-components",
+        "nc:full-test": "npm run nc:lint && npm run nc:test",
+        "nc:normalize-coverage-summary": "node scripts/normalize-file-paths.js coverage/netgrif-components/coverage-summary.json",
+        "nc:doc": "npm run nc:normalize-coverage-summary && compodoc -c projects/netgrif-components/.compodocrc.json",
+        "nc:compodoc": "compodoc -c projects/netgrif-components/.compodocrc.json"
+    },
+    "dependencies": {
+        "@netgrif/components-core": "6.0.0-rc.5"
+    },
     "peerDependencies": {
         "@angular-material-components/datetime-picker": "^2.0.2",
         "@angular-material-components/moment-adapter": "^2.0.1",
@@ -48,11 +72,7 @@
         "moment": "~2.24.0",
         "natural-orderby": "^2.0.3",
         "rxjs": "^6.6.0",
-        "zone.js": "~0.10.2",
-        "@netgrif/application-engine": "6.0.0-rc.5"
+        "zone.js": "~0.10.2"
     },
-    "publishConfig": {
-        "registry": "https://nexus.netgrif.com/repository/npm-private/"
-    },
-    "schematics": "./schematics/collection.json"
+    "schematics": "schematics/collection.json"
 }

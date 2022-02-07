@@ -144,8 +144,8 @@ function updateAppComponentTS(): Rule {
 
         const appComponentChanges: Array<Change> = [];
         appComponentChanges.push(
-            insertImport(fileData.sourceFile, fileData.fileEntry.path, 'LanguageService', '@netgrif/application-engine'),
-            insertImport(fileData.sourceFile, fileData.fileEntry.path, 'RoutingBuilderService', '@netgrif/application-engine')
+            insertImport(fileData.sourceFile, fileData.fileEntry.path, 'LanguageService', '@netgrif/components-core'),
+            insertImport(fileData.sourceFile, fileData.fileEntry.path, 'RoutingBuilderService', '@netgrif/components-core')
         );
         commitChangesToFile(tree, fileData.fileEntry, appComponentChanges);
     };

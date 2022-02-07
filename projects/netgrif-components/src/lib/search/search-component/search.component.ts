@@ -21,7 +21,7 @@ import {
     NAE_BASE_FILTER,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES,
     NAE_DEFAULT_TASK_SEARCH_CATEGORIES, NAE_NAVIGATION_ITEM_TASK_DATA, DataGroup
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 /**

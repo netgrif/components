@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TabViewExampleComponent} from './tab-view-example.component';
-import {MaterialModule} from '@netgrif/application-engine';
+import {MaterialModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('TabViewExampleComponent', () => {

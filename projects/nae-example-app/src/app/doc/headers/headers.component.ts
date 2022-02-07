@@ -5,7 +5,7 @@ import {
     SearchService,
     SimpleFilter,
     TaskViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {
     return factory.createFromConfig('case');

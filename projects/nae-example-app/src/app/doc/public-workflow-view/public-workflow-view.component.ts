@@ -16,7 +16,7 @@ import {
     ConfigurationService,
     PublicUrlResolverService,
     publicFactoryResolver
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,

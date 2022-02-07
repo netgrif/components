@@ -18,7 +18,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('BooleanFieldComponent', () => {
     let component: BooleanFieldComponent;

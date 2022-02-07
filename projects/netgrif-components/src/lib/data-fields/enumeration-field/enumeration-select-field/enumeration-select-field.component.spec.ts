@@ -4,7 +4,7 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormControl} from '@angular/forms';
-import {EnumerationField, MaterialModule, TranslateLibModule, WrappedBoolean} from '@netgrif/application-engine';
+import {EnumerationField, MaterialModule, TranslateLibModule, WrappedBoolean} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('EnumerationSelectFieldComponent', () => {

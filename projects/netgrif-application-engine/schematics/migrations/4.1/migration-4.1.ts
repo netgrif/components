@@ -35,7 +35,7 @@ export function schematicEntryPoint(): Rule {
                 }
 
                 if (extendsCaseView) {
-                    const changes = addProviderToComponent(file, 'SearchChipService', undefined, '@netgrif/application-engine');
+                    const changes = addProviderToComponent(file, 'SearchChipService', undefined, '@netgrif/components-core');
                     commitChangesToFile(tree, file, changes);
                 }
             }

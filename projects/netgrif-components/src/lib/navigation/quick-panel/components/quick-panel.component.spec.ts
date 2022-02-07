@@ -19,7 +19,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('QuickPanelComponent', () => {
     let component: QuickPanelComponent;

@@ -15,7 +15,7 @@ import {
     SideMenuControl,
     TestConfigurationService,
     UserResourceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('FilterSelectorComponent', () => {
     let component: FilterSelectorComponent;

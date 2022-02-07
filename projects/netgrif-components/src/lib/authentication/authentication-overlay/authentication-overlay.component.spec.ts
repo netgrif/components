@@ -8,7 +8,7 @@ import {
     ConfigurationService,
     MockAuthenticationMethodService,
     TestConfigurationService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('AuthenticationOverlayComponent', () => {
     let component: AuthenticationOverlayComponent;

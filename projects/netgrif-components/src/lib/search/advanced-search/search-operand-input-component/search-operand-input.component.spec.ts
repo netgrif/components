@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchOperandInputComponent} from './search-operand-input.component';
 import {Component} from '@angular/core';
-import {MaterialModule, SearchInputType} from '@netgrif/application-engine';
+import {MaterialModule, SearchInputType} from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';

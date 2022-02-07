@@ -17,7 +17,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ButtonFieldComponent', () => {

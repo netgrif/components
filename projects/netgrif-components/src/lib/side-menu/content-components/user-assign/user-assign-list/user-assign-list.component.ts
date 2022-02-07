@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractUserAssignListComponent, UserListService} from '@netgrif/application-engine';
+import {AbstractUserAssignListComponent, UserListService} from '@netgrif/components-core';
 
 /**
  * Is responsible for displaying, filtering, loading and selecting users.

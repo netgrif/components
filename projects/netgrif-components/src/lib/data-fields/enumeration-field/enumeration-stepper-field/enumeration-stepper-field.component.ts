@@ -1,7 +1,7 @@
 import {
     Component, ElementRef
 } from '@angular/core';
-import {AbstractEnumerationStepperFieldComponent} from '@netgrif/application-engine';
+import {AbstractEnumerationStepperFieldComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-enumeration-stepper-field',

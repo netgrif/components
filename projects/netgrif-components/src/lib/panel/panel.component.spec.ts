@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PanelComponent} from './panel.component';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';

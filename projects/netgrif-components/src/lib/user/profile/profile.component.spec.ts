@@ -9,7 +9,7 @@ import {
     MockAuthenticationMethodService,
     TestConfigurationService,
     TranslateLibModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('ProfileComponent', () => {
     let component: ProfileComponent;

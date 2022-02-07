@@ -19,7 +19,7 @@ import {
     TranslateLibModule,
     UserPreferenceService,
     UserResourceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {UserComponentModule} from '../../user/user.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ResizableModule} from 'angular-resizable-element';

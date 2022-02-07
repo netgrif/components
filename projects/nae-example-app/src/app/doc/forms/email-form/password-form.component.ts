@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {FormSubmitEvent, LoggerService, MessageResource, SignUpService, SnackBarService} from '@netgrif/application-engine';
+import {FormSubmitEvent, LoggerService, MessageResource, SignUpService, SnackBarService} from '@netgrif/components-core';
 import {Observable} from 'rxjs';
 
 interface EndpointOption {

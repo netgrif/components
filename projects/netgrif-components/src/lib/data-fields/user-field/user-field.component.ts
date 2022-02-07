@@ -1,5 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractUserFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA, SideMenuService, SnackBarService} from '@netgrif/application-engine';
+import {AbstractUserFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA, SideMenuService, SnackBarService} from '@netgrif/components-core';
 import {UserAssignComponent} from '../../side-menu/content-components/user-assign/user-assign.component';
 import {TranslateService} from '@ngx-translate/core';
 

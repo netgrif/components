@@ -19,7 +19,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('FileFieldComponent', () => {

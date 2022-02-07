@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractPasswordTextFieldComponent} from '@netgrif/application-engine';
+import {AbstractPasswordTextFieldComponent} from '@netgrif/components-core';
 
 @Component({
   selector: 'nc-password-text-field',

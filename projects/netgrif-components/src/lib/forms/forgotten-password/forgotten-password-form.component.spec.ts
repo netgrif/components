@@ -7,7 +7,7 @@ import {
     SignUpService,
     TestConfigurationService,
     TranslateLibModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

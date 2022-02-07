@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RedirectService, User} from '@netgrif/application-engine';
+import {RedirectService, User} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-login-card',

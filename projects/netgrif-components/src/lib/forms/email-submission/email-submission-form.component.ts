@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {AbstractEmailSubmissionFormComponent} from '@netgrif/application-engine';
+import {AbstractEmailSubmissionFormComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-email-submission-form',

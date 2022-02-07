@@ -21,7 +21,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     ViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';

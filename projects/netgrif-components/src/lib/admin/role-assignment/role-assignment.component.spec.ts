@@ -18,7 +18,7 @@ import {
     SuccessSnackBarComponent,
     TestConfigurationService,
     TranslateLibModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 
 describe('RoleAssignmentComponent', () => {

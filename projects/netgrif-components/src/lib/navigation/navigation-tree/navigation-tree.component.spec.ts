@@ -9,7 +9,7 @@ import {
     AuthenticationMethodService,
     MockAuthenticationMethodService,
     AuthenticationModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';

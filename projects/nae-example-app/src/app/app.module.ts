@@ -16,7 +16,7 @@ import {
     SnackBarModule,
     SnackBarVerticalPosition,
     ViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {DocumentationComponent} from './doc/documentation/documentation.component';

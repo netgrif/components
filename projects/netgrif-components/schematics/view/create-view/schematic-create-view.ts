@@ -9,7 +9,7 @@ import {NullableCreateViewArguments} from './models/nullable-create-view-argumen
 import {constructRoutePath} from '../_utility/view-utility-functions';
 import {ViewClassInfo} from '../../_commons/view-class-info';
 import {getGeneratedViewClassNames} from '../_utility/view-service-functions';
-import {Views} from '@netgrif/application-engine';
+import {Views} from '@netgrif/components-core';
 
 
 export function schematicEntryPoint(): Rule {

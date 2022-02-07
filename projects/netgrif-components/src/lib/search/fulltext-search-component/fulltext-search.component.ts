@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractFulltextSearchComponent, SearchService} from '@netgrif/application-engine';
+import {AbstractFulltextSearchComponent, SearchService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-fulltext-search',

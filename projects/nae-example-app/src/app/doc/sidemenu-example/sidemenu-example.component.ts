@@ -3,7 +3,7 @@ import {
     Net,
     SideMenuService,
     SideMenuSize,
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {NewCaseComponent, UserAssignComponent, FilterSelectorComponent} from '@netgrif/components';
 

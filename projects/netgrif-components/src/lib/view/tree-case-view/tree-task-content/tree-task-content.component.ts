@@ -17,7 +17,7 @@ import {
     TreeTaskContentService,
     UnlimitedTaskContentService,
     PermissionService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-tree-task-content',

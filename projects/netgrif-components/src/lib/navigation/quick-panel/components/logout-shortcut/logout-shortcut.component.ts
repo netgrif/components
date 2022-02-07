@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {AbstractLogoutShortcutComponent, ConfigurationService, LoggerService, UserService} from '@netgrif/application-engine';
+import {AbstractLogoutShortcutComponent, ConfigurationService, LoggerService, UserService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-logout-shortcut',

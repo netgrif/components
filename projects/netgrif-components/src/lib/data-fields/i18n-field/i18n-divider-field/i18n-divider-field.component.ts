@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractI18nDividerFieldComponent} from '@netgrif/application-engine';
+import {AbstractI18nDividerFieldComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-i18n-divider-field',

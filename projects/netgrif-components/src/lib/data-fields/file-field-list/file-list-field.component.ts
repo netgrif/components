@@ -6,7 +6,7 @@ import {
     NAE_INFORM_ABOUT_INVALID_DATA,
     SnackBarService,
     TaskResourceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-file-list-field',

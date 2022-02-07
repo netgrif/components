@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FilterRepository, MergeOperator} from '@netgrif/application-engine';
+import {FilterRepository, MergeOperator} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-filter-repository-example',

@@ -8,7 +8,7 @@
     "lib": {
         "entryFile": "src/public-api.ts",
         "umdModuleIds": {
-            "@netgrif/application-engine": "@netgrif/application-engine",
+            "@netgrif/components-core": "@netgrif/components-core",
             "jszip": "JSZip",
             "angular-resize-event": "angularResizeEvent",
             "@covalent/core": "@covalent/core"

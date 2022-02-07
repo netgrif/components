@@ -11,7 +11,7 @@ import {
     TranslateLibModule,
     WrappedBoolean,
     EnumerationField
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('EnumerationIconFieldComponent', () => {
     let component: EnumerationIconFieldComponent;

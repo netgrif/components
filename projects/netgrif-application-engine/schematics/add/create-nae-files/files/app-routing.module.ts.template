@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {ResourceProvider} from '@netgrif/application-engine';
+import {ResourceProvider} from '@netgrif/components-core';
 import {HttpClientModule} from '@angular/common/http';
 
 const routes: Routes = [];

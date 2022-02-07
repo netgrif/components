@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractRichTextareaFieldComponent} from '@netgrif/application-engine';
+import {AbstractRichTextareaFieldComponent} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

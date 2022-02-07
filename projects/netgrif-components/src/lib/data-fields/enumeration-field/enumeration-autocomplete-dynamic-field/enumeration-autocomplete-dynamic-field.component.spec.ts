@@ -5,7 +5,7 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {WrappedBoolean, MaterialModule, TranslateLibModule, DynamicEnumerationField} from '@netgrif/application-engine';
+import {WrappedBoolean, MaterialModule, TranslateLibModule, DynamicEnumerationField} from '@netgrif/components-core';
 
 describe('EnumerationAutocompleteDynamicFieldComponent', () => {
     let component: EnumerationAutocompleteDynamicFieldComponent;

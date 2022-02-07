@@ -11,7 +11,7 @@ import {
     SignUpService,
     TestConfigurationService,
     TranslateLibModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('RegistrationPanelComponent', () => {
     let component: RegistrationFormComponent;

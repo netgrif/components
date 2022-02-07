@@ -1,7 +1,7 @@
 import {Component, Optional} from '@angular/core';
-import {AbstractCasePanelComponent, CaseViewService, LoggerService, OverflowService, UserService} from '@netgrif/application-engine';
-import {CaseResourceService, PermissionService} from '@netgrif/application-engine';
-import {SnackBarService} from '@netgrif/application-engine';
+import {AbstractCasePanelComponent, CaseViewService, LoggerService, OverflowService, UserService} from '@netgrif/components-core';
+import {CaseResourceService, PermissionService} from '@netgrif/components-core';
+import {SnackBarService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe} from '@angular/common';
 

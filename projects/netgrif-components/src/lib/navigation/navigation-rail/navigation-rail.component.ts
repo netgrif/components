@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {AbstractNavigationRailComponent} from '@netgrif/application-engine';
+import {AbstractNavigationRailComponent} from '@netgrif/components-core';
 
 const railAnimation = trigger('transform', [
     state('expand', style({

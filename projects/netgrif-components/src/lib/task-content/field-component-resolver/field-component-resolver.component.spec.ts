@@ -9,7 +9,7 @@ import {
     TestConfigurationService,
     DatafieldGridLayoutElement,
     TaskElementType
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {Component} from '@angular/core';
 
 describe('FieldComponentResolverComponent', () => {

@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FilterFieldContentComponent} from './filter-field-content.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ConfigurationService, TestConfigurationService, FilterField, FilterType, NAE_FILTER_FIELD} from '@netgrif/application-engine';
+import {ConfigurationService, TestConfigurationService, FilterField, FilterType, NAE_FILTER_FIELD} from '@netgrif/components-core';
 import {AdvancedSearchComponentModule} from '../../../search/advanced-search/advanced-search.module';
 
 describe('FilterFieldContentComponent', () => {

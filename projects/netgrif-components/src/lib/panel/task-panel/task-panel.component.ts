@@ -25,7 +25,7 @@ import {
     TaskViewService,
     PermissionService,
     ChangedFieldsService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {TaskContentComponent} from '../../task-content/task-content/task-content.component';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe} from '@angular/common';

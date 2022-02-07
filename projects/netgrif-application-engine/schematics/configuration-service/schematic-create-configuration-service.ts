@@ -29,7 +29,7 @@ export function schematicEntryPoint(): Rule {
             `./${configFileName}`,
             `{provide: ConfigurationService, useClass: ${configClassName}}`);
         changes.push(
-            insertImport(appModule.sourceFile, appModule.fileEntry.path, 'ConfigurationService', '@netgrif/application-engine')
+            insertImport(appModule.sourceFile, appModule.fileEntry.path, 'ConfigurationService', '@netgrif/components-core')
         );
         commitChangesToFile(tree, appModule.fileEntry, changes);
 

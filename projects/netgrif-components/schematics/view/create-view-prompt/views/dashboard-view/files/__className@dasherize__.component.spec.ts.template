@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {<%= classify(className) %>Component} from './<%= dasherize(className) %>.component';
-import {MaterialModule, ConfigurationService} from '@netgrif/application-engine';
+import {MaterialModule, ConfigurationService} from '@netgrif/components-core';
 import {DashboardComponentModule} from '@netgrif/components';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';

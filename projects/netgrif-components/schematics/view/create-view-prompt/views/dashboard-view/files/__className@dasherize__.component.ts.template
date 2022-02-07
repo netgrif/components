@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ConfigurationService, DashboardParams, NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/application-engine';
+import {ConfigurationService, DashboardParams, NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/components-core';
 
 
 @Component({

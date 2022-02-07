@@ -5,9 +5,9 @@ import {
     DashboardMultiData,
     DashboardResourceService,
     DashboardSingleData
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
-import {AggregationResult, LoggerService} from '@netgrif/application-engine';
+import {AggregationResult, LoggerService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-line-chart-card',

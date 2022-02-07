@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractCurrencyNumberFieldComponent} from '@netgrif/application-engine';
+import {AbstractCurrencyNumberFieldComponent} from '@netgrif/components-core';
 import {CurrencyPipe} from '@angular/common';
 
 @Component({

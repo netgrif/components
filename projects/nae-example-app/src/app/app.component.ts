@@ -10,7 +10,7 @@ import {
     BaseAllowedNetsService,
     AllowedNetsServiceFactory,
     UserService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {filter, take} from 'rxjs/operators';
 
 @Component({

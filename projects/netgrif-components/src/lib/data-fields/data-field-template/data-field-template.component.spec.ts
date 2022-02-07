@@ -11,7 +11,7 @@ import {
     ViewService,
     TestViewService,
     TextField
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('DataFieldTemplateComponent', () => {
     let component: DataFieldTemplateComponent;

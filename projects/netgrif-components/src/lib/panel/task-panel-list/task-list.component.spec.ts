@@ -23,7 +23,7 @@ import {
     TestConfigurationService,
     UserResourceService,
     NAE_BASE_FILTER, TestTaskBaseFilterProvider, AllowedNetsService, TestTaskViewAllowedNetsFactory, AllowedNetsServiceFactory
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {PanelComponentModule} from '../panel.module';
 import {AuthenticationComponentModule} from '../../authentication/auth.module';

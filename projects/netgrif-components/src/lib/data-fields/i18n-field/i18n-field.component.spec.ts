@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {I18nFieldComponent} from './i18n-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {I18nField, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {I18nField, MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

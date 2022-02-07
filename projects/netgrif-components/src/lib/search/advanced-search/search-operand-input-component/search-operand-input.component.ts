@@ -5,7 +5,7 @@ import {
     DATE_FORMAT_STRING, DATE_TIME_FORMAT,
     DATE_TIME_FORMAT_STRING,
     SearchInputType
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-search-operand-input',

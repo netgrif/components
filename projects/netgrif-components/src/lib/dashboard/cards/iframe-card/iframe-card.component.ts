@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractIframeCard} from '@netgrif/application-engine';
+import {AbstractIframeCard} from '@netgrif/components-core';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({

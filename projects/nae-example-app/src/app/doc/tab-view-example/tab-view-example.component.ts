@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TabContent} from '@netgrif/application-engine';
+import {TabContent} from '@netgrif/components-core';
 import {ContentComponent} from './content/content.component';
 
 @Component({

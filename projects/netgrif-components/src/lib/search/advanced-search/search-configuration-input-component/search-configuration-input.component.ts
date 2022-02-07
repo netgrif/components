@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractSearchConfigurationInputComponent, OperatorTemplatePartType, SearchInputType} from '@netgrif/application-engine';
+import {AbstractSearchConfigurationInputComponent, OperatorTemplatePartType, SearchInputType} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-search-configuration-input',

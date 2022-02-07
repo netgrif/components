@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {AbstractPanelComponent} from '@netgrif/application-engine';
-import {CaseListFontColorService} from '@netgrif/application-engine';
+import {AbstractPanelComponent} from '@netgrif/components-core';
+import {CaseListFontColorService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-app-panel',

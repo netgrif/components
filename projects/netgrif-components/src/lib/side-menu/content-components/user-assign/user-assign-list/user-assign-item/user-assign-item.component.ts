@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractUserAssignItemComponent} from '@netgrif/application-engine';
+import {AbstractUserAssignItemComponent} from '@netgrif/components-core';
 
 /**
  * Includes avatar user icon and full username in the side menu.

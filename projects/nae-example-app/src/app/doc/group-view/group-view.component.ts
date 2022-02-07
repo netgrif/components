@@ -6,7 +6,7 @@ import {
     SimpleFilter, TaskSearchCaseQuery,
     TaskViewService, NAE_BASE_FILTER, AllowedNetsService, AllowedNetsServiceFactory, NAE_VIEW_ID_SEGMENT, ViewIdService,
     ChangedFieldsService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {
     HeaderComponent,
 } from '@netgrif/components';

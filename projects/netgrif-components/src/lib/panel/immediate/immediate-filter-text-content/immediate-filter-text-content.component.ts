@@ -12,7 +12,7 @@ import {
     CategoryFactory,
     Category,
     NAE_SEARCH_CATEGORIES,
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 export function filterTextBaseFilterFactory(configuration: FilterTextConfiguration): BaseFilter {

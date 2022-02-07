@@ -23,7 +23,7 @@ export function ngAdd(): Rule {
 function createMinimalNaeJson(): Rule {
     return (tree: Tree) => {
         if (!tree.exists('./nae.json')) {
-            tree.create('./nae.json', '{\n  "$schema": "./node_modules/@netgrif/application-engine/src/schema/nae-schema.json",' +
+            tree.create('./nae.json', '{\n  "$schema": "./node_modules/@netgrif/components-core/src/schema/nae-schema.json",' +
                 '\n"extends": "nae-default",\n  "views": {\n\n  },\n  "theme":' +
                 ' {\n    "name": "nae-color",\n    "pallets": {\n      "light": {\n        ' +
                 '"primary": "blue"\n      }\n    }\n  }\n}');

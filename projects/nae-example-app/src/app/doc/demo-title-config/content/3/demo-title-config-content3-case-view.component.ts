@@ -15,7 +15,7 @@ import {
     FilterType,
     NAE_BASE_FILTER,
     AllowedNetsServiceFactory, SavedFilterMetadata, AllowedNetsService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
 

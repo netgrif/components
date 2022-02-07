@@ -26,7 +26,7 @@ export function schematicEntryPoint(): Rule {
             `./${serviceFileName}`,
             `{provide: ViewService, useClass: ${serviceClassName}}`);
         changes.push(
-            insertImport(appModule.sourceFile, appModule.fileEntry.path, 'ViewService', '@netgrif/application-engine')
+            insertImport(appModule.sourceFile, appModule.fileEntry.path, 'ViewService', '@netgrif/components-core')
         );
         commitChangesToFile(tree, appModule.fileEntry, changes);
 

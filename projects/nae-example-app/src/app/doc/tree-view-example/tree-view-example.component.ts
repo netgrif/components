@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {CaseResourceService, Filter, FilterType,
-    ProcessService, SimpleFilter, TreeCaseViewService, CreateCaseEventOutcome} from '@netgrif/application-engine';
+    ProcessService, SimpleFilter, TreeCaseViewService, CreateCaseEventOutcome} from '@netgrif/components-core';
 import {HttpParams} from '@angular/common/http';
 
 @Component({

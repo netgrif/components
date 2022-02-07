@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LoadFilterComponent} from './load-filter.component';
-import {MaterialModule, NAE_LOAD_FILTER_COMPONENT, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, NAE_LOAD_FILTER_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
 import {CaseViewComponentModule} from '../../../view/case-view/case-view.module';
 import {HeaderComponentModule} from '../../../header/header.module';
 

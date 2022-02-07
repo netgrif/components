@@ -6,7 +6,7 @@ import {SearchConfigurationInputComponent} from './search-configuration-input-co
 import {AdvancedSearchComponent} from './advanced-search-component/advanced-search.component';
 import {CommonModule} from '@angular/common';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 
 @NgModule({
     declarations: [

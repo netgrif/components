@@ -18,7 +18,7 @@ import {
     AllowedNetsService,
     AllowedNetsServiceFactory,
     ChangedFieldsService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 
 const localAllowedNetsFactory = (factory: AllowedNetsServiceFactory) => {

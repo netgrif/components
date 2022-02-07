@@ -14,7 +14,7 @@ import {
     AllowedNetsServiceFactory,
     UserFilterConstants,
     BaseFilter
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 export function baseFilterFactory(sideMenuControl: SideMenuControl): BaseFilter {
     if (!sideMenuControl.data) {

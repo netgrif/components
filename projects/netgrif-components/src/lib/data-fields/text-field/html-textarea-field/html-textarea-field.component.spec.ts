@@ -16,7 +16,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     WrappedBoolean
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormControl} from '@angular/forms';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NAE_VIEW_ID_SEGMENT, TabContent, ViewIdService} from '@netgrif/application-engine';
+import {NAE_VIEW_ID_SEGMENT, TabContent, ViewIdService} from '@netgrif/components-core';
 import {TabbedCaseViewComponent} from './tabbed-case-view/tabbed-case-view.component';
 import {TabbedTaskViewComponent} from './tabbed-task-view/tabbed-task-view.component';
 import {ReplaySubject} from 'rxjs';

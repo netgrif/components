@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractEnumerationSelectFieldComponent} from '@netgrif/application-engine';
+import {AbstractEnumerationSelectFieldComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-enumeration-select-field',

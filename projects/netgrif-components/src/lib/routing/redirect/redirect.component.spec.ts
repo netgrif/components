@@ -5,7 +5,7 @@ import {
     ConfigurationService,
     TestConfigurationService,
     TranslateLibModule,
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('RedirectComponent', () => {

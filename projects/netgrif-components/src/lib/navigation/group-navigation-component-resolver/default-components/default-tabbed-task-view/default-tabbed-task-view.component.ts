@@ -14,7 +14,7 @@ import {
     ChangedFieldsService,
     tabbedTaskViewConfigurationFactory,
     tabbedAllowedNetsServiceFactory
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 
 export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {

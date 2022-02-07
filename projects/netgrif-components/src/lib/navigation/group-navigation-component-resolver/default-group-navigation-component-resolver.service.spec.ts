@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {DefaultGroupNavigationComponentResolverService} from './default-group-navigation-component-resolver.service';
-import {TestMockDependenciesModule} from '@netgrif/application-engine';
+import {TestMockDependenciesModule} from '@netgrif/components-core';
 
 describe('DefaultGroupNavigationComponentResolverService', () => {
     let service: DefaultGroupNavigationComponentResolverService;

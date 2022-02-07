@@ -4,7 +4,7 @@ import {
     AuthenticationMethodService,
     ConfigurationService,
     MaterialModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {
     NavigationComponentModule,
     ToolbarComponentModule
