@@ -30,7 +30,7 @@ export interface TaskSearchRequestBody {
      *
      * If more than one user ID is specified, the returned tasks must be assigned to one of the users.
      */
-    user?: number | Array<number>;
+    user?: string | Array<string>;
     /**
      * Returned tasks must be of process with the specified process ID.
      *
