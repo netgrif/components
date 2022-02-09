@@ -3,10 +3,10 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "netgrif-application-engine": {
+        "netgrif-components-core": {
             "projectType": "library",
-            "root": "projects/netgrif-application-engine",
-            "sourceRoot": "projects/netgrif-application-engine/src",
+            "root": "projects/netgrif-components-core",
+            "sourceRoot": "projects/netgrif-components-core/src",
             "prefix": "nae",
             "schematics": {
                 "@schematics/angular:component": {
@@ -17,26 +17,26 @@
                 "build": {
                     "builder": "@angular-devkit/build-ng-packagr:build",
                     "options": {
-                        "tsConfig": "projects/netgrif-application-engine/tsconfig.lib.json",
-                        "project": "projects/netgrif-application-engine/ng-package.json"
+                        "tsConfig": "projects/netgrif-components-core/tsconfig.lib.json",
+                        "project": "projects/netgrif-components-core/ng-package.json"
                     },
                     "configurations": {
                         "production": {
-                            "tsConfig": "projects/netgrif-application-engine/tsconfig.lib.prod.json"
+                            "tsConfig": "projects/netgrif-components-core/tsconfig.lib.prod.json"
                         }
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/netgrif-application-engine/src/test.ts",
-                        "tsConfig": "projects/netgrif-application-engine/tsconfig.spec.json",
-                        "karmaConfig": "projects/netgrif-application-engine/karma.conf.js",
+                        "main": "projects/netgrif-components-core/src/test.ts",
+                        "tsConfig": "projects/netgrif-components-core/tsconfig.spec.json",
+                        "karmaConfig": "projects/netgrif-components-core/karma.conf.js",
                         "sourceMap": true,
                         "codeCoverage": true,
                         "codeCoverageExclude": [
-                            "projects/netgrif-application-engine/src/test.ts",
-                            "projects/netgrif-application-engine/src/commons/**"
+                            "projects/netgrif-components-core/src/test.ts",
+                            "projects/netgrif-components-core/src/commons/**"
                         ]
                     }
                 },
@@ -44,8 +44,8 @@
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
                         "tsConfig": [
-                            "projects/netgrif-application-engine/tsconfig.lib.json",
-                            "projects/netgrif-application-engine/tsconfig.spec.json"
+                            "projects/netgrif-components-core/tsconfig.lib.json",
+                            "projects/netgrif-components-core/tsconfig.spec.json"
                         ],
                         "exclude": [
                             "**/node_modules/**"

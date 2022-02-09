@@ -1,0 +1,448 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-typealiases">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+<ol class="breadcrumb">
+  <li>Miscellaneous</li>
+  <li>Type aliases</li>
+</ol>
+
+<section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#FrontendActions" title="projects/netgrif-components-core/src/lib/data-fields/models/changed-fields.ts" ><b>FrontendActions</b>&nbsp;&nbsp;&nbsp;(projects/.../changed-fields.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#GeneratorMetadata" title="projects/netgrif-components-core/src/lib/search/models/persistance/generator-metadata.ts" ><b>GeneratorMetadata</b>&nbsp;&nbsp;&nbsp;(projects/.../generator-metadata.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HeaderChangeDescription" title="projects/netgrif-components-core/src/lib/header/models/user-changes/header-change-description.ts" ><b>HeaderChangeDescription</b>&nbsp;&nbsp;&nbsp;(projects/.../header-change-description.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HeaderConfiguration" title="projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts" ><b>HeaderConfiguration</b>&nbsp;&nbsp;&nbsp;(projects/.../header-search.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Headers" title="projects/netgrif-components-core/src/lib/resources/resource-provider.service.ts" ><b>Headers</b>&nbsp;&nbsp;&nbsp;(projects/.../resource-provider.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#IconStyle" title="projects/netgrif-components-core/src/lib/user/components/user-card/abstract-user-card.component.ts" ><b>IconStyle</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-user-card.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Mode" title="projects/netgrif-components-core/src/lib/user/components/user-card/abstract-user-card.component.ts" ><b>Mode</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-user-card.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NaeDate" title="projects/netgrif-components-core/src/lib/resources/types/nae-date-type.ts" ><b>NaeDate</b>&nbsp;&nbsp;&nbsp;(projects/.../nae-date-type.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Params" title="projects/netgrif-components-core/src/lib/resources/resource-provider.service.ts" ><b>Params</b>&nbsp;&nbsp;&nbsp;(projects/.../resource-provider.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PredicateTreeMetadata" title="projects/netgrif-components-core/src/lib/search/models/persistance/generator-metadata.ts" ><b>PredicateTreeMetadata</b>&nbsp;&nbsp;&nbsp;(projects/.../generator-metadata.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#QuickPanelItem" title="projects/netgrif-components-core/src/lib/navigation/quick-panel/components/abstract-quick-panel.component.ts" ><b>QuickPanelItem</b>&nbsp;&nbsp;&nbsp;(projects/.../abstract-quick-panel.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Resources" title="projects/netgrif-components-core/src/commons/schema.ts" ><b>Resources</b>&nbsp;&nbsp;&nbsp;(projects/.../schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ResponseType" title="projects/netgrif-components-core/src/lib/resources/resource-provider.service.ts" ><b>ResponseType</b>&nbsp;&nbsp;&nbsp;(projects/.../resource-provider.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TaskContentElementType" title="projects/netgrif-components-core/src/lib/task-content/model/task-content-element-type.ts" ><b>TaskContentElementType</b>&nbsp;&nbsp;&nbsp;(projects/.../task-content-element-type.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>projects/netgrif-components-core/src/lib/data-fields/models/changed-fields.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="FrontendActions"></a>
+                    <span class="name "><b>FrontendActions</b><a href="#FrontendActions"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>A prototype implementation of frontend actions.</p>
+<p>The specifics are subject to change.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../interfaces/Change.html" target="_self" >Change</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/search/models/persistance/generator-metadata.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="GeneratorMetadata"></a>
+                    <span class="name "><b>GeneratorMetadata</b><a href="#GeneratorMetadata"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The two nested arrays represent a predicate tree with 3 levels. The root node of the tree is a predicate consisting of a conjunction
+(AND) of its subtrees.</p>
+<p>The single array represents a predicate tree with 2 levels. The root node of the tree is a predicate consisting of a disjunction (OR) of
+its subtrees.</p>
+<p>The <a href="../interfaces/CategoryGeneratorMetadata.html">CategoryGeneratorMetadata</a> represents a predicate tree with 1 level - a leaf node.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../interfaces/CategoryGeneratorMetadata.html" target="_self" >PredicateTreeMetadata | Array&lt;CategoryGeneratorMetadata&gt; | CategoryGeneratorMetadata</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PredicateTreeMetadata"></a>
+                    <span class="name "><b>PredicateTreeMetadata</b><a href="#PredicateTreeMetadata"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Serialized <a href="../classess/AbstractAdvancedSearchComponent.html">advanced search</a> filter predicate tree.</p>
+<p>The nested array represent nested predicate trees with boolean operators.
+The structure of the tree mirrors the search component.</p>
+<p>The top level array is a conjunction (AND) of its subtrees.</p>
+<p>The second level array is a disjunction (OR) of the leaves.</p>
+<p>The <a href="../interfaces/CategoryGeneratorMetadata.html">CategoryGeneratorMetadata</a> is a leaf node of the predicate tree containing a single query
+generated by <a href="../classess/AbstractSearchPredicateComponent.html">AbstractSearchPredicateComponent</a> (and by extension by a <a href="../classes/Category.html">Category</a>).</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../interfaces/CategoryGeneratorMetadata.html" target="_self" >Array&lt;Array&lt;CategoryGeneratorMetadata&gt;&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/header/models/user-changes/header-change-description.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HeaderChangeDescription"></a>
+                    <span class="name "><b>HeaderChangeDescription</b><a href="#HeaderChangeDescription"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >SortChangeDescription | SearchChangeDescription | EditChangeDescription | ModeChangeDescription</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HeaderConfiguration"></a>
+                    <span class="name "><b>HeaderConfiguration</b><a href="#HeaderConfiguration"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/resources/resource-provider.service.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Headers"></a>
+                    <span class="name "><b>Headers</b><a href="#Headers"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/typealiases.html#Headers" target="_self" >HttpHeaders | literal type</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Params"></a>
+                    <span class="name "><b>Params</b><a href="#Params"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../interfaces/ObjectParams.html" target="_self" >HttpParams | ObjectParams</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ResponseType"></a>
+                    <span class="name "><b>ResponseType</b><a href="#ResponseType"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;json&quot; | &quot;hal&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/user/components/user-card/abstract-user-card.component.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="IconStyle"></a>
+                    <span class="name "><b>IconStyle</b><a href="#IconStyle"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;large&quot; | &quot;small&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Mode"></a>
+                    <span class="name "><b>Mode</b><a href="#Mode"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;full&quot; | &quot;horizontal&quot; | &quot;vertical&quot; | &quot;icon&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/resources/types/nae-date-type.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NaeDate"></a>
+                    <span class="name "><b>NaeDate</b><a href="#NaeDate"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>[year month day hour minute second timestamp]
+month and day are 1 indexed</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>Array&lt;number&gt;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/navigation/quick-panel/components/abstract-quick-panel.component.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="QuickPanelItem"></a>
+                    <span class="name "><b>QuickPanelItem</b><a href="#QuickPanelItem"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;language&quot; | &quot;settings&quot; | &quot;logout&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/commons/schema.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Resources"></a>
+                    <span class="name "><b>Resources</b><a href="#Resources"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This file is single point of truth for NAE frontend configuration schema.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../interfaces/Resource.html" target="_self" >Resource | Array&lt;Resource&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/task-content/model/task-content-element-type.ts</h3>
+    <section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TaskContentElementType"></a>
+                    <span class="name "><b>TaskContentElementType</b><a href="#TaskContentElementType"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>FieldTypeResource | TaskElementType</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-typealiases';
+            var COMPODOC_CURRENT_PAGE_URL = 'typealiases.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

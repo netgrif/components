@@ -13,10 +13,10 @@ import {
     NAE_TASK_VIEW_CONFIGURATION,
     tabbedTaskViewConfigurationFactory,
     tabbedAllowedNetsServiceFactory, AllowedNetsService, AllowedNetsServiceFactory
-} from 'netgrif-application-engine';
+} from '@netgrif/components-core';
 import {
     HeaderComponent,
-} from 'netgrif-components';
+} from '@netgrif/components';
 
 const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
     return {

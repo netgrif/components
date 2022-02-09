@@ -1,0 +1,4691 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-functions">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+<ol class="breadcrumb">
+  <li>Miscellaneous</li>
+  <li>Functions</li>
+</ol>
+
+<section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#arrayToObservable" title="projects/netgrif-components-core/src/lib/utility/array-to-observable.ts" ><b>arrayToObservable</b>&nbsp;&nbsp;&nbsp;(projects/.../array-to-observable.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#authenticationServiceFactory" title="projects/netgrif-components-core/src/lib/authentication/authentication.factory.ts" ><b>authenticationServiceFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../authentication.factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#camelize" title="projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts" ><b>camelize</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#capitalize" title="projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts" ><b>capitalize</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#classify" title="projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts" ><b>classify</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#clearTimeInformation" title="projects/netgrif-components-core/src/lib/utility/clear-time-information.ts" ><b>clearTimeInformation</b>&nbsp;&nbsp;&nbsp;(projects/.../clear-time-information.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#configureCategory" title="projects/netgrif-components-core/src/lib/utility/tests/utility/configure-category.ts" ><b>configureCategory</b>&nbsp;&nbsp;&nbsp;(projects/.../configure-category.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockCase" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-case.ts" ><b>createMockCase</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-case.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockCaseOutcome" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-case-outcome.ts" ><b>createMockCaseOutcome</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-case-outcome.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockDataGroup" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-datagroup.ts" ><b>createMockDataGroup</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-datagroup.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockField" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-field.ts" ><b>createMockField</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-field.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockGetDataOutcome" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-get-data-outcome.ts" ><b>createMockGetDataOutcome</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-get-data-outcome.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockImmediateData" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-immediate-data.ts" ><b>createMockImmediateData</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-immediate-data.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockNet" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-net.ts" ><b>createMockNet</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-net.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockPage" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-page.ts" ><b>createMockPage</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-page.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockPetriNetOutcome" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-petri-net-outcome.ts" ><b>createMockPetriNetOutcome</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-petri-net-outcome.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockSetDataOutcome" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-set-data-outcome.ts" ><b>createMockSetDataOutcome</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-set-data-outcome.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockTask" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-task.ts" ><b>createMockTask</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-task.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createMockTaskOutcome" title="projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-task-outcome.ts" ><b>createMockTaskOutcome</b>&nbsp;&nbsp;&nbsp;(projects/.../create-mock-task-outcome.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#createTaskEventNotification" title="projects/netgrif-components-core/src/lib/task-content/model/task-event-notification.ts" ><b>createTaskEventNotification</b>&nbsp;&nbsp;&nbsp;(projects/.../task-event-notification.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#dasherize" title="projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts" ><b>dasherize</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#decamelize" title="projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts" ><b>decamelize</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#defaultCaseSearchCategoriesFactory" title="projects/netgrif-components-core/src/lib/search/category-factory/default-categories-factories.ts" class="deprecated-name"><b>defaultCaseSearchCategoriesFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-categories-factories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#defaultTaskSearchCategoriesFactory" title="projects/netgrif-components-core/src/lib/search/category-factory/default-categories-factories.ts" class="deprecated-name"><b>defaultTaskSearchCategoriesFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../default-categories-factories.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#destroySubscription" title="projects/netgrif-components-core/src/lib/utility/destroy-subscription.ts" ><b>destroySubscription</b>&nbsp;&nbsp;&nbsp;(projects/.../destroy-subscription.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#extractFilterFieldFromData" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractFilterFieldFromData</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#extractFilterFromData" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractFilterFromData</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#extractFilterFromFilterField" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractFilterFromFilterField</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#extractIconAndTitle" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractIconAndTitle</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#extractRoles" title="projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts" ><b>extractRoles</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-utility-methods.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getField" title="projects/netgrif-components-core/src/lib/utility/get-field.ts" ><b>getField</b>&nbsp;&nbsp;&nbsp;(projects/.../get-field.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getFieldFromDataGroups" title="projects/netgrif-components-core/src/lib/utility/get-field.ts" ><b>getFieldFromDataGroups</b>&nbsp;&nbsp;&nbsp;(projects/.../get-field.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getFieldIndex" title="projects/netgrif-components-core/src/lib/utility/get-field.ts" ><b>getFieldIndex</b>&nbsp;&nbsp;&nbsp;(projects/.../get-field.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getFieldIndexFromDataGroups" title="projects/netgrif-components-core/src/lib/utility/get-field.ts" ><b>getFieldIndexFromDataGroups</b>&nbsp;&nbsp;&nbsp;(projects/.../get-field.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getImmediateData" title="projects/netgrif-components-core/src/lib/utility/get-immediate-data.ts" ><b>getImmediateData</b>&nbsp;&nbsp;&nbsp;(projects/.../get-immediate-data.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getInitial" title="projects/netgrif-components-core/src/lib/authentication/store/authentication.state.ts" ><b>getInitial</b>&nbsp;&nbsp;&nbsp;(projects/.../authentication.state.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#groupNavigationViewIdSegmentFactory" title="projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-view-id-segment-factory.ts" ><b>groupNavigationViewIdSegmentFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../group-navigation-view-id-segment-factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#hasContent" title="projects/netgrif-components-core/src/lib/utility/pagination/page-has-content.ts" ><b>hasContent</b>&nbsp;&nbsp;&nbsp;(projects/.../page-has-content.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HttpLoaderFactory" title="projects/netgrif-components-core/src/lib/translate/translate-lib.module.ts" ><b>HttpLoaderFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../translate-lib.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#levenshtein" title="projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts" ><b>levenshtein</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#loadAllPages" title="projects/netgrif-components-core/src/lib/utility/pagination/load-all-pages.ts" ><b>loadAllPages</b>&nbsp;&nbsp;&nbsp;(projects/.../load-all-pages.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#mapToContent" title="projects/netgrif-components-core/src/lib/utility/pagination/load-all-pages.ts" ><b>mapToContent</b>&nbsp;&nbsp;&nbsp;(projects/.../load-all-pages.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#mockUserAutocompleteValue" title="projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-user-autocomplete-value.ts" ><b>mockUserAutocompleteValue</b>&nbsp;&nbsp;&nbsp;(projects/.../mock-user-autocomplete-value.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#navigationItemTaskAllowedNetsServiceFactory" title="projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts" ><b>navigationItemTaskAllowedNetsServiceFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../allowed-nets-service-factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#navigationItemTaskCategoryFactory" title="projects/netgrif-components-core/src/lib/utility/navigation-item-task-search-categories-factory.ts" ><b>navigationItemTaskCategoryFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-search-categories-factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#navigationItemTaskFilterFactory" title="projects/netgrif-components-core/src/lib/utility/navigation-item-task-filter-factory.ts" ><b>navigationItemTaskFilterFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../navigation-item-task-filter-factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ofVoid" title="projects/netgrif-components-core/src/lib/utility/of-void.ts" ><b>ofVoid</b>&nbsp;&nbsp;&nbsp;(projects/.../of-void.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#paginationParams" title="projects/netgrif-components-core/src/lib/utility/pagination/load-all-pages.ts" ><b>paginationParams</b>&nbsp;&nbsp;&nbsp;(projects/.../load-all-pages.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#passwordValidator" title="projects/netgrif-components-core/src/lib/forms/models/password.validator.ts" ><b>passwordValidator</b>&nbsp;&nbsp;&nbsp;(projects/.../password.validator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#processMessageResponse" title="projects/netgrif-components-core/src/lib/utility/process-message-response.ts" ><b>processMessageResponse</b>&nbsp;&nbsp;&nbsp;(projects/.../process-message-response.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#refreshTree" title="projects/netgrif-components-core/src/lib/utility/refresh-tree.ts" ><b>refreshTree</b>&nbsp;&nbsp;&nbsp;(projects/.../refresh-tree.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#stopPropagation" title="projects/netgrif-components-core/src/lib/utility/stop-propagation.ts" ><b>stopPropagation</b>&nbsp;&nbsp;&nbsp;(projects/.../stop-propagation.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#tabbedAllowedNetsServiceFactory" title="projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts" ><b>tabbedAllowedNetsServiceFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../allowed-nets-service-factory.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#tabbedTaskViewConfigurationFactory" title="projects/netgrif-components-core/src/lib/view/task-view/models/task-view-configuration-injection-token.ts" ><b>tabbedTaskViewConfigurationFactory</b>&nbsp;&nbsp;&nbsp;(projects/.../task-view-configuration-injection-token.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#toMoment" title="projects/netgrif-components-core/src/lib/resources/types/nae-date-type.ts" ><b>toMoment</b>&nbsp;&nbsp;&nbsp;(projects/.../nae-date-type.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#underscore" title="projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts" ><b>underscore</b>&nbsp;&nbsp;&nbsp;(projects/.../angular-cli-devkit-core-strings.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>projects/netgrif-components-core/src/lib/utility/array-to-observable.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="arrayToObservable"></a>
+                    <span class="name">
+                        <span ><b>arrayToObservable</b></span>
+                        <a href="#arrayToObservable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>arrayToObservable(observables)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>observables</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>an array of items</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;T&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an observable that emits each item from the array in order.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/authentication/authentication.factory.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authenticationServiceFactory"></a>
+                    <span class="name">
+                        <span ><b>authenticationServiceFactory</b></span>
+                        <a href="#authenticationServiceFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>authenticationServiceFactory(config, http)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>config</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>http</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/commons/angular-cli-devkit-core-strings.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="camelize"></a>
+                    <span class="name">
+                        <span ><b>camelize</b></span>
+                        <a href="#camelize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>camelize(str)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns the lowerCamelCase form of a string.</p>
+<p>```javascript</p>
+<ul>
+<li>camelize(&#39;innerHTML&#39;);          // &#39;innerHTML&#39;</li>
+<li>camelize(&#39;action_name&#39;);        // &#39;actionName&#39;</li>
+<li>camelize(&#39;css-class-name&#39;);     // &#39;cssClassName&#39;</li>
+<li>camelize(&#39;my favorite items&#39;);  // &#39;myFavoriteItems&#39;</li>
+<li>camelize(&#39;My Favorite Items&#39;);  // &#39;myFavoriteItems&#39;</li>
+<li>```</li>
+</ul>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>str</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The string to camelize.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the camelized string.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="capitalize"></a>
+                    <span class="name">
+                        <span ><b>capitalize</b></span>
+                        <a href="#capitalize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>capitalize(str)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns the Capitalized form of a string</p>
+<p>```javascript</p>
+<ul>
+<li>&#39;innerHTML&#39;.capitalize()         // &#39;InnerHTML&#39;</li>
+<li>&#39;action_name&#39;.capitalize()       // &#39;Action_name&#39;</li>
+<li>&#39;css-class-name&#39;.capitalize()    // &#39;Css-class-name&#39;</li>
+<li>&#39;my favorite items&#39;.capitalize() // &#39;My favorite items&#39;</li>
+<li>```</li>
+</ul>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>str</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The string to capitalize.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>The capitalized string.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="classify"></a>
+                    <span class="name">
+                        <span ><b>classify</b></span>
+                        <a href="#classify"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>classify(str)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns the UpperCamelCase form of a string.</p>
+<p>```javascript</p>
+<ul>
+<li>&#39;innerHTML&#39;.classify();          // &#39;InnerHTML&#39;</li>
+<li>&#39;action_name&#39;.classify();        // &#39;ActionName&#39;</li>
+<li>&#39;css-class-name&#39;.classify();     // &#39;CssClassName&#39;</li>
+<li>&#39;my favorite items&#39;.classify();  // &#39;MyFavoriteItems&#39;</li>
+<li>```</li>
+</ul>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>str</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the string to classify</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the classified string</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dasherize"></a>
+                    <span class="name">
+                        <span ><b>dasherize</b></span>
+                        <a href="#dasherize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dasherize(str)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Replaces underscores, spaces, or camelCase with dashes.</p>
+<p>```javascript</p>
+<ul>
+<li>dasherize(&#39;innerHTML&#39;);         // &#39;inner-html&#39;</li>
+<li>dasherize(&#39;action_name&#39;);       // &#39;action-name&#39;</li>
+<li>dasherize(&#39;css-class-name&#39;);    // &#39;css-class-name&#39;</li>
+<li>dasherize(&#39;my favorite items&#39;); // &#39;my-favorite-items&#39;</li>
+<li>```</li>
+</ul>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>str</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The string to dasherize.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the dasherized string.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decamelize"></a>
+                    <span class="name">
+                        <span ><b>decamelize</b></span>
+                        <a href="#decamelize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>decamelize(str)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Converts a camelized string into all lower case separated by underscores.</p>
+<p>```javascript</p>
+<ul>
+<li>decamelize(&#39;innerHTML&#39;);         // &#39;inner_html&#39;</li>
+<li>decamelize(&#39;action_name&#39;);       // &#39;action_name&#39;</li>
+<li>decamelize(&#39;css-class-name&#39;);    // &#39;css-class-name&#39;</li>
+<li>decamelize(&#39;my favorite items&#39;); // &#39;my favorite items&#39;</li>
+<li>```</li>
+</ul>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>str</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The string to decamelize.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the decamelized string.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="levenshtein"></a>
+                    <span class="name">
+                        <span ><b>levenshtein</b></span>
+                        <a href="#levenshtein"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>levenshtein(a, b)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calculate the levenshtein distance of two strings.
+See <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">https://en.wikipedia.org/wiki/Levenshtein_distance</a>.
+Based off <a href="https://gist.github.com/andrei-m/982927">https://gist.github.com/andrei-m/982927</a> (for using the faster dynamic programming
+version).</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>a</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>String a.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>b</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>String b.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>A number that represents the distance between the two strings. The greater the number
+the more distant the strings are from each others.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="underscore"></a>
+                    <span class="name">
+                        <span ><b>underscore</b></span>
+                        <a href="#underscore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>underscore(str)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>More general than decamelize. Returns the lower_case_and_underscored
+form of a string.</p>
+<p>```javascript</p>
+<ul>
+<li>&#39;innerHTML&#39;.underscore();          // &#39;inner_html&#39;</li>
+<li>&#39;action_name&#39;.underscore();        // &#39;action_name&#39;</li>
+<li>&#39;css-class-name&#39;.underscore();     // &#39;css_class_name&#39;</li>
+<li>&#39;my favorite items&#39;.underscore();  // &#39;my_favorite_items&#39;</li>
+<li>```</li>
+</ul>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>str</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The string to underscore.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the underscored string.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/clear-time-information.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearTimeInformation"></a>
+                    <span class="name">
+                        <span ><b>clearTimeInformation</b></span>
+                        <a href="#clearTimeInformation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearTimeInformation(date)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets milliseconds, seconds, minutes and hours of the provided Moment object to 0</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>date</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>object that we want to clear time information from</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/configure-category.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="configureCategory"></a>
+                    <span class="name">
+                        <span ><b>configureCategory</b></span>
+                        <a href="#configureCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>configureCategory(category, operatorService, operator, operands)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Configures the provided <a href="../classes/Category.html">Category</a> instance with the provided operator and operands.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>category</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the object that should be configured</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>operatorService</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>must be the same {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>operator</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the desired operator class, must be one of the available operators for the provided category</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>operands</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the desired operands</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-case.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockCase"></a>
+                    <span class="name">
+                        <span ><b>createMockCase</b></span>
+                        <a href="#createMockCase"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockCase(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, processIdentifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, petriNetId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock Case instance with the given attributes.</p>
+<p>The attributes are filled with mostly empty values, if you want to make a test that uses some of them,
+we recommend setting them yourself, as the returned object might change between versions.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>stringId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>processIdentifier</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>title</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>petriNetId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Case.html" target="_self" >Case</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-case-outcome.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockCaseOutcome"></a>
+                    <span class="name">
+                        <span ><b>createMockCaseOutcome</b></span>
+                        <a href="#createMockCaseOutcome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockCaseOutcome(aCase, net, outcomes)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock CaseEventOutcome with given case, net and outcomes attributes.</p>
+<p>If attributes are not specified, default values are used.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>aCase</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>net</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>outcomes</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-datagroup.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockDataGroup"></a>
+                    <span class="name">
+                        <span ><b>createMockDataGroup</b></span>
+                        <a href="#createMockDataGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockDataGroup(fields, title?, alignment, layoutType, compact?, hideRows?, stretch, cols: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, parentTaskId?, parentTaskRefId?, nestingLevel?)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock <a href="../interfaces/DataGroup.html">DataGroup</a> object instance containing the provided fields and having the provided configuration.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fields</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>title</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>the optional title of the data group</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>alignment</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>alignment of the fields in non-full rows within the data group (affects flow and legacy layout)</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>layoutType</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the layout type of the data group</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>compact</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>compacting rule for the data group</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>hideRows</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>row hiding rule for the data group</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>stretch</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>whether the <code>stretch</code> property of the data group is enabled or not</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>cols</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the number of columns of the data group layout</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>parentTaskId</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>the ID of the parent task (if the data group is task-reffed)</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>parentTaskRefId</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>the ID of the parent task ref (if the data group is task-reffed)</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nestingLevel</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>the nesting level of the data group (if the data group is task-reffed)</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/DataGroup.html" target="_self" >DataGroup</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-field.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockField"></a>
+                    <span class="name">
+                        <span ><b>createMockField</b></span>
+                        <a href="#createMockField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockField(visible, layout, counterOrStringId, fieldType, taskRefValue)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock boolean or button field, with the specified properties</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>visible</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>if <code>true</code> the fields behavior is set to <code>editable</code>, if <code>false</code> the fields behavior is set to <code>hidden</code></p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>layout</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>position of the field in the grid layout</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>counterOrStringId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>if a <code>string</code> is provided its value will be used as the fields ID.
+If a number is provided the fields ID will be set to &#39;f<number>&#39;.
+If an {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>fieldType</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>determines what type of field should be generated.
+Currently only <code>boolean</code>, <code>button</code> and <code>task ref</code> fields are supported. If an unsupported field type is used an error is thrown.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>taskRefValue</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>determines the value of the task ref field if a task ref field is generated</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Task.html" target="_self" >BooleanField | ButtonField | TaskRefField</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-get-data-outcome.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockGetDataOutcome"></a>
+                    <span class="name">
+                        <span ><b>createMockGetDataOutcome</b></span>
+                        <a href="#createMockGetDataOutcome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockGetDataOutcome(data, task, net, aCase, outcomes)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>task</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>net</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>aCase</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>outcomes</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-immediate-data.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockImmediateData"></a>
+                    <span class="name">
+                        <span ><b>createMockImmediateData</b></span>
+                        <a href="#createMockImmediateData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockImmediateData(importId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, allowedNets?)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock ImmediateData instance with the given attributes.</p>
+<p>The attributes are filled with mostly empty values, if you want to make a test that uses some of them,
+we recommend setting them yourself, as the returned object might change between versions.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>importId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>allowedNets</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ImmediateData</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-net.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockNet"></a>
+                    <span class="name">
+                        <span ><b>createMockNet</b></span>
+                        <a href="#createMockNet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockNet(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, identifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, roles, transitions, immediateData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock Net instance with the given attributes.</p>
+<p>The attributes are filled with mostly empty values, if you want to make a test that uses some of them,
+we recommend setting them yourself, as the returned object might change between versions.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>stringId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>identifier</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>title</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>roles</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>transitions</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>immediateData</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Net</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-page.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockPage"></a>
+                    <span class="name">
+                        <span ><b>createMockPage</b></span>
+                        <a href="#createMockPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockPage(content)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>content</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the contents of the page</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Page.html" target="_self" >Page&lt;T&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a mock Page object with the size equivalent to the number of elements provided in the attribute.
+If the content is empty the <code>content</code> attribute of the returned object is set to an empty object to mimic backend behavior.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-petri-net-outcome.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockPetriNetOutcome"></a>
+                    <span class="name">
+                        <span ><b>createMockPetriNetOutcome</b></span>
+                        <a href="#createMockPetriNetOutcome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockPetriNetOutcome(net, outcomes)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock PetriNetEventOutcome with given net and outcomes attributes.</p>
+<p>If attributes are not specified, default values are used.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>net</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>outcomes</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-set-data-outcome.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockSetDataOutcome"></a>
+                    <span class="name">
+                        <span ><b>createMockSetDataOutcome</b></span>
+                        <a href="#createMockSetDataOutcome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockSetDataOutcome(changedFields, task, net, aCase, outcomes)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock TaskEventOutcome with given changedFields, task, net, case and outcomes attributes.</p>
+<p>If attributes are not specified, default values are used.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changedFields</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>task</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>net</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>aCase</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>outcomes</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-task.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockTask"></a>
+                    <span class="name">
+                        <span ><b>createMockTask</b></span>
+                        <a href="#createMockTask"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockTask(stringId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, transitionId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, cols: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock Task instance with the given attributes.</p>
+<p>The attributes are filled with mostly empty values, if you want to make a test that uses some of them,
+we recommend setting them yourself, as the returned object might change between versions.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>stringId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>title</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>transitionId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>cols</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Task.html" target="_self" >Task</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/utility/create-mock-task-outcome.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMockTaskOutcome"></a>
+                    <span class="name">
+                        <span ><b>createMockTaskOutcome</b></span>
+                        <a href="#createMockTaskOutcome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createMockTaskOutcome(task, net, aCase, outcomes)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a mock TaskEventOutcome with given task, net, case and outcomes attributes.</p>
+<p>If attributes are not specified, default values are used.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>net</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>aCase</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>outcomes</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/task-content/model/task-event-notification.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createTaskEventNotification"></a>
+                    <span class="name">
+                        <span ><b>createTaskEventNotification</b></span>
+                        <a href="#createTaskEventNotification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createTaskEventNotification(task, event, success: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>affected Task object</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the reported Task event</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>success</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>success state of the reported event</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/TaskEventNotification.html" target="_self" >TaskEventNotification</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the notification informing about the event</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/search/category-factory/default-categories-factories.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="defaultCaseSearchCategoriesFactory"></a>
+                    <span class="name">
+                        <span class="deprecated-name"><b>defaultCaseSearchCategoriesFactory</b></span>
+                        <a href="#defaultCaseSearchCategoriesFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4 deprecated">
+                    in 5.6.0 - Use the {
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>defaultCaseSearchCategoriesFactory(factory)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates the default case search categories.</p>
+<p>Depends on <a href="../injectables/CategoryFactory.html">CategoryFactory</a>.</p>
+<p>The created categories cannot be used to generate any predicates, as their inner state is preemptively destroyed to avoid memory leaks
+caused by uncompleted Subjects. They should only be used to create new Category instances with the help of the
+<a href="../classes/Category.html#duplicate">duplicate()</a> method.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>factory</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Array&lt;Category&lt;any&gt;&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Array containing the default case search categories: {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="defaultTaskSearchCategoriesFactory"></a>
+                    <span class="name">
+                        <span class="deprecated-name"><b>defaultTaskSearchCategoriesFactory</b></span>
+                        <a href="#defaultTaskSearchCategoriesFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4 deprecated">
+                    in 5.6.0 - Use the {
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>defaultTaskSearchCategoriesFactory(factory)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates the default task search categories.</p>
+<p>Depends on <a href="../injectables/CategoryFactory.html">CategoryFactory</a>.</p>
+<p>The created categories cannot be used to generate any predicates, as their inner state is preemptively destroyed to avoid memory leaks
+caused by uncompleted Subjects. They should only be used to create new Category instances with the help of the
+<a href="../classes/Category.html#duplicate">duplicate()</a> method.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>factory</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Array&lt;Category&lt;any&gt;&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Array containing the default task search categories: {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/destroy-subscription.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="destroySubscription"></a>
+                    <span class="name">
+                        <span ><b>destroySubscription</b></span>
+                        <a href="#destroySubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>destroySubscription(sub)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Unsubscribes the provided subscription, if it exists and is still opened</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>sub</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the subscription that should be destroyed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/navigation/utility/navigation-item-task-utility-methods.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractFilterFieldFromData"></a>
+                    <span class="name">
+                        <span ><b>extractFilterFieldFromData</b></span>
+                        <a href="#extractFilterFieldFromData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractFilterFieldFromData(dataSection)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Extracts the filter field from the navigation item task data.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataSection</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>an array containing the data groups that correspond to a single navigation entry</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>FilterField | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>The extracted {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractFilterFromData"></a>
+                    <span class="name">
+                        <span ><b>extractFilterFromData</b></span>
+                        <a href="#extractFilterFromData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractFilterFromData(dataSection)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Extracts the data and creates a filter object from the navigation item task data.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataSection</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>an array containing the data groups that correspond to a single navigation entry</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractFilterFromFilterField"></a>
+                    <span class="name">
+                        <span ><b>extractFilterFromFilterField</b></span>
+                        <a href="#extractFilterFromFilterField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractFilterFromFilterField(filterField)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterField</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractIconAndTitle"></a>
+                    <span class="name">
+                        <span ><b>extractIconAndTitle</b></span>
+                        <a href="#extractIconAndTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractIconAndTitle(dataSection)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Extracts the item name and item icon (if any) rom a section of the navigation item task data.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataSection</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>an array containing the data groups that correspond to a single navigation entry</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/GroupNavigationItemLabel.html" target="_self" >GroupNavigationItemLabel</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractRoles"></a>
+                    <span class="name">
+                        <span ><b>extractRoles</b></span>
+                        <a href="#extractRoles"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractRoles(dataSection, roleFieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Based on provided parameter extracts allowed or banned roles into an Array of strings from a section of the navigation item task data.
+Each item has format ROLE_IMPORT_ID:NET_IMPORT_ID</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataSection</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>an array containing the data groups that correspond to a single navigation entry</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>roleFieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>ID of field containing banned or allowed role IDs</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Array of string values representing role IDs</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/get-field.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getField"></a>
+                    <span class="name">
+                        <span ><b>getField</b></span>
+                        <a href="#getField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getField(fields, fieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fields</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>a collection of data fields</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>fieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the id of the desired field</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classess/DataField.html" target="_self" >DataField | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a reference to the datafield with the specified id or <code>undefined</code> if such datafield could not be found</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFieldFromDataGroups"></a>
+                    <span class="name">
+                        <span ><b>getFieldFromDataGroups</b></span>
+                        <a href="#getFieldFromDataGroups"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFieldFromDataGroups(groups, fieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>groups</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>a list of searched data groups</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>fieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the id of the desired field</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classess/DataField.html" target="_self" >DataField | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a reference to the first occurrence of the datafield with the specified id or <code>undefined</code> if such datafield could not be found</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFieldIndex"></a>
+                    <span class="name">
+                        <span ><b>getFieldIndex</b></span>
+                        <a href="#getFieldIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFieldIndex(fields, fieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fields</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>a collection of data fields</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>fieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the id of the desired field</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the index of the datafield with the specified id or <code>-1</code> if such datafield could not be found</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFieldIndexFromDataGroups"></a>
+                    <span class="name">
+                        <span ><b>getFieldIndexFromDataGroups</b></span>
+                        <a href="#getFieldIndexFromDataGroups"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFieldIndexFromDataGroups(groups, fieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>groups</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>a list of searched data groups</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>fieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the id of the desired field</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>DataGroupFieldIndex | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an object containing the index of the data group and the field within it corresponding to the first occurrence of a
+datafield with the specified id or <code>undefined</code> if such datafield could not be found</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/get-immediate-data.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getImmediateData"></a>
+                    <span class="name">
+                        <span ><b>getImmediateData</b></span>
+                        <a href="#getImmediateData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getImmediateData(useCase, fieldId)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>useCase</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>fieldId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the identifier of the field we want to get</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ImmediateData | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the immediate data field if it exists on the case, <code>undefined</code> otherwise</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/authentication/store/authentication.state.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInitial"></a>
+                    <span class="name">
+                        <span ><b>getInitial</b></span>
+                        <a href="#getInitial"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInitial()</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/AuthState.html" target="_self" >AuthState</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/navigation/group-navigation-component-resolver/group-navigation-view-id-segment-factory.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groupNavigationViewIdSegmentFactory"></a>
+                    <span class="name">
+                        <span ><b>groupNavigationViewIdSegmentFactory</b></span>
+                        <a href="#groupNavigationViewIdSegmentFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>groupNavigationViewIdSegmentFactory(activatedRoute)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>activatedRoute</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/pagination/page-has-content.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasContent"></a>
+                    <span class="name">
+                        <span ><b>hasContent</b></span>
+                        <a href="#hasContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hasContent(page)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>page</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>a {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>returns <code>true</code> if the page is defined and has content with non-zero length. Returns <code>false</code> otherwise.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/translate/translate-lib.module.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HttpLoaderFactory"></a>
+                    <span class="name">
+                        <span ><b>HttpLoaderFactory</b></span>
+                        <a href="#HttpLoaderFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>HttpLoaderFactory(http)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>http</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/pagination/load-all-pages.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadAllPages"></a>
+                    <span class="name">
+                        <span ><b>loadAllPages</b></span>
+                        <a href="#loadAllPages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadAllPages(source, filter: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, pagination?)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Loads all pages from the given endpoint and returns their content as one array</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>source</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the method that is used to load an individual page, it must support pagination parameters</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the filter/query object that is used to specify the requested objects. The <code>source</code> argument must accept this filter.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>pagination</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>configuration of the initial pagination.
+Pages will be loaded from the provided page number onwards, page size will be upheld.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;Array&lt;T&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>content of all pages from the given page onwards (or from the start if no <code>pagination</code> argument was provided) as a single Array</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mapToContent"></a>
+                    <span class="name">
+                        <span ><b>mapToContent</b></span>
+                        <a href="#mapToContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>mapToContent(source, filter: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, pagination)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>source</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>pagination</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;Array&lt;T&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginationParams"></a>
+                    <span class="name">
+                        <span ><b>paginationParams</b></span>
+                        <a href="#paginationParams"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>paginationParams(basePagination, pageNumber?)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>basePagination</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>pageNumber</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-user-autocomplete-value.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mockUserAutocompleteValue"></a>
+                    <span class="name">
+                        <span ><b>mockUserAutocompleteValue</b></span>
+                        <a href="#mockUserAutocompleteValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>mockUserAutocompleteValue(userName, normalUser, userId?)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userName</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>name of the mock user value</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>normalUser</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>if not the user is the special ME user option</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>userId</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>id of the mock user value</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>SearchAutocompleteOption&lt;Array&lt;string&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigationItemTaskAllowedNetsServiceFactory"></a>
+                    <span class="name">
+                        <span ><b>navigationItemTaskAllowedNetsServiceFactory</b></span>
+                        <a href="#navigationItemTaskAllowedNetsServiceFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigationItemTaskAllowedNetsServiceFactory(factory, baseAllowedNets, navigationItemTaskData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Convenience method that can be used as an allowed nets factory for views that are loaded from filter process instances.
+It has a dependency on this class and <a href="../miscellaneous/variables.html#NAE_NAVIGATION_ITEM_TASK_DATA">NAE_NAVIGATION_ITEM_TASK_DATA</a> injection token.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>factory</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>baseAllowedNets</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>navigationItemTaskData</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/AllowedNetsService.html" target="_self" >AllowedNetsService</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabbedAllowedNetsServiceFactory"></a>
+                    <span class="name">
+                        <span ><b>tabbedAllowedNetsServiceFactory</b></span>
+                        <a href="#tabbedAllowedNetsServiceFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>tabbedAllowedNetsServiceFactory(factory, tabData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Convenience method that can be used as an allowed nets factory for tabbed task views.
+If no allowed nets are provided in the injected data then an <a href="../injectables/AllowedNetsService.html">AllowedNetsService</a> with no allowed nets is created.
+It has a dependency on this class and <a href="../miscellaneous/variables.html#NAE_TAB_DATA">NAE_TAB_DATA</a> injection token.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>factory</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>tabData</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/AllowedNetsService.html" target="_self" >AllowedNetsService</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/navigation-item-task-search-categories-factory.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigationItemTaskCategoryFactory"></a>
+                    <span class="name">
+                        <span ><b>navigationItemTaskCategoryFactory</b></span>
+                        <a href="#navigationItemTaskCategoryFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigationItemTaskCategoryFactory(categoryResolverService, navigationItemTaskData, defaultCaseSearchCategories, defaultTaskSearchCategories)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates search categories based on the metadata stored in the filter case</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>categoryResolverService</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>navigationItemTaskData</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>task data of a navigation item task, the data must contain a filter field, that is used
+to generate the categories</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>defaultCaseSearchCategories</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the default case search categories that should be merged with the categories provided by the filter
+field, if the filter metadata allow it and the filter is a case filter</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>defaultTaskSearchCategories</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the default task search categories that should be merged with the categories provided by the filter
+field, if the filter metadata allow it and the filter is a task filter</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Array&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/navigation-item-task-filter-factory.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigationItemTaskFilterFactory"></a>
+                    <span class="name">
+                        <span ><b>navigationItemTaskFilterFactory</b></span>
+                        <a href="#navigationItemTaskFilterFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigationItemTaskFilterFactory(extractionService, navigationItemTaskData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Converts an <a href="../miscellaneous/variables.html#NAE_NAVIGATION_ITEM_TASK_DATA">NAE_NAVIGATION_ITEM_TASK_DATA</a> injection token into <a href="../miscellaneous/variables.html#NAE_BASE_FILTER">NAE_BASE_FILTER</a></p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>extractionService</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>navigationItemTaskData</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>a navigation item task containing the aggregated data representing a navigation item</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/BaseFilter.html" target="_self" >BaseFilter</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/of-void.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ofVoid"></a>
+                    <span class="name">
+                        <span ><b>ofVoid</b></span>
+                        <a href="#ofVoid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ofVoid()</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is meant to work as a call to rxjs&#39;s <code>of</code> function without any arguments</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a void Observable, that calls next once and then completes</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/forms/models/password.validator.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="passwordValidator"></a>
+                    <span class="name">
+                        <span ><b>passwordValidator</b></span>
+                        <a href="#passwordValidator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>passwordValidator(control)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Validator to check that passwords are the same</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>control</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>literal type | null</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/process-message-response.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processMessageResponse"></a>
+                    <span class="name">
+                        <span ><b>processMessageResponse</b></span>
+                        <a href="#processMessageResponse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>processMessageResponse(message)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Transforms a <a href="../interfaces/MessageResource.html">MessageResource</a> object into a stream containing either the message
+or an error if the message resource contains an error.</p>
+<p>Can be used with rxjs&#39; <code>switchMap</code> process responses from backend.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>message</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>a {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;MessageResource&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/refresh-tree.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshTree"></a>
+                    <span class="name">
+                        <span ><b>refreshTree</b></span>
+                        <a href="#refreshTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshTree(tree)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Forces a re-render of the tree backed by the datasource</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>tree</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/utility/stop-propagation.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stopPropagation"></a>
+                    <span class="name">
+                        <span ><b>stopPropagation</b></span>
+                        <a href="#stopPropagation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>stopPropagation($event)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/view/task-view/models/task-view-configuration-injection-token.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabbedTaskViewConfigurationFactory"></a>
+                    <span class="name">
+                        <span ><b>tabbedTaskViewConfigurationFactory</b></span>
+                        <a href="#tabbedTaskViewConfigurationFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>tabbedTaskViewConfigurationFactory(injectedTabData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Convenience method that can be used as a task view configuration object factory for tabbed task views.</p>
+<p>If the injected tab data contain information that is included in the <a href="../interfaces/TaskViewConfiguration.html">TaskViewConfiguration</a> interface,
+this factory will forward this information into the provided object.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>injectedTabData</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/TaskViewConfiguration.html" target="_self" >TaskViewConfiguration</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>projects/netgrif-components-core/src/lib/resources/types/nae-date-type.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toMoment"></a>
+                    <span class="name">
+                        <span ><b>toMoment</b></span>
+                        <a href="#toMoment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toMoment(date)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>date</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Moment</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-functions';
+            var COMPODOC_CURRENT_PAGE_URL = 'functions.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

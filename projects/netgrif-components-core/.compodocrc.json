@@ -1,0 +1,14 @@
+{
+    "$schema": "node_modules\\@compodoc\\compodoc\\src\\config\\schema.json",
+    "tsconfig": "projects/netgrif-components-core/tsconfig.lib.json",
+    "output": "docs/compodoc/components-core",
+    "unitTestCoverage": "coverage/netgrif-components-core/coverage-summary.json",
+    "name": "Netgrif Components Core library Documentation",
+    "theme": "gitbook",
+    "customLogo": "assets/docs-title-logo.png",
+    "customFavicon": "assets/docs-favicon.ico",
+    "language": "en-US",
+    "disableSourceCode": false,
+    "disablePrivate": true,
+    "disableInternal": true
+}

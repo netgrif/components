@@ -1,0 +1,2809 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >TaskDataService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/task/services/task-data.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Handles the loading and updating of data fields and behaviour of
+a single Task object managed by a <a href="../injectables/TaskContentService.html">TaskContentService</a> instance.</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_dataReloadSubscription" >_dataReloadSubscription</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_updateSuccess$" >_updateSuccess$</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#addFieldToSetDataRequestBody" >addFieldToSetDataRequestBody</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#compareBackendFormattedFieldValues" >compareBackendFormattedFieldValues</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#initializeTaskDataFields" >initializeTaskDataFields</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isSetDataRequestStillValid" >isSetDataRequestStillValid</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#performGetDataRequest" >performGetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#performSetDataRequest" >performSetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processErroneousGetDataRequest" >processErroneousGetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processErroneousSetDataRequest" >processErroneousSetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processSuccessfulGetDataRequest" >processSuccessfulGetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processSuccessfulSetDataRequest" >processSuccessfulSetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#revertSetDataRequest" >revertSetDataRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#sendNotification" >sendNotification</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateTaskDataFields" >updateTaskDataFields</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#wasFieldUpdated" >wasFieldUpdated</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isTaskPresent" >isTaskPresent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isTaskRelevant" >isTaskRelevant</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#updateSuccess$" >updateSuccess$</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_taskState: <a href="../injectables/TaskRequestStateService.html" target="_self">TaskRequestStateService</a>, _translate: TranslateService, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackBar: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _fieldConverterService: <a href="../injectables/FieldConverterService.html" target="_self">FieldConverterService</a>, _taskEvent: <a href="../injectables/TaskEventService.html" target="_self">TaskEventService</a>, _taskOperations: <a href="../interfaces/TaskOperations.html" target="_self">TaskOperations</a>, _selectedCaseService: <a href="../injectables/SelectedCaseService.html" target="_self">SelectedCaseService</a>, _taskContentService: <a href="../injectables/TaskContentService.html" target="_self">TaskContentService</a>, _afterActionFactory: <a href="../injectables/CallChainService.html" target="_self">CallChainService</a>, _eventQueue: <a href="../injectables/EventQueueService.html" target="_self">EventQueueService</a>, _userComparator: <a href="../injectables/UserComparatorService.html" target="_self">UserComparatorService</a>, _eventService: <a href="../injectables/EventService.html" target="_self">EventService</a>, _changedFieldsService: <a href="../injectables/ChangedFieldsService.html" target="_self">ChangedFieldsService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:46</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_taskState</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskRequestStateService.html" target="_self" >TaskRequestStateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translate</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_snackBar</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SnackBarService.html" target="_self" >SnackBarService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskResourceService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskResourceService.html" target="_self" >TaskResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_fieldConverterService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FieldConverterService.html" target="_self" >FieldConverterService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskEvent</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskEventService.html" target="_self" >TaskEventService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskOperations</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/TaskOperations.html" target="_self" >TaskOperations</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_selectedCaseService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SelectedCaseService.html" target="_self" >SelectedCaseService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskContentService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskContentService.html" target="_self" >TaskContentService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_afterActionFactory</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CallChainService.html" target="_self" >CallChainService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_eventQueue</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EventQueueService.html" target="_self" >EventQueueService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_userComparator</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserComparatorService.html" target="_self" >UserComparatorService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_eventService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EventService.html" target="_self" >EventService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_changedFieldsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChangedFieldsService.html" target="_self" >ChangedFieldsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addFieldToSetDataRequestBody"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>addFieldToSetDataRequestBody</b></span>
+                        <a href="#addFieldToSetDataRequestBody"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addFieldToSetDataRequestBody(context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>, taskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, field: <a href="../classess/DataField.html" target="_self">DataField&lt;any&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="332"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:332</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>taskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>field</td>
+                                    <td>
+                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="compareBackendFormattedFieldValues"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>compareBackendFormattedFieldValues</b></span>
+                        <a href="#compareBackendFormattedFieldValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>compareBackendFormattedFieldValues(current, old)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="518"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:518</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Compares the values that are in the backend compatible format as given by the <a href="../injectables/FieldConverterService.html">FieldConverterService</a>
+and determines whether they are the same value, or not.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>current</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the current value (can also be called <code>value1</code> or <code>left</code>)</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>old</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the new value (can also be called <code>value2</code> or <code>right</code>)</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p><code>true</code> if the values are the same and <code>false</code> otherwise</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeTaskDataFields"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>initializeTaskDataFields</b></span>
+                        <a href="#initializeTaskDataFields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initializeTaskDataFields(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, force)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:107</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Loads the Data Fields of an uninitialized Task from backend
+and populates the Task managed by <a href="../injectables/TaskContentService.html">TaskContentService</a> with the appropriate objects.</p>
+<p>Beware that if the Task has some data already loaded this function does nothing
+and only passes <code>true</code> to the <code>afterAction</code> argument.</p>
+<p>If the task held within the <a href="../injectables/TaskContentService.html">TaskContentService</a> changes before a response is received, the response will be ignored
+and the <code>afterAction</code> will not be executed.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>new AfterAction()</code>
+                                    </td>
+
+                                    <td>
+                                        <p>if the request completes successfully emits <code>true</code> into the Subject, otherwise <code>false</code> will be emitted</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>force</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>false</code>
+                                    </td>
+
+                                    <td>
+                                        <p>set to <code>true</code> if you need force reload of all task data</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSetDataRequestStillValid"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>isSetDataRequestStillValid</b></span>
+                        <a href="#isSetDataRequestStillValid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isSetDataRequestStillValid(request: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="353"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:353</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Checks whether the request could still be performed by the logged user</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>request</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="performGetDataRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>performGetDataRequest</b></span>
+                        <a href="#performGetDataRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>performGetDataRequest(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, force: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs a <code>getData</code> request on the task currently stored in the <code>taskContent</code> service</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>force</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>set to <code>true</code> if you need force reload of all task data</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="performSetDataRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>performSetDataRequest</b></span>
+                        <a href="#performSetDataRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>performSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, body: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="395"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:395</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs a <code>setData</code> request on the task currently stored in the <code>taskContent</code> service</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>setTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>id of the task</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>content of the <code>setData</code> request</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processErroneousGetDataRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processErroneousGetDataRequest</b></span>
+                        <a href="#processErroneousGetDataRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processErroneousGetDataRequest(gottenTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, error: <a href="https://angular.io/api/common/http/HttpErrorResponse" target="_blank">HttpErrorResponse</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="233"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:233</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Processes an erroneous outcome of a <code>getData</code> request</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>gottenTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the Id of the task whose data was requested</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="https://angular.io/api/common/http/HttpErrorResponse" target="_blank" >HttpErrorResponse</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the returned error</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processErroneousSetDataRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processErroneousSetDataRequest</b></span>
+                        <a href="#processErroneousSetDataRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processErroneousSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, error: <a href="https://angular.io/api/common/http/HttpErrorResponse" target="_blank">HttpErrorResponse</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, body: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="455"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:455</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Processes an erroneous outcome of a <code>setData</code> request</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>setTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the Id of the task whose data was set</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                                <code><a href="https://angular.io/api/common/http/HttpErrorResponse" target="_blank" >HttpErrorResponse</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the returned error</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>hold the data that was sent in request</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processSuccessfulGetDataRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processSuccessfulGetDataRequest</b></span>
+                        <a href="#processSuccessfulGetDataRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processSuccessfulGetDataRequest(gottenTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, dataGroups: Array<DataGroup>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="156"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:156</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Processes a successful outcome of a <code>getData</code> request</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>gottenTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the Id of the task whose data was requested</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>dataGroups</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the returned data groups of the task</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processSuccessfulSetDataRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processSuccessfulSetDataRequest</b></span>
+                        <a href="#processSuccessfulSetDataRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processSuccessfulSetDataRequest(setTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, response: <a href="../interfaces/EventOutcome.html" target="_self">EventOutcome</a>, afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, body: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="422"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:422</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Processes a successful outcome of a <code>setData</code> request</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>setTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the Id of the task whose data was set</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>
+                                                <code><a href="../interfaces/EventOutcome.html" target="_self" >EventOutcome</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the resulting Event outcome of the set data request</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>hold the data that was sent in request</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="revertSetDataRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>revertSetDataRequest</b></span>
+                        <a href="#revertSetDataRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>revertSetDataRequest(context: <a href="../interfaces/TaskSetDataRequestContext.html" target="_self">TaskSetDataRequestContext</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="483"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:483</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reverts the effects of a failed <code>setData</code> request, so that the user sees current values.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestContext.html" target="_self" >TaskSetDataRequestContext</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the context of the failed request</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendNotification"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>sendNotification</b></span>
+                        <a href="#sendNotification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendNotification(event: <a href="../interfaces/Task.html" target="_self">TaskEvent.GET_DATA | TaskEvent.SET_DATA</a>, success: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="559"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:559</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Publishes a get/set data notification to the <a href="../injectables/TaskEventService.html">TaskEventService</a></p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >TaskEvent.GET_DATA | TaskEvent.SET_DATA</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the event that occurred to the task</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>success</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>whether the get/set data operation was successful or not</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateTaskDataFields"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>updateTaskDataFields</b></span>
+                        <a href="#updateTaskDataFields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateTaskDataFields(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="270"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:270</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Collects all changed data fields and notifies the backend of the changes.</p>
+<p>If the request is successful clears the <a href="../classess/DataField.html#changed">changed</a> flag on all data fields that were a part of the request
+and emits a <a href="../interfaces/ChangedFields.html">ChangedFields</a> object into this object&#39;s <a href="../injectables/TaskDataService.html#changedFields$">changedFields$</a> stream.</p>
+<p>If the task held within the <a href="../injectables/TaskContentService.html">TaskContentService</a> changes before a response is received, the response will be ignored
+and the <code>afterAction</code> will not be executed.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>new AfterAction()</code>
+                                    </td>
+
+                                    <td>
+                                        <p>if the request completes successfully emits <code>true</code> into the Subject, otherwise <code>false</code> will be emitted</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="wasFieldUpdated"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>wasFieldUpdated</b></span>
+                        <a href="#wasFieldUpdated"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>wasFieldUpdated(field: <a href="../classess/DataField.html" target="_self">DataField&lt;unknown&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="345"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:345</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>field</td>
+                                    <td>
+                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;unknown&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the checked field</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>whether the field was updated on frontend and thus the backend should be notified</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTaskPresent"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>isTaskPresent</b></span>
+                        <a href="#isTaskPresent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isTaskPresent()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Task.html#source" target="_self" >TaskHandlingService:42</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p><code>true</code> if a {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTaskRelevant"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>isTaskRelevant</b></span>
+                        <a href="#isTaskRelevant"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isTaskRelevant(requestedTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Task.html#source" target="_self" >TaskHandlingService:56</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Checks whether the current state of the <a href="../injectables/TaskContentService.html">TaskContentService</a> and optionally if the <a href="../injectables/SelectedCaseService.html">SelectedCaseService</a>, is still
+relevant to the task that was requested.</p>
+<p>This method is useful if you use <a href="../injectables/UnlimitedTaskContentService.html">UnlimitedTaskContentService</a>, or a similar implementation. It is possible for the currently
+&quot;selected&quot; task to change in-between a backend request was sent and the response was received. In that case the response is no longer
+relevant and should be discarded, otherwise an illegal task state could be achieved on frontend.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>requestedTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the <code>stringId</code> of the requested task</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p><code>true</code> if the requested task is still relevant to the state of the frontend. Returns <code>false</code> otherwise.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_dataReloadSubscription"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_dataReloadSubscription</b></span>
+                        <a href="#_dataReloadSubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_updateSuccess$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_updateSuccess$</b></span>
+                        <a href="#_updateSuccess$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subject&lt;boolean&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="updateSuccess$"></a>
+                        <span class="name"><b>updateSuccess$</b><a href="#updateSuccess$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>updateSuccess$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/task-data.service.ts:90</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Contains information about the success or failure of backend
+calls in <a href="../injectables/TaskDataService.html#updateTaskDataFields">updateTaskDataFields</a> method.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, OnDestroy, Optional} from &#x27;@angular/core&#x27;;
+import {Observable, Subject, Subscription} from &#x27;rxjs&#x27;;
+import {ChangedFields} from &#x27;../../data-fields/models/changed-fields&#x27;;
+import {TaskContentService} from &#x27;../../task-content/services/task-content.service&#x27;;
+import {TaskRequestStateService} from &#x27;./task-request-state.service&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#x27;;
+import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
+import {FieldConverterService} from &#x27;../../task-content/services/field-converter.service&#x27;;
+import {TaskSetDataRequestBody} from &#x27;../../resources/interface/task-set-data-request-body&#x27;;
+import {TaskHandlingService} from &#x27;./task-handling-service&#x27;;
+import {NAE_TASK_OPERATIONS} from &#x27;../models/task-operations-injection-token&#x27;;
+import {TaskOperations} from &#x27;../interfaces/task-operations&#x27;;
+import {HttpErrorResponse} from &#x27;@angular/common/http&#x27;;
+import {FileField} from &#x27;../../data-fields/file-field/models/file-field&#x27;;
+import {SelectedCaseService} from &#x27;./selected-case.service&#x27;;
+import {FileListField} from &#x27;../../data-fields/file-list-field/models/file-list-field&#x27;;
+import {createTaskEventNotification} from &#x27;../../task-content/model/task-event-notification&#x27;;
+import {TaskEvent} from &#x27;../../task-content/model/task-event&#x27;;
+import {TaskEventService} from &#x27;../../task-content/services/task-event.service&#x27;;
+import {DataField} from &#x27;../../data-fields/models/abstract-data-field&#x27;;
+import {CallChainService} from &#x27;../../utility/call-chain/call-chain.service&#x27;;
+import {take} from &#x27;rxjs/operators&#x27;;
+import {DynamicEnumerationField} from &#x27;../../data-fields/enumeration-field/models/dynamic-enumeration-field&#x27;;
+import {DataGroup} from &#x27;../../resources/interface/data-groups&#x27;;
+import {EventQueueService} from &#x27;../../event-queue/services/event-queue.service&#x27;;
+import {QueuedEvent} from &#x27;../../event-queue/model/queued-event&#x27;;
+import {AfterAction} from &#x27;../../utility/call-chain/after-action&#x27;;
+import {UserComparatorService} from &#x27;../../user/services/user-comparator.service&#x27;;
+import {TaskSetDataRequestContext} from &#x27;../models/task-set-data-request-context&#x27;;
+import {EventOutcomeMessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
+import {EventService} from &#x27;../../event/services/event.service&#x27;;
+import {EventOutcome} from &#x27;../../resources/interface/event-outcome&#x27;;
+import {ChangedFieldsService} from &#x27;../../changed-fields/services/changed-fields.service&#x27;;
+import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
+
+/**
+ * Handles the loading and updating of data fields and behaviour of
+ * a single Task object managed by a {@link TaskContentService} instance.
+ */
+@Injectable()
+export class TaskDataService extends TaskHandlingService implements OnDestroy {
+
+    protected _updateSuccess$: Subject&lt;boolean&gt;;
+    protected _dataReloadSubscription: Subscription;
+
+    constructor(protected _taskState: TaskRequestStateService,
+                protected _translate: TranslateService,
+                protected _log: LoggerService,
+                protected _snackBar: SnackBarService,
+                protected _taskResourceService: TaskResourceService,
+                protected _fieldConverterService: FieldConverterService,
+                protected _taskEvent: TaskEventService,
+                @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() _selectedCaseService: SelectedCaseService,
+                _taskContentService: TaskContentService,
+                protected _afterActionFactory: CallChainService,
+                protected _eventQueue: EventQueueService,
+                protected _userComparator: UserComparatorService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService) {
+        super(_taskContentService, _selectedCaseService);
+        this._updateSuccess$ &#x3D; new Subject&lt;boolean&gt;();
+        this._dataReloadSubscription &#x3D; this._taskContentService.taskDataReloadRequest$.subscribe(queuedFrontendAction &#x3D;&gt; {
+            this.initializeTaskDataFields(this._afterActionFactory.create(success &#x3D;&gt; {
+                if (success &amp;&amp; queuedFrontendAction) {
+                    this._taskContentService.performFrontendAction(queuedFrontendAction);
+                }
+            }), true);
+        });
+    }
+
+    ngOnDestroy(): void {
+        this._updateSuccess$.complete();
+        this._dataReloadSubscription.unsubscribe();
+        if (this.isTaskPresent() &amp;&amp; this._safeTask.dataGroups) {
+            this._safeTask.dataGroups.forEach(group &#x3D;&gt; {
+                if (group &amp;&amp; group.fields) {
+                    group.fields.forEach(field &#x3D;&gt; field.destroy());
+                }
+            });
+        }
+    }
+
+    /**
+     * Contains information about the success or failure of backend
+     * calls in [updateTaskDataFields]{@link TaskDataService#updateTaskDataFields} method.
+     */
+    public get updateSuccess$(): Observable&lt;boolean&gt; {
+        return this._updateSuccess$.asObservable();
+    }
+
+    /**
+     * Loads the Data Fields of an uninitialized Task from backend
+     * and populates the Task managed by {@link TaskContentService} with the appropriate objects.
+     *
+     * Beware that if the Task has some data already loaded this function does nothing
+     * and only passes &#x60;true&#x60; to the &#x60;afterAction&#x60; argument.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the &#x60;afterAction&#x60; will not be executed.
+     *
+     * @param afterAction if the request completes successfully emits &#x60;true&#x60; into the Subject, otherwise &#x60;false&#x60; will be emitted
+     * @param force set to &#x60;true&#x60; if you need force reload of all task data
+     */
+    public initializeTaskDataFields(afterAction: AfterAction &#x3D; new AfterAction(), force &#x3D; false): void {
+        this._eventQueue.scheduleEvent(new QueuedEvent(
+            () &#x3D;&gt; {
+                return this.isTaskPresent();
+            },
+            nextEvent &#x3D;&gt; {
+                this.performGetDataRequest(afterAction, force, nextEvent);
+            }, nextEvent &#x3D;&gt; {
+                afterAction.resolve(false);
+                nextEvent.resolve(false);
+            }
+        ));
+    }
+
+    /**
+     * Performs a &#x60;getData&#x60; request on the task currently stored in the &#x60;taskContent&#x60; service
+     * @param afterAction the action that should be performed after the request is processed
+     * @param force set to &#x60;true&#x60; if you need force reload of all task data
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     */
+    protected performGetDataRequest(afterAction: AfterAction, force: boolean, nextEvent: AfterAction) {
+        if (this._safeTask.dataSize &gt; 0 &amp;&amp; !force) {
+            this.sendNotification(TaskEvent.GET_DATA, true);
+            afterAction.resolve(true);
+            this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
+            nextEvent.resolve(true);
+            return;
+        }
+        if (force) {
+            this._safeTask.dataSize &#x3D; 0;
+        }
+
+        const gottenTaskId &#x3D; this._safeTask.stringId;
+        this._taskState.startLoading(gottenTaskId);
+
+        this._taskResourceService.getData(gottenTaskId).pipe(take(1)).subscribe(dataGroups &#x3D;&gt; {
+            this.processSuccessfulGetDataRequest(gottenTaskId, dataGroups, afterAction, nextEvent);
+        }, error &#x3D;&gt; {
+            this.processErroneousGetDataRequest(gottenTaskId, error, afterAction, nextEvent);
+        });
+    }
+
+    /**
+     * Processes a successful outcome of a &#x60;getData&#x60; request
+     * @param gottenTaskId the Id of the task whose data was requested
+     * @param dataGroups the returned data groups of the task
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     */
+    protected processSuccessfulGetDataRequest(gottenTaskId: string,
+                                              dataGroups: Array&lt;DataGroup&gt;,
+                                              afterAction: AfterAction,
+                                              nextEvent: AfterAction): void {
+        if (!this.isTaskRelevant(gottenTaskId)) {
+            this._log.debug(&#x27;current task changed before the get data response could be received, discarding...&#x27;);
+            this._taskState.stopLoading(gottenTaskId);
+            afterAction.complete();
+            nextEvent.resolve(false);
+            return;
+        }
+        this._taskContentService.referencedTaskAndCaseIds &#x3D; {};
+        this._taskContentService.taskFieldsIndex &#x3D; {};
+
+        this._safeTask.dataGroups &#x3D; dataGroups;
+        if (dataGroups.length &#x3D;&#x3D;&#x3D; 0) {
+            this._log.info(&#x27;Task has no data &#x27; + this._safeTask);
+            this._safeTask.dataSize &#x3D; 0;
+        } else {
+            this._taskContentService.referencedTaskAndCaseIds[this._safeTask.caseId] &#x3D; [this._safeTask.stringId];
+            dataGroups.forEach(group &#x3D;&gt; {
+                const dataGroupParentCaseId: string &#x3D; group.parentCaseId &#x3D;&#x3D;&#x3D; undefined ? this._safeTask.caseId : group.parentCaseId;
+                const parentTaskId: string &#x3D; group.parentTaskId &#x3D;&#x3D;&#x3D; undefined ? this._safeTask.stringId : group.parentTaskId;
+                if (dataGroupParentCaseId !&#x3D;&#x3D; this._safeTask.caseId) {
+                    if (!this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId]) {
+                        this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId] &#x3D; [group.parentTaskId];
+                    } else {
+                        this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
+                    }
+                } else if (dataGroupParentCaseId &#x3D;&#x3D;&#x3D; this._safeTask.caseId
+                    &amp;&amp; parentTaskId !&#x3D;&#x3D; this._safeTask.stringId
+                    &amp;&amp; !this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].includes(parentTaskId)) {
+                    this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
+                }
+                if (group.fields.length &gt; 0 &amp;&amp; !this._taskContentService.taskFieldsIndex[parentTaskId]) {
+                    this._taskContentService.taskFieldsIndex[parentTaskId] &#x3D; {};
+                }
+                group.fields.forEach(field &#x3D;&gt; {
+                    this._taskContentService.taskFieldsIndex[parentTaskId][field.stringId] &#x3D; field;
+                    field.valueChanges().subscribe(() &#x3D;&gt; {
+                        if (this.wasFieldUpdated(field)) {
+                            if (field instanceof DynamicEnumerationField) {
+                                field.loading &#x3D; true;
+                                this.updateTaskDataFields(this._afterActionFactory.create(bool &#x3D;&gt; {
+                                    field.loading &#x3D; false;
+                                }));
+                            } else {
+                                this.updateTaskDataFields();
+                            }
+                        }
+                    });
+                    if (field instanceof FileField || field instanceof FileListField) {
+                        field.changedFields$.subscribe((change: ChangedFieldsMap) &#x3D;&gt; {
+                            this._changedFieldsService.emitChangedFields(change);
+                        });
+                    }
+                });
+                this._safeTask.dataSize &#x3D;&#x3D;&#x3D; undefined ?
+                    this._safeTask.dataSize &#x3D; group.fields.length :
+                    this._safeTask.dataSize +&#x3D; group.fields.length;
+            });
+        }
+        this._taskState.stopLoading(gottenTaskId);
+        this.sendNotification(TaskEvent.GET_DATA, true);
+        afterAction.resolve(true);
+        nextEvent.resolve(true);
+        this._taskContentService.$shouldCreate.next(this._safeTask.dataGroups);
+        this._taskContentService.$shouldCreateCounter.next(this._taskContentService.$shouldCreateCounter.getValue() + 1);
+    }
+
+    /**
+     * Processes an erroneous outcome of a &#x60;getData&#x60; request
+     * @param gottenTaskId the Id of the task whose data was requested
+     * @param error the returned error
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     */
+    protected processErroneousGetDataRequest(gottenTaskId: string,
+                                             error: HttpErrorResponse,
+                                             afterAction: AfterAction,
+                                             nextEvent: AfterAction) {
+        this._taskState.stopLoading(gottenTaskId);
+        this._log.debug(&#x27;getting task data failed&#x27;, error);
+
+        if (!this.isTaskRelevant(gottenTaskId)) {
+            this._log.debug(&#x27;current task changed before the get data error could be received&#x27;);
+            afterAction.complete();
+            nextEvent.resolve(false);
+            return;
+        }
+
+        if (error.status &#x3D;&#x3D;&#x3D; 500 &amp;&amp; error.error.message &amp;&amp; error.error.message.startsWith(&#x27;Could not find task with id&#x27;)) {
+            this._snackBar.openWarningSnackBar(this._translate.instant(&#x27;tasks.snackbar.noLongerExists&#x27;));
+            this._taskOperations.reload();
+        } else {
+            this._snackBar.openErrorSnackBar(&#x60;${this._translate.instant(&#x27;tasks.snackbar.noGroup&#x27;)}
+                        ${this._taskContentService.task.title} ${this._translate.instant(&#x27;tasks.snackbar.failedToLoad&#x27;)}&#x60;);
+        }
+        this.sendNotification(TaskEvent.GET_DATA, false);
+        afterAction.resolve(false);
+        nextEvent.resolve(false);
+    }
+
+    /**
+     * Collects all changed data fields and notifies the backend of the changes.
+     *
+     * If the request is successful clears the [changed]{@link DataField#changed} flag on all data fields that were a part of the request
+     * and emits a {@link ChangedFields} object into this object&#x27;s [changedFields$]{@link TaskDataService#changedFields$} stream.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the &#x60;afterAction&#x60; will not be executed.
+     *
+     * @param afterAction if the request completes successfully emits &#x60;true&#x60; into the Subject, otherwise &#x60;false&#x60; will be emitted
+     */
+    public updateTaskDataFields(afterAction: AfterAction &#x3D; new AfterAction()): void {
+        if (!this.isTaskPresent()) {
+            this._log.debug(&#x27;Task is not present. Update request ignored.&#x27;);
+            afterAction.resolve(false);
+            return;
+        }
+
+        if (this._safeTask.user &#x3D;&#x3D;&#x3D; undefined) {
+            this._log.debug(&#x27;current task is not assigned...&#x27;);
+            afterAction.resolve(false);
+            return;
+        }
+
+        const setTaskId &#x3D; this._safeTask.stringId;
+
+        if (this._safeTask.dataSize &lt;&#x3D; 0) {
+            afterAction.resolve(true);
+            return;
+        }
+
+        const requestContext &#x3D; this.createUpdateRequestContext();
+
+        this._eventQueue.scheduleEvent(new QueuedEvent(
+            () &#x3D;&gt; this.isSetDataRequestStillValid(requestContext.body),
+            nextEvent &#x3D;&gt; {
+                this.performSetDataRequest(setTaskId, requestContext.body, afterAction, nextEvent);
+            },
+            nextEvent &#x3D;&gt; {
+                this.revertSetDataRequest(requestContext);
+                nextEvent.resolve(false);
+            }
+        ));
+    }
+
+    /**
+     * @ignore
+     * Goes over all the data fields in the managed Task and if they are valid and changed adds them to the set data request
+     */
+    protected createUpdateRequestContext(): TaskSetDataRequestContext {
+        const context: TaskSetDataRequestContext &#x3D; {
+            body: {},
+            previousValues: {}
+        };
+        context.body[this._task.stringId] &#x3D; {};
+        this._safeTask.dataGroups.filter(dataGroup &#x3D;&gt; dataGroup.parentTaskId &#x3D;&#x3D;&#x3D; undefined).forEach(dataGroup &#x3D;&gt; {
+            dataGroup.fields.filter(field &#x3D;&gt; this.wasFieldUpdated(field)).forEach(field &#x3D;&gt; {
+                this.addFieldToSetDataRequestBody(context, this._task.stringId, field);
+            });
+        });
+        this._safeTask.dataGroups.filter(dataGroup &#x3D;&gt; dataGroup.parentTaskId !&#x3D;&#x3D; undefined).forEach(dataGroup &#x3D;&gt; {
+            if (dataGroup.fields.some(field &#x3D;&gt; this.wasFieldUpdated(field))) {
+                context.body[dataGroup.parentTaskId] &#x3D; {};
+            } else {
+                return;
+            }
+            dataGroup.fields.filter(field &#x3D;&gt; this.wasFieldUpdated(field)).forEach(field &#x3D;&gt; {
+                this.addFieldToSetDataRequestBody(context, dataGroup.parentTaskId, field);
+            });
+        });
+        return context;
+    }
+
+    protected addFieldToSetDataRequestBody(context: TaskSetDataRequestContext, taskId: string, field: DataField&lt;any&gt;): void {
+        context.body[taskId][field.stringId] &#x3D; {
+            type: this._fieldConverterService.resolveType(field),
+            value: this._fieldConverterService.formatValueForBackend(field, field.value)
+        };
+        context.previousValues[field.stringId] &#x3D; field.previousValue;
+        field.changed &#x3D; false;
+    }
+
+    /**
+     * @param field the checked field
+     * @returns whether the field was updated on frontend and thus the backend should be notified
+     */
+    protected wasFieldUpdated(field: DataField&lt;unknown&gt;): boolean {
+        return field.initialized &amp;&amp; field.changed &amp;&amp; (field.valid || field.sendInvalidValues);
+    }
+
+    /**
+     * Checks whether the request could still be performed by the logged user
+     * @param request
+     */
+    protected isSetDataRequestStillValid(request: TaskSetDataRequestBody): boolean {
+        if (!this.isTaskPresent()) {
+            return false;
+        }
+        if (this._safeTask.user &#x3D;&#x3D;&#x3D; undefined) {
+            return false;
+        }
+        if (!this._userComparator.compareUsers(this._safeTask.user)) {
+            return false;
+        }
+        const taskIdsInRequest: Array&lt;string&gt; &#x3D; Object.keys(request);
+        for (const taskId of taskIdsInRequest) {
+            if (!Object.keys(this._taskContentService.taskFieldsIndex).includes(taskId)) {
+                this._log.error(&#x60;Task id ${taskId} is not present in task fields index&#x60;);
+                return false;
+            }
+            const fieldIdsOfRequest &#x3D; Object.keys(request[taskId]);
+            for (const fieldId of fieldIdsOfRequest) {
+                const field &#x3D; this._taskContentService.taskFieldsIndex[taskId][fieldId];
+                if (field &#x3D;&#x3D;&#x3D; undefined) {
+                    this._log.error(&#x60;Unexpected state. Datafield ${fieldId} of task ${taskId
+                    } in setData request is not present in the task.&#x60;);
+                    return false;
+                }
+                if (!field.behavior.editable) {
+                    this._log.debug(&#x60;Field ${fieldId}, was meant to be set to
+                    ${JSON.stringify(request[taskId][fieldId])
+                    }, but is no loner editable.&#x60;);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Performs a &#x60;setData&#x60; request on the task currently stored in the &#x60;taskContent&#x60; service
+     * @param setTaskId id of the task
+     * @param body content of the &#x60;setData&#x60; request
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     */
+    protected performSetDataRequest(setTaskId: string, body: TaskSetDataRequestBody, afterAction: AfterAction, nextEvent: AfterAction) {
+        if (Object.keys(body).length &#x3D;&#x3D;&#x3D; 0) {
+            this.sendNotification(TaskEvent.SET_DATA, true);
+            afterAction.resolve(true);
+            nextEvent.resolve(true);
+            return;
+        }
+
+        this._taskState.startLoading(setTaskId);
+        this._taskState.startUpdating(setTaskId);
+
+        this._taskResourceService.setData(this._safeTask.stringId, body).pipe(take(1))
+            .subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
+                this.processSuccessfulSetDataRequest(setTaskId, response.outcome, afterAction, nextEvent, body);
+            }, error &#x3D;&gt; {
+                this.processErroneousSetDataRequest(setTaskId, error, afterAction, nextEvent, body);
+            });
+    }
+
+    /**
+     * Processes a successful outcome of a &#x60;setData&#x60; request
+     * @param setTaskId the Id of the task whose data was set
+     * @param response the resulting Event outcome of the set data request
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
+     */
+    protected processSuccessfulSetDataRequest(setTaskId: string,
+                                              response: EventOutcome,
+                                              afterAction: AfterAction,
+                                              nextEvent: AfterAction,
+                                              body: TaskSetDataRequestBody) {
+        if (!this.isTaskRelevant(setTaskId)) {
+            this._log.debug(&#x27;current task changed before the set data response could be received, discarding...&#x27;);
+            this._taskState.stopLoading(setTaskId);
+            this._taskState.stopUpdating(setTaskId);
+            afterAction.complete();
+            nextEvent.resolve(false);
+            return;
+        }
+
+        const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(response);
+
+        if (Object.keys(changedFieldsMap).length &gt; 0) {
+            this._changedFieldsService.emitChangedFields(changedFieldsMap);
+        }
+        this.clearWaitingForResponseFlag(body);
+        this._snackBar.openSuccessSnackBar(!!response.message ? response.message : this._translate.instant(&#x27;tasks.snackbar.dataSaved&#x27;));
+        this.updateStateInfo(afterAction, true, setTaskId);
+        nextEvent.resolve(true);
+    }
+
+    /**
+     * Processes an erroneous outcome of a &#x60;setData&#x60; request
+     * @param setTaskId the Id of the task whose data was set
+     * @param error the returned error
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param body hold the data that was sent in request
+     */
+    protected processErroneousSetDataRequest(setTaskId: string,
+                                             error: HttpErrorResponse,
+                                             afterAction: AfterAction,
+                                             nextEvent: AfterAction,
+                                             body: TaskSetDataRequestBody) {
+        this._log.debug(&#x27;setting task data failed&#x27;, error);
+
+        if (!this.isTaskRelevant(setTaskId)) {
+            this._log.debug(&#x27;current task changed before the get data error could be received&#x27;);
+            this._taskState.stopLoading(setTaskId);
+            this._taskState.stopUpdating(setTaskId);
+            afterAction.complete();
+            nextEvent.resolve(false);
+            return;
+        }
+
+        this.revertToPreviousValue();
+        this.clearWaitingForResponseFlag(body);
+        this._snackBar.openErrorSnackBar(this._translate.instant(&#x27;tasks.snackbar.failedSave&#x27;));
+        this.updateStateInfo(afterAction, false, setTaskId);
+        nextEvent.resolve(false);
+        this._taskOperations.reload();
+    }
+
+    /**
+     * Reverts the effects of a failed &#x60;setData&#x60; request, so that the user sees current values.
+     * @param context the context of the failed request
+     */
+    protected revertSetDataRequest(context: TaskSetDataRequestContext) {
+        // this iteration could be improved if we had a map of all the data fields in a task
+        const totalCount &#x3D; Object.keys(context.body).length;
+        let foundCount &#x3D; 0;
+
+        for (const datagroup of this._safeTask.dataGroups) {
+            for (const field of datagroup.fields) {
+                if (!context.body[field.stringId]) {
+                    continue;
+                }
+
+                if (this.compareBackendFormattedFieldValues(
+                    this._fieldConverterService.formatValueForBackend(field, field.value),
+                    context.body[field.stringId].value)
+                ) {
+                    field.valueWithoutChange(context.previousValues[field.stringId]);
+                }
+
+                foundCount++;
+                if (foundCount &#x3D;&#x3D;&#x3D; totalCount) {
+                    return;
+                }
+            }
+        }
+
+        this._log.error(&#x60;Invalid state. Some data fields of task ${this._safeTask.stringId}, are no longer present in it!&#x60;);
+    }
+
+    /**
+     * Compares the values that are in the backend compatible format as given by the {@link FieldConverterService}
+     * and determines whether they are the same value, or not.
+     * @param current the current value (can also be called &#x60;value1&#x60; or &#x60;left&#x60;)
+     * @param old the new value (can also be called &#x60;value2&#x60; or &#x60;right&#x60;)
+     * @returns &#x60;true&#x60; if the values are the same and &#x60;false&#x60; otherwise
+     */
+    protected compareBackendFormattedFieldValues(current, old): boolean {
+        if (Array.isArray(current)) {
+            if (!Array.isArray(old)) {
+                throw new Error(&#x27;Illegal arguments! Cannot compare array value to non-array value&#x27;);
+            }
+
+            if (current.length !&#x3D;&#x3D; old.length) {
+                return false;
+            }
+
+            return current.every((value, index) &#x3D;&gt; old[index] &#x3D;&#x3D;&#x3D; value);
+        }
+
+        return current &#x3D;&#x3D;&#x3D; old;
+    }
+
+    /**
+     * @ignore
+     *
+     * stops loading and updating indicators, and emits the &#x60;result&#x60; value
+     * to both the &#x60;afterAction&#x60; and [_updateSuccess$]{@link TaskDataService#_updateSuccess$} streams.
+     *
+     * @param afterAction the call chain steam of the update data method
+     * @param result result of the update data request
+     * @param setTaskId the Id of the {@link Task}, who&#x27;s state should be updated
+     */
+    protected updateStateInfo(afterAction: AfterAction, result: boolean, setTaskId: string): void {
+        this._taskState.stopLoading(setTaskId);
+        this._taskState.stopUpdating(setTaskId);
+        if (this._updateSuccess$.observers.length !&#x3D;&#x3D; 0) {
+            this._updateSuccess$.next(result);
+        }
+        this.sendNotification(TaskEvent.SET_DATA, result);
+        afterAction.resolve(result);
+    }
+
+    /**
+     * Publishes a get/set data notification to the {@link TaskEventService}
+     * @param event the event that occurred to the task
+     * @param success whether the get/set data operation was successful or not
+     */
+    protected sendNotification(event: TaskEvent.GET_DATA | TaskEvent.SET_DATA, success: boolean): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, event, success));
+    }
+
+    private revertToPreviousValue(): void {
+        this._safeTask.dataGroups.forEach(dataGroup &#x3D;&gt; {
+            dataGroup.fields.forEach(field &#x3D;&gt; {
+                if (field.initialized &amp;&amp; field.valid &amp;&amp; field.changed) {
+                    field.revertToPreviousValue();
+                }
+            });
+        });
+    }
+
+    private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
+        Object.keys(body).forEach(taskId &#x3D;&gt; {
+            Object.keys(body[taskId]).forEach(fieldId &#x3D;&gt; {
+                this._taskContentService.taskFieldsIndex[taskId][fieldId].waitingForResponse &#x3D; false;
+            });
+        });
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'TaskDataService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

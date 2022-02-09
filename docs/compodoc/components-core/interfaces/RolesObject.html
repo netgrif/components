@@ -1,0 +1,415 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li
+  >
+  RolesObject</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/user/services/user-list.service.ts</code>
+        </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="inputs">Indexable</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <code>[k: string]:        <code><a href="../interfaces/RoleObject.html" target="_self" >RoleObject</a></code>
+</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/netgrif-components-core/src/lib/user/services/user-list.service.ts:22</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, OnDestroy} from &#x27;@angular/core&#x27;;
+import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from &#x27;rxjs&#x27;;
+import {LoadingEmitter} from &#x27;../../utility/loading-emitter&#x27;;
+import {Pagination} from &#x27;../../resources/interface/pagination&#x27;;
+import {UserResourceService} from &#x27;../../resources/engine-endpoint/user-resource.service&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {catchError, map, mergeMap, scan, tap} from &#x27;rxjs/operators&#x27;;
+import {HttpParams} from &#x27;@angular/common/http&#x27;;
+import {MessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
+import {Page} from &#x27;../../resources/interface/page&#x27;;
+import {UserResource} from &#x27;../../resources/interface/user-resource&#x27;;
+
+export interface UserListItem extends UserResource {
+    selected: boolean;
+    roles: Set&lt;string&gt;;
+
+    toggle(): void;
+}
+
+export interface RolesObject {
+    [k: string]: RoleObject;
+}
+
+interface RoleObject {
+    perform?: boolean;
+    delegate?: boolean;
+    view?: boolean;
+}
+
+/**
+ * Performs paged loading users from backend for [UserAssignComponent]{@link AbstractUserAssignComponent}.
+ */
+@Injectable()
+export class UserListService implements OnDestroy {
+
+    /**
+     * UserValue array stream, that represents users loading from backend.
+     */
+    private readonly _users$: Observable&lt;Array&lt;UserListItem&gt;&gt;;
+    /**
+     * Emit users loading status from backend.
+     */
+    private _loading$: LoadingEmitter;
+    /**
+     * Number stream of next page users list, that to be requested from backend.
+     */
+    private _nextPage$: BehaviorSubject&lt;number&gt;;
+    /**
+     * Signals the end of loaded users.
+     */
+    private _endOfData: boolean;
+    /**
+     * Necessary for pagination parameters in user assign loading from backend.
+     */
+    private _pagination: Pagination;
+    /**
+     * Signals if response is empty or no.
+     */
+    private _clear: boolean;
+    /**
+     * The search content that should be applied to the request
+     */
+    private _searchQuery: string;
+    /**
+     * Roles that should be applied to the request
+     */
+    public rolesQuery: Array&lt;string&gt;;
+    /**
+     * negative Roles that should be applied to the request
+     */
+    public negativeRolesQuery: Array&lt;string&gt;;
+    private _updateProgress$: LoadingEmitter;
+    private _usersReload$: Subject&lt;void&gt;;
+
+    /**
+     * Inject services.
+     * Initialize declared attributes.
+     *
+     * Loading and mapped stream of users.
+     * @param _resources Loading users from backend.
+     * @param _log Logging action status.
+     * @param _snackbar Display info about loading from backend for user.
+     * @param _translate Translate messages for user.
+     */
+    constructor(private _resources: UserResourceService,
+                private _log: LoggerService,
+                private _snackbar: SnackBarService,
+                private _translate: TranslateService) {
+        this._loading$ &#x3D; new LoadingEmitter();
+        this._updateProgress$ &#x3D; new LoadingEmitter();
+        this._usersReload$ &#x3D; new Subject&lt;void&gt;();
+        this._endOfData &#x3D; false;
+        this._nextPage$ &#x3D; new BehaviorSubject&lt;number&gt;(null);
+        this._pagination &#x3D; {
+            size: 20,
+            totalElements: undefined,
+            totalPages: undefined,
+            number: -1
+        };
+        this._clear &#x3D; false;
+        this._searchQuery &#x3D; &#x27;&#x27;;
+        this.rolesQuery &#x3D; new Array&lt;string&gt;();
+        this.negativeRolesQuery &#x3D; new Array&lt;string&gt;();
+
+        const usersMap &#x3D; this._nextPage$.pipe(
+            mergeMap(p &#x3D;&gt; this.loadPage(p)),
+            tap(() &#x3D;&gt; {
+                if (!this._clear) { this._usersReload$.next(); }
+            }),
+            scan((acc, value) &#x3D;&gt; {
+                const result &#x3D; this._clear ? {} : {...acc, ...value};
+                this._clear &#x3D; false;
+                return result;
+            }, {})
+        );
+        this._users$ &#x3D; usersMap.pipe(
+            map(v &#x3D;&gt; Object.values(v) as Array&lt;UserListItem&gt;),
+        );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._updateProgress$.complete();
+        this._usersReload$.complete();
+        this._nextPage$.complete();
+    }
+
+    public get loading(): boolean {
+        return this._loading$.isActive;
+    }
+
+    public get loading$(): Observable&lt;boolean&gt; {
+        return this._loading$.asObservable();
+    }
+
+    public get usersReload$(): Observable&lt;void&gt; {
+        return this._usersReload$.asObservable();
+    }
+
+    public get users$(): Observable&lt;Array&lt;UserListItem&gt;&gt; {
+        return this._users$;
+    }
+
+    public get updating$(): Observable&lt;boolean&gt; {
+        return this._updateProgress$.asObservable();
+    }
+
+    public get totalUsers(): number {
+        return this._pagination.totalElements ? this._pagination.totalElements : 0;
+    }
+
+    /**
+     * Get all users from backend and mapped to [UserValue]{@link UserValue} interface with catching errors.
+     * @param page Page number that is requested. / Next page users list.
+     */
+    public loadPage(page: number): Observable&lt;{ [k: string]: UserListItem }&gt; {
+        if (page &#x3D;&#x3D;&#x3D; null || page &#x3D;&#x3D;&#x3D; undefined || this._clear) {
+            return of({});
+        }
+        let params: HttpParams &#x3D; new HttpParams();
+        params &#x3D; this.addPageParams(params, page);
+        this._loading$.on();
+        return this._resources.search(
+            {fulltext: this._searchQuery, roles: this.rolesQuery, negativeRoles: this.negativeRolesQuery}, params).pipe(
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;Loading users has failed on page &#x27; + this._pagination.number, err);
+                return of({content: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
+            }),
+            tap(u &#x3D;&gt; this._endOfData &#x3D; !Array.isArray(u.content) ||
+                (Array.isArray(u.content) &amp;&amp; u.content.length &#x3D;&#x3D;&#x3D; 0) ||
+                u.pagination.number &#x3D;&#x3D;&#x3D; u.pagination.totalPages),
+            map(users &#x3D;&gt; (Array.isArray(users.content) ? users : {...users, content: []}) as Page&lt;UserResource&gt;),
+            map(users &#x3D;&gt; {
+                this._pagination &#x3D; users.pagination;
+                return users.content.reduce((acc, curr) &#x3D;&gt; {
+                    const item &#x3D; curr as UserListItem;
+                    item.roles &#x3D; new Set&lt;string&gt;(curr.processRoles.map(pr &#x3D;&gt; pr.stringId));
+                    item.processRoles &#x3D; undefined;
+                    item.selected &#x3D; false;
+                    item.toggle &#x3D; function() {
+                        this.selected &#x3D; !this.selected;
+                    };
+                    return {...acc, [curr.id]: item};
+                }, {});
+            }),
+            tap(_ &#x3D;&gt; this._loading$.off())
+        );
+    }
+
+    /**
+     * Set value to nextPage stream as next page users list.
+     * @param lastRendered Last rendered user index.
+     * @param totalRendered Total loaded size users.
+     */
+    public nextPage(lastRendered: number, totalRendered: number) {
+        if (this.loading || this._endOfData) {
+            return;
+        }
+
+        if (lastRendered &#x3D;&#x3D;&#x3D; totalRendered) {
+            this._nextPage$.next(this._pagination.number + 1);
+        }
+    }
+
+    /**
+     * Reload page with users.
+     */
+    public reload(newSearchQuery &#x3D; &#x27;&#x27;): void {
+        if (!this._users$ || !this._pagination) {
+            return;
+        }
+        this._searchQuery &#x3D; newSearchQuery;
+        this._clear &#x3D; true;
+        this._pagination.number &#x3D; -1;
+        this._endOfData &#x3D; false;
+        this.nextPage(0, 0);
+        timer(100).subscribe(_ &#x3D;&gt; {
+            this._pagination.number &#x3D; -1;
+            this.nextPage(0, 0);
+        });
+    }
+
+    public updateRoles(selectedUsers: Array&lt;UserListItem&gt;, selectedRoles: Array&lt;string&gt; &#x3D; []): Observable&lt;Array&lt;MessageResource&gt;&gt; {
+        if (!selectedUsers || selectedUsers.length &#x3D;&#x3D;&#x3D; 0) {
+            return of([]);
+        }
+        this._updateProgress$.on();
+        return forkJoin(selectedUsers.map(user &#x3D;&gt; this._resources.assignRoles(user.id + &#x27;&#x27;, selectedRoles))).pipe(
+            tap(messages &#x3D;&gt; {
+                messages.forEach((message, idx) &#x3D;&gt; {
+                    if (message.error) {
+                        this._log.error(message.error, message);
+                        this._snackbar.openErrorSnackBar(message.error);
+                    } else {
+                        this._log.info(message.success);
+                        selectedUsers[idx].roles &#x3D; new Set&lt;string&gt;(selectedRoles);
+                        this._snackbar.openSuccessSnackBar(this._translate.instant(&#x27;tasks.snackbar.rolesSuccessAssign&#x27;));
+                    }
+                });
+                this._updateProgress$.off();
+            }));
+    }
+
+    /**
+     * Returns HttpParams with page params addition.
+     * @param params Existing HttpParams.
+     * @param page Page number that is requested. / Next page users list.
+     */
+    private addPageParams(params: HttpParams, page?: number): HttpParams {
+        params &#x3D; params.set(&#x27;size&#x27;, this._pagination.size + &#x27;&#x27;);
+        page &#x3D; page !&#x3D;&#x3D; null ? page : this._pagination.number;
+        params &#x3D; params.set(&#x27;page&#x27;, page + &#x27;&#x27;);
+        return params;
+    }
+
+}
+</code></pre>
+    </div>
+</div>
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'RolesObject.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

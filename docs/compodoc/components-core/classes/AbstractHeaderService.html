@@ -1,0 +1,2856 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >AbstractHeaderService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/header/abstract-header-service.ts</code>
+        </p>
+
+
+
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_clearHeaderSearch$" >_clearHeaderSearch$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_headerChange$" >_headerChange$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_headerColumnCount$" >_headerColumnCount$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_headerState" >_headerState</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_preferenceColumnCount$" >_preferenceColumnCount$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_responsiveHeaders$" >_responsiveHeaders$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#DEFAULT_HEADER_COUNT" >DEFAULT_HEADER_COUNT</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#DEFAULT_HEADER_RESPONSIVITY" >DEFAULT_HEADER_RESPONSIVITY</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#fieldsGroup" >fieldsGroup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#changeMode" >changeMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#clearHeaderSearch" >clearHeaderSearch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#confirmEditMode" >confirmEditMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#createMetaHeaders" >createMetaHeaders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#createModeChange" >createModeChange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getViewId" >getViewId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#headerColumnSelected" >headerColumnSelected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#headerSearchInputChanged" >headerSearchInputChanged</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#initializeDefaultHeaderState" >initializeDefaultHeaderState</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadHeadersFromPreferences" >loadHeadersFromPreferences</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#modeChangeAfterEdit" >modeChangeAfterEdit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#modeChangeFromCurrent" >modeChangeFromCurrent</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#restoreLastState" >restoreLastState</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#revertEditMode" >revertEditMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#saveNewState" >saveNewState</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#saveState" >saveState</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setAllowedNets" >setAllowedNets</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setTaskAllowedNets" >setTaskAllowedNets</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#sortHeaderChanged" >sortHeaderChanged</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#updateHeaderColumnCount" >updateHeaderColumnCount</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#headerChange$" >headerChange$</a>
+                                </li>
+                                <li>
+                                    <a href="#selectedHeaders$" >selectedHeaders$</a>
+                                </li>
+                                <li>
+                                    <a href="#headerState" >headerState</a>
+                                </li>
+                                <li>
+                                    <a href="#headerType" >headerType</a>
+                                </li>
+                                <li>
+                                    <a href="#headerColumnCount" >headerColumnCount</a>
+                                </li>
+                                <li>
+                                    <a href="#headerColumnCount$" >headerColumnCount$</a>
+                                </li>
+                                <li>
+                                    <a href="#responsiveHeaders" >responsiveHeaders</a>
+                                </li>
+                                <li>
+                                    <a href="#responsiveHeaders$" >responsiveHeaders$</a>
+                                </li>
+                                <li>
+                                    <a href="#clearHeaderSearch$" >clearHeaderSearch$</a>
+                                </li>
+                                <li>
+                                    <a href="#initDefaultHeaders" >initDefaultHeaders</a>
+                                </li>
+                                <li>
+                                    <a href="#preferenceColumnCount$" >preferenceColumnCount$</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                                <span class="modifier">Protected</span>
+                        <code>constructor(_headerType: <a href="../undefineds/HeaderType.html" target="_self">HeaderType</a>, _preferences: <a href="../injectables/UserPreferenceService.html" target="_self">UserPreferenceService</a>, _viewIdService: <a href="../injectables/ViewIdService.html" target="_self">ViewIdService</a>, _logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:35</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_headerType</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../miscellaneous/enumerations.html#HeaderType" target="_self" >HeaderType</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_preferences</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserPreferenceService.html" target="_self" >UserPreferenceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_viewIdService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ViewIdService.html" target="_self" >ViewIdService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_clearHeaderSearch$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_clearHeaderSearch$</b></span>
+                        <a href="#_clearHeaderSearch$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subject&lt;number&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_headerChange$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_headerChange$</b></span>
+                        <a href="#_headerChange$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subject&lt;HeaderChange&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_headerColumnCount$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_headerColumnCount$</b></span>
+                        <a href="#_headerColumnCount$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Behavior.html" target="_self" >BehaviorSubject&lt;number&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_headerState"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_headerState</b></span>
+                        <a href="#_headerState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/HeaderState.html" target="_self" >HeaderState</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_preferenceColumnCount$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_preferenceColumnCount$</b></span>
+                        <a href="#_preferenceColumnCount$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ReplaySubject&lt;number&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_responsiveHeaders$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_responsiveHeaders$</b></span>
+                        <a href="#_responsiveHeaders$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Behavior.html" target="_self" >BehaviorSubject&lt;boolean&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DEFAULT_HEADER_COUNT"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>DEFAULT_HEADER_COUNT</b></span>
+                        <a href="#DEFAULT_HEADER_COUNT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>5</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DEFAULT_HEADER_RESPONSIVITY"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>DEFAULT_HEADER_RESPONSIVITY</b></span>
+                        <a href="#DEFAULT_HEADER_RESPONSIVITY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fieldsGroup"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fieldsGroup</b></span>
+                        <a href="#fieldsGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;FieldsGroup&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LoadingEmitter.html" target="_self" >LoadingEmitter</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeMode"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>changeMode</b></span>
+                        <a href="#changeMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>changeMode(newMode: <a href="../undefineds/Mode.html" target="_self">HeaderMode</a>, saveLastMode)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="351"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:351</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Change selected header mode there are three possible modes: SORT, SEARCH and EDIT
+It can be restored with the <a href="../classes/HeaderState.html#restoreLastMode">HeaderState.restoreLastMode()</a> method.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>newMode</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >HeaderMode</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>the mode that the header should change to</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>saveLastMode</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>whether the last state should be remembered.
+It can be restored with the [HeaderState.restoreLastMode()]{</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearHeaderSearch"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>clearHeaderSearch</b></span>
+                        <a href="#clearHeaderSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clearHeaderSearch(columnIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="443"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:443</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Emits a new value into the <a href="../classes/AbstractHeaderService.html#clearHeaderSearch$">clearHeaderSearch$</a> stream, that notifies
+the header search component, that it should clear the input for the specified column.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>columnIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the index of the column that should be cleared</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="confirmEditMode"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>confirmEditMode</b></span>
+                        <a href="#confirmEditMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>confirmEditMode()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="366"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:366</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMetaHeaders"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span class="modifier">Abstract</span>
+                        <span ><b>createMetaHeaders</b></span>
+                        <a href="#createMetaHeaders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMetaHeaders()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="272"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:272</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/HeaderColumn.html" target="_self" >Array&lt;HeaderColumn&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createModeChange"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createModeChange</b></span>
+                        <a href="#createModeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createModeChange(oldMode: <a href="../undefineds/Mode.html" target="_self">HeaderMode</a>, newMode: <a href="../undefineds/Mode.html" target="_self">HeaderMode</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="427"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:427</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>containing information about a change to the header mode</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>oldMode</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >HeaderMode</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>newMode</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >HeaderMode</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getViewId"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>getViewId</b></span>
+                        <a href="#getViewId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getViewId()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="450"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:450</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the Id of the view, if the ViewIdService was injected. Returns <code>undefined</code> if the service was not injected.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="headerColumnSelected"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>headerColumnSelected</b></span>
+                        <a href="#headerColumnSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>headerColumnSelected(columnIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, newHeaderColumn: <a href="../classes/HeaderColumn.html" target="_self">HeaderColumn</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="329"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:329</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Change active header and titles of panels</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>columnIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>newHeaderColumn</td>
+                                    <td>
+                                                <code><a href="../classes/HeaderColumn.html" target="_self" >HeaderColumn</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="headerSearchInputChanged"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>headerSearchInputChanged</b></span>
+                        <a href="#headerSearchInputChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>headerSearchInputChanged(columnIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, searchInput: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="307"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:307</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Saves the search value in the appropriate column in the header
+Emit request for searched panels by user input query</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>columnIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>searchInput</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeDefaultHeaderState"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>initializeDefaultHeaderState</b></span>
+                        <a href="#initializeDefaultHeaderState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initializeDefaultHeaderState()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="140"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:140</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadHeadersFromPreferences"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>loadHeadersFromPreferences</b></span>
+                        <a href="#loadHeadersFromPreferences"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadHeadersFromPreferences()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="244"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:244</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If this view has som headers stored in it&#39;s preferences attempts to load them.
+If the preferences contain nonexistent headers they will be skipped.</p>
+<p>This function is NOT called by the abstract class&#39; constructor.
+It is the responsibility of the child class to call it at an appropriate moment.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="modeChangeAfterEdit"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>modeChangeAfterEdit</b></span>
+                        <a href="#modeChangeAfterEdit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>modeChangeAfterEdit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="417"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:417</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>where the <code>previousMode</code> is set to <a href="../miscellaneous/enumerations.html#HeaderMode">EDIT</a> and the <code>currentMode</code> to the mode
+that is currently selected</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="modeChangeFromCurrent"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>modeChangeFromCurrent</b></span>
+                        <a href="#modeChangeFromCurrent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>modeChangeFromCurrent(newMode: <a href="../undefineds/Mode.html" target="_self">HeaderMode</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="408"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:408</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>where the <code>previousMode</code> is set to the currently selected mode and the <code>currentMode</code> is set to the provided argument</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>newMode</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#Mode" target="_self" >HeaderMode</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/HeaderChange.html" target="_self" >HeaderChange</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="394"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:394</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="restoreLastState"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span class="modifier">Abstract</span>
+                        <span ><b>restoreLastState</b></span>
+                        <a href="#restoreLastState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>restoreLastState()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="461"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:461</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="revertEditMode"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>revertEditMode</b></span>
+                        <a href="#revertEditMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>revertEditMode()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="382"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:382</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>When user cancels the edit mode, the last saved headers state is loaded and emitted
+Last mode in header is reloaded as well. Possible reloaded modes: sort or search</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveNewState"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span class="modifier">Abstract</span>
+                        <span ><b>saveNewState</b></span>
+                        <a href="#saveNewState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveNewState()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="459"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:459</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveState"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span class="modifier">Abstract</span>
+                        <span ><b>saveState</b></span>
+                        <a href="#saveState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveState()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="457"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:457</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setAllowedNets"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>setAllowedNets</b></span>
+                        <a href="#setAllowedNets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setAllowedNets(allowedNets: Array<PetriNetReference>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="181"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:181</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>allowedNets</td>
+                                    <td>
+                                            <code>Array&lt;PetriNetReference&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setTaskAllowedNets"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>setTaskAllowedNets</b></span>
+                        <a href="#setTaskAllowedNets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setTaskAllowedNets(allowedNets: Array<Net>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="206"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:206</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>allowedNets</td>
+                                    <td>
+                                            <code>Array&lt;Net&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortHeaderChanged"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>sortHeaderChanged</b></span>
+                        <a href="#sortHeaderChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sortHeaderChanged(columnIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, active: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, direction: SortDirection)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="281"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:281</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Change sort mode for selected column all other column are set to default sort mode
+Emit request for sorted panels</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>columnIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>index of the column that caused the sort change</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>active</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Represents column identifier</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>direction</td>
+                                    <td>
+                                            <code>SortDirection</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Represent one of sort modes: asd, desc and &#39;&#39;</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateHeaderColumnCount"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>updateHeaderColumnCount</b></span>
+                        <a href="#updateHeaderColumnCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateHeaderColumnCount()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="169"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:169</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Adds <code>null</code> headers if the new count is greater than the current count.</p>
+<p>Removes extra headers if the new count is smaller than the current count.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="headerChange$"></a>
+                        <span class="name"><b>headerChange$</b><a href="#headerChange$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>headerChange$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:64</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Provides Observable for all changes in header</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>Observable&lt;HeaderChange&gt;</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedHeaders$"></a>
+                        <span class="name"><b>selectedHeaders$</b><a href="#selectedHeaders$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>selectedHeaders$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:68</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="headerState"></a>
+                        <span class="name"><b>headerState</b><a href="#headerState"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>headerState()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:72</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="headerType"></a>
+                        <span class="name"><b>headerType</b><a href="#headerType"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>headerType()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:76</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="headerColumnCount"></a>
+                        <span class="name"><b>headerColumnCount</b><a href="#headerColumnCount"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>headerColumnCount()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:80</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>headerColumnCount(maxColumns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:84</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>maxColumns</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="headerColumnCount$"></a>
+                        <span class="name"><b>headerColumnCount$</b><a href="#headerColumnCount$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>headerColumnCount$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:95</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="responsiveHeaders"></a>
+                        <span class="name"><b>responsiveHeaders</b><a href="#responsiveHeaders"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>responsiveHeaders()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:99</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>responsiveHeaders(responsiveHeaders: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:103</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>responsiveHeaders</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="responsiveHeaders$"></a>
+                        <span class="name"><b>responsiveHeaders$</b><a href="#responsiveHeaders$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>responsiveHeaders$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:107</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="clearHeaderSearch$"></a>
+                        <span class="name"><b>clearHeaderSearch$</b><a href="#clearHeaderSearch$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>clearHeaderSearch$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:111</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="initDefaultHeaders"></a>
+                        <span class="name"><b>initDefaultHeaders</b><a href="#initDefaultHeaders"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>initDefaultHeaders()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:119</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>initDefaultHeaders(defaultHeaders: Array<string>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:115</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>defaultHeaders</td>
+                                                    
+                                                            <td>
+                                                                        <code>Array&lt;string&gt;</code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="preferenceColumnCount$"></a>
+                        <span class="name"><b>preferenceColumnCount$</b><a href="#preferenceColumnCount$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>preferenceColumnCount$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">projects/netgrif-components-core/src/lib/header/abstract-header-service.ts:123</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {BehaviorSubject, Observable, ReplaySubject, Subject} from &#x27;rxjs&#x27;;
+import {FieldsGroup} from &#x27;./models/fields-group&#x27;;
+import {HeaderState, HeaderStateInterface} from &#x27;./header-state&#x27;;
+import {OnDestroy, Optional} from &#x27;@angular/core&#x27;;
+import {SortChangeDescription} from &#x27;./models/user-changes/sort-change-description&#x27;;
+import {SearchChangeDescription} from &#x27;./models/user-changes/search-change-description&#x27;;
+import {HeaderChange} from &#x27;./models/user-changes/header-change&#x27;;
+import {PetriNetReference} from &#x27;../resources/interface/petri-net-reference&#x27;;
+import {HeaderType} from &#x27;./models/header-type&#x27;;
+import {HeaderMode} from &#x27;./models/header-mode&#x27;;
+import {HeaderColumn, HeaderColumnType} from &#x27;./models/header-column&#x27;;
+import {UserPreferenceService} from &#x27;../user/services/user-preference.service&#x27;;
+import {LoggerService} from &#x27;../logger/services/logger.service&#x27;;
+import {LoadingEmitter} from &#x27;../utility/loading-emitter&#x27;;
+import {SortDirection} from &#x27;@angular/material/sort&#x27;;
+import {HeaderChangeType} from &#x27;./models/user-changes/header-change-type&#x27;;
+import {ViewIdService} from &#x27;../user/services/view-id.service&#x27;;
+import {Net} from &#x27;../process/net&#x27;;
+
+export abstract class AbstractHeaderService implements OnDestroy {
+
+    public static readonly DEFAULT_HEADER_COUNT &#x3D; 5;
+    public static readonly DEFAULT_HEADER_RESPONSIVITY &#x3D; true;
+
+    protected _headerColumnCount$: BehaviorSubject&lt;number&gt;;
+    protected _preferenceColumnCount$: ReplaySubject&lt;number&gt;;
+    protected _responsiveHeaders$: BehaviorSubject&lt;boolean&gt;;
+    protected _headerState: HeaderState;
+    protected _headerChange$: Subject&lt;HeaderChange&gt;;
+    protected _clearHeaderSearch$: Subject&lt;number&gt;;
+    private _initDefaultHeaders: Array&lt;string&gt;;
+    private _initializedCount: boolean;
+
+    public loading: LoadingEmitter;
+    public fieldsGroup: Array&lt;FieldsGroup&gt;;
+
+    protected constructor(protected _headerType: HeaderType,
+                          protected _preferences: UserPreferenceService,
+                          @Optional() private _viewIdService: ViewIdService,
+                          protected _logger: LoggerService) {
+        this.loading &#x3D; new LoadingEmitter(true);
+        this._headerChange$ &#x3D; new Subject&lt;HeaderChange&gt;();
+        this.fieldsGroup &#x3D; [{groupTitle: &#x27;Meta data&#x27;, fields: this.createMetaHeaders()}];
+        this._headerColumnCount$ &#x3D; new BehaviorSubject&lt;number&gt;(AbstractHeaderService.DEFAULT_HEADER_COUNT);
+        this._responsiveHeaders$ &#x3D; new BehaviorSubject&lt;boolean&gt;(AbstractHeaderService.DEFAULT_HEADER_RESPONSIVITY);
+        this._preferenceColumnCount$ &#x3D; new ReplaySubject&lt;number&gt;();
+        this._clearHeaderSearch$ &#x3D; new Subject&lt;number&gt;();
+        this._initializedCount &#x3D; false;
+
+        if (this._viewIdService &#x3D;&#x3D;&#x3D; null) {
+            this._logger.warn(&#x27;Header service could not inject ViewIdService! User preferences won\&#x27;t be loaded or saved!&#x27;);
+        }
+
+        this._preferences.preferencesChanged$.subscribe(() &#x3D;&gt; {
+            this.loadHeadersFromPreferences();
+        });
+
+        this.initializeHeaderState();
+    }
+
+    /**
+     * Provides Observable for all changes in header
+     */
+    get headerChange$(): Observable&lt;HeaderChange&gt; {
+        return this._headerChange$.asObservable();
+    }
+
+    get selectedHeaders$(): Observable&lt;Array&lt;HeaderColumn&gt;&gt; {
+        return this._headerState.selectedHeaders$;
+    }
+
+    get headerState(): HeaderStateInterface {
+        return this._headerState.asInterface();
+    }
+
+    get headerType(): HeaderType {
+        return this._headerType;
+    }
+
+    get headerColumnCount(): number {
+        return this._headerColumnCount$.getValue();
+    }
+
+    set headerColumnCount(maxColumns: number) {
+        if (maxColumns !&#x3D;&#x3D; this.headerColumnCount) {
+            this._headerColumnCount$.next(maxColumns);
+            this.updateHeaderColumnCount();
+            if (!this._initializedCount) {
+                this.initializeDefaultHeaderState();
+                this._initializedCount &#x3D; true;
+            }
+        }
+    }
+
+    get headerColumnCount$(): Observable&lt;number&gt; {
+        return this._headerColumnCount$.asObservable();
+    }
+
+    get responsiveHeaders(): boolean {
+        return this._responsiveHeaders$.getValue();
+    }
+
+    set responsiveHeaders(responsiveHeaders: boolean) {
+        this._responsiveHeaders$.next(responsiveHeaders);
+    }
+
+    get responsiveHeaders$(): Observable&lt;boolean&gt; {
+        return this._responsiveHeaders$.asObservable();
+    }
+
+    get clearHeaderSearch$(): Observable&lt;number&gt; {
+        return this._clearHeaderSearch$.asObservable();
+    }
+
+    set initDefaultHeaders(defaultHeaders: Array&lt;string&gt;) {
+        this._initDefaultHeaders &#x3D; defaultHeaders;
+    }
+
+    get initDefaultHeaders(): Array&lt;string&gt; {
+        return this._initDefaultHeaders;
+    }
+
+    get preferenceColumnCount$(): Observable&lt;number&gt; {
+        return this._preferenceColumnCount$.asObservable();
+    }
+
+    private initializeHeaderState(): void {
+        const defaultHeaders &#x3D; [];
+        for (let i &#x3D; 0; i &lt; this.fieldsGroup[0].fields.length &amp;&amp; defaultHeaders.length &lt; this.headerColumnCount; i++) {
+            if (this.fieldsGroup[0].fields[i].initial) {
+                defaultHeaders.push(this.fieldsGroup[0].fields[i]);
+            }
+        }
+        while (defaultHeaders.length &lt; this.headerColumnCount) {
+            defaultHeaders.push(null);
+        }
+        this._headerState &#x3D; new HeaderState(defaultHeaders);
+    }
+
+    protected initializeDefaultHeaderState(): void {
+        if (this.initDefaultHeaders &amp;&amp; Array.isArray(this.initDefaultHeaders)) {
+            const defaultHeaders &#x3D; [];
+            for (let i &#x3D; 0; i &lt; this.headerColumnCount; i++) {
+                defaultHeaders.push(null);
+            }
+            for (let i &#x3D; 0; i &lt; this.initDefaultHeaders.length; i++) {
+                if (i &gt;&#x3D; this.headerColumnCount) {
+                    this._logger.warn(&#x27;there are more NAE_DEFAULT_HEADERS than header columns. Skipping the rest...&#x27;);
+                    break;
+                }
+                for (const h of this.fieldsGroup) {
+                    const head &#x3D; h.fields.find(header &#x3D;&gt; header.uniqueId &#x3D;&#x3D;&#x3D; this.initDefaultHeaders[i]);
+                    if (head) {
+                        defaultHeaders[i] &#x3D; head;
+                        break;
+                    }
+                }
+            }
+            this._headerState.updateSelectedHeaders(defaultHeaders);
+        }
+        this.loadHeadersFromPreferences();
+    }
+
+    /**
+     * Adds &#x60;null&#x60; headers if the new count is greater than the current count.
+     *
+     * Removes extra headers if the new count is smaller than the current count.
+     */
+    protected updateHeaderColumnCount(): void {
+        let headers &#x3D; this._headerState.selectedHeaders;
+        if (headers.length &lt; this.headerColumnCount) {
+            while (headers.length !&#x3D;&#x3D; this.headerColumnCount) {
+                headers.push(null);
+            }
+        } else if (headers.length &gt; this.headerColumnCount) {
+            headers &#x3D; headers.slice(0, this.headerColumnCount);
+        }
+        this._headerState.updateSelectedHeaders(headers);
+    }
+
+    public setAllowedNets(allowedNets: Array&lt;PetriNetReference&gt;) {
+        /* TODO by simply replacing the select options with new object, we don&#x27;t loose the old references.
+             Columns with headers from nets that are no longer allowed should have their value cleared.
+             Columns with valid values that are not metadata should have their selection remapped to the new objects.
+         */
+
+        const fieldsGroups: Array&lt;FieldsGroup&gt; &#x3D; [];
+        allowedNets.forEach(allowedNet &#x3D;&gt; {
+            const fieldsGroup: FieldsGroup &#x3D; {
+                groupTitle: allowedNet.title,
+                fields: []
+            };
+            allowedNet.immediateData.forEach(immediate &#x3D;&gt; {
+                fieldsGroup.fields.push(
+                    new HeaderColumn(HeaderColumnType.IMMEDIATE, immediate.stringId, immediate.title,
+                        immediate.type, false, allowedNet.identifier)
+                );
+            });
+            fieldsGroups.push(fieldsGroup);
+        });
+
+        this.fieldsGroup.splice(1, this.fieldsGroup.length - 1);
+        this.fieldsGroup.push(...fieldsGroups);
+    }
+
+    public setTaskAllowedNets(allowedNets: Array&lt;Net&gt;) {
+        /* TODO by simply replacing the select options with new object, we don&#x27;t loose the old references.
+             Columns with headers from nets that are no longer allowed should have their value cleared.
+             Columns with valid values that are not metadata should have their selection remapped to the new objects.
+         */
+
+        const fieldsGroups: Array&lt;FieldsGroup&gt; &#x3D; [];
+        allowedNets.forEach(allowedNet &#x3D;&gt; {
+            const fieldsGroup: FieldsGroup &#x3D; {
+                groupTitle: allowedNet.title,
+                fields: []
+            };
+            const existing &#x3D; new Set();
+            allowedNet.transitions.forEach(trans &#x3D;&gt; {
+                trans.immediateData.forEach(data &#x3D;&gt; {
+                    if (!existing.has(data.stringId)) {
+                        existing.add(data.stringId);
+                        fieldsGroup.fields.push(
+                            new HeaderColumn(HeaderColumnType.IMMEDIATE, data.stringId,
+                                data.title, data.type, false, allowedNet.identifier)
+                        );
+                    }
+                });
+            });
+            fieldsGroups.push(fieldsGroup);
+        });
+
+        this.fieldsGroup.splice(1, this.fieldsGroup.length - 1);
+        this.fieldsGroup.push(...fieldsGroups);
+    }
+
+    /**
+     * If this view has som headers stored in it&#x27;s preferences attempts to load them.
+     * If the preferences contain nonexistent headers they will be skipped.
+     *
+     * This function is NOT called by the abstract class&#x27; constructor.
+     * It is the responsibility of the child class to call it at an appropriate moment.
+     */
+    protected loadHeadersFromPreferences(): void {
+        const viewId &#x3D; this.getViewId();
+        if (!viewId) {
+            return;
+        }
+        const preferredHeaderKeys &#x3D; this._preferences.getHeaders(viewId);
+        if (!preferredHeaderKeys) {
+            return;
+        }
+        const newHeaders &#x3D; [];
+        preferredHeaderKeys.forEach(headerKey &#x3D;&gt; {
+            for (const fieldGroup of this.fieldsGroup) {
+                for (const header of fieldGroup.fields) {
+                    if (header.uniqueId &#x3D;&#x3D;&#x3D; headerKey) {
+                        newHeaders.push(header);
+                        return; // continue the outermost loop
+                    }
+                }
+            }
+            // no match found
+            newHeaders.push(null);
+            this._logger.warn(
+                &#x60;Could not restore header with ID &#x27;${headerKey}&#x27; from preferences. It is not one of the available headers for this view.&#x60;);
+        });
+        this._preferenceColumnCount$.next(newHeaders.length);
+        this._headerState.updateSelectedHeaders(newHeaders);
+    }
+
+    protected abstract createMetaHeaders(): Array&lt;HeaderColumn&gt;;
+
+    /**
+     * Change sort mode for selected column all other column are set to default sort mode
+     * Emit request for sorted panels
+     * @param columnIndex index of the column that caused the sort change
+     * @param active Represents column identifier
+     * @param direction Represent one of sort modes: asd, desc and &#x27;&#x27;
+     */
+    public sortHeaderChanged(columnIndex: number, active: string, direction: SortDirection): void {
+        let sortChangeDescription: SortChangeDescription;
+        let foundFirstMatch &#x3D; false; // column can feature in the header in multiple positions &#x3D;&gt; we don&#x27;t want to send multiple events
+        this.headerState.selectedHeaders.filter(header &#x3D;&gt; !!header).forEach(header &#x3D;&gt; {
+            if (header.uniqueId &#x3D;&#x3D;&#x3D; active &amp;&amp; !foundFirstMatch) {
+                sortChangeDescription &#x3D; {
+                    sortDirection: direction,
+                    columnType: header.type,
+                    fieldIdentifier: header.fieldIdentifier,
+                    petriNetIdentifier: header.petriNetIdentifier,
+                    columnIdentifier: columnIndex,
+                    fieldType: header.fieldType
+                };
+                header.sortDirection &#x3D; direction;
+                foundFirstMatch &#x3D; true;
+            } else {
+                header.sortDirection &#x3D; &#x27;&#x27;;
+            }
+        });
+        this._headerChange$.next({headerType: this.headerType, changeType: HeaderChangeType.SORT, description: sortChangeDescription});
+    }
+
+    /**
+     * Saves the search value in the appropriate column in the header
+     * Emit request for searched panels by user input query
+     */
+    public headerSearchInputChanged(columnIndex: number, searchInput: any) {
+        const affectedHeader &#x3D; this.headerState.selectedHeaders[columnIndex];
+        affectedHeader.searchInput &#x3D; searchInput;
+        const searchChangeDescription: SearchChangeDescription &#x3D; {
+            fieldIdentifier: affectedHeader.fieldIdentifier,
+            fieldType: affectedHeader.fieldType,
+            fieldTitle: affectedHeader.title,
+            searchInput,
+            type: affectedHeader.type,
+            petriNetIdentifier: affectedHeader.petriNetIdentifier,
+            columnIdentifier: columnIndex
+        };
+        this._headerChange$.next({
+            headerType: this.headerType,
+            changeType: HeaderChangeType.SEARCH,
+            description: searchChangeDescription
+        });
+    }
+
+    /**
+     * Change active header and titles of panels
+     */
+    public headerColumnSelected(columnIndex: number, newHeaderColumn: HeaderColumn): void {
+        const newHeaders: Array&lt;HeaderColumn&gt; &#x3D; [];
+        newHeaders.push(...this._headerState.selectedHeaders);
+        if (!!newHeaders[columnIndex]) {
+            newHeaders[columnIndex].sortDirection &#x3D; &#x27;&#x27;;
+            newHeaders[columnIndex].searchInput &#x3D; undefined;
+        }
+        newHeaders[columnIndex] &#x3D; newHeaderColumn;
+        this._headerState.updateSelectedHeaders(newHeaders);
+        this._headerChange$.next({
+            headerType: this.headerType,
+            changeType: HeaderChangeType.EDIT,
+            description: {preferredHeaders: this._headerState.selectedHeaders}
+        });
+    }
+
+    /**
+     * Change selected header mode there are three possible modes: SORT, SEARCH and EDIT
+     * @param newMode the mode that the header should change to
+     * @param saveLastMode whether the last state should be remembered.
+     * It can be restored with the [HeaderState.restoreLastMode()]{@link HeaderState#restoreLastMode} method.
+     */
+    public changeMode(newMode: HeaderMode, saveLastMode &#x3D; true): void {
+        if (newMode &#x3D;&#x3D;&#x3D; this._headerState.mode) {
+            return;
+        }
+
+        if (saveLastMode) {
+            this._headerState.saveState();
+            this.saveState();
+        }
+
+        const change &#x3D; this.modeChangeFromCurrent(newMode);
+        this._headerState.mode &#x3D; newMode;
+        this._headerChange$.next(change);
+    }
+
+    public confirmEditMode(): void {
+        this._headerState.restoreLastMode();
+        this.saveNewState();
+        const change &#x3D; this.modeChangeAfterEdit();
+        const viewId &#x3D; this.getViewId();
+        if (!!viewId) {
+            const headers &#x3D; this.headerState.selectedHeaders;
+            this._preferences.setHeaders(viewId, headers.map(header &#x3D;&gt; !!header ? header.uniqueId : &#x27;&#x27;));
+        }
+        this._headerChange$.next(change);
+    }
+
+    /**
+     * When user cancels the edit mode, the last saved headers state is loaded and emitted
+     * Last mode in header is reloaded as well. Possible reloaded modes: sort or search
+     */
+    public revertEditMode(): void {
+        this._headerState.restoreLastState();
+        this.restoreLastState();
+        const change &#x3D; this.modeChangeAfterEdit();
+        this._headerChange$.next({
+            headerType: this.headerType,
+            changeType: HeaderChangeType.EDIT,
+            description: {preferredHeaders: this._headerState.selectedHeaders}
+        });
+        this._headerChange$.next(change);
+    }
+
+    ngOnDestroy(): void {
+        this._headerChange$.complete();
+        this._clearHeaderSearch$.complete();
+        this._headerColumnCount$.complete();
+        this._responsiveHeaders$.complete();
+        this.loading.complete();
+        this._preferenceColumnCount$.complete();
+    }
+
+    /**
+     * @param newMode the {@link HeaderMode} that is being selected as the next mode
+     * @returnsa {@link HeaderChange} object with {@link ModeChangeDescription} object as it&#x27;s &#x60;description&#x60;,
+     * where the &#x60;previousMode&#x60; is set to the currently selected mode and the &#x60;currentMode&#x60; is set to the provided argument
+     */
+    protected modeChangeFromCurrent(newMode: HeaderMode): HeaderChange {
+        return this.createModeChange(this._headerState.mode, newMode);
+    }
+
+    /**
+     * @returns a {@link HeaderChange} object with {@link ModeChangeDescription} object as it&#x27;s &#x60;description&#x60;,
+     * where the &#x60;previousMode&#x60; is set to [EDIT]{@link HeaderMode#EDIT} and the &#x60;currentMode&#x60; to the mode
+     * that is currently selected
+     */
+    protected modeChangeAfterEdit(): HeaderChange {
+        return this.createModeChange(HeaderMode.EDIT, this._headerState.mode);
+    }
+
+    /**
+     * @param oldMode the {@link HeaderMode} that was previously selected
+     * @param newMode the {@link HeaderMode} that is selected now
+     * @returns a {@link HeaderChange} object with {@link ModeChangeDescription} object as it&#x27;s &#x60;description&#x60;
+     * containing information about a change to the header mode
+     */
+    protected createModeChange(oldMode: HeaderMode, newMode: HeaderMode): HeaderChange {
+        return {
+            changeType: HeaderChangeType.MODE_CHANGED,
+            description: {
+                currentMode: newMode,
+                previousMode: oldMode
+            },
+            headerType: this.headerType
+        };
+    }
+
+    /**
+     * Emits a new value into the [clearHeaderSearch$]{@link AbstractHeaderService#clearHeaderSearch$} stream, that notifies
+     * the header search component, that it should clear the input for the specified column.
+     * @param columnIndex the index of the column that should be cleared
+     */
+    public clearHeaderSearch(columnIndex: number): void {
+        this._clearHeaderSearch$.next(columnIndex);
+    }
+
+    /**
+     * @returns the Id of the view, if the ViewIdService was injected. Returns &#x60;undefined&#x60; if the service was not injected.
+     */
+    protected getViewId(): string | undefined {
+        if (this._viewIdService) {
+            return this._viewIdService.viewId;
+        }
+        return undefined;
+    }
+
+    protected abstract saveState();
+
+    protected abstract saveNewState();
+
+    protected abstract restoreLastState();
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'AbstractHeaderService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

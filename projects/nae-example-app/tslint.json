@@ -22,8 +22,8 @@
         "no-string-literal": false,
         "import-blacklist": [
             true,
-            "netgrif-application-engine",
-            [".*/netgrif-application-engine/.*"],
+            "netgrif-components-core",
+            [".*/netgrif-components-core/.*"],
             "netgrif-components",
             [".*/netgrif-components/.*"]
         ]

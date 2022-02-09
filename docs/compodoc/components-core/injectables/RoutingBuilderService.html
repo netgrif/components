@@ -1,0 +1,435 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >RoutingBuilderService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/routing/routing-builder/routing-builder.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Uses the information from nae.json to construct the application&#39;s routing</p>
+
+            </p>
+
+
+
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, _configService: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>, _viewService: <a href="../interfaces/View.html" target="_self">ViewService</a>, _logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _dynamicNavigationRouteService: <a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self">DynamicNavigationRouteProviderService</a>, _groupNavigationComponentResolverComponent: <a href="../classes/AbstractGroupNavigationComponentResolverComponent.html" target="_self">Type&lt;AbstractGroupNavigationComponentResolverComponent&gt;</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/netgrif-components-core/src/lib/routing/routing-builder/routing-builder.service.ts:31</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_configService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_viewService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/View.html" target="_self" >ViewService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_dynamicNavigationRouteService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DynamicNavigationRouteProviderService.html" target="_self" >DynamicNavigationRouteProviderService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_groupNavigationComponentResolverComponent</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/AbstractGroupNavigationComponentResolverComponent.html" target="_self" >Type&lt;AbstractGroupNavigationComponentResolverComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, Optional, Type} from &#x27;@angular/core&#x27;;
+import {ConfigurationService} from &#x27;../../configuration/configuration.service&#x27;;
+import {ViewService} from &#x27;../view-service/view.service&#x27;;
+import {Route, Router} from &#x27;@angular/router&#x27;;
+import {View} from &#x27;../../../commons/schema&#x27;;
+import {AuthenticationGuardService} from &#x27;../../authentication/services/guard/authentication-guard.service&#x27;;
+import {ViewClassInfo} from &#x27;../../../commons/view-class-info&#x27;;
+import {classify} from &#x27;../../../commons/angular-cli-devkit-core-strings&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {AuthorityGuardService} from &#x27;../../authorization/authority/authority-guard.service&#x27;;
+import {RoleGuardService} from &#x27;../../authorization/role/role-guard.service&#x27;;
+import {GroupGuardService} from &#x27;../../authorization/group/group-guard.service&#x27;;
+import {GroupNavigationConstants} from &#x27;../../navigation/model/group-navigation-constants&#x27;;
+import {
+    NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT
+} from &#x27;../../navigation/model/group-navigation-component-resolver-component-injection-token&#x27;;
+import {
+    AbstractGroupNavigationComponentResolverComponent
+} from &#x27;../../navigation/group-navigation-component-resolver/abstract-group-navigation-component-resolver.component&#x27;;
+import {DynamicNavigationRouteProviderService} from &#x27;../dynamic-navigation-route-provider/dynamic-navigation-route-provider.service&#x27;;
+
+
+/**
+ * Uses the information from nae.json to construct the application&#x27;s routing
+ */
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class RoutingBuilderService {
+
+    private _groupNavigationRouteGenerated &#x3D; false;
+
+    constructor(router: Router,
+                private _configService: ConfigurationService,
+                private _viewService: ViewService,
+                private _logger: LoggerService,
+                private _dynamicNavigationRouteService: DynamicNavigationRouteProviderService,
+                @Optional() @Inject(NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT)
+                private _groupNavigationComponentResolverComponent: Type&lt;AbstractGroupNavigationComponentResolverComponent&gt;) {
+        router.config.splice(0, router.config.length);
+        for (const [pathSegment, view] of Object.entries(_configService.get().views)) {
+            const route &#x3D; this.constructRouteObject(view, pathSegment);
+            if (route !&#x3D;&#x3D; undefined) {
+                router.config.push(route);
+            }
+        }
+        router.config.push(...this.defaultRoutesRedirects());
+    }
+
+    private constructRouteObject(view: View, configPath: string, ancestors: Array&lt;Route&gt; &#x3D; []): Route | undefined {
+        const component &#x3D; this.resolveComponentClass(view, configPath);
+        if (component &#x3D;&#x3D;&#x3D; undefined) {
+            return undefined;
+        }
+        if (!view.routing) {
+            this._logger.warn(&#x60;nae.json configuration is invalid. View at path &#x27;${configPath}&#x27;&#x60; +
+                &#x60; must define a &#x27;routing&#x27; attribute. Skipping this view for routing generation.&#x60;);
+            return undefined;
+        }
+
+        const route: Route &#x3D; {
+            path: view.routing.path,
+            component
+        };
+
+        if (view?.layout?.name &#x3D;&#x3D;&#x3D; GroupNavigationConstants.GROUP_NAVIGATION_OUTLET) {
+            if (this._groupNavigationRouteGenerated) {
+                this._logger.warn(&#x60;Multiple groupNavigationOutlets are present in nae.json. Duplicate entry found at path ${configPath}&#x60;);
+            } else {
+                this._logger.debug(&#x60;GroupNavigationOutlet found in nae.json at path &#x27;${configPath}&#x27;&#x60;);
+            }
+
+            const pathNoParams &#x3D; route.path;
+            route.path &#x3D; &#x60;${pathNoParams}/:${GroupNavigationConstants.GROUP_NAVIGATION_ROUTER_PARAM}&#x60;;
+            route.canActivate &#x3D; [AuthenticationGuardService];
+            const parentPathSegments &#x3D; ancestors.map(a &#x3D;&gt; a.path);
+            parentPathSegments.push(pathNoParams);
+            this._dynamicNavigationRouteService.route &#x3D; parentPathSegments.join(&#x27;/&#x27;);
+
+            this._groupNavigationRouteGenerated &#x3D; true;
+            return route;
+        }
+
+        if (view.routing.match !&#x3D;&#x3D; undefined &amp;&amp; view.routing.match) {
+            route[&#x27;pathMatch&#x27;] &#x3D; &#x27;full&#x27;;
+        }
+        route[&#x27;canActivate&#x27;] &#x3D; [];
+        if (view.access &#x3D;&#x3D;&#x3D; &#x27;private&#x27;
+            || view.access.hasOwnProperty(&#x27;role&#x27;)
+            || view.access.hasOwnProperty(&#x27;group&#x27;)
+            || view.access.hasOwnProperty(&#x27;authority&#x27;)) {
+            route[&#x27;canActivate&#x27;].push(AuthenticationGuardService);
+        }
+        if (view.access.hasOwnProperty(&#x27;role&#x27;)) {
+            route[&#x27;canActivate&#x27;].push(RoleGuardService);
+        }
+        if (view.access.hasOwnProperty(&#x27;authority&#x27;)) {
+            route[&#x27;canActivate&#x27;].push(AuthorityGuardService);
+        }
+        if (view.access.hasOwnProperty(&#x27;group&#x27;)) {
+            route[&#x27;canActivate&#x27;].push(GroupGuardService);
+        }
+        if (!!view.children) {
+            route[&#x27;children&#x27;] &#x3D; [];
+            Object.entries(view.children).forEach(([configPathSegment, childView]) &#x3D;&gt; {
+                // TODO check if routes are constructed correctly regarding empty route segments
+                const childRoute &#x3D; this.constructRouteObject(childView, &#x60;${configPath}/${configPathSegment}&#x60;, [...ancestors, route]);
+                if (childRoute !&#x3D;&#x3D; undefined) {
+                    route[&#x27;children&#x27;].push(childRoute);
+                }
+            });
+        }
+        if (view?.layout?.name &#x3D;&#x3D;&#x3D; &#x27;tabView&#x27;) {
+            if (!view.children) {
+                route[&#x27;children&#x27;] &#x3D; [];
+            }
+            route[&#x27;children&#x27;].push({
+                path: &#x27;**&#x27;,
+                component
+            });
+        }
+
+        return route;
+    }
+
+    private resolveComponentClass(view: View, configPath: string): Type&lt;any&gt; | undefined {
+        let result;
+        if (!!view.component) {
+            result &#x3D; this._viewService.resolveNameToClass(view.component.class);
+        } else if (!!view.layout) {
+            result &#x3D; this.resolveComponentClassFromLayout(view, configPath);
+        } else {
+            this._logger.warn(&#x60;nae.json configuration is invalid. View at path &#x27;${configPath}&#x27;&#x60; +
+                &#x60; must define either a &#x27;layout&#x27; or a &#x27;component&#x27; attribute. Skipping this view for routing generation.&#x60;);
+            return undefined;
+        }
+        if (result &#x3D;&#x3D;&#x3D; undefined) {
+            this._logger.warn(&#x60;Some views from nae.json configuration have not been created in the project.&#x60; +
+                &#x60; Run create-view schematic to rectify this. Skipping this view for routing generation.&#x60;);
+            return undefined;
+        }
+        return result;
+    }
+
+    private resolveComponentClassFromLayout(view: View, configPath: string): Type&lt;any&gt; | undefined {
+        if (view.layout.name &#x3D;&#x3D;&#x3D; GroupNavigationConstants.GROUP_NAVIGATION_OUTLET) {
+            return this._groupNavigationComponentResolverComponent;
+        }
+
+        let className;
+        if (!!view.layout.componentName) {
+            className &#x3D; &#x60;${classify(view.layout.componentName)}Component&#x60;;
+        } else {
+            const classInfo &#x3D; new ViewClassInfo(configPath, view.layout.name, view.layout.componentName);
+            className &#x3D; classInfo.className;
+        }
+        return this._viewService.resolveNameToClass(className);
+    }
+
+    private defaultRoutesRedirects(): Array&lt;Route&gt; {
+        const result &#x3D; [];
+        const servicesConfig &#x3D; this._configService.getServicesConfiguration();
+        if (!!servicesConfig &amp;&amp; !!servicesConfig.routing) {
+            if (!!servicesConfig.routing.defaultRedirect) {
+                result.push({
+                    path: &#x27;&#x27;,
+                    redirectTo: servicesConfig.routing.defaultRedirect,
+                    pathMatch: &#x27;full&#x27;
+                });
+            }
+            if (!!servicesConfig.routing.wildcardRedirect) {
+                result.push({
+                    path: &#x27;**&#x27;,
+                    redirectTo: servicesConfig.routing.wildcardRedirect
+                });
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'RoutingBuilderService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

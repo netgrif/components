@@ -29,16 +29,28 @@
     ],
     "scripts": {
         "ng": "ng",
-        "project:local-build": "cd projects/netgrif-application-engine && npm run nae:local-build && cd ../netgrif-components && npm run nc:local-build",
+        "test": "ng test",
+        "lint": "ng lint",
+        "e2e": "ng e2e",
+        "ncc:build": "ng build netgrif-components-core --prod && npm run ncc:build-schematics",
+        "ncc:build-schematics": "node projects/netgrif-components-core/src/scripts/build-schematics.js",
+        "ncc:lint": "ng lint netgrif-components-core",
+        "ncc:spell": "cspell \"{projects/netgrif-components-core/**/*.md,projects/netgrif-components-core/src/**/*.ts}\"",
+        "ncc:test": "ng test netgrif-components-core",
+        "ncc:full-test": "npm run ncc:lint && npm run ncc:test",
+        "ncc:normalize-coverage-summary": "node scripts/normalize-file-paths.js coverage/netgrif-components-core/coverage-summary.json",
+        "ncc:typedoc": "typedoc --tsconfig projects/netgrif-components-core/tsconfig.lib.json  projects/netgrif-components-core/src/public-api.ts",
+        "ncc:doc": "compodoc -c projects/netgrif-components-core/.compodocrc.json",
+        "ncc:full-doc": "npm run ncc:doc && npm run ncc:typedoc",
+        "ncc:prod-build": "npm run ncc:full-test && npm run ncc:build && npm run ncc:full-doc",
+        "ncc:prod-build-without-tests": "npm run ncc:build && npm run ncc:full-doc",
+        "project:local-build": "cd projects/netgrif-components-core && npm run nae:local-build && cd ../netgrif-components && npm run nc:local-build",
         "project:full-test": "npm run nae:full-test && npm run nae:local-build && npm run nc:full-test",
         "project:start": "npm run project:local-build && ng serve",
         "project:sonar": "node scripts/sonar-scanner-analysis.js",
         "components:start": "npm run nc:local-build && ng serve",
         "example:start": "ng serve",
-        "example:build": "ng build --prod",
-        "test": "ng test",
-        "lint": "ng lint",
-        "e2e": "ng e2e"
+        "example:build": "ng build --prod"
     },
     "private": true,
     "dependencies": {
@@ -94,6 +106,7 @@
         "@types/node": "~12.12.29",
         "codelyzer": "~5.2.1",
         "commander": "~4.1.1",
+        "cspell": "^5.18.4",
         "jasmine-core": "~3.5.0",
         "jasmine-spec-reporter": "~4.2.1",
         "json-server": "~0.15.1",
@@ -114,12 +127,13 @@
         "sonarqube-scanner": "~2.5.0",
         "ts-node": "~8.3.0",
         "tslint": "~5.18.0",
+        "typedoc": "^0.22.11",
         "typescript": "~4.0.2",
         "typescript-json-schema": "~0.42.0",
         "unique-names-generator": "~4.2.0"
     },
     "optionalDependencies": {
-        "@netgrif/components-core": "file:dist/netgrif-application-engine",
-        "@netgrif/components": "file:dist/netgrif-components"
+        "@netgrif/components": "file:dist/netgrif-components",
+        "@netgrif/components-core": "file:dist/netgrif-components-core"
     }
 }

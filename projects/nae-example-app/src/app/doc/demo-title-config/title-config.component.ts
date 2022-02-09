@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NAE_VIEW_ID_SEGMENT, ViewIdService} from 'netgrif-application-engine';
+import {NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/components-core';
 import { DemoTitleConfigContent0TaskViewComponent } from './content/0/demo-title-config-content0-task-view.component';
 import { DemoTitleConfigContent1CaseViewComponent } from './content/1/demo-title-config-content1-case-view.component';
 import { DemoTitleConfigContent2CaseViewComponent } from './content/2/demo-title-config-content2-case-view.component';

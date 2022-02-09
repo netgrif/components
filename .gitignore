@@ -11,7 +11,7 @@ package-lock.json
 
 # dependencies
 /node_modules
-/projects/netgrif-application-engine/node_modules
+/projects/netgrif-components-core/node_modules
 /projects/netgrif-components/node_modules
 
 # profiling files

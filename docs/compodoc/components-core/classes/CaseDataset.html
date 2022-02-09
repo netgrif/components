@@ -1,0 +1,4252 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >CaseDataset</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts</code>
+        </p>
+
+
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+            </p>
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="../interfaces/AutocompleteOptions.html" target="_self" >AutocompleteOptions</a></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_configurationInputs$" >_configurationInputs$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#_DATAFIELD_INPUT" >_DATAFIELD_INPUT</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_datafieldOptions" >_datafieldOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_processCategory" >_processCategory</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#DATAFIELD_METADATA" >DATAFIELD_METADATA</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Static</span>
+                                <a href="#DISABLED_TYPES" >DISABLED_TYPES</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_generatedPredicate$" >_generatedPredicate$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_operandsFormControls" >_operandsFormControls</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_operandsFormControls$" >_operandsFormControls$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#_OPERATOR_INPUT" >_OPERATOR_INPUT</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_operatorFormControl" >_operatorFormControl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_operatorTemplate$" >_operatorTemplate$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_trackByIdGenerator" >_trackByIdGenerator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#OPERATOR_METADATA" >OPERATOR_METADATA</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#translationPath" >translationPath</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#addToDatafieldOptionsMap" >addToDatafieldOptionsMap</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#createConfigurationFilterTextSegments" >createConfigurationFilterTextSegments</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#createDatafieldOptions" >createDatafieldOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#createMetadataConfiguration" >createMetadataConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#deserializeOperandValue" >deserializeOperandValue</a>
+                            </li>
+                            <li>
+                                <a href="#destroy" >destroy</a>
+                            </li>
+                            <li>
+                                <a href="#duplicate" >duplicate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#FieldTypeToInputType" >FieldTypeToInputType</a>
+                            </li>
+                            <li>
+                                <a href="#filterOptions" >filterOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#generateNetConstraint" >generateNetConstraint</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#generateQuery" >generateQuery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isNullOperatorQueryGenerationStrategy" >isNullOperatorQueryGenerationStrategy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isOperandValueSelected" >isOperandValueSelected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isSelectedOperator" >isSelectedOperator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadConfigurationFromMetadata" >loadConfigurationFromMetadata</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#reset" >reset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveElasticKeyword" >resolveElasticKeyword</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectDatafields" >selectDatafields</a>
+                            </li>
+                            <li>
+                                <a href="#serializeClass" >serializeClass</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#serializeOperandValue" >serializeOperandValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#standardQueryGenerationStrategy" >standardQueryGenerationStrategy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#transformCategoryValue" >transformCategoryValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#clearOperatorSelection" >clearOperatorSelection</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createFilterTextSegments" >createFilterTextSegments</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createMetadata" >createMetadata</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#createMetadataValues" >createMetadataValues</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#createOperandFilterTextSegment" >createOperandFilterTextSegment</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#createOperatorFilterTextSegments" >createOperatorFilterTextSegments</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#generatePredicate" >generatePredicate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#initializeCategory" >initializeCategory</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isOperatorSelected" >isOperatorSelected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadFromMetadata" >loadFromMetadata</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadValuesFromMetadata" >loadValuesFromMetadata</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#operandValueChanges" >operandValueChanges</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectDefaultOperator" >selectDefaultOperator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectOperator" >selectOperator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setOperands" >setOperands</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#configurationInputs$" >configurationInputs$</a>
+                                </li>
+                                <li>
+                                    <a href="#inputType" >inputType</a>
+                                </li>
+                                <li>
+                                    <a href="#allowedOperators" >allowedOperators</a>
+                                </li>
+                                <li>
+                                    <a href="#displayBold" >displayBold</a>
+                                </li>
+                                <li>
+                                    <a href="#hasSelectedDatafields" >hasSelectedDatafields</a>
+                                </li>
+                                <li>
+                                    <a href="#_selectedDatafields" >_selectedDatafields</a>
+                                </li>
+                                <li>
+                                    <a href="#elasticKeywords" >elasticKeywords</a>
+                                </li>
+                                <li>
+                                    <a href="#inputPlaceholder" >inputPlaceholder</a>
+                                </li>
+                                <li>
+                                    <a href="#datafieldOptionsInitialized$" >datafieldOptionsInitialized$</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(operators: <a href="../injectables/OperatorService.html" target="_self">OperatorService</a>, logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _optionalDependencies: <a href="../interfaces/OptionalDependencies.html" target="_self">OptionalDependencies</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:89</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>operators</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OperatorService.html" target="_self" >OperatorService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_optionalDependencies</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/OptionalDependencies.html" target="_self" >OptionalDependencies</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_configurationInputs$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_configurationInputs$</b></span>
+                        <a href="#_configurationInputs$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Behavior.html" target="_self" >BehaviorSubject&lt;Array&lt;ConfigurationInput&gt;&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_DATAFIELD_INPUT"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>_DATAFIELD_INPUT</b></span>
+                        <a href="#_DATAFIELD_INPUT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/ConfigurationInput.html" target="_self" >ConfigurationInput</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_datafieldOptions"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_datafieldOptions</b></span>
+                        <a href="#_datafieldOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Datafield.html" target="_self" >Map&lt;string | Array&lt;Datafield&gt;&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_processCategory"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_processCategory</b></span>
+                        <a href="#_processCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Case.html" target="_self" >CaseProcess</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DATAFIELD_METADATA"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>DATAFIELD_METADATA</b></span>
+                        <a href="#DATAFIELD_METADATA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;datafield&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DISABLED_TYPES"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Static</span>
+                        <span ><b>DISABLED_TYPES</b></span>
+                        <a href="#DISABLED_TYPES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;button&#x27;, &#x27;taskRef&#x27;, &#x27;caseRef&#x27;, &#x27;filter&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_generatedPredicate$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_generatedPredicate$</b></span>
+                        <a href="#_generatedPredicate$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Behavior.html" target="_self" >BehaviorSubject&lt;ElementaryPredicate | undefined&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:75</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Emit a new <code>Predicate</code> if the <code>Category</code> is in a state that it can be created.
+Emits <code>undefined</code> if the <code>Category</code> is not in such state.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_operandsFormControls"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_operandsFormControls</b></span>
+                        <a href="#_operandsFormControls"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Form.html" target="_self" >Array&lt;FormControl&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:54</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stores the <code>FormControl</code> objects that are pushed into the observable when the number of operands changes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_operandsFormControls$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_operandsFormControls$</b></span>
+                        <a href="#_operandsFormControls$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ReplaySubject&lt;Array | undefined&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:59</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Contains the <code>FormControl</code> objects that can be used to input search arguments.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_OPERATOR_INPUT"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>_OPERATOR_INPUT</b></span>
+                        <a href="#_OPERATOR_INPUT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/ConfigurationInput.html" target="_self" >ConfigurationInput</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:80</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Utility variable that can be used as value for the <a href="../classes/Category.html#configurationInputs$">configurationInputs$</a> <code>Observable</code>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_operatorFormControl"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_operatorFormControl</b></span>
+                        <a href="#_operatorFormControl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:49</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Contains the <code>FormControl</code> object that is used to drive the operator selection.</p>
+<p>The category can subscribe to it if it wishes to react to the selection change by the user.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_operatorTemplate$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_operatorTemplate$</b></span>
+                        <a href="#_operatorTemplate$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Behavior.html" target="_self" >BehaviorSubject&lt;Array | undefined&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:64</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Contains the operator template parts that make up the operands GUI.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_trackByIdGenerator"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_trackByIdGenerator</b></span>
+                        <a href="#_trackByIdGenerator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Count.html" target="_self" >IncrementingCounter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:69</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Generates IDs for template parts supplied to ng for.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="OPERATOR_METADATA"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>OPERATOR_METADATA</b></span>
+                        <a href="#OPERATOR_METADATA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;operator&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:42</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The <a href="../interfaces/CategoryMetadataConfiguration.html">CategoryMetadataConfiguration</a> key for this Category&#39;s <a href="../classes/Operator.html">Operator</a></p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="translationPath"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>translationPath</b></span>
+                        <a href="#translationPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:95</a></code>
+</div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">path to the translation string</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addToDatafieldOptionsMap"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>addToDatafieldOptionsMap</b></span>
+                        <a href="#addToDatafieldOptionsMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addToDatafieldOptionsMap(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, value: <a href="../interfaces/Datafield.html" target="_self">Datafield</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="374"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:374</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Adds a new entry or pushes value into an existing entry.
+When a new entry is created, it is created as an Array of one element.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>where in the map should the value be added</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datafield.html" target="_self" >Datafield</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the value that should be added to the map</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createConfigurationFilterTextSegments"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createConfigurationFilterTextSegments</b></span>
+                        <a href="#createConfigurationFilterTextSegments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createConfigurationFilterTextSegments()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:475</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/FilterTextSegment.html" target="_self" >Array&lt;FilterTextSegment&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createDatafieldOptions"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createDatafieldOptions</b></span>
+                        <a href="#createDatafieldOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createDatafieldOptions()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="313"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:313</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMetadataConfiguration"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createMetadataConfiguration</b></span>
+                        <a href="#createMetadataConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMetadataConfiguration()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:440</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/CategoryMetadataConfiguration.html" target="_self" >CategoryMetadataConfiguration</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deserializeOperandValue"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>deserializeOperandValue</b></span>
+                        <a href="#deserializeOperandValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deserializeOperandValue(value: unknown)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:463</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                            <code>unknown</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="destroy"></a>
+                    <span class="name">
+                        <span ><b>destroy</b></span>
+                        <a href="#destroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>destroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:129</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="duplicate"></a>
+                    <span class="name">
+                        <span ><b>duplicate</b></span>
+                        <a href="#duplicate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>duplicate()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:238</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Case.html" target="_self" >CaseDataset</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="FieldTypeToInputType"></a>
+                    <span class="name">
+                        <span class="modifier">Static</span>
+                        <span ><b>FieldTypeToInputType</b></span>
+                        <a href="#FieldTypeToInputType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>FieldTypeToInputType(fieldType: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fieldType</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#SearchInputType" target="_self" >SearchInputType</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterOptions"></a>
+                    <span class="name">
+                        <span ><b>filterOptions</b></span>
+                        <a href="#filterOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filterOptions(userInput: Observable<string | SearchAutocompleteOption>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="344"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:344</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userInput</td>
+                                    <td>
+                                            <code>Observable&lt;string | SearchAutocompleteOption&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;Array&lt;SearchAutocompleteOption&lt;Array&lt;string&gt;&gt;&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateNetConstraint"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>generateNetConstraint</b></span>
+                        <a href="#generateNetConstraint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateNetConstraint(datafield: <a href="../interfaces/Datafield.html" target="_self">Datafield</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="309"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:309</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datafield</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datafield.html" target="_self" >Datafield</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Query.html" target="_self" >Query</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateQuery"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>generateQuery</b></span>
+                        <a href="#generateQuery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateQuery(userInput: Array<unknown>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:284</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userInput</td>
+                                    <td>
+                                            <code>Array&lt;unknown&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Query.html" target="_self" >Query</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isNullOperatorQueryGenerationStrategy"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>isNullOperatorQueryGenerationStrategy</b></span>
+                        <a href="#isNullOperatorQueryGenerationStrategy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isNullOperatorQueryGenerationStrategy(datafield: <a href="../interfaces/Datafield.html" target="_self">Datafield</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="304"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:304</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datafield</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datafield.html" target="_self" >Datafield</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Query.html" target="_self" >Query</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isOperandValueSelected"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>isOperandValueSelected</b></span>
+                        <a href="#isOperandValueSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isOperandValueSelected(newValue: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:382</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>newValue</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSelectedOperator"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>isSelectedOperator</b></span>
+                        <a href="#isSelectedOperator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isSelectedOperator(operatorClass: Type<any>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="420"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:420</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>operatorClass</td>
+                                    <td>
+                                            <code>Type&lt;any&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadConfigurationFromMetadata"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>loadConfigurationFromMetadata</b></span>
+                        <a href="#loadConfigurationFromMetadata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadConfigurationFromMetadata(configuration: <a href="../interfaces/CategoryMetadataConfiguration.html" target="_self">CategoryMetadataConfiguration</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:446</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>configuration</td>
+                                    <td>
+                                                <code><a href="../interfaces/CategoryMetadataConfiguration.html" target="_self" >CategoryMetadataConfiguration</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reset"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>reset</b></span>
+                        <a href="#reset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reset()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:233</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveElasticKeyword"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveElasticKeyword</b></span>
+                        <a href="#resolveElasticKeyword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveElasticKeyword(datafield: <a href="../interfaces/Datafield.html" target="_self">Datafield</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="250"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:250</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datafield</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datafield.html" target="_self" >Datafield</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectDatafields"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>selectDatafields</b></span>
+                        <a href="#selectDatafields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>selectDatafields(datafieldMapKey: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, selectDefaultOperator)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="357"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:357</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datafieldMapKey</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>selectDefaultOperator</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="serializeClass"></a>
+                    <span class="name">
+                        <span ><b>serializeClass</b></span>
+                        <a href="#serializeClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>serializeClass()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:424</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../miscellaneous/enumerations.html#Categories" target="_self" >Categories | string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="serializeOperandValue"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>serializeOperandValue</b></span>
+                        <a href="#serializeOperandValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>serializeOperandValue(valueFormControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:428</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>valueFormControl</td>
+                                    <td>
+                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>unknown</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="standardQueryGenerationStrategy"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>standardQueryGenerationStrategy</b></span>
+                        <a href="#standardQueryGenerationStrategy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>standardQueryGenerationStrategy(datafield: <a href="../interfaces/Datafield.html" target="_self">Datafield</a>, userInput: Array<unknown>, escapeInput)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="298"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:298</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>datafield</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datafield.html" target="_self" >Datafield</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>userInput</td>
+                                    <td>
+                                            <code>Array&lt;unknown&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>escapeInput</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Query.html" target="_self" >Query</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transformCategoryValue"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>transformCategoryValue</b></span>
+                        <a href="#transformCategoryValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>transformCategoryValue(value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:413</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs a transformation of the <code>FormControl</code> value before passing it into the selected <code>Operator</code> for query generation.
+It is mostly useful only for AutocompleteCategories, where the selected value of the FormControl is an object.</p>
+<p>attribute. Otherwise performs an identity operation.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the FormControlValue</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>If the selected data field has input type <code>AUTOCOMPLETE</code> then returns the {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearOperatorSelection"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>clearOperatorSelection</b></span>
+                        <a href="#clearOperatorSelection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clearOperatorSelection()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:370</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Deselects the currently selected operator (if any)</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFilterTextSegments"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createFilterTextSegments</b></span>
+                        <a href="#createFilterTextSegments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFilterTextSegments()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:615</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/FilterTextSegment.html" target="_self" >Array&lt;FilterTextSegment&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Array containing text segments representing the content of the predicate generated by this category</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMetadata"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createMetadata</b></span>
+                        <a href="#createMetadata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMetadata()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:392</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Provides the necessary information for the serialisation of this category&#39;s state.</p>
+<p>Not every state must be preservable. The default library implementation supports only the preservation of the final state when the
+Category is generating a predicate object.</p>
+<p>barring information about allowed nets. Returns <code>undefined</code> if the category is not in a state that generates a predicate.
+See <a href="../classes/Category.html#providesPredicate">providesPredicate()</a>.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/CategoryGeneratorMetadata.html" target="_self" >CategoryGeneratorMetadata | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an object containing all the necessary information for the reconstruction of this category&#39;s state,
+barring information about allowed nets. Returns <code>undefined</code> if the category is not in a state that generates a predicate.
+See [providesPredicate()]{</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMetadataValues"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createMetadataValues</b></span>
+                        <a href="#createMetadataValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMetadataValues()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:518</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The default implementation returns the value of all operand form control objects up to the current number of operands.
+To serialize value of each operand the <a href="../classes/Category.html#serializeOperandValue">serializeOperandValue()</a> method is used.</p>
+<p>If the values used by this category are not serializable, then either this method, or the <code>serializeOperandValue</code> method,
+must be overridden.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;unknown&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an array containing values input by the user in a serializable form</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createOperandFilterTextSegment"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createOperandFilterTextSegment</b></span>
+                        <a href="#createOperandFilterTextSegment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createOperandFilterTextSegment(operandIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:651</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>operandIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/FilterTextSegment.html" target="_self" >FilterTextSegment</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>filter text segment representing the operand value at the specified index</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createOperatorFilterTextSegments"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createOperatorFilterTextSegments</b></span>
+                        <a href="#createOperatorFilterTextSegments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createOperatorFilterTextSegments()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:634</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/FilterTextSegment.html" target="_self" >Array&lt;FilterTextSegment&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Array containing text segments representing the operators with operands of this category</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generatePredicate"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>generatePredicate</b></span>
+                        <a href="#generatePredicate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generatePredicate(userInput: Array<T>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:335</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calls the <a href="../classes/Category.html#generateQuery">generateQuery</a> method and creates an <a href="../classess/ElementaryPredicate.html">ElementaryPredicate</a> with the result.
+<a href="../classes/Operator.html#_numberOfOperands">arity</a> of the selected Operator.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userInput</td>
+                                    <td>
+                                            <code>Array&lt;T&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>values entered by the user. The length of the array should match the
+[arity]{</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classess/ElementaryPredicate.html" target="_self" >ElementaryPredicate</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Predicate with {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeCategory"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>initializeCategory</b></span>
+                        <a href="#initializeCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initializeCategory()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:430</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This method is calle in the constructor. Apart from calling this method, the constructor only creates instances to fill the protected
+fields of this class.</p>
+<p>The default implementation manages creation of operand <code>FormControl</code> instances and manages subscriptions to them.</p>
+<p>You can override this method to change the initialization of your category without having to rewrite the base
+constructor from scratch.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isOperatorSelected"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>isOperatorSelected</b></span>
+                        <a href="#isOperatorSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isOperatorSelected()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:363</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>whether an operator is currently selected or not.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadFromMetadata"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>loadFromMetadata</b></span>
+                        <a href="#loadFromMetadata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadFromMetadata(metadata: <a href="../interfaces/CategoryGeneratorMetadata.html" target="_self">CategoryGeneratorMetadata</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:410</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Restores the saved state contained in the provided metadata.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>metadata</td>
+                                    <td>
+                                                <code><a href="../interfaces/CategoryGeneratorMetadata.html" target="_self" >CategoryGeneratorMetadata</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the metadata created by calling the [createMetadata()]{</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Observable. When the Observable emits the category has finished restoring its state.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadValuesFromMetadata"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>loadValuesFromMetadata</b></span>
+                        <a href="#loadValuesFromMetadata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadValuesFromMetadata(values: Array<unknown>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:566</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The default implementation sets the provided values into this Category&#39;s operand form controls.</p>
+<p>An operator must be set before calling this method! Otherwise an error will be thrown.</p>
+<p>If the number of values doesn&#39;t match the arity of the selected operator an error will be thrown!</p>
+<p>If this Category overrides the <a href="../classes/Category.html#serializeOperandValue">serializeOperandValue()</a>, it must also
+override its deserialization counterpart - <a href="#Category#deserializeOperandValue">deserializeOperandValue()</a>!</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>values</td>
+                                    <td>
+                                            <code>Array&lt;unknown&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the serialized values that should be loaded into this Category instance</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Observable. When the Observable emits the category has finished loading its values.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="operandValueChanges"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>operandValueChanges</b></span>
+                        <a href="#operandValueChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>operandValueChanges(operandIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:469</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The method that is (by default) called whenever an operand <code>FormControl</code> changes its value.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>operandIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the index of the operand that changed its value</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectDefaultOperator"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>selectDefaultOperator</b></span>
+                        <a href="#selectDefaultOperator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>selectDefaultOperator()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:346</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Selects the default operator that should be used for query generation, when no Operator selection is provided to the user.</p>
+<p>The default implementation selects the first operator in the <a href="../classes/Category.html#allowedOperators">_allowedOperators</a> array.</p>
+<p>See <a href="../classes/Category.html#selectOperator">selectOperator()</a> for more information.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectOperator"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>selectOperator</b></span>
+                        <a href="#selectOperator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>selectOperator(operatorIndex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:266</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Changes the state of the Category. Category can create queries when an <a href="../classes/Operator.html">Operator</a> is selected.</p>
+<p>This method is useful if you want to use the Category class as predicate builder.</p>
+<p>should be selected</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>operatorIndex</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>index in the [allowedOperators]{</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setOperands"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>setOperands</b></span>
+                        <a href="#setOperands"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setOperands(userInput: Array<T>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/Category.html" target="_self" >Category</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/Category.html#source" target="_self" >Category:284</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Changes the state of the Category and generates a query if all necessary operands were set.</p>
+<p>If you are using the category as a builder. Consider using the <a href="../classes/Category.html#generatePredicate">generatePredicate()</a>
+method instead.</p>
+<p><a href="../classes/Operator.html#_numberOfOperands">arity</a> of the selected Operator.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userInput</td>
+                                    <td>
+                                            <code>Array&lt;T&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>values entered by the user. The length of the array should match the
+[arity]{</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="configurationInputs$"></a>
+                        <span class="name"><b>configurationInputs$</b><a href="#configurationInputs$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>configurationInputs$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:139</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="inputType"></a>
+                        <span class="name"><b>inputType</b><a href="#inputType"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>inputType()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:143</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="allowedOperators"></a>
+                        <span class="name"><b>allowedOperators</b><a href="#allowedOperators"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>allowedOperators()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="158" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:158</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>The allowed operators are dependant on the selected data field.</p>
+<p>Beware that if you want to change the order of the allowed operators, then you must also update the
+<a href="../classes/Category.html#selectDefaultOperator">selectDefaultOperator()</a> method, so that default operator for each data field type matches
+the default operator of the <a href="../classess/CaseSimpleDataset.html">CaseSimpleDataset</a> search category. Otherwise the transition of header search into the search GUI
+won&#39;t work properly.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="../classes/Operator.html" target="_self" >Array&lt;Operator&lt;any&gt;&gt;</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayBold"></a>
+                        <span class="name"><b>displayBold</b><a href="#displayBold"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>displayBold()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="221" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:221</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hasSelectedDatafields"></a>
+                        <span class="name"><b>hasSelectedDatafields</b><a href="#hasSelectedDatafields"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>hasSelectedDatafields()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="225" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:225</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_selectedDatafields"></a>
+                        <span class="name"><b>_selectedDatafields</b><a href="#_selectedDatafields"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>_selectedDatafields()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="229" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:229</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="elasticKeywords"></a>
+                        <span class="name"><b>elasticKeywords</b><a href="#elasticKeywords"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>elasticKeywords()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="242" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:242</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="inputPlaceholder"></a>
+                        <span class="name"><b>inputPlaceholder</b><a href="#inputPlaceholder"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>inputPlaceholder()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="273" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:273</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="datafieldOptionsInitialized$"></a>
+                        <span class="name"><b>datafieldOptionsInitialized$</b><a href="#datafieldOptionsInitialized$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>datafieldOptionsInitialized$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="280" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/category/case/case-dataset.ts:280</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {OperatorService} from &#x27;../../../operator-service/operator.service&#x27;;
+import {LoggerService} from &#x27;../../../../logger/services/logger.service&#x27;;
+import {Operator} from &#x27;../../operator/operator&#x27;;
+import {Query} from &#x27;../../query/query&#x27;;
+import {OptionalDependencies} from &#x27;../../../category-factory/optional-dependencies&#x27;;
+import {SearchInputType} from &#x27;../search-input-type&#x27;;
+import {DatafieldMapKey} from &#x27;../../datafield-map-key&#x27;;
+import {SearchAutocompleteOption} from &#x27;../search-autocomplete-option&#x27;;
+import {BooleanOperator} from &#x27;../../boolean-operator&#x27;;
+import {CaseProcess} from &#x27;./case-process&#x27;;
+import {EqualsDate} from &#x27;../../operator/equals-date&#x27;;
+import {Substring} from &#x27;../../operator/substring&#x27;;
+import {EqualsDateTime} from &#x27;../../operator/equals-date-time&#x27;;
+import {Equals} from &#x27;../../operator/equals&#x27;;
+import {BehaviorSubject, Observable, of, ReplaySubject, Subscription} from &#x27;rxjs&#x27;;
+import {debounceTime, map, startWith, switchMap} from &#x27;rxjs/operators&#x27;;
+import {hasContent} from &#x27;../../../../utility/pagination/page-has-content&#x27;;
+import {Category} from &#x27;../category&#x27;;
+import {NotEquals} from &#x27;../../operator/not-equals&#x27;;
+import {MoreThan} from &#x27;../../operator/more-than&#x27;;
+import {LessThan} from &#x27;../../operator/less-than&#x27;;
+import {InRange} from &#x27;../../operator/in-range&#x27;;
+import {IsNull} from &#x27;../../operator/is-null&#x27;;
+import {Like} from &#x27;../../operator/like&#x27;;
+import {NotEqualsDate} from &#x27;../../operator/not-equals-date&#x27;;
+import {MoreThanDate} from &#x27;../../operator/more-than-date&#x27;;
+import {LessThanDate} from &#x27;../../operator/less-than-date&#x27;;
+import {InRangeDate} from &#x27;../../operator/in-range-date&#x27;;
+import {MoreThanDateTime} from &#x27;../../operator/more-than-date-time&#x27;;
+import {LessThanDateTime} from &#x27;../../operator/less-than-date-time&#x27;;
+import {InRangeDateTime} from &#x27;../../operator/in-range-date-time&#x27;;
+import {AutocompleteOptions} from &#x27;../autocomplete-options&#x27;;
+import {ConfigurationInput} from &#x27;../../configuration-input&#x27;;
+import {SearchIndex} from &#x27;../../search-index&#x27;;
+import {Type} from &#x27;@angular/core&#x27;;
+import {Categories} from &#x27;../categories&#x27;;
+import {FormControl} from &#x27;@angular/forms&#x27;;
+import moment, {Moment} from &#x27;moment&#x27;;
+import {CategoryMetadataConfiguration} from &#x27;../../persistance/generator-metadata&#x27;;
+import {MoreThanEqual} from &#x27;../../operator/more-than-equal&#x27;;
+import {LessThanEqual} from &#x27;../../operator/less-than-equal&#x27;;
+import {MoreThanEqualDate} from &#x27;../../operator/more-than-equal-date&#x27;;
+import {LessThanEqualDate} from &#x27;../../operator/less-than-equal-date&#x27;;
+import {MoreThanEqualDateTime} from &#x27;../../operator/more-than-equal-date-time&#x27;;
+import {LessThanEqualDateTime} from &#x27;../../operator/less-than-equal-date-time&#x27;;
+import {FilterTextSegment} from &#x27;../../persistance/filter-text-segment&#x27;;
+import {UserAutocomplete} from &#x27;../user-autocomplete&#x27;;
+
+interface Datafield {
+    netIdentifier: string;
+    fieldId: string;
+    fieldType: string;
+}
+
+export class CaseDataset extends Category&lt;Datafield&gt; implements AutocompleteOptions {
+
+    private static readonly _i18n &#x3D; &#x27;search.category.case.dataset&#x27;;
+    protected static DISABLED_TYPES &#x3D; [&#x27;button&#x27;, &#x27;taskRef&#x27;, &#x27;caseRef&#x27;, &#x27;filter&#x27;];
+    protected static readonly DATAFIELD_METADATA &#x3D; &#x27;datafield&#x27;;
+    private static readonly AUTOCOMPLETE_ICON &#x3D; &#x27;account_circle&#x27;;
+
+    protected readonly _DATAFIELD_INPUT: ConfigurationInput;
+
+    protected _processCategory: CaseProcess;
+
+    protected _configurationInputs$: BehaviorSubject&lt;Array&lt;ConfigurationInput&gt;&gt;;
+
+    protected _datafieldOptions: Map&lt;string, Array&lt;Datafield&gt;&gt;;
+
+    private _datafieldOptionsInitialized$: ReplaySubject&lt;void&gt;;
+    private _allowedNetsSub: Subscription;
+    private _userAutocomplete: UserAutocomplete;
+
+    public static FieldTypeToInputType(fieldType: string): SearchInputType {
+        switch (fieldType) {
+            case &#x27;date&#x27;:
+                return SearchInputType.DATE;
+            case &#x27;dateTime&#x27;:
+                return SearchInputType.DATE_TIME;
+            case &#x27;number&#x27;:
+                return SearchInputType.NUMBER;
+            case &#x27;boolean&#x27;:
+                return SearchInputType.BOOLEAN;
+            case &#x27;user&#x27;:
+                return SearchInputType.AUTOCOMPLETE;
+            default:
+                return SearchInputType.TEXT;
+        }
+    }
+
+    constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies: OptionalDependencies) {
+        super(undefined,
+            undefined,
+            &#x60;${CaseDataset._i18n}.name&#x60;,
+            undefined,
+            logger,
+            operators);
+
+        this._processCategory &#x3D; this._optionalDependencies.categoryFactory.get(CaseProcess) as CaseProcess;
+        this._processCategory.selectDefaultOperator();
+
+        this._datafieldOptions &#x3D; new Map&lt;string, Array&lt;Datafield&gt;&gt;();
+        this._userAutocomplete &#x3D; new UserAutocomplete(this._optionalDependencies);
+        this.createDatafieldOptions();
+
+        this._DATAFIELD_INPUT &#x3D; new ConfigurationInput(
+            SearchInputType.AUTOCOMPLETE,
+            &#x27;search.category.case.dataset.placeholder.field&#x27;,
+            true,
+            this._datafieldOptions,
+            (mapKeys, newValue) &#x3D;&gt; {
+                return mapKeys.map(serializedMapKey &#x3D;&gt; DatafieldMapKey.parse(serializedMapKey))
+                    .filter(mapKey &#x3D;&gt; mapKey.title.toLocaleLowerCase().startsWith(newValue));
+            }
+        );
+
+        this._configurationInputs$ &#x3D; new BehaviorSubject&lt;Array&lt;ConfigurationInput&gt;&gt;([this._DATAFIELD_INPUT]);
+
+        this._DATAFIELD_INPUT.valueChanges$().subscribe(newValue &#x3D;&gt; {
+            if (newValue &#x3D;&#x3D;&#x3D; undefined || typeof newValue &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+                this._configurationInputs$.next([this._DATAFIELD_INPUT]);
+            } else if (this._configurationInputs$.getValue().length &#x3D;&#x3D;&#x3D; 1) {
+                this._configurationInputs$.next([this._DATAFIELD_INPUT, this._OPERATOR_INPUT]);
+            }
+            this._operatorFormControl.setValue(undefined);
+        });
+    }
+
+    destroy() {
+        super.destroy();
+        this._configurationInputs$.complete();
+        this._datafieldOptionsInitialized$.complete();
+        if (this._allowedNetsSub &amp;&amp; !this._allowedNetsSub.closed) {
+            this._allowedNetsSub.unsubscribe();
+        }
+        this._processCategory.destroy();
+    }
+
+    get configurationInputs$(): Observable&lt;Array&lt;ConfigurationInput&gt;&gt; {
+        return this._configurationInputs$.asObservable();
+    }
+
+    public get inputType(): SearchInputType {
+        if (!this.hasSelectedDatafields) {
+            throw new Error(&#x27;Input type of arguments cannot be determined before selecting a data field during the configuration.&#x27;);
+        }
+        return CaseDataset.FieldTypeToInputType(this._selectedDatafields[0].fieldType);
+    }
+
+    /**
+     * The allowed operators are dependant on the selected data field.
+     *
+     * Beware that if you want to change the order of the allowed operators, then you must also update the
+     * [selectDefaultOperator()]{@link Category#selectDefaultOperator} method, so that default operator for each data field type matches
+     * the default operator of the {@link CaseSimpleDataset} search category. Otherwise the transition of header search into the search GUI
+     * won&#x27;t work properly.
+     */
+    public get allowedOperators(): Array&lt;Operator&lt;any&gt;&gt; {
+        if (!this.hasSelectedDatafields) {
+            return [];
+        }
+        switch (this._selectedDatafields[0].fieldType) {
+            case &#x27;number&#x27;:
+                return [
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(MoreThan),
+                    this._operatorService.getOperator(MoreThanEqual),
+                    this._operatorService.getOperator(LessThan),
+                    this._operatorService.getOperator(LessThanEqual),
+                    this._operatorService.getOperator(InRange),
+                    this._operatorService.getOperator(IsNull)
+                ];
+            case &#x27;boolean&#x27;:
+                return [
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals)
+                ];
+            case &#x27;user&#x27;:
+            case &#x27;userList&#x27;:
+                return [
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(IsNull)
+                ];
+            case &#x27;date&#x27;:
+                return [
+                    this._operatorService.getOperator(EqualsDate),
+                    this._operatorService.getOperator(NotEqualsDate),
+                    this._operatorService.getOperator(MoreThanDate),
+                    this._operatorService.getOperator(MoreThanEqualDate),
+                    this._operatorService.getOperator(LessThanDate),
+                    this._operatorService.getOperator(LessThanEqualDate),
+                    this._operatorService.getOperator(InRangeDate),
+                    this._operatorService.getOperator(IsNull)
+                ];
+            case &#x27;dateTime&#x27;:
+                return [
+                    this._operatorService.getOperator(EqualsDateTime),
+                    this._operatorService.getOperator(MoreThanDateTime),
+                    this._operatorService.getOperator(MoreThanEqualDateTime),
+                    this._operatorService.getOperator(LessThanDateTime),
+                    this._operatorService.getOperator(LessThanEqualDateTime),
+                    this._operatorService.getOperator(InRangeDateTime),
+                    this._operatorService.getOperator(IsNull)
+                ];
+            default:
+                return [
+                    this._operatorService.getOperator(Substring),
+                    this._operatorService.getOperator(Equals),
+                    this._operatorService.getOperator(NotEquals),
+                    this._operatorService.getOperator(IsNull),
+                    this._operatorService.getOperator(Like)
+                ];
+        }
+    }
+
+    /**
+     * @returns &#x60;CaseDataset&#x60; category is not displayed in bold for better readability
+     */
+    get displayBold(): boolean {
+        return false;
+    }
+
+    public get hasSelectedDatafields(): boolean {
+        return this._DATAFIELD_INPUT.isOptionSelected;
+    }
+
+    protected get _selectedDatafields(): Array&lt;Datafield&gt; {
+        return this._datafieldOptions.get(this._DATAFIELD_INPUT.formControl.value.value);
+    }
+
+    public reset() {
+        super.reset();
+        this._DATAFIELD_INPUT.clear();
+    }
+
+    duplicate(): CaseDataset {
+        return new CaseDataset(this._operatorService, this._log, this._optionalDependencies);
+    }
+
+    protected get elasticKeywords(): Array&lt;string&gt; {
+        if (!this.hasSelectedDatafields) {
+            return [];
+        } else {
+            return this._selectedDatafields.map(datafield &#x3D;&gt; this.resolveElasticKeyword(datafield));
+        }
+    }
+
+    protected resolveElasticKeyword(datafield: Datafield): string {
+        const resolver &#x3D; this._optionalDependencies.searchIndexResolver;
+        switch (datafield.fieldType) {
+            case &#x27;number&#x27;:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.NUMBER);
+            case &#x27;date&#x27;:
+            case &#x27;dateTime&#x27;:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.TIMESTAMP);
+            case &#x27;boolean&#x27;:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.BOOLEAN);
+            case &#x27;file&#x27;:
+            case &#x27;fileList&#x27;:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
+            case &#x27;user&#x27;:
+            case &#x27;userList&#x27;:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
+            default:
+                return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
+        }
+    }
+
+    get inputPlaceholder(): string {
+        if (!this.hasSelectedDatafields) {
+            return &#x60;${CaseDataset._i18n}.placeholder.field&#x60;;
+        }
+        return &#x60;${CaseDataset._i18n}.placeholder.value&#x60;;
+    }
+
+    protected get datafieldOptionsInitialized$(): Observable&lt;void&gt; {
+        return this._datafieldOptionsInitialized$.asObservable();
+    }
+
+    protected generateQuery(userInput: Array&lt;unknown&gt;): Query {
+        let queryGenerationStrategy;
+        if (this.isSelectedOperator(IsNull)) {
+            queryGenerationStrategy &#x3D; (d, _) &#x3D;&gt; this.isNullOperatorQueryGenerationStrategy(d);
+        } else if (this.inputType &#x3D;&#x3D;&#x3D; SearchInputType.AUTOCOMPLETE) {
+            queryGenerationStrategy &#x3D; (d, ui) &#x3D;&gt; this.standardQueryGenerationStrategy(d, ui[0], false);
+        } else {
+            queryGenerationStrategy &#x3D; (d, ui) &#x3D;&gt; this.standardQueryGenerationStrategy(d, ui);
+        }
+
+        const queries &#x3D; this._selectedDatafields.map(datafield &#x3D;&gt; queryGenerationStrategy(datafield, userInput));
+        return Query.combineQueries(queries, BooleanOperator.OR);
+    }
+
+    protected standardQueryGenerationStrategy(datafield: Datafield, userInput: Array&lt;unknown&gt;, escapeInput &#x3D; true): Query {
+        const valueQuery &#x3D; this.selectedOperator.createQuery(this.elasticKeywords, userInput, escapeInput);
+        const netQuery &#x3D; this.generateNetConstraint(datafield);
+        return Query.combineQueries([valueQuery, netQuery], BooleanOperator.AND);
+    }
+
+    protected isNullOperatorQueryGenerationStrategy(datafield: Datafield): Query {
+        const constraint &#x3D; this.generateNetConstraint(datafield);
+        return (this._operatorService.getOperator(IsNull) as IsNull).createQueryWithConstraint(this.elasticKeywords, constraint);
+    }
+
+    protected generateNetConstraint(datafield: Datafield): Query {
+        return this._processCategory.generatePredicate([[datafield.netIdentifier]]).query;
+    }
+
+    protected createDatafieldOptions(): void {
+        this._datafieldOptionsInitialized$ &#x3D; new ReplaySubject&lt;void&gt;(1);
+        this._allowedNetsSub &#x3D; this._optionalDependencies.allowedNetsService.allowedNets$.subscribe(allowedNets &#x3D;&gt; {
+            allowedNets.forEach(petriNet &#x3D;&gt; {
+                petriNet.immediateData
+                    .filter(immediateData &#x3D;&gt; {
+                        return immediateData.title !&#x3D;&#x3D; undefined
+                            &amp;&amp; immediateData.title.trim().length &gt; 0
+                            &amp;&amp; !CaseDataset.DISABLED_TYPES.includes(immediateData.type);
+                    })
+                    .forEach(immediateData &#x3D;&gt; {
+                        let type &#x3D; immediateData.type;
+
+                        // for search purposes, enumeration and multichoice maps are equivalent to their simpler counterparts
+                        if (type &#x3D;&#x3D;&#x3D; &#x27;enumeration_map&#x27;) {
+                            type &#x3D; &#x27;enumeration&#x27;;
+                        } else if (type &#x3D;&#x3D;&#x3D; &#x27;multichoice_map&#x27;) {
+                            type &#x3D; &#x27;multichoice&#x27;;
+                        }
+
+                        this.addToDatafieldOptionsMap(DatafieldMapKey.serializedForm(immediateData.type, immediateData.title), {
+                            netIdentifier: petriNet.identifier,
+                            fieldId: immediateData.stringId,
+                            fieldType: immediateData.type,
+                        });
+                    });
+            });
+            this._datafieldOptionsInitialized$.next();
+        });
+    }
+
+    filterOptions(userInput: Observable&lt;string | SearchAutocompleteOption&lt;Array&lt;string&gt;&gt;&gt;):
+        Observable&lt;Array&lt;SearchAutocompleteOption&lt;Array&lt;string&gt;&gt;&gt;&gt; {
+
+        if (!this.hasSelectedDatafields) {
+            throw new Error(&#x27;The category must be fully configured before attempting to get autocomplete options!&#x27;);
+        }
+        if (this.inputType !&#x3D;&#x3D; SearchInputType.AUTOCOMPLETE) {
+            throw new Error(&#x27;Cannot filter options of non-autocomplete operands&#x27;);
+        }
+
+        return this._userAutocomplete.filterOptions(userInput);
+    }
+
+    public selectDatafields(datafieldMapKey: string, selectDefaultOperator &#x3D; true): void {
+        if (!this._datafieldOptions.has(datafieldMapKey)) {
+            this._log.warn(&#x60;The provided &#x27;datafieldMapKey&#x27; (${datafieldMapKey}) does not exist.&#x60;);
+            return;
+        }
+        this._DATAFIELD_INPUT.formControl.setValue(DatafieldMapKey.parse(datafieldMapKey));
+        if (selectDefaultOperator) {
+            this.selectDefaultOperator();
+        }
+    }
+
+    /**
+     * Adds a new entry or pushes value into an existing entry.
+     * When a new entry is created, it is created as an Array of one element.
+     * @param key where in the map should the value be added
+     * @param value the value that should be added to the map
+     */
+    protected addToDatafieldOptionsMap(key: string, value: Datafield): void {
+        if (this._datafieldOptions.has(key)) {
+            this._datafieldOptions.get(key).push(value);
+        } else {
+            this._datafieldOptions.set(key, [value]);
+        }
+    }
+
+    protected isOperandValueSelected(newValue: any): boolean {
+        if (!this.isOperatorSelected()) {
+            return false;
+        }
+        let inputType: SearchInputType;
+        try {
+            inputType &#x3D; this.inputType;
+        } catch (e) {
+            return false;
+        }
+
+        switch (inputType) {
+            case SearchInputType.NUMBER:
+                return typeof newValue &#x3D;&#x3D;&#x3D; &#x27;number&#x27;;
+            case SearchInputType.BOOLEAN:
+                return typeof newValue &#x3D;&#x3D;&#x3D; &#x27;boolean&#x27;;
+            case SearchInputType.AUTOCOMPLETE:
+                return !(!newValue || typeof newValue &#x3D;&#x3D;&#x3D; &#x27;string&#x27;);
+            default:
+                return !!newValue;
+        }
+    }
+
+    /**
+     * Performs a transformation of the &#x60;FormControl&#x60; value before passing it into the selected &#x60;Operator&#x60; for query generation.
+     * It is mostly useful only for AutocompleteCategories, where the selected value of the FormControl is an object.
+     *
+     * @param value the FormControlValue
+     * @returns If the selected data field has input type &#x60;AUTOCOMPLETE&#x60; then returns the {@link SearchAutocompleteOption} &#x60;value&#x60;
+     * attribute. Otherwise performs an identity operation.
+     */
+    protected transformCategoryValue(value: any): any {
+        if (this.inputType &#x3D;&#x3D;&#x3D; SearchInputType.AUTOCOMPLETE) {
+            return (value as SearchAutocompleteOption&lt;Array&lt;number&gt;&gt;).value;
+        }
+        return value;
+    }
+
+    protected isSelectedOperator(operatorClass: Type&lt;any&gt;): boolean {
+        return this.selectedOperator &#x3D;&#x3D;&#x3D; this._operatorService.getOperator(operatorClass);
+    }
+
+    serializeClass(): Categories | string {
+        return Categories.CASE_DATASET;
+    }
+
+    protected serializeOperandValue(valueFormControl: FormControl): unknown {
+        switch (this.inputType) {
+            case SearchInputType.AUTOCOMPLETE:
+                return this._userAutocomplete.serializeOperandValue(valueFormControl);
+            case SearchInputType.DATE:
+            case SearchInputType.DATE_TIME:
+                return (valueFormControl.value as Moment).valueOf();
+            default:
+                return super.serializeOperandValue(valueFormControl);
+        }
+    }
+
+    protected createMetadataConfiguration(): CategoryMetadataConfiguration {
+        const config &#x3D; super.createMetadataConfiguration();
+        config[CaseDataset.DATAFIELD_METADATA] &#x3D; (this._DATAFIELD_INPUT.formControl.value as DatafieldMapKey).toSerializedForm();
+        return config;
+    }
+
+    protected loadConfigurationFromMetadata(configuration: CategoryMetadataConfiguration): Observable&lt;void&gt; {
+        const result$ &#x3D; new ReplaySubject&lt;void&gt;(1);
+        this.datafieldOptionsInitialized$.subscribe(() &#x3D;&gt; {
+            const serializedMapKey &#x3D; configuration[CaseDataset.DATAFIELD_METADATA] as string;
+            this.selectDatafields(serializedMapKey, false);
+            if (!this.hasSelectedDatafields) {
+                throw new Error(&#x60;Searched data fields cannot be restored from the provided configuration (${serializedMapKey
+                }). Make sure, that the correct allowed nets are provided in this view.&#x60;);
+            }
+            super.loadConfigurationFromMetadata(configuration).subscribe(() &#x3D;&gt; {
+                result$.next();
+                result$.complete();
+            });
+        });
+        return result$.asObservable();
+    }
+
+    protected deserializeOperandValue(value: unknown): Observable&lt;any&gt; {
+        switch (this.inputType) {
+            case SearchInputType.AUTOCOMPLETE:
+                return this._userAutocomplete.deserializeOperandValue(value as SearchAutocompleteOption&lt;Array&lt;string&gt;&gt;);
+            case SearchInputType.DATE:
+            case SearchInputType.DATE_TIME:
+                return of(moment(value as string));
+            default:
+                return super.deserializeOperandValue(value);
+        }
+    }
+
+    protected createConfigurationFilterTextSegments(): Array&lt;FilterTextSegment&gt; {
+        return [{segment: this._configurationInputs$.value[0].formControl.value.text, bold: true}];
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'CaseDataset.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,1383 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >ClausePredicate</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Represents a clause of <a href="../classess/Predicate.html">Predicate</a>s combined with a <a href="../miscellaneous/enumerations.html#BooleanOperator">BooleanOperator</a>.</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_predicates" >_predicates</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_query" >_query</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_filterTextSegmentsGenerator" >_filterTextSegmentsGenerator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_metadataGenerator" >_metadataGenerator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_visible" >_visible</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#addPredicate" >addPredicate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removePredicate" >removePredicate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#showAll" >showAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#updateQuery" >updateQuery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#combineTextSegmentsWithBooleanOperator" >combineTextSegmentsWithBooleanOperator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createFilterTextSegments" >createFilterTextSegments</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createGeneratorMetadata" >createGeneratorMetadata</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setFilterTextSegmentsGenerator" >setFilterTextSegmentsGenerator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setMetadataGenerator" >setMetadataGenerator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#show" >show</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#query" >query</a>
+                                </li>
+                                <li>
+                                    <a href="#queries" >queries</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(predicates: <a href="../classess/Predicate.html" target="_self">Array&lt;Predicate&gt;</a>, _operator: <a href="../classes/Operator.html" target="_self">BooleanOperator</a>, initiallyVisible, _bracketSubPredicateText)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:17</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>is generated</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>predicates</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classess/Predicate.html" target="_self" >Array&lt;Predicate&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Predicates that should be combined into one</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_operator</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/Operator.html" target="_self" >BooleanOperator</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Operator that is used to combine the predicates</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>initiallyVisible</td>
+                                                  
+                                                        <td>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>whether the predicate should be initially displayed or not</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_bracketSubPredicateText</td>
+                                                  
+                                                        <td>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>whether the individual sub predicates are wrapped in brackets when a textual representation
+is generated</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_predicates"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_predicates</b></span>
+                        <a href="#_predicates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classess/Predicate.html" target="_self" >Array&lt;Predicate&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:13</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stores the <a href="../classess/Predicate.html">Predicate</a>s that this Predicate combines.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_query"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_query</b></span>
+                        <a href="#_query"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Query.html" target="_self" >Query</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:17</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stores the resulting query of this Predicate.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_filterTextSegmentsGenerator"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_filterTextSegmentsGenerator</b></span>
+                        <a href="#_filterTextSegmentsGenerator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:16</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_metadataGenerator"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_metadataGenerator</b></span>
+                        <a href="#_metadataGenerator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:15</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_visible"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_visible</b></span>
+                        <a href="#_visible"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                            </td>
+                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:14</a></code>
+</div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addPredicate"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>addPredicate</b></span>
+                        <a href="#addPredicate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addPredicate(newPredicate: <a href="../classess/Predicate.html" target="_self">Predicate</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="47"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:47</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Adds another <a href="../classess/Predicate.html">Predicate</a> to the clause and updates this <a href="../classess/Predicate.html">Predicate</a>&#39;s <a href="../classes/Query.html">Query</a>.
+Note that removing predicates with a lower index shifts the order of indices.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>newPredicate</td>
+                                    <td>
+                                                <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>the Predicate that should be added to the clause</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the index of the added Predicate, that can be used to remove it.
+Note that removing predicates with a lower index shifts the order of indices.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removePredicate"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>removePredicate</b></span>
+                        <a href="#removePredicate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removePredicate(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:59</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Removes the <a href="../classess/Predicate.html">Predicate</a> at the given <code>index</code> from this clause and updates this <a href="../classess/Predicate.html">Predicate</a>&#39;s <a href="../classes/Query.html">Query</a>.
+If the <code>index</code> is invalid does nothing.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>index</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>index of the {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>whether a predicate was removed, or not</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showAll"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>showAll</b></span>
+                        <a href="#showAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>showAll()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="71"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:71</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets this predicate and all its sub-predicates to visible.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateQuery"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>updateQuery</b></span>
+                        <a href="#updateQuery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateQuery()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Updates the value of the <a href="../classess/ClausePredicate.html#_query">_query</a> attribute.</p>
+<p>See <a href="../classes/Query.html#combineQueries">combineQueries()</a> for more information.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="combineTextSegmentsWithBooleanOperator"></a>
+                    <span class="name">
+                        <span class="modifier">Static</span>
+                        <span ><b>combineTextSegmentsWithBooleanOperator</b></span>
+                        <a href="#combineTextSegmentsWithBooleanOperator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>combineTextSegmentsWithBooleanOperator(predicates: <a href="../classess/Predicate.html" target="_self">IterableIterator&lt;Predicate&gt; | Array&lt;Predicate&gt;</a>, operator: <a href="../classes/Operator.html" target="_self">BooleanOperator</a>, wrapWithBrackets)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:51</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Combines the text segments of the predicates with the given operator and wraps the individual predicates in brackets optionaly
+(if only one predicate is provided it is never wrapped)</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>predicates</td>
+                                    <td>
+                                                <code><a href="../classess/Predicate.html" target="_self" >IterableIterator&lt;Predicate&gt; | Array&lt;Predicate&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>sources of text segments that are to be combined with a boolean operator</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>operator</td>
+                                    <td>
+                                                <code><a href="../classes/Operator.html" target="_self" >BooleanOperator</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>boolean operator used to combine the individual predicate text segments</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>wrapWithBrackets</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>false</code>
+                                    </td>
+
+                                    <td>
+                                        <p>whether the individual predicate text segments should be wrapped in braces or not
+(if only one predicate is provided it is never wrapped)</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/FilterTextSegment.html" target="_self" >Array&lt;FilterTextSegment&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFilterTextSegments"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createFilterTextSegments</b></span>
+                        <a href="#createFilterTextSegments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFilterTextSegments()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:110</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The default implementation returns an empty array.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/FilterTextSegment.html" target="_self" >Array&lt;FilterTextSegment&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Array containing text segments representing the content of this predicate.
+The default implementation returns an empty array.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createGeneratorMetadata"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createGeneratorMetadata</b></span>
+                        <a href="#createGeneratorMetadata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createGeneratorMetadata()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:98</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns <code>undefined</code> if the predicate tree rooted at this node is incomplete and would evaluate into an empty filter.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#GeneratorMetadata" target="_self" >GeneratorMetadata | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an object containing the necessary information for the reconstruction of the entire predicate tree in serializable form.
+Returns <code>undefined</code> if the predicate tree rooted at this node is incomplete and would evaluate into an empty filter.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setFilterTextSegmentsGenerator"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>setFilterTextSegmentsGenerator</b></span>
+                        <a href="#setFilterTextSegmentsGenerator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setFilterTextSegmentsGenerator(filterTextSegmentsGenerator: () => void)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:102</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterTextSegmentsGenerator</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setMetadataGenerator"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>setMetadataGenerator</b></span>
+                        <a href="#setMetadataGenerator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setMetadataGenerator(metadataGenerator: () => void)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:90</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>metadataGenerator</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="show"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>show</b></span>
+                        <a href="#show"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>show()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/Predicate.html#source" target="_self" >Predicate:86</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets the predicates state to <code>visible</code></p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="query"></a>
+                        <span class="name"><b>query</b><a href="#query"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>query()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:37</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="queries"></a>
+                        <span class="name"><b>queries</b><a href="#queries"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>queries()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">projects/netgrif-components-core/src/lib/search/models/predicate/clause-predicate.ts:88</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="../classes/Query.html" target="_self" >Array&lt;Query&gt;</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Predicate} from &#x27;./predicate&#x27;;
+import {Query} from &#x27;../query/query&#x27;;
+import {BooleanOperator} from &#x27;../boolean-operator&#x27;;
+
+/**
+ * Represents a clause of {@link Predicate}s combined with a {@link BooleanOperator}.
+ */
+export class ClausePredicate extends Predicate {
+
+    /**
+     * Stores the {@link Predicate}s that this Predicate combines.
+     */
+    protected _predicates: Array&lt;Predicate&gt;;
+    /**
+     * Stores the resulting query of this Predicate.
+     */
+    protected _query: Query;
+
+    /**
+     * @param predicates Predicates that should be combined into one
+     * @param _operator Operator that is used to combine the predicates
+     * @param initiallyVisible whether the predicate should be initially displayed or not
+     * @param _bracketSubPredicateText whether the individual sub predicates are wrapped in brackets when a textual representation
+     * is generated
+     */
+    constructor(predicates: Array&lt;Predicate&gt;,
+                protected _operator: BooleanOperator,
+                initiallyVisible &#x3D; true,
+                protected _bracketSubPredicateText &#x3D; false) {
+        super(initiallyVisible);
+        this._predicates &#x3D; [];
+        this._predicates.push(...predicates);
+        this.updateQuery();
+        this.initializeFilterTextSegmentsGenerator();
+    }
+
+    get query(): Query {
+        return this._query;
+    }
+
+    /**
+     * Adds another {@link Predicate} to the clause and updates this {@link Predicate}&#x27;s {@link Query}.
+     * @param newPredicate - the Predicate that should be added to the clause
+     * @returns the index of the added Predicate, that can be used to remove it.
+     * Note that removing predicates with a lower index shifts the order of indices.
+     */
+    public addPredicate(newPredicate: Predicate): number {
+        this._predicates.push(newPredicate);
+        this.updateQuery();
+        return this._predicates.length - 1;
+    }
+
+    /**
+     * Removes the {@link Predicate} at the given &#x60;index&#x60; from this clause and updates this {@link Predicate}&#x27;s {@link Query}.
+     * If the &#x60;index&#x60; is invalid does nothing.
+     * @param index index of the {@link Predicate} in this clause that should be removed
+     * @returns whether a predicate was removed, or not
+     */
+    public removePredicate(index: number): boolean {
+        if (index &gt;&#x3D; 0 &amp;&amp; index &lt; this._predicates.length) {
+            this._predicates.splice(index, 1);
+            this.updateQuery();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Sets this predicate and all its sub-predicates to visible.
+     */
+    public showAll(): void {
+        this.show();
+        this._predicates.forEach(p &#x3D;&gt; p.show());
+    }
+
+    /**
+     * Updates the value of the [_query]{@link ClausePredicate#_query} attribute.
+     *
+     * See [combineQueries()]{@link Query#combineQueries} for more information.
+     */
+    protected updateQuery(): void {
+        this._query &#x3D; Query.combineQueries(this.queries, this._operator);
+    }
+
+    /**
+     * @returns the &#x60;Array&#x60; of {@link Query} objects stored within this object&#x27;s [_predicates]{@link ClausePredicate#_predicates} attribute.
+     */
+    protected get queries(): Array&lt;Query&gt; {
+        return this._predicates.map(p &#x3D;&gt; p.query);
+    }
+
+    private initializeFilterTextSegmentsGenerator() {
+        this._filterTextSegmentsGenerator &#x3D; () &#x3D;&gt; {
+            return Predicate.combineTextSegmentsWithBooleanOperator(this._predicates, this._operator, this._bracketSubPredicateText);
+        };
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'ClausePredicate.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

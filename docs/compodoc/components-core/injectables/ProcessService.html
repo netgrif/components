@@ -1,0 +1,2023 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >ProcessService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/process/process.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Process service is responsible for loading and caching processes needed for any functionality of an app.</p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#_nets" >_nets</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_netsSubject" >_netsSubject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_netUpdate" >_netUpdate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_referenceRequestCache" >_referenceRequestCache</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_requestCache" >_requestCache</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#areNetsLoaded" >areNetsLoaded</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getNet" >getNet</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getNetReference" >getNetReference</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getNetReferences" >getNetReferences</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getNets" >getNets</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isNetLoaded" >isNetLoaded</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadNet" >loadNet</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadNetReference" >loadNetReference</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadRoles" >loadRoles</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadTransactions" >loadTransactions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#loadTransitions" >loadTransitions</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#publishUpdate" >publishUpdate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeNet" >removeNet</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateNet" >updateNet</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#nets$" >nets$</a>
+                                </li>
+                                <li>
+                                    <a href="#netUpdate$" >netUpdate$</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_petriNetResource: <a href="../injectables/PetriNetResourceService.html" target="_self">PetriNetResourceService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:29</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_petriNetResource</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PetriNetResourceService.html" target="_self" >PetriNetResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="areNetsLoaded"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>areNetsLoaded</b></span>
+                        <a href="#areNetsLoaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>areNetsLoaded(identifiers: Array<string>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="228"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:228</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>identifiers</td>
+                                    <td>
+                                            <code>Array&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNet"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getNet</b></span>
+                        <a href="#getNet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getNet(identifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, forceLoad)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:80</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get process net by identifier.
+(unless another is already pending)</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>identifier</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>Identifier of the requested process. See {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>forceLoad</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>false</code>
+                                    </td>
+
+                                    <td>
+                                        <p>when set to <code>true</code> cached processes will be ignored and a backend request will always be made
+(unless another is already pending)</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;Net&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Observable of [the process]{</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNetReference"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getNetReference</b></span>
+                        <a href="#getNetReference"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getNetReference(identifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:134</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get process net reference by identifier.</p>
+<p><code>PetriNetReferences</code> are not cached.
+Each call will result in a new backend request unless a request for the same net is already pending.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>identifier</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Identifier of the requested process. See {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;PetriNetReferenceWithPermissions&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Observable of [the process]{</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNetReferences"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getNetReferences</b></span>
+                        <a href="#getNetReferences"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getNetReferences(identifiers: Array<string>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:115</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get process net referencess according to provided identifiers.</p>
+<p><code>PetriNetReferences</code> are not cached.
+Each call will result in a new backend request unless a request for the same net is already pending.
+If any of the processes failed to load it is skipped from the result.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>identifiers</td>
+                                    <td>
+                                            <code>Array&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Array of identifiers of requested processes. See {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;Array&lt;PetriNetReferenceWithPermissions&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Observable of array of loaded processes. Array is emitted only when every process finished loading.
+If any of the processes failed to load it is skipped from the result.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNets"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getNets</b></span>
+                        <a href="#getNets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getNets(identifiers: Array<string>, forceLoad)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:55</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get process nets according to provided identifiers.
+If any of the requested processes is not cached it will be loaded from the server and saved for later.
+(unless another is already pending)
+If any of the processes failed to load it is skipped from the result.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>identifiers</td>
+                                    <td>
+                                            <code>Array&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>Array of identifiers of requested processes. See {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>forceLoad</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>false</code>
+                                    </td>
+
+                                    <td>
+                                        <p>when set to <code>true</code> cached processes will be ignored and a backend request will always be made
+(unless another is already pending)</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;Array&lt;Net&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Observable of array of loaded processes. Array is emitted only when every process finished loading.
+If any of the processes failed to load it is skipped from the result.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isNetLoaded"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>isNetLoaded</b></span>
+                        <a href="#isNetLoaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isNetLoaded(identifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="232"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:232</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>identifier</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadNet"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>loadNet</b></span>
+                        <a href="#loadNet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadNet(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="236"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:236</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;Net&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadNetReference"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>loadNetReference</b></span>
+                        <a href="#loadNetReference"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadNetReference(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="268"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:268</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;PetriNetReference&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadRoles"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>loadRoles</b></span>
+                        <a href="#loadRoles"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadRoles(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="322"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:322</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;RolesAndPermissions&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTransactions"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>loadTransactions</b></span>
+                        <a href="#loadTransactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadTransactions(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="302"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:302</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Transaction.html" target="_self" >Observable&lt;Array&lt;Transaction&gt;&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTransitions"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>loadTransitions</b></span>
+                        <a href="#loadTransitions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadTransitions(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="282"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:282</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Transition.html" target="_self" >Observable&lt;Array&lt;Transition&gt;&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:39</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="publishUpdate"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>publishUpdate</b></span>
+                        <a href="#publishUpdate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>publishUpdate(net?: Net)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="336"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:336</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>net</td>
+                                    <td>
+                                            <code>Net</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeNet"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>removeNet</b></span>
+                        <a href="#removeNet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeNet(identifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="172"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:172</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Remove cached process by identifier. If the process is not found nothing happens.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>identifier</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Process identifier</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateNet"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>updateNet</b></span>
+                        <a href="#updateNet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateNet(net: Net)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="184"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:184</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Update cached process object. If the process is not found nothing happens. Process object is replaced.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>net</td>
+                                    <td>
+                                            <code>Net</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Updated process object.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_nets"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>_nets</b></span>
+                        <a href="#_nets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/NetCache.html" target="_self" >NetCache</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_netsSubject"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_netsSubject</b></span>
+                        <a href="#_netsSubject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/NetCache.html" target="_self" >Subject&lt;NetCache&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_netUpdate"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_netUpdate</b></span>
+                        <a href="#_netUpdate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subject&lt;Net&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_referenceRequestCache"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_referenceRequestCache</b></span>
+                        <a href="#_referenceRequestCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Map&lt;string | ReplaySubject&lt;PetriNetReferenceWithPermissions&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_requestCache"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_requestCache</b></span>
+                        <a href="#_requestCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Map&lt;string | ReplaySubject&lt;Net&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nets$"></a>
+                        <span class="name"><b>nets$</b><a href="#nets$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>nets$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="215" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:215</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Stream of change of the process cache.
+New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.</p>
+</div>
+
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="../interfaces/NetCache.html" target="_self" >Observable&lt;NetCache&gt;</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="netUpdate$"></a>
+                        <span class="name"><b>netUpdate$</b><a href="#netUpdate$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>netUpdate$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="224" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:224</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Stream of change in the process cache.
+New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.</p>
+</div>
+
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>Observable&lt;Net&gt;</code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, OnDestroy} from &#x27;@angular/core&#x27;;
+import {forkJoin, Observable, of, ReplaySubject, Subject} from &#x27;rxjs&#x27;;
+import {Net} from &#x27;./net&#x27;;
+import {PetriNetResourceService} from &#x27;../resources/engine-endpoint/petri-net-resource.service&#x27;;
+import {LoggerService} from &#x27;../logger/services/logger.service&#x27;;
+import Transition from &#x27;./transition&#x27;;
+import Transaction from &#x27;./transaction&#x27;;
+import {catchError, map, switchMap, tap} from &#x27;rxjs/operators&#x27;;
+import RolesAndPermissions from &#x27;./rolesAndPermissions&#x27;;
+import {PetriNetReference} from &#x27;../resources/interface/petri-net-reference&#x27;;
+import {PetriNetReferenceWithPermissions} from &#x27;./petri-net-reference-with-permissions&#x27;;
+
+export interface NetCache {
+    [k: string]: Net;
+}
+
+/**
+ * Process service is responsible for loading and caching processes needed for any functionality of an app.
+ */
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class ProcessService implements OnDestroy {
+
+    protected readonly _nets: NetCache;
+    protected _netsSubject: Subject&lt;NetCache&gt;;
+    protected _netUpdate: Subject&lt;Net&gt;;
+    protected _requestCache: Map&lt;string, ReplaySubject&lt;Net&gt;&gt;;
+    protected _referenceRequestCache: Map&lt;string, ReplaySubject&lt;PetriNetReferenceWithPermissions&gt;&gt;;
+
+    constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
+        this._nets &#x3D; {};
+        this._netsSubject &#x3D; new Subject&lt;NetCache&gt;();
+        this._netUpdate &#x3D; new Subject&lt;Net&gt;();
+        this._requestCache &#x3D; new Map&lt;string, ReplaySubject&lt;Net&gt;&gt;();
+        this._referenceRequestCache &#x3D; new Map&lt;string, ReplaySubject&lt;PetriNetReferenceWithPermissions&gt;&gt;();
+    }
+
+    ngOnDestroy(): void {
+        this._netsSubject.complete();
+        this._netUpdate.complete();
+        Array.from(this._requestCache.values()).forEach(net &#x3D;&gt; net.complete());
+        Array.from(this._referenceRequestCache.values()).forEach(net &#x3D;&gt; net.complete());
+    }
+
+    /**
+     * Get process nets according to provided identifiers.
+     * If any of the requested processes is not cached it will be loaded from the server and saved for later.
+     * @param identifiers Array of identifiers of requested processes. See {@link Net}
+     * @param forceLoad when set to &#x60;true&#x60; cached processes will be ignored and a backend request will always be made
+     * (unless another is already pending)
+     * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
+     * If any of the processes failed to load it is skipped from the result.
+     */
+    public getNets(identifiers: Array&lt;string&gt;, forceLoad &#x3D; false): Observable&lt;Array&lt;Net&gt;&gt; {
+        if (identifiers.length &#x3D;&#x3D;&#x3D; 0) {
+            return of([]);
+        }
+        return forkJoin(identifiers.map(i &#x3D;&gt; {
+            return this.getNet(i, forceLoad);
+        })).pipe(
+            map(nets &#x3D;&gt; nets.filter(n &#x3D;&gt; !!n)),
+            tap(nets &#x3D;&gt; {
+                if (nets.length &#x3D;&#x3D;&#x3D; 0) {
+                    return;
+                }
+                this._netsSubject.next(this._nets);
+                nets.forEach(n &#x3D;&gt; this._netUpdate.next(n));
+            })
+        );
+    }
+
+    /**
+     * Get process net by identifier.
+     * @param identifier Identifier of the requested process. See {@link Net}
+     * @param forceLoad when set to &#x60;true&#x60; cached processes will be ignored and a backend request will always be made
+     * (unless another is already pending)
+     * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
+     */
+    public getNet(identifier: string, forceLoad &#x3D; false): Observable&lt;Net&gt; {
+        if (!forceLoad &amp;&amp; this._nets[identifier]) {
+            this._log.debug(&#x60;returning net &#x27;${identifier}&#x27; from cache&#x60;);
+            return of(this._nets[identifier]);
+        }
+        if (this._requestCache.has(identifier)) {
+            this._log.debug(&#x60;returning net &#x27;${identifier}&#x27; from pending requests&#x60;);
+            return this._requestCache.get(identifier).asObservable();
+        }
+        this._log.debug(&#x60;retrieving net &#x27;${identifier}&#x27; from backend&#x60;);
+        this._requestCache.set(identifier, new ReplaySubject&lt;Net&gt;(1));
+        return this.loadNet(identifier).pipe(
+            tap(net &#x3D;&gt; {
+                const s &#x3D; this._requestCache.get(identifier);
+                if (s) {
+                    s.next(net);
+                    s.complete();
+                    this._requestCache.delete(identifier);
+                }
+                if (net) {
+                    this.publishUpdate(net);
+                }
+            })
+        );
+    }
+
+    /**
+     * Get process net referencess according to provided identifiers.
+     *
+     * &#x60;PetriNetReferences&#x60; are not cached.
+     * Each call will result in a new backend request unless a request for the same net is already pending.
+     * @param identifiers Array of identifiers of requested processes. See {@link Net}
+     * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
+     * If any of the processes failed to load it is skipped from the result.
+     */
+    public getNetReferences(identifiers: Array&lt;string&gt;): Observable&lt;Array&lt;PetriNetReferenceWithPermissions&gt;&gt; {
+        if (identifiers.length &#x3D;&#x3D;&#x3D; 0) {
+            return of([]);
+        }
+        return forkJoin(identifiers.map(i &#x3D;&gt; {
+            return this.getNetReference(i);
+        })).pipe(
+            map(references &#x3D;&gt; references.filter(r &#x3D;&gt; !!r))
+        );
+    }
+
+    /**
+     * Get process net reference by identifier.
+     *
+     * &#x60;PetriNetReferences&#x60; are not cached.
+     * Each call will result in a new backend request unless a request for the same net is already pending.
+     * @param identifier Identifier of the requested process. See {@link Net}
+     * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
+     */
+    public getNetReference(identifier: string): Observable&lt;PetriNetReferenceWithPermissions&gt; {
+        if (this._referenceRequestCache.has(identifier)) {
+            return this._referenceRequestCache.get(identifier).asObservable();
+        }
+        this._referenceRequestCache.set(identifier, new ReplaySubject&lt;PetriNetReferenceWithPermissions&gt;(1));
+        return this.loadNetReference(identifier).pipe(
+            switchMap(ref &#x3D;&gt; {
+                if (ref !&#x3D;&#x3D; null) {
+                    return forkJoin({net: of(ref), roles: this.loadRoles(ref.stringId)});
+                } else {
+                    return of({net: ref, roles: undefined});
+                }
+            }),
+            map(result &#x3D;&gt; {
+                if (result.net &#x3D;&#x3D;&#x3D; null) {
+                    return null;
+                }
+                return {
+                    ...result.net,
+                    roles: result.roles.processRoles,
+                    permissions: result.roles.permissions
+                };
+            }),
+            tap(reference &#x3D;&gt; {
+                const s &#x3D; this._referenceRequestCache.get(identifier);
+                if (s) {
+                    s.next(reference);
+                    s.complete();
+                    this._referenceRequestCache.delete(identifier);
+                }
+            })
+        );
+    }
+
+    /**
+     * Remove cached process by identifier. If the process is not found nothing happens.
+     * @param identifier Process identifier
+     */
+    public removeNet(identifier: string): void {
+        if (!this._nets[identifier]) {
+            return;
+        }
+        delete this._nets[identifier];
+        this.publishUpdate();
+    }
+
+    /**
+     * Update cached process object. If the process is not found nothing happens. Process object is replaced.
+     * @param net Updated process object.
+     */
+    public updateNet(net: Net): void {
+        if (!this._nets[net.identifier]) {
+            return;
+        }
+        if (!net.transitions.length || !net.transactions.length || !net.roles.length) {
+            forkJoin({
+                transitions: this.loadTransitions(net.stringId),
+                transactions: this.loadTransactions(net.stringId),
+                roles: this.loadRoles(net.stringId)
+            }).subscribe(values &#x3D;&gt; {
+                net.transitions &#x3D; values.transitions;
+                net.transactions &#x3D; values.transactions;
+                net.roles &#x3D; values.roles.processRoles;
+                net.permissions &#x3D; values.roles.permissions;
+                this._nets[net.identifier] &#x3D; net;
+                this.publishUpdate(net);
+            }, error &#x3D;&gt; {
+                this._log.error(&#x27;Failed to load part of Petri net &#x27; + net.title, error);
+                // throw error;
+            });
+        } else {
+            this._nets[net.identifier] &#x3D; net;
+            this.publishUpdate(net);
+        }
+    }
+
+    /**
+     * Stream of change of the process cache.
+     * New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.
+     * @returns Observable of whole updated cache.
+     */
+    public get nets$(): Observable&lt;NetCache&gt; {
+        return this._netsSubject.asObservable();
+    }
+
+    /**
+     * Stream of change in the process cache.
+     * New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.
+     * @returns Observable of updated or newly loaded process net.
+     */
+    public get netUpdate$(): Observable&lt;Net&gt; {
+        return this._netUpdate.asObservable();
+    }
+
+    public areNetsLoaded(identifiers: Array&lt;string&gt;): boolean {
+        return identifiers.every(identifier &#x3D;&gt; this.isNetLoaded(identifier));
+    }
+
+    public isNetLoaded(identifier: string): boolean {
+        return !!this._nets[identifier];
+    }
+
+    protected loadNet(id: string): Observable&lt;Net&gt; {
+        const returnNet &#x3D; new ReplaySubject&lt;Net&gt;(1);
+        this.loadNetReference(id).subscribe(net &#x3D;&gt; {
+            if (net &#x3D;&#x3D;&#x3D; null) {
+                this._log.debug(&#x60;loadNetReference for net &#x27;${id}&#x27; returned null&#x60;);
+                returnNet.next(null);
+                returnNet.complete();
+                return;
+            }
+            this._log.debug(&#x60;loading net &#x27;${id}&#x27; transitions, transactions and roles&#x60;);
+            forkJoin({
+                transitions: this.loadTransitions(net.stringId),
+                transactions: this.loadTransactions(net.stringId),
+                roles: this.loadRoles(net.stringId)
+            }).subscribe(values &#x3D;&gt; {
+                this._nets[net.identifier] &#x3D; new Net(net);
+                this._nets[net.identifier].transitions &#x3D; values.transitions;
+                this._nets[net.identifier].transactions &#x3D; values.transactions;
+                this._nets[net.identifier].roles &#x3D; values.roles.processRoles;
+                this._nets[net.identifier].permissions &#x3D; values.roles.permissions;
+                returnNet.next(this._nets[net.identifier]);
+                returnNet.complete();
+            }, error &#x3D;&gt; {
+                this._log.error(&#x27;Failed to load part of Petri net &#x27; + net.title, error);
+                returnNet.next(this._nets[net.identifier]);
+                returnNet.complete();
+                // throw error;
+            });
+        });
+        return returnNet.asObservable();
+    }
+
+    protected loadNetReference(id: string): Observable&lt;PetriNetReference&gt; {
+        const returnReference &#x3D; new ReplaySubject&lt;PetriNetReference&gt;(1);
+        this._petriNetResource.getOne(id, &#x27;^&#x27;).subscribe(reference &#x3D;&gt; {
+            returnReference.next(!reference.stringId ? null : reference);
+            returnReference.complete();
+            return;
+        }, error &#x3D;&gt; {
+            this._log.error(&#x27;Failed to load Petri net&#x27;, error);
+            returnReference.next(null);
+            returnReference.complete();
+        });
+        return returnReference.asObservable();
+    }
+
+    protected loadTransitions(id: string): Observable&lt;Array&lt;Transition&gt;&gt; {
+        return this._petriNetResource.getPetriNetTransitions(id).pipe(
+            map(trans &#x3D;&gt; {
+                if (trans instanceof Array) {
+                    return trans;
+                }
+                return [];
+            }),
+            tap(trans &#x3D;&gt; {
+                if (trans.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.info(&#x27;References for transitions of net &#x27; + id + &#x27; were not found!&#x27;);
+                }
+            }),
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;References for transitions of net &#x27; + id + &#x27; failed to load!&#x27;, err);
+                throw err;
+            })
+        );
+    }
+
+    protected loadTransactions(id: string): Observable&lt;Array&lt;Transaction&gt;&gt; {
+        return this._petriNetResource.getPetriNetTransactions(id).pipe(
+            map(trans &#x3D;&gt; {
+                if (trans instanceof Array) {
+                    return trans;
+                }
+                return [];
+            }),
+            tap(trans &#x3D;&gt; {
+                if (trans.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.info(&#x27;References for transactions of net &#x27; + id + &#x27; were not found!&#x27;);
+                }
+            }),
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;References for transactions of net &#x27; + id + &#x27; failed to load!&#x27;, err);
+                throw err;
+            })
+        );
+    }
+
+    protected loadRoles(id: string): Observable&lt;RolesAndPermissions&gt; {
+        return this._petriNetResource.getPetriNetRoles(id).pipe(
+            tap(rolesAndPerm &#x3D;&gt; {
+                if (rolesAndPerm.processRoles.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.info(&#x27;Roles reference of net &#x27; + id + &#x27; were not found!&#x27;);
+                }
+            }),
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;Roles reference of net &#x27; + id + &#x27; failed to load!&#x27;, err);
+                throw err;
+            })
+        );
+    }
+
+    protected publishUpdate(net?: Net): void {
+        this._netsSubject.next(this._nets);
+        if (net) {
+            this._netUpdate.next(net);
+        }
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProcessService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

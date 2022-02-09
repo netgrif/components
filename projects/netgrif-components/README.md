@@ -4,20 +4,20 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Code scaffolding
 
-Run `ng generate component component-name --project netgrif-application-engine` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project netgrif-application-engine`.
-> Note: Don't forget to add `--project netgrif-application-engine` or else it will be added to the default project in your `angular.json` file. 
+Run `ng generate component component-name --project netgrif-components` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project netgrif-components`.
+> Note: Don't forget to add `--project netgrif-components` or else it will be added to the default project in your `angular.json` file. 
 
 ## Build
 
-Run `ng build netgrif-application-engine` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build netgrif-components` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Publishing
 
-After building your library with `ng build netgrif-application-engine`, go to the dist folder `cd dist/netgrif-application-engine` and run `npm publish`.
+After building your library with `ng build netgrif-components`, go to the dist folder `cd dist/netgrif-components` and run `npm publish`.
 
 ## Running unit tests
 
-Run `ng test netgrif-application-engine` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test netgrif-components` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Further help
 

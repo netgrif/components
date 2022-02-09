@@ -1,0 +1,851 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >OpenedTab</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Holds the information of tab opened in a tab view.</p>
+<p>See <a href="../classess/TabView.html">TabView</a> for more information.</p>
+
+            </p>
+
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="../interfaces/TabContent.html" target="_self" >TabContent</a></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#canBeClosed" >canBeClosed</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#initial" >initial</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#injectedObject" >injectedObject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isTabInitialized" >isTabInitialized</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#label" >label</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#order" >order</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#parentUniqueId" >parentUniqueId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#portal" >portal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#tabClosed$" >tabClosed$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#tabContentComponent" >tabContentComponent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#tabSelected$" >tabSelected$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#uniqueId" >uniqueId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#destroy" >destroy</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(tabContent: <a href="../interfaces/TabContent.html" target="_self">TabContent</a>, uniqueId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:58</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>tabContent</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/TabContent.html" target="_self" >TabContent</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><ul>
+<li>content of the tab</li>
+</ul>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>uniqueId</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><ul>
+<li>unique identifier for the tab</li>
+</ul>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canBeClosed"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>canBeClosed</b></span>
+                        <a href="#canBeClosed"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:20</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>See <a href="../interfaces/TabContent.html#canBeClosed">TabContent.canBeClosed</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initial"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>initial</b></span>
+                        <a href="#initial"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>See <a href="../interfaces/TabContent.html#initial">TabContent.initial</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="injectedObject"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>injectedObject</b></span>
+                        <a href="#injectedObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:28</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>See <a href="../interfaces/TabContent.html#injectedObject">TabContent.injectedObject</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTabInitialized"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isTabInitialized</b></span>
+                        <a href="#isTabInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:50</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Whether the tab was initialized after it&#39;s creation.</p>
+<p>See <a href="../classess/TabView.html#initializeTab">TabGroup.initializeTab()</a> for more information.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="label"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>label</b></span>
+                        <a href="#label"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/TabLabel.html" target="_self" >TabLabel</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:16</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>See <a href="../interfaces/TabContent.html#label">TabContent</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="order"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>order</b></span>
+                        <a href="#order"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:32</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>See <a href="../interfaces/TabContent.html#order">TabContent.order</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parentUniqueId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>parentUniqueId</b></span>
+                        <a href="#parentUniqueId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>undefined</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>See <a href="../interfaces/TabContent.html#parentUniqueId">TabContent.parentUniqueId</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="portal"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>portal</b></span>
+                        <a href="#portal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Component.html" target="_self" >ComponentPortal&lt;any&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:44</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reference to the component portal that is used to display the tab content</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabClosed$"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>tabClosed$</b></span>
+                        <a href="#tabClosed$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subject&lt;void&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:58</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>A stream that is injected into each tab and is used to inform the tab about its termination</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabContentComponent"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>tabContentComponent</b></span>
+                        <a href="#tabContentComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Type&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:24</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>See <a href="../interfaces/TabContent.html#tabContentComponent">TabContent.tabContentComponent</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabSelected$"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>tabSelected$</b></span>
+                        <a href="#tabSelected$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Behavior.html" target="_self" >BehaviorSubject&lt;boolean&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:54</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>A stream that is injected into each tab and is used to inform that tab whenever it is selected or deselected</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uniqueId"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>uniqueId</b></span>
+                        <a href="#uniqueId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:64</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">- unique identifier for the tab</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="destroy"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>destroy</b></span>
+                        <a href="#destroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>destroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/tabs/classes/opened-tab.ts:73</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Closes the stream held in this object</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {TabContent, TabLabel} from &#x27;../interfaces&#x27;;
+import {ComponentPortal} from &#x27;@angular/cdk/portal&#x27;;
+import {Type} from &#x27;@angular/core&#x27;;
+import {BehaviorSubject, Subject} from &#x27;rxjs&#x27;;
+
+/**
+ * Holds the information of tab opened in a tab view.
+ *
+ * See {@link TabView} for more information.
+ */
+export class OpenedTab implements TabContent {
+
+    /**
+     * See {@link TabContent#label}.
+     */
+    public label: TabLabel;
+    /**
+     * See [TabContent.canBeClosed]{@link TabContent#canBeClosed}.
+     */
+    public canBeClosed: boolean;
+    /**
+     * See [TabContent.tabContentComponent]{@link TabContent#tabContentComponent}.
+     */
+    public tabContentComponent: Type&lt;any&gt;;
+    /**
+     * See [TabContent.injectedObject]{@link TabContent#injectedObject}.
+     */
+    public injectedObject: object &#x3D; {};
+    /**
+     * See [TabContent.order]{@link TabContent#order}.
+     */
+    public order &#x3D; 0;
+    /**
+     * See [TabContent.initial]{@link TabContent#initial}.
+     */
+    public initial &#x3D; false;
+    /**
+     * See [TabContent.parentUniqueId]{@link TabContent#parentUniqueId}.
+     */
+    public parentUniqueId &#x3D; undefined;
+    /**
+     * Reference to the component portal that is used to display the tab content
+     */
+    public portal: ComponentPortal&lt;any&gt;;
+    /**
+     * Whether the tab was initialized after it&#x27;s creation.
+     *
+     * See [TabGroup.initializeTab()]{@link TabView#initializeTab} for more information.
+     */
+    public isTabInitialized &#x3D; false;
+    /**
+     * A stream that is injected into each tab and is used to inform that tab whenever it is selected or deselected
+     */
+    public tabSelected$: BehaviorSubject&lt;boolean&gt;;
+    /**
+     * A stream that is injected into each tab and is used to inform the tab about its termination
+     */
+    public tabClosed$: Subject&lt;void&gt;;
+
+    /**
+     * @param tabContent - content of the tab
+     * @param uniqueId - unique identifier for the tab
+     */
+    constructor(tabContent: TabContent, public uniqueId: string) {
+        Object.assign(this, tabContent);
+        this.tabSelected$ &#x3D; new BehaviorSubject&lt;boolean&gt;(false);
+        this.tabClosed$ &#x3D; new Subject();
+    }
+
+    /**
+     * Closes the stream held in this object
+     */
+    public destroy(): void {
+        this.tabSelected$.complete();
+        this.tabClosed$.complete();
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'OpenedTab.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

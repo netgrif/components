@@ -24,7 +24,7 @@ and to create own library of Angular web components to incorporate your own pers
 * License: [NETGRIF Community License](https://github.com/netgrif/components/blob/master/LICENSE)
 
 In this repository are 3 projects:
-* [@netgrif/components-core](projects/netgrif-application-engine/README.md) - Core library of services, factories and abstract classes of components.  
+* [@netgrif/components-core](projects/netgrif-components-core/README.md) - Core library of services, factories and abstract classes of components.  
 * [@netgrif/components](projects/netgrif-components/README.md) - Library of angular components implementing classes from core library.
 * [Examples App](projects/nae-example-app/README.md) - Simple application to demonstrate and test individual components.
 

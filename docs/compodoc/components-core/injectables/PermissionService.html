@@ -1,0 +1,1240 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >PermissionService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#canAssign" >canAssign</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#canCancel" >canCancel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#canCollapse" >canCollapse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#canFinish" >canFinish</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#canReassign" >canReassign</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#checkRolePerms" >checkRolePerms</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#checkUserPerms" >checkUserPerms</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#hasCasePermission" >hasCasePermission</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#hasNetPermission" >hasNetPermission</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#hasTaskPermission" >hasTaskPermission</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resolvePermissions" >resolvePermissions</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(userComparator: <a href="../injectables/UserComparatorService.html" target="_self">UserComparatorService</a>, _userService: <a href="../injectables/UserService.html" target="_self">UserService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:13</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>userComparator</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserComparatorService.html" target="_self" >UserComparatorService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_userService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canAssign"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>canAssign</b></span>
+                        <a href="#canAssign"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>canAssign(task: <a href="../interfaces/Task.html" target="_self">Task | undefined</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:64</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >Task | undefined</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canCancel"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>canCancel</b></span>
+                        <a href="#canCancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>canCancel(task: <a href="../interfaces/Task.html" target="_self">Task | undefined</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="75"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:75</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >Task | undefined</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canCollapse"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>canCollapse</b></span>
+                        <a href="#canCollapse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>canCollapse(task: <a href="../interfaces/Task.html" target="_self">Task | undefined</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:96</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >Task | undefined</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canFinish"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>canFinish</b></span>
+                        <a href="#canFinish"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>canFinish(task: <a href="../interfaces/Task.html" target="_self">Task | undefined</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="89"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:89</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >Task | undefined</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canReassign"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>canReassign</b></span>
+                        <a href="#canReassign"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>canReassign(task: <a href="../interfaces/Task.html" target="_self">Task | undefined</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:82</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >Task | undefined</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkRolePerms"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>checkRolePerms</b></span>
+                        <a href="#checkRolePerms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkRolePerms(roles: <a href="../interfaces/Permissions.html" target="_self">Permissions</a>, permission: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="101"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:101</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>roles</td>
+                                    <td>
+                                                <code><a href="../interfaces/Permissions.html" target="_self" >Permissions</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>permission</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>boolean | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkUserPerms"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>checkUserPerms</b></span>
+                        <a href="#checkUserPerms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkUserPerms(users: <a href="../interfaces/UserPermissions.html" target="_self">UserPermissions</a>, permission)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="113"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:113</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>users</td>
+                                    <td>
+                                                <code><a href="../interfaces/UserPermissions.html" target="_self" >UserPermissions</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>permission</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>boolean | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasCasePermission"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>hasCasePermission</b></span>
+                        <a href="#hasCasePermission"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>hasCasePermission(case_: <a href="../interfaces/Case.html" target="_self">Case | undefined</a>, permission: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:28</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>case_</td>
+                                    <td>
+                                                <code><a href="../interfaces/Case.html" target="_self" >Case | undefined</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>permission</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasNetPermission"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>hasNetPermission</b></span>
+                        <a href="#hasNetPermission"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>hasNetPermission(action: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, net: <a href="../interfaces/PetriNetReferenceWithPermissions.html" target="_self">PetriNetReferenceWithPermissions</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>net</td>
+                                    <td>
+                                                <code><a href="../interfaces/PetriNetReferenceWithPermissions.html" target="_self" >PetriNetReferenceWithPermissions</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasTaskPermission"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>hasTaskPermission</b></span>
+                        <a href="#hasTaskPermission"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>hasTaskPermission(task: <a href="../interfaces/Task.html" target="_self">Task | undefined</a>, permission: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="18"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:18</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >Task | undefined</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>permission</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolvePermissions"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>resolvePermissions</b></span>
+                        <a href="#resolvePermissions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolvePermissions(rolePermValue: boolean | undefined, userPermValue: boolean | undefined)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:38</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>rolePermValue</td>
+                                    <td>
+                                            <code>boolean | undefined</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>userPermValue</td>
+                                    <td>
+                                            <code>boolean | undefined</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {UserComparatorService} from &#x27;../../user/services/user-comparator.service&#x27;;
+import {AssignPolicy} from &#x27;../../task-content/model/policy&#x27;;
+import {Task} from &#x27;../../resources/interface/task&#x27;;
+import {UserService} from &#x27;../../user/services/user.service&#x27;;
+import {Case} from &#x27;../../resources/interface/case&#x27;;
+import {PetriNetReferenceWithPermissions} from &#x27;../../process/petri-net-reference-with-permissions&#x27;;
+import {Permissions, PermissionType, UserPermissions} from &#x27;../../process/permissions&#x27;;
+
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class PermissionService {
+
+    constructor(protected userComparator: UserComparatorService, protected _userService: UserService) {
+    }
+
+    public hasTaskPermission(task: Task | undefined, permission: string): boolean {
+        if (!task) {
+            return false;
+        }
+
+        const rolePermValue &#x3D; this.checkRolePerms(task.roles, permission);
+        const userPermValue &#x3D; this.checkUserPerms(task.users, permission);
+        return this.resolvePermissions(rolePermValue, userPermValue);
+    }
+
+    public hasCasePermission(case_: Case | undefined, permission: string): boolean {
+        if (!case_) {
+            return false;
+        }
+
+        const rolePermValue &#x3D; this.checkRolePerms(case_.permissions, permission);
+        const userPermValue &#x3D; this.checkUserPerms(case_.users, permission);
+        return this.resolvePermissions(rolePermValue, userPermValue);
+    }
+
+    public resolvePermissions(rolePermValue: boolean | undefined, userPermValue: boolean | undefined): boolean {
+        return userPermValue &#x3D;&#x3D;&#x3D; undefined ? (!!rolePermValue) : userPermValue;
+    }
+
+    public hasNetPermission(action: string, net: PetriNetReferenceWithPermissions): boolean {
+        if (!net
+            || !net.permissions
+            || !action
+            || !(net.permissions instanceof Object)
+        ) {
+            return false;
+        }
+        if (Object.keys(net.permissions).some(role &#x3D;&gt;
+            this._userService.hasRoleById(role) ? net.permissions[role][action] &#x3D;&#x3D;&#x3D; false : false)) {
+            return false;
+        }
+        if (!Object.keys(net.permissions).filter(role &#x3D;&gt; Object.keys(net.permissions[role])
+            .some(perm &#x3D;&gt; perm &#x3D;&#x3D;&#x3D; action)).some(role &#x3D;&gt;
+            !!net.permissions[role][action])) {
+            return true;
+        }
+        return Object.keys(net.permissions).some(role &#x3D;&gt;
+            this._userService.hasRoleById(role) ? !!net.permissions[role][action] : false
+        );
+    }
+
+    public canAssign(task: Task | undefined): boolean {
+        return !!task
+            &amp;&amp; (
+                (
+                    task.assignPolicy &#x3D;&#x3D;&#x3D; AssignPolicy.manual
+                    &amp;&amp; !task.user
+                    &amp;&amp; this.hasTaskPermission(task, PermissionType.ASSIGN)
+                )
+            );
+    }
+
+    public canCancel(task: Task | undefined): boolean {
+        return !!task &amp;&amp; !!task.user
+            &amp;&amp; this.hasTaskPermission(task, PermissionType.CANCEL)
+            &amp;&amp; ((task.assignedUserPolicy &#x3D;&#x3D;&#x3D; undefined || task.assignedUserPolicy.cancel &#x3D;&#x3D;&#x3D; undefined)
+                || task.assignedUserPolicy.cancel);
+    }
+
+    public canReassign(task: Task | undefined): boolean {
+        return !!task &amp;&amp; !!task.user &amp;&amp; this.userComparator.compareUsers(task.user)
+            &amp;&amp; this.hasTaskPermission(task, PermissionType.DELEGATE)
+            &amp;&amp; ((task.assignedUserPolicy &#x3D;&#x3D;&#x3D; undefined || task.assignedUserPolicy.reassign &#x3D;&#x3D;&#x3D; undefined)
+                || task.assignedUserPolicy.reassign);
+    }
+
+    public canFinish(task: Task | undefined): boolean {
+        return !!task
+            &amp;&amp; !!task.user
+            &amp;&amp; this.userComparator.compareUsers(task.user)
+            &amp;&amp; this.hasTaskPermission(task, PermissionType.FINISH);
+    }
+
+    public canCollapse(task: Task | undefined): boolean {
+        return !!task
+            &amp;&amp; task.assignPolicy &#x3D;&#x3D;&#x3D; AssignPolicy.manual;
+    }
+
+    public checkRolePerms(roles: Permissions, permission: string): boolean | undefined {
+        let rolePermValue: boolean;
+        if (!!roles) {
+            Object.keys(roles).forEach(role &#x3D;&gt; {
+                if (roles[role][permission] !&#x3D;&#x3D; undefined &amp;&amp; this._userService.hasRoleById(role)) {
+                    rolePermValue &#x3D; rolePermValue &#x3D;&#x3D;&#x3D; undefined ? roles[role][permission] : rolePermValue &amp;&amp; roles[role][permission];
+                }
+            });
+        }
+        return rolePermValue;
+    }
+
+    public checkUserPerms(users: UserPermissions, permission): boolean | undefined {
+        let userPermValue: boolean;
+        if (!!users) {
+            const loggedUserId &#x3D; this._userService.user.id;
+            Object.keys(users).forEach(user &#x3D;&gt; {
+                if (user &#x3D;&#x3D;&#x3D; loggedUserId &amp;&amp; users[user][permission] !&#x3D;&#x3D; undefined) {
+                    userPermValue &#x3D; userPermValue &#x3D;&#x3D;&#x3D; undefined ?
+                        users[user][permission] : userPermValue &amp;&amp; users[user][permission];
+                }
+            });
+        }
+        return userPermValue;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'PermissionService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
