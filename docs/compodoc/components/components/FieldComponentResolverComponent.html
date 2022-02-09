@@ -1,0 +1,433 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  FieldComponentResolverComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components/src/lib/task-content/field-component-resolver/field-component-resolver.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../components/FieldComponentResolverComponent.html" target="_self" >AbstractFieldComponentResolverComponent</a></code>
+    </p>
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>nc-field-component-resolver</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./field-component-resolver.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./field-component-resolver.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(taskContentService: TaskContentService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/netgrif-components/src/lib/task-content/field-component-resolver/field-component-resolver.component.ts:9</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>taskContentService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TaskContentService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
+import {AbstractFieldComponentResolverComponent, TaskContentService} from &#x27;@netgrif/components-core&#x27;;
+
+@Component({
+    selector: &#x27;nc-field-component-resolver&#x27;,
+    templateUrl: &#x27;./field-component-resolver.component.html&#x27;,
+    styleUrls: [&#x27;./field-component-resolver.component.scss&#x27;]
+})
+export class FieldComponentResolverComponent extends AbstractFieldComponentResolverComponent {
+
+    constructor(taskContentService: TaskContentService) {
+        super(taskContentService);
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot; [ngClass]&#x3D;&quot;{&#x27;min-row-height&#x27;: isField()}&quot; [ngSwitch]&#x3D;&quot;getElementType()&quot;&gt;
+    &lt;nc-boolean-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.BOOLEAN&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-boolean-field&gt;
+
+    &lt;nc-text-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.TEXT&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-text-field&gt;
+
+    &lt;nc-number-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.NUMBER&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-number-field&gt;
+
+    &lt;nc-enumeration-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.ENUMERATION&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-enumeration-field&gt;
+
+    &lt;nc-enumeration-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.ENUMERATION_MAP&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-enumeration-field&gt;
+
+    &lt;nc-multichoice-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.MULTICHOICE&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-multichoice-field&gt;
+
+    &lt;nc-multichoice-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.MULTICHOICE_MAP&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-multichoice-field&gt;
+
+    &lt;nc-date-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.DATE&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-date-field&gt;
+
+    &lt;nc-date-time-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.DATE_TIME&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-date-time-field&gt;
+
+    &lt;nc-file-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.FILE&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskId]&#x3D;&quot;getTaskId()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-file-field&gt;
+
+    &lt;nc-file-list-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.FILE_LIST&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskId]&#x3D;&quot;getTaskId()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-file-list-field&gt;
+
+    &lt;nc-user-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.USER&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-user-field&gt;
+
+    &lt;nc-button-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.BUTTON&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&gt;
+    &lt;/nc-button-field&gt;
+
+    &lt;nc-filter-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.FILTER&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&#x3D;&quot;&quot;&gt;
+    &lt;/nc-filter-field&gt;
+
+    &lt;nc-i18n-field *ngSwitchCase&#x3D;&quot;fieldTypeEnum.I18N&quot; [dataField]&#x3D;&quot;getDataField()&quot; [taskOffset]&#x3D;&quot;getFieldOffset()&quot; fxFlex&#x3D;&quot;&quot;&gt;
+    &lt;/nc-i18n-field&gt;
+
+    &lt;div *ngSwitchCase&#x3D;&quot;taskElementEnum.DATA_GROUP_TITLE&quot; fxFlex fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+        &lt;div fxFlex&#x3D;&quot;20&quot; class&#x3D;&quot;line-datagroup&quot;&gt;&lt;/div&gt;
+        &lt;span [ngClass]&#x3D;&quot;{&#x27;margin-default&#x27;: getDataGroupTitle() !&#x3D;&#x3D; &#x27;&#x27;}&quot;&gt;{{getDataGroupTitle()}}&lt;/span&gt;
+        &lt;div fxFlex class&#x3D;&quot;line-datagroup&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div *ngSwitchCase&#x3D;&quot;taskElementEnum.LOADER&quot; class&#x3D;&quot;min-row-height&quot; fxFlex fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+        &lt;div class&#x3D;&quot;phl-item&quot;&gt;
+            &lt;div class&#x3D;&quot;phl-row&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+                &lt;div class&#x3D;&quot;phl-col&quot;&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div *ngSwitchCase&#x3D;&quot;taskElementEnum.BLANK&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./field-component-resolver.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.line-datagroup {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.margin-default {
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
+.min-row-height {
+    min-height: 105px;
+}
+
+.phl-row {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.phl-col {
+    height: 70px;
+    flex: 0 0 90%;
+    background-color: #ced4da;
+    border-radius: 8px;
+
+}
+
+.phl-item {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background-color: #fff;
+
+    &amp;::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient(
+                90deg,
+                rgba(#fff, 0) 0,
+                rgba(#fff, 0.2) 20%,
+                rgba(#fff, 0.5) 60%,
+                rgba(#fff, 0)
+        );
+        animation: shimmer 1s infinite;
+        content: &#x27;&#x27;;
+    }
+
+    @keyframes shimmer {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+}
+
+.phl-item, .phl-item *, .phl-item::after, .phl-item::before {
+    box-sizing: border-box;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div fxLayout="row" fxLayoutAlign="start center" [ngClass]="{\'min-row-height\': isField()}" [ngSwitch]="getElementType()">    <nc-boolean-field *ngSwitchCase="fieldTypeEnum.BOOLEAN" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-boolean-field>    <nc-text-field *ngSwitchCase="fieldTypeEnum.TEXT" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-text-field>    <nc-number-field *ngSwitchCase="fieldTypeEnum.NUMBER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-number-field>    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-enumeration-field>    <nc-enumeration-field *ngSwitchCase="fieldTypeEnum.ENUMERATION_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-enumeration-field>    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-multichoice-field>    <nc-multichoice-field *ngSwitchCase="fieldTypeEnum.MULTICHOICE_MAP" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-multichoice-field>    <nc-date-field *ngSwitchCase="fieldTypeEnum.DATE" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-date-field>    <nc-date-time-field *ngSwitchCase="fieldTypeEnum.DATE_TIME" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-date-time-field>    <nc-file-field *ngSwitchCase="fieldTypeEnum.FILE" [dataField]="getDataField()" [taskId]="getTaskId()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-file-field>    <nc-file-list-field *ngSwitchCase="fieldTypeEnum.FILE_LIST" [dataField]="getDataField()" [taskId]="getTaskId()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-file-list-field>    <nc-user-field *ngSwitchCase="fieldTypeEnum.USER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-user-field>    <nc-button-field *ngSwitchCase="fieldTypeEnum.BUTTON" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>    </nc-button-field>    <nc-filter-field *ngSwitchCase="fieldTypeEnum.FILTER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">    </nc-filter-field>    <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">    </nc-i18n-field>    <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">        <div fxFlex="20" class="line-datagroup"></div>        <span [ngClass]="{\'margin-default\': getDataGroupTitle() !== \'\'}">{{getDataGroupTitle()}}</span>        <div fxFlex class="line-datagroup"></div>    </div>    <div *ngSwitchCase="taskElementEnum.LOADER" class="min-row-height" fxFlex fxLayout="row" fxLayoutAlign="center center">        <div class="phl-item">            <div class="phl-row" fxLayoutAlign="center center">                <div class="phl-col">                </div>            </div>        </div>    </div>    <div *ngSwitchCase="taskElementEnum.BLANK"></div></div></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'FieldComponentResolverComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'FieldComponentResolverComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

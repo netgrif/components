@@ -27,18 +27,6 @@
         "nae components",
         "nae frontend"
     ],
-    "scripts": {
-        "nc:clean": "node projects/netgrif-components/src/scripts/delete-local-build-link.js",
-        "nc:build": "npm run nc:clean && ng build netgrif-components --prod && npm run nc:build-schematics",
-        "nc:local-build": "npm run nc:build && npm i ./dist/netgrif-components --save-optional",
-        "nc:build-schematics": "node projects/netgrif-components/src/scripts/build-schematics.js",
-        "nc:lint": "ng lint netgrif-components",
-        "nc:test": "ng test netgrif-components",
-        "nc:full-test": "npm run nc:lint && npm run nc:test",
-        "nc:normalize-coverage-summary": "node scripts/normalize-file-paths.js coverage/netgrif-components/coverage-summary.json",
-        "nc:doc": "npm run nc:normalize-coverage-summary && compodoc -c projects/netgrif-components/.compodocrc.json",
-        "nc:compodoc": "compodoc -c projects/netgrif-components/.compodocrc.json"
-    },
     "dependencies": {
         "@netgrif/components-core": "6.0.0-rc.5"
     },

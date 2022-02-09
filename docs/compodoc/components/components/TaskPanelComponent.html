@@ -1,0 +1,858 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  TaskPanelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components/src/lib/panel/task-panel/task-panel.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+            <code>AbstractTaskPanelComponent</code>
+    </p>
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                            <code>{ provide: TaskContentService, useClass: SingleTaskContentService }</code>
+                            <code>TaskDataService</code>
+                            <code>TaskEventService</code>
+                            <code>AssignTaskService</code>
+                            <code>DelegateTaskService</code>
+                            <code>CancelTaskService</code>
+                            <code>FinishTaskService</code>
+                            <code>TaskRequestStateService</code>
+                            <code>DataFocusPolicyService</code>
+                            <code>AssignPolicyService</code>
+                            <code>FinishPolicyService</code>
+                            <code>ChangedFieldsService</code>
+                            <code>{ provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations }</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>nc-task-panel</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./task-panel.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./task-panel.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#createContentPortal" >createContentPortal</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_taskContentService: TaskContentService, _log: LoggerService, _taskViewService: TaskViewService, _paperView: PaperViewService, _taskEventService: TaskEventService, _assignTaskService: AssignTaskService, _delegateTaskService: DelegateTaskService, _cancelTaskService: CancelTaskService, _finishTaskService: FinishTaskService, _taskState: TaskRequestStateService, _taskDataService: TaskDataService, _assignPolicyService: AssignPolicyService, _callChain: CallChainService, _translate: TranslateService, _taskOperations: SubjectTaskOperations, _disableFunctions: DisableButtonFuntions, isEnabled: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, _parentInjector: <a href="https://angular.io/api/core/Injector" target="_blank">Injector</a>, _currencyPipe: <a href="https://angular.io/api/common/CurrencyPipe" target="_blank">CurrencyPipe</a>, _changedFieldsService: ChangedFieldsService, _permissionService: PermissionService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/netgrif-components/src/lib/panel/task-panel/task-panel.component.ts:53</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_taskContentService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TaskContentService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                    <code>LoggerService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskViewService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TaskViewService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_paperView</td>
+                                                  
+                                                        <td>
+                                                                    <code>PaperViewService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskEventService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TaskEventService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_assignTaskService</td>
+                                                  
+                                                        <td>
+                                                                    <code>AssignTaskService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_delegateTaskService</td>
+                                                  
+                                                        <td>
+                                                                    <code>DelegateTaskService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_cancelTaskService</td>
+                                                  
+                                                        <td>
+                                                                    <code>CancelTaskService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_finishTaskService</td>
+                                                  
+                                                        <td>
+                                                                    <code>FinishTaskService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskState</td>
+                                                  
+                                                        <td>
+                                                                    <code>TaskRequestStateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskDataService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TaskDataService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_assignPolicyService</td>
+                                                  
+                                                        <td>
+                                                                    <code>AssignPolicyService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_callChain</td>
+                                                  
+                                                        <td>
+                                                                    <code>CallChainService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translate</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskOperations</td>
+                                                  
+                                                        <td>
+                                                                    <code>SubjectTaskOperations</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_disableFunctions</td>
+                                                  
+                                                        <td>
+                                                                    <code>DisableButtonFuntions</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>isEnabled</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_parentInjector</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/Injector" target="_blank" >Injector</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_currencyPipe</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/CurrencyPipe" target="_blank" >CurrencyPipe</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_changedFieldsService</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangedFieldsService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_permissionService</td>
+                                                  
+                                                        <td>
+                                                                    <code>PermissionService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createContentPortal"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>createContentPortal</b></span>
+                        <a href="#createContentPortal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createContentPortal()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">projects/netgrif-components/src/lib/panel/task-panel/task-panel.component.ts:82</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, Injector, Optional, StaticProvider} from &#x27;@angular/core&#x27;;
+import {ComponentPortal} from &#x27;@angular/cdk/portal&#x27;;
+import {
+    AbstractTaskPanelComponent,
+    AssignPolicyService,
+    AssignTaskService,
+    CallChainService,
+    CancelTaskService,
+    DataFocusPolicyService,
+    DelegateTaskService,
+    DisableButtonFuntions,
+    FinishPolicyService,
+    FinishTaskService,
+    LoggerService,
+    NAE_TASK_OPERATIONS,
+    NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS,
+    BOOLEAN_VALUE_LABEL_ENABLED,
+    PaperViewService,
+    SingleTaskContentService,
+    SubjectTaskOperations,
+    TaskContentService,
+    TaskDataService,
+    TaskEventService,
+    TaskRequestStateService,
+    TaskViewService,
+    PermissionService,
+    ChangedFieldsService
+} from &#x27;@netgrif/components-core&#x27;;
+import {TaskContentComponent} from &#x27;../../task-content/task-content/task-content.component&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {CurrencyPipe} from &#x27;@angular/common&#x27;;
+
+@Component({
+    selector: &#x27;nc-task-panel&#x27;,
+    templateUrl: &#x27;./task-panel.component.html&#x27;,
+    styleUrls: [&#x27;./task-panel.component.scss&#x27;],
+    providers: [
+        {provide: TaskContentService, useClass: SingleTaskContentService},
+        TaskDataService,
+        TaskEventService,
+        AssignTaskService,
+        DelegateTaskService,
+        CancelTaskService,
+        FinishTaskService,
+        TaskRequestStateService,
+        DataFocusPolicyService,
+        AssignPolicyService,
+        FinishPolicyService,
+        ChangedFieldsService,
+        {provide: NAE_TASK_OPERATIONS, useClass: SubjectTaskOperations},
+    ]
+})
+export class TaskPanelComponent extends AbstractTaskPanelComponent {
+
+    constructor(protected _taskContentService: TaskContentService,
+                protected _log: LoggerService,
+                protected _taskViewService: TaskViewService,
+                protected _paperView: PaperViewService,
+                protected _taskEventService: TaskEventService,
+                protected _assignTaskService: AssignTaskService,
+                protected _delegateTaskService: DelegateTaskService,
+                protected _cancelTaskService: CancelTaskService,
+                protected _finishTaskService: FinishTaskService,
+                protected _taskState: TaskRequestStateService,
+                protected _taskDataService: TaskDataService,
+                protected _assignPolicyService: AssignPolicyService,
+                protected _callChain: CallChainService,
+                protected _translate: TranslateService,
+                @Inject(NAE_TASK_OPERATIONS) _taskOperations: SubjectTaskOperations,
+                @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions,
+                @Optional() @Inject(BOOLEAN_VALUE_LABEL_ENABLED) protected isEnabled: boolean,
+                protected _parentInjector: Injector,
+                protected _currencyPipe: CurrencyPipe,
+                protected _changedFieldsService: ChangedFieldsService,
+                protected _permissionService: PermissionService) {
+        super(_taskContentService, _log, _taskViewService, _paperView, _taskEventService, _assignTaskService,
+            _delegateTaskService, _cancelTaskService, _finishTaskService, _taskState, _taskDataService,
+            _assignPolicyService, _callChain, _taskOperations, _disableFunctions, _translate, _currencyPipe, _changedFieldsService,
+            _permissionService);
+    }
+
+    protected createContentPortal(): void {
+        const providers: Array&lt;StaticProvider&gt; &#x3D; [
+            {provide: TaskContentService, useValue: this._taskContentService},
+            {provide: BOOLEAN_VALUE_LABEL_ENABLED, useValue: this.isEnabled}
+        ];
+        const injector &#x3D; Injector.create({providers, parent: this._parentInjector});
+
+        if (this.panelContentComponent &#x3D;&#x3D;&#x3D; undefined) {
+            this.portal &#x3D; new ComponentPortal(TaskContentComponent, null, injector);
+        } else {
+            this.portal &#x3D; new ComponentPortal(this.panelContentComponent, null, injector);
+        }
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;nc-app-panel [panelContent]&#x3D;&quot;taskPanelContent&quot; [panelHeader]&#x3D;&quot;taskPanelHeader&quot;
+              (stopLoading)&#x3D;&quot;stopLoading()&quot; (getExpansionPanelRef)&#x3D;&quot;setPanelRef($event)&quot; [first]&#x3D;&quot;first&quot; [last]&#x3D;&quot;last&quot;&gt;
+    &lt;ng-template #taskPanelHeader&gt;
+        &lt;div fxLayoutAlign&#x3D;&quot;start center&quot; fxLayout&#x3D;&quot;row&quot; fxFlex&#x3D;&quot;95&quot; (click)&#x3D;&quot;preventSelectionClick($event)&quot;&gt;
+            &lt;div fxFlex class&#x3D;&quot;text-column-div&quot; [ngClass]&#x3D;&quot;{&#x27;panel-header-padding&#x27;: !textEllipsis}&quot;&gt;
+                &lt;span class&#x3D;&quot;text-column-margin&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+                    &lt;mat-icon class&#x3D;&quot;task-panel-icon panel-primary-icon&quot;&gt;
+                        {{taskPanelData.task.icon ? taskPanelData.task.icon : &#x27;label&#x27;}}&lt;/mat-icon&gt;
+                    &lt;span [ngClass]&#x3D;&quot;{
+                                     &#x27;text-column-ellipsis&#x27;: textEllipsis,
+                                     &#x27;text-column-word-wrap&#x27;: !textEllipsis
+                              }&quot;&gt;{{firstFeaturedValue}}&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div *ngFor&#x3D;&quot;let field of featuredFieldsValues; let i &#x3D; index&quot; fxFlex
+                  class&#x3D;&quot;text-column-div&quot;
+                  [fxHide.lt-xl]&#x3D;&quot;i &gt;&#x3D; 3 &amp;&amp; responsiveBody&quot;
+                  [fxHide.lt-lg]&#x3D;&quot;i &gt;&#x3D; 2 &amp;&amp; responsiveBody&quot;
+                  [fxHide.lt-md]&#x3D;&quot;i &gt;&#x3D; 1 &amp;&amp; responsiveBody&quot;
+                  [fxHide.lt-sm]&#x3D;&quot;i &gt;&#x3D; 0 &amp;&amp; responsiveBody&quot;
+                    [ngClass]&#x3D;&quot;{&#x27;panel-header-padding&#x27;: !textEllipsis &amp;&amp; field.type !&#x3D;&#x3D; &#x27;button&#x27;}&quot;&gt;
+                &lt;span class&#x3D;&quot;text-column-margin&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+                    &lt;mat-icon class&#x3D;&quot;task-panel-icon panel-primary-icon&quot;
+                              *ngIf&#x3D;&quot;!!field.icon &amp;&amp; !!field.value &amp;&amp; field.type !&#x3D;&#x3D; &#x27;button&#x27;&quot;&gt;{{field.icon}}&lt;/mat-icon&gt;
+                    &lt;button *ngIf&#x3D;&quot;field.type &#x3D;&#x3D;&#x3D; &#x27;button&#x27;&quot; mat-flat-button color&#x3D;&quot;primary&quot;&gt;{{field.value}}&lt;/button&gt;
+                    &lt;span [ngClass]&#x3D;&quot;{
+                                 &#x27;text-column-ellipsis&#x27;: textEllipsis,
+                                 &#x27;text-column-word-wrap&#x27;: !textEllipsis
+                              }&quot; [matTooltip]&#x3D;&quot;field.value&quot;
+                          [matTooltipDisabled]&#x3D;&quot;!textEllipsis&quot;
+                          [matTooltipClass]&#x3D;&quot;&#x27;pre-line-dialog&#x27;&quot;
+                    &gt;{{field.type &#x3D;&#x3D;&#x3D; &#x27;button&#x27; ? &#x27;&#x27; : field.value }}&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;end center&quot; fxFlex&#x3D;&quot;5&quot;&gt;
+            &lt;button mat-icon-button (click)&#x3D;&quot;preventPanelOpen($event)&quot;
+                    *ngIf&#x3D;&quot;!isLoading &amp;&amp; (canAssign() || canDo(&#x27;delegate&#x27;) || canReassign() || canCancel() || canFinish())&quot;
+                    [matMenuTriggerFor]&#x3D;&quot;menu&quot;&gt;
+                &lt;mat-icon&gt;more_vert&lt;/mat-icon&gt;
+            &lt;/button&gt;
+            &lt;mat-menu #menu&#x3D;&quot;matMenu&quot;&gt;
+                &lt;button mat-menu-item *ngIf&#x3D;&quot;canAssign()&quot; (click)&#x3D;&quot;assign()&quot; [disabled]&#x3D;&quot;canDisable(&#x27;assign&#x27;)&quot;&gt;
+                    &lt;mat-icon&gt;person&lt;/mat-icon&gt;
+                    &lt;span&gt;{{ getAssignTitle() | translate}}&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button mat-menu-item *ngIf&#x3D;&quot;canDo(&#x27;delegate&#x27;)&quot; (click)&#x3D;&quot;delegate()&quot;
+                        [disabled]&#x3D;&quot;canDisable(&#x27;delegate&#x27;)&quot;&gt;
+                    &lt;mat-icon&gt;person_outline&lt;/mat-icon&gt;
+                    &lt;span&gt;{{ getDelegateTitle() | translate}}&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button mat-menu-item *ngIf&#x3D;&quot;canReassign()&quot; (click)&#x3D;&quot;delegate()&quot; [disabled]&#x3D;&quot;canDisable(&#x27;reassign&#x27;)&quot;&gt;
+                    &lt;mat-icon&gt;person_add&lt;/mat-icon&gt;
+                    &lt;span&gt;{{ &#x27;tasks.view.reassign&#x27; | translate}}&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button mat-menu-item *ngIf&#x3D;&quot;canCancel()&quot; (click)&#x3D;&quot;cancel()&quot; [disabled]&#x3D;&quot;canDisable(&#x27;cancel&#x27;)&quot;&gt;
+                    &lt;mat-icon&gt;cancel&lt;/mat-icon&gt;
+                    &lt;span&gt;{{ getCancelTitle() | translate}}&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button mat-menu-item *ngIf&#x3D;&quot;canFinish()&quot; (click)&#x3D;&quot;finish()&quot; [disabled]&#x3D;&quot;canDisable(&#x27;finish&#x27;)&quot;&gt;
+                    &lt;mat-icon&gt;done&lt;/mat-icon&gt;
+                    &lt;span&gt;{{ getFinishTitle() | translate}}&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/mat-menu&gt;
+            &lt;mat-spinner *ngIf&#x3D;&quot;isLoading&quot; [diameter]&#x3D;&quot;30&quot;&gt;&lt;/mat-spinner&gt;
+        &lt;/div&gt;
+    &lt;/ng-template&gt;
+    &lt;ng-template #taskPanelContent&gt;
+        &lt;div class&#x3D;&quot;panel-main-content&quot; fxLayout&#x3D;&quot;column&quot;&gt;
+            &lt;div class&#x3D;&quot;task-panel-body&quot; [ngClass]&#x3D;&quot;{&#x27;paper-view&#x27;: isPaperView()}&quot; fxFlex&#x3D;&quot;100&quot;&gt;
+                &lt;ng-template [cdkPortalOutlet]&#x3D;&quot;portal&quot;&gt;&lt;/ng-template&gt;
+            &lt;/div&gt;
+            &lt;mat-action-row&gt;
+                &lt;div fxLayout.lt-sm&#x3D;&quot;column&quot; fxLayoutAlign.lt-sm&#x3D;&quot;center stretch&quot; ngClass.lt-sm&#x3D;&quot;width-100&quot;&gt;
+                    &lt;button *ngIf&#x3D;&quot;canAssign()&quot; (click)&#x3D;&quot;assign()&quot; mat-button [disabled]&#x3D;&quot;canDisable(&#x27;assign&#x27;)&quot;&gt;
+                        {{ getAssignTitle() | translate | uppercase }}&lt;/button&gt;
+                    &lt;button *ngIf&#x3D;&quot;canDo(&#x27;delegate&#x27;)&quot; (click)&#x3D;&quot;delegate()&quot; mat-button [disabled]&#x3D;&quot;canDisable(&#x27;delegate&#x27;)&quot;&gt;
+                        {{ getDelegateTitle() | translate | uppercase }}&lt;/button&gt;
+                    &lt;button *ngIf&#x3D;&quot;canReassign()&quot; (click)&#x3D;&quot;delegate()&quot; mat-button [disabled]&#x3D;&quot;canDisable(&#x27;reassign&#x27;)&quot;&gt;
+                        {{ &#x27;tasks.view.reassign&#x27; | translate | uppercase }}&lt;/button&gt;
+                    &lt;button *ngIf&#x3D;&quot;canCancel()&quot; (click)&#x3D;&quot;cancel()&quot; mat-button [disabled]&#x3D;&quot;canDisable(&#x27;cancel&#x27;)&quot;&gt;
+                        {{ getCancelTitle() | translate | uppercase }}&lt;/button&gt;
+                    &lt;button *ngIf&#x3D;&quot;canFinish()&quot; (click)&#x3D;&quot;finish()&quot; mat-button [disabled]&#x3D;&quot;canDisable(&#x27;finish&#x27;)&quot;&gt;
+                        {{ getFinishTitle() | translate | uppercase }}&lt;/button&gt;
+                    &lt;button *ngIf&#x3D;&quot;canCollapse()&quot; color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;collapse()&quot; mat-button&gt;
+                        {{ &#x27;tasks.view.collapse&#x27; | translate | uppercase }}&lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/mat-action-row&gt;
+        &lt;/div&gt;
+    &lt;/ng-template&gt;
+&lt;/nc-app-panel&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./task-panel.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.task-panel-icon {
+    margin-right: 8px;
+}
+
+.task-panel-footer {
+    border-top: 1px solid rgba(0, 0, 0, .03);
+    padding: 5px 24px;
+}
+
+.task-panel-body {
+    padding: 10px 24px;
+}
+
+.paper-view {
+    margin: auto;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.text-column-ellipsis {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.text-column-word-wrap {
+    word-break: break-word !important;
+    white-space: pre-line !important;
+}
+
+.text-column-div {
+    min-width: 0;
+    width: 0;
+}
+
+.text-column-margin {
+    margin-right: 15px;
+    line-height: 24px;
+}
+
+.panel-header-padding {
+    padding: 12px 0 !important;
+}
+
+.pre-line-dialog {
+    white-space: pre-line !important;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><nc-app-panel [panelContent]="taskPanelContent" [panelHeader]="taskPanelHeader"              (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">    <ng-template #taskPanelHeader>        <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">            <div fxFlex class="text-column-div" [ngClass]="{\'panel-header-padding\': !textEllipsis}">                <span class="text-column-margin" fxLayoutAlign="start center">                    <mat-icon class="task-panel-icon panel-primary-icon">                        {{taskPanelData.task.icon ? taskPanelData.task.icon : \'label\'}}</mat-icon>                    <span [ngClass]="{                                     \'text-column-ellipsis\': textEllipsis,                                     \'text-column-word-wrap\': !textEllipsis                              }">{{firstFeaturedValue}}</span>                </span>            </div>            <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex                  class="text-column-div"                  [fxHide.lt-xl]="i >= 3 && responsiveBody"                  [fxHide.lt-lg]="i >= 2 && responsiveBody"                  [fxHide.lt-md]="i >= 1 && responsiveBody"                  [fxHide.lt-sm]="i >= 0 && responsiveBody"                    [ngClass]="{\'panel-header-padding\': !textEllipsis && field.type !== \'button\'}">                <span class="text-column-margin" fxLayoutAlign="start center">                    <mat-icon class="task-panel-icon panel-primary-icon"                              *ngIf="!!field.icon && !!field.value && field.type !== \'button\'">{{field.icon}}</mat-icon>                    <button *ngIf="field.type === \'button\'" mat-flat-button color="primary">{{field.value}}</button>                    <span [ngClass]="{                                 \'text-column-ellipsis\': textEllipsis,                                 \'text-column-word-wrap\': !textEllipsis                              }" [matTooltip]="field.value"                          [matTooltipDisabled]="!textEllipsis"                          [matTooltipClass]="\'pre-line-dialog\'"                    >{{field.type === \'button\' ? \'\' : field.value }}</span>                </span>            </div>        </div>        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">            <button mat-icon-button (click)="preventPanelOpen($event)"                    *ngIf="!isLoading && (canAssign() || canDo(\'delegate\') || canReassign() || canCancel() || canFinish())"                    [matMenuTriggerFor]="menu">                <mat-icon>more_vert</mat-icon>            </button>            <mat-menu #menu="matMenu">                <button mat-menu-item *ngIf="canAssign()" (click)="assign()" [disabled]="canDisable(\'assign\')">                    <mat-icon>person</mat-icon>                    <span>{{ getAssignTitle() | translate}}</span>                </button>                <button mat-menu-item *ngIf="canDo(\'delegate\')" (click)="delegate()"                        [disabled]="canDisable(\'delegate\')">                    <mat-icon>person_outline</mat-icon>                    <span>{{ getDelegateTitle() | translate}}</span>                </button>                <button mat-menu-item *ngIf="canReassign()" (click)="delegate()" [disabled]="canDisable(\'reassign\')">                    <mat-icon>person_add</mat-icon>                    <span>{{ \'tasks.view.reassign\' | translate}}</span>                </button>                <button mat-menu-item *ngIf="canCancel()" (click)="cancel()" [disabled]="canDisable(\'cancel\')">                    <mat-icon>cancel</mat-icon>                    <span>{{ getCancelTitle() | translate}}</span>                </button>                <button mat-menu-item *ngIf="canFinish()" (click)="finish()" [disabled]="canDisable(\'finish\')">                    <mat-icon>done</mat-icon>                    <span>{{ getFinishTitle() | translate}}</span>                </button>            </mat-menu>            <mat-spinner *ngIf="isLoading" [diameter]="30"></mat-spinner>        </div>    </ng-template>    <ng-template #taskPanelContent>        <div class="panel-main-content" fxLayout="column">            <div class="task-panel-body" [ngClass]="{\'paper-view\': isPaperView()}" fxFlex="100">                <ng-template [cdkPortalOutlet]="portal"></ng-template>            </div>            <mat-action-row>                <div fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center stretch" ngClass.lt-sm="width-100">                    <button *ngIf="canAssign()" (click)="assign()" mat-button [disabled]="canDisable(\'assign\')">                        {{ getAssignTitle() | translate | uppercase }}</button>                    <button *ngIf="canDo(\'delegate\')" (click)="delegate()" mat-button [disabled]="canDisable(\'delegate\')">                        {{ getDelegateTitle() | translate | uppercase }}</button>                    <button *ngIf="canReassign()" (click)="delegate()" mat-button [disabled]="canDisable(\'reassign\')">                        {{ \'tasks.view.reassign\' | translate | uppercase }}</button>                    <button *ngIf="canCancel()" (click)="cancel()" mat-button [disabled]="canDisable(\'cancel\')">                        {{ getCancelTitle() | translate | uppercase }}</button>                    <button *ngIf="canFinish()" (click)="finish()" mat-button [disabled]="canDisable(\'finish\')">                        {{ getFinishTitle() | translate | uppercase }}</button>                    <button *ngIf="canCollapse()" color="primary" (click)="collapse()" mat-button>                        {{ \'tasks.view.collapse\' | translate | uppercase }}</button>                </div>            </mat-action-row>        </div>    </ng-template></nc-app-panel></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TaskPanelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TaskPanelComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

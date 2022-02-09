@@ -15,5 +15,8 @@
             "angular-resize-event": "angularResizeEvent",
             "@covalent/core": "@covalent/core"
         }
-    }
+    },
+    "whitelistedNonPeerDependencies": [
+        "@netgrif/components-core"
+    ]
 }
