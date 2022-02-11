@@ -13,7 +13,7 @@ jobs:
                 with:
                     node-version: 12
             -   run: |
-                    npm ci
+                    npm i
                     npm run ncc:build
                     npm run ncc:full-test
                     cd dist/netgrif-components-core

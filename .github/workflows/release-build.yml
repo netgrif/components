@@ -11,7 +11,7 @@ jobs:
                 with:
                     node-version: 12
             -   run: |
-                    npm ci
+                    npm i
                     npm run ncc:build
                     npm run ncc:full-test
                     cd dist/netgrif-components-core
@@ -30,7 +30,7 @@ jobs:
                 with:
                     node-version: 12
                     registry-url: https://registry.npmjs.org/
-            -   run: npm ci
+            -   run: npm i
             -   run: npm run project:local-build
             -   run: npm publish --access public
                 env:
@@ -48,7 +48,7 @@ jobs:
                 with:
                     node-version: 12
                     registry-url: https://npm.pkg.github.com
-            -   run: npm ci
+            -   run: npm i
             -   run: npm run project:local-build
             -   run: npm publish --access public
                 env:

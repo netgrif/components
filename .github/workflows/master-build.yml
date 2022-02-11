@@ -18,7 +18,7 @@ jobs:
                     node-version: 12
                     cache: 'npm'
             -   run: |
-                    npm ci
+                    npm i
                     npm run ncc:build
                     npm run ncc:full-test
                     cd dist/netgrif-components-core
