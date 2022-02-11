@@ -1,12 +1,48 @@
 name: Publish package to GitHub Packages
 on:
-  release:
-    types: [created]
+    release:
+        types: [ published ]
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v2
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: actions/setup-node@v2
+                with:
+                    node-version: 14
+            -   run: npm ci
+            -   run: npm run project:local-build
+            -   run: npm run project:full-test
+
+    publish-npm:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: actions/setup-node@v2
+                with:
+                    node-version: 14
+                    registry-url: https://registry.npmjs.org/
+            -   run: npm ci
+            -   run: npm run project:local-build
+            -   run: npm publish --access public
+                env:
+                    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+    publish-gpr:
+        needs: build
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: actions/setup-node@v2
+                with:
+                    node-version: 14
+                    registry-url: https://npm.pkg.github.com
+            -   run: npm ci
+            -   run: npm run project:local-build
+            -   run: npm publish --access public
+                env:
+                    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
