@@ -2,12 +2,12 @@
 
 [![License](https://img.shields.io/badge/license-NETGRIF%20Community%20License-green)](https://netgrif.com/engine/license)
 [![Angular dependency](https://img.shields.io/npm/dependency-version/@netgrif/components/@angular/core?label=Angular)](https://www.angular.io/)
-[![npm (scoped)](https://img.shields.io/npm/v/@netgrif/components)](https://www.npmjs.com/package/@netgrif/components)
-[![npm](https://img.shields.io/npm/dt/@netgrif/components)](https://www.npmjs.com/package/@netgrif/components)
+[![npm (scoped)](https://img.shields.io/npm/v/@netgrif/components-core)](https://www.npmjs.com/package/@netgrif/components-core)
+[![npm](https://img.shields.io/npm/dt/@netgrif/components-core)](https://www.npmjs.com/package/@netgrif/components-core)
 [![Petriflow 1.0.1](https://img.shields.io/badge/Petriflow-1.0.1-0aa8ff)](https://petriflow.com)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/netgrif/components?sort=semver&display_name=tag)](https://github.com/netgrif/components/releases)
 [![build](https://github.com/netgrif/components/actions/workflows/master-build.yml/badge.svg)](https://github.com/netgrif/components/actions/workflows/master-build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=alert_status)](https://sonarcloud.io/dashboard?id=netgrif_components)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=netgrif_componentsmetric=alert_status)](https://sonarcloud.io/dashboard?id=netgrif_components)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=coverage)](https://sonarcloud.io/dashboard?id=netgrif_components)
 [![Known Vulnerabilities](https://snyk.io/test/github/netgrif/components/badge.svg)](https://snyk.io/test/github/netgrif/components)
 
@@ -17,10 +17,12 @@ and to create own library of Angular web components to incorporate your own pers
 
 * Petriflow low-code language: [http://petriflow.com](https://petriflow.com)
 * Documentation: [https://components.netgrif.com](https://components.netgrif.com)
-* Getting Started: [https://components.netgrif.com/get_started](https://components.netgrif.com/get_started)
+<!-- * Getting Started: [https://components.netgrif.com/get_started](https://components.netgrif.com/get_started) -->
 * Issue Tracker: [Github issues](https://github.com/netgrif/components/issues)
-* Compodoc: [https://components.netgrif.com/components/typedoc](https://components.netgrif.com/components/compodoc)
-           [https://components.netgrif.com/library/typedoc](https://components.netgrif.com/library/compodoc)
+* Compodoc: [@netgrif/components compodoc](https://components.netgrif.com/#/compodoc/components), 
+           [@netgrif/components-core compodoc](https://components.netgrif.com/#/compodoc/components-core)
+* Typedoc: [@netgrif/components typedoc](https://components.netgrif.com/#/typedoc/components),
+           [@netgrif/components-core typedoc](https://components.netgrif.com/#/typedoc/components-core)
 * License: [NETGRIF Community License](https://github.com/netgrif/components/blob/master/LICENSE)
 
 In this repository are 3 projects:
@@ -72,12 +74,12 @@ nae.json defines global application configuration like urls to backend resources
 
 You can find [minimal nae.json configuration here](docs/configuration/nae-minimal.json). 
 
-You can read more on how to configure complete [nae.json here](https://components.netgrif.com/configuration).
+<!-- You can read more on how to configure complete [nae.json here](https://components.netgrif.com/#/configuration). -->
 
 
-For easier startup clone [template project for NAE frontend application](https://github.com/netgrif/nae-frontend-starter)
+For easier startup clone [template project for NAE frontend application](https://github.com/netgrif/nae-frontend-application-starter)
 
-For more information please read instructions in [Get Started](https://components.netgrif.com/get_started)
+<!-- For more information please read instructions in [Get Started](https://components.netgrif.com/#/get_started) -->
 
 ## Other projects
 
