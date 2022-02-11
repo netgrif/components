@@ -9,6 +9,16 @@ jobs:
         steps:
             -   uses: actions/checkout@v2
             -   uses: actions/setup-node@v2
+                name: Full Test
                 with:
-                    node-version: 14
-            -   run: npm run project:full-test
+                    node-version: 12
+            -   run: |
+                    npm ci
+                    npm run ncc:build
+                    npm run ncc:full-test
+                    cd dist/netgrif-components-core
+                    npm link
+                    cd ../..
+                    npm run nc:build
+                    npm run nc:full-test
+                    npm run example:build

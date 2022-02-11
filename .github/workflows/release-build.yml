@@ -9,10 +9,17 @@ jobs:
             -   uses: actions/checkout@v2
             -   uses: actions/setup-node@v2
                 with:
-                    node-version: 14
-            -   run: npm ci
-            -   run: npm run project:local-build
-            -   run: npm run project:full-test
+                    node-version: 12
+            -   run: |
+                    npm ci
+                    npm run ncc:build
+                    npm run ncc:full-test
+                    cd dist/netgrif-components-core
+                    npm link
+                    cd ../..
+                    npm run nc:build
+                    npm run nc:full-test
+                    npm run example:build
 
     publish-npm:
         needs: build
@@ -21,7 +28,7 @@ jobs:
             -   uses: actions/checkout@v2
             -   uses: actions/setup-node@v2
                 with:
-                    node-version: 14
+                    node-version: 12
                     registry-url: https://registry.npmjs.org/
             -   run: npm ci
             -   run: npm run project:local-build
@@ -39,7 +46,7 @@ jobs:
             -   uses: actions/checkout@v2
             -   uses: actions/setup-node@v2
                 with:
-                    node-version: 14
+                    node-version: 12
                     registry-url: https://npm.pkg.github.com
             -   run: npm ci
             -   run: npm run project:local-build
