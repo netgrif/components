@@ -16,9 +16,8 @@ jobs:
                     npm i
                     npm run ncc:build
                     npm run ncc:full-test
-                    cd dist/netgrif-components-core
-                    npm link
-                    cd ../..
+                    npm i dist/netgrif-components-core --save-optional
                     npm run nc:build
                     npm run nc:full-test
+                    npm i dist/netgrif-components --save-optional
                     npm run example:build
