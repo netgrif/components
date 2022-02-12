@@ -12,12 +12,15 @@ jobs:
                 name: Full Test
                 with:
                     node-version: 12
-            -   run: |
-                    npm i
+            -   name: Build & test components-core
+                run: |
                     npm run ncc:build
                     npm run ncc:full-test
                     npm i dist/netgrif-components-core --save-optional
+            -   name: Build & test components
+                run: |
                     npm run nc:build
                     npm run nc:full-test
                     npm i dist/netgrif-components --save-optional
-                    npm run example:build
+            -   name: Build examples
+                run: npm run example:build

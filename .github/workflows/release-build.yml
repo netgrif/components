@@ -30,10 +30,21 @@ jobs:
                     node-version: 12
                     registry-url: https://registry.npmjs.org/
             -   run: npm i
-            -   run: npm run project:local-build
-            -   run: npm publish --access public
+            -   name: Publish components-core
+                run: |
+                    npm run ncc:build
+                    cd dist/netgrif-components-core
+                    npm publish --access public
                 env:
                     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+            -   name: Publish components-core
+                run: |
+                    npm run nc:build
+                    cd dist/netgrif-components
+                    npm publish --access public
+                env:
+                    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
 
     publish-gpr:
         needs: build
@@ -48,7 +59,17 @@ jobs:
                     node-version: 12
                     registry-url: https://npm.pkg.github.com
             -   run: npm i
-            -   run: npm run project:local-build
-            -   run: npm publish --access public
+            -   name: Publish components-core
+                run: |
+                    npm run ncc:build
+                    cd dist/netgrif-components-core
+                    npm publish --access public
+                env:
+                    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+            -   name: Publish components-core
+                run: |
+                    npm run nc:build
+                    cd dist/netgrif-components
+                    npm publish --access public
                 env:
                     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

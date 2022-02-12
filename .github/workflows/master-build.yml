@@ -9,28 +9,27 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
-                with:
-                    fetch-depth: 0
 
             -   name: Use Node.js 12
                 uses: actions/setup-node@v2
                 with:
                     node-version: 12
                     cache: 'npm'
-            -   run: |
-                    npm i
+            -   run: npm i
+            -   name: Build & test components-core
+                run: |
                     npm run ncc:build
                     npm run ncc:full-test
+                    npm run ncc:doc
                     npm i dist/netgrif-components-core --save-optional
+            -   name: Build & test components
+                run: |
                     npm run nc:build
                     npm run nc:full-test
-                    npm i dist/netgrif-components --save-optional
-                    npm run example:build
-                    npm run ncc:doc
                     npm run nc:doc
+                    npm i dist/netgrif-components --save-optional
+            -   name: Build examples
+                run: npm run example:build
 
-            -   name: SonarCloud scan
-                uses: sonarsource/sonarcloud-github-action@master
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
