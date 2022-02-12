@@ -25,9 +25,8 @@
         "schematics/**"
     ],
     "typedocOptions": {
-        "mode": "modules",
         "exclude": "**/*.spec.ts",
-        "out": "docs/typedoc",
+        "out": "../../docs/typedoc/components",
         "theme": "default"
     }
 }

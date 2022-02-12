@@ -1,0 +1,14 @@
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {ViewService, ConfigurationService, LoggerService} from '@netgrif/components-core';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class <%= classify(project) %>ViewService extends ViewService {
+    constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
+        // This class is managed by schematics. Avoid modifying it by hand.
+        // If you want to add views to the application run the 'create-view' schematic.
+        super([], configurationService, router, loggerService);
+    }
+}

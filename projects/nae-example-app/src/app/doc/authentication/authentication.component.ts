@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoggerService, User, UserService} from '@netgrif/application-engine';
+import {LoggerService, User, UserService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-authentication',

@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, UserListService} from '@netgrif/application-engine';
+import {AbstractUserAssignComponent, NAE_SIDE_MENU_CONTROL, SideMenuControl, UserListService} from '@netgrif/components-core';
 
 /**
  * Is the main - parent component of the entire user assignment in the side menu.

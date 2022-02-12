@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractAdvancedSearchComponent, AdvancedSearchComponentInitializationService, SearchService} from '@netgrif/application-engine';
+import {AbstractAdvancedSearchComponent, AdvancedSearchComponentInitializationService, SearchService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-advanced-search',

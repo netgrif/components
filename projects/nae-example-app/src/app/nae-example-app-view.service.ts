@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {ViewService, ConfigurationService, LoggerService} from '@netgrif/application-engine';
+import {ViewService, ConfigurationService, LoggerService} from '@netgrif/components-core';
 import {AuthenticationComponent} from './doc/authentication/authentication.component';
 import {LoginFormComponent} from './doc/forms/login-form/login-form.component';
 import {PasswordFormComponent} from './doc/forms/email-form/password-form.component';

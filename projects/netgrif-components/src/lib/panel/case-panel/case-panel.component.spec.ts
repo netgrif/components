@@ -16,7 +16,7 @@ import {
     MaterialModule,
     NAE_BASE_FILTER, TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory,
     TranslateLibModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {
     TestConfigurationService,
     ConfigurationService,
@@ -24,7 +24,7 @@ import {
     SearchService,
     AuthenticationMethodService,
     MockAuthenticationMethodService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('CasePanelComponent', () => {
     let component: CasePanelComponent;

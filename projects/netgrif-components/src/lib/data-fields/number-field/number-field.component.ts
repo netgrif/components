@@ -1,5 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractNumberFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
+import {AbstractNumberFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

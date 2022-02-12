@@ -4,7 +4,7 @@ import {TabViewComponent} from './tab-view/tab-view.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {TabCreationDetectorComponent} from './tab-creation-detector/tab-creation-detector.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 
 
 @NgModule({

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractLoadingModeComponent} from '@netgrif/application-engine';
+import {AbstractLoadingModeComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-loading-mode',

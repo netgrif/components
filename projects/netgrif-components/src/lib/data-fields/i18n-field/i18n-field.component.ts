@@ -1,5 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractI18nFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
+import {AbstractI18nFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-i18n-field',

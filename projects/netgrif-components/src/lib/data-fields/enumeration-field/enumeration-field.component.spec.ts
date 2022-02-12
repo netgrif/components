@@ -10,7 +10,7 @@ import {EnumerationListFieldComponent} from './enumeration-list-field/enumeratio
 // tslint:disable-next-line:max-line-length
 import {EnumerationAutocompleteSelectFieldComponent} from './enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {EnumerationField, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {EnumerationField, MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {EnumerationStepperFieldComponent} from './enumeration-stepper-field/enumeration-stepper-field.component';
 

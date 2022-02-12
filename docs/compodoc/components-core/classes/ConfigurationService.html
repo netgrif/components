@@ -1,0 +1,1083 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >ConfigurationService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/configuration/configuration.service.ts</code>
+        </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#get" >get</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getAsync" >getAsync</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getConfigurationSubtree" >getConfigurationSubtree</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getDatafieldConfiguration" >getDatafieldConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getPathsByView" >getPathsByView</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getServicesConfiguration" >getServicesConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getViewByPath" >getViewByPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getViewByUrl" >getViewByUrl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveEndpointURLs" >resolveEndpointURLs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveURL" >resolveURL</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                                <span class="modifier">Protected</span>
+                        <code>constructor(configuration: <a href="../interfaces/NetgrifApplicationEngine.html" target="_self">NetgrifApplicationEngine</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:6</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>configuration</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/NetgrifApplicationEngine.html" target="_self" >NetgrifApplicationEngine</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="get"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>get</b></span>
+                        <a href="#get"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>get()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="20"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:20</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/NetgrifApplicationEngine.html" target="_self" >NetgrifApplicationEngine</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a deep copy of the entire configuration object</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAsync"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getAsync</b></span>
+                        <a href="#getAsync"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAsync()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="13"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:13</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/NetgrifApplicationEngine.html" target="_self" >Observable&lt;NetgrifApplicationEngine&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getConfigurationSubtree"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getConfigurationSubtree</b></span>
+                        <a href="#getConfigurationSubtree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getConfigurationSubtree(pathSegments: Array<string>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calling this method with an empty array as argument is equivalent to calling the <a href="../classes/ConfigurationService.html#get">get()</a> method.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pathSegments</td>
+                                    <td>
+                                            <code>Array&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the keys specifying the path trough the configuration that should be accessed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>any | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a deep copy of a specified subsection of the configuration object, or <code>undefined</code> if such subsection doesn&#39;t exist.
+Calling this method with an empty array as argument is equivalent to calling the [get()]{</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDatafieldConfiguration"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getDatafieldConfiguration</b></span>
+                        <a href="#getDatafieldConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDatafieldConfiguration()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="122"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:122</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code> | undefined</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the appropriate template configuration for data fields, or <code>undefined</code> if such configuration is not present.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPathsByView"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getPathsByView</b></span>
+                        <a href="#getPathsByView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPathsByView(layout: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="90"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:90</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get all URLs/paths of views with specified layout.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>layout</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Search views with this layout</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Paths with prefixed &#39;/&#39; of all views with specified layout, empty array otherwise.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getServicesConfiguration"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getServicesConfiguration</b></span>
+                        <a href="#getServicesConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getServicesConfiguration()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="183"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:183</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Services.html" target="_self" >Services | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the services configuration, or <code>undefined</code> if such configuration is not present.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getViewByPath"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getViewByPath</b></span>
+                        <a href="#getViewByPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getViewByPath(viewConfigPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:29</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get view configuration from nae.json for view at given config path.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>viewConfigPath</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>configuration path to the requested view. No leading backslash.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/View.html" target="_self" >View | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>requested configuration if it exists. <code>undefined</code> otherwise.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getViewByUrl"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getViewByUrl</b></span>
+                        <a href="#getViewByUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getViewByUrl(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:46</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get view configuration from nae.json for view at given url.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>to the requested view. Necessary backslash.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/View.html" target="_self" >View | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>requested configuration if it exists. <code>undefined</code> otherwise.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveEndpointURLs"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveEndpointURLs</b></span>
+                        <a href="#resolveEndpointURLs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveEndpointURLs()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="137"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:137</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Resolves the URL addresses of backend endpoints based on the provided configuration.</p>
+<p>If the URLs begin with either <code>http://</code>, or <code>https://</code> the provided URL will be used.</p>
+<p>If not, then the URLs are considered to be relative to the location of the frontend application and it&#39;s URL will be used
+as the base path. <code>/api</code> is appended automatically.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveURL"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveURL</b></span>
+                        <a href="#resolveURL"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveURL(configURL: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="172"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:172</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Resolves a single URL address.</p>
+<p>If the URL begins with either <code>http://</code>, or <code>https://</code> the provided URL will be used.</p>
+<p>If not, then the URL is considered to be relative to the location of the frontend application and it&#39;s URL will be used
+as the base path. <code>/api</code> is appended automatically.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>configURL</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>value from the configuration file</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the resolved URL</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {NetgrifApplicationEngine, Services, View, Views} from &#x27;../../commons/schema&#x27;;
+import {Observable, of} from &#x27;rxjs&#x27;;
+
+export abstract class ConfigurationService {
+
+    private readonly _dataFieldConfiguration: Services[&#x27;dataFields&#x27;];
+
+    protected constructor(protected configuration: NetgrifApplicationEngine) {
+        this.resolveEndpointURLs();
+        this._dataFieldConfiguration &#x3D; this.getConfigurationSubtree([&#x27;services&#x27;, &#x27;dataFields&#x27;]);
+    }
+
+    public getAsync(): Observable&lt;NetgrifApplicationEngine&gt; {
+        return of(this.get());
+    }
+
+    /**
+     * @returns a deep copy of the entire configuration object
+     */
+    public get(): NetgrifApplicationEngine {
+        return this.createConfigurationCopy();
+    }
+
+    /**
+     * Get view configuration from nae.json for view at given config path.
+     * @param viewConfigPath configuration path to the requested view. No leading backslash.
+     * @return requested configuration if it exists. &#x60;undefined&#x60; otherwise.
+     */
+    public getViewByPath(viewConfigPath: string): View | undefined {
+        const viewPathSegments &#x3D; viewConfigPath.split(&#x27;/&#x27;);
+        const configTreePathSegments &#x3D; [&#x27;views&#x27;];
+        for (let i &#x3D; 0; i &lt; viewPathSegments.length; i++) {
+            if (i &gt; 0) {
+                configTreePathSegments.push(&#x27;children&#x27;);
+            }
+            configTreePathSegments.push(viewPathSegments[i]);
+        }
+        return this.getConfigurationSubtree(configTreePathSegments);
+    }
+
+    /**
+     * Get view configuration from nae.json for view at given url.
+     * @param url to the requested view. Necessary backslash.
+     * @return requested configuration if it exists. &#x60;undefined&#x60; otherwise.
+     */
+    public getViewByUrl(url: string): View | undefined {
+        const config &#x3D; this.createConfigurationCopy() as NetgrifApplicationEngine;
+        const views &#x3D; config.views;
+        if (!views) {
+            return undefined;
+        }
+        let map: Map&lt;string, View&gt; &#x3D; new Map();
+        map &#x3D; this.getChildren(views, map, &#x27;&#x27;);
+        if (map.get(url) &#x3D;&#x3D;&#x3D; undefined) {
+            map.forEach((value, key) &#x3D;&gt; {
+                if (key.includes(&#x27;/**&#x27;) &amp;&amp; url.includes(key.split(&#x27;/**&#x27;)[0]))
+                    return value;
+            });
+        }
+        return map.get(url);
+    }
+
+    private getChildren(views: Views, map: Map&lt;string, View&gt;, prefix: string): Map&lt;string, View&gt; {
+        Object.keys(views).forEach(view &#x3D;&gt; {
+            if (!!views[view].routing.path) {
+                prefix &#x3D; prefix.charAt(prefix.length - 1) &#x3D;&#x3D;&#x3D; &#x27;/&#x27; ?
+                    prefix.length &gt; 1 ? prefix.substring(0, prefix.length - 2) : &#x27;&#x27; :
+                    prefix;
+                const viewPath &#x3D; views[view].routing.path.charAt(0) &#x3D;&#x3D;&#x3D; &#x27;/&#x27; ?
+                    views[view].routing.path.length &gt; 1 ? views[view].routing.path.substring(1) : &#x27;&#x27; :
+                    views[view].routing.path;
+                map.set(
+                    views[view].routing.match ?
+                        prefix + &#x27;/&#x27; + viewPath + &#x27;/**&#x27; :
+                        prefix + &#x27;/&#x27; + viewPath,
+                    views[view]);
+            }
+            if (views[view].children) {
+                this.getChildren(views[view].children, map, prefix + &#x27;/&#x27; + views[view].routing.path);
+            }
+        });
+        return map;
+    }
+
+    /**
+     * Get all URLs/paths of views with specified layout.
+     * @param layout Search views with this layout
+     * @returns Paths with prefixed &#x27;/&#x27; of all views with specified layout, empty array otherwise.
+     */
+    public getPathsByView(layout: string): Array&lt;string&gt; {
+        const config &#x3D; this.createConfigurationCopy() as NetgrifApplicationEngine;
+        const result &#x3D; [];
+        if (!config.views) {
+            return result;
+        }
+        Object.values(config.views).forEach(view &#x3D;&gt; {
+            result.push(...this.getView(layout, view).map(path &#x3D;&gt; &#x27;/&#x27; + path));
+        });
+
+        return result;
+    }
+
+    /**
+     * @param pathSegments the keys specifying the path trough the configuration that should be accessed
+     * @returns a deep copy of a specified subsection of the configuration object, or &#x60;undefined&#x60; if such subsection doesn&#x27;t exist.
+     * Calling this method with an empty array as argument is equivalent to calling the [get()]{@link ConfigurationService#get} method.
+     */
+    public getConfigurationSubtree(pathSegments: Array&lt;string&gt;): any | undefined {
+        let root &#x3D; this.configuration;
+        for (const segment of pathSegments) {
+            if (root[segment] &#x3D;&#x3D;&#x3D; undefined) {
+                return undefined;
+            }
+            root &#x3D; root[segment];
+        }
+        return this.deepCopy(root);
+    }
+
+    /**
+     * @returns the appropriate template configuration for data fields, or &#x60;undefined&#x60; if such configuration is not present.
+     */
+    public getDatafieldConfiguration(): Services[&#x27;dataFields&#x27;] | undefined {
+        if (this._dataFieldConfiguration &#x3D;&#x3D;&#x3D; undefined) {
+            return undefined;
+        }
+        return {...this._dataFieldConfiguration};
+    }
+
+    /**
+     * Resolves the URL addresses of backend endpoints based on the provided configuration.
+     *
+     * If the URLs begin with either &#x60;http://&#x60;, or &#x60;https://&#x60; the provided URL will be used.
+     *
+     * If not, then the URLs are considered to be relative to the location of the frontend application and it&#x27;s URL will be used
+     * as the base path. &#x60;/api&#x60; is appended automatically.
+     */
+    protected resolveEndpointURLs() {
+        if (this.configuration?.providers?.auth?.address &#x3D;&#x3D;&#x3D; undefined) {
+            throw new Error(&#x60;&#x27;provider.auth.address&#x27; is a required property and must be present in the configuration!&#x60;);
+        }
+        this.configuration.providers.auth.address &#x3D; this.resolveURL(this.configuration.providers.auth.address);
+
+        if (this.configuration?.providers?.resources &#x3D;&#x3D;&#x3D; undefined) {
+            throw new Error(&#x60;&#x27;provider.resources&#x27; is a required property and must be present in the configuration!&#x60;);
+        }
+        if (Array.isArray(this.configuration.providers.resources)) {
+            this.configuration.providers.resources.forEach(resource &#x3D;&gt; {
+                if (resource?.address &#x3D;&#x3D;&#x3D; undefined) {
+                    throw new Error(&#x60;Resources defined in &#x27;provider.resources&#x27; must define an address property!&#x60;);
+                }
+                resource.address &#x3D; this.resolveURL(resource.address);
+            });
+        } else {
+            if (this.configuration?.providers?.resources?.address &#x3D;&#x3D;&#x3D; undefined) {
+                throw new Error(&#x60;Resources defined in &#x27;provider.resources&#x27; must define an address property!&#x60;);
+            }
+            this.configuration.providers.resources.address &#x3D; this.resolveURL(this.configuration.providers.resources.address);
+        }
+    }
+
+    /**
+     * Resolves a single URL address.
+     *
+     * If the URL begins with either &#x60;http://&#x60;, or &#x60;https://&#x60; the provided URL will be used.
+     *
+     * If not, then the URL is considered to be relative to the location of the frontend application and it&#x27;s URL will be used
+     * as the base path. &#x60;/api&#x60; is appended automatically.
+     *
+     * @param configURL value from the configuration file
+     * @returns the resolved URL
+     */
+    protected resolveURL(configURL: string): string {
+        if (configURL.startsWith(&#x27;http://&#x27;) || configURL.startsWith(&#x27;https://&#x27;)) {
+            return configURL;
+        } else {
+            return location.origin + &#x27;/api&#x27; + configURL;
+        }
+    }
+
+    /**
+     * @returns the services configuration, or &#x60;undefined&#x60; if such configuration is not present.
+     */
+    public getServicesConfiguration(): Services | undefined {
+        const subtree &#x3D; this.getConfigurationSubtree([&#x27;services&#x27;]) as Services;
+        return subtree !&#x3D;&#x3D; undefined ? this.deepCopy(subtree) as Services : undefined;
+    }
+
+    private getView(searched: string, view: View): Array&lt;string&gt; {
+        const paths &#x3D; [];
+        if (!!view.layout &amp;&amp; view.layout.name &#x3D;&#x3D;&#x3D; searched) {
+            paths.push(view.routing.path);
+        }
+        if (view.children &amp;&amp; Object.keys(view.children).length !&#x3D;&#x3D; 0) {
+            Object.values(view.children).forEach(child &#x3D;&gt; {
+                paths.push(...this.getView(searched, child).map(path &#x3D;&gt; view.routing.path + &#x27;/&#x27; + path));
+            });
+        }
+        return paths;
+    }
+
+    private createConfigurationCopy(): any {
+        return this.deepCopy(this.configuration);
+    }
+
+    private deepCopy(obj: object): object {
+        return JSON.parse(JSON.stringify(obj));
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'ConfigurationService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

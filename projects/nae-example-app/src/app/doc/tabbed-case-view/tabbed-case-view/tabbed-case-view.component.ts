@@ -15,7 +15,7 @@ import {
     Filter,
     NAE_NEW_CASE_CONFIGURATION,
     NAE_BASE_FILTER, AllowedNetsServiceFactory, AllowedNetsService, SavedFilterMetadata, OverflowService, UserService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {Subject} from 'rxjs';
 

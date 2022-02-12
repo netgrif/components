@@ -12,7 +12,7 @@ import {
     TranslateLibModule,
     TreeCaseViewService,
     ChangedFieldsService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('TreeTaskContentComponent', () => {
     let component: TreeTaskContentComponent;

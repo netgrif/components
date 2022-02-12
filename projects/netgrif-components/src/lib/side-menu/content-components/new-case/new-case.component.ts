@@ -9,7 +9,7 @@ import {
     NAE_SIDE_MENU_CONTROL,
     SideMenuControl,
     SnackBarService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-new-case',

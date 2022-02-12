@@ -1,33 +1,35 @@
 {
     "name": "@netgrif/components",
-    "version": "5.8.0",
-    "description": "Netgrif Application Engine Angular components",
-    "homepage": "https://netgrif.com",
+    "version": "6.0.0-rc.5",
+    "description": "Netgrif Application Engine frontend Angular components",
+    "homepage": "https://components.netgrif.com",
+    "license": "SEE LICENSE IN LICENSE",
     "repository": {
         "type": "git",
-        "url": "https://bitbucket.org/netgrif/nae-frontend.git"
+        "url": "https://github.com/netgrif/components.git"
     },
     "bugs": {
-        "url": "https://netgrif.atlassian.net/browse/NAE"
+        "url": "https://github.com/netgrif/components/issues"
+    },
+    "author": {
+        "name": "NETGRIF, s.r.o.",
+        "email": "oss@netgrif.com",
+        "url": "https://netgrif.com"
     },
     "keywords": [
+        "netgrif",
+        "application engine",
+        "nae",
+        "engine",
+        "workflow engine",
+        "components",
         "netgrif components",
-        "application engine components",
         "nae components",
-        "angular",
-        "nae"
+        "nae frontend"
     ],
-    "contributors": [
-        "Milan Mladoniczky <mladoniczky@netgrif.com>",
-        "Juraj Mažári <mazari@netgrif.com>",
-        "Tomáš Kováčik <kovacik@netgrif.com>",
-        "Jakub Kovář <kovar@netgrif.com>",
-        "Martin Miklovič <miklovic@netgrif.com>",
-        "Daniel Vaník <vanik@netgrif.com>",
-        "Lukáš Rezák <rezak@netgrif.com>",
-        "Jozef Daxner <daxner@netgrif.com>",
-        "Štefan Renczés <renczes@netgrif.com>"
-    ],
+    "dependencies": {
+        "@netgrif/components-core": "6.0.0-rc.5"
+    },
     "peerDependencies": {
         "@angular-material-components/datetime-picker": "^2.0.2",
         "@angular-material-components/moment-adapter": "^2.0.1",
@@ -58,11 +60,7 @@
         "moment": "~2.24.0",
         "natural-orderby": "^2.0.3",
         "rxjs": "^6.6.0",
-        "zone.js": "~0.10.2",
-        "@netgrif/application-engine": "5.8.0"
+        "zone.js": "~0.10.2"
     },
-    "publishConfig": {
-        "registry": "https://nexus.netgrif.com/repository/npm-private/"
-    },
-    "schematics": "./schematics/collection.json"
+    "schematics": "schematics/collection.json"
 }

@@ -1,0 +1,1331 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >AssignTaskService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/task/services/assign-task.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service that handles the logic of assigning a task.</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#assign" >assign</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#assignRequest" >assignRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#completeActions" >completeActions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#completeSuccess" >completeSuccess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#performAssignRequest" >performAssignRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#sendNotification" >sendNotification</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isTaskPresent" >isTaskPresent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isTaskRelevant" >isTaskRelevant</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _snackBar: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _translate: TranslateService, _taskState: <a href="../injectables/TaskRequestStateService.html" target="_self">TaskRequestStateService</a>, _taskEvent: <a href="../injectables/TaskEventService.html" target="_self">TaskEventService</a>, _taskDataService: <a href="../injectables/TaskDataService.html" target="_self">TaskDataService</a>, _eventQueue: <a href="../injectables/EventQueueService.html" target="_self">EventQueueService</a>, _eventService: <a href="../injectables/EventService.html" target="_self">EventService</a>, _changedFieldsService: <a href="../injectables/ChangedFieldsService.html" target="_self">ChangedFieldsService</a>, _taskOperations: <a href="../interfaces/TaskOperations.html" target="_self">TaskOperations</a>, _selectedCaseService: <a href="../injectables/SelectedCaseService.html" target="_self">SelectedCaseService</a>, _taskViewService: <a href="../injectables/TaskViewService.html" target="_self">TaskViewService</a>, _taskContentService: <a href="../injectables/TaskContentService.html" target="_self">TaskContentService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/assign-task.service.ts:32</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskResourceService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskResourceService.html" target="_self" >TaskResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_snackBar</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SnackBarService.html" target="_self" >SnackBarService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translate</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskState</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskRequestStateService.html" target="_self" >TaskRequestStateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskEvent</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskEventService.html" target="_self" >TaskEventService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskDataService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskDataService.html" target="_self" >TaskDataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_eventQueue</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EventQueueService.html" target="_self" >EventQueueService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_eventService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EventService.html" target="_self" >EventService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_changedFieldsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChangedFieldsService.html" target="_self" >ChangedFieldsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskOperations</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/TaskOperations.html" target="_self" >TaskOperations</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_selectedCaseService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SelectedCaseService.html" target="_self" >SelectedCaseService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskViewService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskViewService.html" target="_self" >TaskViewService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskContentService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskContentService.html" target="_self" >TaskContentService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="assign"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>assign</b></span>
+                        <a href="#assign"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>assign(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/assign-task.service.ts:64</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs the &#39;assign&#39; operation on the task held by <a href="../injectables/TaskContentService.html">TaskContentService</a>.</p>
+<p>Doesn&#39;t send any requests if the loading indicator is in it&#39;s active state.
+Otherwise sets the indicator to the active state and disables it once the request response is received.</p>
+<p>The argument can be used to chain operations together,
+or to execute code conditionally based on the success state of the assign operation.</p>
+<p>If the task held within the <a href="../injectables/TaskContentService.html">TaskContentService</a> changes before a response is received, the response will be ignored
+and the <code>afterAction</code> will not be executed.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>new AfterAction()</code>
+                                    </td>
+
+                                    <td>
+                                        <p>if assign completes successfully <code>true</code> will be emitted into this Subject, otherwise <code>false</code> will be emitted</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="assignRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>assignRequest</b></span>
+                        <a href="#assignRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>assignRequest(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, assignedTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, forceReload: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/assign-task.service.ts:106</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calls the endpoint and processes the possible responses.
+If set to <code>false</code> a regular reload is performed instead.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>new AfterAction()</code>
+                                    </td>
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>assignedTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>the id of the task that is being assigned</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>new AfterAction()</code>
+                                    </td>
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>forceReload</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>whether a force reload of the task data should be performed after assign.
+If set to <code>false</code> a regular reload is performed instead.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="completeActions"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>completeActions</b></span>
+                        <a href="#completeActions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>completeActions(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, bool: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="168"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/assign-task.service.ts:168</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>complete all action streams and send notification with selected boolean</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>bool</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="completeSuccess"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>completeSuccess</b></span>
+                        <a href="#completeSuccess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>completeSuccess(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="160"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/assign-task.service.ts:160</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reloads the task and emits <code>true</code> to the <code>afterAction</code> stream</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="performAssignRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>performAssignRequest</b></span>
+                        <a href="#performAssignRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>performAssignRequest(afterAction: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, nextEvent: <a href="../classes/AfterAction.html" target="_self">AfterAction</a>, forceReload: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/assign-task.service.ts:85</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs an <code>assign</code> request on the task currently stored in the <code>taskContent</code> service
+If set to <code>false</code> a regular reload is performed instead.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>afterAction</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the action that should be performed after the request is processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>nextEvent</td>
+                                    <td>
+                                                <code><a href="../classes/AfterAction.html" target="_self" >AfterAction</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>indicates to the event queue that the next event can be processed</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>forceReload</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>whether a force reload of the task data should be performed after assign.
+If set to <code>false</code> a regular reload is performed instead.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendNotification"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>sendNotification</b></span>
+                        <a href="#sendNotification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendNotification(success: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="178"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/assign-task.service.ts:178</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Publishes an assign notification to the <a href="../injectables/TaskEventService.html">TaskEventService</a></p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>success</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>whether the assign operation was successful or not</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTaskPresent"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>isTaskPresent</b></span>
+                        <a href="#isTaskPresent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isTaskPresent()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Task.html#source" target="_self" >TaskHandlingService:42</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p><code>true</code> if a {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTaskRelevant"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>isTaskRelevant</b></span>
+                        <a href="#isTaskRelevant"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isTaskRelevant(requestedTaskId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Task.html" target="_self" >TaskHandlingService</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Task.html#source" target="_self" >TaskHandlingService:56</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Checks whether the current state of the <a href="../injectables/TaskContentService.html">TaskContentService</a> and optionally if the <a href="../injectables/SelectedCaseService.html">SelectedCaseService</a>, is still
+relevant to the task that was requested.</p>
+<p>This method is useful if you use <a href="../injectables/UnlimitedTaskContentService.html">UnlimitedTaskContentService</a>, or a similar implementation. It is possible for the currently
+&quot;selected&quot; task to change in-between a backend request was sent and the response was received. In that case the response is no longer
+relevant and should be discarded, otherwise an illegal task state could be achieved on frontend.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>requestedTaskId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the <code>stringId</code> of the requested task</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p><code>true</code> if the requested task is still relevant to the state of the frontend. Returns <code>false</code> otherwise.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, Optional} from &#x27;@angular/core&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {TaskContentService} from &#x27;../../task-content/services/task-content.service&#x27;;
+import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
+import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {TaskRequestStateService} from &#x27;./task-request-state.service&#x27;;
+import {TaskHandlingService} from &#x27;./task-handling-service&#x27;;
+import {NAE_TASK_OPERATIONS} from &#x27;../models/task-operations-injection-token&#x27;;
+import {TaskOperations} from &#x27;../interfaces/task-operations&#x27;;
+import {SelectedCaseService} from &#x27;./selected-case.service&#x27;;
+import {TaskEventService} from &#x27;../../task-content/services/task-event.service&#x27;;
+import {createTaskEventNotification} from &#x27;../../task-content/model/task-event-notification&#x27;;
+import {TaskEvent} from &#x27;../../task-content/model/task-event&#x27;;
+import {TaskDataService} from &#x27;./task-data.service&#x27;;
+import {take} from &#x27;rxjs/operators&#x27;;
+import {TaskViewService} from &#x27;../../view/task-view/service/task-view.service&#x27;;
+import {EventQueueService} from &#x27;../../event-queue/services/event-queue.service&#x27;;
+import {QueuedEvent} from &#x27;../../event-queue/model/queued-event&#x27;;
+import {AfterAction} from &#x27;../../utility/call-chain/after-action&#x27;;
+import {AssignTaskEventOutcome} from &#x27;../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome&#x27;;
+import {EventOutcomeMessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
+import {ChangedFieldsService} from &#x27;../../changed-fields/services/changed-fields.service&#x27;;
+import {EventService} from &#x27;../../event/services/event.service&#x27;;
+import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
+
+
+/**
+ * Service that handles the logic of assigning a task.
+ */
+@Injectable()
+export class AssignTaskService extends TaskHandlingService {
+
+    constructor(protected _log: LoggerService,
+                protected _taskResourceService: TaskResourceService,
+                protected _snackBar: SnackBarService,
+                protected _translate: TranslateService,
+                protected _taskState: TaskRequestStateService,
+                protected _taskEvent: TaskEventService,
+                protected _taskDataService: TaskDataService,
+                protected _eventQueue: EventQueueService,
+                protected _eventService: EventService,
+                protected _changedFieldsService: ChangedFieldsService,
+                @Inject(NAE_TASK_OPERATIONS) protected _taskOperations: TaskOperations,
+                @Optional() _selectedCaseService: SelectedCaseService,
+                @Optional() protected _taskViewService: TaskViewService,
+                _taskContentService: TaskContentService) {
+        super(_taskContentService, _selectedCaseService);
+    }
+
+    /**
+     * Performs the &#x27;assign&#x27; operation on the task held by {@link TaskContentService}.
+     *
+     * Doesn&#x27;t send any requests if the loading indicator is in it&#x27;s active state.
+     * Otherwise sets the indicator to the active state and disables it once the request response is received.
+     *
+     * The argument can be used to chain operations together,
+     * or to execute code conditionally based on the success state of the assign operation.
+     *
+     * If the task held within the {@link TaskContentService} changes before a response is received, the response will be ignored
+     * and the &#x60;afterAction&#x60; will not be executed.
+     * @param afterAction if assign completes successfully &#x60;true&#x60; will be emitted into this Subject, otherwise &#x60;false&#x60; will be emitted
+     */
+    public assign(afterAction: AfterAction &#x3D; new AfterAction()): void {
+        this._eventQueue.scheduleEvent(new QueuedEvent(
+            () &#x3D;&gt; {
+                return !this._safeTask.user;
+            },
+            nextEvent &#x3D;&gt; {
+                this.performAssignRequest(afterAction, nextEvent, this._taskViewService !&#x3D;&#x3D; null &amp;&amp; !this._taskViewService.allowMultiOpen);
+            },
+            nextEvent &#x3D;&gt; {
+                this.completeSuccess(afterAction, nextEvent);
+            }
+        ));
+    }
+
+    /**
+     * Performs an &#x60;assign&#x60; request on the task currently stored in the &#x60;taskContent&#x60; service
+     * @param afterAction the action that should be performed after the request is processed
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param forceReload whether a force reload of the task data should be performed after assign.
+     * If set to &#x60;false&#x60; a regular reload is performed instead.
+     */
+    protected performAssignRequest(afterAction: AfterAction, nextEvent: AfterAction, forceReload: boolean) {
+        const assignedTaskId &#x3D; this._safeTask.stringId;
+
+        // this is probably no longer necessary because of the event queue
+        if (this._taskState.isLoading(assignedTaskId)) {
+            nextEvent.resolve(true);
+            return;
+        }
+
+        this._taskState.startLoading(assignedTaskId);
+        this.assignRequest(afterAction, assignedTaskId, nextEvent, forceReload);
+    }
+
+    /**
+     * Calls the endpoint and processes the possible responses.
+     * @param afterAction the action that should be performed after the request is processed
+     * @param assignedTaskId the id of the task that is being assigned
+     * @param nextEvent indicates to the event queue that the next event can be processed
+     * @param forceReload whether a force reload of the task data should be performed after assign.
+     * If set to &#x60;false&#x60; a regular reload is performed instead.
+     */
+    protected assignRequest(afterAction: AfterAction &#x3D; new AfterAction(),
+                            assignedTaskId: string,
+                            nextEvent: AfterAction &#x3D; new AfterAction(),
+                            forceReload: boolean) {
+        this._taskResourceService.assignTask(this._safeTask.stringId).pipe(take(1))
+            .subscribe((outcomeResource: EventOutcomeMessageResource) &#x3D;&gt; {
+                this._taskState.stopLoading(assignedTaskId);
+                if (!this.isTaskRelevant(assignedTaskId)) {
+                    this._log.debug(&#x27;current task changed before the assign response could be received, discarding...&#x27;);
+                    nextEvent.resolve(false);
+                    return;
+                }
+
+                if (outcomeResource.success) {
+                    this._taskContentService.updateStateData(outcomeResource.outcome as AssignTaskEventOutcome);
+                    const changedFieldsMap: ChangedFieldsMap &#x3D; this._eventService
+                        .parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                    if (!!changedFieldsMap) {
+                        this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                    }
+                    forceReload ? this._taskOperations.forceReload() : this._taskOperations.reload();
+                    this.completeActions(afterAction, nextEvent, true);
+                    this._snackBar.openSuccessSnackBar(!!outcomeResource.outcome.message
+                        ? outcomeResource.outcome.message
+                        : this._translate.instant(&#x27;tasks.snackbar.assignTaskSuccess&#x27;));
+                } else if (outcomeResource.error) {
+                    if (outcomeResource.error !&#x3D;&#x3D; &#x27;&#x27;) {
+                        this._snackBar.openErrorSnackBar(outcomeResource.error);
+                    }
+                    if (outcomeResource.outcome !&#x3D;&#x3D; undefined) {
+                        const changedFieldsMap &#x3D; this._eventService.parseChangedFieldsFromOutcomeTree(outcomeResource.outcome);
+                        this._changedFieldsService.emitChangedFields(changedFieldsMap);
+                    }
+                    this.completeActions(afterAction, nextEvent, false);
+                }
+            }, error &#x3D;&gt; {
+                this._taskState.stopLoading(assignedTaskId);
+                this._log.debug(&#x27;assigning task failed&#x27;, error);
+
+                if (!this.isTaskRelevant(assignedTaskId)) {
+                    this._log.debug(&#x27;current task changed before the assign error could be received&#x27;);
+                    nextEvent.resolve(false);
+                    return;
+                }
+
+                this._snackBar.openErrorSnackBar(&#x60;${this._translate.instant(&#x27;tasks.snackbar.assignTask&#x27;)}
+             ${this._taskContentService.task} ${this._translate.instant(&#x27;tasks.snackbar.failed&#x27;)}&#x60;);
+                this.completeActions(afterAction, nextEvent, false);
+            });
+    }
+
+    /**
+     * Reloads the task and emits &#x60;true&#x60; to the &#x60;afterAction&#x60; stream
+     */
+    protected completeSuccess(afterAction: AfterAction, nextEvent: AfterAction): void {
+        this._taskOperations.reload();
+        this.completeActions(afterAction, nextEvent, true);
+    }
+
+    /**
+     * complete all action streams and send notification with selected boolean
+     */
+    protected completeActions(afterAction: AfterAction, nextEvent: AfterAction, bool: boolean): void {
+        this.sendNotification(bool);
+        afterAction.resolve(bool);
+        nextEvent.resolve(bool);
+    }
+
+    /**
+     * Publishes an assign notification to the {@link TaskEventService}
+     * @param success whether the assign operation was successful or not
+     */
+    protected sendNotification(success: boolean): void {
+        this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.ASSIGN, success));
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'AssignTaskService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

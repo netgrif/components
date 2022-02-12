@@ -8,7 +8,7 @@
 //     NAE_SIDE_MENU_CONTROL,
 //     SideMenuControl,
 //     SimpleFilter
-// } from '@netgrif/application-engine';
+// } from '@netgrif/components-core';
 // import {HeaderComponentModule} from '../../../header/header.module';
 // import {CaseViewComponentModule} from '../../../view/case-view/case-view.module';
 // import {of} from 'rxjs';

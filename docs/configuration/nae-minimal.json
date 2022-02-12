@@ -1,0 +1,91 @@
+{
+    "$schema": "https://components.engine.com/nae.schema.json",
+    "providers": {
+        "auth": {
+            "address": "http://localhost:8080/api/",
+            "authentication": "Basic",
+            "endpoints": {
+                "login": "auth/login",
+                "logout": "auth/logout",
+                "signup": "auth/signup",
+                "verification": "auth/verify",
+                "verify": "auth/token/verify",
+                "invite": "auth/invite",
+                "reset": "auth/reset",
+                "recover": "/auth/recover"
+            },
+            "sessionBearer": "X-Auth-Token",
+            "jwtBearer": "X-Jwt-Token"
+        },
+        "resources": [
+            {
+                "name": "case",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
+                "name": "task",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
+                "name": "petrinet",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
+                "name": "user",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
+                "name": "dashboard",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            },
+            {
+                "name": "filter",
+                "address": "http://localhost:8080/api/",
+                "format": "json"
+            }
+        ]
+    },
+    "views": {},
+    "theme": {},
+    "assets": [],
+    "filters": {},
+    "i18n": [
+        "sk-SK",
+        "en-US"
+    ],
+    "services": {
+        "log": {
+            "level": "ALL",
+            "logWithDate": true,
+            "serializeExtraParams": true,
+            "includeLogLevel": true,
+            "publishers": [
+                "console"
+            ]
+        },
+        "auth": {
+            "loginRedirect": "login",
+            "logoutRedirect": "login"
+        },
+        "routing": {
+            "defaultRedirect": "authentication",
+            "wildcardRedirect": "authentication"
+        },
+        "dataFields": {
+            "template": "material",
+            "appearance": "outline"
+        },
+        "legal": {
+            "termsOfService": "https://netgrif.com/",
+            "privacyPolicy": "https://netgrif.com/"
+        },
+        "groupNavigation": {
+            "groupNavigationRoute": "group-nav"
+        }
+    }
+}

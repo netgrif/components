@@ -18,7 +18,7 @@ import {
     TestViewService,
     UserResourceService,
     ViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('TabCreationDetectorComponent', () => {
     let component: TabCreationDetectorComponent;

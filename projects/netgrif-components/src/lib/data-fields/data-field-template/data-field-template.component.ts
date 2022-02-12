@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractDataFieldTemplateComponent, PaperViewService, ConfigurationService} from '@netgrif/application-engine';
+import {AbstractDataFieldTemplateComponent, PaperViewService, ConfigurationService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-data-field-template',

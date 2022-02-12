@@ -1,0 +1,500 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  FileListFieldComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components/src/lib/data-fields/file-field-list/file-list-field.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../components/FileListFieldComponent.html" target="_self" >AbstractFileListFieldComponent</a></code>
+    </p>
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>nc-file-list-field</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./file-list-field.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./file-list-field.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(taskResourceService: TaskResourceService, log: LoggerService, snackbar: SnackBarService, translate: TranslateService, eventService: EventService, informAboutInvalidData: boolean | null)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/netgrif-components/src/lib/data-fields/file-field-list/file-list-field.component.ts:16</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>taskResourceService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TaskResourceService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>log</td>
+                                                  
+                                                        <td>
+                                                                    <code>LoggerService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>snackbar</td>
+                                                  
+                                                        <td>
+                                                                    <code>SnackBarService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translate</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>eventService</td>
+                                                  
+                                                        <td>
+                                                                    <code>EventService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>informAboutInvalidData</td>
+                                                  
+                                                        <td>
+                                                                    <code>boolean | null</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, Optional} from &#x27;@angular/core&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {
+    AbstractFileListFieldComponent, EventService,
+    LoggerService,
+    NAE_INFORM_ABOUT_INVALID_DATA,
+    SnackBarService,
+    TaskResourceService
+} from &#x27;@netgrif/components-core&#x27;;
+
+@Component({
+    selector: &#x27;nc-file-list-field&#x27;,
+    templateUrl: &#x27;./file-list-field.component.html&#x27;,
+    styleUrls: [&#x27;./file-list-field.component.scss&#x27;]
+})
+export class FileListFieldComponent extends AbstractFileListFieldComponent {
+
+    constructor(taskResourceService: TaskResourceService,
+                log: LoggerService,
+                snackbar: SnackBarService,
+                translate: TranslateService,
+                eventService: EventService,
+                @Optional() @Inject(NAE_INFORM_ABOUT_INVALID_DATA) informAboutInvalidData: boolean | null) {
+        super(taskResourceService, log, snackbar, translate, eventService, informAboutInvalidData);
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;nc-data-field-template *ngIf&#x3D;&quot;!dataField.behavior.hidden&quot;
+                        [dataField]&#x3D;&quot;dataField&quot;
+                        [dataFieldTemplate]&#x3D;&quot;dataFieldTemplate&quot;
+                        [offset]&#x3D;&quot;taskOffset&quot;&gt;
+&lt;/nc-data-field-template&gt;
+
+&lt;ng-template #dataFieldTemplate let-showLargeLayout&#x3D;&quot;showLargeLayout&quot;&gt;
+    &lt;div&gt;
+        &lt;mat-label *ngIf&#x3D;&quot;!showLargeLayout.value&quot;&gt;
+            {{dataField.title}}
+            &lt;nc-required-label *ngIf&#x3D;&quot;dataField.behavior.required&quot; [isIn]&#x3D;&quot;!dataField.disabled&quot;&gt;&lt;/nc-required-label&gt;
+            &lt;br&gt;
+        &lt;/mat-label&gt;
+        &lt;div class&#x3D;&quot;form-input button-icon-input full-width input-margin&quot; fxLayout&#x3D;&quot;row&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+            &lt;button mat-icon-button color&#x3D;&quot;accent&quot; (click)&#x3D;&quot;chooseFile()&quot;
+                    [matTooltip]&#x3D;&quot;&#x27;dataField.file.clickToUpload&#x27; | translate&quot; *ngIf&#x3D;&quot;!formControl.disabled&quot;
+                    [class.do-not-click]&#x3D;&quot;state.uploading&quot;&gt;
+                &lt;mat-icon&gt;file_upload&lt;/mat-icon&gt;
+            &lt;/button&gt;
+            &lt;span *ngIf&#x3D;&quot;uploadedFiles.length &#x3D;&#x3D;&#x3D; 0&quot; (click)&#x3D;&quot;chooseFile()&quot; fxFlex
+                  [ngClass]&#x3D;&quot;{&#x27;no-cursor&#x27;: formControl.disabled}&quot; class&#x3D;&quot;input-placeholder input-name-ellipsis&quot;&gt;{{constructDisplayName()}}&lt;/span&gt;
+            &lt;div *ngIf&#x3D;&quot;uploadedFiles.length !&#x3D;&#x3D; 0&quot; class&#x3D;&quot;input-name-ellipsis&quot; fxFlex&gt;
+                &lt;div *ngFor&#x3D;&quot;let name of uploadedFiles&quot; fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+                    &lt;span (click)&#x3D;&quot;download(name)&quot; fxFlex [matTooltip]&#x3D;&quot;&#x27;dataField.file.clickToDownload&#x27; | translate : {fileName: name}&quot;
+                          class&#x3D;&quot;input-name-ellipsis file-list-item&quot;&gt;{{name}}&lt;/span&gt;
+                    &lt;button (click)&#x3D;&quot;deleteFile(name)&quot; [matTooltip]&#x3D;&quot;&#x27;dataField.file.clickToDelete&#x27; | translate&quot; mat-icon-button
+                            *ngIf&#x3D;&quot;!formControl.disabled&quot;&gt;
+                        &lt;mat-icon color&#x3D;&quot;warn&quot;&gt;close&lt;/mat-icon&gt;
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;mat-progress-bar *ngIf&#x3D;&quot;state.uploading || state.downloading&quot; color&#x3D;&quot;primary&quot; [value]&#x3D;&quot;state.progress&quot;
+                          [mode]&#x3D;&quot;state.uploading ? &#x27;determinate&#x27; : &#x27;indeterminate&#x27;&quot;
+                          class&#x3D;&quot;margin-bottom-default&quot;&gt;&lt;/mat-progress-bar&gt;
+        &lt;input type&#x3D;&quot;file&quot; #fileUploadInput name&#x3D;&quot;fileUpload&quot; [multiple]&#x3D;&quot;true&quot;
+               accept&#x3D;&quot;{{dataField.allowTypes}}&quot; class&#x3D;&quot;invisible-input&quot;/&gt;
+        &lt;input type&#x3D;&quot;text&quot; [formControl]&#x3D;&quot;formControl&quot; class&#x3D;&quot;invisible-input&quot;&gt;
+        &lt;mat-hint class&#x3D;&quot;file-hint-error&quot; *ngIf&#x3D;&quot;!dataField.isInvalid(formControl)&quot;&gt;{{dataField.description}}&lt;/mat-hint&gt;
+        &lt;mat-error class&#x3D;&quot;file-hint-error&quot; *ngIf&#x3D;&quot;dataField.isInvalid(formControl)&quot;&gt;{{&#x27;dataField.validations.required&#x27; | translate}}&lt;/mat-error&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./file-list-field.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;../data-field.theme&quot;;
+
+.invisible-input {
+    display: none;
+}
+
+.margin-bottom-default {
+    margin-bottom: 8px;
+}
+
+.progress-bar-size {
+    height: 8px;
+}
+
+.margin-bottom-half {
+    margin-bottom: 4px;
+}
+
+.do-not-click:hover {
+    cursor: not-allowed;
+}
+
+.file-button {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.input-name-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.input-placeholder {
+    color: rgba(0, 0, 0, .42);
+}
+
+.button-icon-input {
+    padding: 2px !important;
+}
+
+.full-width {
+    width: 100%;
+    min-width: 100%;
+}
+
+.input-margin {
+    margin-top: 7px !important;
+}
+
+.form-input {
+    background: transparent;
+    color: #333333;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    text-align: left;
+    font-size: 14px;
+    line-height: 15.75px;
+    border-radius: 6px;
+    min-width: 5px;
+    padding: 10px 15px 10px 15px;
+    box-sizing: border-box;
+    min-height: 54.81px;
+}
+
+.form-input:hover {
+    border-color: black;
+}
+
+.file-hint-error {
+    padding: 0 1em;
+    font-size: 75%;
+}
+
+.no-cursor {
+    cursor: default !important;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><nc-data-field-template *ngIf="!dataField.behavior.hidden"                        [dataField]="dataField"                        [dataFieldTemplate]="dataFieldTemplate"                        [offset]="taskOffset"></nc-data-field-template><ng-template #dataFieldTemplate let-showLargeLayout="showLargeLayout">    <div>        <mat-label *ngIf="!showLargeLayout.value">            {{dataField.title}}            <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>            <br>        </mat-label>        <div class="form-input button-icon-input full-width input-margin" fxLayout="row" fxLayoutAlign="start center">            <button mat-icon-button color="accent" (click)="chooseFile()"                    [matTooltip]="\'dataField.file.clickToUpload\' | translate" *ngIf="!formControl.disabled"                    [class.do-not-click]="state.uploading">                <mat-icon>file_upload</mat-icon>            </button>            <span *ngIf="uploadedFiles.length === 0" (click)="chooseFile()" fxFlex                  [ngClass]="{\'no-cursor\': formControl.disabled}" class="input-placeholder input-name-ellipsis">{{constructDisplayName()}}</span>            <div *ngIf="uploadedFiles.length !== 0" class="input-name-ellipsis" fxFlex>                <div *ngFor="let name of uploadedFiles" fxLayoutAlign="start center">                    <span (click)="download(name)" fxFlex [matTooltip]="\'dataField.file.clickToDownload\' | translate : {fileName: name}"                          class="input-name-ellipsis file-list-item">{{name}}</span>                    <button (click)="deleteFile(name)" [matTooltip]="\'dataField.file.clickToDelete\' | translate" mat-icon-button                            *ngIf="!formControl.disabled">                        <mat-icon color="warn">close</mat-icon>                    </button>                </div>            </div>        </div>        <mat-progress-bar *ngIf="state.uploading || state.downloading" color="primary" [value]="state.progress"                          [mode]="state.uploading ? \'determinate\' : \'indeterminate\'"                          class="margin-bottom-default"></mat-progress-bar>        <input type="file" #fileUploadInput name="fileUpload" [multiple]="true"               accept="{{dataField.allowTypes}}" class="invisible-input"/>        <input type="text" [formControl]="formControl" class="invisible-input">        <mat-hint class="file-hint-error" *ngIf="!dataField.isInvalid(formControl)">{{dataField.description}}</mat-hint>        <mat-error class="file-hint-error" *ngIf="dataField.isInvalid(formControl)">{{\'dataField.validations.required\' | translate}}</mat-error>    </div></ng-template></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'FileListFieldComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'FileListFieldComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -5,7 +5,7 @@ import {
 } from '@angular-devkit/schematics';
 import {getNaeConfiguration} from '../../_utility/utility-functions';
 import {CreateViewArguments} from '../create-view-prompt/models/create-view-arguments';
-import {View} from '@netgrif/application-engine';
+import {View} from '@netgrif/components-core';
 
 
 export function addViewToNaeJson(createViewArguments: CreateViewArguments): Rule {

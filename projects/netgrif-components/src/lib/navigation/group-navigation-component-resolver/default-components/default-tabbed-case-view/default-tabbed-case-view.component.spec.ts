@@ -8,7 +8,7 @@ import {
     NAE_VIEW_ID_SEGMENT,
     TestMockDependenciesModule,
     UserFilterConstants
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';

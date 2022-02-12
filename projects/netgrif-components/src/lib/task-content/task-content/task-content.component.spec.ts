@@ -11,7 +11,7 @@ import {
     TestConfigurationService,
     TaskViewService,
     TaskContentService,
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('TaskContentComponent', () => {
     let component: TaskContentComponent;

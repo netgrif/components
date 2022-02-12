@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Filter, TreeCaseViewService, FilterRepository, NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/application-engine';
+import {Filter, TreeCaseViewService, FilterRepository, NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/components-core';
 
 @Component({
     selector: '<%= prefix %>-<%= dasherize(className) %>',

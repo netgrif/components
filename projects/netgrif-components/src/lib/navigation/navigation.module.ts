@@ -10,7 +10,7 @@ import {
     MaterialModule,
     TranslateLibModule,
     NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {NavigationRailComponent} from './navigation-rail/navigation-rail.component';
 import {NavigationTreeComponent} from './navigation-tree/navigation-tree.component';
 import {UserComponentModule} from '../user/user.module';

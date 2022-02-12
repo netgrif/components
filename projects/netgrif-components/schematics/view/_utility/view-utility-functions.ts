@@ -2,7 +2,7 @@ import {Tree} from '@angular-devkit/schematics';
 import {commitChangesToFile, getAppModule, getNaeConfiguration, getProjectInfo} from '../../_utility/utility-functions';
 import {addDeclarationToModule, addImportToModule} from '@schematics/angular/utility/ast-utils';
 import {ImportToAdd} from '../../_commons/import-to-add';
-import {View, Views} from '@netgrif/application-engine';
+import {View, Views} from '@netgrif/components-core';
 
 
 export function getParentPath(path: string): string {

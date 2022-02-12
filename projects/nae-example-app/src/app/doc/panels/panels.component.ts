@@ -5,7 +5,7 @@ import {Case,
     PetriNetReference,
     WorkflowMetaField,
     Author
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {BehaviorSubject} from 'rxjs';
 
 @Component({

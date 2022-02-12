@@ -19,7 +19,7 @@ import {
     NAE_SEARCH_CATEGORIES,
     CategoryFactory,
     ViewIdService, CaseAuthor, CaseCreationDate, CaseProcess, Category
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Type} from '@angular/core';
 

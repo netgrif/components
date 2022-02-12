@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {ImportNetComponent} from './import-net.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
-import {CovalentModule, MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {CovalentModule, MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 
 @NgModule({
     declarations: [

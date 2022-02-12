@@ -6,7 +6,7 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {QuickPanelComponentModule} from '../quick-panel/quick-panel.module';
 import {UserComponentModule} from '../../user/user.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 

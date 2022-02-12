@@ -16,7 +16,7 @@ import {
     UserListInjectedData,
     UserListService,
     UserValue
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('UserAssignListComponent', () => {
     let component: UserAssignListComponent;

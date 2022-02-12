@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HeaderComponent} from './header.component';
 import {FlexModule} from '@angular/flex-layout';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {EditModeComponent} from './header-modes/edit-mode/edit-mode.component';
 import {SortModeComponent} from './header-modes/sort-mode/sort-mode.component';
 import {SearchModeComponent} from './header-modes/search-mode/search-mode.component';

@@ -5,7 +5,7 @@ import {
     SignUpService,
     SnackBarService,
     UserInviteService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {ActiveGroupService, Case, NextGroupService} from '@netgrif/application-engine';
+import {ActiveGroupService, Case, NextGroupService} from '@netgrif/components-core';
 import {FormControl} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {filter, take} from 'rxjs/operators';

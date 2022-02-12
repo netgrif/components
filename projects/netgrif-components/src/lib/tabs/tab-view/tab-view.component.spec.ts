@@ -17,7 +17,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     ViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {RouterModule} from '@angular/router';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 

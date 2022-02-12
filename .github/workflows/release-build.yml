@@ -1,0 +1,54 @@
+name: Publish package to GitHub Packages
+on:
+    release:
+        types: [ published ]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: actions/setup-node@v2
+                with:
+                    node-version: 12
+            -   run: |
+                    npm i
+                    npm run ncc:build
+                    npm run ncc:full-test
+                    npm i dist/netgrif-components-core --save-optional
+                    npm run nc:build
+                    npm run nc:full-test
+                    npm i dist/netgrif-components --save-optional
+                    npm run example:build
+
+    publish-npm:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: actions/setup-node@v2
+                with:
+                    node-version: 12
+                    registry-url: https://registry.npmjs.org/
+            -   run: npm i
+            -   run: npm run project:local-build
+            -   run: npm publish --access public
+                env:
+                    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+    publish-gpr:
+        needs: build
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: actions/setup-node@v2
+                with:
+                    node-version: 12
+                    registry-url: https://npm.pkg.github.com
+            -   run: npm i
+            -   run: npm run project:local-build
+            -   run: npm publish --access public
+                env:
+                    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

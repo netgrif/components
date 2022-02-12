@@ -7,10 +7,10 @@ import {
     NAE_TAB_DATA,
     AuthenticationMethodService,
     MockAuthenticationMethodService
-} from 'netgrif-application-engine';
+} from '@netgrif/components-core';
 import {
     HeaderComponentModule
-} from 'netgrif-components';
+} from '@netgrif/components';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NaeExampleAppConfigurationService} from '../../../../nae-example-app-configuration.service';

@@ -1,0 +1,499 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li
+  >
+  NetCache</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/process/process.service.ts</code>
+        </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="inputs">Indexable</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <code>[k: string]:    <code>Net</code>
+</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/netgrif-components-core/src/lib/process/process.service.ts:13</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, OnDestroy} from &#x27;@angular/core&#x27;;
+import {forkJoin, Observable, of, ReplaySubject, Subject} from &#x27;rxjs&#x27;;
+import {Net} from &#x27;./net&#x27;;
+import {PetriNetResourceService} from &#x27;../resources/engine-endpoint/petri-net-resource.service&#x27;;
+import {LoggerService} from &#x27;../logger/services/logger.service&#x27;;
+import Transition from &#x27;./transition&#x27;;
+import Transaction from &#x27;./transaction&#x27;;
+import {catchError, map, switchMap, tap} from &#x27;rxjs/operators&#x27;;
+import RolesAndPermissions from &#x27;./rolesAndPermissions&#x27;;
+import {PetriNetReference} from &#x27;../resources/interface/petri-net-reference&#x27;;
+import {PetriNetReferenceWithPermissions} from &#x27;./petri-net-reference-with-permissions&#x27;;
+
+export interface NetCache {
+    [k: string]: Net;
+}
+
+/**
+ * Process service is responsible for loading and caching processes needed for any functionality of an app.
+ */
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class ProcessService implements OnDestroy {
+
+    protected readonly _nets: NetCache;
+    protected _netsSubject: Subject&lt;NetCache&gt;;
+    protected _netUpdate: Subject&lt;Net&gt;;
+    protected _requestCache: Map&lt;string, ReplaySubject&lt;Net&gt;&gt;;
+    protected _referenceRequestCache: Map&lt;string, ReplaySubject&lt;PetriNetReferenceWithPermissions&gt;&gt;;
+
+    constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
+        this._nets &#x3D; {};
+        this._netsSubject &#x3D; new Subject&lt;NetCache&gt;();
+        this._netUpdate &#x3D; new Subject&lt;Net&gt;();
+        this._requestCache &#x3D; new Map&lt;string, ReplaySubject&lt;Net&gt;&gt;();
+        this._referenceRequestCache &#x3D; new Map&lt;string, ReplaySubject&lt;PetriNetReferenceWithPermissions&gt;&gt;();
+    }
+
+    ngOnDestroy(): void {
+        this._netsSubject.complete();
+        this._netUpdate.complete();
+        Array.from(this._requestCache.values()).forEach(net &#x3D;&gt; net.complete());
+        Array.from(this._referenceRequestCache.values()).forEach(net &#x3D;&gt; net.complete());
+    }
+
+    /**
+     * Get process nets according to provided identifiers.
+     * If any of the requested processes is not cached it will be loaded from the server and saved for later.
+     * @param identifiers Array of identifiers of requested processes. See {@link Net}
+     * @param forceLoad when set to &#x60;true&#x60; cached processes will be ignored and a backend request will always be made
+     * (unless another is already pending)
+     * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
+     * If any of the processes failed to load it is skipped from the result.
+     */
+    public getNets(identifiers: Array&lt;string&gt;, forceLoad &#x3D; false): Observable&lt;Array&lt;Net&gt;&gt; {
+        if (identifiers.length &#x3D;&#x3D;&#x3D; 0) {
+            return of([]);
+        }
+        return forkJoin(identifiers.map(i &#x3D;&gt; {
+            return this.getNet(i, forceLoad);
+        })).pipe(
+            map(nets &#x3D;&gt; nets.filter(n &#x3D;&gt; !!n)),
+            tap(nets &#x3D;&gt; {
+                if (nets.length &#x3D;&#x3D;&#x3D; 0) {
+                    return;
+                }
+                this._netsSubject.next(this._nets);
+                nets.forEach(n &#x3D;&gt; this._netUpdate.next(n));
+            })
+        );
+    }
+
+    /**
+     * Get process net by identifier.
+     * @param identifier Identifier of the requested process. See {@link Net}
+     * @param forceLoad when set to &#x60;true&#x60; cached processes will be ignored and a backend request will always be made
+     * (unless another is already pending)
+     * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
+     */
+    public getNet(identifier: string, forceLoad &#x3D; false): Observable&lt;Net&gt; {
+        if (!forceLoad &amp;&amp; this._nets[identifier]) {
+            this._log.debug(&#x60;returning net &#x27;${identifier}&#x27; from cache&#x60;);
+            return of(this._nets[identifier]);
+        }
+        if (this._requestCache.has(identifier)) {
+            this._log.debug(&#x60;returning net &#x27;${identifier}&#x27; from pending requests&#x60;);
+            return this._requestCache.get(identifier).asObservable();
+        }
+        this._log.debug(&#x60;retrieving net &#x27;${identifier}&#x27; from backend&#x60;);
+        this._requestCache.set(identifier, new ReplaySubject&lt;Net&gt;(1));
+        return this.loadNet(identifier).pipe(
+            tap(net &#x3D;&gt; {
+                const s &#x3D; this._requestCache.get(identifier);
+                if (s) {
+                    s.next(net);
+                    s.complete();
+                    this._requestCache.delete(identifier);
+                }
+                if (net) {
+                    this.publishUpdate(net);
+                }
+            })
+        );
+    }
+
+    /**
+     * Get process net referencess according to provided identifiers.
+     *
+     * &#x60;PetriNetReferences&#x60; are not cached.
+     * Each call will result in a new backend request unless a request for the same net is already pending.
+     * @param identifiers Array of identifiers of requested processes. See {@link Net}
+     * @returns Observable of array of loaded processes. Array is emitted only when every process finished loading.
+     * If any of the processes failed to load it is skipped from the result.
+     */
+    public getNetReferences(identifiers: Array&lt;string&gt;): Observable&lt;Array&lt;PetriNetReferenceWithPermissions&gt;&gt; {
+        if (identifiers.length &#x3D;&#x3D;&#x3D; 0) {
+            return of([]);
+        }
+        return forkJoin(identifiers.map(i &#x3D;&gt; {
+            return this.getNetReference(i);
+        })).pipe(
+            map(references &#x3D;&gt; references.filter(r &#x3D;&gt; !!r))
+        );
+    }
+
+    /**
+     * Get process net reference by identifier.
+     *
+     * &#x60;PetriNetReferences&#x60; are not cached.
+     * Each call will result in a new backend request unless a request for the same net is already pending.
+     * @param identifier Identifier of the requested process. See {@link Net}
+     * @returns Observable of [the process]{@link Net}. Process is loaded from a server or picked from the cache.
+     */
+    public getNetReference(identifier: string): Observable&lt;PetriNetReferenceWithPermissions&gt; {
+        if (this._referenceRequestCache.has(identifier)) {
+            return this._referenceRequestCache.get(identifier).asObservable();
+        }
+        this._referenceRequestCache.set(identifier, new ReplaySubject&lt;PetriNetReferenceWithPermissions&gt;(1));
+        return this.loadNetReference(identifier).pipe(
+            switchMap(ref &#x3D;&gt; {
+                if (ref !&#x3D;&#x3D; null) {
+                    return forkJoin({net: of(ref), roles: this.loadRoles(ref.stringId)});
+                } else {
+                    return of({net: ref, roles: undefined});
+                }
+            }),
+            map(result &#x3D;&gt; {
+                if (result.net &#x3D;&#x3D;&#x3D; null) {
+                    return null;
+                }
+                return {
+                    ...result.net,
+                    roles: result.roles.processRoles,
+                    permissions: result.roles.permissions
+                };
+            }),
+            tap(reference &#x3D;&gt; {
+                const s &#x3D; this._referenceRequestCache.get(identifier);
+                if (s) {
+                    s.next(reference);
+                    s.complete();
+                    this._referenceRequestCache.delete(identifier);
+                }
+            })
+        );
+    }
+
+    /**
+     * Remove cached process by identifier. If the process is not found nothing happens.
+     * @param identifier Process identifier
+     */
+    public removeNet(identifier: string): void {
+        if (!this._nets[identifier]) {
+            return;
+        }
+        delete this._nets[identifier];
+        this.publishUpdate();
+    }
+
+    /**
+     * Update cached process object. If the process is not found nothing happens. Process object is replaced.
+     * @param net Updated process object.
+     */
+    public updateNet(net: Net): void {
+        if (!this._nets[net.identifier]) {
+            return;
+        }
+        if (!net.transitions.length || !net.transactions.length || !net.roles.length) {
+            forkJoin({
+                transitions: this.loadTransitions(net.stringId),
+                transactions: this.loadTransactions(net.stringId),
+                roles: this.loadRoles(net.stringId)
+            }).subscribe(values &#x3D;&gt; {
+                net.transitions &#x3D; values.transitions;
+                net.transactions &#x3D; values.transactions;
+                net.roles &#x3D; values.roles.processRoles;
+                net.permissions &#x3D; values.roles.permissions;
+                this._nets[net.identifier] &#x3D; net;
+                this.publishUpdate(net);
+            }, error &#x3D;&gt; {
+                this._log.error(&#x27;Failed to load part of Petri net &#x27; + net.title, error);
+                // throw error;
+            });
+        } else {
+            this._nets[net.identifier] &#x3D; net;
+            this.publishUpdate(net);
+        }
+    }
+
+    /**
+     * Stream of change of the process cache.
+     * New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.
+     * @returns Observable of whole updated cache.
+     */
+    public get nets$(): Observable&lt;NetCache&gt; {
+        return this._netsSubject.asObservable();
+    }
+
+    /**
+     * Stream of change in the process cache.
+     * New state of cache is emitted every time the cached changed by inserting, updating or deleting a process.
+     * @returns Observable of updated or newly loaded process net.
+     */
+    public get netUpdate$(): Observable&lt;Net&gt; {
+        return this._netUpdate.asObservable();
+    }
+
+    public areNetsLoaded(identifiers: Array&lt;string&gt;): boolean {
+        return identifiers.every(identifier &#x3D;&gt; this.isNetLoaded(identifier));
+    }
+
+    public isNetLoaded(identifier: string): boolean {
+        return !!this._nets[identifier];
+    }
+
+    protected loadNet(id: string): Observable&lt;Net&gt; {
+        const returnNet &#x3D; new ReplaySubject&lt;Net&gt;(1);
+        this.loadNetReference(id).subscribe(net &#x3D;&gt; {
+            if (net &#x3D;&#x3D;&#x3D; null) {
+                this._log.debug(&#x60;loadNetReference for net &#x27;${id}&#x27; returned null&#x60;);
+                returnNet.next(null);
+                returnNet.complete();
+                return;
+            }
+            this._log.debug(&#x60;loading net &#x27;${id}&#x27; transitions, transactions and roles&#x60;);
+            forkJoin({
+                transitions: this.loadTransitions(net.stringId),
+                transactions: this.loadTransactions(net.stringId),
+                roles: this.loadRoles(net.stringId)
+            }).subscribe(values &#x3D;&gt; {
+                this._nets[net.identifier] &#x3D; new Net(net);
+                this._nets[net.identifier].transitions &#x3D; values.transitions;
+                this._nets[net.identifier].transactions &#x3D; values.transactions;
+                this._nets[net.identifier].roles &#x3D; values.roles.processRoles;
+                this._nets[net.identifier].permissions &#x3D; values.roles.permissions;
+                returnNet.next(this._nets[net.identifier]);
+                returnNet.complete();
+            }, error &#x3D;&gt; {
+                this._log.error(&#x27;Failed to load part of Petri net &#x27; + net.title, error);
+                returnNet.next(this._nets[net.identifier]);
+                returnNet.complete();
+                // throw error;
+            });
+        });
+        return returnNet.asObservable();
+    }
+
+    protected loadNetReference(id: string): Observable&lt;PetriNetReference&gt; {
+        const returnReference &#x3D; new ReplaySubject&lt;PetriNetReference&gt;(1);
+        this._petriNetResource.getOne(id, &#x27;^&#x27;).subscribe(reference &#x3D;&gt; {
+            returnReference.next(!reference.stringId ? null : reference);
+            returnReference.complete();
+            return;
+        }, error &#x3D;&gt; {
+            this._log.error(&#x27;Failed to load Petri net&#x27;, error);
+            returnReference.next(null);
+            returnReference.complete();
+        });
+        return returnReference.asObservable();
+    }
+
+    protected loadTransitions(id: string): Observable&lt;Array&lt;Transition&gt;&gt; {
+        return this._petriNetResource.getPetriNetTransitions(id).pipe(
+            map(trans &#x3D;&gt; {
+                if (trans instanceof Array) {
+                    return trans;
+                }
+                return [];
+            }),
+            tap(trans &#x3D;&gt; {
+                if (trans.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.info(&#x27;References for transitions of net &#x27; + id + &#x27; were not found!&#x27;);
+                }
+            }),
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;References for transitions of net &#x27; + id + &#x27; failed to load!&#x27;, err);
+                throw err;
+            })
+        );
+    }
+
+    protected loadTransactions(id: string): Observable&lt;Array&lt;Transaction&gt;&gt; {
+        return this._petriNetResource.getPetriNetTransactions(id).pipe(
+            map(trans &#x3D;&gt; {
+                if (trans instanceof Array) {
+                    return trans;
+                }
+                return [];
+            }),
+            tap(trans &#x3D;&gt; {
+                if (trans.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.info(&#x27;References for transactions of net &#x27; + id + &#x27; were not found!&#x27;);
+                }
+            }),
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;References for transactions of net &#x27; + id + &#x27; failed to load!&#x27;, err);
+                throw err;
+            })
+        );
+    }
+
+    protected loadRoles(id: string): Observable&lt;RolesAndPermissions&gt; {
+        return this._petriNetResource.getPetriNetRoles(id).pipe(
+            tap(rolesAndPerm &#x3D;&gt; {
+                if (rolesAndPerm.processRoles.length &#x3D;&#x3D;&#x3D; 0) {
+                    this._log.info(&#x27;Roles reference of net &#x27; + id + &#x27; were not found!&#x27;);
+                }
+            }),
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;Roles reference of net &#x27; + id + &#x27; failed to load!&#x27;, err);
+                throw err;
+            })
+        );
+    }
+
+    protected publishUpdate(net?: Net): void {
+        this._netsSubject.next(this._nets);
+        if (net) {
+            this._netUpdate.next(net);
+        }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'NetCache.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

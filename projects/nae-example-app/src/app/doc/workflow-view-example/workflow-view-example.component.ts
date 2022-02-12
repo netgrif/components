@@ -4,7 +4,7 @@ import {
     PetriNetResourceService,
     BaseAllowedNetsService,
     loadAllPages
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {WorkflowViewComponent} from '@netgrif/components';
 import {Subscription} from 'rxjs';
 

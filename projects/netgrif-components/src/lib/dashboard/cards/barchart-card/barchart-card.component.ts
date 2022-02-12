@@ -5,7 +5,7 @@ import {
     DashboardResourceService,
     DashboardSingleData,
     LoggerService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 

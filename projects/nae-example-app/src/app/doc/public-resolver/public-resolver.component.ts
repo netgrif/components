@@ -5,7 +5,7 @@ import {
     AuthenticationService,
     PublicUrlResolverService,
     RedirectService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 

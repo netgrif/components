@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RedirectService} from '@netgrif/application-engine';
+import {RedirectService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

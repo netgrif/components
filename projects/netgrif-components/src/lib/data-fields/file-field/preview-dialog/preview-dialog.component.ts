@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FilePreviewType, PreviewDialogData} from '@netgrif/application-engine';
+import {FilePreviewType, PreviewDialogData} from '@netgrif/components-core';
 import {SafeUrl} from '@angular/platform-browser';
 
 

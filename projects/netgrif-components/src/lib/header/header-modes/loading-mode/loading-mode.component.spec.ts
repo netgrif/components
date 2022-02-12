@@ -22,7 +22,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     ViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {RouterTestingModule} from '@angular/router/testing';
 
 describe('LoadingModeComponent', () => {

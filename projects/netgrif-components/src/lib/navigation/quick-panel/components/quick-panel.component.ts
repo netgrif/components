@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractQuickPanelComponent, LanguageService, PaperViewService} from '@netgrif/application-engine';
+import {AbstractQuickPanelComponent, LanguageService, PaperViewService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-quick-panel',

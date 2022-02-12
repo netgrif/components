@@ -6,7 +6,7 @@ import {
     NAE_NAVIGATION_ITEM_TASK_DATA,
     TestMockDependenciesModule,
     UserFilterConstants
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {RouterModule} from '@angular/router';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

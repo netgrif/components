@@ -6,7 +6,7 @@ import {Observable, of} from 'rxjs';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {CaseResourceService, Count, CountCard, CountService, DashboardCardTypes, FilterType} from '@netgrif/application-engine';
+import {CaseResourceService, Count, CountCard, CountService, DashboardCardTypes, FilterType} from '@netgrif/components-core';
 
 describe('CountCardComponent', () => {
     let component: CountCardComponent;

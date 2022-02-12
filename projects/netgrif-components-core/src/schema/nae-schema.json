@@ -1,0 +1,770 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": {
+    },
+    "description": "Schema for NAE configuration object",
+    "properties": {
+        "filters": {
+            "$ref": "#/definitions/Filters"
+        },
+        "locales": {
+            "$ref": "#/definitions/Locales"
+        },
+        "providers": {
+            "$ref": "#/definitions/SetAuthAndResourcesAddress"
+        },
+        "services": {
+            "$ref": "#/definitions/Services"
+        },
+        "theme": {
+            "$ref": "#/definitions/Theme"
+        },
+        "views": {
+            "$ref": "#/definitions/Views"
+        }
+    },
+    "type": "object",
+    "definitions": {
+        "Auth": {
+            "additionalProperties": {
+            },
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "authentication": {
+                    "type": "string"
+                },
+                "endpoints": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "sessionBearer": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "CaseLayout": {
+            "properties": {
+                "name": {
+                    "enum": [
+                        "caseView"
+                    ],
+                    "type": "string"
+                },
+                "params": {
+                    "additionalProperties": true,
+                    "properties": {
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "ConfigFilter": {
+            "additionalProperties": {
+            },
+            "properties": {
+                "access": {
+                    "type": "string"
+                },
+                "mergeOperator": {
+                    "enum": [
+                        "AND",
+                        "OR"
+                    ],
+                    "type": "string"
+                },
+                "query": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": true,
+                            "properties": {
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "items": {
+                                "additionalProperties": true,
+                                "properties": {
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        }
+                    ]
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "Case",
+                        "Task"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Filters": {
+            "additionalProperties": {
+                "$ref": "#/definitions/ConfigFilter"
+            },
+            "type": "object"
+        },
+        "Locales": {
+            "additionalProperties": {
+                "type": "string"
+            },
+            "type": "object"
+        },
+        "Resource": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "format": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "openApi": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Resources": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/Resource"
+                },
+                {
+                    "items": {
+                        "$ref": "#/definitions/Resource"
+                    },
+                    "type": "array"
+                }
+            ]
+        },
+        "Services": {
+            "additionalProperties": {
+            },
+            "properties": {
+                "auth": {
+                    "properties": {
+                        "loginRedirect": {
+                            "type": "string"
+                        },
+                        "logoutRedirect": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "dataFields": {
+                    "properties": {
+                        "appearance": {
+                            "type": "string"
+                        },
+                        "template": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "log": {
+                    "additionalProperties": {
+                    },
+                    "properties": {
+                        "includeLogLevel": {
+                            "type": "boolean"
+                        },
+                        "level": {
+                            "type": "string"
+                        },
+                        "logWithDate": {
+                            "type": "boolean"
+                        },
+                        "publishers": {
+                            "items": {
+                            },
+                            "type": "array"
+                        },
+                        "serializeParams": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "routing": {
+                    "properties": {
+                        "defaultRedirect": {
+                            "type": "string"
+                        },
+                        "wildcardRedirect": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "SetAuthAndResourcesAddress": {
+            "additionalProperties": {
+            },
+            "properties": {
+                "auth": {
+                    "$ref": "#/definitions/Auth"
+                },
+                "resources": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Resource"
+                        },
+                        {
+                            "items": {
+                                "$ref": "#/definitions/Resource"
+                            },
+                            "type": "array"
+                        }
+                    ],
+                    "description": "This file is single point of truth for NAE frontend configuration schema."
+                }
+            },
+            "type": "object"
+        },
+        "TaskLayout": {
+            "properties": {
+                "name": {
+                    "enum": [
+                        "taskView"
+                    ],
+                    "type": "string"
+                },
+                "params": {
+                    "additionalProperties": true,
+                    "properties": {
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "Theme": {
+            "additionalProperties": {
+            },
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "pallets": {
+                    "additionalProperties": {
+                    },
+                    "properties": {
+                        "dark": {
+                            "additionalProperties": {
+                            },
+                            "properties": {
+                                "primary": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": {
+                                            },
+                                            "properties": {
+                                                "100": {
+                                                    "type": "string"
+                                                },
+                                                "200": {
+                                                    "type": "string"
+                                                },
+                                                "300": {
+                                                    "type": "string"
+                                                },
+                                                "400": {
+                                                    "type": "string"
+                                                },
+                                                "50": {
+                                                    "type": "string"
+                                                },
+                                                "500": {
+                                                    "type": "string"
+                                                },
+                                                "600": {
+                                                    "type": "string"
+                                                },
+                                                "700": {
+                                                    "type": "string"
+                                                },
+                                                "800": {
+                                                    "type": "string"
+                                                },
+                                                "900": {
+                                                    "type": "string"
+                                                },
+                                                "contrast": {
+                                                    "properties": {
+                                                        "dark": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "light": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "secondary": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": {
+                                            },
+                                            "properties": {
+                                                "100": {
+                                                    "type": "string"
+                                                },
+                                                "200": {
+                                                    "type": "string"
+                                                },
+                                                "300": {
+                                                    "type": "string"
+                                                },
+                                                "400": {
+                                                    "type": "string"
+                                                },
+                                                "50": {
+                                                    "type": "string"
+                                                },
+                                                "500": {
+                                                    "type": "string"
+                                                },
+                                                "600": {
+                                                    "type": "string"
+                                                },
+                                                "700": {
+                                                    "type": "string"
+                                                },
+                                                "800": {
+                                                    "type": "string"
+                                                },
+                                                "900": {
+                                                    "type": "string"
+                                                },
+                                                "contrast": {
+                                                    "properties": {
+                                                        "dark": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "light": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "warn": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": {
+                                            },
+                                            "properties": {
+                                                "100": {
+                                                    "type": "string"
+                                                },
+                                                "200": {
+                                                    "type": "string"
+                                                },
+                                                "300": {
+                                                    "type": "string"
+                                                },
+                                                "400": {
+                                                    "type": "string"
+                                                },
+                                                "50": {
+                                                    "type": "string"
+                                                },
+                                                "500": {
+                                                    "type": "string"
+                                                },
+                                                "600": {
+                                                    "type": "string"
+                                                },
+                                                "700": {
+                                                    "type": "string"
+                                                },
+                                                "800": {
+                                                    "type": "string"
+                                                },
+                                                "900": {
+                                                    "type": "string"
+                                                },
+                                                "contrast": {
+                                                    "properties": {
+                                                        "dark": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "light": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "light": {
+                            "additionalProperties": {
+                            },
+                            "properties": {
+                                "primary": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": {
+                                            },
+                                            "properties": {
+                                                "100": {
+                                                    "type": "string"
+                                                },
+                                                "200": {
+                                                    "type": "string"
+                                                },
+                                                "300": {
+                                                    "type": "string"
+                                                },
+                                                "400": {
+                                                    "type": "string"
+                                                },
+                                                "50": {
+                                                    "type": "string"
+                                                },
+                                                "500": {
+                                                    "type": "string"
+                                                },
+                                                "600": {
+                                                    "type": "string"
+                                                },
+                                                "700": {
+                                                    "type": "string"
+                                                },
+                                                "800": {
+                                                    "type": "string"
+                                                },
+                                                "900": {
+                                                    "type": "string"
+                                                },
+                                                "contrast": {
+                                                    "properties": {
+                                                        "dark": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "light": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "secondary": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": {
+                                            },
+                                            "properties": {
+                                                "100": {
+                                                    "type": "string"
+                                                },
+                                                "200": {
+                                                    "type": "string"
+                                                },
+                                                "300": {
+                                                    "type": "string"
+                                                },
+                                                "400": {
+                                                    "type": "string"
+                                                },
+                                                "50": {
+                                                    "type": "string"
+                                                },
+                                                "500": {
+                                                    "type": "string"
+                                                },
+                                                "600": {
+                                                    "type": "string"
+                                                },
+                                                "700": {
+                                                    "type": "string"
+                                                },
+                                                "800": {
+                                                    "type": "string"
+                                                },
+                                                "900": {
+                                                    "type": "string"
+                                                },
+                                                "contrast": {
+                                                    "properties": {
+                                                        "dark": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "light": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "warn": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": {
+                                            },
+                                            "properties": {
+                                                "100": {
+                                                    "type": "string"
+                                                },
+                                                "200": {
+                                                    "type": "string"
+                                                },
+                                                "300": {
+                                                    "type": "string"
+                                                },
+                                                "400": {
+                                                    "type": "string"
+                                                },
+                                                "50": {
+                                                    "type": "string"
+                                                },
+                                                "500": {
+                                                    "type": "string"
+                                                },
+                                                "600": {
+                                                    "type": "string"
+                                                },
+                                                "700": {
+                                                    "type": "string"
+                                                },
+                                                "800": {
+                                                    "type": "string"
+                                                },
+                                                "900": {
+                                                    "type": "string"
+                                                },
+                                                "contrast": {
+                                                    "properties": {
+                                                        "dark": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "light": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "View": {
+            "additionalProperties": {
+            },
+            "properties": {
+                "access": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": {
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "private",
+                                "public"
+                            ],
+                            "type": "string"
+                        }
+                    ]
+                },
+                "children": {
+                    "$ref": "#/definitions/Views"
+                },
+                "component": {
+                    "description": "Use own custom component for this view",
+                    "properties": {
+                        "class": {
+                            "type": "string"
+                        },
+                        "from": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "layout": {
+                    "additionalProperties": {
+                    },
+                    "properties": {
+                        "componentName": {
+                            "description": "Override autogenerated name. 'Component' will be appended automatically.",
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "enableCaseTitle": {
+                            "type": "boolean"
+                        },
+                        "isCaseTitleRequired": {
+                            "type": "boolean"
+                        },
+                        "params": {
+                            "additionalProperties": {
+                            },
+                            "properties": {
+                                "orientation": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "navigation": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": {
+                            },
+                            "properties": {
+                                "icon": {
+                                    "type": "string"
+                                },
+                                "title": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "boolean"
+                        }
+                    ]
+                },
+                "routing": {
+                    "properties": {
+                        "match": {
+                            "type": "boolean"
+                        },
+                        "path": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "Views": {
+            "additionalProperties": {
+                "$ref": "#/definitions/View"
+            },
+            "type": "object"
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {AbstractRegistrationFormComponent, LoggerService, SignUpService} from '@netgrif/application-engine';
+import {AbstractRegistrationFormComponent, LoggerService, SignUpService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

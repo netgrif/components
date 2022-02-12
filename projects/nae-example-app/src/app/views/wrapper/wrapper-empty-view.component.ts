@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/application-engine';
+import {NAE_VIEW_ID_SEGMENT, ViewIdService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-wrapper-empty-view',

@@ -1,0 +1,36 @@
+name: Master Build & Test
+
+on:
+    push:
+        branches: [ master ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
+
+            -   name: Use Node.js 12
+                uses: actions/setup-node@v2
+                with:
+                    node-version: 12
+                    cache: 'npm'
+            -   run: |
+                    npm i
+                    npm run ncc:build
+                    npm run ncc:full-test
+                    npm i dist/netgrif-components-core --save-optional
+                    npm run nc:build
+                    npm run nc:full-test
+                    npm i dist/netgrif-components --save-optional
+                    npm run example:build
+                    npm run ncc:doc
+                    npm run nc:doc
+
+            -   name: SonarCloud scan
+                uses: sonarsource/sonarcloud-github-action@master
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

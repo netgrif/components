@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractRemoveNodeComponent, CaseTreeService} from '@netgrif/application-engine';
+import {AbstractRemoveNodeComponent, CaseTreeService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-remove-node',

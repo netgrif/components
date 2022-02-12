@@ -14,7 +14,7 @@ import {
     TaskSearchCaseQuery,
     TaskViewService,
     ViewIdService,
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {
     HeaderComponent,
 } from '@netgrif/components';

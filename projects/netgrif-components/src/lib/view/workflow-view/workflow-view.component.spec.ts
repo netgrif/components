@@ -19,7 +19,7 @@ import {
     UserResourceService,
     ViewService,
     WorkflowHeaderService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {PanelComponentModule} from '../../panel/panel.module';
 import {HeaderComponentModule} from '../../header/header.module';
 

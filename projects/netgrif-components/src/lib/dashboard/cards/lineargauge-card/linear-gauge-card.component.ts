@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
-import {AbstractCustomCard, DashboardEventContent, DashboardResourceService} from '@netgrif/application-engine';
+import {AbstractCustomCard, DashboardEventContent, DashboardResourceService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
-import {AggregationResult, LoggerService} from '@netgrif/application-engine';
+import {AggregationResult, LoggerService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-linear-gauge-card',

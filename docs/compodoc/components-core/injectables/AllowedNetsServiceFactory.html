@@ -1,0 +1,788 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >AllowedNetsServiceFactory</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Simplifies the creation of <a href="../injectables/AllowedNetsService.html">AllowedNetsService</a> instances</p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createFromArray" >createFromArray</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createFromConfig" >createFromConfig</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createFromFilterCase" >createFromFilterCase</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createFromObservable" >createFromObservable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createWithAllNets" >createWithAllNets</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_processService: <a href="../injectables/ProcessService.html" target="_self">ProcessService</a>, _petriNetResource: <a href="../injectables/PetriNetResourceService.html" target="_self">PetriNetResourceService</a>, _configService: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_processService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProcessService.html" target="_self" >ProcessService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_petriNetResource</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PetriNetResourceService.html" target="_self" >PetriNetResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_configService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFromArray"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createFromArray</b></span>
+                        <a href="#createFromArray"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFromArray(allowedNetsIdentifiers: Array<string>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:93</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates an instance of <a href="../injectables/AllowedNetsService.html">AllowedNetsService</a> without having to provide all the dependencies yourself.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>allowedNetsIdentifiers</td>
+                                    <td>
+                                            <code>Array&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>identifiers of the allowed nets</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/AllowedNetsService.html" target="_self" >AllowedNetsService</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFromConfig"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createFromConfig</b></span>
+                        <a href="#createFromConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFromConfig(webViewPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="105"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:105</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates an instance of <a href="../injectables/AllowedNetsService.html">AllowedNetsService</a> without having to provide all the dependencies yourself.
+Allowed nets are loaded from the configuration of the view.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>webViewPath</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>path to the view as specified in its configuration. No leading backslash.
+Allowed nets are loaded from the configuration of the view.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/AllowedNetsService.html" target="_self" >AllowedNetsService</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFromFilterCase"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createFromFilterCase</b></span>
+                        <a href="#createFromFilterCase"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFromFilterCase(filterCase: <a href="../interfaces/Case.html" target="_self">Case</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="137"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:137</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates an instance of <a href="../injectables/AllowedNetsService.html">AllowedNetsService</a> without having to provide all the dependencies yourself.
+Allowed nets are set from filter process immediate data</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterCase</td>
+                                    <td>
+                                                <code><a href="../interfaces/Case.html" target="_self" >Case</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>a filter process instance
+Allowed nets are set from filter process immediate data</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/AllowedNetsService.html" target="_self" >AllowedNetsService</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFromObservable"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createFromObservable</b></span>
+                        <a href="#createFromObservable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFromObservable(netIdentifiers$: Observable<Array<string>>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="125"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:125</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates an instance of <a href="../injectables/AllowedNetsService.html">AllowedNetsService</a> without having to provide all the dependencies yourself.
+When a new value is emitted the allowed nets will be updated.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>netIdentifiers$</td>
+                                    <td>
+                                            <code>Observable&lt;Array&lt;string&gt;&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>observable containing the identifiers of the allowed nets.
+When a new value is emitted the allowed nets will be updated.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/AllowedNetsService.html" target="_self" >AllowedNetsService</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createWithAllNets"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createWithAllNets</b></span>
+                        <a href="#createWithAllNets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createWithAllNets()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/allowed-nets/services/factory/allowed-nets-service-factory.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates an instance of <a href="../injectables/AllowedNetsService.html">AllowedNetsService</a> without having to provide all the dependencies yourself.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/AllowedNetsService.html" target="_self" >AllowedNetsService</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an instance of {</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {ProcessService} from &#x27;../../../process/process.service&#x27;;
+import {AllowedNetsService} from &#x27;../allowed-nets.service&#x27;;
+import {switchMap} from &#x27;rxjs/operators&#x27;;
+import {Observable, of} from &#x27;rxjs&#x27;;
+import {PetriNetResourceService} from &#x27;../../../resources/engine-endpoint/petri-net-resource.service&#x27;;
+import {ConfigurationService} from &#x27;../../../configuration/configuration.service&#x27;;
+import {CaseViewParams} from &#x27;../../../view/case-view/models/case-view-params&#x27;;
+import {LoggerService} from &#x27;../../../logger/services/logger.service&#x27;;
+import {TaskViewParams} from &#x27;../../../view/task-view/models/task-view-params&#x27;;
+import {InjectedTabbedTaskViewData} from &#x27;../../../view/task-view/models/injected-tabbed-task-view-data&#x27;;
+import {Case} from &#x27;../../../resources/interface/case&#x27;;
+import {getImmediateData} from &#x27;../../../utility/get-immediate-data&#x27;;
+import {UserFilterConstants} from &#x27;../../../filter/models/user-filter-constants&#x27;;
+import {DataGroup} from &#x27;../../../resources/public-api&#x27;;
+import {getFieldFromDataGroups} from &#x27;../../../utility/get-field&#x27;;
+import {FilterField} from &#x27;../../../data-fields/filter-field/models/filter-field&#x27;;
+import {BaseAllowedNetsService} from &#x27;../base-allowed-nets.service&#x27;;
+
+
+/**
+ * Convenience method that can be used as an allowed nets factory for tabbed task views.
+ * If no allowed nets are provided in the injected data then an {@link AllowedNetsService} with no allowed nets is created.
+ * It has a dependency on this class and {@link NAE_TAB_DATA} injection token.
+ */
+export function tabbedAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
+                                                tabData: InjectedTabbedTaskViewData): AllowedNetsService {
+    return factory.createFromArray(tabData?.allowedNets ?? []);
+}
+
+/**
+ * Convenience method that can be used as an allowed nets factory for views that are loaded from filter process instances.
+ * It has a dependency on this class and {@link NAE_NAVIGATION_ITEM_TASK_DATA} injection token.
+ */
+export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNetsServiceFactory,
+                                                            baseAllowedNets: BaseAllowedNetsService,
+                                                            navigationItemTaskData: Array&lt;DataGroup&gt;): AllowedNetsService {
+    const filterField &#x3D; getFieldFromDataGroups(navigationItemTaskData, UserFilterConstants.FILTER_FIELD_ID) as FilterField;
+
+    if (filterField &#x3D;&#x3D;&#x3D; undefined) {
+        throw new Error(&#x60;Provided navigation item task data does not contain a filter field with ID &#x27;${UserFilterConstants.FILTER_FIELD_ID
+        }&#x27;! Allowed nets cannot be generated from it!&#x60;);
+    }
+
+    const nets &#x3D; [...filterField.allowedNets];
+
+    if (filterField.filterMetadata.inheritAllowedNets) {
+        nets.push(...baseAllowedNets.allowedNets);
+    }
+
+    const uniqueNets &#x3D; new Set&lt;string&gt;(nets);
+
+    return factory.createFromArray(Array.from(uniqueNets));
+}
+
+/**
+ * Simplifies the creation of {@link AllowedNetsService} instances
+ */
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class AllowedNetsServiceFactory {
+
+    constructor(protected _processService: ProcessService,
+                protected _petriNetResource: PetriNetResourceService,
+                protected _configService: ConfigurationService,
+                protected _log: LoggerService) {
+    }
+
+    /**
+     * Creates an instance of {@link AllowedNetsService} without having to provide all the dependencies yourself.
+     * @returns an instance of {@link AllowedNetsService} with all nets set as the &#x60;allowedNets&#x60;
+     */
+    public createWithAllNets(): AllowedNetsService {
+        return new AllowedNetsService(
+            this._petriNetResource.getAll().pipe(
+                switchMap(nets &#x3D;&gt; {
+                    if (nets &amp;&amp; Array.isArray(nets)) {
+                        return of(nets.map(n &#x3D;&gt; n.identifier));
+                    } else {
+                        return of([]);
+                    }
+                })
+            ),
+            this._processService
+        );
+    }
+
+    /**
+     * Creates an instance of {@link AllowedNetsService} without having to provide all the dependencies yourself.
+     * @param allowedNetsIdentifiers identifiers of the allowed nets
+     */
+    public createFromArray(allowedNetsIdentifiers: Array&lt;string&gt;): AllowedNetsService {
+        return new AllowedNetsService(
+            of(allowedNetsIdentifiers),
+            this._processService
+        );
+    }
+
+    /**
+     * Creates an instance of {@link AllowedNetsService} without having to provide all the dependencies yourself.
+     * @param webViewPath path to the view as specified in its configuration. No leading backslash.
+     * Allowed nets are loaded from the configuration of the view.
+     */
+    public createFromConfig(webViewPath: string): AllowedNetsService {
+        const view &#x3D; this._configService.getViewByPath(webViewPath);
+        if (view?.layout?.params &#x3D;&#x3D;&#x3D; undefined) {
+            throw new Error(&#x60;Can&#x27;t load configuration for view with webPath: &#x27;${webViewPath}&#x27;&#x60;);
+        }
+        const viewParams &#x3D; view.layout.params as CaseViewParams | TaskViewParams;
+        if (viewParams.allowedNets &#x3D;&#x3D;&#x3D; undefined) {
+            this._log.warn(&#x60;No &#x27;allowedNets&#x27; provided for view with webPath &#x27;${webViewPath}&#x27;&#x60;);
+        }
+        return new AllowedNetsService(
+            of(viewParams.allowedNets ?? []),
+            this._processService
+        );
+    }
+
+    /**
+     * Creates an instance of {@link AllowedNetsService} without having to provide all the dependencies yourself.
+     * @param netIdentifiers$ observable containing the identifiers of the allowed nets.
+     * When a new value is emitted the allowed nets will be updated.
+     */
+    public createFromObservable(netIdentifiers$: Observable&lt;Array&lt;string&gt;&gt;): AllowedNetsService {
+        return new AllowedNetsService(
+            netIdentifiers$,
+            this._processService
+        );
+    }
+
+    /**
+     * Creates an instance of {@link AllowedNetsService} without having to provide all the dependencies yourself.
+     * @param filterCase a filter process instance
+     * Allowed nets are set from filter process immediate data
+     */
+    public createFromFilterCase(filterCase: Case): AllowedNetsService {
+        const filterData &#x3D; getImmediateData(filterCase, UserFilterConstants.FILTER_FIELD_ID);
+        if (filterData &#x3D;&#x3D;&#x3D; undefined) {
+            throw new Error(&#x60;Cannot get filter from case &#x27;${filterCase.title}&#x27; with id &#x27;${filterCase.stringId}&#x27;&#x60;);
+        }
+        return new AllowedNetsService(
+            of(filterData.allowedNets),
+            this._processService
+        );
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'AllowedNetsServiceFactory.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

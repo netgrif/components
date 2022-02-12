@@ -1,4 +1,4 @@
-import {InjectedTabbedCaseViewData, DataGroup} from '@netgrif/application-engine';
+import {InjectedTabbedCaseViewData, DataGroup} from '@netgrif/components-core';
 
 /**
  * A variation of {@link InjectedTabbedCaseViewData} that contain the task data of a navigation item task.

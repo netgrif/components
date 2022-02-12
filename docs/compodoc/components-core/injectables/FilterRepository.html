@@ -1,0 +1,945 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >FilterRepository</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/filter/filter.repository.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Allows access to filters defined in nae.json during runtime.</p>
+<p>Filters are always returned as copies to avoid unintended side effects when operating on them.</p>
+<p>Also see <a href="../classes/Filter.html">Filter</a>.</p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_filters" >_filters</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getCaseFilterList" >getCaseFilterList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getFilter" >getFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getFilterList" >getFilterList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getFilters" >getFilters</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getTaskFilterList" >getTaskFilterList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#saveFilter" >saveFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#warnIfFilterExists" >warnIfFilterExists</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_configService: <a href="../classes/ConfigurationService.html" target="_self">ConfigurationService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:27</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Loads and creates filters declared in nae.json.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_configService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/ConfigurationService.html" target="_self" >ConfigurationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCaseFilterList"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getCaseFilterList</b></span>
+                        <a href="#getCaseFilterList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCaseFilterList()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="101"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:101</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>list of case filter identifiers stored in the repository</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFilter"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getFilter</b></span>
+                        <a href="#getFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getFilter(filterId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="78"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:78</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>ID of the filter that should be retrieved</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>a copy of the specified filter, or <code>undefined</code> if such filter doesn&#39;t exist in the repository.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFilterList"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>getFilterList</b></span>
+                        <a href="#getFilterList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getFilterList(predicate: (f: <a href="../classes/Filter.html">Filter</a>) => void)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="116"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:116</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>predicate</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>condition that must be fulfilled by the filters in the repository in order to be included in the result</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>list of filter identifiers that fulfill the given predicate</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFilters"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getFilters</b></span>
+                        <a href="#getFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getFilters(filterIds: Array<string>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:131</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>and the array will contain less elements than the input array.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterIds</td>
+                                    <td>
+                                            <code>Array&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>list of ids of filters that should be returned</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Array&lt;Filter&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>list of copies of specified filters. If some of the filters don&#39;t exist in the repository, they won&#39;t be included
+and the array will contain less elements than the input array.</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTaskFilterList"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getTaskFilterList</b></span>
+                        <a href="#getTaskFilterList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTaskFilterList()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>list of task filter identifiers stored in the repository</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveFilter"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>saveFilter</b></span>
+                        <a href="#saveFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveFilter(filter: <a href="../classes/Filter.html" target="_self">Filter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:93</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stores a new filter into the repository. If the repository already contains a filter with the same ID, the stored filter
+will be replaced and a warning will be logged.</p>
+<p>The repository stores a copy of the provided filter, to ensure that the objects in the repository aren&#39;t referenced from outside.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the filter that should be stored</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="warnIfFilterExists"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>warnIfFilterExists</b></span>
+                        <a href="#warnIfFilterExists"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>warnIfFilterExists(filterId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="68"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:68</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Logs a warning if filter with the given id already exists. The warning states that the filter will be replaced.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>ID of the filter who&#39;s existence should be checked</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_filters"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_filters</b></span>
+                        <a href="#_filters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Filter.html" target="_self" >Map&lt;string | Filter&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Map&lt;string, Filter&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/filter.repository.ts:27</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stores the filters managed by the repository. Keys are filterIds.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {ConfigurationService} from &#x27;../configuration/configuration.service&#x27;;
+import {ConfigFilter} from &#x27;../../commons/schema&#x27;;
+import {LoggerService} from &#x27;../logger/services/logger.service&#x27;;
+import {MergeOperator} from &#x27;./models/merge-operator&#x27;;
+import {FilterType} from &#x27;./models/filter-type&#x27;;
+import {SimpleFilter} from &#x27;./models/simple-filter&#x27;;
+import {Filter} from &#x27;./models/filter&#x27;;
+import {MergedFilter} from &#x27;./models/merged-filter&#x27;;
+
+
+/**
+ * Allows access to filters defined in nae.json during runtime.
+ *
+ * Filters are always returned as copies to avoid unintended side effects when operating on them.
+ *
+ * Also see {@link Filter}.
+ */
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class FilterRepository {
+
+    /**
+     * Stores the filters managed by the repository. Keys are filterIds.
+     */
+    protected _filters: Map&lt;string, Filter&gt; &#x3D; new Map&lt;string, Filter&gt;();
+
+    /**
+     * Loads and creates filters declared in nae.json.
+     */
+    constructor(protected _configService: ConfigurationService, protected _log: LoggerService) {
+        const filters &#x3D; _configService.get().filters;
+        if (!filters) {
+            return;
+        }
+
+        Object.keys(filters).forEach(filterId &#x3D;&gt; {
+            const configFilter: ConfigFilter &#x3D; filters[filterId];
+            // TODO 17.4.2020 - don&#x27;t ignore filter.access property
+            if (!configFilter.type || !configFilter.body) {
+                _log.warn(&#x60;Filter &#x27;${filterId}&#x27; doesn&#x27;t define all the necessary properties. Skipping.&#x60;);
+                return;
+            }
+            if (Array.isArray(configFilter.body)) {
+                if (!configFilter.mergeOperator) {
+                    _log.warn(&#x60;Filter &#x27;${filterId}&#x27; contains multiple filters, but doesn&#x27;t define a merge operator. Skipping.&#x60;);
+                    return;
+                }
+                this.warnIfFilterExists(filterId);
+
+                const filter &#x3D; new MergedFilter(filterId, configFilter.type as FilterType,
+                    configFilter.body, configFilter.mergeOperator as MergeOperator, configFilter.title);
+                this._filters.set(filterId, filter);
+
+            } else {
+                this.warnIfFilterExists(filterId);
+                const filter &#x3D; new SimpleFilter(filterId, configFilter.type as FilterType, configFilter.body, configFilter.title);
+                this._filters.set(filterId, filter);
+            }
+        });
+    }
+
+    /**
+     * Logs a warning if filter with the given id already exists. The warning states that the filter will be replaced.
+     * @param filterId ID of the filter who&#x27;s existence should be checked
+     */
+    protected warnIfFilterExists(filterId: string): void {
+        if (this._filters.has(filterId)) {
+            this._log.warn(&#x60;Filter with id &#x27;${filterId}&#x27; already exists in the repository and will be replaced!&#x60;);
+        }
+    }
+
+    /**
+     * @param filterId ID of the filter that should be retrieved
+     * @returns a copy of the specified filter, or &#x60;undefined&#x60; if such filter doesn&#x27;t exist in the repository.
+     */
+    public getFilter(filterId: string): Filter | undefined {
+        let filter &#x3D; this._filters.get(filterId);
+        if (!!filter) {
+            filter &#x3D; filter.clone();
+        }
+        return filter;
+    }
+
+    /**
+     * Stores a new filter into the repository. If the repository already contains a filter with the same ID, the stored filter
+     * will be replaced and a warning will be logged.
+     *
+     * The repository stores a copy of the provided filter, to ensure that the objects in the repository aren&#x27;t referenced from outside.
+     * @param filter the filter that should be stored
+     */
+    public saveFilter(filter: Filter): void {
+        this.warnIfFilterExists(filter.id);
+        this._filters.set(filter.id, filter.clone());
+    }
+
+    /**
+     * @returns list of case filter identifiers stored in the repository
+     */
+    public getCaseFilterList(): Array&lt;string&gt; {
+        return this.getFilterList(filter &#x3D;&gt; filter.type &#x3D;&#x3D;&#x3D; FilterType.CASE);
+    }
+
+    /**
+     * @returns list of task filter identifiers stored in the repository
+     */
+    public getTaskFilterList(): Array&lt;string&gt; {
+        return this.getFilterList(filter &#x3D;&gt; filter.type &#x3D;&#x3D;&#x3D; FilterType.TASK);
+    }
+
+    /**
+     * @param predicate condition that must be fulfilled by the filters in the repository in order to be included in the result
+     * @returns list of filter identifiers that fulfill the given predicate
+     */
+    protected getFilterList(predicate: (f: Filter) &#x3D;&gt; boolean): Array&lt;string&gt; {
+        const result &#x3D; [];
+        this._filters.forEach(filter &#x3D;&gt; {
+            if (predicate(filter)) {
+                result.push(filter.id);
+            }
+        });
+        return result;
+    }
+
+    /**
+     * @param filterIds list of ids of filters that should be returned
+     * @returns list of copies of specified filters. If some of the filters don&#x27;t exist in the repository, they won&#x27;t be included
+     * and the array will contain less elements than the input array.
+     */
+    public getFilters(filterIds: Array&lt;string&gt;): Array&lt;Filter&gt; {
+        const result &#x3D; [];
+        filterIds.forEach(id &#x3D;&gt; {
+            const filter &#x3D; this.getFilter(id);
+            if (filter !&#x3D;&#x3D; undefined) {
+               result.push(filter);
+            }
+        });
+        return result;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'FilterRepository.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

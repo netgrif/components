@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FilterSelectorListItemComponent} from './filter-selector-list-item.component';
 import {Component} from '@angular/core';
-import {FilterType, SimpleFilter} from '@netgrif/application-engine';
+import {FilterType, SimpleFilter} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilterSelectorListItemComponent', () => {

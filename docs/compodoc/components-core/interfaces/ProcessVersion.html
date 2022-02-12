@@ -1,0 +1,415 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li
+  >
+  ProcessVersion</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/admin/role-assignment/services/ProcessList.ts</code>
+        </p>
+
+
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="../interfaces/PetriNetReference.html" target="_self" >PetriNetReference</a></code>
+            </p>
+
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#roles" 
+>
+                                            roles
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="roles"></a>
+                                        <span class="name "><b>roles</b>
+                                            <a href="#roles">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>roles:     <code>Array&lt;ExtendedProcessRole&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>Array&lt;ExtendedProcessRole&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {LoadingEmitter} from &#x27;../../../utility/loading-emitter&#x27;;
+import {PetriNetReference} from &#x27;../../../resources/interface/petri-net-reference&#x27;;
+import {PetriNetResourceService} from &#x27;../../../resources/engine-endpoint/petri-net-resource.service&#x27;;
+import {LoggerService} from &#x27;../../../logger/services/logger.service&#x27;;
+import {forkJoin, Observable, of, timer} from &#x27;rxjs&#x27;;
+import {catchError, map, tap} from &#x27;rxjs/operators&#x27;;
+import NetRole from &#x27;../../../process/netRole&#x27;;
+import RolesAndPermissions from &#x27;../../../process/rolesAndPermissions&#x27;;
+
+export interface ExtendedProcessRole extends NetRole {
+    selected: boolean;
+    processIdentifier: string;
+
+    toggle(): void;
+}
+
+export interface ProcessVersion extends PetriNetReference {
+    roles: Array&lt;ExtendedProcessRole&gt;;
+}
+
+export interface ProcessListItem {
+    identifier: string;
+    title: string;
+    initials: string;
+    newestVersion: string;
+    processes: Array&lt;ProcessVersion&gt;;
+    loading: boolean;
+    emptyRoles: boolean;
+    someRolesSelected: boolean;
+}
+
+export class ProcessList {
+    private _loading$: LoadingEmitter;
+    private _processes: Array&lt;ProcessListItem&gt;;
+    private readonly _rolesIndex: { [k: string]: Array&lt;ExtendedProcessRole&gt; };
+    private _selectedRoles: Set&lt;string&gt;;
+
+    constructor(private _resources: PetriNetResourceService, private _log: LoggerService) {
+        this._loading$ &#x3D; new LoadingEmitter();
+        this._processes &#x3D; [];
+        this._rolesIndex &#x3D; {};
+        this._selectedRoles &#x3D; new Set&lt;string&gt;();
+    }
+
+    public get loading(): boolean {
+        return this._loading$.getValue();
+    }
+
+    public get loading$(): Observable&lt;boolean&gt; {
+        return this._loading$.asObservable();
+    }
+
+    public get processes(): Array&lt;ProcessListItem&gt; {
+        return this._processes;
+    }
+
+    public get selectedRoles(): Array&lt;string&gt; {
+        return [...this._selectedRoles];
+    }
+
+    public loadProcesses(): void {
+        if (this.loading) {
+            return;
+        }
+        this._loading$.on();
+        this._resources.getAll().pipe(
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;Failed to load Petri nets&#x27;, err);
+                return of([] as Array&lt;ProcessVersion&gt;);
+            }),
+            map(p &#x3D;&gt; Array.isArray(p) ? p : [] as Array&lt;ProcessVersion&gt;),
+            map(ps &#x3D;&gt; ps.map(p &#x3D;&gt; ({
+                ...p,
+                roles: []
+            }) as ProcessVersion))
+        ).subscribe(nets &#x3D;&gt; {
+            const cache: { [k: string]: ProcessListItem } &#x3D; {};
+            nets.forEach(net &#x3D;&gt; {
+                if (cache[net.identifier]) {
+                    cache[net.identifier].processes.push(net);
+                } else {
+                    cache[net.identifier] &#x3D; {
+                        identifier: net.identifier,
+                        title: net.title,
+                        initials: net.initials,
+                        newestVersion: undefined,
+                        processes: [net],
+                        loading: true,
+                        emptyRoles: true,
+                        someRolesSelected: false
+                    };
+                }
+                cache[net.identifier].processes.sort((a, b) &#x3D;&gt; {
+                    return b.version.localeCompare(a.version, undefined, { numeric: true });
+                });
+                cache[net.identifier].newestVersion &#x3D; cache[net.identifier].processes[0].version;
+            });
+            this._processes &#x3D; Object.values(cache).sort();
+            this._loading$.off();
+        });
+    }
+
+    public prepareToTryAgainToLoadRoles(item: ProcessListItem): void {
+        if (!item || !item.emptyRoles) {
+            return;
+        }
+        item.loading &#x3D; true;
+    }
+
+    public selectRoles(roleIds: Set&lt;string&gt;): void {
+        if (!roleIds) {
+            roleIds &#x3D; new Set&lt;string&gt;([]);
+        }
+        roleIds.forEach(role &#x3D;&gt; {
+            this._selectedRoles.delete(role);
+        });
+        this._selectedRoles.forEach(role &#x3D;&gt; {
+            if (this._rolesIndex[role]) {
+                this._rolesIndex[role].forEach(r &#x3D;&gt; r.selected &#x3D; false);
+            }
+        });
+        this._selectedRoles &#x3D; roleIds;
+        this._selectedRoles.forEach(role &#x3D;&gt; {
+            if (this._rolesIndex[role]) {
+                this._rolesIndex[role].forEach(r &#x3D;&gt; r.selected &#x3D; true);
+            }
+        });
+        this.updateSelectedRolesFlag(Object.keys(this._rolesIndex)
+            .filter(r &#x3D;&gt; this._selectedRoles.has(r))
+            .map(r &#x3D;&gt; this._rolesIndex[r].length !&#x3D;&#x3D; 0 ? this._rolesIndex[r][0].processIdentifier : null));
+    }
+
+    public updateSelectedRoles(role: ExtendedProcessRole): void {
+        role.selected ? this._selectedRoles.add(role.stringId) : this._selectedRoles.delete(role.stringId);
+        this._rolesIndex[role.stringId].forEach(r &#x3D;&gt; r.selected &#x3D; role.selected);
+    }
+
+    public loadProcessItemRoles(item: ProcessListItem): void {
+        if (!item || !item.emptyRoles) {
+            return;
+        }
+        item.loading &#x3D; true;
+        forkJoin(item.processes.map(p &#x3D;&gt; this.loadNetRoles(p))).subscribe(roles &#x3D;&gt; {
+            let isEmpty &#x3D; true;
+            roles.forEach((rs, i) &#x3D;&gt; {
+                item.processes[i].roles &#x3D; rs;
+                isEmpty &#x3D; isEmpty &amp;&amp; rs.length &#x3D;&#x3D;&#x3D; 0;
+            });
+            item.emptyRoles &#x3D; isEmpty;
+            item.loading &#x3D; false;
+        });
+    }
+
+    private loadNetRoles(net: ProcessVersion): Observable&lt;Array&lt;ExtendedProcessRole&gt;&gt; {
+        if (net.roles &amp;&amp; net.roles.length !&#x3D;&#x3D; 0) {
+            return of(net.roles);
+        }
+        return this._resources.getPetriNetRoles(net.stringId).pipe(
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;Failed to load roles for Petri net [&#x27; + net.stringId + &#x27;] &#x27; + net.title, err);
+                return of([] as Array&lt;ExtendedProcessRole&gt;);
+            }),
+            map((roles: RolesAndPermissions) &#x3D;&gt; roles.processRoles.map(role &#x3D;&gt; ({
+                ...role,
+                selected: false,
+                processIdentifier: net.identifier,
+                toggle() {
+                    this.selected &#x3D; !this.selected;
+                }
+            }) as ExtendedProcessRole)),
+            tap(roles &#x3D;&gt; roles.forEach(role &#x3D;&gt; {
+                if (!this._rolesIndex[role.stringId]) {
+                    this._rolesIndex[role.stringId] &#x3D; [role];
+                } else {
+                    this._rolesIndex[role.stringId].push(role);
+                }
+                if (this._selectedRoles.has(role.stringId)) {
+                    role.selected &#x3D; true;
+                }
+            }))
+        );
+    }
+
+    private updateSelectedRolesFlag(identifiers: Array&lt;string&gt;): void {
+        if (!identifiers) {
+            return;
+        }
+        timer(0).subscribe(_ &#x3D;&gt; {
+            if (identifiers.length &#x3D;&#x3D;&#x3D; 0) {
+                this._processes.forEach(process &#x3D;&gt; {
+                    process.someRolesSelected &#x3D; false;
+                });
+            }
+            identifiers.forEach(identifier &#x3D;&gt; {
+                if (!identifier) {
+                    return;
+                }
+                const requested &#x3D; this._processes.find(process &#x3D;&gt; process.identifier &#x3D;&#x3D;&#x3D; identifier);
+                if (requested) {
+                    requested.someRolesSelected &#x3D; requested.processes.some(version &#x3D;&gt; version.roles.length !&#x3D;&#x3D; 0);
+                }
+            });
+            this._processes.forEach(process &#x3D;&gt; {
+                if (!identifiers.find(i &#x3D;&gt; process.identifier &#x3D;&#x3D;&#x3D; i)) {
+                    process.someRolesSelected &#x3D; false;
+                }
+            });
+        });
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProcessVersion.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

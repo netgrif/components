@@ -5,7 +5,7 @@ import {
     ProcessService,
     SideMenuService,
     WorkflowViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {ImportNetComponent} from '../../side-menu/content-components/import-net/import-net.component';
 
 

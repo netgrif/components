@@ -1,5 +1,5 @@
 /*
- * Public API Surface of netgrif-application-engine
+ * Public API Surface of netgrif-components
  */
 
 /* COMPONENTS */

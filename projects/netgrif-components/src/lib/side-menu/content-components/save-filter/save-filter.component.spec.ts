@@ -9,7 +9,7 @@ import {
     TranslateLibModule,
     AuthenticationMethodService,
     MockAuthenticationMethodService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {of} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
