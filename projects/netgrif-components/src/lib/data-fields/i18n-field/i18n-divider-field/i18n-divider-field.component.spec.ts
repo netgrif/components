@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {I18nDividerFieldComponent} from './i18n-divider-field.component';
 import {Component} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {I18nField, WrappedBoolean} from '@netgrif/application-engine';
+import {I18nField, WrappedBoolean} from '@netgrif/components-core';
 
 describe('I18nDividerFieldComponent', () => {
     let component: I18nDividerFieldComponent;

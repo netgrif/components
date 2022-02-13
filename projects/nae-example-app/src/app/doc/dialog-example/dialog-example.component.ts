@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DialogService} from '@netgrif/application-engine';
+import {DialogService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-dialog-example',

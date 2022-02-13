@@ -3,7 +3,7 @@ import {FilterFieldComponent} from './filter-field.component';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {FilterFieldContentComponent} from './filter-field-content/filter-field-content.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {MaterialModule, FilterType, FilterField, ConfigurationService, TestConfigurationService} from '@netgrif/application-engine';
+import {MaterialModule, FilterType, FilterField, ConfigurationService, TestConfigurationService} from '@netgrif/components-core';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {Component} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

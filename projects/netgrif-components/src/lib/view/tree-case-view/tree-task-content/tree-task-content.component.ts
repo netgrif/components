@@ -15,8 +15,9 @@ import {
     TaskEventService,
     TaskRequestStateService,
     TreeTaskContentService,
-    UnlimitedTaskContentService
-} from '@netgrif/application-engine';
+    UnlimitedTaskContentService,
+    PermissionService
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-tree-task-content',
@@ -45,7 +46,8 @@ export class TreeTaskContentComponent extends AbstractTreeTaskContentComponent {
                 protected _assign: AssignTaskService,
                 protected _cancel: CancelTaskService,
                 protected _finish: FinishTaskService,
-                protected _taskContentService: TaskContentService) {
-        super(_treeTaskContentService, _taskEventService, _assign, _cancel, _finish, _taskContentService);
+                protected _taskContentService: TaskContentService,
+                protected _permissionService: PermissionService) {
+        super(_treeTaskContentService, _taskEventService, _assign, _cancel, _finish, _taskContentService, _permissionService);
     }
 }

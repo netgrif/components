@@ -1,0 +1,538 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >FilterExtractionService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>This service is able to load the full saved filter including all of its ancestor filters.</p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#UNTABBED_VIEW_ID_EXTRACTOR" >UNTABBED_VIEW_ID_EXTRACTOR</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#extractCompleteFilterFromData" >extractCompleteFilterFromData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#extractViewFilter" >extractViewFilter</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_filterRepository: <a href="../injectables/FilterRepository.html" target="_self">FilterRepository</a>, _taskResourceService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:24</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_filterRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FilterRepository.html" target="_self" >FilterRepository</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskResourceService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskResourceService.html" target="_self" >TaskResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractCompleteFilterFromData"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>extractCompleteFilterFromData</b></span>
+                        <a href="#extractCompleteFilterFromData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>extractCompleteFilterFromData(dataSection: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:31</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataSection</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractViewFilter"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>extractViewFilter</b></span>
+                        <a href="#extractViewFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>extractViewFilter(originViewIdField: <a href="../classess/DataField.html" target="_self">DataField&lt;any&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:66</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>originViewIdField</td>
+                                    <td>
+                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Filter | undefined</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UNTABBED_VIEW_ID_EXTRACTOR"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>UNTABBED_VIEW_ID_EXTRACTOR</b></span>
+                        <a href="#UNTABBED_VIEW_ID_EXTRACTOR"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;^.*?(-\\d+)?$&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/netgrif-components-core/src/lib/navigation/utility/filter-extraction.service.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {Filter} from &#x27;../../filter/models/filter&#x27;;
+import {DataGroup} from &#x27;../../resources/interface/data-groups&#x27;;
+import {extractFilterFromFilterField} from &#x27;./navigation-item-task-utility-methods&#x27;;
+import {getFieldFromDataGroups, getFieldIndexFromDataGroups} from &#x27;../../utility/get-field&#x27;;
+import {UserFilterConstants} from &#x27;../../filter/models/user-filter-constants&#x27;;
+import {FilterRepository} from &#x27;../../filter/filter.repository&#x27;;
+import {TextField} from &#x27;../../data-fields/text-field/models/text-field&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {MergeOperator} from &#x27;../../filter/models/merge-operator&#x27;;
+import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
+import {FilterField} from &#x27;../../data-fields/filter-field/models/filter-field&#x27;;
+import {DataField} from &#x27;../../data-fields/models/abstract-data-field&#x27;;
+
+/**
+ * This service is able to load the full saved filter including all of its ancestor filters.
+ */
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class FilterExtractionService {
+
+    // the same regexs is used in a backend filter process action. Please keep them in sync
+    protected static readonly UNTABBED_VIEW_ID_EXTRACTOR &#x3D; &#x27;^.*?(-\\d+)?$&#x27;;
+
+    constructor(protected _filterRepository: FilterRepository,
+                protected _taskResourceService: TaskResourceService,
+                protected _log: LoggerService) {
+    }
+
+    public extractCompleteFilterFromData(dataSection: Array&lt;DataGroup&gt;): Filter | undefined {
+        const filterIndex &#x3D; getFieldIndexFromDataGroups(dataSection, UserFilterConstants.FILTER_FIELD_ID);
+
+        if (filterIndex &#x3D;&#x3D;&#x3D; undefined) {
+            return undefined;
+        }
+
+        let filterSegment: Filter;
+        try {
+            filterSegment &#x3D; extractFilterFromFilterField(
+                dataSection[filterIndex.dataGroupIndex].fields[filterIndex.fieldIndex] as FilterField
+            );
+        } catch (e) {
+            throw new Error(&#x27;Filter segment could not be extracted from filter field&#x27;);
+        }
+
+        const parentFilter &#x3D; this.extractCompleteFilterFromData(dataSection.slice(filterIndex.dataGroupIndex + 1));
+
+        if (parentFilter !&#x3D;&#x3D; undefined) {
+            return filterSegment.merge(parentFilter, MergeOperator.AND);
+        }
+
+        // Is the filter view rooted?
+        const rootViewIdField &#x3D; getFieldFromDataGroups(dataSection, UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID);
+        if (rootViewIdField &#x3D;&#x3D;&#x3D; undefined) {
+            return filterSegment;
+        }
+
+        const rootViewFilter &#x3D; this.extractViewFilter(rootViewIdField);
+        if (rootViewFilter !&#x3D;&#x3D; undefined) {
+            return filterSegment.merge(rootViewFilter, MergeOperator.AND);
+        }
+        return filterSegment;
+    }
+
+    protected extractViewFilter(originViewIdField: DataField&lt;any&gt;): Filter | undefined {
+        if (originViewIdField &#x3D;&#x3D;&#x3D; undefined || !(originViewIdField instanceof TextField)) {
+            throw new Error(&#x27;Could not extract origin view id field from task data&#x27;);
+        }
+        const originViewId &#x3D; originViewIdField.value;
+
+        const match &#x3D; originViewId.match(FilterExtractionService.UNTABBED_VIEW_ID_EXTRACTOR);
+        if (match &#x3D;&#x3D;&#x3D; null) {
+            throw new Error(&#x27;Unexpected state. View Id of origin app view could not be extracted&#x27;);
+        }
+        const originUntabbedViewId &#x3D; originViewId.substring(0, originViewId.length - (match[1]?.length ?? 0));
+        const appOriginFilter &#x3D; this._filterRepository.getFilter(originUntabbedViewId);
+        if (appOriginFilter &#x3D;&#x3D;&#x3D; undefined) {
+            this._log.error(&#x60;Could not retrieve origin app filter with id &#x27;${originUntabbedViewId}&#x27;. Falling back to empty filter&#x60;);
+            return undefined;
+        }
+        return appOriginFilter;
+    }
+
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'FilterExtractionService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

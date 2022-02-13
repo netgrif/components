@@ -3,7 +3,7 @@ import {
     AbstractFilterFieldComponent,
     AbstractFilterFieldContentComponent,
     NAE_INFORM_ABOUT_INVALID_DATA
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {ComponentType} from '@angular/cdk/portal';
 import {FilterFieldContentComponent} from './filter-field-content/filter-field-content.component';
 

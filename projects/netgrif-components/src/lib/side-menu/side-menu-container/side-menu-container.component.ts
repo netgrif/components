@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractSideMenuContainerComponent, SideMenuService} from '@netgrif/application-engine';
+import {AbstractSideMenuContainerComponent, SideMenuService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-side-menu-container',

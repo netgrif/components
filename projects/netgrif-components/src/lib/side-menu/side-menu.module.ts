@@ -4,7 +4,7 @@ import {RouterModule} from '@angular/router';
 import {PortalModule} from '@angular/cdk/portal';
 import {SideMenuContainerComponent} from './side-menu-container/side-menu-container.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MaterialModule} from '@netgrif/application-engine';
+import {MaterialModule} from '@netgrif/components-core';
 
 @NgModule({
     declarations: [

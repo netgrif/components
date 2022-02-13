@@ -7,7 +7,7 @@ import {
     TranslateLibModule,
     CustomDateAdapter,
     CurrencyModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {AngularResizedEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';

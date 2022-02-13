@@ -7,7 +7,7 @@ import {
     navigationItemTaskAllowedNetsServiceFactory,
     navigationItemTaskFilterFactory,
     navigationItemTaskCategoryFactory, CategoryResolverService, FilterExtractionService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from './injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {Type} from '@angular/core';
 

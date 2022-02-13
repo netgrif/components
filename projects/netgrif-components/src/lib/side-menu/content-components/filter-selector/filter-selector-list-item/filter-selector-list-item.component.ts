@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractFilterSelectorListItemComponent} from '@netgrif/application-engine';
+import {AbstractFilterSelectorListItemComponent} from '@netgrif/components-core';
 
 /**
  * @ignore

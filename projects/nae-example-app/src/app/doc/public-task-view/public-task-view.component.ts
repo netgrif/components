@@ -29,7 +29,7 @@ import {
     ViewIdService,
     NAE_BASE_FILTER,
     ChangedFieldsService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';

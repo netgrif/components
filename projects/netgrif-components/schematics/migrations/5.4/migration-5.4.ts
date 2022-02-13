@@ -70,14 +70,14 @@ function migrateCaseView(file: FileEntry, providersArrayContent: ts.Node[]): Arr
         return [];
     }
 
-    const changes = addProviderToComponent(file, 'CaseViewService', '@netgrif/application-engine');
+    const changes = addProviderToComponent(file, 'CaseViewService', '@netgrif/components-core');
     changes.push(...addProviderToComponent(file, searchServiceAlias,
-        searchServiceAlias === 'SearchService' ? '@netgrif/application-engine' : undefined));
-    changes.push(...addProviderToComponent(file, 'NAE_BASE_FILTER', '@netgrif/application-engine',
+        searchServiceAlias === 'SearchService' ? '@netgrif/components-core' : undefined));
+    changes.push(...addProviderToComponent(file, 'NAE_BASE_FILTER', '@netgrif/components-core',
         '{provide: NAE_BASE_FILTER, useFactory: baseFilterFactory}'));
-    changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/application-engine',
+    changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/components-core',
         '{provide: AllowedNetsService, useFactory: localAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}'));
-    changes.push(addImport(file, new ImportToAdd('AllowedNetsServiceFactory', '@netgrif/application-engine')));
+    changes.push(addImport(file, new ImportToAdd('AllowedNetsServiceFactory', '@netgrif/components-core')));
 
     changes.push(removeProvider(file, providersArrayContent, 'CaseViewServiceFactory'));
     changes.push(removeProvider(file, providersArrayContent, searchServiceAlias));
@@ -93,12 +93,12 @@ function migrateTaskView(file: FileEntry, providersArrayContent: ts.Node[]): Arr
         return [];
     }
 
-    const changes = addProviderToComponent(file, 'TaskViewService', '@netgrif/application-engine');
+    const changes = addProviderToComponent(file, 'TaskViewService', '@netgrif/components-core');
     changes.push(...addProviderToComponent(file, searchServiceAlias,
-        searchServiceAlias === 'SearchService' ? '@netgrif/application-engine' : undefined));
-    changes.push(...addProviderToComponent(file, 'NAE_BASE_FILTER', '@netgrif/application-engine',
+        searchServiceAlias === 'SearchService' ? '@netgrif/components-core' : undefined));
+    changes.push(...addProviderToComponent(file, 'NAE_BASE_FILTER', '@netgrif/components-core',
         '{provide: NAE_BASE_FILTER, useFactory: baseFilterFactory}'));
-    changes.push(addImport(file, new ImportToAdd('AllowedNetsServiceFactory', '@netgrif/application-engine')));
+    changes.push(addImport(file, new ImportToAdd('AllowedNetsServiceFactory', '@netgrif/components-core')));
 
     changes.push(removeProvider(file, providersArrayContent, 'TaskViewServiceFactory'));
     changes.push(removeProvider(file, providersArrayContent, searchServiceAlias));
@@ -109,15 +109,15 @@ function migrateTaskView(file: FileEntry, providersArrayContent: ts.Node[]): Arr
 
     if (identifiers.some(identifier => identifier.getText() === 'NAE_TAB_DATA')) {
         // tabbed task view
-        changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/application-engine',
+        changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/components-core',
             '{provide: AllowedNetsService, useFactory: tabbedAllowedNetsServiceFactory, deps: [AllowedNetsServiceFactory, NAE_TAB_DATA]}'));
-        changes.push(addImport(file, new ImportToAdd('tabbedAllowedNetsServiceFactory', '@netgrif/application-engine')));
-        changes.push(...addProviderToComponent(file, 'NAE_TASK_VIEW_CONFIGURATION', '@netgrif/application-engine',
+        changes.push(addImport(file, new ImportToAdd('tabbedAllowedNetsServiceFactory', '@netgrif/components-core')));
+        changes.push(...addProviderToComponent(file, 'NAE_TASK_VIEW_CONFIGURATION', '@netgrif/components-core',
             '{provide: NAE_TASK_VIEW_CONFIGURATION, useFactory: tabbedTaskViewConfigurationFactory, deps: [NAE_TAB_DATA]}'));
-        changes.push(addImport(file, new ImportToAdd('tabbedTaskViewConfigurationFactory', '@netgrif/application-engine')));
+        changes.push(addImport(file, new ImportToAdd('tabbedTaskViewConfigurationFactory', '@netgrif/components-core')));
     } else {
         // standard task view
-        changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/application-engine',
+        changes.push(...addProviderToComponent(file, 'AllowedNetsService', '@netgrif/components-core',
             '{provide: AllowedNetsService, useFactory: localAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}'));
     }
 

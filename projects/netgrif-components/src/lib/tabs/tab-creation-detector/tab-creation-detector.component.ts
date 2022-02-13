@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractTabCreationDetectorComponent} from '@netgrif/application-engine';
+import {AbstractTabCreationDetectorComponent} from '@netgrif/components-core';
 
 /**
  * @ignore

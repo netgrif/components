@@ -1,5 +1,5 @@
 import {Component, Injector} from '@angular/core';
-import {AbstractCountCard} from '@netgrif/application-engine';
+import {AbstractCountCard} from '@netgrif/components-core';
 
 
 @Component({

@@ -3,7 +3,7 @@ import {
     DataGroup, extractFilterFromData,
     FilterType,
     GroupNavigationComponentResolverService, LoggerService, TaskResourceService,
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {DefaultTabViewComponent} from './default-components/default-tab-view/default-tab-view.component';
 import {DefaultSimpleTaskViewComponent} from './default-components/default-simple-task-view/default-simple-task-view.component';
 

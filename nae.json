@@ -1,5 +1,5 @@
 {
-    "$schema": "./dist/netgrif-application-engine/src/schema/nae-schema.json",
+    "$schema": "./dist/netgrif-components-core/src/schema/nae-schema.json",
     "extends": "nae-default",
     "providers": {
         "auth": {
@@ -22,8 +22,7 @@
             {
                 "name": "case",
                 "address": "http://localhost:8080/api/",
-                "format": "hal",
-                "openApi": "https://swagger.io"
+                "format": "json"
             },
             {
                 "name": "task",

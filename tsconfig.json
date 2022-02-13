@@ -19,8 +19,8 @@
             "dom"
         ],
         "paths": {
-            "netgrif-application-engine": [
-                "dist/netgrif-application-engine"
+            "netgrif-components-core": [
+                "dist/netgrif-components-core"
             ],
             "netgrif-components": [
                 "dist/netgrif-components"

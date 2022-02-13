@@ -23,7 +23,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     ViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;

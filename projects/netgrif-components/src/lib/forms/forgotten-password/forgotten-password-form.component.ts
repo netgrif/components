@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractForgottenPasswordComponent, LoggerService, SignUpService} from '@netgrif/application-engine';
+import {AbstractForgottenPasswordComponent, LoggerService, SignUpService} from '@netgrif/components-core';
 import {FormBuilder} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 

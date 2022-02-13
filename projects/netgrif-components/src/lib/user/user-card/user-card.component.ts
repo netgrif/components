@@ -1,5 +1,5 @@
 import {Component, Injector} from '@angular/core';
-import {AbstractUserCardComponent} from '@netgrif/application-engine';
+import {AbstractUserCardComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-user-card',

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractSimpleTextFieldComponent} from '@netgrif/application-engine';
+import {AbstractSimpleTextFieldComponent} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

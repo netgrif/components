@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SnackBarService} from '@netgrif/application-engine';
+import {SnackBarService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nae-app-snack-bar-example',

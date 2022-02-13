@@ -12,7 +12,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserPreferenceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';

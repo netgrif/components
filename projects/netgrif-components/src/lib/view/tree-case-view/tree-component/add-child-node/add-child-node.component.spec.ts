@@ -11,7 +11,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     TreeCaseViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {Component} from '@angular/core';
 
 describe('AddChildNodeComponent', () => {

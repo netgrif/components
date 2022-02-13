@@ -1,0 +1,167 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">Netgrif Components library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="netgrif-components">Netgrif Components</h1>
+<p><a href="https://netgrif.com/engine/license"><img src="https://img.shields.io/badge/license-NETGRIF%20Community%20License-green" alt="License" class="img-responsive"></a>
+<a href="https://www.angular.io/"><img src="https://img.shields.io/npm/dependency-version/@netgrif/components/@angular/core?label=Angular" alt="Angular dependency" class="img-responsive"></a>
+<a href="https://www.npmjs.com/package/@netgrif/components"><img src="https://img.shields.io/npm/v/@netgrif/components" alt="npm (scoped)" class="img-responsive"></a>
+<a href="https://www.npmjs.com/package/@netgrif/components"><img src="https://img.shields.io/npm/dt/@netgrif/components" alt="npm" class="img-responsive"></a>
+<a href="https://petriflow.com"><img src="https://img.shields.io/badge/Petriflow-1.0.1-0aa8ff" alt="Petriflow 1.0.1" class="img-responsive"></a>
+<a href="https://github.com/netgrif/components/releases"><img src="https://img.shields.io/github/v/release/netgrif/components?sort=semver&display_name=tag" alt="GitHub release (latest SemVer)" class="img-responsive"></a>
+<a href="https://github.com/netgrif/components/actions/workflows/master-build.yml"><img src="https://github.com/netgrif/components/actions/workflows/master-build.yml/badge.svg" alt="build" class="img-responsive"></a>
+<a href="https://sonarcloud.io/dashboard?id=netgrif_components"><img src="https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=alert_status" alt="Quality Gate Status" class="img-responsive"></a>
+<a href="https://sonarcloud.io/dashboard?id=netgrif_components"><img src="https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=coverage" alt="Coverage" class="img-responsive"></a>
+<a href="https://snyk.io/test/github/netgrif/components"><img src="https://snyk.io/test/github/netgrif/components/badge.svg" alt="Known Vulnerabilities" class="img-responsive"></a></p>
+<p>Netgrif Components is an Angular library for creating SPA (Single-page application) compatible with Netgrif Application Engine.
+The library provides all necessary tools for creating refined frontend application into NAE environment,
+and to create own library of Angular web components to incorporate your own personal design to the platform.</p>
+<ul>
+<li>Petriflow low-code language: <a href="https://petriflow.com">http://petriflow.com</a></li>
+<li>Documentation: <a href="https://components.netgrif.com">https://components.netgrif.com</a></li>
+<li>Getting Started: <a href="https://components.netgrif.com/get_started">https://components.netgrif.com/get_started</a></li>
+<li>Issue Tracker: <a href="https://github.com/netgrif/components/issues">Github issues</a></li>
+<li>Compodoc: <a href="https://components.netgrif.com/components/compodoc">https://components.netgrif.com/components/typedoc</a><div><pre class="line-numbers"><code class="language-none">     [https://components.netgrif.com/library/typedoc](https://components.netgrif.com/library/compodoc)</code></pre></div></li>
+<li>License: <a href="https://github.com/netgrif/components/blob/master/LICENSE">NETGRIF Community License</a></li>
+</ul>
+<p>In this repository are 3 projects:</p>
+<ul>
+<li><a href="projects/netgrif-components-core/README.md">@netgrif/components-core</a> - Core library of services, factories and abstract classes of components.  </li>
+<li><a href="projects/netgrif-components/README.md">@netgrif/components</a> - Library of angular components implementing classes from core library.</li>
+<li><a href="projects/nae-example-app/README.md">Examples App</a> - Simple application to demonstrate and test individual components.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>The Libraries are implemented as Angular libraries. With Angular dependencies there are several others to complement functionality and range of components available for
+NAE based applications. The components library is based upon Angular Material components to make it easier to derived and implement own set of components but still keep
+the functionality and compatibility with Application Engine.</p>
+<p>The library has defined peer dependencies that are not installed automatically with npm. You can install dependencies with this command:</p>
+<div><pre class="line-numbers"><code class="language-shell">npm i -S &#64;angular-material-components/datetime-picker&#64;4 &#64;angular-material-components/moment-adapter&#64;4 &#64;angular/animations&#64;10 &#64;angular/cdk&#64;10 &#64;angular/common&#64;10 &#64;angular/compiler&#64;10 &#64;angular/core&#64;10 &#64;angular/flex-layout&#64;10 &#64;angular/forms&#64;10 &#64;angular/material&#64;10 &#64;angular/material-moment-adapter&#64;10 &#64;angular/platform-browser&#64;10 &#64;angular/platform-browser-dynamic&#64;10 &#64;angular/router&#64;10 &#64;covalent/core&#64;3 &#64;covalent/highlight&#64;3 &#64;covalent/markdown&#64;3 &#64;covalent/text-editor&#64;3 &#64;ngx-translate/core&#64;13 &#64;ngx-translate/http-loader&#64;6 &#64;schematics/angular&#64;10 angular-resizable-element&#64;3 angular-resize-event&#64;2 angular2-hotkeys&#64;2 hammerjs&#64;2 json-schema-to-typescript&#64;8 jszip&#64;3 moment&#64;2 natural-orderby&#64;2 rxjs&#64;6 zone.js&#64;0.10</code></pre></div><h2 id="installation">Installation</h2>
+<p>To install complete NAE frontend experience you must install the core library and components library:</p>
+<div><pre class="line-numbers"><code class="language-shell">npm i -S &#64;netgrif/components-core &#64;netgrif/components</code></pre></div><p>If you want to developer own set of NAE components, just install the core library, and you can start developing.</p>
+<h2 id="usage-and-configuration">Usage and configuration</h2>
+<p>To start building your NAE web application, it must be configured as Angular application and as NAE application as well.</p>
+<p>Firstly, create new Angular project. We recommend following <a href="https://angular.io/guide/setup-local">official guide</a>.
+At the moment @netgrif/components does not support Ivy engine, your can turn it off with attribute in <code>tsconfig.json</code>:</p>
+<div><pre class="line-numbers"><code class="language-json">{
+    &quot;angularCompilerOptions&quot;:{
+        &quot;enableIvy&quot;: false
+    }
+}</code></pre></div><h3 id="naejson">NAE.json</h3>
+<p>To configure NAE application more easily the libraries use file nae.json that is placed in root of the project.
+nae.json defines global application configuration like urls to backend resources, services&#39; configurations, routing and views.</p>
+<p>You can find <a href="docs/configuration/nae-minimal.json">minimal nae.json configuration here</a>. </p>
+<p>You can read more on how to configure complete <a href="https://components.netgrif.com/configuration">nae.json here</a>.</p>
+<p>For easier startup clone <a href="https://github.com/netgrif/nae-frontend-starter">template project for NAE frontend application</a></p>
+<p>For more information please read instructions in <a href="https://components.netgrif.com/get_started">Get Started</a></p>
+<h2 id="other-projects">Other projects</h2>
+<h3 id="application-engine">Application Engine</h3>
+<p><a href="https://github.com/netgrif/application-engine">Netgrif Application Engine</a> is workflow management system powered by low-code language Petriflow written in Java.
+Application Engine can run as a standalone java application, as a docker image, or you can embed it to your Java/Spring Boot project.</p>
+<h3 id="application-builder">Application Builder</h3>
+<p>For creating processes in Petriflow language try our free Application Builder on <a href="https://builder.netgrif.com">https://builder.netgrif.com</a>.
+You can start from scratch or import existing process in BPMN 2.0 and builder automatically converts it into Petriflow.</p>
+<h3 id="ncli-coming-soon">NCLI (Coming soon)</h3>
+<p>If you need help with setting up project or looking for tool to automate your developer work with NAE based applications,
+take a look on <a href="https://github.com/netgrif/ncli">NCLI (Netgrif Command Line Interface)</a>.</p>
+<h2 id="reporting-issues">Reporting issues</h2>
+<p>If you find a bug, let us know at <a href="https://github.com/netgrif/components/issues">Issue page</a>. First, please read our <a href="https://github.com/netgrif/components/blob/master/CONTRIBUTING.md">Contribution guide</a></p>
+<h2 id="license">License</h2>
+<p>The software is licensed under NETGRIF Community license. You may be found this license at <a href="https://github.com/netgrif/components/blob/master/LICENSE">the LICENSE file</a> in the repository. </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       
+       <script type="module" src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

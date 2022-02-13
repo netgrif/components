@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractSearchClauseComponent} from '@netgrif/application-engine';
+import {AbstractSearchClauseComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-search-clause',

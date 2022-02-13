@@ -22,7 +22,7 @@ import {
     AllowedNetsServiceFactory,
     TestNoAllowedNetsFactory,
     NAE_DEFAULT_CASE_SEARCH_CATEGORIES, DefaultSearchCategoriesModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AdvancedSearchComponentModule} from '../advanced-search.module';
 

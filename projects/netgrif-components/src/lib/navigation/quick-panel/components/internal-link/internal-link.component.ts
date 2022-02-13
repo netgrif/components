@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractInternalLinkComponent} from '@netgrif/application-engine';
+import {AbstractInternalLinkComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-internal-link',

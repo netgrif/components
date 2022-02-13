@@ -1,0 +1,1685 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >FieldConverterService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#formatValueForBackend" >formatValueForBackend</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#formatValueFromBackend" >formatValueFromBackend</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resolveButtonView" >resolveButtonView</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveEnumChoices" >resolveEnumChoices</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveEnumField" >resolveEnumField</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveEnumOptions" >resolveEnumOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveEnumViewType" class="deprecated-name">resolveEnumViewType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveMultichoiceChoices" >resolveMultichoiceChoices</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveMultichoiceOptions" >resolveMultichoiceOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveMultichoiceViewType" class="deprecated-name">resolveMultichoiceViewType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveNumberComponent" >resolveNumberComponent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveTextValue" >resolveTextValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resolveType" >resolveType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toClass" >toClass</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:28</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatValueForBackend"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>formatValueForBackend</b></span>
+                        <a href="#formatValueForBackend"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>formatValueForBackend(field: <a href="../classess/DataField.html" target="_self">DataField&lt;any&gt;</a>, value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:177</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>field</td>
+                                    <td>
+                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatValueFromBackend"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>formatValueFromBackend</b></span>
+                        <a href="#formatValueFromBackend"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>formatValueFromBackend(field: <a href="../classess/DataField.html" target="_self">DataField&lt;any&gt;</a>, value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="323"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:323</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>field</td>
+                                    <td>
+                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveButtonView"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>resolveButtonView</b></span>
+                        <a href="#resolveButtonView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveButtonView(item: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="154"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:154</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>item</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ButtonField.html" target="_self" >ButtonFieldView</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveEnumChoices"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveEnumChoices</b></span>
+                        <a href="#resolveEnumChoices"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveEnumChoices(enumField: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="257"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:257</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to parse enumeration options from the <code>choices</code> attribute</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>enumField</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>enumeration field resource object who&#39;s choices we want to resolve</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/EnumerationFieldValue.html" target="_self" >Array&lt;EnumerationFieldValue&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the options for the enumeration field</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveEnumField"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveEnumField</b></span>
+                        <a href="#resolveEnumField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveEnumField(enumField: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="218"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:218</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Resolves <code>enumeration</code> and <code>eunumeration_map</code> fields into their appropriate class instances</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>enumField</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>enumeration field resource</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/EnumerationField.html" target="_self" >EnumerationField</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveEnumOptions"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveEnumOptions</b></span>
+                        <a href="#resolveEnumOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveEnumOptions(enumField: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="276"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:276</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to parse enumeration options from the <code>options</code> attribute</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>enumField</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>enumeration field resource object who&#39;s options we want to resolve</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/EnumerationFieldValue.html" target="_self" >Array&lt;EnumerationFieldValue&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the options for the enumeration field</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveEnumViewType"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span class="deprecated-name"><b>resolveEnumViewType</b></span>
+                        <a href="#resolveEnumViewType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4 deprecated">
+                    in 4.3.0
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveEnumViewType(enumField: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="238"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:238</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>enumField</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>enumeration field resource object who&#39;s view type we want to resolve</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/EnumerationField.html" target="_self" >EnumerationFieldView</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the view type defined in the field object, or default if none, or invalid type is defined</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveMultichoiceChoices"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveMultichoiceChoices</b></span>
+                        <a href="#resolveMultichoiceChoices"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveMultichoiceChoices(multiField: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="300"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:300</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to parse multichoice options from the <code>choices</code> attribute</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>multiField</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>multichoice field resource object who&#39;s options we want to resolve</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/MultichoiceFieldValue.html" target="_self" >Array&lt;MultichoiceFieldValue&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the options for the multichoice field</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveMultichoiceOptions"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveMultichoiceOptions</b></span>
+                        <a href="#resolveMultichoiceOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveMultichoiceOptions(multiField: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="319"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:319</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to parse enumeration options from the <code>options</code> attribute</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>multiField</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>multichoice field resource object who&#39;s options we want to resolve</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/MultichoiceFieldValue.html" target="_self" >Array&lt;MultichoiceFieldValue&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the options for the multichoice field</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveMultichoiceViewType"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span class="deprecated-name"><b>resolveMultichoiceViewType</b></span>
+                        <a href="#resolveMultichoiceViewType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4 deprecated">
+                    in 4.3.0
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveMultichoiceViewType(multiField: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="285"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:285</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>multiField</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>multichoice field resource object who&#39;s view type we want to resolve</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/MultichoiceField.html" target="_self" >MultichoiceFieldView</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the view type defined in the field object, or default if none, or invalid type is defined</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveNumberComponent"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveNumberComponent</b></span>
+                        <a href="#resolveNumberComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveNumberComponent(numberField: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="203"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:203</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>numberField</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Component.html" target="_self" >Component</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveTextValue"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveTextValue</b></span>
+                        <a href="#resolveTextValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveTextValue(field: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>, value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="359"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:359</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>field</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveType"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>resolveType</b></span>
+                        <a href="#resolveType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveType(item: <a href="../classess/DataField.html" target="_self">DataField&lt;any&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="123"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:123</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>item</td>
+                                    <td>
+                                                <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Resource.html" target="_self" >FieldTypeResource</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toClass"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>toClass</b></span>
+                        <a href="#toClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toClass(item: <a href="../interfaces/DataFieldResource.html" target="_self">DataFieldResource</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task-content/services/field-converter.service.ts:33</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>item</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataFieldResource.html" target="_self" >DataFieldResource</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classess/DataField.html" target="_self" >DataField&lt;any&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {DataFieldResource} from &#x27;../model/resource-interface&#x27;;
+import {DataField} from &#x27;../../data-fields/models/abstract-data-field&#x27;;
+import {BooleanField} from &#x27;../../data-fields/boolean-field/models/boolean-field&#x27;;
+import {TextField, TextFieldView} from &#x27;../../data-fields/text-field/models/text-field&#x27;;
+import {NumberField} from &#x27;../../data-fields/number-field/models/number-field&#x27;;
+import {EnumerationField, EnumerationFieldValue, EnumerationFieldView} from &#x27;../../data-fields/enumeration-field/models/enumeration-field&#x27;;
+import {MultichoiceField, MultichoiceFieldValue, MultichoiceFieldView} from &#x27;../../data-fields/multichoice-field/models/multichoice-field&#x27;;
+import {DateField} from &#x27;../../data-fields/date-field/models/date-field&#x27;;
+import {DateTimeField} from &#x27;../../data-fields/date-time-field/models/date-time-field&#x27;;
+import {UserField} from &#x27;../../data-fields/user-field/models/user-field&#x27;;
+import {ButtonField, ButtonFieldView} from &#x27;../../data-fields/button-field/models/button-field&#x27;;
+import {FileField} from &#x27;../../data-fields/file-field/models/file-field&#x27;;
+import moment from &#x27;moment&#x27;;
+import {UserValue} from &#x27;../../data-fields/user-field/models/user-value&#x27;;
+import {FieldTypeResource} from &#x27;../model/field-type-resource&#x27;;
+import {FileListField} from &#x27;../../data-fields/file-list-field/models/file-list-field&#x27;;
+import {TextAreaField} from &#x27;../../data-fields/text-field/models/text-area-field&#x27;;
+import {Component} from &#x27;../../data-fields/models/component&#x27;;
+import {TaskRefField} from &#x27;../../data-fields/task-ref-field/model/task-ref-field&#x27;;
+import {DynamicEnumerationField} from &#x27;../../data-fields/enumeration-field/models/dynamic-enumeration-field&#x27;;
+import {FilterField} from &#x27;../../data-fields/filter-field/models/filter-field&#x27;;
+import {I18nField} from &#x27;../../data-fields/i18n-field/models/i18n-field&#x27;;
+
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class FieldConverterService {
+
+    constructor() {
+    }
+
+    public toClass(item: DataFieldResource): DataField&lt;any&gt; {
+        switch (item.type) {
+            case FieldTypeResource.BOOLEAN:
+                return new BooleanField(item.stringId, item.name, item.value as boolean, item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.TEXT:
+                /*@deprecated in 4.3.0*/
+                let type &#x3D; TextFieldView.DEFAULT;
+                if (item.subType !&#x3D;&#x3D; undefined &amp;&amp; item.subType &#x3D;&#x3D;&#x3D; &#x27;area&#x27;) {
+                    type &#x3D; TextFieldView.TEXTAREA;
+                }
+                if (item.view !&#x3D;&#x3D; undefined &amp;&amp; item.view.value !&#x3D;&#x3D; undefined &amp;&amp; item.view.value &#x3D;&#x3D;&#x3D; &#x27;editor&#x27;) {
+                    type &#x3D; TextFieldView.RICHTEXTAREA;
+                    return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
+                        item.description, item.layout, item.validations, type);
+                } else if (item.view !&#x3D;&#x3D; undefined &amp;&amp; item.view.value !&#x3D;&#x3D; undefined &amp;&amp; item.view.value &#x3D;&#x3D;&#x3D; &#x27;area&#x27;) {
+                    type &#x3D; TextFieldView.TEXTAREA;
+                } else if (item.view !&#x3D;&#x3D; undefined &amp;&amp; item.view.value !&#x3D;&#x3D; undefined &amp;&amp; item.view.value &#x3D;&#x3D;&#x3D; &#x27;htmlEditor&#x27;) {
+                    type &#x3D; TextFieldView.HTMLTEXTAREA;
+                    return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
+                        item.description, item.layout, item.validations, type);
+                }
+                if (item.component !&#x3D;&#x3D; undefined &amp;&amp; item.component.name !&#x3D;&#x3D; undefined &amp;&amp; (item.component.name &#x3D;&#x3D;&#x3D; &#x27;editor&#x27; ||
+                    item.component.name &#x3D;&#x3D;&#x3D; &#x27;htmltextarea&#x27;)) {
+                    return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
+                        item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component,
+                        item.parentTaskId);
+                }
+                return new TextField(item.stringId, item.name, this.resolveTextValue(item, item.value), item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, type, item.component, item.parentTaskId);
+            case FieldTypeResource.NUMBER:
+                return new NumberField(item.stringId, item.name, item.value as number, item.behavior, item.validations, item.placeholder,
+                    item.description, item.layout, item.formatFilter, this.resolveNumberComponent(item), item.parentTaskId);
+            case FieldTypeResource.ENUMERATION:
+            case FieldTypeResource.ENUMERATION_MAP:
+                return this.resolveEnumField(item);
+            case FieldTypeResource.MULTICHOICE:
+                return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceChoices(item),
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
+                    item.type, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.MULTICHOICE_MAP:
+                return new MultichoiceField(item.stringId, item.name, item.value, this.resolveMultichoiceOptions(item),
+                    item.behavior, item.placeholder, item.description, item.layout, this.resolveMultichoiceViewType(item),
+                    item.type, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.DATE:
+                let date;
+                if (item.value) {
+                    date &#x3D; moment(new Date(item.value[0], item.value[1] - 1, item.value[2]));
+                }
+                return new DateField(item.stringId, item.name, date, item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.DATE_TIME:
+                let dateTime;
+                if (item.value) {
+                    dateTime &#x3D; moment(new Date(item.value[0], item.value[1] - 1, item.value[2], item.value[3], item.value[4]));
+                }
+                return new DateTimeField(item.stringId, item.name, dateTime, item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.USER:
+                let user;
+                if (item.value) {
+                    user &#x3D; new UserValue(item.value.id, item.value.name, item.value.surname, item.value.email);
+                }
+                return new UserField(item.stringId, item.name, item.behavior, user,
+                    item.roles, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.BUTTON:
+                /*@deprecated in 4.3.0*/
+                const typeBtn &#x3D; this.resolveButtonView(item);
+                return new ButtonField(item.stringId, item.name, item.behavior, item.value as number,
+                    item.placeholder, item.description, item.layout, typeBtn, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.FILE:
+                return new FileField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
+                    item.placeholder, item.description, item.layout, null, null, item.validations, item.component,
+                    item.parentTaskId);
+            case FieldTypeResource.FILE_LIST:
+                return new FileListField(item.stringId, item.name, item.behavior, item.value ? item.value : {},
+                    item.placeholder, item.description, item.layout, item.validations, null, null, item.component,
+                    item.parentTaskId);
+            case FieldTypeResource.TASK_REF:
+                return new TaskRefField(item.stringId, item.name, item.value ? item.value : [], item.behavior,
+                    item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.FILTER:
+                return new FilterField(item.stringId, item.name, item.value ?? &#x27;&#x27;, item.filterMetadata, item.allowedNets,
+                    item.behavior, item.placeholder, item.description, item.layout, item.validations, item.component, item.parentTaskId);
+            case FieldTypeResource.I18N:
+                return new I18nField(item.stringId, item.name, item.value ?? {defaultValue: &#x27;&#x27;}, item.behavior, item.placeholder,
+                    item.description, item.layout, item.validations, item.component);
+        }
+    }
+
+    public resolveType(item: DataField&lt;any&gt;): FieldTypeResource {
+        if (item instanceof BooleanField) {
+            return FieldTypeResource.BOOLEAN;
+        } else if (item instanceof ButtonField) {
+            return FieldTypeResource.BUTTON;
+        } else if (item instanceof TextField) {
+            return FieldTypeResource.TEXT;
+        } else if (item instanceof NumberField) {
+            return FieldTypeResource.NUMBER;
+        } else if (item instanceof DateField) {
+            return FieldTypeResource.DATE;
+        } else if (item instanceof DateTimeField) {
+            return FieldTypeResource.DATE_TIME;
+        } else if (item instanceof FileField) {
+            return FieldTypeResource.FILE;
+        } else if (item instanceof FileListField) {
+            return FieldTypeResource.FILE_LIST;
+        } else if (item instanceof UserField) {
+            return FieldTypeResource.USER;
+        } else if (item instanceof TaskRefField) {
+            return FieldTypeResource.TASK_REF;
+        } else if (item instanceof EnumerationField || item instanceof MultichoiceField) {
+            return item.fieldType;
+        } else if (item instanceof FilterField) {
+            return FieldTypeResource.FILTER;
+        } else if (item instanceof I18nField) {
+            return FieldTypeResource.I18N;
+        }
+    }
+
+    /*@deprecated in 4.3.0*/
+    public resolveButtonView(item: DataFieldResource): ButtonFieldView {
+        if (item.view !&#x3D;&#x3D; undefined &amp;&amp; item.view.value !&#x3D;&#x3D; undefined) {
+            switch (item.view.value) {
+                case ButtonFieldView.STROKED:
+                    return ButtonFieldView.STROKED;
+                case ButtonFieldView.RAISED:
+                    return ButtonFieldView.RAISED;
+                case ButtonFieldView.FAB:
+                    return ButtonFieldView.FAB;
+                case ButtonFieldView.FLAT:
+                    return ButtonFieldView.FLAT;
+                case ButtonFieldView.ICON:
+                    return ButtonFieldView.ICON;
+                case ButtonFieldView.MINIFAB:
+                    return ButtonFieldView.MINIFAB;
+                default:
+                    return ButtonFieldView.STANDARD;
+            }
+        } else if (item instanceof ButtonField) {
+            return ButtonFieldView.STANDARD;
+        }
+    }
+
+    public formatValueForBackend(field: DataField&lt;any&gt;, value: any): any {
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.TEXT &amp;&amp; value &#x3D;&#x3D;&#x3D; null) {
+            return null;
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.TEXT &amp;&amp; field.component &amp;&amp; field.component.name &#x3D;&#x3D;&#x3D; &#x27;password&#x27;) {
+            return btoa(value);
+        }
+        if (value &#x3D;&#x3D;&#x3D; undefined || value &#x3D;&#x3D;&#x3D; null) {
+            return;
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.DATE) {
+            if (moment.isMoment(value)) {
+                return value.format(&#x27;YYYY-MM-DD&#x27;);
+            }
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.USER) {
+            return value.id;
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.DATE_TIME) {
+            if (moment.isMoment(value)) {
+                return value.format(&#x27;DD.MM.YYYY HH:mm:ss&#x27;);
+            }
+        }
+        return value;
+    }
+
+    protected resolveNumberComponent(numberField: DataFieldResource): Component {
+        let numberComponent &#x3D; {name: &#x27;default&#x27;, properties: undefined};
+        if (numberField.component !&#x3D;&#x3D; undefined) {
+            numberComponent &#x3D; {
+                name: numberField.component.name,
+                properties: numberField.component.properties
+            };
+        }
+        return numberComponent;
+    }
+
+    /**
+     * Resolves &#x60;enumeration&#x60; and &#x60;eunumeration_map&#x60; fields into their appropriate class instances
+     * @param enumField enumeration field resource
+     */
+    protected resolveEnumField(enumField: DataFieldResource): EnumerationField {
+        const options &#x3D; enumField.type &#x3D;&#x3D;&#x3D; FieldTypeResource.ENUMERATION
+            ? this.resolveEnumChoices(enumField)
+            : this.resolveEnumOptions(enumField);
+        if (enumField.component &amp;&amp; enumField.component.name &#x3D;&#x3D;&#x3D; &#x27;autocomplete_dynamic&#x27;) {
+            return new DynamicEnumerationField(enumField.stringId, enumField.name, enumField.value, options,
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
+                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
+        } else {
+            return new EnumerationField(enumField.stringId, enumField.name, enumField.value, options,
+                enumField.behavior, enumField.placeholder, enumField.description, enumField.layout, this.resolveEnumViewType(enumField),
+                enumField.type, enumField.validations, enumField.component, enumField.parentTaskId);
+        }
+    }
+
+    /**
+     * @param enumField enumeration field resource object who&#x27;s view type we want to resolve
+     * @returns the view type defined in the field object, or default if none, or invalid type is defined
+     * @deprecated in 4.3.0
+     */
+    protected resolveEnumViewType(enumField: DataFieldResource): EnumerationFieldView {
+        let typeEnum &#x3D; EnumerationFieldView.DEFAULT;
+        if (enumField.view &amp;&amp; enumField.view.value !&#x3D;&#x3D; undefined) {
+            if (enumField.view.value &#x3D;&#x3D;&#x3D; &#x27;list&#x27;) {
+                typeEnum &#x3D; EnumerationFieldView.LIST;
+            } else if (enumField.view.value &#x3D;&#x3D;&#x3D; &#x27;autocomplete&#x27;) {
+                typeEnum &#x3D; EnumerationFieldView.AUTOCOMPLETE;
+            } else if (enumField.view.value &#x3D;&#x3D;&#x3D; &#x27;stepper&#x27;) {
+                typeEnum &#x3D; EnumerationFieldView.STEPPER;
+            }
+        }
+        return typeEnum;
+    }
+
+    /**
+     * This function is used to parse enumeration options from the &#x60;choices&#x60; attribute
+     * @param enumField enumeration field resource object who&#x27;s choices we want to resolve
+     * @returns the options for the enumeration field
+     */
+    protected resolveEnumChoices(enumField: DataFieldResource): Array&lt;EnumerationFieldValue&gt; {
+        const enumChoices &#x3D; [];
+        if (enumField.choices instanceof Array) {
+            enumField.choices.forEach(it &#x3D;&gt; {
+                enumChoices.push({key: it, value: it} as EnumerationFieldValue);
+            });
+        } else {
+            Object.keys(enumField.choices).forEach(key &#x3D;&gt; {
+                enumChoices.push({key, value: enumField.choices[key]} as EnumerationFieldValue);
+            });
+        }
+        return enumChoices;
+    }
+
+    /**
+     * This function is used to parse enumeration options from the &#x60;options&#x60; attribute
+     * @param enumField enumeration field resource object who&#x27;s options we want to resolve
+     * @returns the options for the enumeration field
+     */
+    protected resolveEnumOptions(enumField: DataFieldResource): Array&lt;EnumerationFieldValue&gt; {
+        return Object.entries(enumField.options).map(entry &#x3D;&gt; ({key: entry[0], value: entry[1]}));
+    }
+
+    /**
+     * @param multiField multichoice field resource object who&#x27;s view type we want to resolve
+     * @returns the view type defined in the field object, or default if none, or invalid type is defined
+     * @deprecated in 4.3.0
+     */
+    protected resolveMultichoiceViewType(multiField: DataFieldResource): MultichoiceFieldView {
+        let typeMulti &#x3D; MultichoiceFieldView.DEFAULT;
+        if (multiField.view &amp;&amp; multiField.view.value !&#x3D;&#x3D; undefined) {
+            if (multiField.view.value &#x3D;&#x3D;&#x3D; &#x27;list&#x27;) {
+                typeMulti &#x3D; MultichoiceFieldView.LIST;
+            }
+        }
+        return typeMulti;
+    }
+
+    /**
+     * This function is used to parse multichoice options from the &#x60;choices&#x60; attribute
+     * @param multiField multichoice field resource object who&#x27;s options we want to resolve
+     * @returns the options for the multichoice field
+     */
+    protected resolveMultichoiceChoices(multiField: DataFieldResource): Array&lt;MultichoiceFieldValue&gt; {
+        const choicesMulti: Array&lt;MultichoiceFieldValue&gt; &#x3D; [];
+        if (multiField.choices instanceof Array) {
+            multiField.choices.forEach(it &#x3D;&gt; {
+                choicesMulti.push({key: it, value: it} as MultichoiceFieldValue);
+            });
+        } else {
+            Object.keys(multiField.choices).forEach(key &#x3D;&gt; {
+                choicesMulti.push({key, value: multiField.choices[key]} as MultichoiceFieldValue);
+            });
+        }
+        return choicesMulti;
+    }
+
+    /**
+     * This function is used to parse enumeration options from the &#x60;options&#x60; attribute
+     * @param multiField multichoice field resource object who&#x27;s options we want to resolve
+     * @returns the options for the multichoice field
+     */
+    protected resolveMultichoiceOptions(multiField: DataFieldResource): Array&lt;MultichoiceFieldValue&gt; {
+        return Object.entries(multiField.options).map(entry &#x3D;&gt; ({key: entry[0], value: entry[1]}));
+    }
+
+    public formatValueFromBackend(field: DataField&lt;any&gt;, value: any): any {
+        if (value &#x3D;&#x3D;&#x3D; null) {
+            return null;
+        }
+        if (value &#x3D;&#x3D;&#x3D; undefined) {
+            return;
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.TEXT &amp;&amp; value &#x3D;&#x3D;&#x3D; null) {
+            return null;
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.TEXT &amp;&amp; field.component &amp;&amp; field.component.name &#x3D;&#x3D;&#x3D; &#x27;password&#x27;) {
+            return atob(value);
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.DATE) {
+            return moment(new Date(value[0], value[1] - 1, value[2]));
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.USER) {
+            return new UserValue(value.id, value.name, value.surname, value.email);
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.DATE_TIME) {
+            return moment(new Date(value[0], value[1] - 1, value[2], value[3], value[4]));
+        }
+        if (this.resolveType(field) &#x3D;&#x3D;&#x3D; FieldTypeResource.MULTICHOICE) {
+            const array &#x3D; [];
+            value.forEach(v &#x3D;&gt; {
+                if (v.defaultValue) {
+                    array.push(v.defaultValue);
+                } else {
+                    array.push(v);
+                }
+            });
+            return array;
+        }
+        return value;
+    }
+
+    protected resolveTextValue(field: DataFieldResource, value: string): string {
+        if (field.component !&#x3D;&#x3D; undefined &amp;&amp; field.component.name &#x3D;&#x3D;&#x3D; &#x27;password&#x27; &amp;&amp; value !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; value !&#x3D;&#x3D; undefined) {
+            return atob(value);
+        }
+        return value;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'FieldConverterService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

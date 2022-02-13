@@ -18,7 +18,7 @@ import {
     AllowedNetsService,
     TestNoAllowedNetsFactory,
     AllowedNetsServiceFactory, NAE_DEFAULT_CASE_SEARCH_CATEGORIES, DefaultSearchCategoriesModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {Subject} from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';

@@ -7,7 +7,7 @@ import {
     LoggerService,
     NAE_ASYNC_RENDERING_CONFIGURATION,
     TaskEventService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-task-content',

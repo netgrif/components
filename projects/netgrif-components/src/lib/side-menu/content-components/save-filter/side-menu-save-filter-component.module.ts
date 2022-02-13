@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SaveFilterComponent} from './save-filter.component';
-import {MaterialModule, NAE_SAVE_FILTER_COMPONENT, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, NAE_SAVE_FILTER_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
 import {PanelComponentModule} from '../../../panel/panel.module';
 
 

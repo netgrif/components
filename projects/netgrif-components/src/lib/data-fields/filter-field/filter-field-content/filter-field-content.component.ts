@@ -5,7 +5,7 @@ import {
     AllowedNetsService,
     AllowedNetsServiceFactory, FilterField, NAE_FILTER_FIELD, NAE_BASE_FILTER, BaseFilter,
     SimpleFilter, CategoryResolverService, NAE_SEARCH_CATEGORIES, Category, CategoryFactory
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 export function filterFieldBaseFilterFactory(filterField: FilterField): BaseFilter {
     return {

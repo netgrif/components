@@ -1,0 +1,319 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >EventService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/event/services/event.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#parseChangedFieldsFromOutcomeTree" >parseChangedFieldsFromOutcomeTree</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">projects/netgrif-components-core/src/lib/event/services/event.service.ts:11</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parseChangedFieldsFromOutcomeTree"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>parseChangedFieldsFromOutcomeTree</b></span>
+                        <a href="#parseChangedFieldsFromOutcomeTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>parseChangedFieldsFromOutcomeTree(outcome: <a href="../interfaces/EventOutcome.html" target="_self">EventOutcome</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="16"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/event/services/event.service.ts:16</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>outcome</td>
+                                    <td>
+                                                <code><a href="../interfaces/EventOutcome.html" target="_self" >EventOutcome</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/ChangedFieldsMap.html" target="_self" >ChangedFieldsMap</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {EventOutcome} from &#x27;../../resources/interface/event-outcome&#x27;;
+import {ChangedFields} from &#x27;../../data-fields/models/changed-fields&#x27;;
+import {SetDataEventOutcome} from &#x27;../model/event-outcomes/data-outcomes/set-data-event-outcome&#x27;;
+import {ChangedFieldsMap} from &#x27;./interfaces/changed-fields-map&#x27;;
+import {EventConstants} from &#x27;../model/event-constants&#x27;;
+
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class EventService {
+
+    constructor() {
+    }
+
+    public parseChangedFieldsFromOutcomeTree(outcome: EventOutcome): ChangedFieldsMap {
+        const changedFieldsMap: ChangedFieldsMap &#x3D; {};
+        if (!!outcome.outcomes &amp;&amp; outcome.outcomes.length &gt; 0) {
+            return this.parseChangedFieldsFromOutcomeTreeRecursive(outcome.outcomes, changedFieldsMap);
+        } else return changedFieldsMap;
+    }
+
+    private parseChangedFieldsFromOutcomeTreeRecursive(outcomes: Array&lt;EventOutcome&gt;,
+                                                       changedFieldsMap: ChangedFieldsMap): ChangedFieldsMap {
+        outcomes.forEach(childOutcome &#x3D;&gt; {
+            if (EventConstants.CHANGED_FIELDS in childOutcome
+                &amp;&amp; !!(childOutcome as SetDataEventOutcome).aCase
+                &amp;&amp; !!(childOutcome as SetDataEventOutcome).task) {
+                const setDataOutcome: SetDataEventOutcome &#x3D; childOutcome as SetDataEventOutcome;
+                const outcomeChangedFields: ChangedFields &#x3D; (childOutcome as SetDataEventOutcome).changedFields.changedFields;
+                const caseId &#x3D; setDataOutcome.aCase.stringId;
+                if (!Object.keys(changedFieldsMap).includes(caseId)) {
+                    changedFieldsMap[caseId] &#x3D; {};
+                }
+                const taskId &#x3D; setDataOutcome.task.stringId;
+                if (!Object.keys(changedFieldsMap[caseId]).includes(taskId)) {
+                    changedFieldsMap[caseId][taskId] &#x3D; {
+                        taskId
+                    };
+                }
+                Object.keys(outcomeChangedFields).forEach(fieldId &#x3D;&gt; {
+                    if (Object.keys(changedFieldsMap[caseId][taskId]).includes(fieldId)) {
+                        Object.keys(outcomeChangedFields[fieldId]).forEach(attribute &#x3D;&gt; {
+                            changedFieldsMap[caseId][taskId][fieldId][attribute] &#x3D; outcomeChangedFields[fieldId][attribute];
+                        });
+                    } else {
+                        changedFieldsMap[caseId][taskId][fieldId] &#x3D; setDataOutcome.changedFields.changedFields[fieldId];
+                    }
+                });
+            }
+            if (!!childOutcome.outcomes &amp;&amp; childOutcome.outcomes.length &gt; 0) {
+                this.parseChangedFieldsFromOutcomeTreeRecursive(childOutcome.outcomes, changedFieldsMap);
+            }
+        });
+        return changedFieldsMap;
+    }
+
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'EventService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

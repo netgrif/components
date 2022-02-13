@@ -5,7 +5,7 @@ import {
     Category, LoggerService,
     NAE_SEARCH_CATEGORIES,
     CategoryFactory
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-search-predicate',

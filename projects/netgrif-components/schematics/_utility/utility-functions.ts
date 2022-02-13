@@ -16,7 +16,7 @@ import {FileData} from './models/file-data';
 import {FileSystemNode} from './models/file-system-node';
 import {ProjectInfo} from './models/project-info';
 import {addSymbolToDecoratorMetadata} from './modified-library-functions';
-import {NetgrifApplicationEngine} from '@netgrif/application-engine';
+import {NetgrifApplicationEngine} from '@netgrif/components-core';
 import {ImportToAdd} from '../_commons/import-to-add';
 import {insertImport} from '@schematics/angular/utility/ast-utils';
 

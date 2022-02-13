@@ -16,7 +16,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     NewCaseCreationConfigurationData
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('NewCaseComponent', () => {

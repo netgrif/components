@@ -8,7 +8,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserListService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Observable} from 'rxjs';

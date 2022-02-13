@@ -3,7 +3,7 @@ import {OptionSelectorComponent} from './option-selector.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule, NAE_SIDE_MENU_CONTROL, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, NAE_SIDE_MENU_CONTROL, TranslateLibModule} from '@netgrif/components-core';
 
 describe('OptionSelectorComponent', () => {
     let component: OptionSelectorComponent;

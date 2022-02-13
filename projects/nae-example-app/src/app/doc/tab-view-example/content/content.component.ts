@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/application-engine';
+import {InjectedTabData, NAE_TAB_DATA} from '@netgrif/components-core';
 
 @Component({
   selector: 'nae-app-content',

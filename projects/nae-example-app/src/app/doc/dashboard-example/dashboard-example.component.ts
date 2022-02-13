@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ConfigurationService, DashboardParams} from '@netgrif/application-engine';
+import {ConfigurationService, DashboardParams} from '@netgrif/components-core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {ExamplePortalCardComponent} from './piechart-card/example-portal-card.component';
 

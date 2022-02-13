@@ -4,7 +4,7 @@ import {
     AbstractWorkflowPanelComponent,
     WorkflowViewService,
     LoggerService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 @Component({
   selector: 'nc-public-workflow-panel',

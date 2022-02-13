@@ -11,7 +11,7 @@ import {
     MockAuthenticationMethodService,
     TestConfigurationService,
     TranslateLibModule,
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('LoginFormComponent', () => {
     let component: LoginFormComponent;

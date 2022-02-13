@@ -5,7 +5,7 @@ import {LogoutShortcutComponent} from './components/logout-shortcut/logout-short
 import {LanguageSelectorComponent} from './components/language-selector/language-selector.component';
 import {InternalLinkComponent} from './components/internal-link/internal-link.component';
 import {RouterModule} from '@angular/router';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 
 
 @NgModule({

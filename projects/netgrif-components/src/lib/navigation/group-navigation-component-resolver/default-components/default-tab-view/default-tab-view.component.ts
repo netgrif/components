@@ -8,7 +8,7 @@ import {
     extractIconAndTitle,
     NAE_VIEW_ID_SEGMENT,
     groupNavigationViewIdSegmentFactory
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
 import {ActivatedRoute} from '@angular/router';

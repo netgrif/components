@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {AbstractSearchModeComponent, DATE_FORMAT, DATE_TIME_FORMAT, SideMenuService} from '@netgrif/application-engine';
+import {AbstractSearchModeComponent, DATE_FORMAT, DATE_TIME_FORMAT, SideMenuService} from '@netgrif/components-core';
 import {UserAssignComponent} from '../../../side-menu/content-components/user-assign/user-assign.component';
 import {NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
 

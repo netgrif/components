@@ -17,7 +17,7 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService, WrappedBoolean
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {NumberDefaultFieldComponent} from './number-default-field.component';
 import {FormControl} from '@angular/forms';
 

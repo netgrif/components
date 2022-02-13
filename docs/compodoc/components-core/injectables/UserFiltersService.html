@@ -1,0 +1,1788 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >UserFiltersService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/filter/user-filters.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service that manages filters created by users of the application.</p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_filterNet" >_filterNet</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_initialized$" >_initialized$</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#assignSetDataFinish" >assignSetDataFinish</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#createFilterCaseAndSetData" >createFilterCaseAndSetData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#delete" >delete</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#filterMetadataFromSearchService" >filterMetadataFromSearchService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#load" >load</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#save" >save</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#whenInitialized" >whenInitialized</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_caseService: <a href="../injectables/CaseResourceService.html" target="_self">CaseResourceService</a>, _taskService: <a href="../injectables/TaskResourceService.html" target="_self">TaskResourceService</a>, _processService: <a href="../injectables/ProcessService.html" target="_self">ProcessService</a>, _callChainService: <a href="../injectables/CallChainService.html" target="_self">CallChainService</a>, _sideMenuService: <a href="../injectables/SideMenuService.html" target="_self">SideMenuService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _categoryResolverService: <a href="../injectables/CategoryResolverService.html" target="_self">CategoryResolverService</a>, _saveFilterComponent: <a href="../interfaces/Component.html" target="_self">ComponentType&lt;unknown&gt;</a>, _loadFilterComponent: <a href="../interfaces/Component.html" target="_self">ComponentType&lt;unknown&gt;</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:44</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_caseService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CaseResourceService.html" target="_self" >CaseResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_taskService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TaskResourceService.html" target="_self" >TaskResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_processService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProcessService.html" target="_self" >ProcessService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_callChainService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CallChainService.html" target="_self" >CallChainService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_sideMenuService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SideMenuService.html" target="_self" >SideMenuService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_categoryResolverService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CategoryResolverService.html" target="_self" >CategoryResolverService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_saveFilterComponent</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/Component.html" target="_self" >ComponentType&lt;unknown&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_loadFilterComponent</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/Component.html" target="_self" >ComponentType&lt;unknown&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="assignSetDataFinish"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>assignSetDataFinish</b></span>
+                        <a href="#assignSetDataFinish"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>assignSetDataFinish(task: <a href="../interfaces/Task.html" target="_self">Task</a>, data: <a href="../interfaces/TaskSetDataRequestBody.html" target="_self">TaskSetDataRequestBody</a>, callChain: Subject<boolean>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="339"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:339</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>task</td>
+                                    <td>
+                                                <code><a href="../interfaces/Task.html" target="_self" >Task</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestBody.html" target="_self" >TaskSetDataRequestBody</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>callChain</td>
+                                    <td>
+                                            <code>Subject&lt;boolean&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFilterCaseAndSetData"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>createFilterCaseAndSetData</b></span>
+                        <a href="#createFilterCaseAndSetData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFilterCaseAndSetData(searchService: <a href="../injectables/SearchService.html" target="_self">SearchService</a>, allowedNets: ReadonlyArray<string>, searchCategories: <a href="../classes/Category.html" target="_self">ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</a>, viewId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, additionalData: <a href="../interfaces/TaskSetDataRequestFields.html" target="_self">TaskSetDataRequestFields</a>, withDefaultCategories, inheritAllowedNets, navigationItemTaskData: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="242"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:242</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Saves the predicate filter contained in the provided <a href="../injectables/SearchService.html">SearchService</a> instance.</p>
+<p>The base filter of the search service is not saved.</p>
+<p>A new filter case is created and the necessary filter information is set into it.</p>
+<p>If neither the <code>viewId</code> nor the <code>navigationItemTaskData</code> attribute is set the filter will be created as a new root filter
+without any parent filter link. This will most likely result in the filter being less restrictive than what
+the user sees in the current view, since the base filter of the view will NOT be saved alongside the saved filter.
+The default body is applied first and can be overridden by this argument.
+the <a href="../interfaces/FilterMetadata.html#defaultSearchCategories">defaultSearchCategories</a> flag set to <code>true</code>, or <code>false</code>.
+the <a href="../injectables/BaseAllowedNetsService.html">BaseAllowedNetsService</a>.
+If this is the case the case ID of the parent filter will be set into the newly created filter case.
+If not set it implies this is a filter originating in an in-app view and its view id will be set into the created filter.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>searchService</td>
+                                    <td>
+                                                <code><a href="../injectables/SearchService.html" target="_self" >SearchService</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>search service containing a predicate filter, we want to save</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>allowedNets</td>
+                                    <td>
+                                            <code>ReadonlyArray&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>allowed nets of the view, that contains the search service</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>searchCategories</td>
+                                    <td>
+                                                <code><a href="../classes/Category.html" target="_self" >ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>search categories available in the saved advanced search component</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>viewId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>the viewId of the view which contained the filter.
+If neither the <code>viewId</code> nor the <code>navigationItemTaskData</code> attribute is set the filter will be created as a new root filter
+without any parent filter link. This will most likely result in the filter being less restrictive than what
+the user sees in the current view, since the base filter of the view will NOT be saved alongside the saved filter.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>additionalData</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestFields.html" target="_self" >TaskSetDataRequestFields</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>{}</code>
+                                    </td>
+
+                                    <td>
+                                        <p>set data request body, that is sent to the filter in addition to the default body.
+The default body is applied first and can be overridden by this argument.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>withDefaultCategories</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>Whether the saved filter should be saved with
+the [defaultSearchCategories]{</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>inheritAllowedNets</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>Whether the saved filter should merge its allowed nets with the allowed nets provided by
+the {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>navigationItemTaskData</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>null</code>
+                                    </td>
+
+                                    <td>
+                                        <p>if provided then it implies the filter has a parent filter that created its host dynamic view.
+If this is the case the case ID of the parent filter will be set into the newly created filter case.
+If not set it implies this is a filter originating in an in-app view and its view id will be set into the created filter.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an observable that emits the id of the created Filter case instance</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>delete</b></span>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>delete(filterCaseId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Deletes the specified filter case by its case id.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterCaseId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>StringId of the filter case that should be deleted</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Observable that emits <code>true</code> if the case was successfully deleted and <code>false</code> otherwise</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterMetadataFromSearchService"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>filterMetadataFromSearchService</b></span>
+                        <a href="#filterMetadataFromSearchService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>filterMetadataFromSearchService(searchService: <a href="../injectables/SearchService.html" target="_self">SearchService</a>, searchCategories: <a href="../classes/Category.html" target="_self">ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</a>, withDefaultCategories: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, inheritAllowedNets: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="368"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:368</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>searchService</td>
+                                    <td>
+                                                <code><a href="../injectables/SearchService.html" target="_self" >SearchService</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>searchCategories</td>
+                                    <td>
+                                                <code><a href="../classes/Category.html" target="_self" >ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>withDefaultCategories</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>inheritAllowedNets</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/FilterMetadata.html" target="_self" >FilterMetadata</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="load"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>load</b></span>
+                        <a href="#load"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>load(filterType: <a href="../classes/Filter.html" target="_self">FilterType</a>, additionalFilter?: <a href="../classes/Filter.html" target="_self">Filter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:106</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Opens a side menu with filter cases and allows the user to select one of them.</p>
+<p>The default filter constrains the cases to be instances of the filter process and to be filters of the specified type
+(<code>Case</code> or <code>Task</code>).</p>
+<p>otherwise the method throws an error. If it is a <a href="../classess/MergedFilter.html">MergedFilter</a> must use the <code>AND</code> <a href="../miscellaneous/enumerations.html#MergeOperator">MergeOperator</a> otherwise an error
+will be thrown</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterType</td>
+                                    <td>
+                                                <code><a href="../classes/Filter.html" target="_self" >FilterType</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>whether <code>Case</code> or <code>Task</code> user filters should be loaded</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>additionalFilter</td>
+                                    <td>
+                                                <code><a href="../classes/Filter.html" target="_self" >Filter</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>additional constrains on the displayed user filter cases. Must be of type <code>Case</code>
+otherwise the method throws an error. If it is a {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an Observable that emits the data necessary to reconstruct the selected filter, or <code>undefined</code> if no filter was selected</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:65</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="save"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>save</b></span>
+                        <a href="#save"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>save(searchService: <a href="../injectables/SearchService.html" target="_self">SearchService</a>, allowedNets: ReadonlyArray<string>, searchCategories: <a href="../classes/Category.html" target="_self">ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</a>, viewId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, additionalData: <a href="../interfaces/TaskSetDataRequestFields.html" target="_self">TaskSetDataRequestFields</a>, withDefaultCategories, inheritAllowedNets, navigationItemTaskData: Array<DataGroup>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="166"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:166</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Saves the predicate filter contained in the provided <a href="../injectables/SearchService.html">SearchService</a> instance.</p>
+<p>The base filter of the search service is not saved.</p>
+<p>A new filter case is created and the necessary filter information is set into it.</p>
+<p>Then a side menu with the filter is opened for the user to enter the name and other properties.
+The user can confirm or cancel the save by finishing the task in the side menu, or by canceling/closing.</p>
+<p>If neither the <code>viewId</code> nor the <code>navigationItemTaskData</code> attribute is set the filter will be created as a new root filter
+without any parent filter link. This will most likely result in the filter being less restrictive than what
+the user sees in the current view, since the base filter of the view will NOT be saved alongside the saved filter.
+The default body is applied first and can be overridden by this argument.
+the <a href="../interfaces/FilterMetadata.html#defaultSearchCategories">defaultSearchCategories</a> flag set to <code>true</code>, or <code>false</code>.
+the <a href="../injectables/BaseAllowedNetsService.html">BaseAllowedNetsService</a>.
+If this is the case the case ID of the parent filter will be set into the newly created filter case.
+If not set it implies this is a filter originating in an in-app view and its view id will be set into the created filter.
+or the filter could not be saved</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>searchService</td>
+                                    <td>
+                                                <code><a href="../injectables/SearchService.html" target="_self" >SearchService</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>search service containing a predicate filter, we want to save</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>allowedNets</td>
+                                    <td>
+                                            <code>ReadonlyArray&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>allowed nets of the view, that contains the search service</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>searchCategories</td>
+                                    <td>
+                                                <code><a href="../classes/Category.html" target="_self" >ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>search categories available in the saved advanced search component</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>viewId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>the viewId of the view which contained the filter.
+If neither the <code>viewId</code> nor the <code>navigationItemTaskData</code> attribute is set the filter will be created as a new root filter
+without any parent filter link. This will most likely result in the filter being less restrictive than what
+the user sees in the current view, since the base filter of the view will NOT be saved alongside the saved filter.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>additionalData</td>
+                                    <td>
+                                                <code><a href="../interfaces/TaskSetDataRequestFields.html" target="_self" >TaskSetDataRequestFields</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>{}</code>
+                                    </td>
+
+                                    <td>
+                                        <p>set data request body, that is sent to the filter in addition to the default body.
+The default body is applied first and can be overridden by this argument.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>withDefaultCategories</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>Whether the saved filter should be saved with
+the [defaultSearchCategories]{</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>inheritAllowedNets</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>Whether the saved filter should merge its allowed nets with the allowed nets provided by
+the {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>navigationItemTaskData</td>
+                                    <td>
+                                            <code>Array&lt;DataGroup&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>null</code>
+                                    </td>
+
+                                    <td>
+                                        <p>if provided then it implies the filter has a parent filter that created its host dynamic view.
+If this is the case the case ID of the parent filter will be set into the newly created filter case.
+If not set it implies this is a filter originating in an in-app view and its view id will be set into the created filter.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >Observable&lt;SavedFilterMetadata&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>an observable that emits the id of the created Filter case instance or <code>undefined</code> if the user canceled the save process,
+or the filter could not be saved</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="whenInitialized"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>whenInitialized</b></span>
+                        <a href="#whenInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>whenInitialized(onSuccess: () => void, method?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, onFailure: () => void)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="326"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:326</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>onSuccess</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>method</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>onFailure</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>() &#x3D;&gt; {
+                                  this._log.error(&#x60;UserFilterService failed to initialize and the called method${
+                                      method ? &#x27; (&#x27; + method + &#x27;)&#x27; : &#x27;&#x27;
+                                  } cannot be performed&#x60;);
+                              }</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_filterNet"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_filterNet</b></span>
+                        <a href="#_filterNet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Net</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_initialized$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_initialized$</b></span>
+                        <a href="#_initialized$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ReplaySubject&lt;boolean&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/netgrif-components-core/src/lib/filter/user-filters.service.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Inject, Injectable, OnDestroy, Optional, Type} from &#x27;@angular/core&#x27;;
+import {Observable, of, ReplaySubject, Subject} from &#x27;rxjs&#x27;;
+import {CaseResourceService} from &#x27;../resources/engine-endpoint/case-resource.service&#x27;;
+import {TaskResourceService} from &#x27;../resources/engine-endpoint/task-resource.service&#x27;;
+import {SearchService} from &#x27;../search/search-service/search.service&#x27;;
+import {ProcessService} from &#x27;../process/process.service&#x27;;
+import {LoggerService} from &#x27;../logger/services/logger.service&#x27;;
+import {filter, take} from &#x27;rxjs/operators&#x27;;
+import {SimpleFilter} from &#x27;./models/simple-filter&#x27;;
+import {hasContent} from &#x27;../utility/pagination/page-has-content&#x27;;
+import {Task} from &#x27;../resources/interface/task&#x27;;
+import {CallChainService} from &#x27;../utility/call-chain/call-chain.service&#x27;;
+import {TaskSetDataRequestBody, TaskSetDataRequestFields} from &#x27;../resources/interface/task-set-data-request-body&#x27;;
+import {FieldTypeResource} from &#x27;../task-content/model/field-type-resource&#x27;;
+import {Category} from &#x27;../search/models/category/category&#x27;;
+import {Net} from &#x27;../process/net&#x27;;
+import {UserFilterConstants} from &#x27;./models/user-filter-constants&#x27;;
+import {SideMenuSize} from &#x27;../side-menu/models/side-menu-size&#x27;;
+import {SaveFilterInjectionData} from &#x27;../side-menu/content-components/save-filter/model/save-filter-injection-data&#x27;;
+import {SideMenuService} from &#x27;../side-menu/services/side-menu.service&#x27;;
+import {NAE_LOAD_FILTER_COMPONENT, NAE_SAVE_FILTER_COMPONENT} from &#x27;../side-menu/content-components/injection-tokens&#x27;;
+import {ComponentType} from &#x27;@angular/cdk/portal&#x27;;
+import {LoadFilterInjectionData} from &#x27;../side-menu/content-components/load-filter/model/load-filter-injection-data&#x27;;
+import {FilterType} from &#x27;./models/filter-type&#x27;;
+import {Filter} from &#x27;./models/filter&#x27;;
+import {MergeOperator} from &#x27;./models/merge-operator&#x27;;
+import {SavedFilterMetadata} from &#x27;../search/models/persistance/saved-filter-metadata&#x27;;
+import {FilterMetadata} from &#x27;../search/models/persistance/filter-metadata&#x27;;
+import {CreateCaseEventOutcome} from &#x27;../event/model/event-outcomes/case-outcomes/create-case-event-outcome&#x27;;
+import {CategoryResolverService} from &#x27;../search/category-factory/category-resolver.service&#x27;;
+import {DataGroup} from &#x27;../resources/interface/data-groups&#x27;;
+import {getFieldFromDataGroups} from &#x27;../utility/get-field&#x27;;
+import {EventOutcomeMessageResource} from &#x27;../resources/interface/message-resource&#x27;;
+
+/**
+ * Service that manages filters created by users of the application.
+ */
+@Injectable({
+    providedIn: &#x27;root&#x27;
+})
+export class UserFiltersService implements OnDestroy {
+
+    protected _initialized$: ReplaySubject&lt;boolean&gt;;
+    protected _filterNet: Net;
+
+    constructor(protected _caseService: CaseResourceService,
+                protected _taskService: TaskResourceService,
+                protected _processService: ProcessService,
+                protected _callChainService: CallChainService,
+                protected _sideMenuService: SideMenuService,
+                protected _log: LoggerService,
+                protected _categoryResolverService: CategoryResolverService,
+                @Optional() @Inject(NAE_SAVE_FILTER_COMPONENT) protected _saveFilterComponent: ComponentType&lt;unknown&gt;,
+                @Optional() @Inject(NAE_LOAD_FILTER_COMPONENT) protected _loadFilterComponent: ComponentType&lt;unknown&gt;) {
+        this._initialized$ &#x3D; new ReplaySubject&lt;boolean&gt;(1);
+        this._processService.getNet(UserFilterConstants.FILTER_NET_IDENTIFIER).subscribe(net &#x3D;&gt; {
+            this._filterNet &#x3D; net;
+            this._initialized$.next(true);
+        }, error &#x3D;&gt; {
+            this._log.error(&#x60;Filter net could not be loaded with error&#x60;, error);
+            this._initialized$.next(false);
+        });
+    }
+
+    ngOnDestroy(): void {
+        this._initialized$.complete();
+    }
+
+    /**
+     * Deletes the specified filter case by its case id.
+     * @param filterCaseId StringId of the filter case that should be deleted
+     * @returns an Observable that emits &#x60;true&#x60; if the case was successfully deleted and &#x60;false&#x60; otherwise
+     */
+    public delete(filterCaseId: string): Observable&lt;boolean&gt; {
+        const result$ &#x3D; new ReplaySubject&lt;boolean&gt;(1);
+        this._caseService.deleteCase(filterCaseId).subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
+            if (response.success) {
+                this._log.debug(&#x27;Filter case delete success&#x27;, response);
+                result$.next(true);
+                result$.complete();
+            } else {
+                this._log.error(&#x27;Filter case delete failure&#x27;, response);
+                result$.next(false);
+                result$.complete();
+            }
+        }, e &#x3D;&gt; {
+            this._log.error(&#x27;Filter case delete error&#x27;, e);
+            result$.next(false);
+            result$.complete();
+        });
+        return result$.asObservable();
+    }
+
+    /**
+     * Opens a side menu with filter cases and allows the user to select one of them.
+     *
+     * The default filter constrains the cases to be instances of the filter process and to be filters of the specified type
+     * (&#x60;Case&#x60; or &#x60;Task&#x60;).
+     *
+     * @param filterType whether &#x60;Case&#x60; or &#x60;Task&#x60; user filters should be loaded
+     * @param additionalFilter additional constrains on the displayed user filter cases. Must be of type &#x60;Case&#x60;
+     * otherwise the method throws an error. If it is a {@link MergedFilter} must use the &#x60;AND&#x60; {@link MergeOperator} otherwise an error
+     * will be thrown
+     * @returns an Observable that emits the data necessary to reconstruct the selected filter, or &#x60;undefined&#x60; if no filter was selected
+     */
+    public load(filterType: FilterType, additionalFilter?: Filter): Observable&lt;any&gt; {
+        if (additionalFilter?.type &#x3D;&#x3D;&#x3D; FilterType.TASK) {
+            this._log.error(&#x27;The additional filter applied to UserFiltersService.load() must be of type Case&#x27;, additionalFilter);
+            throw Error(&#x27;The additional filter applied to UserFiltersService.load() must be of type Case&#x27;);
+        }
+
+        let filterCasesFilter &#x3D; SimpleFilter.fromCaseQuery({
+            process: {
+                identifier: UserFilterConstants.FILTER_NET_IDENTIFIER
+            },
+            query: &#x60;dataSet.${UserFilterConstants.FILTER_TYPE_FIELD_ID}.keyValue:${filterType}&#x60;
+        });
+        if (!!additionalFilter) {
+            filterCasesFilter &#x3D; filterCasesFilter.merge(additionalFilter, MergeOperator.AND);
+        }
+
+        const result &#x3D; new ReplaySubject&lt;any&gt;(1);
+        const ref &#x3D; this._sideMenuService.open(this._loadFilterComponent, SideMenuSize.LARGE, {
+            filter: filterCasesFilter
+        } as LoadFilterInjectionData);
+        ref.onClose.pipe(filter(e &#x3D;&gt; !e.opened), take(1)).subscribe(event &#x3D;&gt; {
+            if (event.message &#x3D;&#x3D;&#x3D; &#x27;Side menu closed unexpectedly&#x27;) {
+                result.next();
+            } else {
+                result.next(event.data);
+            }
+            result.complete();
+        });
+        return result.asObservable();
+    }
+
+    /**
+     * Saves the predicate filter contained in the provided {@link SearchService} instance.
+     *
+     * The base filter of the search service is not saved.
+     *
+     * A new filter case is created and the necessary filter information is set into it.
+     *
+     * Then a side menu with the filter is opened for the user to enter the name and other properties.
+     * The user can confirm or cancel the save by finishing the task in the side menu, or by canceling/closing.
+     *
+     * @param searchService search service containing a predicate filter, we want to save
+     * @param allowedNets allowed nets of the view, that contains the search service
+     * @param searchCategories search categories available in the saved advanced search component
+     * @param viewId the viewId of the view which contained the filter.
+     * If neither the &#x60;viewId&#x60; nor the &#x60;navigationItemTaskData&#x60; attribute is set the filter will be created as a new root filter
+     * without any parent filter link. This will most likely result in the filter being less restrictive than what
+     * the user sees in the current view, since the base filter of the view will NOT be saved alongside the saved filter.
+     * @param additionalData set data request body, that is sent to the filter in addition to the default body.
+     * The default body is applied first and can be overridden by this argument.
+     * @param withDefaultCategories Whether the saved filter should be saved with
+     * the [defaultSearchCategories]{@link FilterMetadata#defaultSearchCategories} flag set to &#x60;true&#x60;, or &#x60;false&#x60;.
+     * @param inheritAllowedNets Whether the saved filter should merge its allowed nets with the allowed nets provided by
+     * the {@link BaseAllowedNetsService}.
+     * @param navigationItemTaskData if provided then it implies the filter has a parent filter that created its host dynamic view.
+     * If this is the case the case ID of the parent filter will be set into the newly created filter case.
+     * If not set it implies this is a filter originating in an in-app view and its view id will be set into the created filter.
+     * @returns an observable that emits the id of the created Filter case instance or &#x60;undefined&#x60; if the user canceled the save process,
+     * or the filter could not be saved
+     */
+    public save(searchService: SearchService,
+                allowedNets: ReadonlyArray&lt;string&gt;,
+                searchCategories: ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;,
+                viewId?: string,
+                additionalData: TaskSetDataRequestFields &#x3D; {},
+                withDefaultCategories &#x3D; true,
+                inheritAllowedNets &#x3D; true,
+                navigationItemTaskData: Array&lt;DataGroup&gt; &#x3D; null): Observable&lt;SavedFilterMetadata&gt; {
+        if (!searchService.additionalFiltersApplied) {
+            this._log.warn(&#x27;The provided SearchService contains no filter besides the base filter. Nothing to save.&#x27;);
+            return of(undefined);
+        }
+
+        const result &#x3D; new ReplaySubject&lt;SavedFilterMetadata&gt;(1);
+        this.createFilterCaseAndSetData(
+            searchService,
+            allowedNets,
+            searchCategories,
+            viewId,
+            additionalData,
+            withDefaultCategories,
+            inheritAllowedNets,
+            navigationItemTaskData
+        ).subscribe(filterCaseId &#x3D;&gt; {
+            const ref &#x3D; this._sideMenuService.open(this._saveFilterComponent, SideMenuSize.LARGE, {
+                newFilterCaseId: filterCaseId
+            } as SaveFilterInjectionData);
+            ref.onClose.pipe(filter(e &#x3D;&gt; !e.opened), take(1)).subscribe(event &#x3D;&gt; {
+                if (event.message &#x3D;&#x3D;&#x3D; &#x27;Side menu closed unexpectedly&#x27;) {
+                    this.delete(filterCaseId);
+                    result.next();
+                } else {
+                    result.next({
+                        filterCaseId,
+                        allowedNets: [...allowedNets],
+                        originViewId: viewId,
+                        filterMetadata: this.filterMetadataFromSearchService(
+                            searchService,
+                            searchCategories,
+                            withDefaultCategories,
+                            inheritAllowedNets
+                        ),
+                        filter: SimpleFilter.fromQuery({query: searchService.rootPredicate.query.value}, searchService.filterType)
+                    });
+                }
+                result.complete();
+            });
+        });
+        return result.asObservable();
+    }
+
+    /**
+     * Saves the predicate filter contained in the provided {@link SearchService} instance.
+     *
+     * The base filter of the search service is not saved.
+     *
+     * A new filter case is created and the necessary filter information is set into it.
+     *
+     * @param searchService search service containing a predicate filter, we want to save
+     * @param allowedNets allowed nets of the view, that contains the search service
+     * @param searchCategories search categories available in the saved advanced search component
+     * @param viewId the viewId of the view which contained the filter.
+     * If neither the &#x60;viewId&#x60; nor the &#x60;navigationItemTaskData&#x60; attribute is set the filter will be created as a new root filter
+     * without any parent filter link. This will most likely result in the filter being less restrictive than what
+     * the user sees in the current view, since the base filter of the view will NOT be saved alongside the saved filter.
+     * @param additionalData set data request body, that is sent to the filter in addition to the default body.
+     * The default body is applied first and can be overridden by this argument.
+     * @param withDefaultCategories Whether the saved filter should be saved with
+     * the [defaultSearchCategories]{@link FilterMetadata#defaultSearchCategories} flag set to &#x60;true&#x60;, or &#x60;false&#x60;.
+     * @param inheritAllowedNets Whether the saved filter should merge its allowed nets with the allowed nets provided by
+     * the {@link BaseAllowedNetsService}.
+     * @param navigationItemTaskData if provided then it implies the filter has a parent filter that created its host dynamic view.
+     * If this is the case the case ID of the parent filter will be set into the newly created filter case.
+     * If not set it implies this is a filter originating in an in-app view and its view id will be set into the created filter.
+     * @returns an observable that emits the id of the created Filter case instance
+     */
+    public createFilterCaseAndSetData(searchService: SearchService,
+                                      allowedNets: ReadonlyArray&lt;string&gt;,
+                                      searchCategories: ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;,
+                                      viewId?: string,
+                                      additionalData: TaskSetDataRequestFields &#x3D; {},
+                                      withDefaultCategories &#x3D; true,
+                                      inheritAllowedNets &#x3D; true,
+                                      navigationItemTaskData: Array&lt;DataGroup&gt; &#x3D; null): Observable&lt;string&gt; {
+        const result &#x3D; new ReplaySubject&lt;string&gt;(1);
+        this.whenInitialized(() &#x3D;&gt; {
+            this._caseService.createCase({
+                title: this._filterNet.defaultCaseName,
+                netId: this._filterNet.stringId
+            }).subscribe(filterCase &#x3D;&gt; {
+                this._taskService.getTasks(SimpleFilter.fromTaskQuery({
+                    case: {
+                        id: (filterCase.outcome as CreateCaseEventOutcome).aCase.stringId
+                    }
+                })).subscribe(page &#x3D;&gt; {
+                    if (!hasContent(page)) {
+                        throw new Error(&#x27;Expected filter process to contain tasks, but none were found!&#x27;);
+                    }
+
+                    const initTask &#x3D; page.content.find(task &#x3D;&gt; task.transitionId &#x3D;&#x3D;&#x3D; UserFilterConstants.SET_FILTER_METADATA_TRANSITION_ID);
+                    if (initTask &#x3D;&#x3D;&#x3D; undefined) {
+                        throw new Error(&#x60;Expected filter process to contain task &#x27;${UserFilterConstants.SET_FILTER_METADATA_TRANSITION_ID
+                        }&#x27;, but none was found!&#x60;);
+                    }
+
+                    const requestBody &#x3D; {
+                        [UserFilterConstants.FILTER_TYPE_FIELD_ID]: {
+                            type: FieldTypeResource.ENUMERATION_MAP,
+                            value: searchService.filterType
+                        },
+                        [UserFilterConstants.FILTER_FIELD_ID]: {
+                            type: FieldTypeResource.FILTER,
+                            value: searchService.rootPredicate.query.value,
+                            allowedNets,
+                            filterMetadata: this.filterMetadataFromSearchService(
+                                searchService,
+                                searchCategories,
+                                withDefaultCategories,
+                                inheritAllowedNets
+                            )
+                        },
+                    };
+
+                    let parentFilterCaseIdField;
+                    if (navigationItemTaskData !&#x3D;&#x3D; null &amp;&amp; navigationItemTaskData !&#x3D;&#x3D; undefined) {
+                        parentFilterCaseIdField &#x3D; getFieldFromDataGroups(navigationItemTaskData,
+                            UserFilterConstants.FILTER_CASE_ID_FIELD_ID);
+                    }
+
+                    if (parentFilterCaseIdField !&#x3D;&#x3D; undefined) {
+                        requestBody[UserFilterConstants.PARENT_FILTER_CASE_ID_FIELD_ID] &#x3D; {
+                            type: FieldTypeResource.TEXT,
+                            value: parentFilterCaseIdField.value
+                        };
+                    } else if (viewId !&#x3D;&#x3D; undefined || viewId !&#x3D;&#x3D; &#x27;&#x27;) {
+                        requestBody[UserFilterConstants.ORIGIN_VIEW_ID_FIELD_ID] &#x3D; {
+                            type: FieldTypeResource.TEXT,
+                            value: viewId
+                        };
+                    }
+
+                    this.assignSetDataFinish(initTask, {
+                        [initTask.stringId]: {
+                            ...requestBody,
+                            ...additionalData
+                        }
+                    }, this._callChainService.create(success &#x3D;&gt; {
+                        if (!success) {
+                            throw new Error(&#x27;Filter instance could not be initialized&#x27;);
+                        }
+
+                        result.next((filterCase.outcome as CreateCaseEventOutcome).aCase.stringId);
+                        result.complete();
+                    }));
+                });
+            });
+        }, &#x27;saveWithSideMenu&#x27;);
+        return result.asObservable();
+    }
+
+    protected whenInitialized(onSuccess: () &#x3D;&gt; void,
+                              method?: string,
+                              onFailure: () &#x3D;&gt; void &#x3D; () &#x3D;&gt; {
+                                  this._log.error(&#x60;UserFilterService failed to initialize and the called method${
+                                      method ? &#x27; (&#x27; + method + &#x27;)&#x27; : &#x27;&#x27;
+                                  } cannot be performed&#x60;);
+                              }) {
+        this._initialized$.asObservable().pipe(take(1)).subscribe(initialized &#x3D;&gt; {
+            initialized ? onSuccess() : onFailure();
+        });
+    }
+
+    // TODO 6.4.2021 IMPROVEMENT - extract similar method into some utility service
+    protected assignSetDataFinish(task: Task, data: TaskSetDataRequestBody, callChain: Subject&lt;boolean&gt;): void {
+        this._taskService.assignTask(task.stringId).subscribe(assignOutcome &#x3D;&gt; {
+            if (assignOutcome.error) {
+                this._log.error(&#x60;Could not assign task &#x27;${task.title}&#x27;&#x60;, task, assignOutcome.error);
+                callChain.next(false);
+            }
+
+            this._taskService.setData(task.stringId, data).subscribe(() &#x3D;&gt; {
+                this._taskService.finishTask(task.stringId).subscribe(finishOutcome &#x3D;&gt; {
+                    if (finishOutcome.error) {
+                        this._log.error(&#x60;Could not finish task &#x27;${task.title}&#x27;&#x60;, task, finishOutcome.error);
+                        callChain.next(false);
+                    }
+
+                    callChain.next(true);
+                }, error &#x3D;&gt; {
+                    this._log.error(&#x60;Could not finish task &#x27;${task.title}&#x27;&#x60;, task, error);
+                    callChain.next(false);
+                });
+            }, error &#x3D;&gt; {
+                this._log.error(&#x60;Could not set data of task &#x27;${task.title}&#x27;&#x60;, task, data, error);
+                callChain.next(false);
+            });
+        }, error &#x3D;&gt; {
+            this._log.error(&#x60;Could not assign task &#x27;${task.title}&#x27;&#x60;, task, error);
+            callChain.next(false);
+        });
+    }
+
+    protected filterMetadataFromSearchService(searchService: SearchService,
+                                              searchCategories: ReadonlyArray&lt;Type&lt;Category&lt;any&gt;&gt;&gt;,
+                                              withDefaultCategories: boolean,
+                                              inheritAllowedNets: boolean): FilterMetadata {
+        return {
+            filterType: searchService.filterType,
+            predicateMetadata: searchService.createPredicateMetadata(),
+            searchCategories: searchCategories.map(c &#x3D;&gt; this._categoryResolverService.serialize(c)),
+            defaultSearchCategories: withDefaultCategories,
+            inheritAllowedNets
+        };
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'UserFiltersService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

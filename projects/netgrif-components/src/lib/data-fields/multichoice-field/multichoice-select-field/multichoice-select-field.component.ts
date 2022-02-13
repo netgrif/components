@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractMultichoiceSelectFieldComponent} from '@netgrif/application-engine';
+import {AbstractMultichoiceSelectFieldComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-multichoice-select-field',

@@ -4,7 +4,7 @@ import {NewCaseComponent} from './new-case.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {HotkeyModule} from 'angular2-hotkeys';
-import {CovalentModule, MaterialModule, NAE_NEW_CASE_COMPONENT, SnackBarModule, TranslateLibModule} from '@netgrif/application-engine';
+import {CovalentModule, MaterialModule, NAE_NEW_CASE_COMPONENT, SnackBarModule, TranslateLibModule} from '@netgrif/components-core';
 
 @NgModule({
     declarations: [

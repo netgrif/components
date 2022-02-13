@@ -1,0 +1,437 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  ProfileComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/netgrif-components/src/lib/user/profile/profile.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../components/ProfileComponent.html" target="_self" >AbstractProfileComponent</a></code>
+    </p>
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>nc-user-profile</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./profile.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./profile.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_userService: UserService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/netgrif-components/src/lib/user/profile/profile.component.ts:9</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_userService</td>
+                                                  
+                                                        <td>
+                                                                    <code>UserService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
+import {AbstractProfileComponent, UserService} from &#x27;@netgrif/components-core&#x27;;
+
+@Component({
+    selector: &#x27;nc-user-profile&#x27;,
+    templateUrl: &#x27;./profile.component.html&#x27;,
+    styleUrls: [&#x27;./profile.component.scss&#x27;]
+})
+export class ProfileComponent extends AbstractProfileComponent {
+    constructor(protected _userService: UserService) {
+        super(_userService);
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div *ngIf&#x3D;&quot;!user&quot;&gt;
+    &lt;div fxLayout&#x3D;&quot;row&quot; fxFlex&#x3D;&quot;50&quot; fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+        &lt;mat-card fxLayoutAlign&#x3D;&quot;center center&quot;&gt;
+            &lt;h1&gt;{{ &#x27;profile.notLogged&#x27; | translate}}&lt;/h1&gt;
+        &lt;/mat-card&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div *ngIf&#x3D;&quot;user&quot; fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center start&quot;&gt;
+    &lt;div [style.backgroundImage]&#x3D;&quot;&#x27;url(&#x27;+userBanner+&#x27;)&#x27;&quot; fxLayout&#x3D;&quot;row&quot; class&#x3D;&quot;full-width banner mat-elevation-z6&quot;
+         matRipple fxLayoutAlign&#x3D;&quot;start center&quot;&gt;
+        &lt;div class&#x3D;&quot;user-avatar-large mat-elevation-z6 margin-banner&quot; matRipple&gt;
+            &lt;img [src]&#x3D;&quot;userAvatar&quot; alt&#x3D;&quot;user avatar&quot; class&#x3D;&quot;full-width full-height&quot;&gt;
+        &lt;/div&gt;
+        &lt;h1 class&#x3D;&quot;white-name&quot;&gt;{{user.fullName}}&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;div fxLayout&#x3D;&quot;row&quot; fxFlex fxLayoutAlign&#x3D;&quot;center end&quot; class&#x3D;&quot;full-width div-background&quot;&gt;
+        &lt;div fxFlex&#x3D;&quot;80&quot; class&#x3D;&quot;tab-group margin-bottom-x2 mat-elevation-z4&quot;&gt;
+            &lt;div fxLayout&#x3D;&quot;row&quot;&gt;
+                &lt;div fxFlex&#x3D;&quot;50&quot; class&#x3D;&quot;padding-x2&quot; fxLayout&#x3D;&quot;column&quot;&gt;
+                    &lt;div fxLayout&#x3D;&quot;column&quot; class&#x3D;&quot;full-height border&quot;&gt;
+                        &lt;div fxLayoutAlign&#x3D;&quot;center start&quot; class&#x3D;&quot;card-title&quot; matRipple&gt;
+                            &lt;h2&gt;{{ &#x27;profile.personal&#x27; | translate}}&lt;/h2&gt;
+                        &lt;/div&gt;
+                        &lt;div fxFlex fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;padding-default&quot;&gt;
+                            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+                                &lt;mat-label&gt;{{ &#x27;profile.name&#x27; | translate}}&lt;/mat-label&gt;
+                                &lt;input matInput disabled [value]&#x3D;user.firstName&gt;
+                            &lt;/mat-form-field&gt;
+                            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+                                &lt;mat-label&gt;{{ &#x27;profile.surname&#x27; | translate}}&lt;/mat-label&gt;
+                                &lt;input matInput disabled [value]&#x3D;user.lastName&gt;
+                            &lt;/mat-form-field&gt;
+                            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;full-width&quot;&gt;
+                                &lt;mat-label&gt;Email&lt;/mat-label&gt;
+                                &lt;input disabled matInput [value]&#x3D;&quot;user.email&quot;&gt;
+                            &lt;/mat-form-field&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div fxFlex&#x3D;&quot;50&quot; class&#x3D;&quot;padding-x2&quot; fxLayout&#x3D;&quot;column&quot;&gt;
+                    &lt;div fxLayout&#x3D;&quot;column&quot; class&#x3D;&quot;full-height border&quot;&gt;
+                        &lt;div fxLayoutAlign&#x3D;&quot;center start&quot; class&#x3D;&quot;card-title&quot; matRipple&gt;
+                            &lt;h2&gt;{{ &#x27;profile.authority&#x27; | translate}}&lt;/h2&gt;
+                        &lt;/div&gt;
+                        &lt;div fxFlex fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;padding-default&quot;&gt;
+                            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;user-chip-list&quot;&gt;
+                                &lt;mat-chip-list disabled&gt;
+                                    &lt;mat-chip color&#x3D;&quot;primary&quot;
+                                              *ngFor&#x3D;&quot;let authority of user.authorities&quot;&gt;{{authority}}&lt;/mat-chip&gt;
+                                &lt;/mat-chip-list&gt;
+                            &lt;/mat-form-field&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div fxLayout&#x3D;&quot;row&quot;&gt;
+                &lt;div fxFlex&#x3D;&quot;50&quot; class&#x3D;&quot;padding-x2&quot; fxLayout&#x3D;&quot;column&quot;&gt;
+                    &lt;div fxLayout&#x3D;&quot;column&quot; class&#x3D;&quot;full-height border&quot;&gt;
+                        &lt;div fxLayoutAlign&#x3D;&quot;center start&quot; class&#x3D;&quot;card-title&quot; matRipple&gt;
+                            &lt;h2&gt;{{ &#x27;profile.roles&#x27; | translate}}&lt;/h2&gt;
+                        &lt;/div&gt;
+                        &lt;div fxFlex fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;padding-default&quot;&gt;
+                            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;user-chip-list&quot;&gt;
+                                &lt;mat-chip-list disabled&gt;
+                                    &lt;mat-chip color&#x3D;&quot;primary&quot; *ngFor&#x3D;&quot;let role of user.roles&quot;&gt;{{role.name}}&lt;/mat-chip&gt;
+                                &lt;/mat-chip-list&gt;
+                            &lt;/mat-form-field&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div fxFlex&#x3D;&quot;50&quot; class&#x3D;&quot;padding-x2&quot; fxLayout&#x3D;&quot;column&quot;&gt;
+                    &lt;div fxLayout&#x3D;&quot;column&quot; class&#x3D;&quot;full-height border&quot;&gt;
+                        &lt;div fxLayoutAlign&#x3D;&quot;center start&quot; class&#x3D;&quot;card-title&quot; matRipple&gt;
+                            &lt;h2&gt;{{ &#x27;profile.groups&#x27; | translate}}&lt;/h2&gt;
+                        &lt;/div&gt;
+                        &lt;div fxFlex fxLayout&#x3D;&quot;column&quot; fxLayoutAlign&#x3D;&quot;center center&quot; class&#x3D;&quot;padding-default&quot;&gt;
+                            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;user-chip-list&quot;&gt;
+                                &lt;mat-chip-list disabled&gt;
+                                    &lt;mat-chip color&#x3D;&quot;primary&quot; *ngFor&#x3D;&quot;let group of user.groups&quot;&gt;{{group}}&lt;/mat-chip&gt;
+                                &lt;/mat-chip-list&gt;
+                            &lt;/mat-form-field&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./profile.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../styles/core&#x27;;
+
+.user-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+}
+
+.banner {
+    height: 250px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.margin-banner {
+    margin-left: 10%;
+    margin-right: 32px;
+}
+
+.white-name {
+    color: #FFF;
+}
+
+.tab-group {
+    margin-top: -48px;
+    z-index: 100;
+    background: #f0f0f0;
+}
+
+.div-background {
+    background: #ddd;
+}
+
+.user-chip-list {
+    width: 100%;
+}
+
+.border {
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    background: white;
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="!user">    <div fxLayout="row" fxFlex="50" fxLayoutAlign="center center">        <mat-card fxLayoutAlign="center center">            <h1>{{ \'profile.notLogged\' | translate}}</h1>        </mat-card>    </div></div><div *ngIf="user" fxLayout="column" fxLayoutAlign="center start">    <div [style.backgroundImage]="\'url(\'+userBanner+\')\'" fxLayout="row" class="full-width banner mat-elevation-z6"         matRipple fxLayoutAlign="start center">        <div class="user-avatar-large mat-elevation-z6 margin-banner" matRipple>            <img [src]="userAvatar" alt="user avatar" class="full-width full-height">        </div>        <h1 class="white-name">{{user.fullName}}</h1>    </div>    <div fxLayout="row" fxFlex fxLayoutAlign="center end" class="full-width div-background">        <div fxFlex="80" class="tab-group margin-bottom-x2 mat-elevation-z4">            <div fxLayout="row">                <div fxFlex="50" class="padding-x2" fxLayout="column">                    <div fxLayout="column" class="full-height border">                        <div fxLayoutAlign="center start" class="card-title" matRipple>                            <h2>{{ \'profile.personal\' | translate}}</h2>                        </div>                        <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">                            <mat-form-field appearance="outline" class="full-width">                                <mat-label>{{ \'profile.name\' | translate}}</mat-label>                                <input matInput disabled [value]=user.firstName>                            </mat-form-field>                            <mat-form-field appearance="outline" class="full-width">                                <mat-label>{{ \'profile.surname\' | translate}}</mat-label>                                <input matInput disabled [value]=user.lastName>                            </mat-form-field>                            <mat-form-field appearance="outline" class="full-width">                                <mat-label>Email</mat-label>                                <input disabled matInput [value]="user.email">                            </mat-form-field>                        </div>                    </div>                </div>                <div fxFlex="50" class="padding-x2" fxLayout="column">                    <div fxLayout="column" class="full-height border">                        <div fxLayoutAlign="center start" class="card-title" matRipple>                            <h2>{{ \'profile.authority\' | translate}}</h2>                        </div>                        <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">                            <mat-form-field appearance="outline" class="user-chip-list">                                <mat-chip-list disabled>                                    <mat-chip color="primary"                                              *ngFor="let authority of user.authorities">{{authority}}</mat-chip>                                </mat-chip-list>                            </mat-form-field>                        </div>                    </div>                </div>            </div>            <div fxLayout="row">                <div fxFlex="50" class="padding-x2" fxLayout="column">                    <div fxLayout="column" class="full-height border">                        <div fxLayoutAlign="center start" class="card-title" matRipple>                            <h2>{{ \'profile.roles\' | translate}}</h2>                        </div>                        <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">                            <mat-form-field appearance="outline" class="user-chip-list">                                <mat-chip-list disabled>                                    <mat-chip color="primary" *ngFor="let role of user.roles">{{role.name}}</mat-chip>                                </mat-chip-list>                            </mat-form-field>                        </div>                    </div>                </div>                <div fxFlex="50" class="padding-x2" fxLayout="column">                    <div fxLayout="column" class="full-height border">                        <div fxLayoutAlign="center start" class="card-title" matRipple>                            <h2>{{ \'profile.groups\' | translate}}</h2>                        </div>                        <div fxFlex fxLayout="column" fxLayoutAlign="center center" class="padding-default">                            <mat-form-field appearance="outline" class="user-chip-list">                                <mat-chip-list disabled>                                    <mat-chip color="primary" *ngFor="let group of user.groups">{{group}}</mat-chip>                                </mat-chip-list>                            </mat-form-field>                        </div>                    </div>                </div>            </div>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AddChildNodeComponent', 'selector': 'nc-add-child-node'},{'name': 'AdvancedSearchComponent', 'selector': 'nc-advanced-search'},{'name': 'AuthenticationOverlayComponent', 'selector': 'nc-authentication-overlay'},{'name': 'BarchartCardComponent', 'selector': 'nc-barchart-card'},{'name': 'BooleanFieldComponent', 'selector': 'nc-boolean-field'},{'name': 'ButtonFieldComponent', 'selector': 'nc-button-field'},{'name': 'CaseListComponent', 'selector': 'nc-case-list'},{'name': 'CasePanelComponent', 'selector': 'nc-case-panel'},{'name': 'CaseSearchComponent', 'selector': 'nc-case-search'},{'name': 'CountCardComponent', 'selector': 'nc-count-card'},{'name': 'DashboardContentComponent', 'selector': 'nc-dashboard-content'},{'name': 'DataFieldTemplateComponent', 'selector': 'nc-data-field-template'},{'name': 'DateFieldComponent', 'selector': 'nc-date-field'},{'name': 'DateTimeFieldComponent', 'selector': 'nc-date-time-field'},{'name': 'DefaultSimpleTaskViewComponent', 'selector': 'nc-default-simple-task-view'},{'name': 'DefaultTabbedCaseViewComponent', 'selector': 'nc-default-tabbed-case-view'},{'name': 'DefaultTabbedTaskViewComponent', 'selector': 'nc-default-tabbed-task-view'},{'name': 'DefaultTabViewComponent', 'selector': 'nc-default-tab-view'},{'name': 'EditModeComponent', 'selector': 'nc-edit-mode'},{'name': 'EmailSubmissionFormComponent', 'selector': 'nc-email-submission-form'},{'name': 'EnumerationAutocompleteDynamicFieldComponent', 'selector': 'nc-enumeration-autocomplete-dynamic-field'},{'name': 'EnumerationAutocompleteSelectFieldComponent', 'selector': 'nc-enumeration-autocomplete-select-field'},{'name': 'EnumerationFieldComponent', 'selector': 'nc-enumeration-field'},{'name': 'EnumerationIconFieldComponent', 'selector': 'nc-enumeration-icon-field'},{'name': 'EnumerationListFieldComponent', 'selector': 'nc-enumeration-list-field'},{'name': 'EnumerationSelectFieldComponent', 'selector': 'nc-enumeration-select-field'},{'name': 'EnumerationStepperFieldComponent', 'selector': 'nc-enumeration-stepper-field'},{'name': 'FieldComponentResolverComponent', 'selector': 'nc-field-component-resolver'},{'name': 'FileFieldComponent', 'selector': 'nc-file-field'},{'name': 'FileListFieldComponent', 'selector': 'nc-file-list-field'},{'name': 'FilterFieldComponent', 'selector': 'nc-filter-field'},{'name': 'FilterFieldContentComponent', 'selector': 'nc-filter-field-content'},{'name': 'FilterSelectorComponent', 'selector': 'nc-filter-selector'},{'name': 'ForgottenPasswordFormComponent', 'selector': 'nc-forgotten-password-form'},{'name': 'FulltextSearchComponent', 'selector': 'nc-fulltext-search'},{'name': 'GroupNavigationComponentResolverComponent', 'selector': 'nc-group-navigation-component-resolver'},{'name': 'HeaderComponent', 'selector': 'nc-header'},{'name': 'HtmlTextareaFieldComponent', 'selector': 'nc-html-textarea-field'},{'name': 'I18nDividerFieldComponent', 'selector': 'nc-i18n-divider-field'},{'name': 'I18nFieldComponent', 'selector': 'nc-i18n-field'},{'name': 'I18nTextFieldComponent', 'selector': 'nc-i18n-text-field'},{'name': 'IframeCardComponent', 'selector': 'nc-iframe-card'},{'name': 'ImmediateFilterTextComponent', 'selector': 'nc-immediate-filter-text'},{'name': 'ImmediateFilterTextContentComponent', 'selector': 'nc-immediate-filter-text-content'},{'name': 'ImportNetComponent', 'selector': 'nc-import-net'},{'name': 'InternalLinkComponent', 'selector': 'nc-internal-link'},{'name': 'LanguageSelectorComponent', 'selector': 'nc-language-selector'},{'name': 'LegalNoticeComponent', 'selector': 'nc-legal-notice'},{'name': 'LinearGaugeCardComponent', 'selector': 'nc-linear-gauge-card'},{'name': 'LineChartCardComponent', 'selector': 'nc-line-chart-card'},{'name': 'LoadFilterComponent', 'selector': 'nc-load-filter'},{'name': 'LoadingModeComponent', 'selector': 'nc-loading-mode'},{'name': 'LoginFormComponent', 'selector': 'nc-login-form'},{'name': 'LogoutShortcutComponent', 'selector': 'nc-logout-shortcut'},{'name': 'MultichoiceFieldComponent', 'selector': 'nc-multichoice-field'},{'name': 'MultichoiceListFieldComponent', 'selector': 'nc-multichoice-list-field'},{'name': 'MultichoiceSelectFieldComponent', 'selector': 'nc-multichoice-select-field'},{'name': 'NavigationDrawerComponent', 'selector': 'nc-navigation-drawer'},{'name': 'NavigationRailComponent', 'selector': 'nc-navigation-rail'},{'name': 'NavigationTreeComponent', 'selector': 'nc-navigation-tree'},{'name': 'NewCaseComponent', 'selector': 'nc-new-case'},{'name': 'NumberCurrencyFieldComponent', 'selector': 'nc-number-currency-field'},{'name': 'NumberDefaultFieldComponent', 'selector': 'nc-number-default-field'},{'name': 'NumberFieldComponent', 'selector': 'nc-number-field'},{'name': 'OptionSelectorComponent', 'selector': 'nc-option-selector'},{'name': 'PanelComponent', 'selector': 'nc-app-panel'},{'name': 'PasswordTextFieldComponent', 'selector': 'nc-password-text-field'},{'name': 'PieChartCardComponent', 'selector': 'nc-pie-chart-card'},{'name': 'PortalCardComponent', 'selector': 'nc-portal-card'},{'name': 'PreviewDialogComponent', 'selector': 'nc-preview-dialog'},{'name': 'ProfileComponent', 'selector': 'nc-user-profile'},{'name': 'PublicWorkflowPanelComponent', 'selector': 'nc-public-workflow-panel'},{'name': 'QuickPanelComponent', 'selector': 'nc-quick-panel'},{'name': 'RedirectComponent', 'selector': 'nc-redirect'},{'name': 'RegistrationFormComponent', 'selector': 'nc-registration-form'},{'name': 'RemoveNodeComponent', 'selector': 'nc-remove-node'},{'name': 'RequiredLabelComponent', 'selector': 'nc-required-label'},{'name': 'RichTextareaFieldComponent', 'selector': 'nc-rich-textarea-field'},{'name': 'RoleAssignmentComponent', 'selector': 'nc-role-assignment'},{'name': 'SaveFilterComponent', 'selector': 'nc-save-filter'},{'name': 'SearchClauseComponent', 'selector': 'nc-search-clause'},{'name': 'SearchComponent', 'selector': 'nc-search'},{'name': 'SearchConfigurationInputComponent', 'selector': 'nc-search-configuration-input'},{'name': 'SearchModeComponent', 'selector': 'nc-search-mode'},{'name': 'SearchOperandInputComponent', 'selector': 'nc-search-operand-input'},{'name': 'SearchPredicateComponent', 'selector': 'nc-search-predicate'},{'name': 'SideMenuContainerComponent', 'selector': 'nc-side-menu-container'},{'name': 'SimpleTextFieldComponent', 'selector': 'nc-simple-text-field'},{'name': 'SortModeComponent', 'selector': 'nc-sort-mode'},{'name': 'TabViewComponent', 'selector': 'nc-tab-view'},{'name': 'TaskContentComponent', 'selector': 'nc-task-content'},{'name': 'TaskListComponent', 'selector': 'nc-task-list'},{'name': 'TaskPanelComponent', 'selector': 'nc-task-panel'},{'name': 'TaskSearchComponent', 'selector': 'nc-task-search'},{'name': 'TextareaFieldComponent', 'selector': 'nc-textarea-field'},{'name': 'TextFieldComponent', 'selector': 'nc-text-field'},{'name': 'ToolbarComponent', 'selector': 'nc-toolbar'},{'name': 'TreeComponent', 'selector': 'nc-tree-component'},{'name': 'TreeTaskContentComponent', 'selector': 'nc-tree-task-content'},{'name': 'UserAssignComponent', 'selector': 'nc-user-assign'},{'name': 'UserAssignItemComponent', 'selector': 'nc-user-assign-item'},{'name': 'UserAssignListComponent', 'selector': 'nc-user-assign-list'},{'name': 'UserCardComponent', 'selector': 'nc-user-card'},{'name': 'UserFieldComponent', 'selector': 'nc-user-field'},{'name': 'UserInviteComponent', 'selector': 'nc-user-invite'},{'name': 'WorkflowPanelComponent', 'selector': 'nc-workflow-panel'},{'name': 'WorkflowViewComponent', 'selector': 'nc-workflow-view'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ProfileComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProfileComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

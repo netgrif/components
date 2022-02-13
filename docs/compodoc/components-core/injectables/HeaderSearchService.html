@@ -1,0 +1,1658 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >HeaderSearchService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Acts as an intermediary between the <a href="../classes/AbstractHeaderService.html">AbstractHeaderService</a> instances of various types and the <a href="../injectables/SearchService.html">SearchService</a></p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_columnToConfiguration" >_columnToConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_headerService" >_headerService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_headerSub" >_headerSub</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_searchSub" >_searchSub</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_typeToCategory" >_typeToCategory</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#addPredicate" >addPredicate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#emptyInput" >emptyInput</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handlePredicateRemoval" >handlePredicateRemoval</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#initializeHeaderSearch" >initializeHeaderSearch</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processCaseDataSearch" >processCaseDataSearch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processCaseMetaSearch" >processCaseMetaSearch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processCaseSearch" >processCaseSearch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processModeChange" >processModeChange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#processSearchChange" >processSearchChange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#removePredicate" >removePredicate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#headerService" >headerService</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_categoryFactory: <a href="../injectables/CategoryFactory.html" target="_self">CategoryFactory</a>, _processService: <a href="../injectables/ProcessService.html" target="_self">ProcessService</a>, _translate: TranslateService, _logger: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _searchService: <a href="../injectables/SearchService.html" target="_self">SearchService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:66</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_categoryFactory</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CategoryFactory.html" target="_self" >CategoryFactory</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_processService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProcessService.html" target="_self" >ProcessService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_translate</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_searchService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SearchService.html" target="_self" >SearchService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addPredicate"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>addPredicate</b></span>
+                        <a href="#addPredicate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addPredicate(column: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, predicate: <a href="../classess/Predicate.html" target="_self">Predicate</a>, configuration: MetaGeneratorConfiguration | DataGeneratorConfiguration)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="245"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:245</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Updates a Predicate for a given column.
+Removes an existing predicate for this column if it exists and adds the new Predicate.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>column</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the index of the header column</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>predicate</td>
+                                    <td>
+                                                <code><a href="../classess/Predicate.html" target="_self" >Predicate</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the Predicate that should be added</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>configuration</td>
+                                    <td>
+                                            <code>MetaGeneratorConfiguration | DataGeneratorConfiguration</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>data necessary for the configuration of the {</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="emptyInput"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>emptyInput</b></span>
+                        <a href="#emptyInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>emptyInput(changeDescription: <a href="../interfaces/SearchChangeDescription.html" target="_self">SearchChangeDescription</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="232"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:232</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changeDescription</td>
+                                    <td>
+                                                <code><a href="../interfaces/SearchChangeDescription.html" target="_self" >SearchChangeDescription</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>information about the search header change</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>whether the input was cleared</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handlePredicateRemoval"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>handlePredicateRemoval</b></span>
+                        <a href="#handlePredicateRemoval"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handlePredicateRemoval(removedId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, clearInput)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="271"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:271</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>removedId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>the id of the removed {</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>clearInput</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>whether the corresponding header search input should be cleared</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeHeaderSearch"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>initializeHeaderSearch</b></span>
+                        <a href="#initializeHeaderSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initializeHeaderSearch()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:115</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p><a href="../injectables/HeaderSearchService.html">HeaderSearchService</a> can only be initialized if it successfully injected a <a href="../injectables/SearchService.html">SearchService</a>
+and a <a href="../classes/AbstractHeaderService.html">AbstractHeaderService</a> instance of any of the supported types was set into it.</p>
+<p>Currently only task and case header searching is supported.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="87"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:87</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processCaseDataSearch"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processCaseDataSearch</b></span>
+                        <a href="#processCaseDataSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processCaseDataSearch(changeDescription: <a href="../interfaces/SearchChangeDescription.html" target="_self">SearchChangeDescription</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="211"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:211</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Processes the change object of a case immediate data header and resolves it into the appropriate case search predicate change</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changeDescription</td>
+                                    <td>
+                                                <code><a href="../interfaces/SearchChangeDescription.html" target="_self" >SearchChangeDescription</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the change object that should be resolved</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processCaseMetaSearch"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processCaseMetaSearch</b></span>
+                        <a href="#processCaseMetaSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processCaseMetaSearch(changeDescription: <a href="../interfaces/SearchChangeDescription.html" target="_self">SearchChangeDescription</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="194"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:194</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Processes the change object of a case meta header and resolves it into the appropriate case search predicate change</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changeDescription</td>
+                                    <td>
+                                                <code><a href="../interfaces/SearchChangeDescription.html" target="_self" >SearchChangeDescription</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the change object that should be resolved</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processCaseSearch"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processCaseSearch</b></span>
+                        <a href="#processCaseSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processCaseSearch(changeDescription: <a href="../interfaces/SearchChangeDescription.html" target="_self">SearchChangeDescription</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:177</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Processes the change object and resolves it into the appropriate case search predicate change</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changeDescription</td>
+                                    <td>
+                                                <code><a href="../interfaces/SearchChangeDescription.html" target="_self" >SearchChangeDescription</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the change object that should be resolved</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processModeChange"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processModeChange</b></span>
+                        <a href="#processModeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processModeChange()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="142"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:142</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Pushes all the predicates from the headers into the search interface and clears the header inputs</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processSearchChange"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>processSearchChange</b></span>
+                        <a href="#processSearchChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processSearchChange(headerType: <a href="../undefineds/HeaderType.html" target="_self">HeaderType</a>, changeDescription: <a href="../interfaces/SearchChangeDescription.html" target="_self">SearchChangeDescription</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="167"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:167</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Transforms the <a href="../interfaces/HeaderChange.html">HeaderChange</a> object into a search predicate</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>headerType</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/enumerations.html#HeaderType" target="_self" >HeaderType</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>changeDescription</td>
+                                    <td>
+                                                <code><a href="../interfaces/SearchChangeDescription.html" target="_self" >SearchChangeDescription</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removePredicate"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>removePredicate</b></span>
+                        <a href="#removePredicate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removePredicate(column: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, clearInput)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="259"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:259</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Removes a predicate that corresponds to the provided column</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>column</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>the index of the column that cleared it&#39;s search</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>clearInput</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>true</code>
+                                    </td>
+
+                                    <td>
+                                        <p>whether the corresponding header search input should be cleared</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_columnToConfiguration"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_columnToConfiguration</b></span>
+                        <a href="#_columnToConfiguration"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#HeaderConfiguration" target="_self" >Map&lt;number | HeaderConfiguration&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_headerService"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_headerService</b></span>
+                        <a href="#_headerService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/AbstractHeaderService.html" target="_self" >AbstractHeaderService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_headerSub"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_headerSub</b></span>
+                        <a href="#_headerSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_searchSub"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_searchSub</b></span>
+                        <a href="#_searchSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_typeToCategory"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_typeToCategory</b></span>
+                        <a href="#_typeToCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Category.html" target="_self" >Map&lt;string | Category&lt;any&gt;&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="headerService"></a>
+                        <span class="name"><b>headerService</b><a href="#headerService"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>headerService(headerService: <a href="../classes/AbstractHeaderService.html" target="_self">AbstractHeaderService</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">projects/netgrif-components-core/src/lib/search/header-search-service/header-search.service.ts:99</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>headerService</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="../classes/AbstractHeaderService.html" target="_self" >AbstractHeaderService</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, OnDestroy, Optional} from &#x27;@angular/core&#x27;;
+import {SearchService} from &#x27;../search-service/search.service&#x27;;
+import {AbstractHeaderService} from &#x27;../../header/abstract-header-service&#x27;;
+import {HeaderType} from &#x27;../../header/models/header-type&#x27;;
+import {filter} from &#x27;rxjs/operators&#x27;;
+import {HeaderChangeType} from &#x27;../../header/models/user-changes/header-change-type&#x27;;
+import {HeaderMode} from &#x27;../../header/models/header-mode&#x27;;
+import {ModeChangeDescription} from &#x27;../../header/models/user-changes/mode-change-description&#x27;;
+import {SearchChangeDescription} from &#x27;../../header/models/user-changes/search-change-description&#x27;;
+import {HeaderColumnType} from &#x27;../../header/models/header-column&#x27;;
+import {CaseMetaField} from &#x27;../../header/case-header/case-menta-enum&#x27;;
+import {CategoryFactory} from &#x27;../category-factory/category-factory&#x27;;
+import {CaseVisualId} from &#x27;../models/category/case/case-visual-id&#x27;;
+import {Category} from &#x27;../models/category/category&#x27;;
+import {CaseAuthor} from &#x27;../models/category/case/case-author&#x27;;
+import {CaseCreationDate} from &#x27;../models/category/case/case-creation-date&#x27;;
+import {CaseTitle} from &#x27;../models/category/case/case-title&#x27;;
+import {CaseStringId} from &#x27;../models/category/case/case-string-id&#x27;;
+import {Predicate} from &#x27;../models/predicate/predicate&#x27;;
+import {ProcessService} from &#x27;../../process/process.service&#x27;;
+import {CaseSimpleDataset} from &#x27;../models/category/case/case-simple-dataset&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {Subscription} from &#x27;rxjs&#x27;;
+
+/**
+ * Holds the Id of the predicate in the {@link SearchService}
+ */
+interface PredicateId {
+    predicateId: number;
+}
+
+/**
+ * Holds the information necessary for the configuration of a {@link Category} class to generate
+ * a predicate for a Meta header field
+ */
+interface MetaGeneratorConfiguration {
+    type: HeaderColumnType.META;
+    fieldIdentifier: string;
+    userInput: Array&lt;any&gt;;
+}
+
+/**
+ * Holds the information necessary for the configuration of a {@link Category} class to generate
+ * a predicate for a Data header field
+ */
+interface DataGeneratorConfiguration {
+    type: HeaderColumnType.IMMEDIATE;
+    fieldType: string;
+    fieldTitle: string;
+    userInput: Array&lt;any&gt;;
+}
+
+type HeaderConfiguration &#x3D; PredicateId &amp; (MetaGeneratorConfiguration | DataGeneratorConfiguration);
+
+/**
+ * Acts as an intermediary between the {@link AbstractHeaderService} instances of various types and the {@link SearchService}
+ */
+@Injectable()
+export class HeaderSearchService implements OnDestroy {
+
+    protected _headerService: AbstractHeaderService;
+    protected _columnToConfiguration: Map&lt;number, HeaderConfiguration&gt;;
+    protected _typeToCategory: Map&lt;string, Category&lt;any&gt;&gt;;
+    protected _headerSub: Subscription;
+    protected _searchSub: Subscription;
+
+    constructor(protected _categoryFactory: CategoryFactory,
+                protected _processService: ProcessService,
+                protected _translate: TranslateService,
+                protected _logger: LoggerService,
+                @Optional() protected _searchService: SearchService) {
+        this._columnToConfiguration &#x3D; new Map&lt;number, HeaderConfiguration&gt;();
+        this._typeToCategory &#x3D; new Map&lt;string, Category&lt;any&gt;&gt;();
+        [
+            {k: CaseMetaField.VISUAL_ID, v: CaseVisualId},
+            {k: CaseMetaField.TITLE, v: CaseTitle},
+            {k: CaseMetaField.CREATION_DATE, v: CaseCreationDate},
+            {k: CaseMetaField.AUTHOR, v: CaseAuthor},
+            {k: CaseMetaField.MONGO_ID, v: CaseStringId}
+        ].forEach(pair &#x3D;&gt; {
+            this._typeToCategory.set(pair.k, this._categoryFactory.getWithDefaultOperator(pair.v));
+        });
+        this._typeToCategory.set(HeaderColumnType.IMMEDIATE, this._categoryFactory.get(CaseSimpleDataset));
+    }
+
+    ngOnDestroy(): void {
+        if (this._headerSub) {
+            this._headerSub.unsubscribe();
+        }
+        if (this._searchSub) {
+            this._searchSub.unsubscribe();
+        }
+        for (const cat of this._typeToCategory.values()) {
+            cat.destroy();
+        }
+    }
+
+    public set headerService(headerService: AbstractHeaderService) {
+        if (headerService.headerType &#x3D;&#x3D;&#x3D; HeaderType.CASE || headerService.headerType &#x3D;&#x3D;&#x3D; HeaderType.TASK) {
+            this._headerService &#x3D; headerService;
+        }
+
+        if (headerService &amp;&amp; this._searchService) {
+            this.initializeHeaderSearch();
+        }
+    }
+
+    /**
+     * {@link HeaderSearchService} can only be initialized if it successfully injected a {@link SearchService}
+     * and a {@link AbstractHeaderService} instance of any of the supported types was set into it.
+     *
+     * Currently only task and case header searching is supported.
+     */
+    protected initializeHeaderSearch(): void {
+        if (!this._searchService) {
+            this._logger.error(&#x27;You can\&#x27;t call initializeHeaderSearch without providing a SearchService to be injected!&#x27;);
+            return;
+        }
+        if (!this._headerService) {
+            this._logger.error(&#x27;You can\&#x27;t call initializeHeaderSearch without setting an AbstractHeaderService implementation instance!&#x27;);
+            return;
+        }
+
+        this._headerSub &#x3D; this._headerService.headerChange$
+            .pipe(filter(change &#x3D;&gt; change.changeType &#x3D;&#x3D;&#x3D; HeaderChangeType.SEARCH || change.changeType &#x3D;&#x3D;&#x3D; HeaderChangeType.MODE_CHANGED))
+            .subscribe(change &#x3D;&gt; {
+                if (change.changeType &#x3D;&#x3D;&#x3D; HeaderChangeType.SEARCH) {
+                    this.processSearchChange(change.headerType, change.description as SearchChangeDescription);
+                } else if ((change.description as ModeChangeDescription).previousMode &#x3D;&#x3D;&#x3D; HeaderMode.SEARCH) {
+                    this.processModeChange();
+                }
+            });
+
+        this._searchSub &#x3D;
+            this._searchService.predicateRemoved$.subscribe(event &#x3D;&gt; this.handlePredicateRemoval(event.index, event.clearInput));
+    }
+
+    /**
+     * Pushes all the predicates from the headers into the search interface and clears the header inputs
+     */
+    protected processModeChange(): void {
+        const addedPredicateIds &#x3D; [];
+        this._columnToConfiguration.forEach(config &#x3D;&gt; {
+            this._searchService.removePredicate(config.predicateId);
+
+            let editableCategory;
+            if (config.type &#x3D;&#x3D;&#x3D; HeaderColumnType.META) {
+                editableCategory &#x3D; this._typeToCategory.get(config.fieldIdentifier).duplicate();
+                editableCategory.selectDefaultOperator();
+                editableCategory.setOperands(config.userInput);
+            } else {
+                const dataset &#x3D; (this._typeToCategory.get(HeaderColumnType.IMMEDIATE) as CaseSimpleDataset);
+                editableCategory &#x3D; dataset.transformToCaseDataset(config.fieldType, config.fieldTitle, config.userInput);
+            }
+            addedPredicateIds.push(this._searchService.addGeneratedLeafPredicate(editableCategory));
+        });
+
+        this._searchService.show(addedPredicateIds);
+
+        this._columnToConfiguration.clear();
+    }
+
+    /**
+     * Transforms the {@link HeaderChange} object into a search predicate
+     */
+    protected processSearchChange(headerType: HeaderType, changeDescription: SearchChangeDescription): void {
+        if (headerType &#x3D;&#x3D;&#x3D; HeaderType.CASE) {
+            this.processCaseSearch(changeDescription);
+        }
+    }
+
+    /**
+     * Processes the change object and resolves it into the appropriate case search predicate change
+     * @param changeDescription the change object that should be resolved
+     */
+    protected processCaseSearch(changeDescription: SearchChangeDescription): void {
+        if (this.emptyInput(changeDescription)) {
+            this.removePredicate(changeDescription.columnIdentifier);
+            return;
+        }
+
+        if (changeDescription.type &#x3D;&#x3D;&#x3D; HeaderColumnType.META) {
+            this.processCaseMetaSearch(changeDescription);
+        } else {
+            this.processCaseDataSearch(changeDescription);
+        }
+    }
+
+    /**
+     * Processes the change object of a case meta header and resolves it into the appropriate case search predicate change
+     * @param changeDescription the change object that should be resolved
+     */
+    protected processCaseMetaSearch(changeDescription: SearchChangeDescription): void {
+        const config &#x3D; {
+            fieldIdentifier: changeDescription.fieldIdentifier,
+            userInput: [changeDescription.searchInput]
+        };
+        const category &#x3D; this._typeToCategory.get(config.fieldIdentifier);
+        const predicate &#x3D; category.generatePredicate(config.userInput);
+        this.addPredicate(changeDescription.columnIdentifier, predicate, {
+            type: HeaderColumnType.META,
+            ...config
+        });
+    }
+
+    /**
+     * Processes the change object of a case immediate data header and resolves it into the appropriate case search predicate change
+     * @param changeDescription the change object that should be resolved
+     */
+    protected processCaseDataSearch(changeDescription: SearchChangeDescription): void {
+        this._processService.getNet(changeDescription.petriNetIdentifier).subscribe(net &#x3D;&gt; {
+            const config &#x3D; {
+                fieldType: changeDescription.fieldType,
+                fieldTitle: changeDescription.fieldTitle,
+                userInput: [changeDescription.searchInput]
+            };
+            const category &#x3D; this._typeToCategory.get(changeDescription.type) as CaseSimpleDataset;
+            category.configure(changeDescription.fieldIdentifier, config.fieldType, [net.identifier]);
+            const predicate &#x3D; category.generatePredicate(config.userInput);
+            this.addPredicate(changeDescription.columnIdentifier, predicate, {
+                type: HeaderColumnType.IMMEDIATE,
+                ...config
+            });
+        });
+    }
+
+    /**
+     * @param changeDescription information about the search header change
+     * @returns whether the input was cleared
+     */
+    protected emptyInput(changeDescription: SearchChangeDescription): boolean {
+        return changeDescription.searchInput &#x3D;&#x3D;&#x3D; undefined
+            || changeDescription.searchInput &#x3D;&#x3D;&#x3D; null
+            || (typeof changeDescription.searchInput &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp; changeDescription.searchInput.length &#x3D;&#x3D;&#x3D; 0);
+    }
+
+    /**
+     * Updates a Predicate for a given column.
+     * Removes an existing predicate for this column if it exists and adds the new Predicate.
+     * @param column the index of the header column
+     * @param predicate the Predicate that should be added
+     * @param configuration data necessary for the configuration of the {@link Category} that generates the added predicate
+     */
+    protected addPredicate(column: number,
+                           predicate: Predicate,
+                           configuration: MetaGeneratorConfiguration | DataGeneratorConfiguration): void {
+
+        this.removePredicate(column, !this._columnToConfiguration.has(column));
+        const predicateId &#x3D; this._searchService.addPredicate(predicate);
+        this._columnToConfiguration.set(column, {predicateId, ...configuration});
+    }
+
+    /**
+     * Removes a predicate that corresponds to the provided column
+     * @param column the index of the column that cleared it&#x27;s search
+     * @param clearInput whether the corresponding header search input should be cleared
+     */
+    protected removePredicate(column: number, clearInput &#x3D; true): void {
+        const predicateConfig &#x3D; this._columnToConfiguration.get(column);
+        if (predicateConfig !&#x3D;&#x3D; undefined) {
+            this._searchService.removePredicate(predicateConfig.predicateId, clearInput);
+            this._columnToConfiguration.delete(column);
+        }
+    }
+
+    /**
+     * @param removedId the id of the removed {@link Predicate}
+     * @param clearInput whether the corresponding header search input should be cleared
+     */
+    protected handlePredicateRemoval(removedId: number, clearInput &#x3D; true): void {
+        if (this._headerService &amp;&amp; clearInput) {
+            this._headerService.clearHeaderSearch(removedId);
+        }
+        this._columnToConfiguration.delete(removedId);
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'HeaderSearchService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

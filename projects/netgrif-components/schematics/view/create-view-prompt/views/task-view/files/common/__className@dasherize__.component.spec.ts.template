@@ -7,7 +7,7 @@ import {
     NAE_TAB_DATA,
     SimpleFilter,
     FilterType
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {
     HeaderComponentModule,
     PanelComponentModule,

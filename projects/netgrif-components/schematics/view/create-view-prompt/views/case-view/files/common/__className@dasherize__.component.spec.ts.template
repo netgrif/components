@@ -7,7 +7,7 @@ import {
     NAE_TAB_DATA,
     AuthenticationMethodService,
     MockAuthenticationMethodService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {
     HeaderComponentModule
 } from '@netgrif/components';

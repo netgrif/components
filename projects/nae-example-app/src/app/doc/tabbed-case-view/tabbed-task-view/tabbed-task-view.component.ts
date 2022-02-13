@@ -17,7 +17,7 @@ import {
     tabbedTaskViewConfigurationFactory,
     NAE_TASK_VIEW_CONFIGURATION,
     ChangedFieldsService, NAE_ASYNC_RENDERING_CONFIGURATION
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
 
 const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {

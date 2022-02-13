@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractSortModeComponent} from '@netgrif/application-engine';
+import {AbstractSortModeComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-sort-mode',

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Injector, Input, OnInit, Output} from '@angular/core';
-import {AbstractCustomCard, DashboardEventContent, DashboardResourceService} from '@netgrif/application-engine';
+import {AbstractCustomCard, DashboardEventContent, DashboardResourceService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {ComponentPortal, Portal} from '@angular/cdk/portal';
-import {AggregationResult, LoggerService} from '@netgrif/application-engine';
+import {AggregationResult, LoggerService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-portal-card',

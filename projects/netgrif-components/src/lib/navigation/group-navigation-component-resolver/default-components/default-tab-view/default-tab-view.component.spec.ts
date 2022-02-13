@@ -8,7 +8,7 @@ import {
     NAE_NAVIGATION_ITEM_TASK_DATA, TestMockDependenciesModule, TestViewService,
     TextField,
     UserFilterConstants, ViewService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {RouterModule} from '@angular/router';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

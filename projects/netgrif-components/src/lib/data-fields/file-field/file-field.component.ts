@@ -6,7 +6,7 @@ import {
     NAE_INFORM_ABOUT_INVALID_DATA,
     SnackBarService,
     TaskResourceService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatDialog} from '@angular/material/dialog';
 import {PreviewDialogComponent} from './preview-dialog/preview-dialog.component';

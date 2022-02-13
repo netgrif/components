@@ -5,7 +5,7 @@ import {UserAssignItemComponent} from './user-assign-list/user-assign-item/user-
 import {UserAssignListComponent} from './user-assign-list/user-assign-list.component';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
-import {CovalentModule, MaterialModule, NAE_USER_ASSIGN_COMPONENT, TranslateLibModule} from '@netgrif/application-engine';
+import {CovalentModule, MaterialModule, NAE_USER_ASSIGN_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
 
 
 @NgModule({

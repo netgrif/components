@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractEnumerationListFieldComponent} from '@netgrif/application-engine';
+import {AbstractEnumerationListFieldComponent} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-enumeration-list-field',

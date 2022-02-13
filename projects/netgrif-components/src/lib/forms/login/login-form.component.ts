@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {AbstractLoginFormComponent, UserService} from '@netgrif/application-engine';
+import {AbstractLoginFormComponent, UserService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-login-form',

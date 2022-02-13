@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {GroupNavigationComponentResolverComponent} from './group-navigation-component-resolver.component';
 import {NavigationComponentModule} from '../navigation.module';
-import {TestMockDependenciesModule} from '@netgrif/application-engine';
+import {TestMockDependenciesModule} from '@netgrif/components-core';
 import {RouterModule} from '@angular/router';
 
 describe('GroupNavigationComponentResolverComponent', () => {

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CategoryFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES} from '@netgrif/application-engine';
+import {CategoryFactory, defaultTaskSearchCategoriesFactory, NAE_SEARCH_CATEGORIES} from '@netgrif/components-core';
 
 /**
  * A component that provides the default task search categories.

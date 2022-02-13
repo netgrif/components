@@ -13,7 +13,7 @@ import {
     NAE_SAVE_FILTER_COMPONENT,
     NAE_USER_ASSIGN_COMPONENT,
     NAE_LOAD_FILTER_COMPONENT
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {UserAssignComponent} from './user-assign/user-assign.component';
 import {NewCaseComponent} from './new-case/new-case.component';
 import {OptionSelectorComponent} from './option-selector/option-selector.component';

@@ -18,7 +18,7 @@ import {
     TranslateLibModule,
     UserResourceService,
     WrappedBoolean
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 
 describe('TextareaFieldComponent', () => {
     let component: TextareaFieldComponent;

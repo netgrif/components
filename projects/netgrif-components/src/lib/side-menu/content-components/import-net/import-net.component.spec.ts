@@ -14,7 +14,7 @@ import {
     SuccessSnackBarComponent,
     TestConfigurationService,
     TranslateLibModule
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatIconModule} from '@angular/material/icon';
 

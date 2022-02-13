@@ -1,8 +1,9 @@
 {
     "$schema": "node_modules\\@compodoc\\compodoc\\src\\config\\schema.json",
     "tsconfig": "projects/netgrif-components/tsconfig.lib.json",
-    "output": "docs/netgrif-components",
-    "name": "Netgrif Application Engine Documentation",
+    "output": "docs/compodoc/components",
+    "unitTestCoverage": "coverage/netgrif-components/coverage-summary.json",
+    "name": "Netgrif Components library Documentation",
     "theme": "gitbook",
     "customLogo": "assets/docs-title-logo.png",
     "customFavicon": "assets/docs-favicon.ico",

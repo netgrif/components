@@ -1,5 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractEnumerationFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
+import {AbstractEnumerationFieldComponent, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-enumeration-field',

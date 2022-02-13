@@ -1,0 +1,334 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li
+  >
+  HeaderOption</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/header/header-modes/edit-mode/abstract-edit-mode.component.ts</code>
+        </p>
+
+
+
+
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#fields" 
+>
+                                            fields
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#groupTitle" 
+>
+                                            groupTitle
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="fields"></a>
+                                        <span class="name "><b>fields</b>
+                                            <a href="#fields">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>fields:         <code><a href="../classes/HeaderColumn.html" target="_self" >Array&lt;HeaderColumn&gt;</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../classes/HeaderColumn.html" target="_self" >Array&lt;HeaderColumn&gt;</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="groupTitle"></a>
+                                        <span class="name "><b>groupTitle</b>
+                                            <a href="#groupTitle">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>groupTitle:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Input, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
+import {AbstractHeaderService} from &#x27;../../abstract-header-service&#x27;;
+import {HeaderColumn} from &#x27;../../models/header-column&#x27;;
+import {FormControl} from &#x27;@angular/forms&#x27;;
+import {map, startWith} from &#x27;rxjs/operators&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {FieldsGroup} from &#x27;../../models/fields-group&#x27;;
+import {orderBy} from &#x27;natural-orderby&#x27;;
+import {Observable, Subscription} from &#x27;rxjs&#x27;;
+import {LoggerService} from &#x27;../../../logger/services/logger.service&#x27;;
+import {AbstractHeaderModeComponent} from &#x27;../abstract-header-mode.component&#x27;;
+
+export interface HeaderOption {
+    groupTitle: string;
+    fields: Array&lt;HeaderColumn&gt;;
+}
+
+export abstract class AbstractEditModeComponent extends AbstractHeaderModeComponent implements OnInit, OnDestroy {
+    public formControls: Array&lt;FormControl&gt; &#x3D; [];
+    public filterOptions: Array&lt;Observable&lt;Array&lt;HeaderOption&gt;&gt;&gt; &#x3D; [];
+    protected subHeader: Subscription;
+
+    @Input() public headerService: AbstractHeaderService;
+
+    protected constructor(protected _translate: TranslateService,
+                          protected _log: LoggerService) {
+        super();
+    }
+
+    ngOnInit(): void {
+        this.subHeader &#x3D; this.headerService.headerColumnCount$.subscribe(newCount &#x3D;&gt; this.updateHeaderCount(newCount));
+    }
+
+    ngOnDestroy(): void {
+        this.subHeader.unsubscribe();
+    }
+
+    protected updateHeaderCount(newCount: number): void {
+        if (this.formControls.length &gt; newCount) {
+            this.formControls &#x3D; this.formControls.slice(0, newCount);
+            this.filterOptions &#x3D; this.filterOptions.slice(0, newCount);
+            return;
+        }
+
+        while (this.formControls.length &lt; newCount) {
+            const i &#x3D; this.formControls.length;
+            const formControl &#x3D; new FormControl();
+            formControl.setValue(this.headerService.headerState.selectedHeaders[i]);
+            this.formControls.push(formControl);
+            this.filterOptions.push(formControl.valueChanges.pipe(
+                startWith(&#x27;&#x27;),
+                map(inputText &#x3D;&gt; this._filter(inputText)))
+            );
+        }
+    }
+
+    protected _filter(value): Array&lt;HeaderOption&gt; {
+        let filterValue;
+        if (typeof value &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+            filterValue &#x3D; (value as string).toLowerCase().normalize(&#x27;NFD&#x27;).replace(/[\u0300-\u036f]/g, &#x27;&#x27;);
+        } else {
+            filterValue &#x3D; &#x27;&#x27;;
+        }
+
+        const arrayGroup: Array&lt;FieldsGroup&gt; &#x3D; [];
+        arrayGroup.push(...this.headerService.fieldsGroup);
+        const meta &#x3D; arrayGroup.splice(0, 1);
+        // TODO IMPROVEMENT 17.7.2020 - don&#x27;t sort the fieldsGroup array here, but sort it once in the headerService and maintain
+        //  the sorted order there
+        meta.push(...orderBy(arrayGroup, v &#x3D;&gt; v.groupTitle, &#x27;asc&#x27;));
+        meta.forEach(group &#x3D;&gt; group.fields &#x3D; orderBy(group.fields, v &#x3D;&gt; v.title, &#x27;asc&#x27;));
+
+        return meta.map(group &#x3D;&gt; ({
+            groupTitle: group.groupTitle,
+            fields: group.fields.filter(option &#x3D;&gt; this.checkImmediateTitle(option) &amp;&amp;
+                this._translate.instant(option.title).toLowerCase().normalize(&#x27;NFD&#x27;)
+                .replace(/[\u0300-\u036f]/g, &#x27;&#x27;).indexOf(filterValue) &#x3D;&#x3D;&#x3D; 0)
+        })).filter(group &#x3D;&gt; group.fields.length &gt; 0);
+    }
+
+    public headerColumnSelected(columnIndex: number, newHeaderColumn: HeaderColumn) {
+        this.headerService.headerColumnSelected(columnIndex, newHeaderColumn);
+    }
+
+    public renderSelection &#x3D; (header) &#x3D;&gt; {
+        return header ? this._translate.instant(header.title) : &#x27;&#x27;;
+    }
+
+    private checkImmediateTitle(option: HeaderColumn): boolean {
+        if (option.title &#x3D;&#x3D;&#x3D; undefined || option.title &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+            this._log.warn(&#x27;Immediate field in column [&#x27; + option.uniqueId + &#x27;] does not have a title&#x27;);
+            return false;
+        }
+        return true;
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'HeaderOption.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

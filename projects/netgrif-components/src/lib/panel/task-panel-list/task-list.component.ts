@@ -1,5 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractTaskListComponent, InjectedTabData, LoggerService, NAE_TAB_DATA, TaskViewService} from '@netgrif/application-engine';
+import {AbstractTaskListComponent, InjectedTabData, LoggerService, NAE_TAB_DATA, TaskViewService} from '@netgrif/components-core';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { <%= classify(className) %>Component } from './<%= dasherize(className) %>.component';
-import {ConfigurationService, AuthenticationMethodService, NullAuthenticationService} from '@netgrif/application-engine';
+import {ConfigurationService, AuthenticationMethodService, NullAuthenticationService} from '@netgrif/components-core';
 import {TreeCaseViewComponentModule} from '@netgrif/components';
 import {<%= configName %>ConfigurationService} from '<%= configImportPath %>';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';

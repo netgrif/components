@@ -1,6 +1,6 @@
 import {ComponentType} from '@angular/cdk/portal';
 import {Component, Injector} from '@angular/core';
-import {AbstractImmediateFilterTextComponent, AbstractImmediateFilterTextContentComponent} from '@netgrif/application-engine';
+import {AbstractImmediateFilterTextComponent, AbstractImmediateFilterTextContentComponent} from '@netgrif/components-core';
 import {ImmediateFilterTextContentComponent} from '../immediate-filter-text-content/immediate-filter-text-content.component';
 
 @Component({

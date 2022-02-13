@@ -17,7 +17,7 @@ import {
     NAE_DEFAULT_TASK_SEARCH_CATEGORIES,
     BaseAllowedNetsService,
     FilterExtractionService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HeaderComponent} from '../../../../header/header.component';
 import {InjectedTabbedCaseViewDataWithNavigationItemTaskData} from '../model/injected-tabbed-case-view-data-with-navigation-item-task-data';
 import {

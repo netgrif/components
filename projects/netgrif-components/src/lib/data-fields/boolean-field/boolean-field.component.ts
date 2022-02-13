@@ -1,5 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractBooleanFieldComponent, BOOLEAN_VALUE_LABEL_ENABLED, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/application-engine';
+import {AbstractBooleanFieldComponent, BOOLEAN_VALUE_LABEL_ENABLED, NAE_INFORM_ABOUT_INVALID_DATA} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

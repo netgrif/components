@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractDashboardContent, LoggerService} from '@netgrif/application-engine';
+import {AbstractDashboardContent, LoggerService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-dashboard-content',

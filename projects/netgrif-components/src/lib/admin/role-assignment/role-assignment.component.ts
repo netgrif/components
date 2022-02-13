@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractRoleAssignment, RoleAssignmentService, UserService} from '@netgrif/application-engine';
+import {AbstractRoleAssignment, RoleAssignmentService, UserService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-role-assignment',

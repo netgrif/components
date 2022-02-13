@@ -54,7 +54,7 @@ import {
     TestTaskViewAllowedNetsFactory,
     AllowedNetsServiceFactory,
     CurrencyModule, ChangedFieldsService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {PanelComponent} from '../panel.component';

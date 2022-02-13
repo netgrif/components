@@ -4,7 +4,7 @@ import {TreeTaskContentComponent} from './tree-task-content/tree-task-content.co
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {PanelComponentModule} from '../../panel/panel.module';
-import {MaterialModule, TranslateLibModule} from '@netgrif/application-engine';
+import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {TaskContentComponentModule} from '../../task-content/task-content.module';
 import {AddChildNodeComponent} from './tree-component/add-child-node/add-child-node.component';
 import {RemoveNodeComponent} from './tree-component/remove-node/remove-node.component';

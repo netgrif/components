@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractFilterSelectorComponent, FilterRepository, NAE_SIDE_MENU_CONTROL, SideMenuControl} from '@netgrif/application-engine';
+import {AbstractFilterSelectorComponent, FilterRepository, NAE_SIDE_MENU_CONTROL, SideMenuControl} from '@netgrif/components-core';
 
 /**
  * Allows user to choose a {@link Filter} from the {@link FilterRepository}.

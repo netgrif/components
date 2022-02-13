@@ -8,7 +8,7 @@ import {RequiredLabelComponent} from '../required-label/required-label.component
 import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {MultichoiceSelectFieldComponent} from './multichoice-select-field/multichoice-select-field.component';
 import {MultichoiceListFieldComponent} from './multichoice-list-field/multichoice-list-field.component';
-import {TranslateLibModule, MultichoiceField, MaterialModule} from '@netgrif/application-engine';
+import {TranslateLibModule, MultichoiceField, MaterialModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('MultichoiceFieldComponent', () => {

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractFieldComponentResolverComponent, TaskContentService} from '@netgrif/application-engine';
+import {AbstractFieldComponentResolverComponent, TaskContentService} from '@netgrif/components-core';
 
 @Component({
     selector: 'nc-field-component-resolver',

@@ -3,7 +3,7 @@ import {
     AbstractGroupNavigationComponentResolverComponent,
     GroupNavigationComponentResolverService,
     LoggerService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

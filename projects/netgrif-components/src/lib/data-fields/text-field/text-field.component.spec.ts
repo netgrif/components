@@ -8,7 +8,7 @@ import {SimpleTextFieldComponent} from './simple-text-field/simple-text-field.co
 import {TextareaFieldComponent} from './textarea-field/textarea-field.component';
 import {RichTextareaFieldComponent} from './rich-textarea-field/rich-textarea-field.component';
 import {TextFieldComponent} from './text-field.component';
-import {CovalentModule, MaterialModule, TextField, TranslateLibModule} from '@netgrif/application-engine';
+import {CovalentModule, MaterialModule, TextField, TranslateLibModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('TextFieldComponent', () => {

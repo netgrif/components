@@ -51,7 +51,7 @@ export function createCaseView(tree: Tree, args: CreateViewArguments & TabbedVie
     updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('FlexLayoutModule', '@angular/flex-layout'),
-        new ImportToAdd('MaterialModule', '@netgrif/application-engine'),
+        new ImportToAdd('MaterialModule', '@netgrif/components-core'),
         new ImportToAdd('HeaderComponentModule', '@netgrif/components'),
         new ImportToAdd('PanelComponentModule', '@netgrif/components'),
         new ImportToAdd('CaseViewComponentModule', '@netgrif/components'),

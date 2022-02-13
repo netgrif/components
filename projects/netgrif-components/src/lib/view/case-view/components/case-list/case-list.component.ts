@@ -1,5 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
-import {AbstractCaseListComponent, CaseViewService, InjectedTabData, LoggerService, NAE_TAB_DATA} from '@netgrif/application-engine';
+import {AbstractCaseListComponent, CaseViewService, InjectedTabData, LoggerService, NAE_TAB_DATA} from '@netgrif/components-core';
 import {ActivatedRoute, Route} from '@angular/router';
 
 @Component({

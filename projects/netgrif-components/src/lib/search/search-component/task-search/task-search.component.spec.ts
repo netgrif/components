@@ -17,7 +17,7 @@ import {
     TestNoAllowedNetsFactory,
     AllowedNetsServiceFactory,
     ViewIdService
-} from '@netgrif/application-engine';
+} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
