@@ -12,6 +12,7 @@ jobs:
                 name: Full Test
                 with:
                     node-version: 12
+            -   run: npm i
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build

@@ -30,6 +30,14 @@ jobs:
                     npm i dist/netgrif-components --save-optional
             -   name: Build examples
                 run: npm run example:build
+            -   uses: EndBug/add-and-commit@v8
+                with:
+                    add: docs
+                    pathspec_error_handling: exitImmediately
+                    default_author: github_actions
+                    committer_name: GitHub Actions
+                    committer_email: actions@github.com
+                    message: 'Update documentation'
 
 
 

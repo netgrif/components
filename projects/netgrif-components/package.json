@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components",
-    "version": "6.0.0-rc.5",
+    "version": "6.0.0",
     "description": "Netgrif Application Engine frontend Angular components",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -28,7 +28,7 @@
         "nae frontend"
     ],
     "dependencies": {
-        "@netgrif/components-core": "6.0.0-rc.5"
+        "@netgrif/components-core": "6.0.0"
     },
     "peerDependencies": {
         "@angular-material-components/datetime-picker": "^2.0.2",
