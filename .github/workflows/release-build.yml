@@ -33,11 +33,12 @@ jobs:
             -   name: Publish components-core
                 run: |
                     npm run ncc:build
+                    npm i dist/netgrif-components-core --save-optional
                     cd dist/netgrif-components-core
                     npm publish --access public
                 env:
                     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-            -   name: Publish components-core
+            -   name: Publish components
                 run: |
                     npm run nc:build
                     cd dist/netgrif-components
@@ -62,11 +63,12 @@ jobs:
             -   name: Publish components-core
                 run: |
                     npm run ncc:build
+                    npm i dist/netgrif-components-core --save-optional
                     cd dist/netgrif-components-core
                     npm publish --access public
                 env:
                     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-            -   name: Publish components-core
+            -   name: Publish components
                 run: |
                     npm run nc:build
                     cd dist/netgrif-components

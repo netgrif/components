@@ -1,13 +1,13 @@
 # Netgrif Components Core library
 
 [![License](https://img.shields.io/badge/license-NETGRIF%20Community%20License-green)](https://netgrif.com/engine/license)
-[![Angular dependency](https://img.shields.io/npm/dependency-version/@netgrif/components-core/@angular/core?label=Angular)](https://www.angular.io/)
+[![npm peer dependency version (scoped)](https://img.shields.io/npm/dependency-version/@netgrif/components-core/peer/@angular/core?color=red)](https://www.angular.io/)
 [![npm (scoped)](https://img.shields.io/npm/v/@netgrif/components-core)](https://www.npmjs.com/package/@netgrif/components-core)
 [![npm](https://img.shields.io/npm/dt/@netgrif/components-core)](https://www.npmjs.com/package/@netgrif/components-core)
 [![Petriflow 1.0.1](https://img.shields.io/badge/Petriflow-1.0.1-0aa8ff)](https://petriflow.com)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/netgrif/components-core?sort=semver&display_name=tag)](https://github.com/netgrif/components/releases)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/netgrif/components?display_name=tag&sort=semver)](https://github.com/netgrif/components/releases)
 [![build](https://github.com/netgrif/components/actions/workflows/master-build.yml/badge.svg)](https://github.com/netgrif/components/actions/workflows/master-build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=netgrif_componentsmetric=alert_status)](https://sonarcloud.io/dashboard?id=netgrif_components)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=netgrif_components)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=coverage)](https://sonarcloud.io/dashboard?id=netgrif_components)
 [![Known Vulnerabilities](https://snyk.io/test/github/netgrif/components/badge.svg)](https://snyk.io/test/github/netgrif/components)
 
