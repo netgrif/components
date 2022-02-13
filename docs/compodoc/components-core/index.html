@@ -31,15 +31,15 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="netgrif-components">Netgrif Components</h1>
+<h1 id="netgrif-components-libraries">Netgrif Components libraries</h1>
 <p><a href="https://netgrif.com/engine/license"><img src="https://img.shields.io/badge/license-NETGRIF%20Community%20License-green" alt="License" class="img-responsive"></a>
-<a href="https://www.angular.io/"><img src="https://img.shields.io/npm/dependency-version/@netgrif/components/@angular/core?label=Angular" alt="Angular dependency" class="img-responsive"></a>
-<a href="https://www.npmjs.com/package/@netgrif/components"><img src="https://img.shields.io/npm/v/@netgrif/components" alt="npm (scoped)" class="img-responsive"></a>
-<a href="https://www.npmjs.com/package/@netgrif/components"><img src="https://img.shields.io/npm/dt/@netgrif/components" alt="npm" class="img-responsive"></a>
+<a href="https://www.angular.io/"><img src="https://img.shields.io/npm/dependency-version/@netgrif/components-core/@angular/core?label=Angular" alt="Angular dependency" class="img-responsive"></a>
+<a href="https://www.npmjs.com/package/@netgrif/components-core"><img src="https://img.shields.io/npm/v/@netgrif/components-core" alt="npm (scoped)" class="img-responsive"></a>
+<a href="https://www.npmjs.com/package/@netgrif/components-core"><img src="https://img.shields.io/npm/dt/@netgrif/components-core" alt="npm" class="img-responsive"></a>
 <a href="https://petriflow.com"><img src="https://img.shields.io/badge/Petriflow-1.0.1-0aa8ff" alt="Petriflow 1.0.1" class="img-responsive"></a>
 <a href="https://github.com/netgrif/components/releases"><img src="https://img.shields.io/github/v/release/netgrif/components?sort=semver&display_name=tag" alt="GitHub release (latest SemVer)" class="img-responsive"></a>
 <a href="https://github.com/netgrif/components/actions/workflows/master-build.yml"><img src="https://github.com/netgrif/components/actions/workflows/master-build.yml/badge.svg" alt="build" class="img-responsive"></a>
-<a href="https://sonarcloud.io/dashboard?id=netgrif_components"><img src="https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=alert_status" alt="Quality Gate Status" class="img-responsive"></a>
+<a href="https://sonarcloud.io/dashboard?id=netgrif_components"><img src="https://sonarcloud.io/api/project_badges/measure?project=netgrif_componentsmetric=alert_status" alt="Quality Gate Status" class="img-responsive"></a>
 <a href="https://sonarcloud.io/dashboard?id=netgrif_components"><img src="https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=coverage" alt="Coverage" class="img-responsive"></a>
 <a href="https://snyk.io/test/github/netgrif/components"><img src="https://snyk.io/test/github/netgrif/components/badge.svg" alt="Known Vulnerabilities" class="img-responsive"></a></p>
 <p>Netgrif Components is an Angular library for creating SPA (Single-page application) compatible with Netgrif Application Engine.
@@ -47,10 +47,10 @@ The library provides all necessary tools for creating refined frontend applicati
 and to create own library of Angular web components to incorporate your own personal design to the platform.</p>
 <ul>
 <li>Petriflow low-code language: <a href="https://petriflow.com">http://petriflow.com</a></li>
-<li>Documentation: <a href="https://components.netgrif.com">https://components.netgrif.com</a></li>
-<li>Getting Started: <a href="https://components.netgrif.com/get_started">https://components.netgrif.com/get_started</a></li>
+<li>Documentation: <a href="https://components.netgrif.com">https://components.netgrif.com</a><!-- * Getting Started: [https://components.netgrif.com/get_started](https://components.netgrif.com/get_started) --></li>
 <li>Issue Tracker: <a href="https://github.com/netgrif/components/issues">Github issues</a></li>
-<li>Compodoc: <a href="https://components.netgrif.com/components/compodoc">https://components.netgrif.com/components/typedoc</a><div><pre class="line-numbers"><code class="language-none">     [https://components.netgrif.com/library/typedoc](https://components.netgrif.com/library/compodoc)</code></pre></div></li>
+<li>Compodoc: <a href="https://components.netgrif.com/#/compodoc/components">@netgrif/components compodoc</a>, <div><pre class="line-numbers"><code class="language-none">     [&#64;netgrif/components-core compodoc](https://components.netgrif.com/#/compodoc/components-core)</code></pre></div></li>
+<li>Typedoc: <a href="https://components.netgrif.com/#/typedoc/components">@netgrif/components typedoc</a>,<div><pre class="line-numbers"><code class="language-none">     [&#64;netgrif/components-core typedoc](https://components.netgrif.com/#/typedoc/components-core)</code></pre></div></li>
 <li>License: <a href="https://github.com/netgrif/components/blob/master/LICENSE">NETGRIF Community License</a></li>
 </ul>
 <p>In this repository are 3 projects:</p>
@@ -79,9 +79,12 @@ At the moment @netgrif/components does not support Ivy engine, your can turn it 
 <p>To configure NAE application more easily the libraries use file nae.json that is placed in root of the project.
 nae.json defines global application configuration like urls to backend resources, services&#39; configurations, routing and views.</p>
 <p>You can find <a href="docs/configuration/nae-minimal.json">minimal nae.json configuration here</a>. </p>
-<p>You can read more on how to configure complete <a href="https://components.netgrif.com/configuration">nae.json here</a>.</p>
-<p>For easier startup clone <a href="https://github.com/netgrif/nae-frontend-starter">template project for NAE frontend application</a></p>
-<p>For more information please read instructions in <a href="https://components.netgrif.com/get_started">Get Started</a></p>
+<!-- You can read more on how to configure complete [nae.json here](https://components.netgrif.com/#/configuration). -->
+
+
+<p>For easier startup clone <a href="https://github.com/netgrif/nae-frontend-application-starter">template project for NAE frontend application</a></p>
+<!-- For more information please read instructions in [Get Started](https://components.netgrif.com/#/get_started) -->
+
 <h2 id="other-projects">Other projects</h2>
 <h3 id="application-engine">Application Engine</h3>
 <p><a href="https://github.com/netgrif/application-engine">Netgrif Application Engine</a> is workflow management system powered by low-code language Petriflow written in Java.
