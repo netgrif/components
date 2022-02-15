@@ -16,21 +16,19 @@ jobs:
                 with:
                     node-version: 12
                     cache: 'npm'
-            -   run: |
-                    rm package-lock.json
-                    npm i
+            -   run: npm i
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
                     npm run ncc:full-test
                     npm run ncc:doc
-                    npm i dist/netgrif-components-core --save-optional
+                    npm i ./dist/netgrif-components-core --save-optional
             -   name: Build & test components
                 run: |
                     npm run nc:build
                     npm run nc:full-test
                     npm run nc:doc
-                    npm i dist/netgrif-components --save-optional
+                    npm i ./dist/netgrif-components --save-optional
             -   name: Build examples
                 run: npm run example:build
             -   uses: EndBug/add-and-commit@v8

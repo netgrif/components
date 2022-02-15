@@ -63,7 +63,6 @@
         "example:start": "ng serve",
         "example:build": "ng build --prod"
     },
-    "private": true,
     "dependencies": {
         "@angular-material-components/datetime-picker": "~4.0.5",
         "@angular-material-components/moment-adapter": "~4.0.1",
