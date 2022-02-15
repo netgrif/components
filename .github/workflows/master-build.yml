@@ -16,7 +16,9 @@ jobs:
                 with:
                     node-version: 12
                     cache: 'npm'
-            -   run: npm i
+            -   run: |
+                    rm package-lock.json
+                    npm i
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
