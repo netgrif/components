@@ -28,7 +28,7 @@
         "nae frontend"
     ],
     "dependencies": {
-        "@netgrif/components-core": "6.0.0"
+        "@netgrif/components-core": "6.0.1"
     },
     "peerDependencies": {
         "@angular-material-components/datetime-picker": "^2.0.2",
