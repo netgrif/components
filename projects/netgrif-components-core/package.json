@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-core",
-    "version": "6.0.1",
+    "version": "6.0.2-rc.1",
     "description": "Netgrif Application engine frontend core Angular library",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
