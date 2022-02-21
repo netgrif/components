@@ -9,6 +9,7 @@
            [matAutocomplete]="auto"
            (keyup)="change()">
     <mat-autocomplete [displayWith]="renderSelection" autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option [value]="null">---</mat-option>
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option.key" (click)="change()">
             {{option.value}}
         </mat-option>

@@ -242,6 +242,9 @@
         },
         "dynamicEnum": {
             "noData": "Vášmu vyhľadávaniu nezodpovedajú žiadne položky"
+        },
+        "enum": {
+            "reset": "Resetovať"
         }
     },
     "dialog": {
