@@ -1,12 +1,14 @@
 import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
+import {Observable} from 'rxjs';
 
 export abstract class AbstractEmailSubmissionFormComponent implements HasForm, OnDestroy {
 
     public rootFormGroup: FormGroup;
 
     @Input() public displayLegalNotice = true;
+    @Input() public loading = new Observable<boolean>();
 
     @Output() public formSubmit: EventEmitter<FormSubmitEvent>;
     @Output() public goBackButton: EventEmitter<void>;
