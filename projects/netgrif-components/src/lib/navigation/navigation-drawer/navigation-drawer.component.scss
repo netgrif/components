@@ -14,3 +14,13 @@
 mat-divider.drawer-divider {
     width: 90%;
 }
+
+.sidenav-wrapper {
+    overflow-x: hidden !important;
+}
+
+.sidenav-close-button {
+    position: absolute;
+    right: 0;
+    z-index: 100;
+}

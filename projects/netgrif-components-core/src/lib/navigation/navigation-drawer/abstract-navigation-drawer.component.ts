@@ -95,21 +95,21 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     }
 
     open(): Promise<MatDrawerToggleResult> {
-        if (this._fixed) {
-            return Promise.resolve('open');
+        if (!this._sideNav.opened) {
+            this._sideNav.open();
         }
-        return this._sideNav.open();
+        return Promise.resolve('open');
     }
 
     close(): Promise<MatDrawerToggleResult> {
         if (this._fixed) {
-            return Promise.resolve('open');
+            return Promise.resolve('close');
         }
         return this._sideNav.close();
     }
 
     toggle(): Promise<MatDrawerToggleResult> {
-        if (this._fixed) {
+        if (this._fixed && this._sideNav.opened) {
             return Promise.resolve('open');
         }
         return this._sideNav.toggle();
@@ -122,7 +122,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
             disableClose: true
         } : {
             mode: 'over',
-            opened: false,
+            opened: true,
             disableClose: false
         };
         if (bool && this._sideNav) {

@@ -70,15 +70,18 @@ describe('AbstractNavigationDrawerComponent', () => {
         });
     });
 
-    it('should close', async () => {
-        await component.close().then(res  => {
-            expect(res).toEqual('open');
+    it('should close',  (done) => {
+        component.close().then(res  => {
+            expect(res).toEqual('close');
+            done();
         });
     });
 
-    it('should toggle', async () => {
-        await component.toggle().then(res  => {
+    it('should toggle', (done) => {
+        component.toggle();
+        component.toggle().then(res  => {
             expect(res).toEqual('open');
+            done();
         });
     });
 
