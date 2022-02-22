@@ -212,7 +212,7 @@ describe('PermissionService', () => {
                 {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
                 {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
                 {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
-                {stringId: 'enum', title: 'string', type: 'enumeration', value: { defaultValue: 'dasd'}},
+                {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd'}},
             ]
         };
         expect(permissionService.hasCasePermission(case_, PermissionType.DELETE)).toBeTrue();
@@ -251,14 +251,14 @@ describe('PermissionService', () => {
                 {stringId: 'date', title: 'string', type: 'date', value: [2020, 1, 1, 10, 10]},
                 {stringId: 'string', title: 'string', type: 'string', value: 'dasdsadsad'},
                 {stringId: 'dateTime', title: 'string', type: 'dateTime', value: [2020, 1, 1, 10, 10]},
-                {stringId: 'enum', title: 'string', type: 'enumeration', value: { defaultValue: 'dasd'}},
+                {stringId: 'enum', title: 'string', type: 'enumeration', value: {defaultValue: 'dasd'}},
             ]
         };
         expect(permissionService.hasCasePermission(case_, PermissionType.DELEGATE)).toBeFalse();
     });
 
-    it('should test canDo', () => {
-        const net = new Net( {
+    it('should test hasNetPermission', () => {
+        const net = new Net({
             identifier: '',
             stringId: '',
             immediateData: [],
@@ -270,21 +270,24 @@ describe('PermissionService', () => {
             title: ''
         });
         net.permissions = {};
-        expect(permissionService.hasNetPermission('create', net)).toBeTrue();
+        expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
-            new User('', '', '', '', [], [{stringId: '12454sdasd', name: '', importId: ''}]);
-        net.permissions = {'12454sdasd': {create: true}};
-        expect(permissionService.hasNetPermission('create', net)).toBeTrue();
+            new User('', '', '', '', [], [{stringId: 'role1', name: '', importId: ''}]);
+        net.permissions = {role1: {create: true}};
+        expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeTrue();
 
-        net.permissions = {'12454sdasd': {create: false}};
-        expect(permissionService.hasNetPermission('create', net)).toBeFalse();
+        net.permissions = {role1: {create: false}};
+        expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
+
+        net.permissions = {role1: {view: true}};
+        expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
 
         (userService as unknown as MockUserService).user =
             new User('', '', '', '', [],
-                [{stringId: '12454sdasd', name: '', importId: ''}, {stringId: '12454sddasdasd', name: '', importId: ''}]);
-        net.permissions = {'12454sdasd': {create: false}, '12454sddasdasd': {create: true}};
-        expect(permissionService.hasNetPermission('create', net)).toBeFalse();
+                [{stringId: 'role1', name: '', importId: ''}, {stringId: 'role2', name: '', importId: ''}]);
+        net.permissions = {role1: {create: false}, role2: {create: true}};
+        expect(permissionService.hasNetPermission(PermissionType.CREATE, net)).toBeFalse();
     });
 
 
