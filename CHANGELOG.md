@@ -8,10 +8,19 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
-## [6.0.2](https://github.com/netgrif/components/releases/tag/v6.0.2) (2022-02-17)
+## [6.0.2](https://github.com/netgrif/components/releases/tag/v6.0.2) (2022-02-22)
 
 ### Fixed
 
+- [NAE-1574] Net role permission checking
+- [NAE-1455] Navigation menu closes on small screens and cannot be reopened
+- [NAE-1557] Cannot clear optional enumeration
+- [NAE-1459] Loading indicator on login and registration related components
+- [NAE-1472] MaterialAppearance property on AbstractDataField
+- [NAE-1524] Header search by author is not working
+- [NAE-1529] Finish auto does not work
+- [NAE-1577] Task reffed change behavior does not propagate
+- [NAE-1575] User select component trying open non-exisisting side menu component
 
 ## [6.0.1](https://github.com/netgrif/components/releases/tag/v6.0.0) (2022-02-15)
 
@@ -512,7 +521,6 @@ None
 ### Fixed
 
 - [NAE-984] Destroy subscription on changedFields
-
 
 ## [4.1.1](https://github.com/netgrif/components/releases/tag/4.1.1) (2020-08-20)
 
