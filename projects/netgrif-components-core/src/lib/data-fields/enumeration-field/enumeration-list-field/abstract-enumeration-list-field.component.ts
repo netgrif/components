@@ -11,4 +11,8 @@ export abstract class AbstractEnumerationListFieldComponent implements OnInit {
 
     ngOnInit() {
     }
+
+    resetEnum(): void {
+        this.formControlRef.reset();
+    }
 }
