@@ -38,7 +38,7 @@ describe('AbstractEmailSubmissionFormComponent ', () => {
     it('should submit', (done) => {
         component.rootFormGroup.controls['email'].setValue('login@login.sk');
         component.formSubmit.subscribe( event => {
-            expect(event).toEqual({ email: 'login@login.sk', emitter: new LoadingEmitter() });
+            expect(event).toEqual({ email: 'login@login.sk', loading: new LoadingEmitter() });
             done();
         });
         component.onSubmit();

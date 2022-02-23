@@ -35,6 +35,6 @@ export abstract class AbstractEmailSubmissionFormComponent implements HasForm, O
         if (!this.rootFormGroup.valid) {
             return;
         }
-        this.formSubmit.emit({email: this.rootFormGroup.controls['email'].value, emitter: this.loading});
+        this.formSubmit.emit({email: this.rootFormGroup.controls['email'].value, loading: this.loading});
     }
 }

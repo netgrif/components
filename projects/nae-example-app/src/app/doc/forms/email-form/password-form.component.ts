@@ -47,7 +47,7 @@ export class PasswordFormComponent implements OnInit, OnDestroy {
     }
 
     callEndpoint(event: FormSubmitEvent): void {
-        event.emitter.on();
+        event.loading.on();
         let endpoint: Observable<MessageResource>;
         if (this.endpointFormControl.value === 'signup') {
             endpoint = this._signUpService.invite({email: event.email, groups: [], processRoles: []});
@@ -62,7 +62,7 @@ export class PasswordFormComponent implements OnInit, OnDestroy {
             } else {
                 this._snackBarService.openSuccessSnackBar('Request success');
             }
-            event.emitter.off();
+            event.loading.off();
         });
     }
 }
