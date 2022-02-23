@@ -31,6 +31,7 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
     private _token: string;
     private _tokenVerified: boolean;
     public loadingToken: LoadingEmitter;
+    public loadingSubmit: LoadingEmitter;
     public userEmail: string;
 
     protected constructor(protected _signupService: SignUpService,
@@ -43,6 +44,7 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
         this.invalidToken = new EventEmitter<void>();
         this._tokenVerified = false;
         this.loadingToken = new LoadingEmitter(true);
+        this.loadingSubmit = new LoadingEmitter(false);
     }
 
     ngOnDestroy(): void {
@@ -50,6 +52,7 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
         this.register.complete();
         this.invalidToken.complete();
         this.loadingToken.complete();
+        this.loadingSubmit.complete();
     }
 
     @Input()
@@ -95,10 +98,13 @@ export abstract class AbstractRegistrationComponent implements HasForm, OnDestro
             return;
         }
         request.token = this._token;
+        this.loadingSubmit.on();
         this.callRegistration(request).pipe(take(1)).subscribe(message => {
             this.register.emit(message);
+            this.loadingSubmit.off();
         }, error => {
             this.register.emit({error});
+            this.loadingSubmit.off();
         });
     }
 

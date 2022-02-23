@@ -84,7 +84,7 @@
         "user": {
             "assign": "Priradiť používateľa",
             "choose": "Zvoľte používateľa",
-            "noUser": "Neexistujú žiadny používatelia",
+            "noUser": "Neexistujú žiadni používatelia",
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
         },
@@ -348,7 +348,7 @@
     },
     "admin": {
         "user-list": {
-            "noUsersWereFound": "Momentálne nie sú v systéme žiadny používatelia",
+            "noUsersWereFound": "Momentálne nie sú v systéme žiadni používatelia",
             "listTitle": "Používatelia"
         },
         "process-list": {

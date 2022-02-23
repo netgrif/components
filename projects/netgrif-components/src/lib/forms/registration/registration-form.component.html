@@ -3,20 +3,23 @@
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">email</mat-icon>
             <mat-form-field fxFlex="100">
-                <input matInput placeholder="{{ 'forms.register.email' | translate}}" disabled [value]="userEmail" autocomplete="username">
+                <input matInput placeholder="{{ 'forms.register.email' | translate}}" disabled [value]="userEmail"
+                       autocomplete="username">
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle</mat-icon>
             <mat-form-field fxFlex="100">
-                <input matInput placeholder="{{ 'forms.register.name' | translate }}" formControlName="name" required autocomplete="given-name">
+                <input matInput placeholder="{{ 'forms.register.name' | translate }}" formControlName="name" required
+                       autocomplete="given-name">
                 <mat-error *ngIf="!isFieldValid('name')">{{getErrorMessage('name')}}</mat-error>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle_outline</mat-icon>
             <mat-form-field fxFlex="100">
-                <input matInput placeholder="{{ 'forms.register.surname' | translate }}" formControlName="surname" required autocomplete="family-name">
+                <input matInput placeholder="{{ 'forms.register.surname' | translate }}" formControlName="surname"
+                       required autocomplete="family-name">
                 <mat-error *ngIf="!isFieldValid('surname')">{{getErrorMessage('surname')}}</mat-error>
             </mat-form-field>
         </div>
@@ -57,7 +60,13 @@
         <nc-legal-notice *ngIf="displayLegalNotice" [buttonName]="'forms.register.register'"></nc-legal-notice>
         <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.xs="center" class="margin-top-4">
             <button fxFlexOffset="8px" fxFlexOffset.xs="0" mat-raised-button class="register-button" color="primary">
-                {{ 'forms.register.register' | translate }}
+                <mat-spinner *ngIf="loadingSubmit | async"
+                             mode="indeterminate"
+                             diameter="36"
+                             color="accent"
+                             fxFlex></mat-spinner>
+                <span *ngIf="(loadingSubmit | async) === false"
+                      fxFlex>{{ 'forms.register.register' | translate }}</span>
             </button>
         </div>
     </form>
