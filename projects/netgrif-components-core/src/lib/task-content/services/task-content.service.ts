@@ -228,6 +228,8 @@ export abstract class TaskContentService implements OnDestroy {
         Object.keys(chFields).forEach(changedField => {
             if (!!this.taskFieldsIndex[chFields.taskId] && !!this.taskFieldsIndex[chFields.taskId][changedField]) {
                 this.updateField(chFields, this.taskFieldsIndex[chFields.taskId][changedField], frontendActions);
+            } else if (this.isFieldInTaskRef(changedField)) {
+                this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             }
         });
 
@@ -236,7 +238,8 @@ export abstract class TaskContentService implements OnDestroy {
     }
 
     private updateField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
-        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
+        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF
+            || this.isFieldInTaskRef(field.stringId)) {
             this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
             return;
         }
@@ -306,5 +309,11 @@ export abstract class TaskContentService implements OnDestroy {
         if (frontendAction && frontendAction.type === TaskContentService.VALIDATE_FRONTEND_ACTION) {
             timer().subscribe(() => this.validateTaskData());
         }
+    }
+
+    private isFieldInTaskRef(changedField: string): boolean {
+        return !!this.taskFieldsIndex &&
+            Object.keys(this.taskFieldsIndex)
+            .some(taskId => taskId !== this.task.stringId && this.taskFieldsIndex[taskId][changedField]);
     }
 }

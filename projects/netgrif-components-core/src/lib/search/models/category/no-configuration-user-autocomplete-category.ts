@@ -33,7 +33,7 @@ export abstract class NoConfigurationUserAutocompleteCategory extends NoConfigur
         if (this.selectedOperator.numberOfOperands !== 1) {
             throw new Error(`Only unary operators are currently supported by the ${this._className} implementation`);
         }
-        return this.selectedOperator.createQuery(this.elasticKeywords, userInput[0], false);
+        return this.selectedOperator.createQuery(this.elasticKeywords, Array.isArray(userInput[0]) ? userInput[0] : userInput, false);
     }
 
     protected serializeOperandValue(valueFormControl: FormControl): any {
