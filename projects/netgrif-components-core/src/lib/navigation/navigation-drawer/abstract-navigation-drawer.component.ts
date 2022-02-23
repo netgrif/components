@@ -109,10 +109,10 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     }
 
     toggle(): Promise<MatDrawerToggleResult> {
-        if (!this._sideNav.opened) {
-            this._sideNav.toggle();
+        if (this._fixed) {
+            return Promise.resolve('open');
         }
-        return Promise.resolve('open');
+        return this._sideNav.toggle();
     }
 
     private resolveLayout(bool: boolean): void {
