@@ -70,7 +70,7 @@ describe('AbstractNavigationDrawerComponent', () => {
         });
     });
 
-    it('should close',  (done) => {
+    it('should close', (done) => {
         component.close().then(res  => {
             expect(res).toEqual('close');
             done();
@@ -78,7 +78,6 @@ describe('AbstractNavigationDrawerComponent', () => {
     });
 
     it('should toggle', (done) => {
-        component.toggle();
         component.toggle().then(res  => {
             expect(res).toEqual('open');
             done();

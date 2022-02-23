@@ -33,7 +33,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
     protected _config = {
         mode: 'over',
-        opened: false,
+        opened: true,
         disableClose: false
     };
 
@@ -122,7 +122,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
             disableClose: true
         } : {
             mode: 'over',
-            opened: true,
+            opened: false,
             disableClose: false
         };
         if (bool && this._sideNav) {
