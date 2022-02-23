@@ -242,6 +242,9 @@
         },
         "dynamicEnum": {
             "noData": "No items match your search"
+        },
+        "enum": {
+            "reset": "Reset"
         }
     },
     "dialog": {

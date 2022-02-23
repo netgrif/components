@@ -242,6 +242,9 @@
         },
         "dynamicEnum": {
             "noData": "Keine Einträge entsprechen Ihrer Suchanfrage"
+        },
+        "enum": {
+            "reset": "Rücksetzen"
         }
     },
     "dialog": {
