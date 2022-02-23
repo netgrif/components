@@ -24,6 +24,7 @@ export abstract class AbstractEmailSubmissionFormComponent implements HasForm, O
     ngOnDestroy(): void {
         this.formSubmit.complete();
         this.goBackButton.complete();
+        this.loading.complete();
     }
 
     public emitGoBack() {
