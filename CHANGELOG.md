@@ -20,7 +20,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1524] Header search by author is not working
 - [NAE-1529] Finish auto does not work
 - [NAE-1577] Task reffed change behavior does not propagate
-- [NAE-1575] User select component trying open non-exisisting side menu component
+- [NAE-1575] User select component trying open non-existing side menu component
 - [NAE-1580] Grammar check
 
 ## [6.0.1](https://github.com/netgrif/components/releases/tag/v6.0.0) (2022-02-15)
