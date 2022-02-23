@@ -32,7 +32,7 @@
             "caseGetFailed": "Načítanie prípadov zlyhalo",
             "noLongerExists": "Zvolená úloha už neexistuje",
             "caseDeleteFailed": "Prípad sa nepodarilo vymazať",
-            "caseDeleteSuccess": "Prípad úspešný zmazaný",
+            "caseDeleteSuccess": "Prípad bol úspešne zmazaný",
             "rolesSuccessAssign": "Roly boli úspešne priradené vybraným používateľom"
         },
         "view": {
@@ -78,7 +78,7 @@
             "errSecond": "Názov je povinné pole.",
             "errThird": "Farba je povinné pole.",
             "noNets": "Žiadne povolené siete",
-            "createCase": "Uspešne vytvorený nový prípad",
+            "createCase": "Úspešne vytvorený nový prípad",
             "defaultCaseName": "s prednastaveným názvom prípadu"
         },
         "user": {
@@ -196,7 +196,7 @@
         "validations": {
             "required": "Toto pole je potrebné!",
             "requiredTrue": "Zadaná hodnota musí byť true",
-            "odd": "Zadané čislo musí byť nepárne",
+            "odd": "Zadané číslo musí byť nepárne",
             "even": "Zadané číslo musí byť párne",
             "positive": "Zadané číslo musí byť kladné",
             "negative": "Zadané číslo musí byť záporné",
@@ -207,22 +207,22 @@
             "pattern": "Zadaný text je v nesprávnom formáte",
             "phone": "Zadaný text musí byť tel. číslo",
             "email": "Zadaný text musí byť email",
-            "dateRange": "Zadaný dátum musí byť z rozsahu {{left}} a {{right}}",
+            "dateRange": "Zadaný dátum musí byť v rozsahu {{left}} a {{right}}",
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň",
             "enumeration": "Musí byť vybraná jedna z možností",
             "min": "Zadané číslo musí byť väčšie ako {{length}}"
         },
         "snackBar": {
-            "downloadFail": " stahovanie zlyhalo",
-            "moreFiles": "Zvolil si viac súborov ako je povolené",
-            "sameFiles": "Nemôžeš nahrať dva rovnaké súbory",
+            "downloadFail": " sťahovanie zlyhalo",
+            "moreFiles": "Zvolili ste si viac súborov ako je povolené",
+            "sameFiles": "Nemôžete nahrať dva rovnaké súbory",
             "fileSize": "Veľkosť súboru presiahla povolený limit",
-            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať zvoľte iný názov súboru alebo súbor odstránte",
-            "wontUploadSameFiles": "Vybrané súbory už boli nahrané. Ak chcete súbory aktualizovať odstránte už nahrané súbory",
+            "wontUploadSameFile": "Súbor už existuje. Ak chcete súbor aktualizovať, zvoľte iný názov súboru alebo súbor odstráňte",
+            "wontUploadSameFiles": "Vybrané súbory už boli nahrané. Ak chcete súbory aktualizovať, odstráňte už nahrané súbory",
             "fileUploadFailed": "Súbor sa nepodarilo nahrať",
             "fileDeleteFailed": "Súbor sa nepodarilo vymazať",
-            "maxFilesExceeded": "Je presiahnutý maximálny počet nahrateľných súborov: ",
+            "maxFilesExceeded": "Je presiahnutý maximálny počet nahratých súborov: ",
             "maxFilesSizeExceeded": "Je presiahnutá maximálna veľkosť nahrávaných súborov: ",
             "notSelectedUser": "Nebol vybraný žiadny používateľ",
             "userAssigned": "Používateľ {{userName}} bol pridelený"
@@ -242,6 +242,9 @@
         },
         "dynamicEnum": {
             "noData": "Vášmu vyhľadávaniu nezodpovedajú žiadne položky"
+        },
+        "enum": {
+            "reset": "Resetovať"
         }
     },
     "dialog": {
@@ -359,14 +362,14 @@
             "newUser": "Nový používateľ",
             "orgs": "Organizácie",
             "selectedOrgs": "Vybrané Organizácie",
-            "selectedRoless": "Vybrané Role",
+            "selectedRoless": "Vybrané Roly",
             "mail": "Zadajte Email",
-            "noSelectedOrgs": "Nie su zvolené žiadne organizácie!",
-            "noSelectedRoles": "Nie su zvolené žiadne role!",
+            "noSelectedOrgs": "Nie sú zvolené žiadne organizácie!",
+            "noSelectedRoles": "Nie sú zvolené žiadne role!",
             "noOrgs": "Nie sú žiadne dostupné organizácie!",
             "version": "Verzia",
             "emailFieldMandatory": "Email je povinný",
-            "oneOrMoreOrganization": "Nový používateľ musí patriť aspoň do jenej organizácie",
+            "oneOrMoreOrganization": "Nový používateľ musí patriť aspoň do jednej organizácie",
             "inviteSent": "Pozvánka bola odoslaná",
             "inviteFailed": "Poslanie pozvánky zlyhalo",
             "invite-user": "POZVAŤ POUŽÍVATEĽA"
@@ -380,7 +383,7 @@
     },
     "caseTree": {
         "newNodeDefaultName": "Nový Vrchol",
-        "noTaskSelected": "Momentálne nie je zvolený žiaden prípad. Pre vybranie prípadu zvoľte vrchol v strome."
+        "noTaskSelected": "Momentálne nie je zvolený žiadny prípad. Pre vybranie prípadu zvoľte vrchol v strome."
     },
     "dashboard": {
         "cases": "prípady"
