@@ -11,7 +11,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=netgrif_components&metric=coverage)](https://sonarcloud.io/dashboard?id=netgrif_components)
 [![Known Vulnerabilities](https://snyk.io/test/github/netgrif/components/badge.svg)](https://snyk.io/test/github/netgrif/components)
 
-Netgrif Components is an Angular library for creating SPA (Single-page application) compatible with Netgrif Application Engine.
+Netgrif Components is an Angular library for creating SPA (Single-page application) compatible with [Netgrif Application Engine](https://github.com/netgrif/application-engine).
 The library provides all necessary tools for creating refined frontend application into NAE environment,
 and to create own library of Angular web components to incorporate your own personal design to the platform.
 
