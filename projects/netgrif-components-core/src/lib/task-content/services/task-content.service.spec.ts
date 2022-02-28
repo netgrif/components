@@ -10,7 +10,7 @@ import {SingleTaskContentService} from './single-task-content.service';
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {createMockDataGroup} from '../../utility/tests/utility/create-mock-datagroup';
 import {createMockField} from '../../utility/tests/utility/create-mock-field';
-import {TaskFields} from "../model/task-fields";
+import {TaskFields} from '../model/task-fields';
 
 describe('TaskPanelContentService', () => {
     const FIELD_ID = 'field1';
