@@ -259,7 +259,8 @@ export abstract class TaskContentService implements OnDestroy {
                         field.behavior = updatedField.behavior[this._task.transitionId];
                     } else {
                         const transitionId = this.getReferencedTransitionId(field.stringId);
-                        field.behavior = updatedField.behavior[transitionId];
+                        if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
+                            field.behavior = updatedField.behavior[transitionId];
                         break;
                     }
                     break;
@@ -307,7 +308,8 @@ export abstract class TaskContentService implements OnDestroy {
             switch (key) {
                 case 'behavior':
                     const transitionId = this.getReferencedTransitionId(field.stringId);
-                    field.behavior = updatedField.behavior[transitionId];
+                    if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
+                        field.behavior = updatedField.behavior[transitionId];
                     break;
                 default:
                     field[key] = updatedField[key];
