@@ -229,6 +229,7 @@ export class TaskResourceService extends AbstractResourceService implements Coun
                     };
                     if (dataGroupResource.parentTaskId !== undefined) {
                         dataGroupObject.parentTaskId = dataGroupResource.parentTaskId;
+                        dataGroupObject.parentTransitionId = dataGroupResource.parentTransitionId
                         dataGroupObject.parentTaskRefId = dataGroupResource.parentTaskRefId;
                         dataGroupObject.nestingLevel = dataGroupResource.nestingLevel;
                     }

@@ -34,6 +34,7 @@ import {EventService} from '../../event/services/event.service';
 import {EventOutcome} from '../../resources/interface/event-outcome';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import {TaskFields} from '../../task-content/model/task-fields';
 
 /**
  * Handles the loading and updating of data fields and behaviour of
@@ -176,6 +177,8 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             dataGroups.forEach(group => {
                 const dataGroupParentCaseId: string = group.parentCaseId === undefined ? this._safeTask.caseId : group.parentCaseId;
                 const parentTaskId: string = group.parentTaskId === undefined ? this._safeTask.stringId : group.parentTaskId;
+                const parentTransitionId: string = group.parentTransitionId === undefined ?
+                    this._safeTask.transitionId : group.parentTransitionId;
                 if (dataGroupParentCaseId !== this._safeTask.caseId) {
                     if (!this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId]) {
                         this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId] = [group.parentTaskId];
@@ -188,10 +191,14 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
                     this._taskContentService.referencedTaskAndCaseIds[dataGroupParentCaseId].push(group.parentTaskId);
                 }
                 if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId]) {
-                    this._taskContentService.taskFieldsIndex[parentTaskId] = {};
+                    this._taskContentService.taskFieldsIndex[parentTaskId] = {} as TaskFields;
+                }
+                if (group.fields.length > 0 && !this._taskContentService.taskFieldsIndex[parentTaskId].fields) {
+                    this._taskContentService.taskFieldsIndex[parentTaskId].fields = {};
                 }
                 group.fields.forEach(field => {
-                    this._taskContentService.taskFieldsIndex[parentTaskId][field.stringId] = field;
+                    this._taskContentService.taskFieldsIndex[parentTaskId].transitionId = parentTransitionId;
+                    this._taskContentService.taskFieldsIndex[parentTaskId].fields[field.stringId] = field;
                     field.valueChanges().subscribe(() => {
                         if (this.wasFieldUpdated(field)) {
                             if (field instanceof DynamicEnumerationField) {
@@ -368,7 +375,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
             }
             const fieldIdsOfRequest = Object.keys(request[taskId]);
             for (const fieldId of fieldIdsOfRequest) {
-                const field = this._taskContentService.taskFieldsIndex[taskId][fieldId];
+                const field = this._taskContentService.taskFieldsIndex[taskId].fields[fieldId];
                 if (field === undefined) {
                     this._log.error(`Unexpected state. Datafield ${fieldId} of task ${taskId
                     } in setData request is not present in the task.`);
@@ -573,7 +580,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
     private clearWaitingForResponseFlag(body: TaskSetDataRequestBody) {
         Object.keys(body).forEach(taskId => {
             Object.keys(body[taskId]).forEach(fieldId => {
-                this._taskContentService.taskFieldsIndex[taskId][fieldId].waitingForResponse = false;
+                this._taskContentService.taskFieldsIndex[taskId].fields[fieldId].waitingForResponse = false;
             });
         });
     }
