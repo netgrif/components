@@ -230,7 +230,8 @@ export abstract class TaskContentService implements OnDestroy {
                 this.updateField(chFields, this.taskFieldsIndex[chFields.taskId].fields[changedField], frontendActions);
             } else if (this.isFieldInTaskRef(changedField)) {
                 const taskId = this.getReferencedTaskId(changedField);
-                if (!!taskId)
+                if (!!taskId && !!this.taskFieldsIndex[taskId] && !!this.taskFieldsIndex[taskId].fields
+                    && !!this.taskFieldsIndex[taskId].fields[changedField])
                     this.updateReferencedField(chFields, this.taskFieldsIndex[taskId].fields[changedField], frontendActions);
             }
         });
