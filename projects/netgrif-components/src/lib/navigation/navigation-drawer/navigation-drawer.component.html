@@ -6,18 +6,40 @@
                  [resizeCursorPrecision]="10"
                  [resizeEdges]="{ right: true }"
                  (resizing)="onResizeEvent($event)">
-        <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-            <nc-user-card *ngIf="showUser" [user]="user" mode="full" [contentWidth]="contentWidth"></nc-user-card>
-            <mat-divider *ngIf="showUser" class="drawer-divider"></mat-divider>
-
-            <nc-quick-panel *ngIf="showQuickPanel" [items]="quickPanelItems" [contentWidth]="contentWidth"></nc-quick-panel>
-            <mat-divider *ngIf="showQuickPanel" class="drawer-divider"></mat-divider>
-
-            <nc-navigation-tree *ngIf="navigation" [contentWidth]="contentWidth"></nc-navigation-tree>
+        <div class="sidenav-wrapper">
+            <button
+                class="sidenav-close-button"
+                type="button"
+                aria-label="Toggle sidenav"
+                mat-icon-button
+                *ngIf="!fixed"
+                (click)="close()">
+                <mat-icon aria-label="Side nav toggle icon">close</mat-icon>
+            </button>
+            <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+                <nc-user-card *ngIf="showUser" [user]="user" mode="full" [contentWidth]="contentWidth"></nc-user-card>
+                <mat-divider *ngIf="showUser" class="drawer-divider"></mat-divider>
+                <nc-quick-panel *ngIf="showQuickPanel" [items]="quickPanelItems"
+                                [contentWidth]="contentWidth"></nc-quick-panel>
+                <mat-divider *ngIf="showQuickPanel" class="drawer-divider"></mat-divider>
+                <nc-navigation-tree *ngIf="navigation" [contentWidth]="contentWidth"></nc-navigation-tree>
+            </div>
         </div>
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <ng-content></ng-content>
+        <div class="content-wrapper" fxLayout="row" fxLayoutAlign="space-between none">
+            <button
+                type="button"
+                aria-label="Toggle sidenav"
+                mat-icon-button
+                (click)="open()"
+                *ngIf="!sidenav.opened">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <div fxFlex="100">
+                <ng-content></ng-content>
+            </div>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

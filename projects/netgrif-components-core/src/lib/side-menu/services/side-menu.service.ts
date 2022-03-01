@@ -52,6 +52,9 @@ export class SideMenuService {
     public open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
                    width: SideMenuSize = SideMenuSize.MEDIUM,
                    injectionData?: SideMenuInjectionData): SideMenuRef {
+        if (!this.componentIsPresent()) {
+            throw new Error('Side menu is not initialized');
+        }
         if (this._sideMenuComponent.isOpened()) {
             throw new Error('Side menu has been already opened with another content');
         }
@@ -105,4 +108,8 @@ export class SideMenuService {
     // public toggle(isOpen?: boolean): Observable<MatDrawerToggleResult> {
     //     return from(this._sideMenu.toggle(isOpen));
     // }
+
+    private componentIsPresent(): boolean {
+        return !!this._sideMenuComponent;
+    }
 }

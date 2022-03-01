@@ -51,11 +51,6 @@ export class PermissionService {
             this._userService.hasRoleById(role) ? net.permissions[role][action] === false : false)) {
             return false;
         }
-        if (!Object.keys(net.permissions).filter(role => Object.keys(net.permissions[role])
-            .some(perm => perm === action)).some(role =>
-            !!net.permissions[role][action])) {
-            return true;
-        }
         return Object.keys(net.permissions).some(role =>
             this._userService.hasRoleById(role) ? !!net.permissions[role][action] : false
         );

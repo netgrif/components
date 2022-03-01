@@ -7,6 +7,7 @@ import {Component} from '@angular/core';
 import {AbstractEmailSubmissionFormComponent} from './abstract-email-submission-form.component';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {LoadingEmitter} from '../../utility/loading-emitter';
 
 describe('AbstractEmailSubmissionFormComponent ', () => {
     let component: TestPassFormComponent;
@@ -37,7 +38,7 @@ describe('AbstractEmailSubmissionFormComponent ', () => {
     it('should submit', (done) => {
         component.rootFormGroup.controls['email'].setValue('login@login.sk');
         component.formSubmit.subscribe( event => {
-            expect(event).toEqual({ email: 'login@login.sk' });
+            expect(event).toEqual({ email: 'login@login.sk', loading: new LoadingEmitter() });
             done();
         });
         component.onSubmit();
