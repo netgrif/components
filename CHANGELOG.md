@@ -8,7 +8,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
-## [6.0.2](https://github.com/netgrif/components/releases/tag/v6.0.2) (2022-02-25)
+## [6.0.2](https://github.com/netgrif/components/releases/tag/v6.0.2) (2022-03-02)
 
 ### Fixed
 
@@ -23,6 +23,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1575] User select component trying open non-existing side menu component
 - [NAE-1580] Grammar check
 - [NAE-1583] Broken FileField/FileListField placeholder
+- [NAE-1586] Virtual scroll is broken everywhere on page
 
 ## [6.0.1](https://github.com/netgrif/components/releases/tag/v6.0.0) (2022-02-15)
 
