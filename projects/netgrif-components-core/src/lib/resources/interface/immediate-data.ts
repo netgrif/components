@@ -44,4 +44,8 @@ export interface ImmediateData {
      */
     // TODO Exists only in case immediate data
     name?: any;
+    /**
+     * Only for enumeration_map and multichoice_map
+     */
+    options?: { defaultValue?: string };
 }
