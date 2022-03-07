@@ -14,6 +14,7 @@ import {DynamicEnumerationField} from '../../data-fields/enumeration-field/model
 import {Validation} from '../../data-fields/models/validation';
 import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 import {DataField} from '../../data-fields/models/abstract-data-field';
+import {TaskFields} from '../model/task-fields';
 
 /**
  * Acts as a communication interface between the Component that renders Task content and it's parent Component.
@@ -35,9 +36,7 @@ export abstract class TaskContentService implements OnDestroy {
     protected _taskDataReloadRequest$: Subject<FrontendActions>;
     protected _isExpanding$: BehaviorSubject<boolean>;
     private _taskFieldsIndex: {
-        [taskId: string]: {
-            [fieldId: string]: DataField<any>;
-        }
+        [taskId: string]: TaskFields
     } = {};
     private _referencedTaskAndCaseIds: { [caseId: string]: Array<string> } = {};
 
@@ -86,11 +85,11 @@ export abstract class TaskContentService implements OnDestroy {
     }
 
 
-    get taskFieldsIndex(): { [p: string]: { [p: string]: DataField<any> } } {
+    get taskFieldsIndex(): { [p: string]: TaskFields } {
         return this._taskFieldsIndex;
     }
 
-    set taskFieldsIndex(value: { [p: string]: { [p: string]: DataField<any> } }) {
+    set taskFieldsIndex(value: { [p: string]: TaskFields }) {
         this._taskFieldsIndex = value;
     }
 
@@ -226,8 +225,14 @@ export abstract class TaskContentService implements OnDestroy {
         const frontendActions = chFields.taskId === this.task.stringId && chFields[TaskContentService.FRONTEND_ACTIONS_KEY];
 
         Object.keys(chFields).forEach(changedField => {
-            if (!!this.taskFieldsIndex[chFields.taskId] && !!this.taskFieldsIndex[chFields.taskId][changedField]) {
-                this.updateField(chFields, this.taskFieldsIndex[chFields.taskId][changedField], frontendActions);
+            if (!!this.taskFieldsIndex[chFields.taskId] && !!this.taskFieldsIndex[chFields.taskId].fields
+                && !!this.taskFieldsIndex[chFields.taskId].fields[changedField]) {
+                this.updateField(chFields, this.taskFieldsIndex[chFields.taskId].fields[changedField], frontendActions);
+            } else if (this.isFieldInTaskRef(changedField)) {
+                const taskId = this.getReferencedTaskId(changedField);
+                if (!!taskId && !!this.taskFieldsIndex[taskId] && !!this.taskFieldsIndex[taskId].fields
+                    && !!this.taskFieldsIndex[taskId].fields[changedField])
+                    this.updateReferencedField(chFields, this.taskFieldsIndex[taskId].fields[changedField], frontendActions);
             }
         });
 
@@ -255,8 +260,10 @@ export abstract class TaskContentService implements OnDestroy {
                         // TODO NGSD-489 fix behavior resolution
                         field.behavior = updatedField.behavior[this._task.transitionId];
                     } else {
-                        // ignore the behavior update, since it does not affect this task
-                        return; // continue - the field does not need updating, since nothing changed
+                        const transitionId = this.getReferencedTransitionId(field.stringId);
+                        if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
+                            field.behavior = updatedField.behavior[transitionId];
+                        break;
                     }
                     break;
                 case 'choices':
@@ -293,6 +300,26 @@ export abstract class TaskContentService implements OnDestroy {
         });
     }
 
+    private updateReferencedField(chFields: ChangedFields, field: DataField<any>, frontendActions: Change): void {
+        if (this._fieldConverterService.resolveType(field) === FieldTypeResource.TASK_REF) {
+            this._taskDataReloadRequest$.next(frontendActions ? frontendActions : undefined);
+            return;
+        }
+        const updatedField = chFields[field.stringId];
+        Object.keys(updatedField).forEach(key => {
+            switch (key) {
+                case 'behavior':
+                    const transitionId = this.getReferencedTransitionId(field.stringId);
+                    if (!!transitionId && transitionId !== '' && updatedField.behavior[transitionId])
+                        field.behavior = updatedField.behavior[transitionId];
+                    break;
+                default:
+                    field[key] = updatedField[key];
+            }
+            field.update();
+        });
+    }
+
     /**
      * Performs the specific frontend action.
      *
@@ -306,5 +333,28 @@ export abstract class TaskContentService implements OnDestroy {
         if (frontendAction && frontendAction.type === TaskContentService.VALIDATE_FRONTEND_ACTION) {
             timer().subscribe(() => this.validateTaskData());
         }
+    }
+
+    private isFieldInTaskRef(changedField: string): boolean {
+        return !!this.taskFieldsIndex &&
+            Object.keys(this.taskFieldsIndex)
+            .some(taskId => taskId !== this.task.stringId && this.taskFieldsIndex[taskId].fields[changedField]);
+    }
+
+    private getReferencedTransitionId(changedField: string): string {
+        if (!!this.taskFieldsIndex) {
+           const taskFieldsIndexId = Object.keys(this.taskFieldsIndex).find(taskId =>
+                Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField));
+           return this.taskFieldsIndex[taskFieldsIndexId].transitionId;
+        }
+        return undefined;
+    }
+
+    private getReferencedTaskId(changedField: string): string {
+        if (!!this.taskFieldsIndex) {
+            return  Object.keys(this.taskFieldsIndex).find(taskId =>
+                Object.keys(this.taskFieldsIndex[taskId].fields).includes(changedField));
+        }
+        return undefined;
     }
 }

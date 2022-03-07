@@ -10,6 +10,7 @@ import {SingleTaskContentService} from './single-task-content.service';
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {createMockDataGroup} from '../../utility/tests/utility/create-mock-datagroup';
 import {createMockField} from '../../utility/tests/utility/create-mock-field';
+import {TaskFields} from '../model/task-fields';
 
 describe('TaskPanelContentService', () => {
     const FIELD_ID = 'field1';
@@ -50,8 +51,8 @@ describe('TaskPanelContentService', () => {
         };
 
         // normally task fields index is created during processing of getData response
-        service.taskFieldsIndex[mockTask.stringId] = {};
-        service.taskFieldsIndex[mockTask.stringId][FIELD_ID] = mockTask.dataGroups[0].fields[0];
+        service.taskFieldsIndex[mockTask.stringId] = {transitionId: mockTask.transitionId, fields: {}} as TaskFields;
+        service.taskFieldsIndex[mockTask.stringId].fields[FIELD_ID] = mockTask.dataGroups[0].fields[0];
         service.task = mockTask;
 
         service.updateFromChangedFields({

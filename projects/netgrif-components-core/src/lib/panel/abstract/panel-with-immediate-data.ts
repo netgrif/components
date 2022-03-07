@@ -28,6 +28,11 @@ export abstract class PanelWithImmediateData extends PanelWithHeaderBinding impl
                     return {value: immediate.value.defaultValue, icon: undefined, type: immediate.type};
                 case 'multichoice':
                     return {value: immediate.value.map(it => it.defaultValue).join(', '), icon: undefined, type: immediate.type};
+                case 'enumeration_map':
+                    return {value: immediate.options[immediate.value].defaultValue, icon: undefined, type: immediate.type};
+                case 'multichoice_map':
+                    return {value: immediate.value.map(it =>
+                            immediate.options[it].defaultValue).join(', '), icon: undefined, type: immediate.type};
                 case 'file':
                     return {value: immediate.value?.name, icon: 'insert_drive_file', type: immediate.type};
                 case 'fileList':

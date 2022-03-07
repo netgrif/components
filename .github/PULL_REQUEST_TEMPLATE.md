@@ -63,7 +63,16 @@ You can now safely **delete all between two horizontal lines**, so the instructi
 
 ### Test Configuration
 
-<Please describe configuration for tests to run if applicable, like program parameters, host OS, VM configuration etc.>
+<Please describe configuration for tests to run if applicable, like program parameters, host OS, VM configuration etc. You can use >
+
+| Name                | Tested on |
+|---------------------| --------- |
+| OS                  |           |
+| Runtime             |           |
+| Dependency Manager  |           |
+| Framework version   |           |
+| Run parameters      |           |
+| Other configuration |           |
 
 # Checklist:
 
