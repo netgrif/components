@@ -14,10 +14,10 @@ jobs:
                     npm i
                     npm run ncc:build
                     npm run ncc:full-test
-                    npm i dist/netgrif-components-core --save-optional
+                    npm i ./dist/netgrif-components-core --save-optional
                     npm run nc:build
                     npm run nc:full-test
-                    npm i dist/netgrif-components --save-optional
+                    npm i ./dist/netgrif-components --save-optional
                     npm run example:build
 
     publish-npm:
@@ -33,11 +33,12 @@ jobs:
             -   name: Publish components-core
                 run: |
                     npm run ncc:build
+                    npm i ./dist/netgrif-components-core --save-optional
                     cd dist/netgrif-components-core
                     npm publish --access public
                 env:
                     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-            -   name: Publish components-core
+            -   name: Publish components
                 run: |
                     npm run nc:build
                     cd dist/netgrif-components
@@ -62,11 +63,12 @@ jobs:
             -   name: Publish components-core
                 run: |
                     npm run ncc:build
+                    npm i ./dist/netgrif-components-core --save-optional
                     cd dist/netgrif-components-core
                     npm publish --access public
                 env:
                     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-            -   name: Publish components-core
+            -   name: Publish components
                 run: |
                     npm run nc:build
                     cd dist/netgrif-components

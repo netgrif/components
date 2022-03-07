@@ -72,13 +72,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AlertDialogModule.html" data-type="entity-link" >AlertDialogModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AlertDialogModule-8b8173e30c5d6057397b7cd17c3f9bc6"' : 'data-target="#xs-components-links-module-AlertDialogModule-8b8173e30c5d6057397b7cd17c3f9bc6"' }>
+                                            'data-target="#components-links-module-AlertDialogModule-7c1628cdb2576b577454206c739e039b"' : 'data-target="#xs-components-links-module-AlertDialogModule-7c1628cdb2576b577454206c739e039b"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AlertDialogModule-8b8173e30c5d6057397b7cd17c3f9bc6"' :
-                                            'id="xs-components-links-module-AlertDialogModule-8b8173e30c5d6057397b7cd17c3f9bc6"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AlertDialogModule-7c1628cdb2576b577454206c739e039b"' :
+                                            'id="xs-components-links-module-AlertDialogModule-7c1628cdb2576b577454206c739e039b"' }>
                                             <li class="link">
                                                 <a href="components/AlertDialogComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >AlertDialogComponent</a>
                                             </li>
@@ -92,13 +92,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/ConfirmDialogModule.html" data-type="entity-link" >ConfirmDialogModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-ConfirmDialogModule-4f7a093c93cebcfb506c6a0a533f095f"' : 'data-target="#xs-components-links-module-ConfirmDialogModule-4f7a093c93cebcfb506c6a0a533f095f"' }>
+                                            'data-target="#components-links-module-ConfirmDialogModule-f459a7545aa2d96cda70ce6fdae58142"' : 'data-target="#xs-components-links-module-ConfirmDialogModule-f459a7545aa2d96cda70ce6fdae58142"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-ConfirmDialogModule-4f7a093c93cebcfb506c6a0a533f095f"' :
-                                            'id="xs-components-links-module-ConfirmDialogModule-4f7a093c93cebcfb506c6a0a533f095f"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-ConfirmDialogModule-f459a7545aa2d96cda70ce6fdae58142"' :
+                                            'id="xs-components-links-module-ConfirmDialogModule-f459a7545aa2d96cda70ce6fdae58142"' }>
                                             <li class="link">
                                                 <a href="components/ConfirmDialogComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >ConfirmDialogComponent</a>
                                             </li>
@@ -127,13 +127,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/PromptDialogModule.html" data-type="entity-link" >PromptDialogModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-PromptDialogModule-bfa0df35a6440295420786a7f575fddb"' : 'data-target="#xs-components-links-module-PromptDialogModule-bfa0df35a6440295420786a7f575fddb"' }>
+                                            'data-target="#components-links-module-PromptDialogModule-b5dff2a152051e778f0100f0f476d302"' : 'data-target="#xs-components-links-module-PromptDialogModule-b5dff2a152051e778f0100f0f476d302"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-PromptDialogModule-bfa0df35a6440295420786a7f575fddb"' :
-                                            'id="xs-components-links-module-PromptDialogModule-bfa0df35a6440295420786a7f575fddb"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-PromptDialogModule-b5dff2a152051e778f0100f0f476d302"' :
+                                            'id="xs-components-links-module-PromptDialogModule-b5dff2a152051e778f0100f0f476d302"' }>
                                             <li class="link">
                                                 <a href="components/PromptDialogComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >PromptDialogComponent</a>
                                             </li>
@@ -147,13 +147,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/SnackBarModule.html" data-type="entity-link" >SnackBarModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-SnackBarModule-e1e998595496f88f1f0038f7179fbc7f"' : 'data-target="#xs-components-links-module-SnackBarModule-e1e998595496f88f1f0038f7179fbc7f"' }>
+                                            'data-target="#components-links-module-SnackBarModule-ddb4cdef7567f2c4cbabb27716c5c6d0"' : 'data-target="#xs-components-links-module-SnackBarModule-ddb4cdef7567f2c4cbabb27716c5c6d0"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SnackBarModule-e1e998595496f88f1f0038f7179fbc7f"' :
-                                            'id="xs-components-links-module-SnackBarModule-e1e998595496f88f1f0038f7179fbc7f"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-SnackBarModule-ddb4cdef7567f2c4cbabb27716c5c6d0"' :
+                                            'id="xs-components-links-module-SnackBarModule-ddb4cdef7567f2c4cbabb27716c5c6d0"' }>
                                             <li class="link">
                                                 <a href="components/ErrorSnackBarComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >ErrorSnackBarComponent</a>
                                             </li>
@@ -176,13 +176,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/TranslateLibModule.html" data-type="entity-link" >TranslateLibModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-TranslateLibModule-aa53d4ab3eb7831370fe2a3c3260af02"' : 'data-target="#xs-injectables-links-module-TranslateLibModule-aa53d4ab3eb7831370fe2a3c3260af02"' }>
+                                        'data-target="#injectables-links-module-TranslateLibModule-d0af318455dcd43cb1dbe190a596d247"' : 'data-target="#xs-injectables-links-module-TranslateLibModule-d0af318455dcd43cb1dbe190a596d247"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-TranslateLibModule-aa53d4ab3eb7831370fe2a3c3260af02"' :
-                                        'id="xs-injectables-links-module-TranslateLibModule-aa53d4ab3eb7831370fe2a3c3260af02"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-TranslateLibModule-d0af318455dcd43cb1dbe190a596d247"' :
+                                        'id="xs-injectables-links-module-TranslateLibModule-d0af318455dcd43cb1dbe190a596d247"' }>
                                         <li class="link">
                                             <a href="injectables/LanguageService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >LanguageService</a>
                                         </li>
@@ -1045,9 +1045,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/HeaderSearchService.html" data-type="entity-link" >HeaderSearchService</a>
-                                </li>
-                                <li class="link">
-                                    <a href="injectables/LanguageService.html" data-type="entity-link" >LanguageService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/LoggerService.html" data-type="entity-link" >LoggerService</a>

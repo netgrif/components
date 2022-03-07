@@ -117,10 +117,12 @@ describe('ProcessService', () => {
         });
     });
 
-    it('should call more net references', () => {
+    it('should call more net references', (done) => {
         const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
-        service.getNetReferences(['correct', 'emptySecondaries']).subscribe();
-        expect(getOneSpy).toHaveBeenCalledTimes(2);
+        service.getNetReferences(['correct', 'emptySecondaries']).subscribe(() => {
+            expect(getOneSpy).toHaveBeenCalledTimes(2);
+            done();
+        });
     });
 
     it('getNetReferences should emit with empty argument', (done) => {

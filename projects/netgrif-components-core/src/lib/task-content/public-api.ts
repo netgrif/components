@@ -16,6 +16,7 @@ export * from './model/async-rendering-configuration';
 export * from './model/async-rendering-configuration-injection-token';
 export * from './model/subgrid';
 export * from './model/split-data-group';
+export * from './model/task-fields';
 
 /* MODULES */
 export * from './task-content/abstract-task-content.component';

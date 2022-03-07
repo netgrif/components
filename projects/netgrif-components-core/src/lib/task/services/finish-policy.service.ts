@@ -45,7 +45,6 @@ export class FinishPolicyService extends TaskHandlingService {
     protected autoNoDataFinishPolicy(afterAction: AfterAction): void {
         if (this._safeTask.dataSize <= 0) {
             this._finishTaskService.validateDataAndFinish(afterAction);
-            this._taskOperations.close();
         } else {
             this._taskOperations.open();
             this._dataFocusPolicyService.performDataFocusPolicy();

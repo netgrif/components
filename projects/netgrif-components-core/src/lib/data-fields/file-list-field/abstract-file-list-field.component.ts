@@ -290,7 +290,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      * Construct display name.
      */
     public constructDisplayName(): string {
-        return this.dataField?.placeholder ?? this._translate.instant('dataField.file.noFile');
+        if (!!this.dataField && !!this.dataField.placeholder) {
+            return this.dataField.placeholder;
+        }
+        return this._translate.instant('dataField.file.noFile');
     }
 
     protected parseResponse(): void {

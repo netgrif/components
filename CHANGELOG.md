@@ -8,6 +8,28 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
+## [6.0.2](https://github.com/netgrif/components/releases/tag/v6.0.2) (2022-03-04)
+
+### Fixed
+
+- [NAE-1574] Net role permission checking
+- [NAE-1455] Navigation menu closes on small screens and cannot be reopened
+- [NAE-1557] Cannot clear optional enumeration
+- [NAE-1459] Loading indicator on login and registration related components
+- [NAE-1472] MaterialAppearance property on AbstractDataField
+- [NAE-1524] Header search by author is not working
+- [NAE-1529] Finish auto does not work
+- [NAE-1577] Task reffed change behavior does not propagate
+- [NAE-1575] User select component trying open non-existing side menu component
+- [NAE-1580] Grammar check
+- [NAE-1583] Broken FileField/FileListField placeholder
+- [NAE-1586] Virtual scroll is broken everywhere on page
+- [NAE-1389] Immediate map data fields display their keys
+
+## [6.0.1](https://github.com/netgrif/components/releases/tag/v6.0.0) (2022-02-15)
+
+- Fixing mistake with npm registry
+
 ## [6.0.0](https://github.com/netgrif/components/releases/tag/v6.0.0) (2022-02-11)
 
 ### Changed
@@ -22,7 +44,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1541] Navigation and refresh bug correction
 - [NAE-1563] Filters don't work with parent views
 
-## [5.8.0](https://github.com/netgrif/components/releases/tag/v5.8.0) (2021-11-26)
+## [5.8.0](https://github.com/netgrif/components/releases/tag/5.8.0) (2021-11-26)
 
 ### Changed
 
@@ -32,19 +54,19 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 - [NAE-1296] Event Outcome refactor
 
-## [5.7.4](https://github.com/netgrif/components/releases/tag/v5.7.4) (2021-12-21)
+## [5.7.4](https://github.com/netgrif/components/releases/tag/5.7.4) (2021-12-21)
 
 ### Fixed
 
 - [NAE-1534] CaseStringId search category is not exported
 
-## [5.7.3](https://github.com/netgrif/components/releases/tag/v5.7.3) (2021-11-23)
+## [5.7.3](https://github.com/netgrif/components/releases/tag/5.7.3) (2021-11-23)
 
 ### Added
 
 - [NAE-1493] i18n divider data field
 
-## [5.7.2](https://github.com/netgrif/components/releases/tag/v5.7.2) (2021-11-23)
+## [5.7.2](https://github.com/netgrif/components/releases/tag/5.7.2) (2021-11-23)
 
 ### Fixed
 
@@ -54,7 +76,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 - [NAE-1519] Independent column count in data groups
 
-## [5.7.1](https://github.com/netgrif/components/releases/tag/v5.7.1) (2021-11-08)
+## [5.7.1](https://github.com/netgrif/components/releases/tag/5.7.1) (2021-11-08)
 
 ### Fixed
 
@@ -67,7 +89,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1421] File preview border
 - [NAE-1042] Hide create new case button if there are no allowed nets
 
-## [5.7.0](https://github.com/netgrif/components/releases/tag/v5.7.0) (2021-10-29)
+## [5.7.0](https://github.com/netgrif/components/releases/tag/5.7.0) (2021-10-29)
 
 ### Fixed
 
@@ -88,7 +110,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1402] Configurable group navigation with role constraints
 - [NAE-1397] Fix task rows
 
-## [5.6.3](https://github.com/netgrif/components/releases/tag/v5.6.3) (2021-09-27)
+## [5.6.3](https://github.com/netgrif/components/releases/tag/5.6.3) (2021-09-27)
 
 ### Fixed
 
@@ -100,11 +122,11 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 - [NAE-1454] Dynamic filter chaining
 
-## [5.6.2](https://github.com/netgrif/components/releases/tag/v5.6.2) (2021-08-03)
+## [5.6.2](https://github.com/netgrif/components/releases/tag/5.6.2) (2021-08-03)
 
-## [5.6.1](https://github.com/netgrif/components/releases/tag/v5.6.1) (2021-08-30)
+## [5.6.1](https://github.com/netgrif/components/releases/tag/5.6.1) (2021-08-30)
 
-## [5.6.0](https://github.com/netgrif/components/releases/tag/v5.6.0) (2021-08-26)
+## [5.6.0](https://github.com/netgrif/components/releases/tag/5.6.0) (2021-08-26)
 
 ### Fixed
 
@@ -131,25 +153,25 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 - [NAE-420] Redirect to any view
 
-## [5.5.4](https://github.com/netgrif/components/releases/tag/v5.5.4) (2021-12-20)
+## [5.5.4](https://github.com/netgrif/components/releases/tag/5.5.4) (2021-12-20)
 
 ### Fixed
 
 - [NAE-1536] Simple search does not work with values containing dash symbol
 
-## [5.5.2](https://github.com/netgrif/components/releases/tag/v5.5.2) (2021-07-19)
+## [5.5.2](https://github.com/netgrif/components/releases/tag/5.5.2) (2021-07-19)
 
 ### Fixed
 
 - [NAE-1395] AfterActions are not completed if some event queue conditions are not met
 
-## [5.5.1](https://github.com/netgrif/components/releases/tag/v5.5.1) (2021-07-09)
+## [5.5.1](https://github.com/netgrif/components/releases/tag/5.5.1) (2021-07-09)
 
 ### Fixed
 
 - [NAE-1386] setData events are ignored when fired too closely together
 
-## [5.5.0](https://github.com/netgrif/components/releases/tag/v5.5.0) (2021-06-11)
+## [5.5.0](https://github.com/netgrif/components/releases/tag/5.5.0) (2021-06-11)
 
 ### Fixed
 
@@ -168,13 +190,13 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 - [NAE-1305] Loading on set data for button data field
 
-## [5.4.1](https://github.com/netgrif/components/releases/tag/v5.4.1) (2021-05-31)
+## [5.4.1](https://github.com/netgrif/components/releases/tag/5.4.1) (2021-05-31)
 
 ### Changed
 
 - [NAE-1309] Expose close tab event to NAE tabs
 
-## [5.4.0](https://github.com/netgrif/components/releases/tag/v5.4.0) (2021-05-27)
+## [5.4.0](https://github.com/netgrif/components/releases/tag/5.4.0) (2021-05-27)
 
 ### Fixed
 
@@ -186,13 +208,13 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1207] Filter management
 - [NAE-412] Process and Case loading refactor
 
-## [5.3.1](https://github.com/netgrif/components/releases/tag/v5.3.1) (2021-05-20)
+## [5.3.1](https://github.com/netgrif/components/releases/tag/5.3.1) (2021-05-20)
 
 ### Fixed
 
 - [NAE-1307] Cancel of a task is available even for unassigned task
 
-## [5.3.0](https://github.com/netgrif/components/releases/tag/v5.3.0) (2021-05-05)
+## [5.3.0](https://github.com/netgrif/components/releases/tag/5.3.0) (2021-05-05)
 
 ### Changed
 
@@ -202,7 +224,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 - [NAE-1251] Dynamic validations
 
-## [5.2.0](https://github.com/netgrif/components/releases/tag/v5.2.0) (2021-05-03)
+## [5.2.0](https://github.com/netgrif/components/releases/tag/5.2.0) (2021-05-03)
 
 ### Fixed
 
@@ -218,13 +240,13 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1268] Displaying case ID in column
 - [NAE-1238] Case event view
 
-## [5.1.2](https://github.com/netgrif/components/releases/tag/v5.1.2) (2021-04-16)
+## [5.1.2](https://github.com/netgrif/components/releases/tag/5.1.2) (2021-04-16)
 
 ### Fixed
 
 - [NAE-1287] Broken case creation when only one process is uploaded
 
-## [5.1.1](https://github.com/netgrif/components/releases/tag/v5.1.1) (2021-04-12)
+## [5.1.1](https://github.com/netgrif/components/releases/tag/5.1.1) (2021-04-12)
 
 ### Fixed
 
@@ -263,30 +285,30 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 - [NAE-1226] Frontend starter app features
 
-## [5.0.7](https://github.com/netgrif/components/releases/tag/v5.0.7) (2021-03-01)
+## [5.0.7](https://github.com/netgrif/components/releases/tag/5.0.7) (2021-03-01)
 
-## [5.0.6](https://github.com/netgrif/components/releases/tag/v5.0.6) (2021-02-24)
+## [5.0.6](https://github.com/netgrif/components/releases/tag/5.0.6) (2021-02-24)
 
-## [5.0.5](https://github.com/netgrif/components/releases/tag/v5.0.5) (2021-02-19)
+## [5.0.5](https://github.com/netgrif/components/releases/tag/5.0.5) (2021-02-19)
 
 ### Changed
 
 - [NAE-1244] Add button to immediate on panel
 
-## [5.0.4](https://github.com/netgrif/components/releases/tag/v5.0.4) (2021-02-19)
+## [5.0.4](https://github.com/netgrif/components/releases/tag/5.0.4) (2021-02-19)
 
 ### Fixed
 
 - [NAE-1243] Clearing fulltext input doesn't clear fulltext search
 
-## [5.0.3](https://github.com/netgrif/components/releases/tag/v5.0.3) (2021-02-09)
+## [5.0.3](https://github.com/netgrif/components/releases/tag/5.0.3) (2021-02-09)
 
 ### Fixed
 
 - [NAE-1221] TreeNode.toLoggableForm returns object with cyclic references
 - [NAE-1222] TaskDataService destroy event is failing
 
-## [5.0.2](https://github.com/netgrif/components/releases/tag/v5.0.2) (2021-02-07)
+## [5.0.2](https://github.com/netgrif/components/releases/tag/5.0.2) (2021-02-07)
 
 ### Fixed
 
@@ -294,7 +316,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1229] On wrong credentials undefined user is propagated
 - [NAE-1231] Enter key on login form does not trigger login action
 
-## [5.0.1](https://github.com/netgrif/components/releases/tag/v5.0.1) (2021-02-04)
+## [5.0.1](https://github.com/netgrif/components/releases/tag/5.0.1) (2021-02-04)
 
 ### Fixed
 
@@ -303,7 +325,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1219] NavigationTreeComponent path of undefined error
 - [NAE-1223] Fix tests and lint warnings
 
-## [5.0.0](https://github.com/netgrif/components/releases/tag/v5.0.0) (2021-02-28)
+## [5.0.0](https://github.com/netgrif/components/releases/tag/5.0.0) (2021-02-28)
 
 ### Fixed
 
@@ -332,7 +354,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1119] Constructor and destructor as process meta-data
 - [NAE-1164] GroupGuard
 
-## [4.6.0](https://github.com/netgrif/components/releases/tag/v4.6.0) (2021-01-20)
+## [4.6.0](https://github.com/netgrif/components/releases/tag/4.6.0) (2021-01-20)
 
 ### Fixed
 
@@ -342,7 +364,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 - [NAE-1109] Task ref set data propagation
 
-## [4.5.0](https://github.com/netgrif/components/releases/tag/v4.5.0) (2020-12-22)
+## [4.5.0](https://github.com/netgrif/components/releases/tag/4.5.0) (2020-12-22)
 
 ### Fixed
 
@@ -357,7 +379,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1168] Task ref representation
 - [NAE-1172] Frontend control from process actions
 
-## [4.4.0](https://github.com/netgrif/components/releases/tag/v4.4.0) (2020-12-14)
+## [4.4.0](https://github.com/netgrif/components/releases/tag/4.4.0) (2020-12-14)
 
 ### Fixed
 
@@ -391,14 +413,14 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1112] Sort search autocomplete
 - [NAE-1093] Stepper component for enumeration field
 
-## [4.3.1](https://github.com/netgrif/components/releases/tag/v4.3.1) (2020-11-13)
+## [4.3.1](https://github.com/netgrif/components/releases/tag/4.3.1) (2020-11-13)
 
 ### Fixed
 
 - [NAE-1064] Required
 - [NAE-1105] Current CaseTree node reload fails if node has no children case ref
 
-## [4.3.0](https://github.com/netgrif/components/releases/tag/v4.3.0) (2020-11-11)
+## [4.3.0](https://github.com/netgrif/components/releases/tag/4.3.0) (2020-11-11)
 
 ### Fixed
 
@@ -432,7 +454,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1048] Process delete
 - [NAE-1075] Recover account component
 
-## [4.2.1](https://github.com/netgrif/components/releases/tag/v4.2.1) (2020-09-23)
+## [4.2.1](https://github.com/netgrif/components/releases/tag/4.2.1) (2020-09-23)
 
 ### Fixed
 
@@ -458,7 +480,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 None
 
-## [4.2.0](https://github.com/netgrif/components/releases/tag/v4.2.0) (2020-09-21)
+## [4.2.0](https://github.com/netgrif/components/releases/tag/4.2.0) (2020-09-21)
 
 ### Fixed
 
@@ -498,14 +520,13 @@ None
 - [NAE-965] Grid layout container
 - [NAE-980] Create HTML textarea field
 
-## [4.1.2](https://github.com/netgrif/components/releases/tag/v4.1.2) (2020-09-10)
+## [4.1.2](https://github.com/netgrif/components/releases/tag/4.1.2) (2020-09-10)
 
 ### Fixed
 
 - [NAE-984] Destroy subscription on changedFields
 
-
-## [4.1.1](https://github.com/netgrif/components/releases/tag/v4.1.1) (2020-08-20)
+## [4.1.1](https://github.com/netgrif/components/releases/tag/4.1.1) (2020-08-20)
 
 ### Fixed
 
@@ -523,7 +544,7 @@ None
 
 None
 
-## [4.1.0](https://github.com/netgrif/components/releases/tag/v4.1.0) (2020-08-17)
+## [4.1.0](https://github.com/netgrif/components/releases/tag/4.1.0) (2020-08-17)
 
 ### Fixed
 
@@ -571,7 +592,7 @@ None
 - [NAE-517] Background Screen
 - [NAE-876] Tree Case View
 
-## [4.0.1](https://github.com/netgrif/components/releases/tag/v4.0.1) (2020-08-10)
+## [4.0.1](https://github.com/netgrif/components/releases/tag/4.0.1) (2020-08-10)
 
 ### Fixed
 
@@ -587,7 +608,7 @@ None
 - [NAE-869] AuthGuard token expiration
 - [NAE-860] Tab View Schematic doesn't generate 'canBeClosed' attribute
 
-## [4.0.0](https://github.com/netgrif/components/releases/tag/v4.0.0) (2020-07-24)
+## [4.0.0](https://github.com/netgrif/components/releases/tag/4.0.0) (2020-07-24)
 
 ### Fixed
 

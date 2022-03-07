@@ -113,6 +113,11 @@ export abstract class DataField<T> {
     protected _localLayout: Layout;
 
     /**
+     * Listens for layout changes
+     */
+    protected layoutSubject: BehaviorSubject<Layout>;
+
+    /**
      * @param _stringId - ID of the data field from backend
      * @param _title - displayed title of the data field from backend
      * @param initialValue - initial value of the data field
@@ -139,6 +144,7 @@ export abstract class DataField<T> {
         this._block = new Subject<boolean>();
         this._touch = new Subject<boolean>();
         this._validRequired = true;
+        this.layoutSubject = new BehaviorSubject<Layout>(_layout);
         this.resetLocalLayout();
     }
 
@@ -215,6 +221,7 @@ export abstract class DataField<T> {
 
     set layout(layout: Layout) {
         this._layout = layout;
+        this.layoutSubject.next(layout);
     }
 
     get layout(): Layout {
@@ -323,6 +330,7 @@ export abstract class DataField<T> {
         this._touch.complete();
         this._block.complete();
         this._initialized$.complete();
+        this.layoutSubject.complete();
     }
 
     public registerFormControl(formControl: FormControl): void {
@@ -502,6 +510,13 @@ export abstract class DataField<T> {
             }
         }
         this.materialAppearance = appearance;
+
+        /* Listen for changes of layout in future */
+        this.layoutSubject.subscribe(layout => {
+            if (this.layout && this.layout.appearance) {
+                this.materialAppearance = this.layout.appearance;
+            }
+        });
     }
 
     public resolvePrevValue(value: T): void {
