@@ -1086,8 +1086,8 @@ maxFilesMessage - error message if number of files is exceeded</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="296"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-list-field/abstract-file-list-field.component.ts:296</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="299"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/file-list-field/abstract-file-list-field.component.ts:299</a></div>
                 </td>
             </tr>
 
@@ -1532,7 +1532,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
      * Construct display name.
      */
     public constructDisplayName(): string {
-        return this.dataField?.placeholder ?? this._translate.instant(&#x27;dataField.file.noFile&#x27;);
+        if (!!this.dataField &amp;&amp; !!this.dataField.placeholder) {
+            return this.dataField.placeholder;
+        }
+        return this._translate.instant(&#x27;dataField.file.noFile&#x27;);
     }
 
     protected parseResponse(): void {
