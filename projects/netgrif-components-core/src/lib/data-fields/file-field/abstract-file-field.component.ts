@@ -14,7 +14,7 @@ import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
-import {FileFieldIdBody} from "../models/file-field-id-body";
+import {FileFieldIdBody} from '../models/file-field-id-body';
 
 export interface FileState {
     progress: number;

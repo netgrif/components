@@ -13,7 +13,7 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 import {Subscription} from 'rxjs';
-import {FileFieldIdBody} from "../models/file-field-id-body";
+import {FileFieldIdBody} from '../models/file-field-id-body';
 
 export interface FilesState {
     progress: number;
