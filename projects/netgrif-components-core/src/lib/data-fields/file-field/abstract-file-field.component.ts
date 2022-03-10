@@ -14,6 +14,7 @@ import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {EventService} from '../../event/services/event.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
+import {FileFieldIdBody} from "../models/file-field-id-body";
 
 export interface FileState {
     progress: number;
@@ -197,7 +198,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         this.state.uploading = true;
         const fileFormData = new FormData();
         const fileToUpload = this.fileUploadEl.nativeElement.files.item(0) as File;
-        const data = {};
+        const data: FileFieldIdBody = {};
         data[this.resolveParentTaskId()] = this.dataField.stringId;
         fileFormData.append('file', fileToUpload);
         fileFormData.append('data', new Blob([JSON.stringify(data)], {type: 'application/json'}));
