@@ -158,7 +158,10 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
         filesToUpload.forEach(fileToUpload => {
             fileFormData.append('files', fileToUpload);
         });
-        this._taskResourceService.uploadFile(this.resolveParentTaskId(),
+        const data = {};
+        data[this.resolveParentTaskId()] = this.dataField.stringId;
+        fileFormData.append('data', new Blob([JSON.stringify(data)], {type: 'application/json'}));
+        this._taskResourceService.uploadFile(this.taskId,
             this.dataField.stringId, fileFormData, true)
             .subscribe((response: EventOutcomeMessageResource) => {
                 if ((response as ProviderProgress).type && (response as ProviderProgress).type === ProgressType.UPLOAD) {
@@ -253,7 +256,7 @@ export abstract class AbstractFileListFieldComponent extends AbstractDataFieldCo
             return;
         }
 
-        this._taskResourceService.deleteFile(this.resolveParentTaskId(),
+        this._taskResourceService.deleteFile(this.taskId,
             this.dataField.stringId, fileName).pipe(take(1)).subscribe(response => {
             if (response.success) {
                 this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile !== fileName);
