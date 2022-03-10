@@ -352,7 +352,7 @@
                     <td class="col-md-4">
                         <i>Default value : </i><code>{
         mode: &#x27;over&#x27;,
-        opened: false,
+        opened: true,
         disableClose: false
     }</code>
                     </td>
@@ -1416,7 +1416,7 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
 
     protected _config &#x3D; {
         mode: &#x27;over&#x27;,
-        opened: false,
+        opened: true,
         disableClose: false
     };
 
@@ -1478,15 +1478,15 @@ export abstract class AbstractNavigationDrawerComponent implements OnInit, After
     }
 
     open(): Promise&lt;MatDrawerToggleResult&gt; {
-        if (this._fixed) {
-            return Promise.resolve(&#x27;open&#x27;);
+        if (!this._sideNav.opened) {
+            this._sideNav.open();
         }
-        return this._sideNav.open();
+        return Promise.resolve(&#x27;open&#x27;);
     }
 
     close(): Promise&lt;MatDrawerToggleResult&gt; {
         if (this._fixed) {
-            return Promise.resolve(&#x27;open&#x27;);
+            return Promise.resolve(&#x27;close&#x27;);
         }
         return this._sideNav.close();
     }

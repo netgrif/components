@@ -12,21 +12,24 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 
 ### Fixed
 
-- [NAE-1574] Net role permission checking
+- [NAE-1389] Immediate map data fields display their keys
 - [NAE-1455] Navigation menu closes on small screens and cannot be reopened
-- [NAE-1557] Cannot clear optional enumeration
-- [NAE-1459] Loading indicator on login and registration related components
 - [NAE-1472] MaterialAppearance property on AbstractDataField
 - [NAE-1524] Header search by author is not working
 - [NAE-1529] Finish auto does not work
-- [NAE-1577] Task reffed change behavior does not propagate
+- [NAE-1557] Cannot clear optional enumeration
+- [NAE-1574] Net role permission checking
 - [NAE-1575] User select component trying open non-existing side menu component
+- [NAE-1577] Task reffed change behavior does not propagate
 - [NAE-1580] Grammar check
 - [NAE-1583] Broken FileField/FileListField placeholder
 - [NAE-1586] Virtual scroll is broken everywhere on page
-- [NAE-1389] Immediate map data fields display their keys
 
-## [6.0.1](https://github.com/netgrif/components/releases/tag/v6.0.0) (2022-02-15)
+### Changed
+
+- [NAE-1459] Loading indicator on login and registration related components
+
+## [6.0.1](https://github.com/netgrif/components/releases/tag/v6.0.1) (2022-02-15)
 
 - Fixing mistake with npm registry
 

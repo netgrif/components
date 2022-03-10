@@ -37,7 +37,7 @@ jobs:
                     default_author: github_actions
                     committer_name: Netgrif DevOps
                     committer_email: devops@netgrif.com
-                    message: 'Update documentation'
+                    message: 'CI - Update documentation'
 
 
 
