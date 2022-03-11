@@ -8,6 +8,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
             -   uses: actions/setup-node@v2
                 name: Full Test
                 with:
@@ -23,5 +25,10 @@ jobs:
                     npm run nc:build
                     npm run nc:full-test
                     npm i ./dist/netgrif-components --save-optional
+            -   name: SonarCloud scan
+                uses: SonarSource/sonarcloud-github-action@master
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             -   name: Build examples
                 run: npm run example:build
