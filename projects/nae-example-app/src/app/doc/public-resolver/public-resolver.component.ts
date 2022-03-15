@@ -29,7 +29,7 @@ export class PublicResolverComponent implements OnInit, OnDestroy {
                 this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
                     { queryParams: this.redirectService.queryParams });
                 this._publicResolver.url = undefined;
-            } else if (!user || user.id === '') {
+            } else {
                 if (!this._sessionService.verified && !this._sessionService.isVerifying &&
                     this._sessionService.isInitialized && !this._auth.isAuthenticated) {
                     this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
