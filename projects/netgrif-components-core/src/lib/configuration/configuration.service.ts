@@ -51,13 +51,14 @@ export abstract class ConfigurationService {
         }
         let map: Map<string, View> = new Map();
         map = this.getChildren(views, map, '');
+        let view = undefined;
         if (map.get(url) === undefined) {
             map.forEach((value, key) => {
                 if (key.includes('/**') && url.includes(key.split('/**')[0]))
-                    return value;
+                    view = value;
             });
         }
-        return map.get(url);
+        return view ?? map.get(url);
     }
 
     private getChildren(views: Views, map: Map<string, View>, prefix: string): Map<string, View> {
