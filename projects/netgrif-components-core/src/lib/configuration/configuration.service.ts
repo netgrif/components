@@ -51,7 +51,7 @@ export abstract class ConfigurationService {
         let map: Map<string, View> = new Map();
         map = this.getChildren(views, map, '');
         if (map.get(url) === undefined) {
-            for (let [key, value] of map) {
+            for (const [key, value] of map) {
                 if (key.includes('/**') && url.includes(key.split('/**')[0]))
                     return value;
             }
