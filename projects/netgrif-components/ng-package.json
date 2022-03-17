@@ -16,7 +16,7 @@
             "@covalent/core": "@covalent/core"
         }
     },
-    "whitelistedNonPeerDependencies": [
+    "allowedNonPeerDependencies": [
         "@netgrif/components-core"
     ]
 }

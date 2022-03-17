@@ -14,5 +14,5 @@
             "@covalent/core": "@covalent/core"
         }
     },
-    "whitelistedNonPeerDependencies": ["palette-creator", "angular2-hotkeys", "tslib"]
+    "allowedNonPeerDependencies": ["palette-creator", "angular2-hotkeys", "tslib"]
 }
