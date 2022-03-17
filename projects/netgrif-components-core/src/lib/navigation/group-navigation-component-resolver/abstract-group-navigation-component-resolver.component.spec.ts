@@ -23,7 +23,7 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([])
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},

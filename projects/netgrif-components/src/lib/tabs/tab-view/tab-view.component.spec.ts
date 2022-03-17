@@ -33,7 +33,7 @@ describe('TabViewComponent', () => {
                 MaterialModule,
                 TabTestModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([])
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
