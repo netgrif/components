@@ -1,8 +1,8 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {MatSortModule} from '@angular/material/sort';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {Component} from '@angular/core';
 import {AbstractSortModeComponent} from './abstract-sort-mode.component';
@@ -71,6 +71,7 @@ describe('AbstractSortModeComponent', () => {
 
     afterEach(() => {
         TestBed.resetTestingModule();
+        headerSpy.calls.reset();
     });
 });
 

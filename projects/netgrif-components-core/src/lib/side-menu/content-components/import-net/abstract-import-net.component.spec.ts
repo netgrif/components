@@ -1,5 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {Observable, of, Subject} from 'rxjs';
@@ -83,6 +83,8 @@ describe('AbstractImportNetComponent', () => {
     });
 
     afterEach(() => {
+        logSpy.calls.reset();
+        sideMenuCloseSpy.calls.reset();
         TestBed.resetTestingModule();
     });
 });

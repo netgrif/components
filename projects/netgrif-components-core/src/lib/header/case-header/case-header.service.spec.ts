@@ -1,4 +1,4 @@
-import {TestBed} from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 import {CaseHeaderService} from './case-header.service';
 import {HeaderType} from '../models/header-type';
 import {HeaderMode} from '../models/header-mode';
@@ -7,7 +7,7 @@ import {HeaderColumn, HeaderColumnType} from '../models/header-column';
 import {SearchService} from '../../search/search-service/search.service';
 import {TestCaseBaseFilterProvider, TestCaseViewAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {CaseViewService} from '../../view/case-view/service/case-view-service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -98,9 +98,10 @@ describe('CaseHeaderService', () => {
         expect(service.fieldsGroup.length).toEqual(2);
     });
 
-    it('call sort header changed', () => {
+    it('call sort header changed', (done) => {
         service.headerChange$.subscribe(res => {
             expect(res).toEqual({headerType: HeaderType.CASE, changeType: HeaderChangeType.SORT, description: undefined});
+            done();
         });
         service.sortHeaderChanged(0, '', 'asc');
     });
@@ -139,8 +140,8 @@ describe('CaseHeaderService', () => {
                 expect(res.changeType).toEqual(HeaderChangeType.MODE_CHANGED);
                 expect((res.description as ModeChangeDescription).previousMode).toEqual(HeaderMode.EDIT);
                 expect((res.description as ModeChangeDescription).currentMode).toEqual(HeaderMode.SORT);
-                done();
             }
+            done();
         });
         service.revertEditMode();
     });

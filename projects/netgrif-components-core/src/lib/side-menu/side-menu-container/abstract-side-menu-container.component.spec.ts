@@ -1,7 +1,7 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {SideMenuService} from '../services/side-menu.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {MaterialModule} from '../../material/material.module';
@@ -48,9 +48,10 @@ describe('AbstractSideMenuContainerComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should open and close', () => {
+    it('should open and close', (done) => {
         service.open(TestImportComponent).onClose.subscribe(event => {
             expect(event).toBeTruthy();
+            done();
         });
         service.close({opened: false});
     });

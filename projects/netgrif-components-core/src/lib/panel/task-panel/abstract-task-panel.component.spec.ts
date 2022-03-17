@@ -1,11 +1,11 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, inject, TestBed, waitForAsync} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Observable, of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AbstractTaskPanelComponent} from './abstract-task-panel.component';
@@ -53,7 +53,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
-import {UserService} from '../../user/services/user.service';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
@@ -169,7 +168,6 @@ describe('AbtsractTaskPanelComponent', () => {
         expect(component.canDo('delegate')).toBeFalse();
         expect(component.canFinish()).toBeFalse();
     });
-
 
     afterEach(() => {
         TestBed.resetTestingModule();

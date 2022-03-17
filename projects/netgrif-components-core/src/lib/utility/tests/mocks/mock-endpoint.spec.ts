@@ -1,6 +1,7 @@
 import {MockEndpoint} from './mock-endpoint';
 import {HttpParams} from '@angular/common/http';
 import {hasContent} from '../../pagination/page-has-content';
+import {TestBed} from '@angular/core/testing';
 
 describe('MockEndpoint', () => {
 
@@ -64,6 +65,10 @@ describe('MockEndpoint', () => {
             expect(hasContent(result)).toBeFalse();
             done();
         });
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
 

@@ -1,7 +1,7 @@
-import {waitForAsync, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, fakeAsync, TestBed, tick, inject} from '@angular/core/testing';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
 import {AbstractSearchModeComponent} from './abstract-search-mode.component';
@@ -87,6 +87,7 @@ describe('AbstractSearchModeComponent', () => {
 
     afterEach(() => {
         TestBed.resetTestingModule();
+        headerSpy.calls.reset();
     });
 });
 

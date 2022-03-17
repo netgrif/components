@@ -63,6 +63,10 @@ describe('AbstractLoadFilterComponent', () => {
     it('should create an instance', () => {
         expect(component).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

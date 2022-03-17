@@ -5,6 +5,7 @@ import {configureCategory} from '../../../../utility/tests/utility/configure-cat
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
+import {TestBed} from '@angular/core/testing';
 
 describe('CaseVisualId', () => {
     let category: CaseVisualId;
@@ -17,6 +18,7 @@ describe('CaseVisualId', () => {
 
     afterEach(() => {
         category.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {

@@ -1,6 +1,7 @@
 import {MergedFilter} from './merged-filter';
 import {FilterType} from './filter-type';
 import {MergeOperator} from './merge-operator';
+import {TestBed} from '@angular/core/testing';
 
 describe('MergedFilter', () => {
     it('should create an instance', () => {
@@ -18,5 +19,9 @@ describe('MergedFilter', () => {
             .toEqual(new MergedFilter('&', FilterType.TASK, [{}, {}], MergeOperator.AND));
 
         expect(filter.getRequestParams()).toEqual({operation: MergeOperator.AND});
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

@@ -1,6 +1,6 @@
-import {TestBed} from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {AuthenticationModule} from '../../../authentication.module';
 import {NullAuthenticationService} from './null-authentication.service';
 import {TestConfigurationService} from '../../../../utility/tests/test-config';

@@ -1,4 +1,4 @@
-import {ComponentFixture, fakeAsync, TestBed, tick, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
@@ -14,7 +14,7 @@ import {FieldConverterService} from '../services/field-converter.service';
 import {PaperViewService} from '../../navigation/quick-panel/components/paper-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TaskEventService} from '../services/task-event.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {DataGroupAlignment} from '../../resources/interface/data-groups';
 import {DataGroupCompact, DataGroupHideEmptyRows, DataGroupLayoutType} from '../../resources/interface/data-group-layout';
 import {IncrementingCounter} from '../../utility/incrementing-counter';
@@ -711,6 +711,10 @@ describe('AbstractTaskContentComponent', () => {
 
             expect(component.dataSource[6].content.length).toEqual(1);
             expect(component.dataSource[6].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
+        });
+
+        afterEach(() => {
+            TestBed.resetTestingModule();
         });
     });
 
