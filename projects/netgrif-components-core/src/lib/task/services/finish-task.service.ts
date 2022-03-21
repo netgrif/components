@@ -60,7 +60,7 @@ export class FinishTaskService extends TaskHandlingService {
      * otherwise `false` will be emitted
      */
     public validateDataAndFinish(afterAction: AfterAction = new AfterAction()): void {
-        if (this._safeTask.dataSize <= 0) {
+        if (this._safeTask.dataSize <= 0 || !this._safeTask.dataGroups || this._safeTask.dataGroups.length <= 0) {
             this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
                 if (this._safeTask.dataSize <= 0 ||
                     (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData())) {
