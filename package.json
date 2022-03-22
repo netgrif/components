@@ -89,7 +89,7 @@
     "@swimlane/ngx-charts": "~16.0.0",
     "@types/mousetrap": "~1.6.9",
     "angular-resizable-element": "~3.3.0",
-    "angular-resize-event": "~2.0.1",
+    "angular-resize-event": "~3.1.1",
     "angular2-hotkeys": "~2.4.0",
     "json-schema-to-typescript": "~8.1.0",
     "jszip": "~3.2.2",
