@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex]="tabView.selectedIndex"
+<mat-tab-group [selectedIndex]="tabView.selectedIndex.value"
                [class.center-tabs]="align === 'center'"
                [class.end-tabs]="align === 'end'"
                (selectedTabChange)="tabView.tabChange($event)" class="tab-group"

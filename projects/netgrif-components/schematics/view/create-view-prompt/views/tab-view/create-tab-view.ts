@@ -105,7 +105,7 @@ function processTabViewContents(tree: Tree,
                                 hostViewPath: string,
                                 hostClassName: ViewClassInfo,
                                 createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
-                                viewCounterStartValue: number = 0
+                                viewCounterStartValue = 0
 ): TabViews {
 
     const result = newTabViews();
@@ -130,7 +130,7 @@ function processEmbeddedView(embeddedView: EmbeddedView,
                              viewNumber: number,
                              tree: Tree,
                              createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
-                             isDefaultTabbedTaskView: boolean = false
+                             isDefaultTabbedTaskView = false
 ): void {
     let tabTemplate: TabContentTemplate;
     if (embeddedView.component !== undefined) {
@@ -194,7 +194,7 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
                                 newViewPath: string,
                                 tree: Tree,
                                 createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
-                                isDefaultTabbedTaskView: boolean = false
+                                isDefaultTabbedTaskView = false
 ): TabContentTemplate {
     if (!embeddedView.view) {
         throw new SchematicsException('processEmbeddedNewView can\'t be called with EmbeddedView object' +
