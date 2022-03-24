@@ -1,13 +1,26 @@
 import {Component} from '@angular/core';
-import {CaseResourceService, Filter, FilterType,
-    ProcessService, SimpleFilter, TreeCaseViewService, CreateCaseEventOutcome} from '@netgrif/components-core';
+import {
+    CaseResourceService,
+    ChangedFieldsService,
+    CreateCaseEventOutcome,
+    Filter,
+    FilterType,
+    NAE_TREE_CASE_VIEW_CONFIGURATION,
+    ProcessService,
+    SimpleFilter,
+    TreeCaseViewService,
+} from '@netgrif/components-core';
 import {HttpParams} from '@angular/common/http';
 
 @Component({
     selector: 'nae-app-tree-view-example',
     templateUrl: './tree-view-example.component.html',
     styleUrls: ['./tree-view-example.component.scss'],
-    providers: [TreeCaseViewService]
+    providers: [
+        ChangedFieldsService,
+        TreeCaseViewService,
+        {provide: NAE_TREE_CASE_VIEW_CONFIGURATION, useValue: {pageSize: 100}}
+    ]
 })
 export class TreeViewExampleComponent {
 
