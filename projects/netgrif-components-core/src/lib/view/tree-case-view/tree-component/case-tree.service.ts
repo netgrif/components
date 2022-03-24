@@ -31,6 +31,8 @@ import {EventOutcomeMessageResource} from '../../../resources/interface/message-
 import {SetDataEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
 import {refreshTree} from '../../../utility/refresh-tree';
+import {NAE_TREE_CASE_VIEW_CONFIGURATION} from './model/tree-configuration-injection-token';
+import {TreeCaseViewConfiguration} from './model/tree-case-view-configuration';
 
 /**
  * An internal helper object, that is used to return two values from a function.
@@ -48,6 +50,8 @@ interface CaseUpdateResult {
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
+
+    public static readonly DEFAULT_PAGE_SIZE = 50;
 
     protected _currentNode: CaseTreeNode;
     private _rootNodesFilter: Filter;
@@ -76,7 +80,14 @@ export class CaseTreeService implements OnDestroy {
                 protected _processService: ProcessService,
                 protected _sideMenuService: SideMenuService,
                 protected _translateService: TranslateService,
-                @Optional() @Inject(NAE_OPTION_SELECTOR_COMPONENT) protected _optionSelectorComponent: any) {
+                @Optional() @Inject(NAE_OPTION_SELECTOR_COMPONENT) protected _optionSelectorComponent: any,
+                @Optional() @Inject(NAE_TREE_CASE_VIEW_CONFIGURATION) protected _treeConfiguration: TreeCaseViewConfiguration) {
+        if (this._treeConfiguration === null) {
+            this._treeConfiguration = {
+                pageSize: CaseTreeService.DEFAULT_PAGE_SIZE
+            };
+        }
+
         this._treeDataSource = new MatTreeNestedDataSource<CaseTreeNode>();
         this._treeControl = new NestedTreeControl<CaseTreeNode>(node => node.children);
         _treeCaseViewService.reloadCase$.asObservable().subscribe(() => {
@@ -360,6 +371,7 @@ export class CaseTreeService implements OnDestroy {
         const done = new ReplaySubject<void>(1);
 
         let params: HttpParams = new HttpParams();
+        params = params.set('size', this._treeConfiguration.pageSize + '');
         params = params.set('page', `${pageNumber}`).set('sort', 'creationDate,asc');
         this._caseResourceService.getCases(requestBody, params).subscribe(page => {
             if (!hasContent(page)) {
