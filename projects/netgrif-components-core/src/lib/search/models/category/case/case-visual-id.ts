@@ -7,13 +7,14 @@ import {Equals} from '../../operator/equals';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
 import {CaseSearch} from './case-search.enum';
+import {Query} from "../../query/query";
 
 export class CaseVisualId extends NoConfigurationCategory<string> {
 
     private static readonly _i18n = 'search.category.case.visualId';
 
     constructor(operators: OperatorService, logger: LoggerService) {
-        super([CaseSearch.VISUAL_ID],
+        super(undefined,
             [operators.getOperator(Substring), operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseVisualId._i18n}.name`,
             SearchInputType.TEXT,
@@ -31,5 +32,9 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
 
     serializeClass(): Categories | string {
         return Categories.CASE_VISUAL_ID;
+    }
+
+    protected get elasticKeywords(): Array<string> {
+        return [`${CaseSearch.VISUAL_ID}${this.isSelectedOperator(Substring) ? '.keyword' : ''}`];
     }
 }

@@ -14,7 +14,7 @@ export class CaseTitle extends NoConfigurationCategory<string> {
     private static readonly _i18n = 'search.category.case.title';
 
     constructor(operators: OperatorService, logger: LoggerService) {
-        super([CaseSearch.TITLE],
+        super(undefined,
             [
                 operators.getOperator(Substring),
                 operators.getOperator(Equals),
@@ -37,5 +37,9 @@ export class CaseTitle extends NoConfigurationCategory<string> {
 
     serializeClass(): Categories | string {
         return Categories.CASE_TITLE;
+    }
+
+    protected get elasticKeywords(): Array<string> {
+        return [`${CaseSearch.TITLE}${this.isSelectedOperator(Substring) ? '.keyword' : ''}`];
     }
 }
