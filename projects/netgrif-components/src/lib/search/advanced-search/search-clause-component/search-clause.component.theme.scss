@@ -1,9 +1,9 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 @mixin search-clause-theme($theme) {
     $primary: map-get($theme, primary);
 
     .clause-body-color {
-        background: mat-color($primary, 100);
+        background: mat.get-color-from-palette($primary, 100);
     }
 }

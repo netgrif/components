@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
@@ -16,7 +16,7 @@ describe('AbstractTextFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, NoopAnimationsModule,
+            imports: [MaterialModule, AngularResizeEventModule, NoopAnimationsModule,
                 CovalentModule, TranslateLibModule, HttpClientTestingModule],
             declarations: [
                 TestWrapperComponent

@@ -18,7 +18,9 @@
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
-        "enableResourceInlining": true
+        "enableResourceInlining": true,
+        "fullTemplateTypeCheck": true,
+        "enableIvy": true
     },
     "exclude": [
         "src/test.ts",

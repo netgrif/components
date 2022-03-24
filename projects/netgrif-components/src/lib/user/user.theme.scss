@@ -1,9 +1,9 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 @mixin user-profile($theme) {
     $primary: map-get($theme, primary);
     .card-title {
-        background: mat-color($primary) !important;
+        background: mat.get-color-from-palette($primary) !important;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }

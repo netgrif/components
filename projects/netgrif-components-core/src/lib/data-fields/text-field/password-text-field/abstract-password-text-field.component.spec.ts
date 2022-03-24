@@ -1,5 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, NgZone} from '@angular/core';
@@ -27,7 +27,7 @@ import {AbstractPasswordTextFieldComponent} from './abstract-password-text-field
 //         TestBed.configureTestingModule({
 //             imports: [
 //                 MaterialModule,
-//                 AngularResizedEventModule,
+//                 AngularResizeEventModule,
 //                 BrowserAnimationsModule,
 //                 TranslateLibModule,
 //                 HttpClientTestingModule

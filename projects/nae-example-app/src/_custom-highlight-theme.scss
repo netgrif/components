@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 /**
 * Mimicking VS Dark+ theme as closely as possible
@@ -9,7 +9,7 @@
         background: rgba(0, 0, 0, .03);
 
         .highlight {
-            color: mat-color($mat-grey, 900);
+            color: mat.get-color-from-palette(mat.$grey-palette, 900);
         }
 
         .hljs-comment,

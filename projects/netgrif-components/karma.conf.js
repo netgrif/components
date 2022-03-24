@@ -17,7 +17,7 @@ module.exports = function(config) {
             require("karma-mocha-reporter"),
             require("karma-nyan-reporter"),
             require("karma-junit-reporter"),
-            require("@angular-devkit/build-angular/plugins/karma"),
+            require("@angular-devkit/build-angular/plugins/karma")
         ],
 
         client: {

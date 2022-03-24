@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 @mixin data-field-component($theme) {
     $primary: map-get($theme, primary);
@@ -39,32 +39,32 @@
     }
 
     .horizontal-state-primary {
-        background-color: mat-color($primary);
+        background-color: mat.get-color-from-palette($primary);
     }
 
     .horizontal-state-secondary {
-        background-color: mat-color($secondary);
+        background-color: mat.get-color-from-palette($secondary);
     }
 
     .stepper-arrow-selected {
-        color: mat-color($primary) !important;
+        color: mat.get-color-from-palette($primary) !important;
         font-weight: 700 !important;
     }
 
     .enum-icon-item:hover {
-        color: mat-color($primary) !important;
+        color: mat.get-color-from-palette($primary) !important;
     }
 
     .enum-icon-item-active {
-        color: mat-color($primary) !important;
+        color: mat.get-color-from-palette($primary) !important;
     }
 
     .file-list-item:hover {
-        background-color: rgba(mat-color($secondary, A200), 0.3)
+        background-color: rgba(mat.get-color-from-palette($secondary, A200), 0.3)
     }
 
     .primary-background-color {
-        background: mat-color($primary);
+        background: mat.get-color-from-palette($primary);
     }
 }
 

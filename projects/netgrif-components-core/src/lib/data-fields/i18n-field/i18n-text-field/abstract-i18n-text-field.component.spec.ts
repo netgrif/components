@@ -4,7 +4,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {I18nField} from '../models/i18n-field';
 import {MaterialModule} from '../../../material/material.module';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -27,7 +27,7 @@ describe('AbstractI18nTextFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,

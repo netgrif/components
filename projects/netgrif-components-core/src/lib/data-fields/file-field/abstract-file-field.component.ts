@@ -416,7 +416,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     public changeMaxWidth(event: ResizedEvent) {
         if (!!this.imageEl) {
-            this.imageEl.nativeElement.style.maxWidth = event.newWidth + 'px';
+            this.imageEl.nativeElement.style.maxWidth = event.newRect.width + 'px';
         }
     }
 
