@@ -27,7 +27,7 @@ export class ProcessService implements OnDestroy {
     protected _netUpdate: Subject<Net>;
     protected _requestCache: Map<string, ReplaySubject<Net>>;
     protected _referenceRequestCache: Map<string, ReplaySubject<PetriNetReferenceWithPermissions>>;
-    protected readonly LATEST = 'latest';
+    public readonly LATEST = 'latest';
 
     constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
         this._nets = {};
