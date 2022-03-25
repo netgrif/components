@@ -43,7 +43,7 @@ describe('AbstractEnumerationAutocompleteSelectFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enum-auto',
+    selector: 'ncc-test-enum-auto',
     template: ''
 })
 class TestEnumAutoComponent extends AbstractEnumerationAutocompleteSelectFieldComponent {
@@ -53,9 +53,9 @@ class TestEnumAutoComponent extends AbstractEnumerationAutocompleteSelectFieldCo
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enum-auto [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</nae-test-enum-auto>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enum-auto [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</ncc-test-enum-auto>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

@@ -39,7 +39,7 @@ describe('AbstractTextFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-text',
+    selector: 'ncc-test-text',
     template: ''
 })
 class TestTextComponent extends AbstractTextFieldComponent {
@@ -49,8 +49,8 @@ class TestTextComponent extends AbstractTextFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-text [dataField]="field"></nae-test-text>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-text [dataField]="field"></ncc-test-text>'
 })
 class TestWrapperComponent {
     field = new TextField('', '', '', {

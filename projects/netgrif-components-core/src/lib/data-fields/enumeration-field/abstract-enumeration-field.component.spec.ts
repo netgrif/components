@@ -44,7 +44,7 @@ describe('AbstractEnumerationFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enumeration',
+    selector: 'ncc-test-enumeration',
     template: ''
 })
 class TestEnumerationComponent extends AbstractEnumerationFieldComponent {
@@ -54,8 +54,8 @@ class TestEnumerationComponent extends AbstractEnumerationFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enumeration [dataField]="field"></nae-test-enumeration>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enumeration [dataField]="field"></ncc-test-enumeration>'
 })
 class TestWrapperComponent {
     field = new EnumerationField('', '', '', [], {

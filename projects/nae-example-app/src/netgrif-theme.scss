@@ -1,6 +1,4 @@
 @use '~@angular/material' as mat;
-@import '~@covalent/core/theming/all-theme';
-@import '~@covalent/markdown/markdown-theme';
 @import '~@netgrif/components/nae-theme';
 
 $typography: mat.define-typography-config(

@@ -37,7 +37,7 @@ describe('AbstractUserAssignItemComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestUserComponent extends AbstractUserAssignItemComponent {
@@ -47,8 +47,8 @@ class TestUserComponent extends AbstractUserAssignItemComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-user [user]="user"></nae-test-user>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-user [user]="user"></ncc-test-user>'
 })
 class TestWrapperComponent {
     user = new UserValue('0', '', '', '');

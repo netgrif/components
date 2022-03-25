@@ -61,7 +61,7 @@ describe('AbstractSimpleTextFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-text',
+    selector: 'ncc-test-text',
     template: ''
 })
 class TestTextComponent extends AbstractSimpleTextFieldComponent {
@@ -71,11 +71,11 @@ class TestTextComponent extends AbstractSimpleTextFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: `<nae-test-text [showLargeLayout]="label"
+    selector: 'ncc-test-wrapper',
+    template: `<ncc-test-text [showLargeLayout]="label"
                                       [textField]="field"
                                       [formControlRef]="formControl">
-                </nae-test-text>`
+                </ncc-test-text>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

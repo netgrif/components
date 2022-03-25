@@ -1026,7 +1026,7 @@ function transformStringToGrid(gridString: string): Array<Array<string>> {
 }
 
 @Component({
-    selector: 'nae-test-panel',
+    selector: 'ncc-test-panel',
     template: ''
 })
 class TestTaskContentComponent extends AbstractTaskContentComponent {

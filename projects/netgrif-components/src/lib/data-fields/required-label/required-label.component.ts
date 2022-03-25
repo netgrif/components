@@ -5,14 +5,10 @@ import {Component, Input, OnInit} from '@angular/core';
     templateUrl: './required-label.component.html',
     styleUrls: ['./required-label.component.scss']
 })
-export class RequiredLabelComponent implements OnInit {
+export class RequiredLabelComponent {
 
     @Input() public isIn = false;
 
     constructor() {
     }
-
-    ngOnInit(): void {
-    }
-
 }

@@ -33,7 +33,7 @@ describe('AbstractLegalFormComponent ', () => {
 });
 
 @Component({
-    selector: 'nae-test-legal',
+    selector: 'ncc-test-legal',
     template: ''
 })
 class TestLegalFormComponent extends AbstractLegalNoticeComponent {

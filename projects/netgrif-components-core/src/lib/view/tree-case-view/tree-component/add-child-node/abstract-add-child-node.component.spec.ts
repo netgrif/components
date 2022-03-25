@@ -47,7 +47,7 @@ describe('AbstractAddChildNodeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-add-child',
+    selector: 'ncc-test-add-child',
     template: ''
 })
 class TestComponent extends AbstractAddChildNodeComponent {
@@ -57,8 +57,8 @@ class TestComponent extends AbstractAddChildNodeComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-add-child [node]="node"></nae-test-add-child>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-add-child [node]="node"></ncc-test-add-child>'
 })
 class TestWrapperComponent {
     node = new CaseTreeNode(undefined, undefined);

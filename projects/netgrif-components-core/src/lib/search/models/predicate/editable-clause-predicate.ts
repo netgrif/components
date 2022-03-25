@@ -12,7 +12,7 @@ import {Predicate} from './predicate';
  * A complex, editable `Predicate`. Represents an inner node in the predicate tree, that can process changes of `Query` objects
  * held by its child nodes. It can notify the parent tree node about changes to the held `Query`.
  */
-export class EditableClausePredicate extends EditablePredicate implements OnDestroy {
+export class EditableClausePredicate extends EditablePredicate {
 
     protected _predicates: Map<number, Predicate>;
     protected _childUpdated$: Subject<void>;
@@ -33,10 +33,6 @@ export class EditableClausePredicate extends EditablePredicate implements OnDest
         this._childUpdated$.subscribe(() => {
             this.updateQueryAndNotify();
         });
-    }
-
-    ngOnDestroy(): void {
-        this._childUpdated$.complete();
     }
 
     get query(): Query {

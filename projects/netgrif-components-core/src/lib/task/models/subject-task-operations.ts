@@ -5,7 +5,7 @@ import {OnDestroy} from '@angular/core';
 /**
  * An implementation of the {@link TaskOperations} interface that provides a Subject for both operations.
  */
-export class SubjectTaskOperations implements TaskOperations, OnDestroy {
+export class SubjectTaskOperations implements TaskOperations {
 
     protected _open: Subject<void>;
     protected _close: Subject<void>;
@@ -61,16 +61,6 @@ export class SubjectTaskOperations implements TaskOperations, OnDestroy {
 
     public get forceReload$(): Observable<void> {
         return this._forceReload.asObservable();
-    }
-
-    /**
-     * Completes the underlying streams
-     */
-    ngOnDestroy(): void {
-        this._open.complete();
-        this._close.complete();
-        this._reload.complete();
-        this._forceReload.complete();
     }
 }
 

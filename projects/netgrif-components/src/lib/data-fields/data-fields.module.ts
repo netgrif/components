@@ -8,7 +8,7 @@ import {
     CustomDateAdapter,
     CurrencyModule
 } from '@netgrif/components-core';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
@@ -118,7 +118,7 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
         FlexLayoutModule,
         MaterialModule,
         CovalentModule,
-        AngularResizedEventModule,
+        AngularResizeEventModule,
         HttpClientModule,
         ReactiveFormsModule,
         NgxMatDatetimePickerModule,

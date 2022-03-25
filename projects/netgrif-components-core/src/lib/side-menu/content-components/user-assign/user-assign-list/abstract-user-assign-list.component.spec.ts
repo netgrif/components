@@ -62,7 +62,7 @@ describe('AbstractUserAssignListComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestUserComponent extends AbstractUserAssignListComponent {
@@ -72,8 +72,8 @@ class TestUserComponent extends AbstractUserAssignListComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-user [searchUserControl]="formControl"></nae-test-user>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-user [searchUserControl]="formControl"></ncc-test-user>'
 })
 class TestWrapperComponent {
     injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;

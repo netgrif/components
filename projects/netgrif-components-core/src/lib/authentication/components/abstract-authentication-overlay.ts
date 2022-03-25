@@ -1,4 +1,4 @@
-import {OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from '../session/services/session.service';
 import {SpinnerOverlayService} from '../../utility/service/spinner-overlay.service';
 import {Router} from '@angular/router';
@@ -6,7 +6,11 @@ import {RedirectService} from '../../routing/redirect-service/redirect.service';
 import {Subscription} from 'rxjs';
 import {UserService} from '../../user/services/user.service';
 
-export abstract class AbstractAuthenticationOverlay implements OnInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-auth-overlay',
+    template: ''
+})
+export abstract class AbstractAuthenticationOverlayComponent implements OnInit, OnDestroy {
     protected subSession: Subscription;
     protected user: Subscription;
     protected subInitializing: Subscription;

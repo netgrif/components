@@ -77,7 +77,7 @@ describe('AbstractForgottenPasswordComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-reg',
+    selector: 'ncc-test-reg',
     template: ''
 })
 class TestRegFormComponent extends AbstractForgottenPasswordComponent {

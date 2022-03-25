@@ -43,7 +43,7 @@ describe('AbstractEnumerationStepperFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enum-stepper',
+    selector: 'ncc-test-enum-stepper',
     template: ''
 })
 class TestEnumStepperComponent extends AbstractEnumerationStepperFieldComponent {
@@ -53,9 +53,9 @@ class TestEnumStepperComponent extends AbstractEnumerationStepperFieldComponent 
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enum-stepper [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</nae-test-enum-stepper>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enum-stepper [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</ncc-test-enum-stepper>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

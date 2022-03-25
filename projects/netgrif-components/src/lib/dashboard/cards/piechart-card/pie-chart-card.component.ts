@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
-import {AbstractCustomCard, DashboardEventContent, DashboardResourceService, DashboardSingleData} from '@netgrif/components-core';
+import {AbstractCustomCardComponent, DashboardEventContent, DashboardResourceService, DashboardSingleData} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {AggregationResult, LoggerService} from '@netgrif/components-core';
 
@@ -8,7 +8,7 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
     templateUrl: './pie-chart-card.component.html',
     styleUrls: ['./pie-chart-card.component.scss']
 })
-export class PieChartCardComponent extends AbstractCustomCard implements OnInit {
+export class PieChartCardComponent extends AbstractCustomCardComponent implements OnInit {
 
     isDoughnut = false;
     legendPosition = 'right';

@@ -15,7 +15,7 @@ describe('OpenedTab', () => {
 });
 
 @Component({
-    selector: 'nae-tab-test-component',
+    selector: 'ncc-tab-test-component',
     template: '<div></div>'
 })
 export class TabTestComponent {}

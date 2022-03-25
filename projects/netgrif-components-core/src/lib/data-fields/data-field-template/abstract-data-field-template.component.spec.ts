@@ -41,7 +41,7 @@ describe('AbstractDataFieldTemplateComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-datafield-template',
+    selector: 'ncc-test-datafield-template',
     template: ''
 })
 class TestDatafieldTemplateComponent extends AbstractDataFieldTemplateComponent {
@@ -51,8 +51,8 @@ class TestDatafieldTemplateComponent extends AbstractDataFieldTemplateComponent 
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-datafield-template [dataField]="field"></nae-test-datafield-template>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-datafield-template [dataField]="field"></ncc-test-datafield-template>'
 })
 class TestWrapperComponent {
     field = new TextField('', '', '', {});

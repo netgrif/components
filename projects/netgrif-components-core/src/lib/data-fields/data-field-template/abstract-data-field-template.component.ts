@@ -1,4 +1,4 @@
-import {ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {WrappedBoolean} from './models/wrapped-boolean';
 import {DataField} from '../models/abstract-data-field';
 import {TemplateAppearance} from '../models/template-appearance';
@@ -17,6 +17,11 @@ import {ConfigurationService} from '../../configuration/configuration.service';
  *
  * See {@link DataField} and {@link TemplateAppearance} for more information.
  */
+
+@Component({
+    selector: 'ncc-abstract-datafield-template',
+    template: ''
+})
 export abstract class AbstractDataFieldTemplateComponent implements OnInit {
 
     /**

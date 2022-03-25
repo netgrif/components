@@ -1,8 +1,12 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
 import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
 
+@Component({
+    selector: 'ncc-abstract-currency-field',
+    template: ''
+})
 export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberErrorsComponent implements OnInit {
 
     @Input() transformedValue: string;

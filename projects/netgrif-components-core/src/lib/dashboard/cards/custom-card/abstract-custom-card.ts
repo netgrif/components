@@ -1,4 +1,4 @@
-import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {CustomCard} from '../model/custom-dashboard-model/custom-card';
 import {DashboardResourceService} from '../../../resources/engine-endpoint/dashboard-resource.service';
@@ -9,7 +9,11 @@ import {DashboardMultiData} from '../model/custom-dashboard-model/dashboard-mult
 import {LoggerService} from '../../../logger/services/logger.service';
 import {AggregationResult} from '../model/custom-dashboard-model/aggregation-result';
 
-export abstract class AbstractCustomCard implements OnInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-custom-card',
+    template: ''
+})
+export abstract class AbstractCustomCardComponent implements OnInit, OnDestroy {
 
     @Input() public card: CustomCard;
     protected _filter: Filter;

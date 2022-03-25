@@ -30,7 +30,7 @@ describe('AbstractSearchConfigurationInputComponent', () => {
 });
 
 @Component({
-    selector: 'nae-search-configuration-input',
+    selector: 'ncc-search-configuration-input',
     template: ''
 })
 class TestSearchConfigurationInputComponent extends AbstractSearchConfigurationInputComponent {

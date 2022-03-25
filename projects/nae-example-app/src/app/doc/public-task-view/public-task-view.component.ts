@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
-    AbstractTaskView,
+    AbstractTaskViewComponent,
     TaskEventNotification,
     TaskViewService,
     CaseResourceService,
@@ -108,7 +108,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         ViewIdService,
     ]
 })
-export class PublicTaskViewComponent extends AbstractTaskView implements AfterViewInit {
+export class PublicTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 

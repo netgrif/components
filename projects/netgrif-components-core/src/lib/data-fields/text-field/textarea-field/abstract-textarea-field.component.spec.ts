@@ -62,7 +62,7 @@ describe('AbstractTextareaFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-text',
+    selector: 'ncc-test-text',
     template: '<textarea matInput\n' +
         '              #textArea\n' +
         '              [placeholder]="textAreaField.placeholder"\n' +
@@ -80,8 +80,8 @@ class TestTextComponent extends AbstractTextareaFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-text [showLargeLayout]="label" [textAreaField]="field" [formControlRef]="formControl"> </nae-test-text>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-text [showLargeLayout]="label" [textAreaField]="field" [formControlRef]="formControl"> </ncc-test-text>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

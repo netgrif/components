@@ -1,4 +1,14 @@
-import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from '@angular/core';
 import {FileField, FilePreviewType} from './models/file-field';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -32,6 +42,10 @@ const fieldPadding = 16;
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
+@Component({
+    selector: 'ncc-abstract-file-field',
+    template: ''
+})
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
 
     /**

@@ -47,7 +47,7 @@ describe('AbstractProfileComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestProfileComponent extends AbstractProfileComponent {

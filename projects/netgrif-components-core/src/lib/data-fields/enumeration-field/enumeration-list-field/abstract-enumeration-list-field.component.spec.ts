@@ -44,7 +44,7 @@ describe('AbstractEnumerationListFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enum-list',
+    selector: 'ncc-test-enum-list',
     template: ''
 })
 class TestEnumListComponent extends AbstractEnumerationListFieldComponent {
@@ -54,9 +54,9 @@ class TestEnumListComponent extends AbstractEnumerationListFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enum-list [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</nae-test-enum-list>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enum-list [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</ncc-test-enum-list>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

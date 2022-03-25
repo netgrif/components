@@ -76,7 +76,7 @@ describe('AbstractLoadingModeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-load',
+    selector: 'ncc-test-load',
     template: ''
 })
 class TestLoadModeComponent extends AbstractLoadingModeComponent {
@@ -86,8 +86,8 @@ class TestLoadModeComponent extends AbstractLoadingModeComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-load [headerService]="service"></nae-test-load>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-load [headerService]="service"></ncc-test-load>'
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

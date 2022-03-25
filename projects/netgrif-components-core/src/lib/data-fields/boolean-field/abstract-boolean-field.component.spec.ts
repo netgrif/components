@@ -63,7 +63,7 @@ describe('AbstractBooleanFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-boolean',
+    selector: 'ncc-test-boolean',
     template: ''
 })
 class TestBooleanComponent extends AbstractBooleanFieldComponent {
@@ -74,8 +74,8 @@ class TestBooleanComponent extends AbstractBooleanFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-boolean [dataField]="field"></nae-test-boolean>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-boolean [dataField]="field"></ncc-test-boolean>'
 })
 class TestWrapperComponent {
     field = new BooleanField('', '', false, {

@@ -63,7 +63,7 @@ describe('AbstractRichTextareaFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-text',
+    selector: 'ncc-test-text',
     template: ''
 })
 class TestTextComponent extends AbstractRichTextareaFieldComponent {
@@ -73,10 +73,10 @@ class TestTextComponent extends AbstractRichTextareaFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: `<nae-test-text [showLargeLayout]="label"
+    selector: 'ncc-test-wrapper',
+    template: `<ncc-test-text [showLargeLayout]="label"
                                  [formControlRef]="formControl"
-                                 [textAreaField]="dataField"></nae-test-text>`
+                                 [textAreaField]="dataField"></ncc-test-text>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

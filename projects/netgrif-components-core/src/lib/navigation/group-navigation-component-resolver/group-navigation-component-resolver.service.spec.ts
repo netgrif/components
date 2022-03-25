@@ -33,7 +33,7 @@ describe('GroupNavigationComponentResolverService', () => {
 });
 
 @Component({
-    selector: 'nae-test-portal',
+    selector: 'ncc-test-portal',
     template: ''
 })
 class TestPortalComponent {

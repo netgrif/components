@@ -58,7 +58,7 @@ describe('AbstractI18nTextFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-i18n-text',
+    selector: 'ncc-test-i18n-text',
     template: ''
 })
 class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
@@ -68,12 +68,12 @@ class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
+    selector: 'ncc-test-wrapper',
     template: `
-        <nae-test-i18n-text [showLargeLayout]="label"
+        <ncc-test-i18n-text [showLargeLayout]="label"
                             [textI18nField]="field"
                             [formControlRef]="formControl">
-        </nae-test-i18n-text>`
+        </ncc-test-i18n-text>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

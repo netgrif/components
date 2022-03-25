@@ -85,7 +85,7 @@ describe('AbstractHeaderComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-head',
+    selector: 'ncc-test-head',
     template: ''
 })
 class TestHeaderComponent extends AbstractHeaderComponent {

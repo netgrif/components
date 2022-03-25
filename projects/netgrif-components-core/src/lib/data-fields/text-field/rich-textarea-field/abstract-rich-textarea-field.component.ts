@@ -1,11 +1,15 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {TextAreaField} from '../models/text-area-field';
 
-export abstract class AbstractRichTextareaFieldComponent extends AbstractTextErrorsComponent implements OnInit {
+@Component({
+    selector: 'ncc-abstract-rich-text-field',
+    template: ''
+})
+export abstract class AbstractRichTextareaFieldComponent extends AbstractTextErrorsComponent {
 
     @Input() textAreaField: TextAreaField;
     @Input() formControlRef: FormControl;
@@ -26,9 +30,6 @@ export abstract class AbstractRichTextareaFieldComponent extends AbstractTextErr
                 toggleFullScreen: null
             }
         };
-    }
-
-    ngOnInit(): void {
     }
 
     public getErrorMessage() {

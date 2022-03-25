@@ -65,7 +65,7 @@ describe('AbstractLoginFormComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-login',
+    selector: 'ncc-test-login',
     template: ''
 })
 class TestLoginFormComponent extends AbstractLoginFormComponent {

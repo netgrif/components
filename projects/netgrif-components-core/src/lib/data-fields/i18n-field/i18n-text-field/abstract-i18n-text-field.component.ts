@@ -1,18 +1,18 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {I18nField} from '../models/i18n-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 
-
-export abstract class AbstractI18nTextFieldComponent implements OnInit {
+@Component({
+    selector: 'ncc-abstract-i18n-text-field',
+    template: ''
+})
+export abstract class AbstractI18nTextFieldComponent {
 
     @Input() textI18nField: I18nField;
     @Input() formControlRef: FormControl;
     @Input() showLargeLayout: WrappedBoolean;
-
-    ngOnInit(): void {
-    }
 
     protected constructor(protected _translateService: TranslateService) {
     }

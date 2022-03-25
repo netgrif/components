@@ -68,7 +68,7 @@ describe('AbstractFulltextSearchComponent', () => {
 
 
 @Component({
-    selector: 'nae-test-fulltext-search',
+    selector: 'ncc-test-fulltext-search',
     template: ''
 })
 class TestFulltextSearchComponent extends AbstractFulltextSearchComponent {

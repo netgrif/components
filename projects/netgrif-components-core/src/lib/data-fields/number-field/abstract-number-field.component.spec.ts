@@ -61,7 +61,7 @@ describe('AbstractNumberFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-num',
+    selector: 'ncc-test-num',
     template: ''
 })
 class TestNumComponent extends AbstractNumberFieldComponent {
@@ -72,8 +72,8 @@ class TestNumComponent extends AbstractNumberFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-num [dataField]="field"></nae-test-num>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-num [dataField]="field"></ncc-test-num>'
 })
 class TestWrapperComponent {
     field = new NumberField('', '', 4, {

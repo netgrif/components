@@ -43,7 +43,7 @@ describe('AbstractEnumerationIconFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enum-select',
+    selector: 'ncc-test-enum-select',
     template: ''
 })
 class TestEnumSelectComponent extends AbstractEnumerationIconFieldComponent {
@@ -53,9 +53,9 @@ class TestEnumSelectComponent extends AbstractEnumerationIconFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enum-select [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
-        '</nae-test-enum-select>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enum-select [showLargeLayout]="label" [enumerationField]="field" [formControlRef]="form">' +
+        '</ncc-test-enum-select>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

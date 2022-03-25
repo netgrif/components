@@ -65,7 +65,7 @@ describe('AbstractTabCreationDetectorComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-tabs',
+    selector: 'ncc-test-tabs',
     template: ''
 })
 class TestTabComponent extends AbstractTabCreationDetectorComponent {
@@ -75,8 +75,8 @@ class TestTabComponent extends AbstractTabCreationDetectorComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-tabs [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></nae-test-tabs>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-tabs [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></ncc-test-tabs>'
 })
 class TestWrapperComponent implements OnInit {
     tabGroup: TabView;
@@ -103,7 +103,7 @@ class TestWrapperComponent implements OnInit {
 }
 
 @Component({
-    selector: 'nae-test-div',
+    selector: 'ncc-test-div',
     template: '<div></div>'
 })
 class TestComponent {

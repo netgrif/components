@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FileFieldComponent} from './file-field.component';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -30,7 +30,7 @@ describe('FileFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule,

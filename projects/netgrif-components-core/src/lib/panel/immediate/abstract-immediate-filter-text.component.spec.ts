@@ -36,7 +36,7 @@ describe('AbstractImmediateFilterTextComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-immediate-filter-text',
+    selector: 'ncc-test-immediate-filter-text',
     template: ''
 })
 class TestImmediateFilterTextComponent extends AbstractImmediateFilterTextComponent {
@@ -52,7 +52,7 @@ class TestImmediateFilterTextComponent extends AbstractImmediateFilterTextCompon
 }
 
 @Component({
-    selector: 'nae-portal-content-component',
+    selector: 'ncc-portal-content-component',
     template: ''
 })
 class PortalContentComponent extends AbstractImmediateFilterTextContentComponent {

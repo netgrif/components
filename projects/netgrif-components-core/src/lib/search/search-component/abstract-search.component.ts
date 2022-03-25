@@ -3,7 +3,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {DialogService} from '../../dialog/services/dialog.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_SEARCH_COMPONENT_CONFIGURATION} from '../models/component-configuration/search-component-configuration-injection-token';
-import {EventEmitter, Inject, Input, OnInit, Optional, Output, Type} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Optional, Output, Type} from '@angular/core';
 import {SearchComponentConfiguration} from '../models/component-configuration/search-component-configuration';
 import {SearchMode} from '../models/component-configuration/search-mode';
 import {UserFiltersService} from '../../filter/user-filters.service';
@@ -31,6 +31,10 @@ import {DataGroup} from '../../resources/interface/data-groups';
  * The search component's visuals can be configured either by the {@link NAE_SEARCH_COMPONENT_CONFIGURATION} injection token,
  * or by the appropriate component inputs. The injection token configuration takes precedence over the inputs if both are present.
  */
+@Component({
+    selector: 'ncc-abstract-search',
+    template: ''
+})
 export abstract class AbstractSearchComponent implements SearchComponentConfiguration, OnInit {
 
     public advancedSearchDisplayed;

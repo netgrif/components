@@ -45,7 +45,7 @@ describe('AbstractMultichoiceFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enum',
+    selector: 'ncc-test-enum',
     template: ''
 })
 class TestEnumComponent extends AbstractMultichoiceFieldComponent {
@@ -55,8 +55,8 @@ class TestEnumComponent extends AbstractMultichoiceFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enum [dataField]="field"></nae-test-enum>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enum [dataField]="field"></ncc-test-enum>'
 })
 class TestWrapperComponent {
     field = new MultichoiceField('', '', [''], [], {

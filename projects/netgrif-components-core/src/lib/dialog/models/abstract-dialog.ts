@@ -1,9 +1,13 @@
-import {Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {DialogData} from './DialogData';
 import {DialogResult} from './DialogResult';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 /** Abstract dialog for all types of dialog components is used for data injection and dialog reference holding. */
+@Component({
+    selector: 'ncc-abstract-dialog',
+    template: ''
+})
 export abstract class AbstractDialog<T> implements OnInit {
     /**
      * Only injecting.

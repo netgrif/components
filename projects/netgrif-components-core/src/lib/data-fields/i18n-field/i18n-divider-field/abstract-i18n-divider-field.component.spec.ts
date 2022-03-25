@@ -44,7 +44,7 @@ describe('AbstractI18nDividerFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-i18n-divider',
+    selector: 'ncc-test-i18n-divider',
     template: ''
 })
 class TestI18nDividerComponent extends AbstractI18nDividerFieldComponent {
@@ -54,12 +54,12 @@ class TestI18nDividerComponent extends AbstractI18nDividerFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
+    selector: 'ncc-test-wrapper',
     template: `
-        <nae-test-i18n-divider [showLargeLayout]="label"
+        <ncc-test-i18n-divider [showLargeLayout]="label"
                                [dividerI18nField]="field"
                                [formControlRef]="formControl">
-        </nae-test-i18n-divider>`
+        </ncc-test-i18n-divider>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

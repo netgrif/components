@@ -1,4 +1,5 @@
 import {
+    Component,
     EventEmitter,
     Inject,
     Input,
@@ -19,6 +20,10 @@ import {InjectedTabData} from '../../../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
 import {filter, takeUntil} from 'rxjs/operators';
 
+@Component({
+    selector: 'ncc-abstract-case-list',
+    template: ''
+})
 export abstract class AbstractCaseListComponent extends TabbedVirtualScrollComponent implements OnDestroy {
 
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;

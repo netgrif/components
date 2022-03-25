@@ -1,5 +1,5 @@
 import {Component, Injectable} from '@angular/core';
-import {AbstractCaseView} from './abstract-case-view';
+import {AbstractCaseViewComponent} from './abstract-case-view';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {CaseViewService} from './service/case-view-service';
 import {Case} from '../../resources/interface/case';
@@ -116,10 +116,10 @@ describe('AbstractCaseView', () => {
 
 
 @Component({
-    selector: 'nae-test-case-view',
+    selector: 'ncc-test-case-view',
     template: ''
 })
-class TestCaseViewComponent extends AbstractCaseView {
+class TestCaseViewComponent extends AbstractCaseViewComponent {
     constructor(caseViewService: CaseViewService) {
         super(caseViewService);
     }

@@ -63,7 +63,7 @@ describe('AbstractDateFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-date',
+    selector: 'ncc-test-date',
     template: ''
 })
 class TestDateFieldComponent extends AbstractDateFieldComponent {
@@ -74,8 +74,8 @@ class TestDateFieldComponent extends AbstractDateFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-date [dataField]="field"></nae-test-date>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-date [dataField]="field"></ncc-test-date>'
 })
 class TestWrapperComponent {
     field = new DateField('', '', moment(new Date()), {

@@ -1,5 +1,5 @@
 import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
-import {SortableView} from '../abstract/sortable-view';
+import {AbstractSortableViewComponent} from '../abstract/sortable-view';
 import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Net} from '../../process/net';
@@ -22,7 +22,7 @@ import {SearchIndexResolverService} from '../../search/search-keyword-resolver-s
 
 
 @Injectable()
-export class WorkflowViewService extends SortableView implements OnDestroy {
+export class WorkflowViewService extends AbstractSortableViewComponent implements OnDestroy {
 
     // TODO 19.10.2020 - Add support for requests with context (filter), same as Case- and TaskViewServices
     protected _loading$: LoadingEmitter;

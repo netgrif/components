@@ -1,5 +1,5 @@
 /* CLASSES */
-export * from './role-assignment/abstract-role-assignment';
+export * from './role-assignment/abstract-role-assignment.component';
 export * from './user-invite/abstract-user-invite.component';
 
 /* SERVICES */

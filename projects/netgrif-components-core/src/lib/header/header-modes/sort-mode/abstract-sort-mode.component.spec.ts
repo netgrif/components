@@ -75,7 +75,7 @@ describe('AbstractSortModeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-sort',
+    selector: 'ncc-test-sort',
     template: ''
 })
 class TestSortModeComponent extends AbstractSortModeComponent {
@@ -85,8 +85,8 @@ class TestSortModeComponent extends AbstractSortModeComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-sort [headerService]="service"></nae-test-sort>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-sort [headerService]="service"></ncc-test-sort>'
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

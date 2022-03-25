@@ -1,247 +1,238 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "version": 1,
-    "newProjectRoot": "projects",
-    "projects": {
-        "netgrif-components-core": {
-            "projectType": "library",
-            "root": "projects/netgrif-components-core",
-            "sourceRoot": "projects/netgrif-components-core/src",
-            "prefix": "nae",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss"
-                }
-            },
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:ng-packagr",
-                    "options": {
-                        "tsConfig": "projects/netgrif-components-core/tsconfig.lib.json",
-                        "project": "projects/netgrif-components-core/ng-package.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "tsConfig": "projects/netgrif-components-core/tsconfig.lib.prod.json"
-                        }
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "projects/netgrif-components-core/src/test.ts",
-                        "tsConfig": "projects/netgrif-components-core/tsconfig.spec.json",
-                        "karmaConfig": "projects/netgrif-components-core/karma.conf.js",
-                        "sourceMap": true,
-                        "codeCoverage": true,
-                        "codeCoverageExclude": [
-                            "projects/netgrif-components-core/src/test.ts",
-                            "projects/netgrif-components-core/src/commons/**"
-                        ]
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/netgrif-components-core/tsconfig.lib.json",
-                            "projects/netgrif-components-core/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
-        },
-        "netgrif-components": {
-            "projectType": "library",
-            "root": "projects/netgrif-components",
-            "sourceRoot": "projects/netgrif-components/src",
-            "prefix": "nc",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss"
-                }
-            },
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:ng-packagr",
-                    "options": {
-                        "tsConfig": "projects/netgrif-components/tsconfig.lib.json",
-                        "project": "projects/netgrif-components/ng-package.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "tsConfig": "projects/netgrif-components/tsconfig.lib.prod.json"
-                        }
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "projects/netgrif-components/src/test.ts",
-                        "tsConfig": "projects/netgrif-components/tsconfig.spec.json",
-                        "karmaConfig": "projects/netgrif-components/karma.conf.js",
-                        "sourceMap": true,
-                        "codeCoverage": true,
-                        "codeCoverageExclude": [
-                            "projects/netgrif-components/src/test.ts",
-                            "projects/netgrif-components/src/commons/**"
-                        ]
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/netgrif-components/tsconfig.lib.json",
-                            "projects/netgrif-components/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
-        },
-        "nae-example-app": {
-            "projectType": "application",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss"
-                }
-            },
-            "root": "projects/nae-example-app",
-            "sourceRoot": "projects/nae-example-app/src",
-            "prefix": "nae-app",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "options": {
-                        "outputPath": "dist/nae-example-app",
-                        "index": "projects/nae-example-app/src/index.html",
-                        "main": "projects/nae-example-app/src/main.ts",
-                        "polyfills": "projects/nae-example-app/src/polyfills.ts",
-                        "tsConfig": "projects/nae-example-app/tsconfig.app.json",
-                        "assets": [
-                            "projects/nae-example-app/src/favicon.ico",
-                            "projects/nae-example-app/src/assets"
-                        ],
-                        "styles": [
-                            "./node_modules/quill/dist/quill.snow.css",
-                            "./node_modules/quill/dist/quill.bubble.css",
-                            "./node_modules/quill/dist/quill.core.css",
-                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-                            "projects/nae-example-app/src/styles.scss"
-                        ],
-                        "scripts": [],
-                        "vendorChunk": true,
-                        "extractLicenses": false,
-                        "buildOptimizer": false,
-                        "sourceMap": true,
-                        "optimization": false,
-                        "namedChunks": true
-                    },
-                    "configurations": {
-                        "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "projects/nae-example-app/src/environments/environment.ts",
-                                    "with": "projects/nae-example-app/src/environments/environment.prod.ts"
-                                }
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "namedChunks": false,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "budgets": [
-                                {
-                                    "type": "initial",
-                                    "maximumWarning": "2mb",
-                                    "maximumError": "5mb"
-                                },
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb",
-                                    "maximumError": "10kb"
-                                }
-                            ]
-                        }
-                    },
-                    "defaultConfiguration": ""
-                },
-                "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "nae-example-app:build"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "nae-example-app:build:production"
-                        }
-                    }
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "nae-example-app:build"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "projects/nae-example-app/src/test.ts",
-                        "polyfills": "projects/nae-example-app/src/polyfills.ts",
-                        "tsConfig": "projects/nae-example-app/tsconfig.spec.json",
-                        "karmaConfig": "projects/nae-example-app/karma.conf.js",
-                        "assets": [
-                            "projects/nae-example-app/src/favicon.ico",
-                            "projects/nae-example-app/src/assets"
-                        ],
-                        "styles": [
-                            "./node_modules/quill/dist/quill.snow.css",
-                            "./node_modules/quill/dist/quill.bubble.css",
-                            "./node_modules/quill/dist/quill.core.css",
-                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-                            "projects/nae-example-app/src/styles.scss"
-                        ],
-                        "scripts": []
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/nae-example-app/tsconfig.app.json",
-                            "projects/nae-example-app/tsconfig.spec.json",
-                            "projects/nae-example-app/e2e/tsconfig.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                },
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "projects/nae-example-app/e2e/protractor.conf.js",
-                        "devServerTarget": "nae-example-app:serve"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "nae-example-app:serve:production"
-                        }
-                    }
-                }
-            }
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "netgrif-components-core": {
+      "projectType": "library",
+      "root": "projects/netgrif-components-core",
+      "sourceRoot": "projects/netgrif-components-core/src",
+      "prefix": "nae",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
         }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/netgrif-components-core/tsconfig.lib.json",
+            "project": "projects/netgrif-components-core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/netgrif-components-core/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/netgrif-components-core/src/test.ts",
+            "tsConfig": "projects/netgrif-components-core/tsconfig.spec.json",
+            "karmaConfig": "projects/netgrif-components-core/karma.conf.js",
+            "sourceMap": true,
+            "codeCoverage": true,
+            "codeCoverageExclude": [
+              "projects/netgrif-components-core/src/test.ts",
+              "projects/netgrif-components-core/src/commons/**"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/netgrif-components-core/**/*.ts",
+              "projects/netgrif-components-core/**/*.html"
+            ]
+          }
+        }
+      }
     },
-    "defaultProject": "nae-example-app",
-    "cli": {
-        "analytics": false
+    "netgrif-components": {
+      "projectType": "library",
+      "root": "projects/netgrif-components",
+      "sourceRoot": "projects/netgrif-components/src",
+      "prefix": "nc",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/netgrif-components/tsconfig.lib.json",
+            "project": "projects/netgrif-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/netgrif-components/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/netgrif-components/src/test.ts",
+            "tsConfig": "projects/netgrif-components/tsconfig.spec.json",
+            "karmaConfig": "projects/netgrif-components/karma.conf.js",
+            "sourceMap": true,
+            "codeCoverage": true,
+            "codeCoverageExclude": [
+              "projects/netgrif-components/src/test.ts",
+              "projects/netgrif-components/src/commons/**"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/netgrif-components/**/*.ts",
+              "projects/netgrif-components/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "nae-example-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/nae-example-app",
+      "sourceRoot": "projects/nae-example-app/src",
+      "prefix": "nae-app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/nae-example-app",
+            "index": "projects/nae-example-app/src/index.html",
+            "main": "projects/nae-example-app/src/main.ts",
+            "polyfills": "projects/nae-example-app/src/polyfills.ts",
+            "tsConfig": "projects/nae-example-app/tsconfig.app.json",
+            "assets": [
+              "projects/nae-example-app/src/favicon.ico",
+              "projects/nae-example-app/src/assets"
+            ],
+            "styles": [
+              "./node_modules/quill/dist/quill.snow.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/nae-example-app/src/styles.scss"
+            ],
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/nae-example-app/src/environments/environment.ts",
+                  "with": "projects/nae-example-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "nae-example-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "nae-example-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "nae-example-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/nae-example-app/src/test.ts",
+            "polyfills": "projects/nae-example-app/src/polyfills.ts",
+            "tsConfig": "projects/nae-example-app/tsconfig.spec.json",
+            "karmaConfig": "projects/nae-example-app/karma.conf.js",
+            "assets": [
+              "projects/nae-example-app/src/favicon.ico",
+              "projects/nae-example-app/src/assets"
+            ],
+            "styles": [
+              "./node_modules/quill/dist/quill.snow.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/nae-example-app/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/nae-example-app/**/*.ts",
+              "projects/nae-example-app/**/*.html"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/nae-example-app/e2e/protractor.conf.js",
+            "devServerTarget": "nae-example-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "nae-example-app:serve:production"
+            }
+          }
+        }
+      }
     }
+  },
+  "defaultProject": "nae-example-app",
+  "cli": {
+    "analytics": false,
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

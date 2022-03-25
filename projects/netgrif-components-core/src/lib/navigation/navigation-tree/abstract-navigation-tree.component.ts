@@ -1,4 +1,4 @@
-import {Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Services, View, Views} from '../../../commons/schema';
@@ -35,6 +35,10 @@ export interface NavigationNode {
     translate?: boolean;
 }
 
+@Component({
+    selector: 'ncc-abstract-navigation-tree',
+    template: ''
+})
 export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
     @Input() public viewPath: string;

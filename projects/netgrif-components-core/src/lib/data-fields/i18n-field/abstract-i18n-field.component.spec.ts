@@ -44,7 +44,7 @@ describe('AbstractI18nFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-i18n',
+    selector: 'ncc-test-i18n',
     template: ''
 })
 class TestI18nComponent extends AbstractI18nFieldComponent {
@@ -54,8 +54,8 @@ class TestI18nComponent extends AbstractI18nFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-i18n [dataField]="field"></nae-test-i18n>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-i18n [dataField]="field"></ncc-test-i18n>'
 })
 class TestWrapperComponent {
     field = new I18nField('', '', '', {

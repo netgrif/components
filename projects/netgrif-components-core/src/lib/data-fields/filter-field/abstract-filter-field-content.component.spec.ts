@@ -64,7 +64,7 @@ describe('AbstractFilterFieldContentComponent', () => {
 
 
 @Component({
-    selector: 'nae-test-filter-content',
+    selector: 'ncc-test-filter-content',
     template: ''
 })
 class TestFilterContentComponent extends AbstractFilterFieldContentComponent {

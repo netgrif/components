@@ -2,6 +2,7 @@ import {FormControl} from '@angular/forms';
 import {TextField, TextFieldValidation} from './models/text-field';
 import {TranslateService} from '@ngx-translate/core';
 import {TextAreaField} from './models/text-area-field';
+import {Component} from '@angular/core';
 
 export abstract class AbstractTextErrorsComponent {
 

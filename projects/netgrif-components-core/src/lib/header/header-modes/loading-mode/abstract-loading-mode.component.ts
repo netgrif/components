@@ -1,17 +1,18 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
-export abstract class AbstractLoadingModeComponent extends AbstractHeaderModeComponent implements OnInit {
+@Component({
+    selector: 'ncc-abstract-loading-mode',
+    template: ''
+})
+export abstract class AbstractLoadingModeComponent extends AbstractHeaderModeComponent {
 
     @Input()
     public headerService: AbstractHeaderService;
 
     constructor() {
         super();
-    }
-
-    ngOnInit(): void {
     }
 
 }

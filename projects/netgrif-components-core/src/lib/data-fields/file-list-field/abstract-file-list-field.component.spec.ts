@@ -77,7 +77,7 @@ describe('AbstractFileListFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-filelist',
+    selector: 'ncc-test-filelist',
     template: ''
 })
 class TestFileListComponent extends AbstractFileListFieldComponent {
@@ -92,8 +92,8 @@ class TestFileListComponent extends AbstractFileListFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-filelist [dataField]="field" taskId="666"></nae-test-filelist>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-filelist [dataField]="field" taskId="666"></ncc-test-filelist>'
 })
 class TestWrapperComponent {
     field = new FileListField('', '', {

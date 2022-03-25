@@ -65,7 +65,7 @@ describe('AbstractNumberErrorsComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-num-err',
+    selector: 'ncc-test-num-err',
     template: ''
 })
 class TestNumErrorComponent extends AbstractNumberErrorsComponent {
@@ -75,8 +75,8 @@ class TestNumErrorComponent extends AbstractNumberErrorsComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-num-err [numberField]="field" [formControlRef]="fc"></nae-test-num-err>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-num-err [numberField]="field" [formControlRef]="fc"></ncc-test-num-err>'
 })
 class TestWrapperComponent implements OnDestroy {
     field = new NumberField('', '', 4, {

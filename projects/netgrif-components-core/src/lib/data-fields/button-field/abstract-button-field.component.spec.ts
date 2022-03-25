@@ -67,7 +67,7 @@ describe('AbstractButtonFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-button',
+    selector: 'ncc-test-button',
     template: ''
 })
 class TestButtonComponent extends AbstractButtonFieldComponent {
@@ -79,8 +79,8 @@ class TestButtonComponent extends AbstractButtonFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-button [dataField]="field"></nae-test-button>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-button [dataField]="field"></ncc-test-button>'
 })
 class TestWrapperComponent {
     field = new ButtonField('', '', {
