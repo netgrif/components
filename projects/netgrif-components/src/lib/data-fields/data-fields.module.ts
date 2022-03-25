@@ -132,11 +132,7 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
         CurrencyModule
     ],
     providers: [
-        {provide: DateAdapter, useClass: CustomDateAdapter}
-    ],
-    entryComponents: [
-        PreviewDialogComponent,
-        FilterFieldContentComponent
+        { provide: DateAdapter, useClass: CustomDateAdapter }
     ]
 })
 export class DataFieldsComponentModule {

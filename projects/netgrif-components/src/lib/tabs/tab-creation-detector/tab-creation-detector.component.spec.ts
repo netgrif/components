@@ -96,8 +96,7 @@ class TestComponent {
 }
 
 @NgModule({
-    declarations: [TestComponent],
-    entryComponents: [TestComponent]
+    declarations: [TestComponent]
 })
 class TabTestModule {
 }

@@ -24,9 +24,8 @@ import {CovalentModule, MaterialModule, NAE_USER_ASSIGN_COMPONENT, TranslateLibM
         TranslateLibModule
     ],
     exports: [UserAssignComponent],
-    entryComponents: [UserAssignComponent],
     providers: [
-        {provide: NAE_USER_ASSIGN_COMPONENT, useValue: UserAssignComponent},
+        { provide: NAE_USER_ASSIGN_COMPONENT, useValue: UserAssignComponent },
     ]
 })
 export class SideMenuUserAssignComponentModule {

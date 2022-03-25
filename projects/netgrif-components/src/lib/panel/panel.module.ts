@@ -44,9 +44,6 @@ import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-
         TaskListComponent,
         PublicWorkflowPanelComponent,
         ImmediateFilterTextComponent,
-    ],
-    entryComponents: [
-        ImmediateFilterTextContentComponent,
     ]
 })
 export class PanelComponentModule {

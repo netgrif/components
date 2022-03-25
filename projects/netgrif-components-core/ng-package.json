@@ -6,13 +6,7 @@
         "./src/schema/nae-schema.json"
     ],
     "lib": {
-        "entryFile": "src/public-api.ts",
-        "umdModuleIds": {
-            "@netgrif/components-core": "@netgrif/components-core",
-            "jszip": "JSZip",
-            "angular-resize-event": "angularResizeEvent",
-            "@covalent/core": "@covalent/core"
-        }
+        "entryFile": "src/public-api.ts"
     },
     "allowedNonPeerDependencies": ["palette-creator", "angular2-hotkeys", "tslib"]
 }
