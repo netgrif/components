@@ -8,7 +8,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     selector: 'ncc-abstract-dialog',
     template: ''
 })
-export abstract class AbstractDialog<T> implements OnInit {
+export abstract class AbstractDialog<T> {
     /**
      * Only injecting.
      * @param dialogRef Reference to a dialog opened via the MatDialog service.
@@ -20,6 +20,4 @@ export abstract class AbstractDialog<T> implements OnInit {
     /** On close dialog or on click answer button closed current open modal dialog. */
     public abstract onClose(isSubmitted?: boolean);
 
-    public ngOnInit() {
-    }
 }

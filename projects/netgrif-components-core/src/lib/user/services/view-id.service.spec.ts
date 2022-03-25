@@ -54,7 +54,7 @@ describe('ViewIdService', () => {
 
 @Component({
     selector: 'ncc-test-root',
-    template: '<ncc-test-direct></ncc-test-direct><nae-test-skipped></nae-test-skipped>',
+    template: '<ncc-test-direct></ncc-test-direct><ncc-test-skipped></ncc-test-skipped>',
     providers: [
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'root'},
         ViewIdService
