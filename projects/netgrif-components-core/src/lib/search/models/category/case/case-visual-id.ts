@@ -7,7 +7,6 @@ import {Equals} from '../../operator/equals';
 import {NotEquals} from '../../operator/not-equals';
 import {Categories} from '../categories';
 import {CaseSearch} from './case-search.enum';
-import {Query} from "../../query/query";
 
 export class CaseVisualId extends NoConfigurationCategory<string> {
 
