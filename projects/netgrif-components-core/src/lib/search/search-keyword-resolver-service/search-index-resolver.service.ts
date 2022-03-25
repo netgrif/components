@@ -14,7 +14,10 @@ import {SearchIndex} from '../models/search-index';
   providedIn: 'root'
 })
 export class SearchIndexResolverService {
-  constructor() { }
+
+    public readonly KEYWORD = '.keyword';
+
+    constructor() { }
 
     /**
      * Constructs the index name for the specified field.
@@ -28,6 +31,10 @@ export class SearchIndexResolverService {
      * @returns the full name of the specified index
      */
   public getIndex(dataFieldIdentifier: string, index: SearchIndex, keyword = false): string {
-      return `dataSet.${dataFieldIdentifier}.${index}${keyword ? '.keyword' : ''}`;
+      return `dataSet.${dataFieldIdentifier}.${index}${keyword ? this.KEYWORD : ''}`;
+  }
+
+  public getCoreIndex(index: string, keyword = false): string {
+      return `${index}${keyword ? this.KEYWORD : ''}`;
   }
 }
