@@ -1,10 +1,7 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
-import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {
-    commitChangesToFile,
     createFilesFromTemplates,
     createRelativePath,
-    getAppModule,
     getProjectInfo
 } from '../../../../_utility/utility-functions';
 import {EmbeddedView, TabViewParams} from '../../models/params-interfaces';
@@ -86,13 +83,6 @@ export function createTabView(
     updateAppModule(tree, view.className, view.fileImportPath, [
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('TabsComponentModule', '@netgrif/components')]);
-
-    tabViews.entryComponentsImports.forEach(imp => {
-        // the tree/fileEntry gets updated with every iteration, so we need to get the current state every time
-        const appModule = getAppModule(tree, projectInfo.path);
-        const changes = addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, imp.className, imp.fileImportPath);
-        commitChangesToFile(tree, appModule.fileEntry, changes);
-    });
 
     if (addViewToService) {
         addViewToViewService(tree, view);

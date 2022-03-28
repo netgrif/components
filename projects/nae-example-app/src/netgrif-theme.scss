@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import '@netgrif/components/nae-theme';
+@import 'node_modules/@netgrif/components/nae-theme';
 
 $typography: mat.define-typography-config(
     $font-family: 'Roboto, monospace',
