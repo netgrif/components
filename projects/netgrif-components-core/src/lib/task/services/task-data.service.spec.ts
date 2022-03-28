@@ -1,8 +1,8 @@
-import {inject, TestBed} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {TaskDataService} from './task-data.service';
 import {TaskRequestStateService} from './task-request-state.service';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MaterialModule} from '../../material/material.module';

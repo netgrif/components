@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {PublicProcessService} from './public-process.service';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
@@ -12,7 +12,7 @@ describe('PublicProcessService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, NoopAnimationsModule],
-            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}, HttpTestingController]
+            providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
         });
         service = TestBed.inject(PublicProcessService);
     });

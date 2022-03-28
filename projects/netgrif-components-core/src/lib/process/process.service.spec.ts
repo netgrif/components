@@ -1,5 +1,5 @@
-import {inject, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ProcessService} from './process.service';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
@@ -44,52 +44,52 @@ describe('ProcessService', () => {
     it('should call one net', (done) => {
         const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
         service.getNet('correct').subscribe(() => {
+            expect(getOneSpy).toHaveBeenCalled();
             done();
         });
-        expect(getOneSpy).toHaveBeenCalled();
     });
 
     it('should call more nets', (done) => {
         const getOneSpy = spyOn(TestBed.inject(PetriNetResourceService), 'getOne').and.callThrough();
         service.getNets(['correct', 'emptySecondaries']).subscribe(() => {
+            expect(getOneSpy).toHaveBeenCalledTimes(2);
             done();
         });
-        expect(getOneSpy).toHaveBeenCalledTimes(2);
     });
 
     it('get petri net errors - net without transitions/transactions/roles', (done) => {
         service.getNet('emptySecondaries').subscribe(() => {
+            expect(logInfoSpy).toHaveBeenCalled();
             done();
         });
-        expect(logInfoSpy).toHaveBeenCalled();
     });
 
     it('get petri net errors - roles fail to load', (done) => {
         service.getNet('errorOnRoles').subscribe(() => {
+            expect(logSpy).toHaveBeenCalled();
             done();
         });
-        expect(logSpy).toHaveBeenCalled();
     });
 
     it('get petri net errors - transactions fail to load', (done) => {
         service.getNet('errorOnTransactions').subscribe(() => {
+            expect(logSpy).toHaveBeenCalled();
             done();
         });
-        expect(logSpy).toHaveBeenCalled();
     });
 
     it('get petri net errors - transitions fail to load', (done) => {
         service.getNet('errorOnTransitions').subscribe(() => {
+            expect(logSpy).toHaveBeenCalled();
             done();
         });
-        expect(logSpy).toHaveBeenCalled();
     });
 
     it('get petri net errors - net fails to load', (done) => {
         service.getNet('err').subscribe(() => {
+            expect(logSpy).toHaveBeenCalled();
             done();
         });
-        expect(logSpy).toHaveBeenCalled();
     });
 
     // NAE-1085
@@ -148,23 +148,23 @@ describe('ProcessService', () => {
 
     it('get petri net reference errors - net without transitions/transactions/roles', (done) => {
         service.getNetReference('emptySecondaries').subscribe(() => {
+            expect(logInfoSpy).toHaveBeenCalled();
             done();
         });
-        expect(logInfoSpy).toHaveBeenCalled();
     });
 
     // it('get petri net reference errors - roles fail to load', (done) => {
     //     service.getNetReference('errorOnRoles').subscribe(() => {
+    //         expect(logSpy).toHaveBeenCalled();
     //         done();
     //     });
-    //     expect(logSpy).toHaveBeenCalled();
     // });
 
     it('get petri net reference errors - net fails to load', (done) => {
         service.getNetReference('err').subscribe(() => {
+            expect(logSpy).toHaveBeenCalled();
             done();
         });
-        expect(logSpy).toHaveBeenCalled();
     });
 
     afterEach(() => {

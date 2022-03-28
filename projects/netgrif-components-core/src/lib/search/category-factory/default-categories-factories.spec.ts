@@ -1,11 +1,11 @@
 import {Inject, Injectable} from '@angular/core';
 import {NAE_SEARCH_CATEGORIES} from './search-categories-injection-token';
-import {inject, TestBed} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {defaultCaseSearchCategoriesFactory, defaultTaskSearchCategoriesFactory} from './default-categories-factories';
 import {CategoryFactory} from './category-factory';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {
     TestCaseBaseFilterProvider,
     TestCaseViewAllowedNetsFactory,

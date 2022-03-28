@@ -1,8 +1,8 @@
 import {ViewService} from './view.service';
 import {Component, Type} from '@angular/core';
 import {ViewEntry} from './model/view-entry';
-import {inject, TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 

@@ -9,7 +9,7 @@ import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractFulltextSearchComponent', () => {
     let component: TestFulltextSearchComponent;

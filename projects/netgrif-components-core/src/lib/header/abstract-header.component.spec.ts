@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatIconModule} from '@angular/material/icon';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';

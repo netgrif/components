@@ -1,11 +1,11 @@
-import {inject, TestBed} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {SearchService} from './search.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CategoryFactory} from '../category-factory/category-factory';
 import {CaseTitle} from '../models/category/case/case-title';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider, TestNoAllowedNetsFactory} from '../../utility/tests/test-factory-methods';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';

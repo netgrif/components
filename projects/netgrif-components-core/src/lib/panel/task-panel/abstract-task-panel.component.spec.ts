@@ -1,11 +1,11 @@
-import {ComponentFixture, inject, TestBed, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {AfterViewInit, Component, Inject, Injector, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Observable, of, Subject, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AbstractTaskPanelComponent} from './abstract-task-panel.component';

@@ -1,6 +1,6 @@
-import {fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ConfigurationService} from '../../../configuration/configuration.service';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule} from '../../../material/material.module';
 import {TaskViewService} from './task-view.service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
