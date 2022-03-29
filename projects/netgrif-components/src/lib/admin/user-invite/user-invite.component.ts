@@ -22,4 +22,173 @@ export class UserInviteComponent extends AbstractUserInviteComponent {
                 protected _translate: TranslateService) {
         super(_userInviteService, _orgList, _signUpService, _snackBar, _translate);
     }
+
+    totok() {
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+    }
+
+
+    totokDuplicateCode() {
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+    }
+
+
+
+    totokDuplicateCode2() {
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+    }
+
+
+
+    totokDuplicateCode3() {
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+    }
 }
