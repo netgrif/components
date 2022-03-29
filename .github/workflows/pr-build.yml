@@ -25,6 +25,10 @@ jobs:
                     npm run nc:build
                     npm run nc:full-test
                     npm i ./dist/netgrif-components --save-optional
+            -   name: Edit Path
+                run: |
+                    sed -i 's/SF:.*.projects/SF:projects/g' coverage/netgrif-components/lcov.info
+                    sed -i 's/SF:.*.projects/SF:projects/g' coverage/netgrif-components-core/lcov.info
             -   name: SonarCloud scan
                 uses: SonarSource/sonarcloud-github-action@master
                 env:
