@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
     AbstractUserInviteComponent,
     OrganizationListService,
@@ -13,9 +13,11 @@ import {TranslateService} from '@ngx-translate/core';
     templateUrl: './user-invite.component.html',
     styleUrls: ['./user-invite.component.scss']
 })
-export class UserInviteComponent extends AbstractUserInviteComponent {
+export class UserInviteComponent extends AbstractUserInviteComponent implements OnInit {
 
-    constructor(protected _userInviteService: UserInviteService,
+    constructor(
+        // protected _userInviteService= this._config.get().providers.auth.session;
+                protected _userInviteService: UserInviteService,
                 protected _orgList: OrganizationListService,
                 protected _signUpService: SignUpService,
                 protected _snackBar: SnackBarService,
@@ -24,8 +26,9 @@ export class UserInviteComponent extends AbstractUserInviteComponent {
     }
 
     totok() {
-        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
-        this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
+        this._signUpService.signup({name: 'name', password: 'pass', token: 'secretToken', surname: 'TEST SONAR'}).subscribe();
+        this._snackBar.openErrorSnackBar('(/\..*$/, \'\')');
+        this._snackBar.openErrorSnackBar( 'http://' + 'SONAR TEST!!!!');
         this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
         this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
         this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
@@ -64,6 +67,9 @@ export class UserInviteComponent extends AbstractUserInviteComponent {
         this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
     }
 
+    // SONAR TEST PLZ DELETE
+    ngOnInit(): void {
+    }
 
     totokDuplicateCode() {
         this._snackBar.openErrorSnackBar('SONAR TEST!!!!');
