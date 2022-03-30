@@ -23,32 +23,4 @@ export class UserInviteComponent extends AbstractUserInviteComponent {
         super(_userInviteService, _orgList, _signUpService, _snackBar, _translate);
     }
 
-
-    totok() {
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-    }
-
-    totok2() {
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-        this._snackBar.openErrorSnackBar('AAaaaaaaaaaaaaaaaaaaaaa');
-    }
 }
