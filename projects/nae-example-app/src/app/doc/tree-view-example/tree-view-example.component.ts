@@ -3,9 +3,12 @@ import {
     CaseResourceService,
     ChangedFieldsService,
     CreateCaseEventOutcome,
+    createSortParam,
     Filter,
     FilterType,
     NAE_TREE_CASE_VIEW_CONFIGURATION,
+    PaginationParams,
+    PaginationSort,
     ProcessService,
     SimpleFilter,
     TreeCaseViewService,
@@ -34,7 +37,7 @@ export class TreeViewExampleComponent {
                 private _processService: ProcessService) {
         this.loading = true;
         let params: HttpParams = new HttpParams();
-        params = params.set('sort', 'creationDateSortable,asc');
+        params = params.set(PaginationParams.PAGE_SORT, createSortParam('creationDateSortable', PaginationSort.ASCENDING));
         this._caseResource.searchCases(
             new SimpleFilter('', FilterType.CASE, {process: {identifier: 'tree_test'}, query: '(title:root)'}), params)
             .subscribe(page => {
