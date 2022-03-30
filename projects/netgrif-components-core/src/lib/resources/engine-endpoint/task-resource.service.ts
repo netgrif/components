@@ -25,7 +25,9 @@ import {GetDataGroupsEventOutcome} from '../../event/model/event-outcomes/data-o
 })
 export class TaskResourceService extends AbstractResourceService implements CountService {
 
-    constructor(provider: ResourceProvider,
+    constructor(
+        // this._resourceProvider.post$('task/delegate/' + taskId, this.SERVER_URL, body, undefined, {'Content-Type': 'text/plain'})
+                provider: ResourceProvider,
                 configService: ConfigurationService,
                 protected _fieldConverter: FieldConverterService,
                 protected _logger: LoggerService) {
