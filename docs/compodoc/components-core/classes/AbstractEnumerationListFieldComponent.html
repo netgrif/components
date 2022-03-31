@@ -111,6 +111,9 @@
                             <li>
                                 <a href="#ngOnInit" >ngOnInit</a>
                             </li>
+                            <li>
+                                <a href="#resetEnum" >resetEnum</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -298,6 +301,43 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetEnum"></a>
+                    <span class="name">
+                        <span ><b>resetEnum</b></span>
+                        <a href="#resetEnum"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetEnum()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="15"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/enumeration-field/enumeration-list-field/abstract-enumeration-list-field.component.ts:15</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
             <section>
@@ -385,6 +425,10 @@ export abstract class AbstractEnumerationListFieldComponent implements OnInit {
     @Input() showLargeLayout: WrappedBoolean;
 
     ngOnInit() {
+    }
+
+    resetEnum(): void {
+        this.formControlRef.reset();
     }
 }
 </code></pre>

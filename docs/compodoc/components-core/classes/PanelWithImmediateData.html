@@ -444,8 +444,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="66"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/abstract/panel-with-immediate-data.ts:66</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="71"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/panel/abstract/panel-with-immediate-data.ts:71</a></div>
                 </td>
             </tr>
 
@@ -1089,6 +1089,11 @@ export abstract class PanelWithImmediateData extends PanelWithHeaderBinding impl
                     return {value: immediate.value.defaultValue, icon: undefined, type: immediate.type};
                 case &#x27;multichoice&#x27;:
                     return {value: immediate.value.map(it &#x3D;&gt; it.defaultValue).join(&#x27;, &#x27;), icon: undefined, type: immediate.type};
+                case &#x27;enumeration_map&#x27;:
+                    return {value: immediate.options[immediate.value].defaultValue, icon: undefined, type: immediate.type};
+                case &#x27;multichoice_map&#x27;:
+                    return {value: immediate.value.map(it &#x3D;&gt;
+                            immediate.options[it].defaultValue).join(&#x27;, &#x27;), icon: undefined, type: immediate.type};
                 case &#x27;file&#x27;:
                     return {value: immediate.value?.name, icon: &#x27;insert_drive_file&#x27;, type: immediate.type};
                 case &#x27;fileList&#x27;:

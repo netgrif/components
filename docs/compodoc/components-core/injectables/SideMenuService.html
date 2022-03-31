@@ -193,8 +193,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="94"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/services/side-menu.service.ts:94</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/services/side-menu.service.ts:97</a></div>
                 </td>
             </tr>
 
@@ -529,6 +529,9 @@ export class SideMenuService {
     public open&lt;T&gt;(componentOrTemplateRef: ComponentType&lt;T&gt; | TemplateRef&lt;T&gt;,
                    width: SideMenuSize &#x3D; SideMenuSize.MEDIUM,
                    injectionData?: SideMenuInjectionData): SideMenuRef {
+        if (!this.componentIsPresent()) {
+            throw new Error(&#x27;Side menu is not initialized&#x27;);
+        }
         if (this._sideMenuComponent.isOpened()) {
             throw new Error(&#x27;Side menu has been already opened with another content&#x27;);
         }
@@ -582,6 +585,10 @@ export class SideMenuService {
     // public toggle(isOpen?: boolean): Observable&lt;MatDrawerToggleResult&gt; {
     //     return from(this._sideMenu.toggle(isOpen));
     // }
+
+    private componentIsPresent(): boolean {
+        return !!this._sideMenuComponent;
+    }
 }
 </code></pre>
     </div>
