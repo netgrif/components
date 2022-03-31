@@ -172,6 +172,7 @@ export class TaskDataService extends TaskHandlingService implements OnDestroy {
         if (dataGroups.length === 0) {
             this._log.info('Task has no data ' + this._safeTask);
             this._safeTask.dataSize = 0;
+            this._taskContentService.taskFieldsIndex[this._safeTask.stringId] = {} as TaskFields;
         } else {
             this._taskContentService.referencedTaskAndCaseIds[this._safeTask.caseId] = [this._safeTask.stringId];
             dataGroups.forEach(group => {
