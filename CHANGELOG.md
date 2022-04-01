@@ -8,6 +8,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
+## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-01)
+
+### Fixed
+
+- [NAE-1613] Text selection in field value prevents task expansion panel header from reacting to click events
+
 ## [6.0.3](https://github.com/netgrif/components/releases/tag/v6.0.3) (2022-04-01)
 
 ### Fixed
