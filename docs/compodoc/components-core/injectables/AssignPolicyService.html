@@ -1260,7 +1260,7 @@ export class AssignPolicyService extends TaskHandlingService {
             afterAction.next(false);
             afterAction.complete();
             return;
-    }
+        }
         this._cancelTaskService.cancel(
             this._callchain.create((requestSuccess) &#x3D;&gt; {
                 this._taskOperations.close();
