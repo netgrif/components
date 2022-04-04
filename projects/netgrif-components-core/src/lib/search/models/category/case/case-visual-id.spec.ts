@@ -8,16 +8,17 @@ import {Operators} from '../../operator/operators';
 import {Substring} from '../../operator/substring';
 import {SearchIndexResolverService} from '../../../search-keyword-resolver-service/search-index-resolver.service';
 import {CaseSearch} from './case-search.enum';
+import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 
 describe('CaseVisualId', () => {
     let category: CaseVisualId;
     let operatorService: OperatorService;
-    let resolver: SearchIndexResolverService;
+    let deps: OptionalDependencies;
 
     beforeEach(() => {
         operatorService = new OperatorService(new OperatorResolverService());
-        category = new CaseVisualId(operatorService, null);
-        resolver = new SearchIndexResolverService();
+        deps = {searchIndexResolver: new SearchIndexResolverService()} as OptionalDependencies;
+        category = new CaseVisualId(operatorService, null, deps);
     });
 
     afterEach(() => {
@@ -72,7 +73,7 @@ describe('CaseVisualId', () => {
 
     it('should use keyword index', () => {
         configureCategory(category, operatorService, Substring, ['foo']);
-        const query = resolver.getCoreIndex(CaseSearch.VISUAL_ID, category.selectedOperator === operatorService.getOperator(Substring));
-        expect(query === `${CaseSearch.VISUAL_ID}${resolver.KEYWORD}`).toBeTrue();
+        const predicate = category.generatePredicate(['input']);
+        expect(predicate.query.value.includes(`${CaseSearch.VISUAL_ID}${deps.searchIndexResolver.KEYWORD}`)).toBeTrue();
     });
 });
