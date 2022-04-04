@@ -44,18 +44,17 @@ export abstract class ConfigurationService {
      * @return requested configuration if it exists. `undefined` otherwise.
      */
     public getViewByUrl(url: string): View | undefined {
-        const config = this.createConfigurationCopy() as NetgrifApplicationEngine;
-        const views = config.views;
+        const views = this.getViewsCopy();
         if (!views) {
             return undefined;
         }
         let map: Map<string, View> = new Map();
         map = this.getChildren(views, map, '');
         if (map.get(url) === undefined) {
-            map.forEach((value, key) => {
+            for (const [key, value] of map) {
                 if (key.includes('/**') && url.includes(key.split('/**')[0]))
                     return value;
-            });
+            }
         }
         return map.get(url);
     }
@@ -200,6 +199,10 @@ export abstract class ConfigurationService {
 
     private createConfigurationCopy(): any {
         return this.deepCopy(this.configuration);
+    }
+
+    private getViewsCopy(): Views {
+        return this.getConfigurationSubtree(['views']) as Views;
     }
 
     private deepCopy(obj: object): object {

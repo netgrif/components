@@ -25,11 +25,11 @@ export class PublicResolverComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this._userSub = this._userService.user$.subscribe(user => {
-            if (user.id !== '') {
+            if (!!user && user.id !== '') {
                 this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
                     { queryParams: this.redirectService.queryParams });
                 this._publicResolver.url = undefined;
-            } else if (user.id === '') {
+            } else {
                 if (!this._sessionService.verified && !this._sessionService.isVerifying &&
                     this._sessionService.isInitialized && !this._auth.isAuthenticated) {
                     this._router.navigate([this.redirectService.parseRedirectPath(this._publicResolver.url)],
