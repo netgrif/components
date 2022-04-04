@@ -13,6 +13,8 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 ### Fixed
 
 - [NAE-1613] Text selection in field value prevents task expansion panel header from reacting to click events
+- [NAE-1594] SonarCloud analysis is not configured correctly for @netgrif/components
+- [NAE-1614] Advanced search substring query
 
 ## [6.0.3](https://github.com/netgrif/components/releases/tag/v6.0.3) (2022-04-01)
 
