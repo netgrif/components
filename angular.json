@@ -44,8 +44,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/netgrif-components-core/**/*.ts",
-              "projects/netgrif-components-core/**/*.html"
+              "projects/netgrif-components-core/src/lib/**/*.ts",
+              "projects/netgrif-components-core/src/lib/**/*.html"
             ]
           }
         }

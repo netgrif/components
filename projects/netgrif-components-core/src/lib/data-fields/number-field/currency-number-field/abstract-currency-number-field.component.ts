@@ -18,7 +18,7 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
 
     ngOnInit() {
         this.fieldType = 'text';
-        this.transformedValue = this.transformCurrency(this.numberField.value.toString());
+        this.transformedValue = this.transformCurrency(this.numberField.value?.toString());
         this.numberField.valueChanges().subscribe(value => {
             if (value !== undefined) {
                 if (this.fieldType === 'text') {
