@@ -31,7 +31,7 @@ module.exports = function(config) {
         coverageIstanbulReporter: {
             dir: require("path").join(__dirname, "../../coverage/netgrif-components"),
             reports: ["html", "text-summary", "json-summary", "lcov"],
-            fixWebpackSourcePaths: true,
+            fixWebpackSourcePaths: true
         },
         nyanReporter: {
             suppressErrorReport: false, // default is false
@@ -52,7 +52,9 @@ module.exports = function(config) {
         sonarQubeUnitReporter: {
             sonarQubeVersion: 'LATEST',
             outputFile: '../../coverage/netgrif-components/sonarqube-unit-report.xml',
-            useBrowserName: false
+            useBrowserName: false,
+            overrideTestDescription: true,
+            testPaths: ['projects/netgrif-components/src/lib']
         },
 
         customLaunchers: {

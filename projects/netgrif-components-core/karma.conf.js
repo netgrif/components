@@ -52,7 +52,9 @@ module.exports = function (config) {
         sonarQubeUnitReporter: {
             sonarQubeVersion: 'LATEST',
             outputFile: '../../coverage/netgrif-components-core/sonarqube-unit-report.xml',
-            useBrowserName: false
+            useBrowserName: false,
+            overrideTestDescription: true,
+            testPaths: ['projects/netgrif-components-core/src/lib']
         },
 
         customLaunchers: {
