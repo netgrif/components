@@ -221,8 +221,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="64"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:64</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:59</a></div>
                 </td>
             </tr>
 
@@ -291,8 +291,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="75"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:75</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="70"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:70</a></div>
                 </td>
             </tr>
 
@@ -361,8 +361,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="96"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:96</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:91</a></div>
                 </td>
             </tr>
 
@@ -431,8 +431,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="89"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:89</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:84</a></div>
                 </td>
             </tr>
 
@@ -501,8 +501,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="82"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:82</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:77</a></div>
                 </td>
             </tr>
 
@@ -571,8 +571,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="101"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:101</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:96</a></div>
                 </td>
             </tr>
 
@@ -653,8 +653,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="113"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:113</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/authorization/permission/permission.service.ts:108</a></div>
                 </td>
             </tr>
 
@@ -1098,11 +1098,6 @@ export class PermissionService {
         if (Object.keys(net.permissions).some(role &#x3D;&gt;
             this._userService.hasRoleById(role) ? net.permissions[role][action] &#x3D;&#x3D;&#x3D; false : false)) {
             return false;
-        }
-        if (!Object.keys(net.permissions).filter(role &#x3D;&gt; Object.keys(net.permissions[role])
-            .some(perm &#x3D;&gt; perm &#x3D;&#x3D;&#x3D; action)).some(role &#x3D;&gt;
-            !!net.permissions[role][action])) {
-            return true;
         }
         return Object.keys(net.permissions).some(role &#x3D;&gt;
             this._userService.hasRoleById(role) ? !!net.permissions[role][action] : false

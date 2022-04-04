@@ -249,7 +249,7 @@ export class EnumerationField extends DataField&lt;string&gt; {
         if (this._choices &#x3D;&#x3D;&#x3D; undefined || this._choices.length &#x3D;&#x3D;&#x3D; 0 || control.value &#x3D;&#x3D;&#x3D; &#x27;&#x27; || control.value &#x3D;&#x3D;&#x3D; undefined) {
             return null;
         }
-        return this._choices.find(choice &#x3D;&gt; choice.key &#x3D;&#x3D;&#x3D; control.value) ? null : {wrongValue: true};
+        return this._choices.find(choice &#x3D;&gt; choice.key &#x3D;&#x3D;&#x3D; control.value || control.value &#x3D;&#x3D;&#x3D; null) ? null : {wrongValue: true};
     }
 
     getType(): string {

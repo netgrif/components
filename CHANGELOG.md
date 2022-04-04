@@ -8,6 +8,24 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
+## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-01)
+
+### Fixed
+
+- [NAE-1613] Text selection in field value prevents task expansion panel header from reacting to click events
+
+## [6.0.3](https://github.com/netgrif/components/releases/tag/v6.0.3) (2022-04-01)
+
+### Fixed
+
+- [NAE-1592] UserService user$ observable null value not checked
+- [NAE-1590] Taskref with file field must be assigned
+- [NAE-1608] Configuration service getViewByUrl not working with /**
+
+### Changed
+
+- [NAE-1571] Change the Version.NEWEST from "^" to "latest"
+
 ## [6.0.2](https://github.com/netgrif/components/releases/tag/v6.0.2) (2022-03-04)
 
 ### Fixed
