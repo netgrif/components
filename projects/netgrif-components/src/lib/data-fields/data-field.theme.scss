@@ -2,6 +2,7 @@
 @import "quill/dist/quill.snow.css";
 @import "quill/dist/quill.bubble.css";
 @import "quill/dist/quill.core.css";
+@import '~node_modules/@covalent/markdown/markdown-theme';
 
 @mixin data-field-component($theme) {
     $primary: map-get($theme, primary);

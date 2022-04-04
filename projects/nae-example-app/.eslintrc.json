@@ -10,9 +10,9 @@
       ],
       "parserOptions": {
         "project": [
-          "projects/nae-example-app/tsconfig.app.json",
-          "projects/nae-example-app/tsconfig.spec.json",
-          "projects/nae-example-app/e2e/tsconfig.json"
+          "tsconfig.app.json",
+          "tsconfig.spec.json",
+          "e2e/tsconfig.json"
         ],
         "createDefaultProgram": true
       },

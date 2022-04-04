@@ -58,6 +58,7 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
 import { I18nFieldComponent } from './i18n-field/i18n-field.component';
 import { I18nDividerFieldComponent } from './i18n-field/i18n-divider-field/i18n-divider-field.component';
 import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-field.component';
+import { EasymdeWrapperComponent } from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
 
 @NgModule({
     declarations: [
@@ -96,6 +97,7 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
         I18nFieldComponent,
         I18nDividerFieldComponent,
         I18nTextFieldComponent,
+        EasymdeWrapperComponent,
     ],
     exports: [
         BooleanFieldComponent,

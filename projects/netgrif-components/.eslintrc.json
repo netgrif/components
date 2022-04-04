@@ -10,11 +10,16 @@
       ],
       "parserOptions": {
         "project": [
-          "projects/netgrif-components/tsconfig.lib.json",
-          "projects/netgrif-components/tsconfig.spec.json"
+          "tsconfig.lib.json",
+          "tsconfig.spec.json"
         ],
         "createDefaultProgram": true
       },
+        "extends": [
+            "eslint:recommended",
+            "plugin:@angular-eslint/recommended",
+            "plugin:@angular-eslint/template/process-inline-templates"
+        ],
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
