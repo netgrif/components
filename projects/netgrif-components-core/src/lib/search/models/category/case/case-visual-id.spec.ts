@@ -5,14 +5,19 @@ import {configureCategory} from '../../../../utility/tests/utility/configure-cat
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
+import {Substring} from '../../operator/substring';
+import {SearchIndexResolverService} from '../../../search-keyword-resolver-service/search-index-resolver.service';
+import {CaseSearch} from './case-search.enum';
 
 describe('CaseVisualId', () => {
     let category: CaseVisualId;
     let operatorService: OperatorService;
+    let resolver: SearchIndexResolverService;
 
     beforeEach(() => {
         operatorService = new OperatorService(new OperatorResolverService());
         category = new CaseVisualId(operatorService, null);
+        resolver = new SearchIndexResolverService();
     });
 
     afterEach(() => {
@@ -63,5 +68,11 @@ describe('CaseVisualId', () => {
 
             done();
         });
+    });
+
+    it('should use keyword index', () => {
+        configureCategory(category, operatorService, Substring, ['foo']);
+        const query = resolver.getCoreIndex(CaseSearch.VISUAL_ID, category.selectedOperator === operatorService.getOperator(Substring));
+        expect(query === `${CaseSearch.VISUAL_ID}${resolver.KEYWORD}`).toBeTrue();
     });
 });
