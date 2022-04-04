@@ -14,7 +14,7 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
     private static readonly _i18n = 'search.category.case.visualId';
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies?: OptionalDependencies) {
-        super(undefined,
+        super([CaseSearch.VISUAL_ID],
             [operators.getOperator(Substring), operators.getOperator(Equals), operators.getOperator(NotEquals)],
             `${CaseVisualId._i18n}.name`,
             SearchInputType.TEXT,
@@ -35,7 +35,11 @@ export class CaseVisualId extends NoConfigurationCategory<string> {
     }
 
     protected get elasticKeywords(): Array<string> {
-        const resolver = this._optionalDependencies.searchIndexResolver;
-        return [resolver.getCoreIndex(CaseSearch.VISUAL_ID, this.isSelectedOperator(Substring))];
+        if (!!this._optionalDependencies) {
+            const resolver = this._optionalDependencies.searchIndexResolver;
+            return [resolver.getCoreIndex(CaseSearch.VISUAL_ID, this.isSelectedOperator(Substring))];
+        } else {
+            return this._elasticKeywords;
+        }
     }
 }

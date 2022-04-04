@@ -15,7 +15,7 @@ export class CaseTitle extends NoConfigurationCategory<string> {
     private static readonly _i18n = 'search.category.case.title';
 
     constructor(operators: OperatorService, logger: LoggerService, protected _optionalDependencies?: OptionalDependencies) {
-        super(undefined,
+        super([CaseSearch.TITLE],
             [
                 operators.getOperator(Substring),
                 operators.getOperator(Equals),
@@ -41,7 +41,11 @@ export class CaseTitle extends NoConfigurationCategory<string> {
     }
 
     protected get elasticKeywords(): Array<string> {
-        const resolver = this._optionalDependencies.searchIndexResolver;
-        return [resolver.getCoreIndex(CaseSearch.TITLE, this.isSelectedOperator(Substring))];
+        if (!!this._optionalDependencies) {
+            const resolver = this._optionalDependencies.searchIndexResolver;
+            return [resolver.getCoreIndex(CaseSearch.TITLE, this.isSelectedOperator(Substring))];
+        } else {
+            return this._elasticKeywords;
+        }
     }
 }
