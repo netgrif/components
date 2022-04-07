@@ -14,7 +14,10 @@ import {SearchIndex} from '../models/search-index';
   providedIn: 'root'
 })
 export class SearchIndexResolverService {
-  constructor() { }
+
+    public readonly KEYWORD = '.keyword';
+
+    constructor() { }
 
     /**
      * Constructs the index name for the specified field.
@@ -28,6 +31,20 @@ export class SearchIndexResolverService {
      * @returns the full name of the specified index
      */
   public getIndex(dataFieldIdentifier: string, index: SearchIndex, keyword = false): string {
-      return `dataSet.${dataFieldIdentifier}.${index}${keyword ? '.keyword' : ''}`;
+      return `dataSet.${dataFieldIdentifier}.${index}${keyword ? this.KEYWORD : ''}`;
+  }
+
+    /**
+     * Constructs the index name for the specified core field.
+     *
+     * Note that almost all combinations are valid and will not throw an error when used to query the database, but not all combinations are
+     * used by the application engine. The {@link SearchIndex} class has some information about which field types map to which indices, but
+     * you should consult the backend documentation for more reliable information.
+     * @param index the queried index
+     * @param keyword whether the keyword of a TEXT index should be queried
+     * @returns the full name of the specified index
+     */
+  public getCoreIndex(index: string, keyword = false): string {
+      return `${index}${keyword ? this.KEYWORD : ''}`;
   }
 }

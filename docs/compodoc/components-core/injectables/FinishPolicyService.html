@@ -313,8 +313,8 @@ Otherwise <a href="../interfaces/TaskOperations.html#open">opens</a> it and perf
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="63"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-policy.service.ts:63</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-policy.service.ts:62</a></div>
                 </td>
             </tr>
 
@@ -642,7 +642,6 @@ export class FinishPolicyService extends TaskHandlingService {
     protected autoNoDataFinishPolicy(afterAction: AfterAction): void {
         if (this._safeTask.dataSize &lt;&#x3D; 0) {
             this._finishTaskService.validateDataAndFinish(afterAction);
-            this._taskOperations.close();
         } else {
             this._taskOperations.open();
             this._dataFocusPolicyService.performDataFocusPolicy();

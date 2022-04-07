@@ -592,7 +592,7 @@ export class NextGroupService implements OnDestroy {
 
         this._userSub &#x3D; this._userService.user$.pipe(
             switchMap(user &#x3D;&gt; {
-                if (user.id &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+                if (!user || user.id &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
                     return of([]);
                 }
 
