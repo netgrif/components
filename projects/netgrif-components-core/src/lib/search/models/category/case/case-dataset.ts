@@ -260,13 +260,13 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             case 'file':
             case 'fileList':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FILE_NAME,
-                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring));
             case 'user':
             case 'userList':
                 return resolver.getIndex(datafield.fieldId, SearchIndex.USER_ID);
             default:
                 return resolver.getIndex(datafield.fieldId, SearchIndex.FULLTEXT,
-                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals));
+                    this.isSelectedOperator(Equals) || this.isSelectedOperator(NotEquals) || this.isSelectedOperator(Substring));
         }
     }
 
@@ -415,10 +415,6 @@ export class CaseDataset extends Category<Datafield> implements AutocompleteOpti
             return (value as SearchAutocompleteOption<Array<number>>).value;
         }
         return value;
-    }
-
-    protected isSelectedOperator(operatorClass: Type<any>): boolean {
-        return this.selectedOperator === this._operatorService.getOperator(operatorClass);
     }
 
     serializeClass(): Categories | string {
