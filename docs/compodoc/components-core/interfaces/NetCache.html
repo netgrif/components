@@ -124,6 +124,7 @@ export class ProcessService implements OnDestroy {
     protected _netUpdate: Subject&lt;Net&gt;;
     protected _requestCache: Map&lt;string, ReplaySubject&lt;Net&gt;&gt;;
     protected _referenceRequestCache: Map&lt;string, ReplaySubject&lt;PetriNetReferenceWithPermissions&gt;&gt;;
+    public readonly LATEST &#x3D; &#x27;latest&#x27;;
 
     constructor(private _petriNetResource: PetriNetResourceService, private _log: LoggerService) {
         this._nets &#x3D; {};
@@ -364,7 +365,7 @@ export class ProcessService implements OnDestroy {
 
     protected loadNetReference(id: string): Observable&lt;PetriNetReference&gt; {
         const returnReference &#x3D; new ReplaySubject&lt;PetriNetReference&gt;(1);
-        this._petriNetResource.getOne(id, &#x27;^&#x27;).subscribe(reference &#x3D;&gt; {
+        this._petriNetResource.getOne(id, this.LATEST).subscribe(reference &#x3D;&gt; {
             returnReference.next(!reference.stringId ? null : reference);
             returnReference.complete();
             return;
