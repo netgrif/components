@@ -60,7 +60,7 @@ export class FinishTaskService extends TaskHandlingService {
      * otherwise `false` will be emitted
      */
     public validateDataAndFinish(afterAction: AfterAction = new AfterAction()): void {
-        if (this._safeTask.dataSize <= 0) {
+        if (this.dataIsEmpty()) {
             this._taskDataService.initializeTaskDataFields(this._callChain.create(() => {
                 if (this._safeTask.dataSize <= 0 ||
                     (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData())) {
@@ -70,17 +70,15 @@ export class FinishTaskService extends TaskHandlingService {
         } else if (this._taskContentService.validateDynamicEnumField() && this._taskContentService.validateTaskData()) {
             const finishedTaskId = this._safeTask.stringId;
             this._taskDataService.updateTaskDataFields(this._callChain.create(success => {
-                if (success) {
-                    if (this._taskState.isUpdating(finishedTaskId)) {
+                    if (success && this._taskState.isUpdating(finishedTaskId)) {
                         this._taskDataService.updateSuccess$.pipe(take(1)).subscribe(bool => {
                             if (bool) {
                                 this.queueFinishTaskRequest(afterAction);
                             }
                         });
-                    } else {
+                    } else if (success) {
                         this.queueFinishTaskRequest(afterAction);
                     }
-                }
             }));
         }
     }
@@ -187,5 +185,13 @@ export class FinishTaskService extends TaskHandlingService {
      */
     protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.FINISH, success));
+    }
+
+    /**
+     * Checks data size
+     * @return boolean whether the task contains data or not
+     */
+    private dataIsEmpty(): boolean {
+        return this._safeTask.dataSize <= 0 || !this._safeTask.dataGroups || this._safeTask.dataGroups.length <= 0;
     }
 }
