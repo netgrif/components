@@ -5,9 +5,6 @@
             "description": "Adds NAE library to the project and creates all the necessary files.",
             "factory": "./add/add/index#ngAdd"
         },
-        "ng-update": {
-            "migrations": "migrations.json"
-        },
         "create-nae-files": {
             "description": "Creates all the necessary files for a NAE project",
             "factory": "./add/create-nae-files/index#createNaeFiles",

@@ -16,6 +16,7 @@ import {Operators} from '../operator/operators';
 import {ofVoid} from '../../../utility/of-void';
 import {FilterTextSegment} from '../persistance/filter-text-segment';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../../moment/time-formats';
+import {Type} from '@angular/core';
 
 /**
  * The top level of abstraction in search query generation. Represents a set of indexed fields that can be searched.
@@ -323,7 +324,7 @@ export abstract class Category<T> {
         if (!this.isOperatorSelected()) {
             throw new Error('Category cannot generate a Query if no Operator is selected');
         }
-        return this._operatorFormControl.value.createQuery(this._elasticKeywords, userInput as unknown as Array<string>);
+        return this._operatorFormControl.value.createQuery(this.elasticKeywords, userInput as unknown as Array<string>);
     }
 
     /**
@@ -666,5 +667,14 @@ export abstract class Category<T> {
                 break;
         }
         return {segment, bold: true};
+    }
+
+    /**
+     * Checks for selected operator
+     * @param operatorClass the operator to be checked
+     * @return boolean of the statement
+     */
+    protected isSelectedOperator(operatorClass: Type<any>): boolean {
+        return this.selectedOperator === this._operatorService.getOperator(operatorClass);
     }
 }
