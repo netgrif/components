@@ -5,9 +5,6 @@
             "description": "Adds NAE library to the project and creates all the necessary files.",
             "factory": "./add/add/index#ngAdd"
         },
-        "ng-update": {
-            "migrations": "migrations.json"
-        },
         "create-nc-files": {
             "description": "Creates all the necessary files for a NAE project",
             "factory": "./add/create-nc-files/index#createNcFiles",
@@ -35,12 +32,6 @@
             "description": "Adds extension to sidenav based on user inputs.",
             "factory": "./view/create-view-prompt/schematic-create-sidenav-prompt#schematicEntryPoint",
             "schema": "./view/create-view-prompt/schema-create-sidenav-prompt.json",
-            "hidden": true
-        },
-        "migration-5.4": {
-            "description": "migration from NAE 5.3.x to NAE 5.4.0",
-            "factory": "./migrations/5.4/migration-5.4#schematicEntryPoint",
-            "schema": "./migrations/5.4/schema.json",
             "hidden": true
         }
     }
