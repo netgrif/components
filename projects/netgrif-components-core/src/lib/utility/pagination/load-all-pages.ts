@@ -5,6 +5,7 @@ import {Pagination} from '../../resources/interface/pagination';
 import {HttpParams} from '@angular/common/http';
 import {concatMap, map} from 'rxjs/operators';
 import {hasContent} from './page-has-content';
+import {PaginationParams} from './pagination-params';
 
 /**
  * Loads all pages from the given endpoint and returns their content as one array
@@ -43,8 +44,8 @@ export function loadAllPages<T>(source: (filter: any, params: Params) => Observa
 
 function paginationParams(basePagination: Pagination, pageNumber?: number): HttpParams {
     let params = new HttpParams();
-    params = params.set('size', basePagination.size + '');
-    params = params.set('page', (pageNumber !== undefined ? pageNumber : basePagination.number) + '');
+    params = params.set(PaginationParams.PAGE_SIZE, `${basePagination.size}`);
+    params = params.set(PaginationParams.PAGE_NUMBER, (pageNumber !== undefined ? pageNumber : basePagination.number) + '');
     return params;
 }
 

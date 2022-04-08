@@ -2,6 +2,7 @@ import {ResourceProvider} from '../resource-provider.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {Page} from '../interface/page';
 import {Pagination} from '../interface/pagination';
+import {PaginationParams} from '../../utility/pagination/pagination-params';
 
 /**
  * The class that contains behavior common to all resource services.
@@ -69,7 +70,7 @@ export abstract class AbstractResourceService {
 
         return {
             content: this.changeType<Array<T>>(r, propertiesParams),
-            pagination: r.hasOwnProperty('page') ? r.page : defaultPage
+            pagination: r.hasOwnProperty(PaginationParams.PAGE_NUMBER) ? r.page : defaultPage
         };
     }
 
