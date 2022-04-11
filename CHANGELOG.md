@@ -8,7 +8,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
-## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-08)
+## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-11)
 
 ### Fixed
 
@@ -17,7 +17,7 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1614] Advanced search substring query
 - [NAE-1601] Component preview field is not propagated into taskRef
 - [NAE-1597] New case process input is not validated
-- [NAE-1615] Finish button randomly throws error and does not sends request
+- [NAE-1615] Finish button randomly throws error and does not send request
 - [NAE-1619] Task that has no fields cannot be completed
 
 ### Changed
