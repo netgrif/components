@@ -762,7 +762,7 @@
                                 "aggs": {
                                     "result": {
                                         "terms": {
-                                            "field": "dataSet.text.value.keyword"
+                                            "field": "title.keyword"
                                         }
                                     }
                                 }
@@ -783,7 +783,7 @@
                                 "aggs": {
                                     "result": {
                                         "terms": {
-                                            "field": "dataSet.text.value.keyword"
+                                            "field": "title.keyword"
                                         }
                                     }
                                 }
@@ -806,12 +806,12 @@
                                 "aggs": {
                                     "result1": {
                                         "terms": {
-                                            "field": "dataSet.text.value.keyword"
+                                            "field": "title.keyword"
                                         }
                                     },
                                     "result2": {
                                         "terms": {
-                                            "field": "dataSet.text.value.keyword"
+                                            "field": "title.keyword"
                                         }
                                     }
                                 }
@@ -834,7 +834,7 @@
                                 "aggs": {
                                     "types_count": {
                                         "value_count": {
-                                            "field": "dataSet.text.value.keyword"
+                                            "field": "title.keyword"
                                         }
                                     }
                                 }

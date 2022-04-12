@@ -8,6 +8,7 @@ import {DashboardSingleData} from '../model/custom-dashboard-model/dashboard-sin
 import {DashboardMultiData} from '../model/custom-dashboard-model/dashboard-multi-data';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {AggregationResult} from '../model/custom-dashboard-model/aggregation-result';
+import {Color} from "@swimlane/ngx-charts";
 
 @Component({
     selector: 'ncc-abstract-custom-card',
@@ -39,7 +40,7 @@ export abstract class AbstractCustomCardComponent implements OnInit, OnDestroy {
             '#a10ed6', '#b9c9e3', '#a8385d', '#aae3f5',
             '#bbbfbf', '#e7a897', '#854618', '#7aa3e5',
             '#a8385d', '#0db8ee']
-    };
+    } as Color;
 
     protected constructor(protected _injector: Injector,
                           protected resourceService: DashboardResourceService,
@@ -48,6 +49,8 @@ export abstract class AbstractCustomCardComponent implements OnInit, OnDestroy {
         this.loading = new LoadingEmitter();
         this.single = new Array<DashboardSingleData>();
         this.multi = new Array<DashboardMultiData>();
+        this.value = 0;
+        this.count = 0;
     }
 
     ngOnInit(): void {
