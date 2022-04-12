@@ -19,6 +19,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {arrayToObservable} from '../../utility/array-to-observable';
 import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
+import {PaginationParams} from '../../utility/pagination/pagination-params';
 
 
 @Injectable()
@@ -229,17 +230,9 @@ export class WorkflowViewService extends SortableView implements OnDestroy {
         return '';
     }
 
-    protected addSortParams(params: HttpParams): HttpParams {
-        if (this._lastHeaderSearchState.sortDirection !== '') {
-            return params.set('sort', `${this.getSortId()},${this._lastHeaderSearchState.sortDirection}`);
-        } else {
-            return params.set('sort', this.getDefaultSortParam());
-        }
-    }
-
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
-        params = params.set('size', pagination.size + '');
-        params = params.set('page', pagination.number + '');
+        params = params.set(PaginationParams.PAGE_SIZE, `${pagination.size}`);
+        params = params.set(PaginationParams.PAGE_NUMBER, `${pagination.number}`);
         return params;
     }
 

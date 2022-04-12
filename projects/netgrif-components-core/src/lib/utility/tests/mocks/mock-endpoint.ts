@@ -1,6 +1,7 @@
 import {HttpParams} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {Page} from '../../../resources/interface/page';
+import {PaginationParams} from '../../pagination/pagination-params';
 
 interface RequestedPagination {
     pageSize: number;
@@ -46,8 +47,8 @@ export class MockEndpoint {
 
     private getPagination(params: HttpParams): RequestedPagination {
         return {
-            pageSize: parseInt(params.get('size'), 10),
-            pageNumber: parseInt(params.get('page'), 10)
+            pageSize: parseInt(params.get(PaginationParams.PAGE_SIZE), 10),
+            pageNumber: parseInt(params.get(PaginationParams.PAGE_NUMBER), 10)
         };
     }
 }
