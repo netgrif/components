@@ -8,7 +8,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
-## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-11)
+## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-12)
 
 ### Fixed
 
@@ -23,7 +23,6 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 ### Changed
 
 - [NAE-1612] Optimize Tree Case View performance with many children
-
 
 ## [6.0.3](https://github.com/netgrif/components/releases/tag/v6.0.3) (2022-04-01)
 
