@@ -1,13 +1,29 @@
 import {Component} from '@angular/core';
-import {CaseResourceService, Filter, FilterType,
-    ProcessService, SimpleFilter, TreeCaseViewService, CreateCaseEventOutcome} from '@netgrif/components-core';
+import {
+    CaseResourceService,
+    ChangedFieldsService,
+    CreateCaseEventOutcome,
+    createSortParam,
+    Filter,
+    FilterType,
+    NAE_TREE_CASE_VIEW_CONFIGURATION,
+    PaginationParams,
+    PaginationSort,
+    ProcessService,
+    SimpleFilter,
+    TreeCaseViewService,
+} from '@netgrif/components-core';
 import {HttpParams} from '@angular/common/http';
 
 @Component({
     selector: 'nae-app-tree-view-example',
     templateUrl: './tree-view-example.component.html',
     styleUrls: ['./tree-view-example.component.scss'],
-    providers: [TreeCaseViewService]
+    providers: [
+        ChangedFieldsService,
+        TreeCaseViewService,
+        {provide: NAE_TREE_CASE_VIEW_CONFIGURATION, useValue: {pageSize: 100}}
+    ]
 })
 export class TreeViewExampleComponent {
 
@@ -21,7 +37,7 @@ export class TreeViewExampleComponent {
                 private _processService: ProcessService) {
         this.loading = true;
         let params: HttpParams = new HttpParams();
-        params = params.set('sort', 'creationDateSortable,asc');
+        params = params.set(PaginationParams.PAGE_SORT, createSortParam('creationDateSortable', PaginationSort.ASCENDING));
         this._caseResource.searchCases(
             new SimpleFilter('', FilterType.CASE, {process: {identifier: 'tree_test'}, query: '(title:root)'}), params)
             .subscribe(page => {

@@ -267,4 +267,10 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
             this.netVersion = '';
         }
     }
+
+    toNextStep(viewValue: any): void {
+        if (viewValue !== null && viewValue.value !== undefined) {
+            this.stepper1.next();
+        }
+    }
 }

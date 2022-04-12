@@ -6,6 +6,7 @@ import {HttpParams} from '@angular/common/http';
 import {map, switchMap} from 'rxjs/operators';
 import {Case} from '../../resources/interface/case';
 import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
+import {PaginationParams} from '../../utility/pagination/pagination-params';
 
 /**
  * This service allows access to information about the groups of the currently logged user.
@@ -37,7 +38,7 @@ export class NextGroupService implements OnDestroy {
                 }
 
                 const params = new HttpParams();
-                params.set('size', `${(user as any).nextGroups.length}`);
+                params.set(PaginationParams.PAGE_SIZE, `${(user as any).nextGroups.length}`);
 
                 return this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery({stringId: (user as any).nextGroups}), params)
                     .pipe(

@@ -370,7 +370,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
         this.state.downloading = true;
-        this._taskResourceService.downloadFilePreview(this.taskId, this.dataField.stringId).subscribe(response => {
+        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response => {
             if (response instanceof Blob) {
                 this._log.debug(`Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded`);
                 this.fileForPreview = new Blob([response], {type: 'application/octet-stream'});

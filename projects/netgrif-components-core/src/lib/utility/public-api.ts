@@ -7,6 +7,8 @@ export * from './call-chain/call-chain.service';
 export * from './call-chain/after-action';
 export * from './pagination/page-has-content';
 export * from './pagination/load-all-pages';
+export * from './pagination/pagination-params';
+export * from './pagination/pagination-sort';
 export * from './service/spinner-overlay.service';
 export * from './service/case-list-font-color.service';
 export * from './incrementing-counter';

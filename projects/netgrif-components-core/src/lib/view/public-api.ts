@@ -9,6 +9,7 @@ export * from './task-view/models/task-view-configuration';
 export * from './tree-case-view/tree-component/model/case-tree-node';
 export * from './tree-case-view/tree-component/model/case-tree-path';
 export * from './tree-case-view/tree-component/model/expansion-tree';
+export * from './tree-case-view/tree-component/model/tree-case-view-configuration';
 
 /* ENUMS */
 export * from './tree-case-view/model/tree-petriflow-identifiers';
@@ -30,6 +31,7 @@ export * from './case-view/models/new-case-configuration-injection-token';
 export * from './task-view/models/injection-token-task-endpoint';
 export * from './task-view/models/task-view-configuration-injection-token';
 export * from './workflow-view/models/injection-token-workflow-service';
+export * from './tree-case-view/tree-component/model/tree-configuration-injection-token';
 
 /* SERVICES */
 export * from './case-view/service/case-view-service';

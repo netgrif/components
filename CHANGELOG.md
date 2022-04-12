@@ -8,6 +8,22 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
+## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-12)
+
+### Fixed
+
+- [NAE-1613] Text selection in field value prevents task expansion panel header from reacting to click events
+- [NAE-1594] SonarCloud analysis is not configured correctly for @netgrif/components
+- [NAE-1614] Advanced search substring query
+- [NAE-1601] Component preview field is not propagated into taskRef
+- [NAE-1597] New case process input is not validated
+- [NAE-1615] Finish button randomly throws error and does not send request
+- [NAE-1619] Task that has no fields cannot be completed
+
+### Changed
+
+- [NAE-1612] Optimize Tree Case View performance with many children
+
 ## [6.0.3](https://github.com/netgrif/components/releases/tag/v6.0.3) (2022-04-01)
 
 ### Fixed
