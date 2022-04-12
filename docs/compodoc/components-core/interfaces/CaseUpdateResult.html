@@ -228,6 +228,10 @@ import {EventOutcomeMessageResource} from &#x27;../../../resources/interface/mes
 import {SetDataEventOutcome} from &#x27;../../../event/model/event-outcomes/data-outcomes/set-data-event-outcome&#x27;;
 import {CreateCaseEventOutcome} from &#x27;../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome&#x27;;
 import {refreshTree} from &#x27;../../../utility/refresh-tree&#x27;;
+import {NAE_TREE_CASE_VIEW_CONFIGURATION} from &#x27;./model/tree-configuration-injection-token&#x27;;
+import {TreeCaseViewConfiguration} from &#x27;./model/tree-case-view-configuration&#x27;;
+import {PaginationParams} from &#x27;../../../utility/pagination/pagination-params&#x27;;
+import {createSortParam, PaginationSort} from &#x27;../../../utility/pagination/pagination-sort&#x27;;
 
 /**
  * An internal helper object, that is used to return two values from a function.
@@ -245,6 +249,8 @@ interface CaseUpdateResult {
 
 @Injectable()
 export class CaseTreeService implements OnDestroy {
+
+    public static readonly DEFAULT_PAGE_SIZE &#x3D; 50;
 
     protected _currentNode: CaseTreeNode;
     private _rootNodesFilter: Filter;
@@ -273,7 +279,14 @@ export class CaseTreeService implements OnDestroy {
                 protected _processService: ProcessService,
                 protected _sideMenuService: SideMenuService,
                 protected _translateService: TranslateService,
-                @Optional() @Inject(NAE_OPTION_SELECTOR_COMPONENT) protected _optionSelectorComponent: any) {
+                @Optional() @Inject(NAE_OPTION_SELECTOR_COMPONENT) protected _optionSelectorComponent: any,
+                @Optional() @Inject(NAE_TREE_CASE_VIEW_CONFIGURATION) protected _treeConfiguration: TreeCaseViewConfiguration) {
+        if (!this._treeConfiguration) {
+            this._treeConfiguration &#x3D; {
+                pageSize: CaseTreeService.DEFAULT_PAGE_SIZE
+            };
+        }
+
         this._treeDataSource &#x3D; new MatTreeNestedDataSource&lt;CaseTreeNode&gt;();
         this._treeControl &#x3D; new NestedTreeControl&lt;CaseTreeNode&gt;(node &#x3D;&gt; node.children);
         _treeCaseViewService.reloadCase$.asObservable().subscribe(() &#x3D;&gt; {
@@ -557,7 +570,9 @@ export class CaseTreeService implements OnDestroy {
         const done &#x3D; new ReplaySubject&lt;void&gt;(1);
 
         let params: HttpParams &#x3D; new HttpParams();
-        params &#x3D; params.set(&#x27;page&#x27;, &#x60;${pageNumber}&#x60;).set(&#x27;sort&#x27;, &#x27;creationDate,asc&#x27;);
+        params &#x3D; params.set(PaginationParams.PAGE_SIZE, &#x60;${this._treeConfiguration.pageSize}&#x60;)
+                       .set(PaginationParams.PAGE_NUMBER, &#x60;${pageNumber}&#x60;)
+                       .set(PaginationParams.PAGE_SORT, createSortParam(&#x27;creationDate&#x27;, PaginationSort.ASCENDING));
         this._caseResourceService.getCases(requestBody, params).subscribe(page &#x3D;&gt; {
             if (!hasContent(page)) {
                 this._logger.error(&#x27;Child cases invalid page content&#x27;, page);

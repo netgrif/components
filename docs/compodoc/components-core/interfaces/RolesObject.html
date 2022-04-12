@@ -84,7 +84,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/netgrif-components-core/src/lib/user/services/user-list.service.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/netgrif-components-core/src/lib/user/services/user-list.service.ts:23</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -108,6 +108,7 @@ import {HttpParams} from &#x27;@angular/common/http&#x27;;
 import {MessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
 import {Page} from &#x27;../../resources/interface/page&#x27;;
 import {UserResource} from &#x27;../../resources/interface/user-resource&#x27;;
+import {PaginationParams} from &#x27;../../utility/pagination/pagination-params&#x27;;
 
 export interface UserListItem extends UserResource {
     selected: boolean;
@@ -346,9 +347,9 @@ export class UserListService implements OnDestroy {
      * @param page Page number that is requested. / Next page users list.
      */
     private addPageParams(params: HttpParams, page?: number): HttpParams {
-        params &#x3D; params.set(&#x27;size&#x27;, this._pagination.size + &#x27;&#x27;);
+        params &#x3D; params.set(PaginationParams.PAGE_SIZE, &#x60;${this._pagination.size}&#x60;);
         page &#x3D; page !&#x3D;&#x3D; null ? page : this._pagination.number;
-        params &#x3D; params.set(&#x27;page&#x27;, page + &#x27;&#x27;);
+        params &#x3D; params.set(PaginationParams.PAGE_NUMBER, &#x60;${page}&#x60;);
         return params;
     }
 
