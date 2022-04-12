@@ -32,6 +32,8 @@ import {NewCaseCreationConfigurationData} from '../../../side-menu/content-compo
 import {PermissionService} from '../../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
 import {CreateCaseEventOutcome} from '../../../event/model/event-outcomes/case-outcomes/create-case-event-outcome';
+import {PaginationParams} from '../../../utility/pagination/pagination-params';
+import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 
 @Injectable()
 export class CaseViewService extends SortableView implements OnDestroy {
@@ -252,13 +254,13 @@ export class CaseViewService extends SortableView implements OnDestroy {
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
-        params = params.set('size', pagination.size + '');
-        params = params.set('page', pagination.number + '');
+        params = params.set(PaginationParams.PAGE_SIZE, `${pagination.size}`);
+        params = params.set(PaginationParams.PAGE_NUMBER, `${pagination.number}`);
         return params;
     }
 
     protected getDefaultSortParam(): string {
-        return 'stringId,desc';
+        return createSortParam('stringId', PaginationSort.DESCENDING);
     }
 
     protected getMetaFieldSortId(): string {
