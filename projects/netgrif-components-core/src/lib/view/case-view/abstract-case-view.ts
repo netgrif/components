@@ -15,6 +15,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public cases$: Observable<Array<Case>>;
     public loading: boolean;
     public authorityToCreate: Array<string>;
+    protected canCreate: boolean;
 
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _overflowService?: OverflowService,
@@ -26,6 +27,9 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
         super(_caseViewService);
         this._caseViewService.loading$.subscribe(loading => {
             this.loading = loading;
+        });
+        this._caseViewService.getNewCaseAllowedNets().subscribe(allowedNets => {
+            this.canCreate = allowedNets.length > 0;
         });
         this.cases$ = this._caseViewService.cases$;
         this.authorityToCreate = _authority.map(a => a.authority);
@@ -42,7 +46,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public abstract handleCaseClick(clickedCase: Case): void;
 
     public hasAuthority(): boolean {
-        return (this._caseViewService.hasAuthority(this.authorityToCreate) && this._caseViewService.getAllowedNetsCount() > 0);
+        return (this._caseViewService.hasAuthority(this.authorityToCreate) && this.canCreate);
     }
 
     public getWidth() {
