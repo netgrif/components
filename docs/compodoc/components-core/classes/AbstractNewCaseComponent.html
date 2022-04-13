@@ -182,6 +182,9 @@
                             <li>
                                 <a href="#titleShortening" >titleShortening</a>
                             </li>
+                            <li>
+                                <a href="#toNextStep" >toNextStep</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -1332,6 +1335,74 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toNextStep"></a>
+                    <span class="name">
+                        <span ><b>toNextStep</b></span>
+                        <a href="#toNextStep"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toNextStep(viewValue: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="271"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/side-menu/content-components/new-case/abstract-new-case.component.ts:271</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>viewValue</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
 
@@ -1658,6 +1729,12 @@ export abstract class AbstractNewCaseComponent implements OnDestroy {
         const currentOption &#x3D; typeof viewValue &#x3D;&#x3D;&#x3D; &#x27;string&#x27; || viewValue &#x3D;&#x3D;&#x3D; null ? undefined : viewValue.version;
         if (currentOption &#x3D;&#x3D;&#x3D; undefined) {
             this.netVersion &#x3D; &#x27;&#x27;;
+        }
+    }
+
+    toNextStep(viewValue: any): void {
+        if (viewValue !&#x3D;&#x3D; null &amp;&amp; viewValue.value !&#x3D;&#x3D; undefined) {
+            this.stepper1.next();
         }
     }
 }

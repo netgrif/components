@@ -1,6 +1,7 @@
 import {MockEndpoint} from './mock-endpoint';
 import {HttpParams} from '@angular/common/http';
 import {hasContent} from '../../pagination/page-has-content';
+import {PaginationParams} from '../../pagination/pagination-params';
 
 describe('MockEndpoint', () => {
 
@@ -69,7 +70,7 @@ describe('MockEndpoint', () => {
 
 function paginationParams(page: number, size: number): HttpParams {
     let params = new HttpParams();
-    params = params.set('size', `${size}`);
-    params = params.set('page', `${page}`);
+    params = params.set(PaginationParams.PAGE_SIZE, `${size}`);
+    params = params.set(PaginationParams.PAGE_NUMBER, `${page}`);
     return params;
 }

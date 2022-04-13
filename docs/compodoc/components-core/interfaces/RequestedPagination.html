@@ -179,6 +179,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {HttpParams} from &#x27;@angular/common/http&#x27;;
 import {Observable, of} from &#x27;rxjs&#x27;;
 import {Page} from &#x27;../../../resources/interface/page&#x27;;
+import {PaginationParams} from &#x27;../../pagination/pagination-params&#x27;;
 
 interface RequestedPagination {
     pageSize: number;
@@ -224,8 +225,8 @@ export class MockEndpoint {
 
     private getPagination(params: HttpParams): RequestedPagination {
         return {
-            pageSize: parseInt(params.get(&#x27;size&#x27;), 10),
-            pageNumber: parseInt(params.get(&#x27;page&#x27;), 10)
+            pageSize: parseInt(params.get(PaginationParams.PAGE_SIZE), 10),
+            pageNumber: parseInt(params.get(PaginationParams.PAGE_NUMBER), 10)
         };
     }
 }

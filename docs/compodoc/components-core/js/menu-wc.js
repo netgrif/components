@@ -1893,6 +1893,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/Transition.html" data-type="entity-link" >Transition</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/TreeCaseViewConfiguration.html" data-type="entity-link" >TreeCaseViewConfiguration</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/TypeLocalisadField.html" data-type="entity-link" >TypeLocalisadField</a>
                             </li>
                             <li class="link">
