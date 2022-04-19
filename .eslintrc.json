@@ -1,51 +1,69 @@
 {
-  "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
-  "overrides": [
-    {
-      "files": [
-        "*.ts"
-      ],
-      "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
-        ],
-        "createDefaultProgram": true
-      },
-      "extends": [
-        "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
-      "rules": {
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "prefix": "ncc",
-            "style": "kebab-case",
-            "type": "element"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "prefix": "ncc",
-            "style": "camelCase",
-            "type": "attribute"
-          }
-        ]
-      }
-    },
-    {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "rules": {}
-    }
-  ]
+    "root": true,
+    "ignorePatterns": [
+        "projects/**/*"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts"
+            ],
+            "parserOptions": {
+                "project": [
+                    "tsconfig.json",
+                    "e2e/tsconfig.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "extends": [
+                "plugin:@angular-eslint/recommended",
+                "plugin:@angular-eslint/template/process-inline-templates"
+            ],
+            "rules": {
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "prefix": "ncc",
+                        "style": "kebab-case",
+                        "type": "element"
+                    }
+                ],
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "prefix": "ncc",
+                        "style": "camelCase",
+                        "type": "attribute"
+                    }
+                ],
+                "quotes": [
+                    2,
+                    "single",
+                    "avoid-escape"
+                ],
+                "max-len": [
+                    2,
+                    140,
+                    4
+                ],
+                "curly": "error",
+                "indent": ["error", 4],
+                "@typescript-eslint/member-ordering": [
+                    "error",
+                    [
+
+                    ]
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
+            ],
+            "rules": {}
+        }
+    ]
 }
