@@ -26,6 +26,8 @@ import {AbstractSortableViewComponent} from '../../abstract/sortable-view';
 import {NAE_TASK_VIEW_CONFIGURATION} from '../models/task-view-configuration-injection-token';
 import {TaskViewConfiguration} from '../models/task-view-configuration';
 import {ChangedFieldsMap} from '../../../event/services/interfaces/changed-fields-map';
+import {PaginationParams} from '../../../utility/pagination/pagination-params';
+import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 
 
 @Injectable()
@@ -336,12 +338,12 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
     }
 
     protected getDefaultSortParam(): string {
-        return 'priority,desc';
+        return createSortParam('priority', PaginationSort.DESCENDING);
     }
 
     protected addPageParams(params: HttpParams, pagination: Pagination): HttpParams {
-        params = params.set('size', pagination.size + '');
-        params = params.set('page', pagination.number + '');
+        params = params.set(PaginationParams.PAGE_SIZE, `${pagination.size}`);
+        params = params.set(PaginationParams.PAGE_NUMBER, `${pagination.number}`);
         return params;
     }
 }

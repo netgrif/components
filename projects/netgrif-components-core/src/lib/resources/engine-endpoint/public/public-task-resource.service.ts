@@ -20,7 +20,7 @@ import {EventOutcomeMessageResource, MessageResource} from '../../interface/mess
 import {GetDataGroupsEventOutcome} from '../../../event/model/event-outcomes/data-outcomes/get-data-groups-event-outcome';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PublicTaskResourceService extends TaskResourceService {
 

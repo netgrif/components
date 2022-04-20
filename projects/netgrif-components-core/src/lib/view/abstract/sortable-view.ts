@@ -7,6 +7,7 @@ import {HeaderChangeType} from '../../header/models/user-changes/header-change-t
 import {Component, OnDestroy} from '@angular/core';
 import {SearchIndexResolverService} from '../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {SearchIndex} from '../../search/models/search-index';
+import {PaginationParams} from '../../utility/pagination/pagination-params';
 
 @Component({
     selector: 'ncc-abstract-sortable-view',
@@ -52,9 +53,9 @@ export abstract class AbstractSortableViewComponent implements OnDestroy {
 
     protected addSortParams(params: HttpParams): HttpParams {
         if (this._lastHeaderSearchState.sortDirection !== '') {
-            return params.set('sort', `${this.getSortId()},${this._lastHeaderSearchState.sortDirection}`);
+            return params.set(PaginationParams.PAGE_SORT, `${this.getSortId()},${this._lastHeaderSearchState.sortDirection}`);
         } else {
-            return params.set('sort', this.getDefaultSortParam());
+            return params.set(PaginationParams.PAGE_SORT, this.getDefaultSortParam());
         }
     }
 

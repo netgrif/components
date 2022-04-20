@@ -500,8 +500,8 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="267"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:267</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="268"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:268</a></div>
                 </td>
             </tr>
 
@@ -618,8 +618,8 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="365"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:365</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="366"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:366</a></div>
                 </td>
             </tr>
 
@@ -663,8 +663,8 @@ use the <a href="../injectables/SearchService.html#addGeneratedLeafPredicate">ad
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="310"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:310</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="311"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:311</a></div>
                 </td>
             </tr>
 
@@ -711,8 +711,8 @@ Otherwise returns the serialized form of the completed queries in the predicate 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="323"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:323</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="324"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:324</a></div>
                 </td>
             </tr>
 
@@ -1004,8 +1004,8 @@ If full text filter is already set, it will be replaced.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="279"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:279</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="280"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:280</a></div>
                 </td>
             </tr>
 
@@ -1081,8 +1081,8 @@ If full text filter is already set, it will be replaced.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="287"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:287</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="288"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-service/search.service.ts:288</a></div>
                 </td>
             </tr>
 
@@ -1932,7 +1932,8 @@ export class SearchService implements OnDestroy {
      * @param searchedSubstring value that should be searched on all full text fields
      */
     public setFullTextFilter(searchedSubstring: string): void {
-        this._fullTextFilter &#x3D; new SimpleFilter(&#x27;&#x27;, this._baseFilter.type, {fullText: searchedSubstring});
+        const whiteSpacedSubstring &#x3D; searchedSubstring.replace(&#x27; &#x27;, &#x27;\\ &#x27;);
+        this._fullTextFilter &#x3D; new SimpleFilter(&#x27;&#x27;, this._baseFilter.type, {fullText: whiteSpacedSubstring});
         this.updateActiveFilter();
     }
 
