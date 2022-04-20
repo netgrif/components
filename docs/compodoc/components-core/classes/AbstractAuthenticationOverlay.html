@@ -497,7 +497,7 @@ export abstract class AbstractAuthenticationOverlay implements OnInit, OnDestroy
             this._spinnerOverlay.spin$.next(true);
             this.subSession &#x3D; this._session.verifying.subscribe(active &#x3D;&gt; {
                 this.userService.user$.subscribe(user &#x3D;&gt; {
-                    if (!!user.id &amp;&amp; user.id.length &gt; 0) {
+                    if (!!user &amp;&amp; !!user.id &amp;&amp; user.id.length &gt; 0) {
                         this.redirect(!active);
                     }
                 });

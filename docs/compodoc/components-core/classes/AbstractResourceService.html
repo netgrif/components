@@ -140,7 +140,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -246,8 +246,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="81"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:81</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:82</a></div>
                 </td>
             </tr>
 
@@ -351,8 +351,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="35"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:35</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:36</a></div>
                 </td>
             </tr>
 
@@ -430,8 +430,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="59"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:59</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:60</a></div>
                 </td>
             </tr>
 
@@ -539,7 +539,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/netgrif-components-core/src/lib/resources/abstract-endpoint/abstract-resource.service.ts:28</a></div>
                                 </td>
                             </tr>
 
@@ -554,6 +554,7 @@
 import {ConfigurationService} from &#x27;../../configuration/configuration.service&#x27;;
 import {Page} from &#x27;../interface/page&#x27;;
 import {Pagination} from &#x27;../interface/pagination&#x27;;
+import {PaginationParams} from &#x27;../../utility/pagination/pagination-params&#x27;;
 
 /**
  * The class that contains behavior common to all resource services.
@@ -621,7 +622,7 @@ export abstract class AbstractResourceService {
 
         return {
             content: this.changeType&lt;Array&lt;T&gt;&gt;(r, propertiesParams),
-            pagination: r.hasOwnProperty(&#x27;page&#x27;) ? r.page : defaultPage
+            pagination: r.hasOwnProperty(PaginationParams.PAGE_NUMBER) ? r.page : defaultPage
         };
     }
 

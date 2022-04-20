@@ -17,7 +17,7 @@
             </mat-autocomplete>
         </mat-form-field>
         <div>
-            <button *ngIf="isCaseTitleEnabled()" mat-button matStepperNext>{{'side-menu.new-case.next' | translate}}</button>
+            <button *ngIf="isCaseTitleEnabled()"  mat-button (click)="toNextStep(processFormControl.value)">{{'side-menu.new-case.next' | translate}}</button>
             <button *ngIf="!isCaseTitleEnabled()" mat-button (click)="createNewCase()">{{'side-menu.new-case.create' | translate}}</button>
         </div>
     </mat-step>

@@ -17,7 +17,8 @@ module.exports = function(config) {
             require("karma-mocha-reporter"),
             require("karma-nyan-reporter"),
             require("karma-junit-reporter"),
-            require("@angular-devkit/build-angular/plugins/karma")
+            require("karma-sonarqube-unit-reporter"),
+            require("@angular-devkit/build-angular/plugins/karma"),
         ],
 
         client: {
@@ -48,6 +49,11 @@ module.exports = function(config) {
             properties: {}, // key value pair of properties to add to the <properties> section of the report
             xmlVersion: null, // use '1' if reporting to be per SonarQube 6.2 XML format
         },
+        sonarQubeUnitReporter: {
+            sonarQubeVersion: 'LATEST',
+            outputFile: '../../coverage/netgrif-components/sonarqube-unit-report.xml',
+            useBrowserName: false
+        },
 
         customLaunchers: {
             ChromeHeadlessCI: {
@@ -63,7 +69,7 @@ module.exports = function(config) {
             }
         },
 
-        reporters: ["progress", "kjhtml", "coverage-istanbul", "nyan", "junit"],
+        reporters: ["progress", "kjhtml", "coverage-istanbul", "nyan", "junit", "sonarqubeUnit"],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,

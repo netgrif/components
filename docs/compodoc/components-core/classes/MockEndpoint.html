@@ -148,7 +148,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-endpoint.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-endpoint.ts:19</a></div>
                         </td>
                     </tr>
 
@@ -188,8 +188,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-endpoint.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/utility/tests/mocks/mock-endpoint.ts:32</a></div>
                 </td>
             </tr>
 
@@ -280,6 +280,7 @@ Otherwise the <code>content</code> attribute contains the corresponding subsecti
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {HttpParams} from &#x27;@angular/common/http&#x27;;
 import {Observable, of} from &#x27;rxjs&#x27;;
 import {Page} from &#x27;../../../resources/interface/page&#x27;;
+import {PaginationParams} from &#x27;../../pagination/pagination-params&#x27;;
 
 interface RequestedPagination {
     pageSize: number;
@@ -325,8 +326,8 @@ export class MockEndpoint {
 
     private getPagination(params: HttpParams): RequestedPagination {
         return {
-            pageSize: parseInt(params.get(&#x27;size&#x27;), 10),
-            pageNumber: parseInt(params.get(&#x27;page&#x27;), 10)
+            pageSize: parseInt(params.get(PaginationParams.PAGE_SIZE), 10),
+            pageNumber: parseInt(params.get(PaginationParams.PAGE_NUMBER), 10)
         };
     }
 }
