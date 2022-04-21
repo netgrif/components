@@ -87,7 +87,7 @@
         "@ngx-translate/http-loader": "~6.0.0",
         "@schematics/angular": "~10.2.0",
         "@swimlane/ngx-charts": "~16.0.0",
-        "@types/mousetrap": "1.6.3",
+        "@types/mousetrap": "1.6.9",
         "angular-resizable-element": "~3.3.0",
         "angular-resize-event": "~2.0.1",
         "angular2-hotkeys": "~2.2.0",
