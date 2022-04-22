@@ -137,7 +137,7 @@
     "karma-junit-reporter": "~2.0.1",
     "karma-mocha-reporter": "~2.2.5",
     "karma-nyan-reporter": "~0.2.5",
-      "karma-sonarqube-unit-reporter": "^0.0.23",
+    "karma-sonarqube-unit-reporter": "^0.0.23",
     "ncp": "~2.0.0",
     "ng-packagr": "~13.3.0",
     "protractor": "~7.0.0",
