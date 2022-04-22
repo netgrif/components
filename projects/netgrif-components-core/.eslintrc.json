@@ -1,50 +1,50 @@
 {
-  "extends": "../../.eslintrc.json",
-  "ignorePatterns": [
-    "!**/*"
-  ],
-  "overrides": [
-    {
-      "files": [
-        "*.ts"
-      ],
-      "parserOptions": {
-        "project": [
-          "projects/netgrif-components-core/tsconfig.lib.json",
-          "projects/netgrif-components-core/tsconfig.spec.json"
-        ],
-        "createDefaultProgram": true
-      },
-        "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "ncc",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "ncc",
-            "style": "kebab-case"
-          }
-        ],
-      "@angular-eslint/no-input-rename": [
-          "warn"
-      ],
-      "@angular-eslint/component-class-suffix": [
-          "warn"
-      ]
-      }
-    },
-    {
-      "files": [
-        "*.html"
-      ],
-      "rules": {}
-    }
-  ]
+    "extends": "../../.eslintrc.json",
+    "ignorePatterns": [
+        "!**/*"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts"
+            ],
+            "parserOptions": {
+                "project": [
+                    "projects/netgrif-components-core/tsconfig.lib.json",
+                    "projects/netgrif-components-core/tsconfig.spec.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "rules": {
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": "ncc",
+                        "style": "camelCase"
+                    }
+                ],
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": "element",
+                        "prefix": "ncc",
+                        "style": "kebab-case"
+                    }
+                ],
+                "@angular-eslint/no-input-rename": [
+                    "warn"
+                ],
+                "@angular-eslint/component-class-suffix": [
+                    "warn"
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "rules": {}
+        }
+    ]
 }
