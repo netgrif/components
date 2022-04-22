@@ -38,7 +38,7 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
 
     transformToNumber() {
         this.fieldType = 'number';
-        this.transformedValue = this.numberField.value?.toString();
+        this.transformedValue = !!this.numberField.value ? this.numberField.value.toString() : '0';
     }
 
     getCurrencySymbol(): string {
