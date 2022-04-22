@@ -11,17 +11,19 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
 
     @Input() transformedValue: string;
     fieldType: string;
+    public readonly NUMBER_TYPE = 'number';
+    public readonly TEXT_TYPE = 'text';
 
     protected constructor(protected _currencyPipe: CurrencyPipe, translateService: TranslateService) {
         super(translateService);
     }
 
     ngOnInit() {
-        this.fieldType = 'text';
+        this.fieldType = this.TEXT_TYPE;
         this.transformedValue = this.transformCurrency(this.numberField.value?.toString());
         this.numberField.valueChanges().subscribe(value => {
             if (value !== undefined) {
-                if (this.fieldType === 'text') {
+                if (this.fieldType === this.TEXT_TYPE) {
                     this.transformedValue = this.transformCurrency(value.toString());
                 }
             } else {
@@ -32,12 +34,12 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
 
     transformToText(event: Event) {
         const target = (event.target as HTMLInputElement);
-        this.fieldType = 'text';
+        this.fieldType = this.TEXT_TYPE;
         this.transformedValue = this.transformCurrency(target.value);
     }
 
     transformToNumber() {
-        this.fieldType = 'number';
+        this.fieldType = this.NUMBER_TYPE;
         this.transformedValue = !!this.numberField.value ? this.numberField.value.toString() : '0';
     }
 
@@ -47,6 +49,10 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
                 'wide', this.numberField.component.properties['locale']);
         }
         return getCurrencySymbol(this.numberField._formatFilter.code, 'wide', this.numberField._formatFilter.locale);
+    }
+
+    isNumberType(): boolean {
+        return this.fieldType === this.NUMBER_TYPE;
     }
 
     private transformCurrency(value: string | undefined): string {
