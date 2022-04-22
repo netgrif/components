@@ -2,7 +2,6 @@ import {BooleanOperator} from '../boolean-operator';
 import {Subject} from 'rxjs';
 import {EditableElementaryPredicate} from './editable-elementary-predicate';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
-import {OnDestroy} from '@angular/core';
 import {Query} from '../query/query';
 import {EditablePredicate} from './editable-predicate';
 import {Predicate} from './predicate';

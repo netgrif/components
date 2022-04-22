@@ -27,6 +27,9 @@ import {I18nField} from '../../data-fields/i18n-field/models/i18n-field';
 })
 export class FieldConverterService {
 
+    public readonly RICH_TEXT_AREA = 'richtextarea';
+    public readonly HTML_TEXT_AREA = 'htmltextarea';
+
     constructor() {
     }
 
@@ -41,7 +44,7 @@ export class FieldConverterService {
                 if (item.subType !== undefined && item.subType === 'area') {
                     type = TextFieldView.TEXTAREA;
                 }
-                if (item.view !== undefined && item.view.value !== undefined && (item.view.value === 'editor' || item.view.value === 'richtextarea')) {
+                if (item.view !== undefined && item.view.value !== undefined && (item.view.value === 'editor' || item.view.value === this.RICH_TEXT_AREA)) {
                     type = TextFieldView.RICHTEXTAREA;
                     return new TextAreaField(item.stringId, item.name, item.value as string, item.behavior, item.placeholder,
                         item.description, item.layout, item.validations, type);
@@ -53,7 +56,7 @@ export class FieldConverterService {
                         item.description, item.layout, item.validations, type);
                 }
                 if (item.component !== undefined && item.component.name !== undefined && (item.component.name === 'editor' ||
-                    item.component.name === 'htmltextarea' || item.component.name === 'richtextarea')) {
+                    item.component.name === this.HTML_TEXT_AREA || item.component.name === this.RICH_TEXT_AREA)) {
                     return new TextAreaField(item.stringId, item.name, this.resolveTextValue(item, item.value),
                         item.behavior, item.placeholder, item.description, item.layout, item.validations, type, item.component,
                         item.parentTaskId);
