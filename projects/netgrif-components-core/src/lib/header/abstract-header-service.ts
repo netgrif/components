@@ -1,7 +1,7 @@
 import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {HeaderState, HeaderStateInterface} from './header-state';
-import {Component, Injectable, OnDestroy, Optional} from '@angular/core';
+import {Injectable, OnDestroy, Optional} from '@angular/core';
 import {SortChangeDescription} from './models/user-changes/sort-change-description';
 import {SearchChangeDescription} from './models/user-changes/search-change-description';
 import {HeaderChange} from './models/user-changes/header-change';
