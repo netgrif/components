@@ -49,7 +49,8 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
         return getCurrencySymbol(this.numberField._formatFilter.code, 'wide', this.numberField._formatFilter.locale);
     }
 
-    private transformCurrency(value: string): string {
+    private transformCurrency(value: string | undefined): string {
+        value = !!value ? value : '0';
         if (this.numberField._formatFilter === undefined) {
             return this._currencyPipe.transform(
                 parseFloat(value),
