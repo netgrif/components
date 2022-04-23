@@ -13,7 +13,8 @@
                                [textEllipsis]="textEllipsis"
                                *ngFor="let case_ of cases | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
                                 let first = first;
-                                let last = last;"
+                                let last = last;
+                                trackBy: trackById"
                                [showCasePanelIcon]="showCasePanelIcon"
                                [showDeleteMenu]="showDeleteMenu" [first]="first" [last]="last"
                                [case_]="case_" [selectedHeaders$]="selectedHeaders$" (click)="onCaseClick(case_)">
@@ -25,7 +26,7 @@
                 </div>
 
         </mat-accordion>
-        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary"
                        [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>
         </mat-paginator>
     </ng-container>
