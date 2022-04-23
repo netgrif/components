@@ -1,6 +1,6 @@
 {
     "name": "@netgrif/components-project",
-    "version": "6.0.3-rc.1",
+    "version": "6.1.0-rc.1",
     "description": "Netgrif Application Engine Frontend project. Project includes angular libraries as base for NAE applications.",
     "homepage": "https://components.netgrif.com",
     "license": "SEE LICENSE IN LICENSE",
@@ -130,6 +130,7 @@
         "karma-junit-reporter": "~2.0.1",
         "karma-mocha-reporter": "~2.2.5",
         "karma-nyan-reporter": "~0.2.5",
+        "karma-sonarqube-unit-reporter": "^0.0.23",
         "ncp": "~2.0.0",
         "ng-packagr": "~9.0.3",
         "protractor": "~5.4.3",

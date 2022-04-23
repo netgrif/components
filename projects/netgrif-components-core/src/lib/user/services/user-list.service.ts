@@ -11,6 +11,7 @@ import {HttpParams} from '@angular/common/http';
 import {MessageResource} from '../../resources/interface/message-resource';
 import {Page} from '../../resources/interface/page';
 import {UserResource} from '../../resources/interface/user-resource';
+import {PaginationParams} from '../../utility/pagination/pagination-params';
 
 export interface UserListItem extends UserResource {
     selected: boolean;
@@ -249,9 +250,9 @@ export class UserListService implements OnDestroy {
      * @param page Page number that is requested. / Next page users list.
      */
     private addPageParams(params: HttpParams, page?: number): HttpParams {
-        params = params.set('size', this._pagination.size + '');
+        params = params.set(PaginationParams.PAGE_SIZE, `${this._pagination.size}`);
         page = page !== null ? page : this._pagination.number;
-        params = params.set('page', page + '');
+        params = params.set(PaginationParams.PAGE_NUMBER, `${page}`);
         return params;
     }
 

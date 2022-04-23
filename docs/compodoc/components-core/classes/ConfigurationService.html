@@ -296,8 +296,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="108"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:108</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:107</a></div>
                 </td>
             </tr>
 
@@ -375,8 +375,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="122"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:122</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="121"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:121</a></div>
                 </td>
             </tr>
 
@@ -420,8 +420,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="90"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:90</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="89"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:89</a></div>
                 </td>
             </tr>
 
@@ -498,8 +498,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="183"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:183</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="182"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:182</a></div>
                 </td>
             </tr>
 
@@ -699,8 +699,8 @@ Calling this method with an empty array as argument is equivalent to calling the
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="137"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:137</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:136</a></div>
                 </td>
             </tr>
 
@@ -743,8 +743,8 @@ as the base path. <code>/api</code> is appended automatically.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="172"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:172</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="171"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/configuration/configuration.service.ts:171</a></div>
                 </td>
             </tr>
 
@@ -858,18 +858,17 @@ export abstract class ConfigurationService {
      * @return requested configuration if it exists. &#x60;undefined&#x60; otherwise.
      */
     public getViewByUrl(url: string): View | undefined {
-        const config &#x3D; this.createConfigurationCopy() as NetgrifApplicationEngine;
-        const views &#x3D; config.views;
+        const views &#x3D; this.getViewsCopy();
         if (!views) {
             return undefined;
         }
         let map: Map&lt;string, View&gt; &#x3D; new Map();
         map &#x3D; this.getChildren(views, map, &#x27;&#x27;);
         if (map.get(url) &#x3D;&#x3D;&#x3D; undefined) {
-            map.forEach((value, key) &#x3D;&gt; {
+            for (const [key, value] of map) {
                 if (key.includes(&#x27;/**&#x27;) &amp;&amp; url.includes(key.split(&#x27;/**&#x27;)[0]))
                     return value;
-            });
+            }
         }
         return map.get(url);
     }
@@ -1014,6 +1013,10 @@ export abstract class ConfigurationService {
 
     private createConfigurationCopy(): any {
         return this.deepCopy(this.configuration);
+    }
+
+    private getViewsCopy(): Views {
+        return this.getConfigurationSubtree([&#x27;views&#x27;]) as Views;
     }
 
     private deepCopy(obj: object): object {

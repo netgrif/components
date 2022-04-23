@@ -6,14 +6,20 @@ import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
 import {TestBed} from '@angular/core/testing';
+import {Substring} from '../../operator/substring';
+import {SearchIndexResolverService} from '../../../search-keyword-resolver-service/search-index-resolver.service';
+import {CaseSearch} from './case-search.enum';
+import {OptionalDependencies} from '../../../category-factory/optional-dependencies';
 
 describe('CaseVisualId', () => {
     let category: CaseVisualId;
     let operatorService: OperatorService;
+    let deps: OptionalDependencies;
 
     beforeEach(() => {
         operatorService = new OperatorService(new OperatorResolverService());
-        category = new CaseVisualId(operatorService, null);
+        deps = {searchIndexResolver: new SearchIndexResolverService()} as OptionalDependencies;
+        category = new CaseVisualId(operatorService, null, deps);
     });
 
     afterEach(() => {
@@ -65,5 +71,11 @@ describe('CaseVisualId', () => {
 
             done();
         });
+    });
+
+    it('should use keyword index', () => {
+        configureCategory(category, operatorService, Substring, ['foo']);
+        const predicate = category.generatePredicate(['input']);
+        expect(predicate.query.value.includes(`${CaseSearch.VISUAL_ID}${deps.searchIndexResolver.KEYWORD}`)).toBeTrue();
     });
 });

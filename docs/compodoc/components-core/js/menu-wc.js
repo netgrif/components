@@ -1476,6 +1476,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/FieldView.html" data-type="entity-link" >FieldView</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/FileFieldIdBody.html" data-type="entity-link" >FileFieldIdBody</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/FileFieldValue.html" data-type="entity-link" >FileFieldValue</a>
                             </li>
                             <li class="link">
@@ -1888,6 +1891,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/Transition.html" data-type="entity-link" >Transition</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/TreeCaseViewConfiguration.html" data-type="entity-link" >TreeCaseViewConfiguration</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/TypeLocalisadField.html" data-type="entity-link" >TypeLocalisadField</a>

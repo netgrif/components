@@ -309,6 +309,7 @@ import {take} from &#x27;rxjs/operators&#x27;;
 import {EventOutcomeMessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
 import {EventService} from &#x27;../../event/services/event.service&#x27;;
 import {ChangedFieldsMap} from &#x27;../../event/services/interfaces/changed-fields-map&#x27;;
+import {FileFieldIdBody} from &#x27;../models/file-field-id-body&#x27;;
 
 export interface FileState {
     progress: number;
@@ -492,8 +493,11 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
         this.state.uploading &#x3D; true;
         const fileFormData &#x3D; new FormData();
         const fileToUpload &#x3D; this.fileUploadEl.nativeElement.files.item(0) as File;
+        const data: FileFieldIdBody &#x3D; {};
+        data[this.resolveParentTaskId()] &#x3D; this.dataField.stringId;
         fileFormData.append(&#x27;file&#x27;, fileToUpload);
-        this._taskResourceService.uploadFile(this.resolveParentTaskId(), this.dataField.stringId, fileFormData, false)
+        fileFormData.append(&#x27;data&#x27;, new Blob([JSON.stringify(data)], {type: &#x27;application/json&#x27;}));
+        this._taskResourceService.uploadFile(this.taskId, this.dataField.stringId, fileFormData, false)
             .subscribe((response: EventOutcomeMessageResource) &#x3D;&gt; {
                 if ((response as ProviderProgress).type &amp;&amp; (response as ProviderProgress).type &#x3D;&#x3D;&#x3D; ProgressType.UPLOAD) {
                     this.state.progress &#x3D; (response as ProviderProgress).progress;
@@ -602,7 +606,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
 
-        this._taskResourceService.deleteFile(this.resolveParentTaskId(),
+        this._taskResourceService.deleteFile(this.taskId,
             this.dataField.stringId).pipe(take(1)).subscribe(response &#x3D;&gt; {
             if (response.success) {
                 const filename &#x3D; this.dataField.value.name;
@@ -661,7 +665,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
             return;
         }
         this.state.downloading &#x3D; true;
-        this._taskResourceService.downloadFilePreview(this.taskId, this.dataField.stringId).subscribe(response &#x3D;&gt; {
+        this._taskResourceService.downloadFilePreview(this.resolveParentTaskId(), this.dataField.stringId).subscribe(response &#x3D;&gt; {
             if (response instanceof Blob) {
                 this._log.debug(&#x60;Preview of file [${this.dataField.stringId}] ${this.dataField.value.name} was successfully downloaded&#x60;);
                 this.fileForPreview &#x3D; new Blob([response], {type: &#x27;application/octet-stream&#x27;});
