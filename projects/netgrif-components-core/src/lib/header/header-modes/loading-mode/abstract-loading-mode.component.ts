@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AbstractHeaderService} from '../../abstract-header-service';
 import {AbstractHeaderModeComponent} from '../abstract-header-mode.component';
 
