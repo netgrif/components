@@ -62,5 +62,15 @@ export class SubjectTaskOperations implements TaskOperations {
     public get forceReload$(): Observable<void> {
         return this._forceReload.asObservable();
     }
+
+    /**
+     * Completes the underlying streams
+     */
+    destroy(): void {
+        this._open.complete();
+        this._close.complete();
+        this._reload.complete();
+        this._forceReload.complete();
+    }
 }
 

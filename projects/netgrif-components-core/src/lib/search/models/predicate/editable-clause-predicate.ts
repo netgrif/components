@@ -38,7 +38,12 @@ export class EditableClausePredicate extends EditablePredicate {
         return this._query;
     }
 
-    show() {
+    public destroy(): void {
+        super.destroy();
+        this._childUpdated$.complete();
+    }
+
+    public show() {
         super.show();
         this.showAll();
     }
