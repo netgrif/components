@@ -1,5 +1,6 @@
 import {DateField} from './date-field';
 import moment from 'moment';
+import {TestBed} from '@angular/core/testing';
 
 describe('DateField', () => {
 
@@ -11,5 +12,9 @@ describe('DateField', () => {
             editable: true,
             hidden: true
         })).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

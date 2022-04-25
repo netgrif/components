@@ -71,6 +71,7 @@ describe('AbstractSortModeComponent', () => {
 
     afterEach(() => {
         TestBed.resetTestingModule();
+        headerSpy.calls.reset();
     });
 });
 

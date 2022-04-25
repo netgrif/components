@@ -1,6 +1,7 @@
 import {OperatorTemplatePart} from './operator-template-part';
 import {OperatorTemplatePartType} from './operator-template-part-type';
 import {FormControl} from '@angular/forms';
+import {TestBed} from '@angular/core/testing';
 
 describe('OperatorTemplatePart', () => {
     it('should create with type TEXT', () => {
@@ -16,5 +17,9 @@ describe('OperatorTemplatePart', () => {
         expect(template).toBeTruthy();
         expect(template.type).toEqual(OperatorTemplatePartType.INPUT);
         expect(template.content).toEqual(fc);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

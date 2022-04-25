@@ -4,7 +4,7 @@ import {createMockDependencies} from '../../../../utility/tests/search-category-
 import {Observable, ReplaySubject} from 'rxjs';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {Net} from '../../../../process/net';
-import {waitForAsync} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {createMockNet} from '../../../../utility/tests/utility/create-mock-net';
 import {filter, take} from 'rxjs/operators';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
@@ -36,6 +36,7 @@ describe('CaseDataset', () => {
     afterEach(() => {
         allowedNets$.complete();
         category.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {
@@ -91,6 +92,11 @@ describe('CaseDataset', () => {
                 createMockNet('', 'netIdentifier', '', undefined, undefined, data),
                 createMockNet('', 'netIdentifier2', '', undefined, undefined, data)
             ]);
+        });
+        afterEach(() => {
+            allowedNets$.complete();
+            category.destroy();
+            TestBed.resetTestingModule();
         });
 
         describe('should serialize', () => {
@@ -174,6 +180,11 @@ describe('CaseDataset', () => {
                     expect(metadata.values).toEqual([v.valueOf()]);
                 }, operatorService);
             });
+            afterEach(() => {
+                allowedNets$.complete();
+                category.destroy();
+                TestBed.resetTestingModule();
+            });
         });
 
         describe('should deserialize', () => {
@@ -241,6 +252,11 @@ describe('CaseDataset', () => {
                 const v = moment('2021-03-30 10:39');
                 deserializationTest(done, category, EqualsDateTime, 'dateTime', v, (d, c) => momentObjectsComparison(d, c),
                     operatorService, allowedNets$);
+            });
+            afterEach(() => {
+                allowedNets$.complete();
+                category.destroy();
+                TestBed.resetTestingModule();
             });
         });
     });

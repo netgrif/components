@@ -3,6 +3,7 @@ import {HttpClient, HttpEvent, HttpHandler, HttpRequest} from '@angular/common/h
 import {Observable} from 'rxjs';
 import {TestConfigurationService} from '../utility/tests/test-config';
 import {BasicAuthenticationService} from './services/methods/basic-authentication/basic-authentication.service';
+import {TestBed} from '@angular/core/testing';
 
 
 describe('authenticationServiceFactory', () => {
@@ -10,6 +11,10 @@ describe('authenticationServiceFactory', () => {
         const config = new TestConfigurationService();
         const http = new HttpClient(new OurHttp());
         expect(authenticationServiceFactory(config, http)).toEqual(new BasicAuthenticationService(http, config));
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
 

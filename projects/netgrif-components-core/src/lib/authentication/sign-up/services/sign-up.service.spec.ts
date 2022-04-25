@@ -26,44 +26,58 @@ describe('SignUpService', () => {
             expect(service).toBeTruthy();
         });
 
-        it('should signup', inject([HttpTestingController],
-            (httpMock: HttpTestingController) => {
-                service.signup({token: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
-                    expect(res.success).toEqual('Done');
-                });
+        it('should signup', (done) => {
+            inject([HttpTestingController],
+                    (httpMock: HttpTestingController) => {
+                        service.signup({token: 'string', name: 'string', surname: 'string', password: 'string'}).subscribe(res => {
+                            expect(res.success).toEqual('Done');
+                            done();
+                        });
 
-                const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/signup');
-                expect(reqLog.request.method).toEqual('POST');
+                        const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/signup');
+                        expect(reqLog.request.method).toEqual('POST');
 
-                reqLog.flush({success: 'Done'});
-            })
+                        reqLog.flush({success: 'Done'});
+                    })();
+            }
         );
 
-        it('should verify token', inject([HttpTestingController],
-            (httpMock: HttpTestingController) => {
-                service.verify('string').subscribe(res => {
-                    expect(res.success).toEqual('username');
-                });
+        it('should verify token', (done) => {
+            inject([HttpTestingController],
+                    (httpMock: HttpTestingController) => {
+                        service.verify('string').subscribe(res => {
+                            expect(res.success).toEqual('username');
+                            done();
+                        });
 
-                const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/token/verify');
-                expect(reqLog.request.method).toEqual('POST');
+                        const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/token/verify');
+                        expect(reqLog.request.method).toEqual('POST');
 
-                reqLog.flush({success: 'username'});
-            })
+                        reqLog.flush({success: 'username'});
+                    })();
+            }
         );
 
-        it('should invite', inject([HttpTestingController],
-            (httpMock: HttpTestingController) => {
-                service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
-                    expect(res.success).toEqual('Done');
-                });
+        it('should invite', (done) => {
+            inject([HttpTestingController],
+                    (httpMock: HttpTestingController) => {
+                        service.invite({email: 'user@user.sk', groups: [], processRoles: []}).subscribe(res => {
+                            expect(res.success).toEqual('Done');
+                            done();
+                        });
 
-                const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
-                expect(reqLog.request.method).toEqual('POST');
+                        const reqLog = httpMock.expectOne('http://localhost:8080/api/auth/invite');
+                        expect(reqLog.request.method).toEqual('POST');
 
-                reqLog.flush({success: 'Done'});
-            })
+                        reqLog.flush({success: 'Done'});
+                    })();
+            }
         );
+
+        afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
+            mock.verify();
+            TestBed.resetTestingModule();
+        }));
     });
 
     describe('no endpoints configuration', () => {
@@ -97,10 +111,10 @@ describe('SignUpService', () => {
                 service.verify('');
             }).toThrowError('Verify URL is not set in authentication provider endpoints!');
         });
-    });
 
-    afterEach(() => {
-        TestBed.resetTestingModule();
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 });
 
