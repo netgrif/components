@@ -1,7 +1,7 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {FormBuilder} from '@angular/forms';
 import {Component} from '@angular/core';
 import {AbstractEmailSubmissionFormComponent} from './abstract-email-submission-form.component';
@@ -18,7 +18,7 @@ describe('AbstractEmailSubmissionFormComponent ', () => {
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],

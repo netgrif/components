@@ -1,6 +1,7 @@
 import {EditableClausePredicateWithGenerators} from './editable-clause-predicate-with-generators';
 import {BooleanOperator} from '../boolean-operator';
 import {PredicateWithGenerator} from './predicate-with-generator';
+import {TestBed} from '@angular/core/testing';
 
 describe('EditableClausePredicateWithGenerators', () => {
     it('should create an instance', () => {
@@ -17,5 +18,9 @@ describe('EditableClausePredicateWithGenerators', () => {
         expect(map).toBeTruthy();
         expect(map.get(id)).toBeTruthy();
         expect(map.get(id) instanceof PredicateWithGenerator).toBeTrue();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

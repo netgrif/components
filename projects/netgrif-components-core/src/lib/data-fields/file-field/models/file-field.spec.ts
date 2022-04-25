@@ -1,4 +1,5 @@
 import {FileField} from './file-field';
+import {TestBed} from '@angular/core/testing';
 
 describe(' FileField', () => {
     it('should create an instance', () => {
@@ -9,5 +10,9 @@ describe(' FileField', () => {
             editable: true,
             hidden: true
         })).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

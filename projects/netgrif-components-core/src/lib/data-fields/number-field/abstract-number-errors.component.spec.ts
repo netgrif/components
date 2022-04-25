@@ -62,6 +62,10 @@ describe('AbstractNumberErrorsComponent', () => {
         component.numberField.value = 5;
         expect(component.getErrorMessage()).toEqual('Entered number must be even');
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

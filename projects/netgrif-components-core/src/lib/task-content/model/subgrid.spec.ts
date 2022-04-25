@@ -3,7 +3,7 @@ import {createMockField} from '../../utility/tests/utility/create-mock-field';
 import {FieldTypeResource} from './field-type-resource';
 import {createMockDataGroup} from '../../utility/tests/utility/create-mock-datagroup';
 import {TaskElementType} from './task-content-element-type';
-import {fakeAsync, tick} from '@angular/core/testing';
+import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 describe('Subgrid', () => {
     let subgrid: Subgrid;
@@ -14,6 +14,7 @@ describe('Subgrid', () => {
 
     afterEach(() => {
         subgrid.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {

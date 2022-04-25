@@ -83,6 +83,8 @@ describe('AbstractImportNetComponent', () => {
     });
 
     afterEach(() => {
+        logSpy.calls.reset();
+        sideMenuCloseSpy.calls.reset();
         TestBed.resetTestingModule();
     });
 });

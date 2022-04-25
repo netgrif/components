@@ -82,6 +82,7 @@ describe('AbstractEditModeComponent', () => {
 
     afterEach(() => {
         TestBed.resetTestingModule();
+        headerSpy.calls.reset();
     });
 });
 

@@ -20,6 +20,7 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('Default search categories factory methods', () => {
     let testService: TestService;
@@ -31,6 +32,7 @@ describe('Default search categories factory methods', () => {
                     HttpClientTestingModule,
                     MaterialModule,
                     TranslateLibModule,
+                    NoopAnimationsModule
                 ],
                 providers: [
                     TestService,
@@ -70,7 +72,8 @@ describe('Default search categories factory methods', () => {
                 imports: [
                     HttpClientTestingModule,
                     MaterialModule,
-                    TranslateLibModule
+                    TranslateLibModule,
+                    HttpClientTestingModule
                 ],
                 providers: [
                     TestService,

@@ -87,6 +87,10 @@ describe('AbstractCaseView', () => {
             expect(allowedNetsService.allowedNets.length).toBe(1);
             expect(component.hasAuthority()).toBeTrue();
         });
+
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 
     describe('without allowed nets', () => {
@@ -111,6 +115,9 @@ describe('AbstractCaseView', () => {
             expect(component.hasAuthority()).toBeFalse();
         });
 
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 });
 

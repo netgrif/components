@@ -39,10 +39,14 @@ export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErr
     }
 
     ngOnInit(): void {
-        this.disabledDisplay = this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value);
+        this.disabledDisplay = this.sanitizeValue();
         this.textAreaField.valueChanges().subscribe(() => {
-            this.disabledDisplay = this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value);
+            this.disabledDisplay = this.sanitizeValue();
         });
+    }
+
+    protected sanitizeValue(): SafeHtml {
+        return this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value !== undefined ? this.textAreaField.value : '');
     }
 
     public getErrorMessage() {

@@ -26,4 +26,8 @@ describe('OperatorResolverService', () => {
     it('should not resolve random string', () => {
         expect(service.toClass('random')).toEqual(undefined);
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });

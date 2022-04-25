@@ -15,7 +15,6 @@ import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserService} from '../../user/services/user.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
