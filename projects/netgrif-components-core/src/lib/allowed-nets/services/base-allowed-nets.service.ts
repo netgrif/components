@@ -30,6 +30,7 @@ export class BaseAllowedNetsService implements OnDestroy {
     }
 
     /**
+     * @deprecated
      * @returns the currently set allowed nets. Returns an empty array if no value was set.
      */
     public get allowedNets(): Array<string> {
