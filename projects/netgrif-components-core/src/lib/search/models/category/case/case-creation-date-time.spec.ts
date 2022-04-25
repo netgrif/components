@@ -7,6 +7,7 @@ import moment from 'moment';
 import {EqualsDate} from '../../operator/equals-date';
 import {CaseCreationDateTime} from './case-creation-date-time';
 import {EqualsDateTime} from '../../operator/equals-date-time';
+import {TestBed} from '@angular/core/testing';
 
 describe('CaseCreationDateTime', () => {
     let category: CaseCreationDateTime;
@@ -19,6 +20,7 @@ describe('CaseCreationDateTime', () => {
 
     afterEach(() => {
         category.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {

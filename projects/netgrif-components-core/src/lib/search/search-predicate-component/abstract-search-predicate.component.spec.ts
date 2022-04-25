@@ -26,6 +26,7 @@ import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {DefaultSearchCategoriesModule} from '../category-factory/default-search-categories.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
@@ -38,6 +39,7 @@ describe('AbstractSearchPredicateComponent', () => {
                 MaterialModule,
                 TranslateLibModule,
                 DefaultSearchCategoriesModule,
+                NoopAnimationsModule
             ],
             declarations: [
                 TestSearchPredicateComponent,

@@ -1,9 +1,10 @@
-import {TestBed} from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
 import {ConfigurationService} from './configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 describe('ConfigurationService', () => {
     let service: ConfigurationService;
@@ -11,7 +12,7 @@ describe('ConfigurationService', () => {
     describe('with TestConfigurationService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAnimationsModule, RouterTestingModule.withRoutes([])],
+                imports: [NoopAnimationsModule, HttpClientTestingModule, RouterTestingModule.withRoutes([])],
                 providers: [{provide: ConfigurationService, useClass: TestConfigurationService}]
             });
             service = TestBed.inject(ConfigurationService);
@@ -290,6 +291,10 @@ describe('ConfigurationService', () => {
                 expect(resource?.address).toEqual('http://localhost:8080/api/');
             });
         });
+
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 
     describe('with relative URLs', () => {
@@ -312,10 +317,10 @@ describe('ConfigurationService', () => {
                 expect(resource?.address).toEqual(`${urlBase}/api/world`);
             });
         });
-    });
 
-    afterEach(() => {
-        TestBed.resetTestingModule();
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 });
 

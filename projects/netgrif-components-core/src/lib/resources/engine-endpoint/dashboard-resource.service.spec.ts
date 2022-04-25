@@ -22,20 +22,24 @@ describe('DashboardResourceService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should getDashboardData', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getDashboardData('case', {aggs: {result: {terms: {field: 'dataSet.text.value.keyword'}}}}).subscribe(res => {
-                // expect(res.content.length).toEqual(0);
-            });
+    it('should getDashboardData', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getDashboardData('case', {aggs: {result: {terms: {field: 'dataSet.text.value.keyword'}}}}).subscribe(res => {
+                        expect(res.aggregations).toEqual({});
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/dashboard/search?type=case');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/dashboard/search?type=case');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush({aggregations: {}});
+                })();
+        }
     );
 
-    afterEach(() => {
+    afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
+        mock.verify();
         TestBed.resetTestingModule();
-    });
+    }));
 });

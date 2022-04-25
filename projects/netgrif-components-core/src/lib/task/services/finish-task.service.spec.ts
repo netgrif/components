@@ -13,7 +13,7 @@ import {TaskContentService} from '../../task-content/services/task-content.servi
 import {NAE_TASK_OPERATIONS} from '../models/task-operations-injection-token';
 import {NullTaskOperations} from '../models/null-task-operations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {EventOutcomeMessageResource, MessageResource} from '../../resources/interface/message-resource';
+import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
@@ -30,7 +30,6 @@ import {TaskEventNotification} from '../../task-content/model/task-event-notific
 import {TaskEvent} from '../../task-content/model/task-event';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
-import {TaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/task-event-outcome';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
@@ -51,7 +50,7 @@ describe('FinishTaskService', () => {
                 TranslateModule,
                 TranslateLibModule,
                 NoopAnimationsModule,
-                SnackBarModule,
+                SnackBarModule
             ],
             providers: [
                 FinishTaskService,

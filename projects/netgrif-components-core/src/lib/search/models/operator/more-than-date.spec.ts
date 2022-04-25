@@ -2,6 +2,7 @@ import {MoreThanDate} from './more-than-date';
 import {OperatorService} from '../../operator-service/operator.service';
 import moment from 'moment';
 import {OperatorResolverService} from '../../operator-service/operator-resolver.service';
+import {TestBed} from '@angular/core/testing';
 
 describe('MoreThanDate', () => {
     it('should create an instance', () => {
@@ -30,5 +31,9 @@ describe('MoreThanDate', () => {
         expect(dateTime.date()).toEqual(14);
         expect(dateTime.month()).toEqual(0);
         expect(dateTime.year()).toEqual(2021);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

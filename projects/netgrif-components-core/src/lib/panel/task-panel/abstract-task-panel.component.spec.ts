@@ -53,7 +53,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
-import {UserService} from '../../user/services/user.service';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
@@ -169,7 +168,6 @@ describe('AbtsractTaskPanelComponent', () => {
         expect(component.canDo('delegate')).toBeFalse();
         expect(component.canFinish()).toBeFalse();
     });
-
 
     afterEach(() => {
         TestBed.resetTestingModule();

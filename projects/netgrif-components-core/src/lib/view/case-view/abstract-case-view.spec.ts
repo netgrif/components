@@ -97,6 +97,10 @@ describe('AbstractCaseView', () => {
                 done();
             });
         });
+
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 
     describe('without allowed nets', () => {
@@ -123,6 +127,9 @@ describe('AbstractCaseView', () => {
             expect(component.hasAuthority()).toBeFalse();
         });
 
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 });
 

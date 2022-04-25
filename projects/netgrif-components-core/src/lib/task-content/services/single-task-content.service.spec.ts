@@ -17,8 +17,7 @@ describe('SingleTaskContentService', () => {
                 NoopAnimationsModule,
                 MatSnackBarModule,
                 TranslateLibModule,
-                HttpClientTestingModule,
-                NoopAnimationsModule
+                HttpClientTestingModule
             ],
             providers: [
                 SingleTaskContentService,

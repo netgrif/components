@@ -64,6 +64,10 @@ describe('AbstractSaveFilterComponent', () => {
     it('should create an instance', () => {
         expect(component).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

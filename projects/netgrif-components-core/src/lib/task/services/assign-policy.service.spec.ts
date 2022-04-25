@@ -109,5 +109,6 @@ describe('AssignPolicyService', () => {
 
     afterEach(() => {
         TestBed.resetTestingModule();
+        assignSpy.calls.reset();
     });
 });

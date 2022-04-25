@@ -8,6 +8,7 @@ import {IUser} from '../../../user/models/iuser';
 import {createMockPage} from '../../../utility/tests/utility/create-mock-page';
 import {OptionalDependencies} from '../../category-factory/optional-dependencies';
 import {FormControl} from '@angular/forms';
+import {TestBed} from '@angular/core/testing';
 
 describe('UserAutocomplete', () => {
     let userResourceService: MockUserResourceService;
@@ -20,6 +21,10 @@ describe('UserAutocomplete', () => {
             undefined,
             userResourceService as unknown as UserResourceService
         );
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {

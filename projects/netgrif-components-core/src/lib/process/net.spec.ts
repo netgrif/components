@@ -1,4 +1,5 @@
 import {Net} from './net';
+import {TestBed} from '@angular/core/testing';
 
 describe('Net', () => {
     it('should create an instance', () => {
@@ -39,5 +40,9 @@ describe('Net', () => {
         expect(net.transitions).toEqual([]);
         expect(net.transactions).toEqual([]);
         expect(net.roles).toEqual([]);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

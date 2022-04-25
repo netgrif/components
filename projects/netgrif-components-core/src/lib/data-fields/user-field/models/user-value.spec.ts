@@ -1,4 +1,5 @@
 import {UserValue} from './user-value';
+import {TestBed} from '@angular/core/testing';
 
 describe('UserValue', () => {
     it('should create an instance', () => {
@@ -9,5 +10,9 @@ describe('UserValue', () => {
         expect(user.surname).toEqual('surname');
         expect(user.fullName).toEqual('name surname');
         expect(user.email).toEqual('mail');
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

@@ -4,6 +4,7 @@ import {Component} from '@angular/core';
 import {AbstractFilterSelectorListItemComponent} from './abstract-filter-selector-list-item.component';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractFilterSelectorListItemComponent', () => {
     let component: TestFilterComponent;
@@ -12,7 +13,8 @@ describe('AbstractFilterSelectorListItemComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
-                NoopAnimationsModule],
+                NoopAnimationsModule, HttpClientTestingModule
+            ],
             declarations: [
                 TestFilterComponent,
                 TestWrapperComponent

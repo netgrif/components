@@ -1,12 +1,14 @@
 import {TestBed} from '@angular/core/testing';
 import {CategoryResolverService} from './category-resolver.service';
 import {Categories} from '../models/category/categories';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('CategoryResolverService', () => {
     let service: CategoryResolverService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({imports: [NoopAnimationsModule, HttpClientTestingModule]});
         service = TestBed.inject(CategoryResolverService);
     });
 
@@ -40,5 +42,9 @@ describe('CategoryResolverService', () => {
 
     it('should not resolve random string', () => {
         expect(service.toClass('random')).toEqual(undefined);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

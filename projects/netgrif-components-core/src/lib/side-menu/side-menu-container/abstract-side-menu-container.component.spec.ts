@@ -48,9 +48,10 @@ describe('AbstractSideMenuContainerComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should open and close', () => {
+    it('should open and close', (done) => {
         service.open(TestImportComponent).onClose.subscribe(event => {
             expect(event).toBeTruthy();
+            done();
         });
         service.close({opened: false});
     });
