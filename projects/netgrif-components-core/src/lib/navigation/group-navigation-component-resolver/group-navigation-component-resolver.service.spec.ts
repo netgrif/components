@@ -4,9 +4,8 @@ import {Component, Injectable, Type} from '@angular/core';
 import {TaskResourceService} from '../../resources/engine-endpoint/task-resource.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {TestMockDependenciesModule} from '../../utility/tests/test-mock-dependencies.module';
-import {ResourceProvider} from '../../resources/resource-provider.service';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {FieldConverterService} from '../../task-content/services/field-converter.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('GroupNavigationComponentResolverService', () => {
     let service: GroupNavigationComponentResolverService;
@@ -14,6 +13,8 @@ describe('GroupNavigationComponentResolverService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
+                HttpClientTestingModule,
                 TestMockDependenciesModule
             ],
             providers: [

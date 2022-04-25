@@ -87,6 +87,7 @@ describe('AbstractSearchModeComponent', () => {
 
     afterEach(() => {
         TestBed.resetTestingModule();
+        headerSpy.calls.reset();
     });
 });
 

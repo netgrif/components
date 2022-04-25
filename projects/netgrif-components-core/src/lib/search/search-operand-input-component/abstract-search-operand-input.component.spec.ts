@@ -3,6 +3,8 @@ import {Component} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractSearchOperandInputComponent', () => {
     let component: TestSearchOperandInputComponent;
@@ -10,6 +12,7 @@ describe('AbstractSearchOperandInputComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             declarations: [
                 TestSearchOperandInputComponent,
                 TestWrapperComponent

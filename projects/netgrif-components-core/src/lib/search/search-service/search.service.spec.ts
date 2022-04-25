@@ -135,8 +135,15 @@ describe('SearchService', () => {
                     done();
                 });
             });
+
+            afterEach(() => {
+                TestBed.resetTestingModule();
+            });
         });
 
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 
     describe('with Observable base filter', () => {
@@ -180,6 +187,9 @@ describe('SearchService', () => {
             });
         });
 
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 
     afterEach(() => {

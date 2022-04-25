@@ -34,22 +34,27 @@ describe('AuthenticationInterceptor', () => {
     });
 
     describe('intercept HTTP request', () => {
-        it('should add Authentication bearer to Headers', inject([HttpClient, HttpTestingController],
-            (http: HttpClient, mock: HttpTestingController) => {
+        it('should add Authentication bearer to Headers', (done) => {
+            inject([HttpClient, HttpTestingController],
+                (http: HttpClient, mock: HttpTestingController) => {
 
-                service.sessionToken = 'session-token';
-                http.get('/api').subscribe(response => {
-                    expect(response).toBeTruthy();
-                });
-                const request = mock.expectOne(req => (req.headers.has('X-Auth-Token')));
+                    service.sessionToken = 'session-token';
+                    http.get('/api').subscribe(response => {
+                        expect(response).toBeTruthy();
+                        done();
+                    });
+                    const request = mock.expectOne(req => (req.headers.has('X-Auth-Token')));
 
-                request.flush({data: 'test'}, {headers: new HttpHeaders({'X-Auth-Token': 'tokenos'})});
-                mock.verify();
-            }));
+                    request.flush({data: 'test'}, {headers: new HttpHeaders({'X-Auth-Token': 'tokenos'})});
+                })();
+        });
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 
-    afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
-        mock.verify();
+    afterEach(() => {
+        warnSpy.calls.reset();
         TestBed.resetTestingModule();
-    }));
+    });
 });

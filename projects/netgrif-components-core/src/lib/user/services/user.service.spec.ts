@@ -31,17 +31,19 @@ describe('UserService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should login', () => {
+    it('should login', (done) => {
         service.login({password: '', username: ''}).subscribe(res => {
             expect(res.id).toEqual('id');
             expect(service.hasAuthority('ADMIN')).toBeTrue();
             expect(service.hasRoleById('id')).toBeTrue();
+            done();
         });
     });
 
-    it('should logout', () => {
+    it('should logout', (done) => {
         service.logout().subscribe(res => {
             expect(res).toEqual(undefined);
+            done();
         });
     });
 

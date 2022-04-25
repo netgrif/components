@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
@@ -25,7 +25,7 @@ describe('AbstractLoginFormComponent', () => {
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
                 RouterTestingModule.withRoutes([])
@@ -50,11 +50,12 @@ describe('AbstractLoginFormComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should submit', () => {
+    it('should submit', (done) => {
         component.rootFormGroup.controls['login'].setValue('login');
         component.rootFormGroup.controls['password'].setValue('pass');
         component.formSubmit.subscribe( event => {
             expect(event).toEqual({username: 'login', password: 'pass'});
+            done();
         });
         component.onSubmit();
     });

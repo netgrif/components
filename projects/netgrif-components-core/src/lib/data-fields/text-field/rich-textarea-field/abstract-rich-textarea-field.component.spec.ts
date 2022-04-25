@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AbstractRichTextareaFieldComponent} from './abstract-rich-textarea-field.component';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizedEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
@@ -30,7 +30,7 @@ describe('AbstractRichTextareaFieldComponent', () => {
                 MaterialModule,
                 AngularResizedEventModule,
                 CovalentModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],

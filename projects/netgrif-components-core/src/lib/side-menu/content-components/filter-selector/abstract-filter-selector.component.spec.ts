@@ -29,8 +29,7 @@ describe('AbstractFilterSelectorComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule
+                NoopAnimationsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

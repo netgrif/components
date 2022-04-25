@@ -11,7 +11,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {DynamicEnumerationField} from '../models/dynamic-enumeration-field';
 
-describe('AbstractEnumerationAutocompleteSelectFieldComponent', () => {
+describe('AbstractEnumerationAutocompleteDynamicFieldComponent', () => {
     let component: TestEnumAutoComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
