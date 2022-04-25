@@ -1,14 +1,15 @@
 import {Case} from '../../resources/interface/case';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {HeaderType} from '../../header/models/header-type';
 import {CaseViewService} from './service/case-view-service';
 import {ViewWithHeaders} from '../abstract/view-with-headers';
 import {Authority} from '../../resources/interface/authority';
 import {OverflowService} from '../../header/services/overflow.service';
 import {NewCaseCreationConfigurationData} from '../../side-menu/content-components/new-case/model/new-case-injection-data';
+import {OnDestroy} from '@angular/core';
 
 
-export abstract class AbstractCaseView extends ViewWithHeaders {
+export abstract class AbstractCaseView extends ViewWithHeaders implements OnDestroy {
 
     public readonly MINIMAL_OFFSET = 120;
     public readonly headerType: HeaderType = HeaderType.CASE;
@@ -16,6 +17,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
     public loading: boolean;
     public authorityToCreate: Array<string>;
     protected canCreate: boolean;
+    protected canCreateSub: Subscription;
 
     protected constructor(protected _caseViewService: CaseViewService,
                           protected _overflowService?: OverflowService,
@@ -28,7 +30,7 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
         this._caseViewService.loading$.subscribe(loading => {
             this.loading = loading;
         });
-        this._caseViewService.getNewCaseAllowedNets().subscribe(allowedNets => {
+        this.canCreateSub = this._caseViewService.getNewCaseAllowedNets().subscribe(allowedNets => {
             this.canCreate = allowedNets.length > 0;
         });
         this.cases$ = this._caseViewService.cases$;
@@ -56,5 +58,12 @@ export abstract class AbstractCaseView extends ViewWithHeaders {
 
     public getOverflowStatus() {
         return this._overflowService ? this._overflowService.overflowMode : false;
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this.canCreateSub) {
+            this.canCreateSub.unsubscribe();
+        }
     }
 }
