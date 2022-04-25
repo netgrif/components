@@ -15,8 +15,8 @@ export abstract class AbstractCaseView extends ViewWithHeaders implements OnDest
     public readonly headerType: HeaderType = HeaderType.CASE;
     public cases$: Observable<Array<Case>>;
     public loading: boolean;
+    public canCreate: boolean;
     public authorityToCreate: Array<string>;
-    protected canCreate: boolean;
     protected canCreateSub: Subscription;
 
     protected constructor(protected _caseViewService: CaseViewService,

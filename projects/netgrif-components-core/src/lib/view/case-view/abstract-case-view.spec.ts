@@ -92,7 +92,7 @@ describe('AbstractCaseView', () => {
         it('should display create case button', (done) => {
             expect(component).toBeTruthy();
             caseViewService.getNewCaseAllowedNets().subscribe(nets => {
-                expect(allowedNetsService.allowedNets.length).toBe(1);
+                expect(component.canCreate).toBeTrue();
                 expect(component.hasAuthority()).toBeTrue();
                 done();
             });
@@ -120,7 +120,6 @@ describe('AbstractCaseView', () => {
 
         it('should not display create case button', () => {
             expect(component).toBeTruthy();
-            expect(allowedNetsService.allowedNets.length).toBe(0);
             expect(component.hasAuthority()).toBeFalse();
         });
 
