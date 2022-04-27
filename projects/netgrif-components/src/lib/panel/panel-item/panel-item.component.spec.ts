@@ -1,22 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PanelItemComponent } from './panel-item.component';
-import { Component } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FeaturedValue } from '@netgrif/components-core';
 
 describe('PanelItemComponent', () => {
     let component: PanelItemComponent;
-    let fixture: ComponentFixture<PanelItemComponent>;
+    let fixture: ComponentFixture<TestWrapperComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [PanelItemComponent]
+            declarations: [TestWrapperComponent],
+            schemas: [NO_ERRORS_SCHEMA]
         })
             .compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(PanelItemComponent);
-        component = fixture.componentInstance;
+        fixture = TestBed.createComponent(TestWrapperComponent);
+        component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
     });
 
@@ -30,6 +31,10 @@ describe('PanelItemComponent', () => {
 
     it('should have label icon as leading', () => {
         expect(component.leadingIcon).toEqual('label');
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
 
