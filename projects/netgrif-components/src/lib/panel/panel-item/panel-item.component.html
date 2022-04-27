@@ -1,0 +1,19 @@
+<span class='text-column-margin' fxLayoutAlign='start center'>
+    <mat-icon class='panel-icon panel-primary-icon' *ngIf='index === 0'>
+        {{leadingIcon ? leadingIcon : 'label'}}</mat-icon>
+    <mat-icon class='panel-icon panel-primary-icon'
+              *ngIf="!!featuredValue.icon && !!featuredValue.value && featuredValue.type !== 'button' && index !== 0">{{featuredValue.icon}}</mat-icon>
+    <ng-container [ngSwitch]='featuredValue.type'>
+        <span *ngSwitchDefault
+              [ngClass]="{'text-column-ellipsis': textEllipsis, 'text-column-word-wrap': !textEllipsis}"
+              [matTooltip]='featuredValue.value'
+              [matTooltipDisabled]='!textEllipsis'
+              [matTooltipClass]="'pre-line-dialog'">{{featuredValue.value}}</span>
+        <button *ngSwitchCase="'button'" mat-flat-button color='primary'>{{featuredValue.value}}</button>
+        <nc-immediate-filter-text *ngSwitchCase="'filter'"
+                                  [filterMetadata]='featuredValue.filterMetadata'
+                                  [ellipsis]='textEllipsis'
+                                  class='width-100'>
+        </nc-immediate-filter-text>
+    </ng-container>
+</span>

@@ -13,6 +13,7 @@ import {PublicWorkflowPanelComponent} from './public-workflow-panel/public-workf
 import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
 import {ImmediateFilterTextComponent} from './immediate/immediate-filter-text/immediate-filter-text.component';
 import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-text-content/immediate-filter-text-content.component';
+import { PanelItemComponent } from './panel-item/panel-item.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-
         PublicWorkflowPanelComponent,
         ImmediateFilterTextComponent,
         ImmediateFilterTextContentComponent,
+        PanelItemComponent,
     ],
     imports: [
         CommonModule,

@@ -9,25 +9,12 @@
                   [fxHide.lt-md]="i >= 2 && responsiveBody"
                   [fxHide.lt-sm]="i >= 1 && responsiveBody"
                     [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
-                <span class="text-column-margin" fxLayoutAlign="start center">
-                    <mat-icon class="task-panel-icon panel-primary-icon" *ngIf="i === 0">
-                        {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
-                    <mat-icon class="task-panel-icon panel-primary-icon"
-                              *ngIf="!!field.icon && !!field.value && field.type !== 'button' && i !== 0">{{field.icon}}</mat-icon>
-                    <ng-container [ngSwitch]="field.type">
-                        <span *ngSwitchDefault
-                              [ngClass]="{'text-column-ellipsis': textEllipsis, 'text-column-word-wrap': !textEllipsis}"
-                              [matTooltip]="field.value"
-                              [matTooltipDisabled]="!textEllipsis"
-                              [matTooltipClass]="'pre-line-dialog'">{{field.value}}</span>
-                        <button *ngSwitchCase="'button'" mat-flat-button color="primary">{{field.value}}</button>
-                        <nc-immediate-filter-text *ngSwitchCase="'filter'"
-                                                  [filterMetadata]="field.filterMetadata"
-                                                  [ellipsis]="textEllipsis"
-                                                  class="width-100">
-                        </nc-immediate-filter-text>
-                    </ng-container>
-                </span>
+                <nc-panel-item
+                    [leadingIcon]="taskPanelData.task.icon"
+                    [index]="i"
+                    [featuredValue]="field"
+                    [textEllipsis]="textEllipsis">
+                </nc-panel-item>
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxFlex="5">
