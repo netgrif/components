@@ -2,8 +2,6 @@
               (stopLoading)="stopLoading()" (getExpansionPanelRef)="setPanelRef($event)" [first]="first" [last]="last">
     <ng-template #taskPanelHeader>
         <div fxLayoutAlign="start center" fxLayout="row" fxFlex="95" (click)="preventSelectionClick($event)">
-            <mat-icon class="task-panel-icon panel-primary-icon">
-                {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
             <div *ngFor="let field of featuredFieldsValues; let i = index" fxFlex
                   class="text-column-div"
                   [fxHide.lt-xl]="i >= 4 && responsiveBody"
@@ -12,8 +10,10 @@
                   [fxHide.lt-sm]="i >= 1 && responsiveBody"
                     [ngClass]="{'panel-header-padding': !textEllipsis && field.type !== 'button'}">
                 <span class="text-column-margin" fxLayoutAlign="start center">
+                    <mat-icon class="task-panel-icon panel-primary-icon" *ngIf="i === 0">
+                        {{taskPanelData.task.icon ? taskPanelData.task.icon : 'label'}}</mat-icon>
                     <mat-icon class="task-panel-icon panel-primary-icon"
-                              *ngIf="!!field.icon && !!field.value && field.type !== 'button'">{{field.icon}}</mat-icon>
+                              *ngIf="!!field.icon && !!field.value && field.type !== 'button' && i !== 0">{{field.icon}}</mat-icon>
                     <ng-container [ngSwitch]="field.type">
                         <span *ngSwitchDefault
                               [ngClass]="{'text-column-ellipsis': textEllipsis, 'text-column-word-wrap': !textEllipsis}"
