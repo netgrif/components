@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractPanelItemComponent } from '@netgrif/components-core';
 
 @Component({
@@ -6,13 +6,9 @@ import { AbstractPanelItemComponent } from '@netgrif/components-core';
   templateUrl: './panel-item.component.html',
   styleUrls: ['./panel-item.component.scss']
 })
-export class PanelItemComponent extends AbstractPanelItemComponent implements OnInit {
+export class PanelItemComponent extends AbstractPanelItemComponent {
 
   constructor() {
       super();
   }
-
-  ngOnInit(): void {
-  }
-
 }

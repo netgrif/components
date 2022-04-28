@@ -1,7 +1,7 @@
-import { Input, OnDestroy, OnInit } from '@angular/core';
+import { Input } from '@angular/core';
 import { FeaturedValue } from '../abstract/featured-value';
 
-export abstract class AbstractPanelItemComponent implements OnInit, OnDestroy {
+export abstract class AbstractPanelItemComponent {
 
     @Input() leadingIcon: string;
     @Input() featuredValue: FeaturedValue;
@@ -10,11 +10,5 @@ export abstract class AbstractPanelItemComponent implements OnInit, OnDestroy {
 
     constructor() {
 
-    }
-
-    ngOnDestroy(): void {
-    }
-
-    ngOnInit(): void {
     }
 }
