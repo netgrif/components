@@ -41,10 +41,7 @@ export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
         }
 
         this.featuredFieldsValues.splice(0, this.featuredFieldsValues.length);
-        // this.firstFeaturedValue = this.getFeaturedValue(this._lastSelectedHeaders[0]).value;
-        for (const item of this._lastSelectedHeaders) {
-            this.featuredFieldsValues.push(this.getFeaturedValue(item));
-        }
+        this._lastSelectedHeaders.forEach(item => this.featuredFieldsValues.push(this.getFeaturedValue(item)));
     }
 
     protected getFeaturedValue(selectedHeader: HeaderColumn): FeaturedValue {
