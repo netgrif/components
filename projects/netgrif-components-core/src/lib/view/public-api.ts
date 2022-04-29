@@ -43,6 +43,7 @@ export * from './workflow-view/workflow-view.service';
 export * from './tree-case-view/tree-case-view.service';
 export * from './tree-case-view/tree-component/case-tree.service';
 export * from './tree-case-view/tree-task-content/tree-task-content.service';
+export * from './task-view/service/public-task-loading.service';
 
 /* COMPONENTS */
 export * from './workflow-view/abstract-workflow-view.component';
