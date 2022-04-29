@@ -6,7 +6,9 @@ describe('PublicTaskLoadingService', () => {
   let service: PublicTaskLoadingService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+        providers: [PublicTaskLoadingService]
+    });
     service = TestBed.inject(PublicTaskLoadingService);
   });
 
