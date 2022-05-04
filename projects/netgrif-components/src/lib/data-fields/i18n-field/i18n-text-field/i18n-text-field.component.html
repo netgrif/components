@@ -30,8 +30,11 @@
              [ngClass]="{'invalid-form-input': textI18nField.isInvalid(formControlRef)}">
             <button mat-icon-button color="accent" [matTooltip]="'dataField.i18n.languageSelect' | translate"
                     class="language-selector-button" (click)="languageDropdown.open()">
-                <div class="language-svg-wrapper"
-                     [innerHTML]="this.languageIconsService.languageIcons[this.selectedLanguage].svgIcon"></div>
+                <div fxLayout="row" fxLayoutAlign=" center">
+                    <div class="language-svg-wrapper"
+                         [innerHTML]="this.languageIconsService.languageIcons[this.selectedLanguage].svgIcon"></div>
+                    <mat-icon color="primary">arrow_drop_down</mat-icon>
+                </div>
             </button>
             <mat-select #languageDropdown class="language-select">
                 <mat-option *ngFor="let languageKey of languageKeys"
@@ -48,13 +51,9 @@
                    [required]="textI18nField.behavior.required"
                    [(ngModel)]="currentValue[selectedLanguage]"
                    (blur)="setSelectedValue()">
-            <button mat-icon-button (click)="showFilled()" *ngIf="!filledShown"
-                    [matTooltip]="'dataField.i18n.showTranslations' | translate">
-                <mat-icon color="warn">arrow_drop_down</mat-icon>
-            </button>
-            <button mat-icon-button (click)="hideFilled()" *ngIf="filledShown"
-                    [matTooltip]="'dataField.i18n.hideTranslations' | translate">
-                <mat-icon color="warn">arrow_drop_up</mat-icon>
+            <button mat-icon-button (click)="toggleFilled()"
+                    [matTooltip]="(filledShown ? 'dataField.i18n.hideTranslations' : 'dataField.i18n.showTranslations') | translate">
+                <mat-icon color="warn">{{filledShown ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
             </button>
         </div>
 

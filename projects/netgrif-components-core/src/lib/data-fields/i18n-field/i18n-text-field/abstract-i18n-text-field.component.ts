@@ -104,16 +104,8 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         this.refreshFilledMap();
     }
 
-    public showFilled(): void {
-        this.filledShown = true;
-    }
-
-    public hideFilled(): void {
-        this.filledShown = false;
-    }
-
-    public isRequired(): boolean {
-        return this.textI18nField.validations.some(item => item.validationRule.includes(I18nFieldValidation.REQUIRED_I18N));
+    public toggleFilled(): void {
+        this.filledShown = !this.filledShown;
     }
 
     public isPlainText(): boolean {
