@@ -49,7 +49,7 @@ class TestPanelItemComponent extends AbstractPanelItemComponent {
     constructor() {
         super();
         this.leadingIcon = 'label';
-        this.index = 0;
+        this.leadingIconEnabled = true;
         this.textEllipsis = true;
         this.featuredValue = {
             type: 'text',

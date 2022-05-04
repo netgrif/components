@@ -40,12 +40,12 @@ describe('PanelItemComponent', () => {
 
 @Component({
     selector: 'nc-test-wrapper',
-    template: '<nc-panel-item [leadingIcon]="leadingIcon" [index]="index" [textEllipsis]="textEllipsis" ' +
+    template: '<nc-panel-item [leadingIcon]="leadingIcon" [leadingIconEnabled]="index" [textEllipsis]="textEllipsis" ' +
         '[featuredValue]="featuredValue"></nc-panel-item>'
 })
 class TestWrapperComponent {
     leadingIcon = 'label';
-    index = 0;
+    leadingIconEnabled = true;
     textEllipsis = true;
     featuredValue = {
         type: 'text',
