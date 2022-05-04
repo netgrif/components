@@ -58,6 +58,8 @@ import {SideMenuUserAssignComponentModule} from '../side-menu/content-components
 import { I18nFieldComponent } from './i18n-field/i18n-field.component';
 import { I18nDividerFieldComponent } from './i18n-field/i18n-divider-field/i18n-divider-field.component';
 import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-field.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -129,7 +131,9 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
         MatDialogModule,
         AdvancedSearchComponentModule,
         MatProgressSpinnerModule,
-        CurrencyModule
+        CurrencyModule,
+        BrowserModule,
+        BrowserAnimationsModule
     ],
     providers: [
         {provide: DateAdapter, useClass: CustomDateAdapter}

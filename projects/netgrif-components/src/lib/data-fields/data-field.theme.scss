@@ -69,5 +69,14 @@
     .primary-background-color {
         background: mat-color($primary);
     }
+
+    .filled-language-row:hover {
+        background-color: rgba(mat-color($primary), 0.2);
+    }
+
+    .form-input:focus-within {
+        border: solid 2px mat-color($primary) !important;
+        padding: 1px !important;
+    }
 }
 

@@ -3,3 +3,116 @@
     margin: 0 auto;
     width: 100%;
 }
+
+.selected-language-value {
+    outline: none;
+    padding: 9px 0;
+    width: calc(100% - 56px);
+    font-size: 14px;
+    border: 0;
+    margin-left: 8px;
+}
+
+.form-input {
+    background: transparent;
+    color: #333333;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    text-align: left;
+    font-size: 14px;
+    line-height: 15.75px;
+    border-radius: 6px;
+    min-width: 5px;
+    padding: 10px 15px 10px 15px;
+    box-sizing: border-box;
+    height: 54.81px;
+}
+
+.form-input:hover {
+    border: solid 2px black;
+}
+
+.button-icon-input {
+    padding: 2px !important;
+}
+
+.button-icon-input:hover {
+    padding: 1px !important;
+}
+
+.invalid-form-input {
+    border: solid 2px #f44336 !important;
+    padding: 1px !important;
+}
+
+.i18n-hint-error {
+    padding: 0 1em;
+    font-size: 75%;
+}
+
+.language-svg-wrapper {
+    height: 20px;
+    line-height: normal;
+}
+
+.language-selector-button {
+    width: auto;
+    margin-left: 8px;
+    margin-right: 4px;
+}
+
+.language-selector-wrapper {
+    margin: 0 8px;
+}
+
+.language-svg-icon {
+    border: solid 1px black;
+}
+
+.filled-language-row {
+    min-height: 28px;
+    padding: 4px 0;
+}
+
+.filled-language-row:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.filled-languages-wrapper {
+    border-radius: 0 0 6px 6px;
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin-top: -5px;
+    padding-top: 5px;
+    transform-origin: top;
+}
+
+.filled-language-icon {
+    margin: 0 10px;
+    height: 20px;
+}
+
+.filled-language-value {
+    margin-left: 20px;
+}
+
+.filled-language-button {
+    margin-left: auto;
+    height: 24px;
+    width: 24px;
+    line-height: normal;
+    margin-right: 10px;
+}
+
+.language-select {
+    width: 18px !important;
+}
+
+.language-option-icon {
+    margin-left: 0;
+}
+
+.language-option-value {
+    margin-left: 16px;
+}

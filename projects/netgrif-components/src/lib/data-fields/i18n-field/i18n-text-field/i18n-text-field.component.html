@@ -4,7 +4,7 @@
             <mat-label *ngIf="!showLargeLayout.value">{{textI18nField.title}}</mat-label>
             <input matInput
                    [disabled]="true"
-                   [ngModel]="getTranslation()"
+                   [ngModel]="currentValue[selectedLanguage]"
                    [placeholder]="textI18nField.placeholder"
                    [required]="textI18nField.behavior.required">
             <mat-hint>{{textI18nField.description}}</mat-hint>
@@ -14,13 +14,66 @@
         <div class="full-width"
              [ngStyle]="textPropertyEnabled('fontSize') && {'font-size': getTextFontSize()}">
             <span [ngStyle]="textPropertyEnabled('textColor') && {'color': getTextColor()}">
-                {{getTranslation()}}
+                {{currentValue[selectedLanguage]}}
             </span>
         </div>
     </ng-template>
 </ng-template>
 <ng-template [ngIf]="!textI18nField.disabled">
     <div class="full-width">
-        <!-- TODO: add editable view for text component -->
+        <mat-label *ngIf="!showLargeLayout.value">
+            {{textI18nField.title}}
+            <nc-required-label *ngIf="textI18nField.behavior.required" [isIn]="!textI18nField.disabled"></nc-required-label>
+            <br>
+        </mat-label>
+        <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
+             [ngClass]="{'invalid-form-input': textI18nField.isInvalid(formControlRef)}">
+            <button mat-icon-button color="accent" [matTooltip]="'dataField.i18n.languageSelect' | translate"
+                    class="language-selector-button" (click)="languageDropdown.open()">
+                <div class="language-svg-wrapper"
+                     [innerHTML]="this.languageIconsService.languageIcons[this.selectedLanguage].svgIcon"></div>
+            </button>
+            <mat-select #languageDropdown class="language-select">
+                <mat-option *ngFor="let languageKey of languageKeys"
+                            [value]="languageKey" (click)="selectLanguage(languageKey)">
+                    <div fxLayout="row" fxLayoutAlign=" center">
+                        <div [innerHTML]="languageIconsService.languageIcons[languageKey].svgIcon" class="language-option-icon"></div>
+                        <span class="language-option-value">{{languageIconsService.languageIcons[languageKey].languageName}}</span>
+                    </div>
+                </mat-option>
+            </mat-select>
+            <input class="selected-language-value"
+                   type="text"
+                   [placeholder]="textI18nField.placeholder"
+                   [required]="textI18nField.behavior.required"
+                   [(ngModel)]="currentValue[selectedLanguage]"
+                   (blur)="setSelectedValue()">
+            <button mat-icon-button (click)="showFilled()" *ngIf="!filledShown"
+                    [matTooltip]="'dataField.i18n.showTranslations' | translate">
+                <mat-icon color="warn">arrow_drop_down</mat-icon>
+            </button>
+            <button mat-icon-button (click)="hideFilled()" *ngIf="filledShown"
+                    [matTooltip]="'dataField.i18n.hideTranslations' | translate">
+                <mat-icon color="warn">arrow_drop_up</mat-icon>
+            </button>
+        </div>
+
+        <div fxLayout="column" class="filled-languages-wrapper"
+             [@languageWrapper]="filledShown"
+             (@languageWrapper.start)="$event.element.style.display = 'block'"
+             (@languageWrapper.done)="$event.element.style.display = ($event.toState ? 'block' : 'none')">
+            <div *ngFor="let filledKey of filledKeys" fxLayout="row" fxLayoutAlign=" center" class="filled-language-row">
+                <div class="filled-language-icon" [innerHTML]="this.languageIconsService.languageIcons[filledKey].svgIcon"></div>
+                <span class="filled-language-value">{{currentValue[filledKey]}}</span>
+                <button class="filled-language-button" *ngIf="!isDefaultValue(filledKey)" mat-icon-button
+                        (click)="removeTranslation(filledKey)" [matTooltip]="'dataField.i18n.deleteTranslation' | translate">
+                    <mat-icon color="warn">close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-hint class="i18n-hint-error"
+                  *ngIf="!textI18nField.isInvalid(formControlRef)">{{textI18nField.description}}</mat-hint>
+        <mat-error class="i18n-hint-error"
+                   *ngIf="textI18nField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
     </div>
 </ng-template>
