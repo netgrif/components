@@ -21,13 +21,13 @@
 </ng-template>
 <ng-template [ngIf]="!textI18nField.disabled">
     <div class="full-width">
-        <mat-label *ngIf="!showLargeLayout.value">
+        <div #i18nLabel class="i18n-label">
             {{textI18nField.title}}
             <nc-required-label *ngIf="textI18nField.behavior.required" [isIn]="!textI18nField.disabled"></nc-required-label>
-            <br>
-        </mat-label>
+        </div>
         <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
-             [ngClass]="{'invalid-form-input': textI18nField.isInvalid(formControlRef)}">
+             [ngClass]="{'invalid-form-input': textI18nField.isInvalid(formControlRef)}"
+             [ngStyle]="{'-webkit-clip-path': getCutProperty(i18nLabel)}">
             <button mat-icon-button color="accent" [matTooltip]="'dataField.i18n.languageSelect' | translate"
                     class="language-selector-button" (click)="languageDropdown.open()">
                 <div fxLayout="row" fxLayoutAlign=" center">

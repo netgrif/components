@@ -11,6 +11,7 @@
     font-size: 14px;
     border: 0;
     margin-left: 8px;
+    background: transparent;
 }
 
 .form-input {
@@ -23,9 +24,8 @@
     line-height: 15.75px;
     border-radius: 6px;
     min-width: 5px;
-    padding: 10px 15px 10px 15px;
     box-sizing: border-box;
-    height: 54.81px;
+    height: 52px;
 }
 
 .form-input:hover {
@@ -116,4 +116,14 @@
 
 .language-option-value {
     margin-left: 16px;
+}
+
+.i18n-label {
+    transform: translate(0.4em,-0.4em) scale(.75);
+    transform-origin: left;
+    color: rgba(0, 0, 0, 0.6);
+    background: transparent;
+    width: fit-content;
+    padding: 0 0.5em;
+    height: 0;
 }

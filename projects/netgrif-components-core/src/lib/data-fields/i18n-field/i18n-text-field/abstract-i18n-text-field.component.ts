@@ -108,6 +108,11 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         this.filledShown = !this.filledShown;
     }
 
+    public getCutProperty(i18nLabel) {
+        const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
+        return 'polygon(0 0, 0 100%, 100% 100%, 100% 0%, ' + calculatedWidth + ' 0, ' + calculatedWidth + ' 5%, 0.5em 5%, 0.5em 0)';
+    }
+
     public isPlainText(): boolean {
         if (this.textPropertyEnabled('plainText')) {
             return this.textI18nField.component.properties.plainText === 'true';
