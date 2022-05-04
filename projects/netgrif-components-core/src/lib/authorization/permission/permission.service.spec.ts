@@ -2,7 +2,7 @@ import {TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {PermissionService} from './permission.service';
@@ -24,6 +24,7 @@ describe('PermissionService', () => {
                 MaterialModule,
                 CommonModule,
                 FlexModule,
+                NoopAnimationsModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule

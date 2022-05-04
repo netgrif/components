@@ -362,8 +362,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="178"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:178</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="176"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:176</a></div>
                 </td>
             </tr>
 
@@ -458,8 +458,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="116"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:116</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="114"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:114</a></div>
                 </td>
             </tr>
 
@@ -551,8 +551,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="102"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:102</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="100"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:100</a></div>
                 </td>
             </tr>
 
@@ -636,8 +636,8 @@ otherwise <code>false</code> will be emitted</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="188"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:188</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="186"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/task/services/finish-task.service.ts:186</a></div>
                 </td>
             </tr>
 
@@ -984,7 +984,7 @@ export class FinishTaskService extends TaskHandlingService {
      * otherwise &#x60;false&#x60; will be emitted
      */
     public validateDataAndFinish(afterAction: AfterAction &#x3D; new AfterAction()): void {
-        if (this._safeTask.dataSize &lt;&#x3D; 0) {
+        if (this.dataIsEmpty()) {
             this._taskDataService.initializeTaskDataFields(this._callChain.create(() &#x3D;&gt; {
                 if (this._safeTask.dataSize &lt;&#x3D; 0 ||
                     (this._taskContentService.validateDynamicEnumField() &amp;&amp; this._taskContentService.validateTaskData())) {
@@ -994,17 +994,15 @@ export class FinishTaskService extends TaskHandlingService {
         } else if (this._taskContentService.validateDynamicEnumField() &amp;&amp; this._taskContentService.validateTaskData()) {
             const finishedTaskId &#x3D; this._safeTask.stringId;
             this._taskDataService.updateTaskDataFields(this._callChain.create(success &#x3D;&gt; {
-                if (success) {
-                    if (this._taskState.isUpdating(finishedTaskId)) {
+                    if (success &amp;&amp; this._taskState.isUpdating(finishedTaskId)) {
                         this._taskDataService.updateSuccess$.pipe(take(1)).subscribe(bool &#x3D;&gt; {
                             if (bool) {
                                 this.queueFinishTaskRequest(afterAction);
                             }
                         });
-                    } else {
+                    } else if (success) {
                         this.queueFinishTaskRequest(afterAction);
                     }
-                }
             }));
         }
     }
@@ -1111,6 +1109,14 @@ export class FinishTaskService extends TaskHandlingService {
      */
     protected sendNotification(success: boolean): void {
         this._taskEvent.publishTaskEvent(createTaskEventNotification(this._safeTask, TaskEvent.FINISH, success));
+    }
+
+    /**
+     * Checks data size
+     * @return boolean whether the task contains data or not
+     */
+    private dataIsEmpty(): boolean {
+        return this._safeTask.dataSize &lt;&#x3D; 0 || !this._safeTask.dataGroups || this._safeTask.dataGroups.length &lt;&#x3D; 0;
     }
 }
 </code></pre>

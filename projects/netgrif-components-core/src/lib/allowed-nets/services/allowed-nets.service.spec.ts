@@ -8,6 +8,7 @@ import {TestConfigurationService} from '../../utility/tests/test-config';
 import {Injectable} from '@angular/core';
 import {of} from 'rxjs';
 import {ProcessService} from '../../process/process.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AllowedNetsService', () => {
     let service: AllowedNetsService;
@@ -18,11 +19,16 @@ describe('AllowedNetsService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    HttpClientTestingModule
+                    HttpClientTestingModule,
+                    NoopAnimationsModule
                 ],
                 providers: [
                     {provide: ConfigurationService, useClass: TestConfigurationService},
-                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]}
+                    {
+                        provide: AllowedNetsService,
+                        useFactory: TestNoAllowedNetsFactory,
+                        deps: [AllowedNetsServiceFactory]
+                    }
                 ]
             });
             service = TestBed.inject(AllowedNetsService);
@@ -32,6 +38,9 @@ describe('AllowedNetsService', () => {
             expect(service).toBeTruthy();
         });
 
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 
     describe('with mocked process service', () => {
@@ -42,7 +51,11 @@ describe('AllowedNetsService', () => {
                 ],
                 providers: [
                     {provide: ConfigurationService, useClass: TestConfigurationService},
-                    {provide: AllowedNetsService, useFactory: TestNoAllowedNetsFactory, deps: [AllowedNetsServiceFactory]},
+                    {
+                        provide: AllowedNetsService,
+                        useFactory: TestNoAllowedNetsFactory,
+                        deps: [AllowedNetsServiceFactory]
+                    },
                     {provide: ProcessService, useClass: MockProcessService}
                 ]
             });
@@ -52,17 +65,19 @@ describe('AllowedNetsService', () => {
 
         it('should share allowed nets', () => {
             expect(service).toBeTruthy();
-            const sub1 = service.allowedNets$.subscribe(() => {});
+            const sub1 = service.allowedNets$.subscribe(() => {
+            });
             const callsAfterOneSub = mockProcessService.numberOfCalls;
-            const sub2 = service.allowedNets$.subscribe(() => {});
+            const sub2 = service.allowedNets$.subscribe(() => {
+            });
             expect(mockProcessService.numberOfCalls).toEqual(callsAfterOneSub);
             sub1.unsubscribe();
             sub2.unsubscribe();
         });
-    });
 
-    afterEach(() => {
-        TestBed.resetTestingModule();
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 });
 

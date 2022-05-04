@@ -4,6 +4,7 @@ import {createMockDependencies} from '../../../../utility/tests/search-category-
 import {of} from 'rxjs';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {createMockNet} from '../../../../utility/tests/utility/create-mock-net';
+import {TestBed} from '@angular/core/testing';
 
 describe('CaseSimpleDataset', () => {
     let category: CaseSimpleDataset;
@@ -18,6 +19,7 @@ describe('CaseSimpleDataset', () => {
 
     afterEach(() => {
         category.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {

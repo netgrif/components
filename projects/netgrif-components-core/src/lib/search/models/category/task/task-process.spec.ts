@@ -1,7 +1,7 @@
 import {TaskProcess} from './task-process';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
 import {OperatorService} from '../../../operator-service/operator.service';
-import {waitForAsync} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {ReplaySubject} from 'rxjs';
 import {OperatorResolverService} from '../../../operator-service/operator-resolver.service';
 import {Net} from '../../../../process/net';
@@ -29,6 +29,7 @@ describe('TaskProcess', () => {
     afterEach(() => {
         allowedNets$.complete();
         category.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {
@@ -141,9 +142,5 @@ describe('TaskProcess', () => {
                 done();
             });
         });
-    });
-
-    afterEach(() => {
-        category.destroy();
     });
 });

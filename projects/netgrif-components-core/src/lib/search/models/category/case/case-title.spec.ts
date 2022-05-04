@@ -5,6 +5,7 @@ import {configureCategory} from '../../../../utility/tests/utility/configure-cat
 import {Equals} from '../../operator/equals';
 import {Categories} from '../categories';
 import {Operators} from '../../operator/operators';
+import {TestBed} from '@angular/core/testing';
 import {Substring} from '../../operator/substring';
 import {CaseSearch} from './case-search.enum';
 import {SearchIndexResolverService} from '../../../search-keyword-resolver-service/search-index-resolver.service';
@@ -24,6 +25,7 @@ describe('CaseTitle', () => {
 
     afterEach(() => {
         category.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {

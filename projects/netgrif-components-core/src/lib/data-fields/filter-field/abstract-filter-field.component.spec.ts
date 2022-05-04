@@ -7,15 +7,25 @@ import {FilterType} from '../../filter/models/filter-type';
 import {ComponentType} from '@angular/cdk/portal';
 import {AbstractFilterFieldContentComponent} from './abstract-filter-field-content.component';
 import {SearchService} from '../../search/search-service/search.service';
-import {of} from 'rxjs';
+import {of, Subject} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractFilterFieldComponent', () => {
     let component: TestFilterComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
+    let mockSearchService;
+
     beforeEach(() => {
+        mockSearchService = {
+            loadFromMetadata: () => {},
+            loadingFromMetadata$: new Subject<boolean>()
+        };
+
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             declarations: [
                 TestWrapperComponent,
                 TestFilterComponent,

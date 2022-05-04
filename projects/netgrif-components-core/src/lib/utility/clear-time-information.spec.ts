@@ -1,5 +1,6 @@
 import moment from 'moment';
 import {clearTimeInformation} from './clear-time-information';
+import {TestBed} from '@angular/core/testing';
 
 
 describe('clearTimeInformation', () => {
@@ -23,5 +24,9 @@ describe('clearTimeInformation', () => {
         expect(dateTime.date()).toEqual(14);
         expect(dateTime.month()).toEqual(0);
         expect(dateTime.year()).toEqual(2021);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

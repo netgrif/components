@@ -35,6 +35,7 @@ import {ChangedFieldsService} from '../../changed-fields/services/changed-fields
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
 import {createMockTask} from '../../utility/tests/utility/create-mock-task';
 import {createMockTaskOutcome} from '../../utility/tests/utility/create-mock-task-outcome';
+import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 
 describe('AssignTaskService', () => {
     let service: AssignTaskService;
@@ -51,7 +52,7 @@ describe('AssignTaskService', () => {
                 TranslateModule,
                 TranslateLibModule,
                 NoopAnimationsModule,
-                SnackBarModule,
+                SnackBarModule
             ],
             providers: [
                 AssignTaskService,
@@ -99,6 +100,7 @@ describe('AssignTaskService', () => {
         callChainService = TestBed.inject(CallChainService);
         taskEventService = TestBed.inject(TaskEventService);
         spyOn(console, 'debug');
+        spyOn(TestBed.inject(SnackBarService), 'openErrorSnackBar');
     });
 
     afterEach(() => {
