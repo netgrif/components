@@ -24,10 +24,11 @@ export abstract class AbstractI18nErrorsComponent {
                 value.validationRule.includes(I18nFieldValidation.TRANSLATION_REQUIRED)
             ).validationRule.split(' ');
             const missingLanguages = tmp[1]
-                                    .split(',')
-                                    .filter(lanCode => !Object.keys(this.formControlRef.value.translations).includes(lanCode))
-                                    .map(lanCode => this.languageIconsService.languageIcons[lanCode].languageName)
-                                    .join(', ');
+                .replace(' ', '')
+                .split(',')
+                .filter(lanCode => !Object.keys(this.formControlRef.value.translations).includes(lanCode))
+                .map(lanCode => this.languageIconsService.languageIcons[lanCode].languageName)
+                .join(', ');
             return this.resolveErrorMessage(
                 I18nFieldValidation.TRANSLATION_REQUIRED,
                 this._translate.instant(
@@ -41,6 +42,7 @@ export abstract class AbstractI18nErrorsComponent {
                 value.validationRule.includes(I18nFieldValidation.TRANSLATION_ONLY)
             ).validationRule.split(' ');
             const onlyLanguages = tmp[1]
+                .replace(' ', '')
                 .split(',')
                 .map(lanCode => this.languageIconsService.languageIcons[lanCode].languageName)
                 .join(', ');

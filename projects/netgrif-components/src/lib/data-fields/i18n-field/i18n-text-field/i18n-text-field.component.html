@@ -30,11 +30,8 @@
              [ngStyle]="{'-webkit-clip-path': getCutProperty(i18nLabel)}">
             <button mat-icon-button color="accent" [matTooltip]="'dataField.i18n.languageSelect' | translate"
                     class="language-selector-button" (click)="languageDropdown.open()">
-                <div fxLayout="row" fxLayoutAlign=" center">
-                    <div class="language-svg-wrapper"
-                         [innerHTML]="this.languageIconsService.languageIcons[this.selectedLanguage].svgIcon"></div>
-                    <mat-icon color="primary">arrow_drop_down</mat-icon>
-                </div>
+                <div class="language-svg-wrapper"
+                     [innerHTML]="this.languageIconsService.languageIcons[this.selectedLanguage].svgIcon"></div>
             </button>
             <mat-select #languageDropdown class="language-select">
                 <mat-option *ngFor="let languageKey of languageKeys"

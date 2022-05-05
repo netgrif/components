@@ -126,13 +126,13 @@ export class I18nField extends DataField<I18nFieldValue> {
             if (item.validationRule.includes(I18nFieldValidation.TRANSLATION_REQUIRED)) {
                 const tmp = item.validationRule.split(' ');
                 if (tmp[1] !== undefined) {
-                    result.push(this.validTranslationRequired(tmp[1].split(',')));
+                    result.push(this.validTranslationRequired(tmp[1].replace(' ', '').split(',')));
                 }
             }
             if (item.validationRule.includes(I18nFieldValidation.TRANSLATION_ONLY)) {
                 const tmp = item.validationRule.split(' ');
                 if (tmp[1] !== undefined) {
-                    result.push(this.validTranslationOnly(tmp[1].split(',')));
+                    result.push(this.validTranslationOnly(tmp[1].replace(' ', '').split(',')));
                 }
             }
         });
