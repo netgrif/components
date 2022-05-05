@@ -71,6 +71,10 @@ export class LanguageIconsService {
             languageName: 'English',
             svgIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" class="language-svg-icon"><path d="M0 0h24v18H0z" fill="rgb(0.392157%,12.941176%,41.176471%)"/><path d="M2.813 0l9.148 6.789L21.074 0H24v2.324l-9 6.715 9 6.672V18h-3l-9-6.711L3.039 18H0v-2.25l8.961-6.676L0 2.398V0zm0 0" fill="rgb(100%,100%,100%)"/><path d="M15.898 10.539L24 16.5V18l-10.164-7.461zM9 11.289l.227 1.313L2.023 18H0zM24 0v.113l-9.336 7.051.074-1.652L22.125 0zM0 0l8.961 6.602h-2.25L0 1.574zm0 0" fill="rgb(78.431373%,6.27451%,18.039216%)"/><path d="M9.039 0v18h6V0zM0 6v6h24V6zm0 0" fill="rgb(100%,100%,100%)"/><path d="M0 7.238v3.598h24V7.238zM10.238 0v18h3.598V0zm0 0" fill="rgb(78.431373%,6.27451%,18.039216%)"/></svg>'
         },
+        eo: {
+            languageName: 'Esperanto',
+            svgIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" class="language-svg-icon"><path d="M0 0h24v18H0z" fill="rgb(0%,60%,0%)"/><path d="M0 0h9v9H0zm0 0" fill-rule="evenodd" fill="rgb(100%,100%,100%)"/><path d="M4.5 1.352L2.664 7.051 7.5 3.523h-6l4.836 3.527zm0 0" fill="rgb(0%,60%,0%)"/></svg>'
+        },
         et: {
             languageName: 'Estonian',
             svgIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" fill-rule="evenodd" class="language-svg-icon"><path d="M0 0h24v17.922H0zm0 0" fill="rgb(0%,0%,0%)"/><path d="M0 12.027h24V18H0zm0 0" fill="rgb(100%,100%,100%)"/><path d="M0 0h24v5.973H0zm0 0" fill="rgb(7.058824%,56.862745%,100%)"/></svg>'
