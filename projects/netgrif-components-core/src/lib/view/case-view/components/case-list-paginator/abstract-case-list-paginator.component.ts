@@ -10,10 +10,10 @@ import {AbstractDefaultCaseList} from '../default-case-list/abstract-default-cas
 
 export abstract class AbstractCaseListPaginatorComponent extends AbstractDefaultCaseList {
 
-    length: number;
-    pageSize = 20;
-    pageIndex = 0;
-    pageSizeOptions: number[] = [10, 20, 50];
+    public length: number;
+    public pageSize = 20;
+    public pageIndex = 0;
+    public pageSizeOptions: number[] = [10, 20, 50];
 
     constructor(protected _caseViewService: CaseViewService,
                 protected _log: LoggerService,
@@ -27,13 +27,13 @@ export abstract class AbstractCaseListPaginatorComponent extends AbstractDefault
         this.onRedirect();
     }
 
-    onPageChanged(e) {
+    public onPageChanged(e) {
         this.pageIndex = e.pageIndex;
         this.pageSize = e.pageSize;
         this._caseViewService.nextPagePagination(this.pageSize, this.pageIndex);
     }
 
-    public trackById(index, caze: Case) {
+    public trackById(index: number, caze: Case) {
         return caze.stringId;
     }
 }
