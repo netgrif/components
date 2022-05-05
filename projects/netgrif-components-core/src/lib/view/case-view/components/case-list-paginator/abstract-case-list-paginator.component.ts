@@ -33,7 +33,7 @@ export abstract class AbstractCaseListPaginatorComponent extends AbstractDefault
         this._caseViewService.nextPagePagination(this.pageSize, this.pageIndex);
     }
 
-    public trackById(index: number, caze: Case) {
+    public trackById(_index: number, caze: Case) {
         return caze.stringId;
     }
 }

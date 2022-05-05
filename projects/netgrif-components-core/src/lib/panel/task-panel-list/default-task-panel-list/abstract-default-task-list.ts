@@ -61,7 +61,7 @@ export abstract class AbstractDefaultTaskList extends TabbedVirtualScrollCompone
         this.onRedirect();
     }
 
-    public trackBy(idx: number, item: TaskPanelData): any {
+    public trackBy(_idx: number, item: TaskPanelData): any {
         return item.task.stringId; // + (item.task.user ? item.task.user.email : '');
     }
 
