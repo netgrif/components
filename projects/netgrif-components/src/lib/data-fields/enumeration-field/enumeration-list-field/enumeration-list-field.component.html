@@ -6,7 +6,7 @@
     [formControl]="formControlRef">
     <mat-label *ngIf="!showLargeLayout.value">{{enumerationField.title}}
         <nc-required-label *ngIf="enumerationField.behavior.required" [isIn]="true"></nc-required-label>
-        <button mat-button [hidden]="formControlRef.disabled" (click)="resetEnum()">{{'dataField.enum.reset' | translate}}</button>
+        <button mat-button *ngIf="!formControlRef.disabled" (click)="resetEnum()">{{'dataField.enum.reset' | translate}}</button>
         <br></mat-label>
     <mat-radio-button class="example-radio-button" *ngFor="let option of enumerationField.choices" [value]="option.key">
         {{option.value}}
