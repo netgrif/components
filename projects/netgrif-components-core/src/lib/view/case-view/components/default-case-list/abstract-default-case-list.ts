@@ -37,6 +37,7 @@ export abstract class AbstractDefaultCaseList extends TabbedVirtualScrollCompone
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         this.caseClick.complete();
         this.unsubscribe$.complete();
     }
