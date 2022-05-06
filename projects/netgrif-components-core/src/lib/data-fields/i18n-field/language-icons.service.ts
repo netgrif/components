@@ -6,6 +6,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class LanguageIconsService {
 
+    /* eslint-disable */
+    /* tslint:disable */
     private _languageIcons = {
         xx: {
             languageName: 'Default',
@@ -235,11 +237,15 @@ export class LanguageIconsService {
             languageName: 'Vietnamese',
             svgIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" class="language-svg-icon"><path d="M0 0h24v18H0z" fill="rgb(92.54902%,0%,8.235294%)"/><path d="M15.289 13.395l-3.148-2.344-3.129 2.363 1.16-3.852-3.129-2.379 3.871-.035 1.203-3.848 1.219 3.836 3.871.004-3.113 2.406 1.195 3.852zm0 0" fill-rule="evenodd" fill="rgb(100%,100%,0%)"/></svg>'
         }
-    }
+    };
+    /* tslint:enable */
+    /* eslint-enable */
 
     constructor(private _domSanitizer: DomSanitizer) {
         for (const k in this._languageIcons) {
-            this._languageIcons[k].svgIcon = this._domSanitizer.bypassSecurityTrustHtml(this._languageIcons[k].svgIcon);
+            if (Object.prototype.hasOwnProperty.call(this._languageIcons, k)) {
+                this._languageIcons[k].svgIcon = this._domSanitizer.bypassSecurityTrustHtml(this._languageIcons[k].svgIcon);
+            }
         }
     }
 

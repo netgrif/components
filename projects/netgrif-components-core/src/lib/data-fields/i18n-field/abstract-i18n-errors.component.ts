@@ -11,7 +11,7 @@ export abstract class AbstractI18nErrorsComponent {
     @Input() formControlRef: FormControl;
     @Input() textI18nField: I18nField;
 
-    protected constructor(public languageIconsService: LanguageIconsService,
+    protected constructor(protected languageIconsService: LanguageIconsService,
                           protected _translate: TranslateService) {
     }
 

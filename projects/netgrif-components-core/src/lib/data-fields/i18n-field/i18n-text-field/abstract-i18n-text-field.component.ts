@@ -1,5 +1,5 @@
 import {Input, OnDestroy, OnInit} from '@angular/core';
-import {I18nField, I18nFieldValidation} from '../models/i18n-field';
+import {I18nField} from '../models/i18n-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
@@ -27,7 +27,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
     public currentValue = {};
     public filledKeys: Array<string>;
 
-    protected constructor(public languageIconsService: LanguageIconsService,
+    protected constructor(protected languageIconsService: LanguageIconsService,
                           protected _translateService: TranslateService,
                           protected _domSanitizer: DomSanitizer) {
         super(languageIconsService, _translateService);
@@ -67,6 +67,10 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         this.refreshFilledMap();
     }
 
+    public getLanguageIcons() {
+        return this.languageIconsService.languageIcons;
+    }
+
     public isDefaultValue(choosenLanguage: string) {
         return choosenLanguage === 'xx';
     }
@@ -94,7 +98,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         }
         this.filledKeys.sort((a, b) => {
             return this.languageKeys.indexOf(a) - this.languageKeys.indexOf(b);
-        })
+        });
     }
 
     public removeTranslation(key: string) {

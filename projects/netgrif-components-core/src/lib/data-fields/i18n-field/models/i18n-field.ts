@@ -9,11 +9,37 @@ import {FormControl, ValidatorFn} from '@angular/forms';
 
 export enum I18nFieldValidation {
     TRANSLATION_REQUIRED = 'translationRequired',
-    TRANSLATION_ONLY =  'translationOnly',
+    TRANSLATION_ONLY = 'translationOnly',
     REQUIRED_I18N = 'requiredI18n'
 }
 
 export class I18nField extends DataField<I18nFieldValue> {
+
+    public static toObject(templateValue: I18nFieldValue): any {
+        const object = {};
+        object['xx'] = templateValue.defaultValue;
+        for (const k in templateValue.translations) {
+            if (Object.prototype.hasOwnProperty.call(templateValue.translations, k)) {
+                object[k] = templateValue.translations[k];
+            }
+        }
+        return object;
+    }
+
+    public static fromObject(templateValue: any, templateKey: string): I18nFieldValue {
+        const i18nObject = {
+            defaultValue: templateValue['xx'],
+            key: templateKey,
+            translations: {}
+        };
+        for (const k in templateValue) {
+            if (k === 'xx') {
+                continue;
+            }
+            i18nObject.translations[k] = templateValue[k];
+        }
+        return i18nObject as I18nFieldValue;
+    }
 
     constructor(stringId: string, title: string, value: I18nFieldValue | string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array<Validation>, _component?: Component) {
@@ -34,13 +60,14 @@ export class I18nField extends DataField<I18nFieldValue> {
             return true;
         }
         if ((!(!a.defaultValue && !b.defaultValue)
-            && ((!a.defaultValue && !!b.defaultValue) || (!b.defaultValue && !!a.defaultValue) || (a.defaultValue !== b.defaultValue)))
+                && ((!a.defaultValue && !!b.defaultValue) || (!b.defaultValue && !!a.defaultValue) || (a.defaultValue !== b.defaultValue)))
             || (!(!a.key && !b.key) && ((!a.key && !!b.key) || (!b.key && !!a.key) || (a.key !== b.key)))
-            || (!(!a.translations && !b.translations) && ((!a.translations && !!b.translations) || (!b.translations && !!a.translations)))) {
+            || (!(!a.translations && !b.translations)
+                && ((!a.translations && !!b.translations) || (!b.translations && !!a.translations)))) {
             return false;
         }
-        const aKeys = Object.keys(a.translations).sort()
-        const bKeys = Object.keys(b.translations).sort()
+        const aKeys = Object.keys(a.translations).sort();
+        const bKeys = Object.keys(b.translations).sort();
         if (aKeys.length !== bKeys.length
             || !aKeys.every((element, index) => {
                 return element === bKeys[index];
@@ -57,30 +84,6 @@ export class I18nField extends DataField<I18nFieldValue> {
 
     get updated(): Observable<void> {
         return this._update.asObservable();
-    }
-
-    public static toObject(templateValue: I18nFieldValue): any {
-        let object = {};
-        object['xx'] = templateValue.defaultValue;
-        for (const k in templateValue.translations) {
-            object[k] = templateValue.translations[k];
-        }
-        return object;
-    }
-
-    public static fromObject(templateValue: any, templateKey: string): I18nFieldValue {
-        let i18nObject = {
-            defaultValue: templateValue['xx'],
-            key: templateKey,
-            translations: {}
-        };
-        for (const k in templateValue) {
-            if (k === 'xx') {
-                continue;
-            }
-            i18nObject.translations[k] = templateValue[k];
-        }
-        return i18nObject as I18nFieldValue;
     }
 
     protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
@@ -141,14 +144,14 @@ export class I18nField extends DataField<I18nFieldValue> {
     }
 
     private validTranslationRequired(countries: Array<string>): ValidatorFn {
-        return (fc: FormControl): {[key: string]: any} | null => {
+        return (fc: FormControl): { [key: string]: any } | null => {
             return countries.every(languageCode => languageCode in fc.value.translations)
                 ? (null) : ({translationRequired: true});
         };
     }
 
     private validTranslationOnly(countries: Array<string>): ValidatorFn {
-        return (fc: FormControl): {[key: string]: any} | null => {
+        return (fc: FormControl): { [key: string]: any } | null => {
             return Object.keys(fc.value.translations).every(translation => countries.includes(translation))
                 ? (null) : ({translationOnly: true});
         };
