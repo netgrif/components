@@ -120,7 +120,7 @@ export class PublicTaskViewComponent extends AbstractTaskView implements AfterVi
         super(taskViewService);
         this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
             map(sources => {
-                return !(!sources[0] && !sources[1]);
+                return sources[0] || sources[1];
             })
         );
     }
