@@ -109,6 +109,17 @@
                 "path": "roles"
             }
         },
+        "demo-ldap-group-roles": {
+            "component": {
+                "class": "LdapGroupRolesAssignComponent",
+                "from": "./doc/ldap-group-roles-assign/ldap-group-roles-assign.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "ldap"
+            }
+        },
         "demo-login": {
             "component": {
                 "class": "LoginFormComponent",
@@ -298,6 +309,17 @@
                 }
             }
         },
+        "demo-workflow-view": {
+            "component": {
+                "class": "WorkflowViewExampleComponent",
+                "from": "./doc/workflow-view-example/workflow-view-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "workflow-view"
+            }
+        },
         "demo-title-config": {
             "layout": {
                 "name": "tabView",
@@ -359,19 +381,9 @@
                 "from": "./doc/title-config-example/title-config-example.component"
             },
             "access": "private",
-            "routing": {
-                "path": "titleConfig"
-            }
-        },
-        "demo-workflow-view": {
-            "component": {
-                "class": "WorkflowViewExampleComponent",
-                "from": "./doc/workflow-view-example/workflow-view-example.component"
-            },
-            "access": "private",
             "navigation": true,
             "routing": {
-                "path": "workflow-view"
+                "path": "titleConfig"
             }
         },
         "demo-dashboard-view": {

@@ -50,6 +50,7 @@ import {ProfileComponent} from './doc/profile/profile.component';
 import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
+import {LdapGroupRolesAssignComponent} from './doc/ldap-group-roles-assign/ldap-group-roles-assign.component';
 import {NaeExampleAppViewService} from './nae-example-app-view.service';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -76,7 +77,7 @@ import {
     TabsComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
-    WorkflowViewComponentModule,
+    WorkflowViewComponentModule, NewCaseComponent,
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -129,6 +130,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
+        LdapGroupRolesAssignComponent,
         TreeViewExampleComponent,
         UserInviteComponent,
         ExamplePortalCardComponent,
@@ -222,6 +224,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavigationExampleComponent,
         ButtonsNavComponent,
         RolesAssignComponent,
+        LdapGroupRolesAssignComponent,
         TreeViewExampleComponent,
         ExamplePortalCardComponent,
         ResetPasswordFormComponent,
@@ -237,7 +240,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         DemoTitleConfigContent3CaseViewComponent,
         TitleConfigComponent,
         ActiveGroupComponent,
-        WrapperEmptyViewComponent
+        WrapperEmptyViewComponent,
+        NewCaseComponent
     ],
     providers: [{
         provide: ConfigurationService,

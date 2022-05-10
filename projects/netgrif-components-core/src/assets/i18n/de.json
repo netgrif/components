@@ -351,6 +351,10 @@
             "noUsersWereFound": "Derzeit befinden sich keine Benutzer im System",
             "listTitle": "Benutzer"
         },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "Es wurde keine LDAP-Gruppe gefunden",
+            "listTitle": "LDAP-Gruppe"
+        },
         "process-list": {
             "newestVersion": "Neuste Version",
             "listTitle": "Prozesse",
