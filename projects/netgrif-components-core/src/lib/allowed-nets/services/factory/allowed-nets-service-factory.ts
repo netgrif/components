@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ProcessService} from '../../../process/process.service';
 import {AllowedNetsService} from '../allowed-nets.service';
 import {switchMap} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {CaseViewParams} from '../../../view/case-view/models/case-view-params';
@@ -41,16 +41,15 @@ export function navigationItemTaskAllowedNetsServiceFactory(factory: AllowedNets
         throw new Error(`Provided navigation item task data does not contain a filter field with ID '${UserFilterConstants.FILTER_FIELD_ID
         }'! Allowed nets cannot be generated from it!`);
     }
-
-    const nets = [...filterField.allowedNets];
+    const nets = new BehaviorSubject<Array<string>>(Array.from(new Set<string>([...filterField.allowedNets])));
 
     if (filterField.filterMetadata.inheritAllowedNets) {
-        nets.push(...baseAllowedNets.allowedNets);
+        baseAllowedNets.allowedNets$.subscribe(allowedNets => {
+            const netSet = new Set<string>(allowedNets);
+            nets.next(Array.from(netSet));
+        });
     }
-
-    const uniqueNets = new Set<string>(nets);
-
-    return factory.createFromArray(Array.from(uniqueNets));
+    return factory.createFromObservable(nets.asObservable());
 }
 
 /**
