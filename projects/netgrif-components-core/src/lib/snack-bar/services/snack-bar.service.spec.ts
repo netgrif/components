@@ -90,6 +90,7 @@ describe('SnackBarService', () => {
     });
 
     afterEach(() => {
+        snackSpy.calls.reset();
         TestBed.resetTestingModule();
     });
 });

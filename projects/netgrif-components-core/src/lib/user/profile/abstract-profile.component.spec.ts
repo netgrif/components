@@ -44,6 +44,10 @@ describe('AbstractProfileComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

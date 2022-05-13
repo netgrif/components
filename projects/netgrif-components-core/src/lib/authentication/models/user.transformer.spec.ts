@@ -1,4 +1,5 @@
 import {UserTransformer} from './user.transformer';
+import {TestBed} from '@angular/core/testing';
 
 describe('UserTransformer', () => {
     it('should create an instance', () => {
@@ -19,5 +20,9 @@ describe('UserTransformer', () => {
             nextGroups: [],
             _links: {}
         }).fullName).toEqual('string string');
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

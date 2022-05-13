@@ -1,4 +1,5 @@
 import {TextField} from './text-field';
+import {TestBed} from '@angular/core/testing';
 
 describe('TextField', () => {
     it('should create an instance', () => {
@@ -9,5 +10,9 @@ describe('TextField', () => {
             editable: true,
             hidden: true
         })).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

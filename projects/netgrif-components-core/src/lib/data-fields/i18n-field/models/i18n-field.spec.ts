@@ -1,4 +1,5 @@
 import {I18nField} from './i18n-field';
+import {TestBed} from '@angular/core/testing';
 
 describe('I18nField', () => {
     it('should create an instance', () => {
@@ -9,5 +10,9 @@ describe('I18nField', () => {
             editable: true,
             hidden: true
         })).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
