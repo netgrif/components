@@ -22,11 +22,13 @@ import {createMockNet} from '../../utility/tests/utility/create-mock-net';
 import {ProcessService} from '../../process/process.service';
 import {UserService} from '../../user/services/user.service';
 import {MockUserService} from '../../utility/tests/mocks/mock-user.service';
+import {User} from '../../user/models/user';
 
 describe('AbstractCaseView', () => {
     let component: TestCaseViewComponent;
     let fixture: ComponentFixture<TestCaseViewComponent>;
     let allowedNetsService: AllowedNetsService;
+    let caseViewService: CaseViewService;
 
     const imports = [
         MaterialModule,
@@ -54,6 +56,7 @@ describe('AbstractCaseView', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         allowedNetsService = TestBed.inject(AllowedNetsService);
+        caseViewService = TestBed.inject(CaseViewService);
     };
 
     afterEach(() => {
@@ -70,7 +73,11 @@ describe('AbstractCaseView', () => {
                     {
                         provide: ProcessService,
                         useClass: MockProcessService
-                    }
+                    },
+                    {
+                        provide: UserService,
+                        useClass: CustomMockUserService
+                    },
                 ],
                 declarations: [TestCaseViewComponent]
             }).compileComponents();
@@ -82,10 +89,13 @@ describe('AbstractCaseView', () => {
             expect(component).toBeTruthy();
         });
 
-        it('should display create case button', () => {
+        it('should display create case button', (done) => {
             expect(component).toBeTruthy();
-            expect(allowedNetsService.allowedNets.length).toBe(1);
-            expect(component.hasAuthority()).toBeTrue();
+            caseViewService.getNewCaseAllowedNets().subscribe(nets => {
+                expect(component.canCreate).toBeTrue();
+                expect(component.hasAuthority()).toBeTrue();
+                done();
+            });
         });
 
         afterEach(() => {
@@ -98,7 +108,10 @@ describe('AbstractCaseView', () => {
         beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
                 imports,
-                providers,
+                providers: [
+                    ...providers,
+                    {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                ],
                 declarations: [TestCaseViewComponent]
             }).compileComponents();
         }));
@@ -111,7 +124,6 @@ describe('AbstractCaseView', () => {
 
         it('should not display create case button', () => {
             expect(component).toBeTruthy();
-            expect(allowedNetsService.allowedNets.length).toBe(0);
             expect(component.hasAuthority()).toBeFalse();
         });
 
@@ -139,6 +151,34 @@ class TestCaseViewComponent extends AbstractCaseView {
 class MockProcessService {
 
     public getNets() {
-        return of([createMockNet()]);
+        return of([createMockNet(
+            'stringId',
+            'identifier',
+            'title',
+            [{
+                stringId: 'id',
+                name: 'id'
+            }], [], [], {
+                id: {
+                    create: true
+                }
+            }
+        )]);
+    }
+}
+
+@Injectable()
+class CustomMockUserService extends MockUserService {
+    constructor() {
+        super();
+        this._user = new User('123', 'test@netgrif.com', 'Test', 'User', ['ROLE_USER'], [{
+            stringId: 'id',
+            name: 'id',
+            description: '',
+            importId: 'id',
+            netImportId: 'identifier',
+            netVersion: '1.0.0',
+            netStringId: 'stringId',
+        }]);
     }
 }
