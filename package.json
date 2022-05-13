@@ -92,7 +92,7 @@
         "angular-resize-event": "~2.0.1",
         "angular2-hotkeys": "~2.2.0",
         "hammerjs": "~2.0.8",
-        "json-schema-to-typescript": "~8.1.0",
+        "json-schema-to-typescript": "~9.0.0",
         "jszip": "~3.2.2",
         "moment": "~2.24.0",
         "natural-orderby": "~2.0.3",
