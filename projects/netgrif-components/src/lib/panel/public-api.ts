@@ -9,4 +9,4 @@ export * from './workflow-panel/workflow-panel.component';
 export * from './public-workflow-panel/public-workflow-panel.component';
 export * from './task-panel-list/task-list.component';
 export * from './panel-item/panel-item.component';
-
+export * from './task-panel-list-pagination/task-list-pagination.component';

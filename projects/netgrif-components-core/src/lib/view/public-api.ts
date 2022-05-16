@@ -47,6 +47,7 @@ export * from './tree-case-view/tree-task-content/tree-task-content.service';
 /* COMPONENTS */
 export * from './workflow-view/abstract-workflow-view.component';
 export * from './case-view/components/case-list/abstract-case-list.component';
+export * from './case-view/components/case-list-paginator/abstract-case-list-paginator.component';
 export * from './tree-case-view/tree-component/abstract-tree.component';
 export * from './tree-case-view/tree-component/add-child-node/abstract-add-child-node.component';
 export * from './tree-case-view/tree-component/remove-node/abstract-remove-node.component';
