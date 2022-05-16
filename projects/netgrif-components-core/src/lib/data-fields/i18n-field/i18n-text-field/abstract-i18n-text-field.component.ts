@@ -8,6 +8,8 @@ import {LanguageIconsService} from '../language-icons.service';
 import {Subscription} from 'rxjs';
 import {AbstractI18nErrorsComponent} from '../abstract-i18n-errors.component';
 
+const DEFAULT_LANGUAGE_CODE = 'xx';
+
 export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsComponent implements OnInit, OnDestroy {
 
     @Input() textI18nField: I18nField;
@@ -59,7 +61,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         }
         if (!this.initializedLanguage) {
             if (!(this.selectedLanguage in newValue.translations)) {
-                this.selectedLanguage = 'xx';
+                this.selectedLanguage = DEFAULT_LANGUAGE_CODE;
             }
             this.initializedLanguage = true;
         }
@@ -72,7 +74,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
     }
 
     public isDefaultValue(choosenLanguage: string) {
-        return choosenLanguage === 'xx';
+        return choosenLanguage === DEFAULT_LANGUAGE_CODE;
     }
 
     public selectLanguage(newLanguage: string): void {

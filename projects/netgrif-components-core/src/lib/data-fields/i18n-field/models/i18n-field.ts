@@ -59,13 +59,31 @@ export class I18nField extends DataField<I18nFieldValue> {
         if ((!a.defaultValue && !b.defaultValue) && (!a.translations && !b.translations) && (!a.key && !b.key)) {
             return true;
         }
-        if ((!(!a.defaultValue && !b.defaultValue)
-                && ((!a.defaultValue && !!b.defaultValue) || (!b.defaultValue && !!a.defaultValue) || (a.defaultValue !== b.defaultValue)))
-            || (!(!a.key && !b.key) && ((!a.key && !!b.key) || (!b.key && !!a.key) || (a.key !== b.key)))
-            || (!(!a.translations && !b.translations)
-                && ((!a.translations && !!b.translations) || (!b.translations && !!a.translations)))) {
+        if (this.defaultValueNonEquality(a, b) || this.keyNonEquality(a, b) || this.translationsNonEquality(a, b)) {
             return false;
         }
+        return this.translationsEquality(a, b);
+    }
+
+    private defaultValueNonEquality(a: I18nFieldValue, b: I18nFieldValue) {
+        return (!(!a.defaultValue && !b.defaultValue)
+                && (
+                    (!a.defaultValue && !!b.defaultValue)
+                    || (!b.defaultValue && !!a.defaultValue)
+                    || (a.defaultValue !== b.defaultValue)
+                ));
+    }
+
+    private keyNonEquality(a: I18nFieldValue, b: I18nFieldValue) {
+        return (!(!a.key && !b.key) && ((!a.key && !!b.key) || (!b.key && !!a.key) || (a.key !== b.key)));
+    }
+
+    private translationsNonEquality(a: I18nFieldValue, b: I18nFieldValue) {
+        return (!(!a.translations && !b.translations)
+            && ((!a.translations && !!b.translations) || (!b.translations && !!a.translations)));
+    }
+
+    private translationsEquality(a: I18nFieldValue, b: I18nFieldValue) {
         const aKeys = Object.keys(a.translations).sort();
         const bKeys = Object.keys(b.translations).sort();
         if (aKeys.length !== bKeys.length
