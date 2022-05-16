@@ -5,7 +5,7 @@ export * from './engine-endpoint/task-resource.service';
 export * from './engine-endpoint/petri-net-resource.service';
 export * from './engine-endpoint/user-resource.service';
 export * from './engine-endpoint/dashboard-resource.service';
-export * from './engine-endpoint/ldap-group-resource-service.service';
+export * from './engine-endpoint/ldap-group-resource.service';
 
 /* PUBLIC SERVICES */
 export * from './engine-endpoint/public/public-case-resource.service';

@@ -10,7 +10,7 @@ import {LdapGroupResponseBody} from '../interface/ldapGroupResponseBody';
 @Injectable({
   providedIn: 'root'
 })
-export class LdapGroupResourceServiceService extends AbstractResourceService {
+export class LdapGroupResourceService extends AbstractResourceService {
 
     constructor(provider: ResourceProvider, configService: ConfigurationService) {
         super('user', provider, configService);

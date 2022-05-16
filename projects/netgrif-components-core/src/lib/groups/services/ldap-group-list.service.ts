@@ -9,7 +9,7 @@ import {catchError, map, mergeMap, scan, tap} from 'rxjs/operators';
 import {HttpParams} from '@angular/common/http';
 import {PaginationParams} from '../../utility/pagination/pagination-params';
 import {LdapGroup, LdapGroupResponseBody} from '../../resources/interface/ldapGroupResponseBody';
-import {LdapGroupResourceServiceService} from '../../resources/engine-endpoint/ldap-group-resource-service.service';
+import {LdapGroupResourceService} from '../../resources/engine-endpoint/ldap-group-resource.service';
 import {MessageResource} from '../../resources/interface/message-resource';
 
 export interface LdapGroupListItem extends LdapGroup {
@@ -72,7 +72,7 @@ export class LdapGroupListService implements OnDestroy {
      * @param _snackbar Display info about loading from backend for ldap group.
      * @param _translate Translate messages for ldap group.
      */
-    constructor(private _resources: LdapGroupResourceServiceService,
+    constructor(private _resources: LdapGroupResourceService,
                 private _log: LoggerService,
                 private _snackbar: SnackBarService,
                 private _translate: TranslateService) {
