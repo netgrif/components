@@ -127,6 +127,10 @@ export class CaseViewService extends SortableView implements OnDestroy {
         return this._cases$;
     }
 
+    public get pagination(): Pagination {
+        return this._pagination;
+    }
+
     protected get activeFilter(): Filter {
         return this._searchService.activeFilter;
     }
@@ -186,6 +190,19 @@ export class CaseViewService extends SortableView implements OnDestroy {
         if (renderedRange.end === totalLoaded) {
             this._nextPage$.next(requestContext);
         }
+    }
+
+    public nextPagePagination(length: number, pageIndex: number, requestContext?: PageLoadRequestContext) {
+        if (requestContext === undefined) {
+            requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
+            requestContext.pagination.size = length;
+            requestContext.pagination.number = pageIndex;
+        }
+
+        if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
+            return;
+        }
+        this._nextPage$.next(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
