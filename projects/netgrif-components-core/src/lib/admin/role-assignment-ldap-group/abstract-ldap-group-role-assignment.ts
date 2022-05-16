@@ -6,14 +6,14 @@ import {FormControl} from '@angular/forms';
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {RoleAssignmentLdapGroupService} from './services/role-assignment-ldap-group.service';
-import {LdapGroupListItem, LdapGroupListServiceService} from '../../groups/services/ldap-group-list-service.service';
+import {LdapGroupListItem, LdapGroupListService} from '../../groups/services/ldap-group-list.service';
 
 export abstract class AbstractLdapGroupRoleAssignment implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('ldapGroupList') public ldapGroupList: MatSelectionList;
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
 
-    public ldapGroup: LdapGroupListServiceService;
+    public ldapGroup: LdapGroupListService;
     public nets: ProcessList;
     public ldapGroupMultiSelect: boolean;
     public searchLdapGroupControl = new FormControl();
@@ -65,7 +65,6 @@ export abstract class AbstractLdapGroupRoleAssignment implements OnInit, AfterVi
         }
 
         const intersection = all.reduce((acc, curr) => new Set([...acc].filter(s => curr.has(s))), all[0]);
-        console.log(intersection);
         this.nets.selectRoles(intersection);
     }
 

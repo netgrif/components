@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LdapGroupListServiceService } from './ldap-group-list-service.service';
+import { LdapGroupListService } from './ldap-group-list.service';
 
-describe('LdapGroupListServiceService', () => {
-  let service: LdapGroupListServiceService;
+describe('LdapGroupListService', () => {
+  let service: LdapGroupListService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LdapGroupListServiceService);
+    service = TestBed.inject(LdapGroupListService);
   });
 
   it('should be created', () => {

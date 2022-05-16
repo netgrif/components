@@ -11,8 +11,6 @@ import {PaginationParams} from '../../utility/pagination/pagination-params';
 import {LdapGroup, LdapGroupResponseBody} from '../../resources/interface/ldapGroupResponseBody';
 import {LdapGroupResourceServiceService} from '../../resources/engine-endpoint/ldap-group-resource-service.service';
 import {MessageResource} from '../../resources/interface/message-resource';
-import {Page} from '../../resources/interface/page';
-import {UserResource} from '../../resources/interface/user-resource';
 
 export interface LdapGroupListItem extends LdapGroup {
     selected: boolean;
@@ -22,7 +20,7 @@ export interface LdapGroupListItem extends LdapGroup {
 }
 
 @Injectable()
-export class LdapGroupListServiceService implements OnDestroy {
+export class LdapGroupListService implements OnDestroy {
 
     /**
      * Ldap Group Value array stream, that represents ldap group loading from backend.
@@ -221,7 +219,8 @@ export class LdapGroupListServiceService implements OnDestroy {
             return of([]);
         }
         this._updateProgress$.on();
-        return forkJoin(selectedLdapGroups.map(ldapGroup => this._resources.assignRolesToLdapGroup({groupDn: ldapGroup.dn, roleIds: selectedRoles}))).pipe(
+        return forkJoin(selectedLdapGroups.map(ldapGroup => this._resources.assignRolesToLdapGroup(
+            {groupDn: ldapGroup.dn, roleIds: selectedRoles}))).pipe(
             tap(messages => {
                 messages.forEach((message, idx) => {
                     if (message.error) {

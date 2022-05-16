@@ -352,8 +352,8 @@
             "listTitle": "Benutzer"
         },
         "ldapGroup-list": {
-            "noLdapGroupsWereFound": "Es wurde keine LDAP-Gruppe gefunden",
-            "listTitle": "LDAP-Gruppe"
+            "noLdapGroupsWereFound": "Keine LDAP Gruppe wurde gefunden",
+            "listTitle": "LDAP Gruppen"
         },
         "process-list": {
             "newestVersion": "Neuste Version",
