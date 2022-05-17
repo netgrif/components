@@ -87,15 +87,16 @@ describe('PetriNetResourceService', () => {
     it('should getNetFile', (done) => {
         inject([HttpTestingController],
                 (httpMock: HttpTestingController) => {
+                    const response = new Blob();
                     service.getNetFile('id').subscribe(res => {
-                        expect(res.length).toEqual(0);
+                        expect((res as Blob).size).toEqual(0);
                         done();
                     });
 
                     const reqLog = httpMock.expectOne('http://localhost:8080/api/petrinet/id/file');
                     expect(reqLog.request.method).toEqual('GET');
 
-                    reqLog.flush([]);
+                    reqLog.flush(response);
                 })();
         }
     );

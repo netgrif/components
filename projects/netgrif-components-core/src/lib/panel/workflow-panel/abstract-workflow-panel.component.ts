@@ -14,6 +14,8 @@ import {TranslateService, TranslationChangeEvent} from '@ngx-translate/core';
 import {WorkflowMetaField} from '../../header/workflow-header/workflow-meta-enum';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {FeaturedValue} from '../abstract/featured-value';
+import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
+import {ProgressType, ProviderProgress} from '../../resources/resource-provider.service';
 
 
 export interface WorkflowPanelContent {
@@ -43,7 +45,8 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
 
     protected constructor(protected _log: LoggerService,
                           protected _translate: TranslateService,
-                          protected _workflowService: WorkflowViewService) {
+                          protected _workflowService: WorkflowViewService,
+                          protected _petriNetResource: PetriNetResourceService) {
         super();
 
         this._subscription = _translate.onLangChange.subscribe((event: TranslationChangeEvent) => {
@@ -84,6 +87,36 @@ export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBind
      */
     public deleteWorkflow(): void {
         this._workflowService.deleteWorkflow(this.workflow);
+    }
+
+    /**
+     * Handles the logic that should be executed when the "download workflow" button is clicked.
+     *
+     * Calls the appropriate method in the {@link WorkflowViewService}.
+     */
+    public downloadNetFile() {
+        this._petriNetResource.getNetFile(this.workflow.stringId).subscribe(response => {
+            if (!(response as ProviderProgress).type || (response as ProviderProgress).type !== ProgressType.DOWNLOAD) {
+                this._log.debug(`File ${this.workflow.identifier} was successfully downloaded`);
+                this.downloadViaAnchor(response as Blob);
+            }
+        }, error => {
+            this._log.error(`Downloading file ${this.workflow.identifier} has failed!`, error);
+        });
+    }
+
+    protected downloadViaAnchor(blob: Blob): void {
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        blob = new Blob([blob], {type: blob.type});
+
+        const url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = this.workflow.identifier;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
     }
 
     /**
