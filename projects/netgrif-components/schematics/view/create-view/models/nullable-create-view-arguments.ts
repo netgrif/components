@@ -9,4 +9,6 @@ export interface NullableCreateViewArguments {
     access: CreateViewArguments['access'] | undefined;
     enableCaseTitle?: CreateViewArguments['enableCaseTitle'];
     isCaseTitleRequired?: CreateViewArguments['enableCaseTitle'];
+    showDeleteMenu?: CreateViewArguments['showDeleteMenu'];
+    confirmWorkflowDeletion?: CreateViewArguments['confirmWorkflowDeletion'];
 }

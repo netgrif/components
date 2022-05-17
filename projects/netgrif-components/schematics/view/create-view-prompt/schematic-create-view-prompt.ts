@@ -19,6 +19,8 @@ import {addViewToViewService} from '../_utility/view-service-functions';
 import {ImportToAdd} from '../../_commons/import-to-add';
 import {createTreeCaseView} from './views/tree-case-view/create-tree-case-view';
 import {createGroupView} from './views/group-view/create-group-view';
+import {createWorkflowView} from './views/workflow-view/create-workflow-view';
+import {createRoleAssignmentView} from './views/role-assignment-view/role-assignment-view';
 
 
 export function schematicEntryPoint(schematicArguments: CreateViewArguments): Rule {
@@ -82,6 +84,12 @@ function createView(tree: Tree, args: CreateViewArguments, addViewToService: boo
                 throw new SchematicsException(`Custom components must define both a 'class' and a 'from' attribute! Path: '${args.path}'`);
             }
             addViewToViewService(tree, new ImportToAdd(args.componentName, args.customImportPath));
+            break;
+        case 'workflowView':
+            rules.push(createWorkflowView(tree, args, addViewToService));
+            break;
+        case 'roleAssignmentView':
+            rules.push(createRoleAssignmentView(tree, args, addViewToService));
             break;
         default:
             throw new SchematicsException(`Unknown view type '${args.viewType}'`);

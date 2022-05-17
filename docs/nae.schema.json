@@ -713,6 +713,12 @@
                         "isCaseTitleRequired": {
                             "type": "boolean"
                         },
+                        "showDeleteMenu": {
+                            "type": "boolean"
+                        },
+                        "confirmWorkflowDeletion": {
+                            "type": "boolean"
+                        },
                         "params": {
                             "additionalProperties": {
                             },

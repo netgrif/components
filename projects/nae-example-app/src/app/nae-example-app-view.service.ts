@@ -35,6 +35,7 @@ import { TitleConfigComponent } from './doc/demo-title-config/title-config.compo
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import { ConsoleTestRoleAssignmentViewComponent } from './views/console-test/console-test-role-assignment-view.component';
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +44,8 @@ export class NaeExampleAppViewService extends ViewService {
     constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
-        super([{id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
+        super([{id: 'ConsoleTestRoleAssignmentViewComponent', class: ConsoleTestRoleAssignmentViewComponent},
+			{id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
 			{id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
