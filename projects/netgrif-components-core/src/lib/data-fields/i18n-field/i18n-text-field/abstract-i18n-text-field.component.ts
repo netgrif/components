@@ -1,5 +1,5 @@
 import {Input, OnDestroy, OnInit} from '@angular/core';
-import {I18nField} from '../models/i18n-field';
+import {DEFAULT_LANGUAGE_CODE, I18nField} from '../models/i18n-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
@@ -7,8 +7,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {LanguageIconsService} from '../language-icons.service';
 import {Subscription} from 'rxjs';
 import {AbstractI18nErrorsComponent} from '../abstract-i18n-errors.component';
-
-const DEFAULT_LANGUAGE_CODE = 'xx';
 
 export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsComponent implements OnInit, OnDestroy {
 

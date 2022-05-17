@@ -13,11 +13,13 @@ export enum I18nFieldValidation {
     REQUIRED_I18N = 'requiredI18n'
 }
 
+export const DEFAULT_LANGUAGE_CODE = 'xx';
+
 export class I18nField extends DataField<I18nFieldValue> {
 
     public static toObject(templateValue: I18nFieldValue): any {
         const object = {};
-        object['xx'] = templateValue.defaultValue;
+        object[DEFAULT_LANGUAGE_CODE] = templateValue.defaultValue;
         for (const k in templateValue.translations) {
             if (Object.prototype.hasOwnProperty.call(templateValue.translations, k)) {
                 object[k] = templateValue.translations[k];
@@ -28,12 +30,12 @@ export class I18nField extends DataField<I18nFieldValue> {
 
     public static fromObject(templateValue: any, templateKey: string): I18nFieldValue {
         const i18nObject = {
-            defaultValue: templateValue['xx'],
+            defaultValue: templateValue[DEFAULT_LANGUAGE_CODE],
             key: templateKey,
             translations: {}
         };
         for (const k in templateValue) {
-            if (k === 'xx') {
+            if (k === DEFAULT_LANGUAGE_CODE) {
                 continue;
             }
             i18nObject.translations[k] = templateValue[k];
