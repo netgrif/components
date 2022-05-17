@@ -94,6 +94,7 @@ import { TitleConfigComponent } from './doc/demo-title-config/title-config.compo
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import { ConsoleTestRoleAssignmentViewComponent } from './views/console-test/console-test-role-assignment-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -145,6 +146,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TitleConfigComponent,
         ActiveGroupComponent,
         WrapperEmptyViewComponent,
+        ConsoleTestRoleAssignmentViewComponent,
     ],
     imports: [
         BrowserModule,
@@ -237,7 +239,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         DemoTitleConfigContent3CaseViewComponent,
         TitleConfigComponent,
         ActiveGroupComponent,
-        WrapperEmptyViewComponent
+        WrapperEmptyViewComponent,
+        ConsoleTestRoleAssignmentViewComponent
     ],
     providers: [{
         provide: ConfigurationService,
