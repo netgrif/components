@@ -1,16 +1,20 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { LanguageIconsService } from './language-icons.service';
+import {LanguageIconsService} from './language-icons.service';
 
 describe('LanguageIconsService', () => {
-  let service: LanguageIconsService;
+    let service: LanguageIconsService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(LanguageIconsService);
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(LanguageIconsService);
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });

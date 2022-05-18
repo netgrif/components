@@ -45,6 +45,9 @@ describe('I18nDividerFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 
     @Component({
         selector: 'nc-test-wrapper',

@@ -27,7 +27,10 @@
         </div>
         <div class="form-input button-icon-input full-width" fxLayout="row" fxLayoutAlign="start center"
              [ngClass]="{'invalid-form-input': textI18nField.isInvalid(formControlRef)}"
-             [ngStyle]="{'-webkit-clip-path': getCutProperty(i18nLabel)}">
+             [ngStyle]="{
+                    '-webkit-clip-path': getCutProperty(i18nLabel),
+                    'clip-path': getCutProperty(i18nLabel)
+            }">
             <button mat-icon-button color="accent" [matTooltip]="'dataField.i18n.languageSelect' | translate"
                     class="language-selector-button" (click)="languageDropdown.open()">
                 <div class="language-svg-wrapper"

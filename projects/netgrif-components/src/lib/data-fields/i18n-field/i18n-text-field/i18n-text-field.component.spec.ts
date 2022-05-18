@@ -55,6 +55,9 @@ describe('I18nTextFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 
     @Component({
         selector: 'nc-test-wrapper',

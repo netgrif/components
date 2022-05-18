@@ -33,15 +33,10 @@
 }
 
 .button-icon-input {
-    padding: 2px !important;
+    padding: 2px;
 }
 
 .button-icon-input:hover {
-    padding: 1px !important;
-}
-
-.invalid-form-input {
-    border: solid 2px #f44336 !important;
     padding: 1px !important;
 }
 
@@ -125,8 +120,4 @@
     width: fit-content;
     padding: 0 0.5em;
     height: 0;
-}
-
-.invalid-form-label {
-    color: #f44336;
 }

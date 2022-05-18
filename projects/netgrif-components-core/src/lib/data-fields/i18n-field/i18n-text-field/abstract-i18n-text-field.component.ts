@@ -7,6 +7,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {LanguageIconsService} from '../language-icons.service';
 import {Subscription} from 'rxjs';
 import {AbstractI18nErrorsComponent} from '../abstract-i18n-errors.component';
+import {LanguageIcons} from '../models/language-icons';
 
 export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsComponent implements OnInit, OnDestroy {
 
@@ -23,6 +24,9 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
 
     public selectedLanguage: string;
     public filledShown = false;
+
+    private labelWidth: number;
+    public cutProperty: string;
 
     public currentValue = {};
     public filledKeys: Array<string>;
@@ -67,11 +71,11 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         this.refreshFilledMap();
     }
 
-    public getLanguageIcons() {
+    public getLanguageIcons(): LanguageIcons {
         return this.languageIconsService.languageIcons;
     }
 
-    public isDefaultValue(choosenLanguage: string) {
+    public isDefaultValue(choosenLanguage: string): boolean {
         return choosenLanguage === DEFAULT_LANGUAGE_CODE;
     }
 
@@ -101,7 +105,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         });
     }
 
-    public removeTranslation(key: string) {
+    public removeTranslation(key: string): void {
         delete this.currentValue[key];
         this.textI18nField.value = I18nField.fromObject(this.currentValue, this.textI18nField.value.key);
         this.formControlRef.markAsTouched();
@@ -112,9 +116,17 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         this.filledShown = !this.filledShown;
     }
 
-    public getCutProperty(i18nLabel) {
-        const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
-        return 'polygon(0 0, 0 100%, 100% 100%, 100% 0%, ' + calculatedWidth + ' 0, ' + calculatedWidth + ' 5%, 0.5em 5%, 0.5em 0)';
+    public getCutProperty(i18nLabel): string {
+        if (this.labelWidth !== i18nLabel.offsetWidth) {
+            this.labelWidth = i18nLabel.offsetWidth;
+            const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
+            this.cutProperty = 'polygon(0 0, 0 100%, 100% 100%, 100% 0%, '
+                                + calculatedWidth
+                                + ' 0, '
+                                + calculatedWidth
+                                + ' 5%, 0.5em 5%, 0.5em 0)';
+        }
+        return this.cutProperty;
     }
 
     public isPlainText(): boolean {

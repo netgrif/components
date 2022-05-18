@@ -67,6 +67,7 @@ export * from './models/format-filter';
 export * from './models/component';
 export * from './models/properties';
 export * from './data-field-template/models/wrapped-boolean';
+export * from './i18n-field/models/language-icons';
 
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
