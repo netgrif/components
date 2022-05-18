@@ -10,11 +10,14 @@ import {LdapGroupResourceService} from '../../../resources/engine-endpoint/ldap-
 @Injectable()
 export class RoleAssignmentLdapGroupService {
 
-    private readonly _ldapGroupList: LdapGroupListService;
-    private readonly _processList: ProcessList;
+    protected readonly _ldapGroupList: LdapGroupListService;
+    protected readonly _processList: ProcessList;
 
-    constructor(ldapGroupResources: LdapGroupResourceService, processResources: PetriNetResourceService,
-                snackbar: SnackBarService, private _log: LoggerService, private _translate: TranslateService) {
+    constructor(protected ldapGroupResources: LdapGroupResourceService,
+                protected processResources: PetriNetResourceService,
+                protected snackbar: SnackBarService,
+                protected _log: LoggerService,
+                protected _translate: TranslateService) {
         this._ldapGroupList = new LdapGroupListService(ldapGroupResources, _log, snackbar, _translate);
         this._processList = new ProcessList(processResources, _log);
     }

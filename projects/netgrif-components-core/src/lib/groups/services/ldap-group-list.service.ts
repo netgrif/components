@@ -58,8 +58,8 @@ export class LdapGroupListService implements OnDestroy {
      * negative Roles that should be applied to the request
      */
     public negativeRolesQuery: Array<string>;
-    private _updateProgress$: LoadingEmitter;
-    private _ldapGroupsReload$: Subject<void>;
+    protected _updateProgress$: LoadingEmitter;
+    protected _ldapGroupsReload$: Subject<void>;
 
 
     /**
@@ -72,10 +72,10 @@ export class LdapGroupListService implements OnDestroy {
      * @param _snackbar Display info about loading from backend for ldap group.
      * @param _translate Translate messages for ldap group.
      */
-    constructor(private _resources: LdapGroupResourceService,
-                private _log: LoggerService,
-                private _snackbar: SnackBarService,
-                private _translate: TranslateService) {
+    constructor(protected _resources: LdapGroupResourceService,
+                protected _log: LoggerService,
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
         this._loading$ = new LoadingEmitter();
         this._updateProgress$ = new LoadingEmitter();
         this._ldapGroupsReload$ = new Subject<void>();
