@@ -17,7 +17,7 @@ export const DEFAULT_LANGUAGE_CODE = 'xx';
 
 export class I18nField extends DataField<I18nFieldValue> {
 
-    private static defaultValueNonEquality(a: I18nFieldValue, b: I18nFieldValue) {
+    private static defaultValueNonEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
         return (!(!a.defaultValue && !b.defaultValue)
             && (
                 (!a.defaultValue && !!b.defaultValue)
@@ -26,16 +26,16 @@ export class I18nField extends DataField<I18nFieldValue> {
             ));
     }
 
-    private static keyNonEquality(a: I18nFieldValue, b: I18nFieldValue) {
+    private static keyNonEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
         return (!(!a.key && !b.key) && ((!a.key && !!b.key) || (!b.key && !!a.key) || (a.key !== b.key)));
     }
 
-    private static translationsNonEquality(a: I18nFieldValue, b: I18nFieldValue) {
+    private static translationsNonEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
         return (!(!a.translations && !b.translations)
             && ((!a.translations && !!b.translations) || (!b.translations && !!a.translations)));
     }
 
-    private static translationsEquality(a: I18nFieldValue, b: I18nFieldValue) {
+    private static translationsEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
         const aKeys = Object.keys(a.translations).sort();
         const bKeys = Object.keys(b.translations).sort();
         if (aKeys.length !== bKeys.length
