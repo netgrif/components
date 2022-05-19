@@ -25,31 +25,31 @@ export class LdapGroupListService implements OnDestroy {
     /**
      * Ldap Group Value array stream, that represents ldap group loading from backend.
      */
-    private readonly _ldapGroups$: Observable<Array<LdapGroupListItem>>;
+    protected readonly _ldapGroups$: Observable<Array<LdapGroupListItem>>;
     /**
      * Emit ldap group loading status from backend.
      */
-    private _loading$: LoadingEmitter;
+    protected _loading$: LoadingEmitter;
     /**
      * Number stream of next page ldap group list, that to be requested from backend.
      */
-    private _nextPage$: BehaviorSubject<number>;
+    protected _nextPage$: BehaviorSubject<number>;
     /**
      * Signals the end of loaded ldap groups.
      */
-    private _endOfData: boolean;
+    protected _endOfData: boolean;
     /**
      * Necessary for pagination parameters in ldap group assign loading from backend.
      */
-    private _pagination: Pagination;
+    protected _pagination: Pagination;
     /**
      * Signals if response is empty or no.
      */
-    private _clear: boolean;
+    protected _clear: boolean;
     /**
      * The search content that should be applied to the request
      */
-    private _searchQuery: string;
+    protected _searchQuery: string;
     /**
      * Roles that should be applied to the request
      */
@@ -241,7 +241,7 @@ export class LdapGroupListService implements OnDestroy {
      * @param params Existing HttpParams.
      * @param page Page number that is requested. / Next page ldapGroups list.
      */
-    private addPageParams(params: HttpParams, page?: number): HttpParams {
+    protected addPageParams(params: HttpParams, page?: number): HttpParams {
         params = params.set(PaginationParams.PAGE_SIZE, `${this._pagination.size}`);
         page = page !== null ? page : this._pagination.number;
         params = params.set(PaginationParams.PAGE_NUMBER, `${page}`);
