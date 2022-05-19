@@ -28,7 +28,8 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         }
 
         return this._http.get<UserResource>(url, {
-            headers: new HttpHeaders().set('Authorization', `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`)
+            headers: new HttpHeaders().set('Authorization', 'Basic ' +
+        `${btoa(unescape(encodeURIComponent(`${credentials.username}:${credentials.password}`)))}`)
         });
     }
 
