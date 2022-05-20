@@ -29,7 +29,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         }
         return this._http.get<UserResource>(url, {
             headers: new HttpHeaders().set('Authorization', 'Basic ' +
-        `${Buffer.Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64')}`)
+        Buffer.Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64'))
         });
     }
 
