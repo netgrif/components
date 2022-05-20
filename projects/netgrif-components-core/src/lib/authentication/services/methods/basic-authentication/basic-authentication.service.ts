@@ -5,6 +5,7 @@ import {AuthenticationMethodService} from '../../authentication-method.service';
 import {Credentials} from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {UserResource} from '../../../../resources/interface/user-resource';
+import { utf8Encode } from '@angular/compiler/src/util';
 
 @Injectable()
 export class BasicAuthenticationService extends AuthenticationMethodService {
@@ -26,10 +27,9 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         if (credentials.username === '' || credentials.password === '') {
             return throwError(new Error('User\'s credentials are empty!'));
         }
-
         return this._http.get<UserResource>(url, {
             headers: new HttpHeaders().set('Authorization', 'Basic ' +
-        `${btoa(unescape(encodeURIComponent(`${credentials.username}:${credentials.password}`)))}`)
+        `${btoa(encodeURIComponent(`${credentials.username}:${credentials.password}`))}`)
         });
     }
 
