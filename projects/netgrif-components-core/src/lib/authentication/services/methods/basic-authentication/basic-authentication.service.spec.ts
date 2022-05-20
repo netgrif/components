@@ -70,7 +70,10 @@ describe('BasicAuthenticationService', () => {
     });
 
     it('should decode non-latin characters', (done) => {
-        expect((decodeURIComponent(atob(btoa(encodeURIComponent('šššččč')))))).toEqual('šššččč');
+        const encoded = btoa(encodeURIComponent('šššččč'));
+        const decoded = decodeURIComponent(atob(encoded));
+        expect(decoded).toEqual('šššččč');
+        done();
     });
 
     afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
