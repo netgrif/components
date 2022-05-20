@@ -5,7 +5,7 @@ import {AuthenticationMethodService} from '../../authentication-method.service';
 import {Credentials} from '../../../models/credentials';
 import {ConfigurationService} from '../../../../configuration/configuration.service';
 import {UserResource} from '../../../../resources/interface/user-resource';
-import { utf8Encode } from '@angular/compiler/src/util';
+import * as Buffer from 'buffer';
 
 @Injectable()
 export class BasicAuthenticationService extends AuthenticationMethodService {
@@ -29,7 +29,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         }
         return this._http.get<UserResource>(url, {
             headers: new HttpHeaders().set('Authorization', 'Basic ' +
-        `${btoa(encodeURIComponent(`${credentials.username}:${credentials.password}`))}`)
+        `${Buffer.Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64')}`)
         });
     }
 
