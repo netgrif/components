@@ -10,7 +10,6 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {MockAuthenticationMethodService} from '../../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {MockAuthenticationService} from '../../../../utility/tests/mocks/mock-authentication.service';
-import * as Buffer from 'buffer';
 
 describe('BasicAuthenticationService', () => {
     let service: BasicAuthenticationService;
