@@ -70,8 +70,8 @@ describe('BasicAuthenticationService', () => {
     });
 
     it('should decode non-latin characters', (done) => {
-        const encoded = service.encode('ššščččôôôžžťťť', 'base64');
-        const decoded = service.decode(encoded, 'base64', 'utf-8');
+        const encoded = service.encodeBase64('ššščččôôôžžťťť');
+        const decoded = service.decodeBase64(encoded);
         expect(decoded).toEqual('ššščččôôôžžťťť');
         done();
     });

@@ -30,7 +30,7 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         }
         return this._http.get<UserResource>(url, {
             headers: new HttpHeaders().set('Authorization', 'Basic ' +
-                this.encode(`${credentials.username}:${credentials.password}`, 'base64'))
+                this.encodeBase64(`${credentials.username}:${credentials.password}`))
         });
     }
 
@@ -43,11 +43,11 @@ export class BasicAuthenticationService extends AuthenticationMethodService {
         return this._http.post(url, {});
     }
 
-    encode(text: string, encoding: string): string {
-        return Buffer.Buffer.from(text).toString(encoding);
+    encodeBase64(text: string): string {
+        return Buffer.Buffer.from(text).toString('base64');
     }
 
-    decode(text: string, encoding: string, toCharSet: string): string {
-        return Buffer.Buffer.from(text, encoding).toString(toCharSet);
+    decodeBase64(encoded: string): string {
+       return Buffer.Buffer.from(encoded, 'base64').toString('utf-8');
     }
 }
