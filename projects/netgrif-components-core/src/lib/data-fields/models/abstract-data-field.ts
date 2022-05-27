@@ -474,7 +474,7 @@ export abstract class DataField<T> {
      * @param b - second compared value
      */
     protected valueEquality(a: T, b: T): boolean {
-        return a === b;
+        return a === b || (Number.isNaN(a) && Number.isNaN(b));
     }
 
     /**
