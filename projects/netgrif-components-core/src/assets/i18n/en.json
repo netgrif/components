@@ -88,6 +88,11 @@
             "err": "Users failed to load",
             "showcase": "User showcase mode not set!"
         },
+        "ldapGroup": {
+            "choose": "Search Ldap group",
+            "noUser": "Not found Ldap group",
+            "err": "Failed to load Ldap group"
+        },
         "option-selector": {
             "select": "Select",
             "choose-one-option": "Choose one of the provided options"
