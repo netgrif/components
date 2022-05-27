@@ -8,6 +8,7 @@ import {LanguageIconsService} from '../language-icons.service';
 import {Subscription} from 'rxjs';
 import {AbstractI18nErrorsComponent} from '../abstract-i18n-errors.component';
 import {LanguageIcons} from '../models/language-icons';
+import {I18nFieldTranslations} from '../models/i18n-field-value';
 
 export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsComponent implements OnInit, OnDestroy {
 
@@ -28,7 +29,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
     private labelWidth: number;
     public cutProperty: string;
 
-    public currentValue = {};
+    public currentValue: I18nFieldTranslations = {};
     public filledKeys: Array<string>;
 
     protected constructor(protected languageIconsService: LanguageIconsService,
@@ -75,8 +76,8 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         return this.languageIconsService.languageIcons;
     }
 
-    public isDefaultValue(choosenLanguage: string): boolean {
-        return choosenLanguage === DEFAULT_LANGUAGE_CODE;
+    public isDefaultValue(chosenLanguage: string): boolean {
+        return chosenLanguage === DEFAULT_LANGUAGE_CODE;
     }
 
     public selectLanguage(newLanguage: string): void {
@@ -120,11 +121,7 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
         if (this.labelWidth !== i18nLabel.offsetWidth) {
             this.labelWidth = i18nLabel.offsetWidth;
             const calculatedWidth = 'calc(0.5em + ' + i18nLabel.offsetWidth / 4 * 3 + 'px)';
-            this.cutProperty = 'polygon(0 0, 0 100%, 100% 100%, 100% 0%, '
-                                + calculatedWidth
-                                + ' 0, '
-                                + calculatedWidth
-                                + ' 5%, 0.5em 5%, 0.5em 0)';
+            this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 5%, 0.5em 5%, 0.5em 0)`;
         }
         return this.cutProperty;
     }

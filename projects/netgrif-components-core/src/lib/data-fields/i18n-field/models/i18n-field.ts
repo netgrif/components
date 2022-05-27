@@ -3,7 +3,7 @@ import {Behavior} from '../../models/behavior';
 import {Layout} from '../../models/layout';
 import {Validation} from '../../models/validation';
 import {Component} from '../../models/component';
-import {I18nFieldValue} from './i18n-field-value';
+import {I18nFieldTranslations, I18nFieldValue} from './i18n-field-value';
 import {Observable} from 'rxjs';
 import {FormControl, ValidatorFn} from '@angular/forms';
 
@@ -52,7 +52,7 @@ export class I18nField extends DataField<I18nFieldValue> {
         return true;
     }
 
-    public static toObject(templateValue: I18nFieldValue): any {
+    public static toObject(templateValue: I18nFieldValue): I18nFieldTranslations {
         const object = {};
         object[DEFAULT_LANGUAGE_CODE] = templateValue.defaultValue;
         for (const k in templateValue.translations) {
@@ -63,17 +63,17 @@ export class I18nField extends DataField<I18nFieldValue> {
         return object;
     }
 
-    public static fromObject(templateValue: any, templateKey: string): I18nFieldValue {
+    public static fromObject(templateValue: I18nFieldTranslations, templateKey: string): I18nFieldValue {
         const i18nObject = {
             defaultValue: templateValue[DEFAULT_LANGUAGE_CODE],
             key: templateKey,
             translations: {}
         };
-        for (const k in templateValue) {
-            if (k === DEFAULT_LANGUAGE_CODE) {
+        for (const [key, value] of Object.entries(templateValue)) {
+            if (key === DEFAULT_LANGUAGE_CODE) {
                 continue;
             }
-            i18nObject.translations[k] = templateValue[k];
+            i18nObject.translations[key] = value;
         }
         return i18nObject as I18nFieldValue;
     }
@@ -177,8 +177,8 @@ export class I18nField extends DataField<I18nFieldValue> {
         };
     }
 
-    private validRequiredI18n(fc: FormControl) {
+    private validRequiredI18n(fc: FormControl): { [k: string]: boolean } {
         return (fc.value.defaultValue === '' && Object.keys(fc.value.translations).length === 0)
-            ? ({requiredI18n: true}) : (null);
+            ? ({requiredI18n: true}) : null;
     }
 }
