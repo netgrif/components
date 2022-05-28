@@ -88,6 +88,11 @@
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
         },
+        "ldapGroup": {
+            "choose": "Vyhladajťe Ldap skupinu",
+            "noUser": "Neexistuje žiadna Ldap skupina",
+            "err": "Nepodarilo sa načítať Ldap skupiny"
+        },
         "option-selector": {
             "select": "Zvoliť",
             "choose-one-option": "Vyberte jednu z možností"
@@ -350,6 +355,10 @@
         "user-list": {
             "noUsersWereFound": "Momentálne nie sú v systéme žiadni používatelia",
             "listTitle": "Používatelia"
+        },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "Žiadna LDAP skupina nebola najdená",
+            "listTitle": "Ldap Skupiny"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",
