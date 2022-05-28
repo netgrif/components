@@ -216,7 +216,10 @@
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day",
             "enumeration": "One of the options must be selected",
-            "min": "Entered number must be greater than {{length}}"
+            "min": "Entered number must be greater than {{length}}",
+            "translationRequired": "Translation for languages: <{{translation}}> must be entered",
+            "translationOnly": "Only translation for languages: <{{translation}}> is allowed",
+            "requiredI18n": "At least one value must be entered"
         },
         "snackBar": {
             "downloadFail": " failed to download",
@@ -244,6 +247,12 @@
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
             "clickToDelete": "Click to delete file"
+        },
+        "i18n": {
+            "languageSelect": "Select language",
+            "deleteTranslation": "Delete translation",
+            "showTranslations": "Show translations",
+            "hideTranslations": "Hide translations"
         },
         "dynamicEnum": {
             "noData": "No items match your search"

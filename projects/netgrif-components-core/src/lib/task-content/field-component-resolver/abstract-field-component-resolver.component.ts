@@ -42,7 +42,14 @@ export abstract class AbstractFieldComponentResolverComponent {
     }
 
     isField(): boolean {
-        return this.gridElement.type !== TaskElementType.BLANK && this.gridElement.type !== TaskElementType.DATA_GROUP_TITLE
-            && this.gridElement.type !== FieldTypeResource.I18N;
+        return this.gridElement.type !== TaskElementType.BLANK && this.gridElement.type !== TaskElementType.DATA_GROUP_TITLE;
+    }
+
+    isCustomHeight(): boolean {
+        const component = !!this.gridElement.item?.component ? this.gridElement.item.component : null;
+        return this.gridElement.type === FieldTypeResource.I18N && !!component
+            && (component.name === 'divider'
+                || (!!component.properties && 'plainText' in component.properties && component.properties.plaintText === 'true')
+            );
     }
 }

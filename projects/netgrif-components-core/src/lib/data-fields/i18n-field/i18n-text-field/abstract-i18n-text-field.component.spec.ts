@@ -18,10 +18,14 @@ import {MockUserResourceService} from '../../../utility/tests/mocks/mock-user-re
 import {ConfigurationService} from '../../../configuration/configuration.service';
 import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {TranslateService} from '@ngx-translate/core';
+import {LanguageIconsService} from '../language-icons.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {LanguageService} from '../../../translate/language.service';
 
 describe('AbstractI18nTextFieldComponent', () => {
     let component: TestI18nTextComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
+    let service: LanguageService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -41,8 +45,9 @@ describe('AbstractI18nTextFieldComponent', () => {
             ],
             declarations: [TestI18nTextComponent, TestWrapperComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-            .compileComponents();
+        }).compileComponents();
+        service = TestBed.inject(LanguageService);
+        service.setLanguage('en-US');
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
@@ -62,8 +67,10 @@ describe('AbstractI18nTextFieldComponent', () => {
     template: ''
 })
 class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
-    constructor(translateService: TranslateService) {
-        super(translateService);
+    constructor(protected languageIconsService: LanguageIconsService,
+                protected _translateService: TranslateService,
+                protected _domSanitizer: DomSanitizer) {
+        super(languageIconsService, _translateService, _domSanitizer);
     }
 }
 
@@ -77,12 +84,15 @@ class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
-    field = new I18nField('', '', '', {
-        required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
-    });
+    field = new I18nField('', '',
+        {defaultValue: 'Default translation', translations: {en: 'English translation'}},
+        {
+            required: true,
+            optional: true,
+            visible: true,
+            editable: true,
+            hidden: true
+        }
+    );
     formControl = new FormControl();
 }

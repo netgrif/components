@@ -12,35 +12,40 @@ import {
     TestConfigurationService,
     TranslateLibModule,
     UserResourceService,
-    WrappedBoolean
+    WrappedBoolean,
+    LanguageService
 } from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Component} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FormControl} from '@angular/forms';
+import {AngularResizedEventModule} from 'angular-resize-event';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('I18nTextFieldComponent', () => {
     let component: I18nTextFieldComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
+    let service: LanguageService;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                HttpClientTestingModule,
-                TranslateLibModule
+                AngularResizedEventModule,
+                BrowserAnimationsModule,
+                TranslateLibModule,
+                HttpClientTestingModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
+                {provide: ConfigurationService, useClass: TestConfigurationService},
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
-                {provide: UserResourceService, useClass: MockUserResourceService},
-                {provide: ConfigurationService, useClass: TestConfigurationService}
+                {provide: UserResourceService, useClass: MockUserResourceService}
             ],
-            declarations: [I18nTextFieldComponent, TestWrapperComponent]
-        })
-            .compileComponents();
-    });
-
-    beforeEach(() => {
+            declarations: [I18nTextFieldComponent, TestWrapperComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        }).compileComponents();
+        service = TestBed.inject(LanguageService);
+        service.setLanguage('en-US');
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
@@ -50,19 +55,25 @@ describe('I18nTextFieldComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 
     @Component({
         selector: 'nc-test-wrapper',
         template: '<nc-i18n-text-field [formControlRef]="fc" [textI18nField]="field" [showLargeLayout]="boolean"></nc-i18n-text-field>'
     })
     class TestWrapperComponent {
-        field = new I18nField('', '', '',  {
-            required: true,
-            optional: true,
-            visible: true,
-            editable: true,
-            hidden: true
-        });
+        field = new I18nField('', '',
+            {defaultValue: 'Default translation', translations: {en: 'English translation'}},
+            {
+                required: true,
+                optional: true,
+                visible: true,
+                editable: true,
+                hidden: true
+            }
+        );
         fc =  new FormControl('', { updateOn: 'blur' });
         boolean = new WrappedBoolean();
 

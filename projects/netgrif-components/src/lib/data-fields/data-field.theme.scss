@@ -6,6 +6,7 @@
 @mixin data-field-component($theme) {
     $primary: map-get($theme, primary);
     $secondary: map-get($theme, accent);
+    $warn: map-get($theme, warn);
 
     .editor-preview > h1 {
         border-bottom: 1px solid #ddd;
@@ -68,6 +69,24 @@
 
     .primary-background-color {
         background: mat-color($primary);
+    }
+
+    .filled-language-row:hover {
+        background-color: rgba(mat-color($primary), 0.2);
+    }
+
+    .form-input:focus-within:not(.invalid-form-input) {
+        border: solid 2px mat-color($primary) !important;
+        padding: 1px !important;
+    }
+
+    .invalid-form-input {
+        border: solid 2px mat-color($warn) !important;
+        padding: 1px !important;
+    }
+
+    .invalid-form-label {
+        color: mat-color($warn) !important;
     }
 }
 
