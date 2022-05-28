@@ -88,6 +88,11 @@
             "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
             "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
         },
+        "ldapGroup": {
+            "choose": "LDAP-Gruppe suchen",
+            "noUser": "LDAP-Gruppe nicht gefunden",
+            "err": "LDAP-Gruppe konnte nicht geladen werden"
+        },
         "option-selector": {
             "select": "Auswählen",
             "choose-one-option": "Wählen Sie eine Option aus"
@@ -359,6 +364,10 @@
         "user-list": {
             "noUsersWereFound": "Derzeit befinden sich keine Benutzer im System",
             "listTitle": "Benutzer"
+        },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "Keine LDAP Gruppe wurde gefunden",
+            "listTitle": "LDAP Gruppen"
         },
         "process-list": {
             "newestVersion": "Neuste Version",

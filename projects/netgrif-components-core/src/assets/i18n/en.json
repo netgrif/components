@@ -88,6 +88,11 @@
             "err": "Users failed to load",
             "showcase": "User showcase mode not set!"
         },
+        "ldapGroup": {
+            "choose": "Search Ldap group",
+            "noUser": "Not found Ldap group",
+            "err": "Failed to load Ldap group"
+        },
         "option-selector": {
             "select": "Select",
             "choose-one-option": "Choose one of the provided options"
@@ -359,6 +364,10 @@
         "user-list": {
             "noUsersWereFound": "There are any user in the system at the moment",
             "listTitle": "Users"
+        },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "No LDAP group was found",
+            "listTitle": "Ldap Groups"
         },
         "process-list": {
             "newestVersion": "Newest version",
