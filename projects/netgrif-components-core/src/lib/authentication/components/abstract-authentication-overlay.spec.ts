@@ -5,7 +5,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {Component} from '@angular/core';
-import {AbstractAuthenticationOverlay} from './abstract-authentication-overlay';
+import {AbstractAuthenticationOverlayComponent} from './abstract-authentication-overlay';
 import {SessionService} from '../session/services/session.service';
 import {SpinnerOverlayService} from '../../utility/service/spinner-overlay.service';
 import {Router} from '@angular/router';
@@ -15,6 +15,7 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {AuthenticationService} from '../services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {UserService} from '../../user/services/user.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractAuthenticationOverlay', () => {
     let component: TestAuthenticationOverlayComponent;
@@ -26,6 +27,7 @@ describe('AbstractAuthenticationOverlay', () => {
             imports: [
                 HttpClientTestingModule,
                 OverlayModule,
+                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -52,10 +54,10 @@ describe('AbstractAuthenticationOverlay', () => {
 });
 
 @Component({
-    selector: 'nae-test-overlay',
+    selector: 'ncc-test-overlay',
     template: '',
 })
-class TestAuthenticationOverlayComponent extends AbstractAuthenticationOverlay {
+class TestAuthenticationOverlayComponent extends AbstractAuthenticationOverlayComponent {
     constructor(protected _session: SessionService, protected _spinnerOverlay: SpinnerOverlayService,
                 protected router: Router, protected redirectService: RedirectService, protected userService: UserService) {
         super(_session, _spinnerOverlay, router, redirectService, userService);

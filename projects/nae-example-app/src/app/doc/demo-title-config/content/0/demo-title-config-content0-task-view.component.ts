@@ -6,7 +6,7 @@ import {
     NAE_SEARCH_CATEGORIES,
     NAE_TAB_DATA,
     SearchService,
-    TabbedTaskView,
+    AbstractTabbedTaskViewComponent,
     TaskViewService,
     ViewIdService,
     NAE_BASE_FILTER,
@@ -49,7 +49,7 @@ const baseFilterFactory = (injectedTabData: InjectedTabbedTaskViewData) => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultTaskSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
-export class DemoTitleConfigContent0TaskViewComponent extends TabbedTaskView implements AfterViewInit {
+export class DemoTitleConfigContent0TaskViewComponent extends AbstractTabbedTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 

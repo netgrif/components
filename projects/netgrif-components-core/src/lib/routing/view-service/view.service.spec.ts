@@ -1,12 +1,21 @@
 import {ViewService} from './view.service';
 import {Component, Type} from '@angular/core';
 import {ViewEntry} from './model/view-entry';
+import {TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 
 describe('ViewService', () => {
 
     it('should create', () => {
         expect(new TestViewService([])).toBeTruthy();
+    });
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, HttpClientTestingModule]
+        });
     });
 
     it('should create with components', () => {
@@ -18,7 +27,10 @@ describe('ViewService', () => {
     });
 
     it('should create with View objects', () => {
-        const service = new TestViewService([{id: 'view1', class: Test1Component}, {id: 'view2', class: Test2Component}]);
+        const service = new TestViewService([{id: 'view1', class: Test1Component}, {
+            id: 'view2',
+            class: Test2Component
+        }]);
         expect(service).toBeTruthy();
         expect(service.resolveNameToClass('view1')).toBe(Test1Component);
         expect(service.resolveNameToClass('view2')).toBe(Test2Component);
@@ -33,6 +45,9 @@ describe('ViewService', () => {
         expect(service.resolveNameToClass('Test2Component')).toBe(undefined);
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 class TestViewService extends ViewService {
@@ -42,15 +57,17 @@ class TestViewService extends ViewService {
 }
 
 @Component({
-    selector: 'nae-test-1',
+    selector: 'ncc-test-1',
     template: '',
     styles: []
 })
-class Test1Component {}
+class Test1Component {
+}
 
 @Component({
-    selector: 'nae-test-2',
+    selector: 'ncc-test-2',
     template: '',
     styles: []
 })
-class Test2Component {}
+class Test2Component {
+}

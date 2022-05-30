@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {of} from 'rxjs';
@@ -43,7 +43,7 @@ describe('AbstractCasePanelComponent', () => {
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
@@ -97,7 +97,7 @@ describe('AbstractCasePanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-case-panel',
+    selector: 'ncc-test-case-panel',
     template: ''
 })
 class TestCasePanelComponent extends AbstractCasePanelComponent {
@@ -112,8 +112,8 @@ class TestCasePanelComponent extends AbstractCasePanelComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nae-test-case-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </ncc-test-case-panel>'
 })
 class TestWrapperComponent {
     selectedHeaders =  of([

@@ -3,6 +3,8 @@ import {Component} from '@angular/core';
 import {AbstractLegalNoticeComponent} from './abstract-legal-notice.component';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractLegalFormComponent ', () => {
     let component: TestLegalFormComponent;
@@ -11,6 +13,7 @@ describe('AbstractLegalFormComponent ', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule, HttpClientTestingModule
             ],
             declarations: [TestLegalFormComponent],
             providers: [
@@ -33,7 +36,7 @@ describe('AbstractLegalFormComponent ', () => {
 });
 
 @Component({
-    selector: 'nae-test-legal',
+    selector: 'ncc-test-legal',
     template: ''
 })
 class TestLegalFormComponent extends AbstractLegalNoticeComponent {

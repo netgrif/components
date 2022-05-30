@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
 @mixin side-menu-typography($typography-config) {
     .side-menu-root {
@@ -12,8 +12,8 @@
     $primary: map-get($theme, primary);
 
     .custom-mat-toolbar {
-        background-color: mat-color($primary);
-        color: mat-contrast($primary, 500);
+        background-color: mat.get-color-from-palette($primary);
+        color: mat.get-contrast-color-from-palette($primary, 500);
         height: 64px;
         padding: 0 16px;
         font-weight: 500;

@@ -7,6 +7,8 @@ import {AbstractImmediateFilterTextContentComponent} from './abstract-immediate-
 import {FilterTextConfiguration, NAE_FILTER_TEXT} from './model/filter-text-injection-token';
 import {SearchService} from '../../search/search-service/search.service';
 import {TranslateService} from '@ngx-translate/core';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractImmediateFilterTextComponent', () => {
     let component: TestImmediateFilterTextComponent;
@@ -15,6 +17,7 @@ describe('AbstractImmediateFilterTextComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule, HttpClientTestingModule
             ],
             declarations: [TestImmediateFilterTextComponent]
         }).compileComponents();
@@ -36,7 +39,7 @@ describe('AbstractImmediateFilterTextComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-immediate-filter-text',
+    selector: 'ncc-test-immediate-filter-text',
     template: ''
 })
 class TestImmediateFilterTextComponent extends AbstractImmediateFilterTextComponent {
@@ -52,7 +55,7 @@ class TestImmediateFilterTextComponent extends AbstractImmediateFilterTextCompon
 }
 
 @Component({
-    selector: 'nae-portal-content-component',
+    selector: 'ncc-portal-content-component',
     template: ''
 })
 class PortalContentComponent extends AbstractImmediateFilterTextContentComponent {

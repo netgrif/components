@@ -1,6 +1,4 @@
 import {inject, TestBed} from '@angular/core/testing';
-import {AuthenticationInterceptor} from './authentication-interceptor';
-import {AuthenticationMethodService} from './authentication-method.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HTTP_INTERCEPTORS, HttpClient, HttpHeaders} from '@angular/common/http';
@@ -33,22 +31,28 @@ describe('AnonymousAuthenticationInterceptor', () => {
     });
 
     describe('intercept HTTP request', () => {
-        it('should add JWT bearer to Headers', inject([HttpClient, HttpTestingController],
-            (http: HttpClient, mock: HttpTestingController) => {
+        it('should add JWT bearer to Headers', (done) => {
+            inject([HttpClient, HttpTestingController],
+                (http: HttpClient, mock: HttpTestingController) => {
 
-                service.setToken('jwt-token');
-                http.get('/api').subscribe(response => {
-                    expect(response).toBeTruthy();
-                });
-                const request = mock.expectOne(req => (req.headers.has('X-Jwt-Token')));
+                    service.setToken('jwt-token');
+                    http.get('/api').subscribe(response => {
+                        expect(response).toBeTruthy();
+                        done();
+                    });
+                    const request = mock.expectOne(req => (req.headers.has('X-Jwt-Token')));
 
-                request.flush({data: 'test'}, {headers: new HttpHeaders({'X-Jwt-Token': 'tokenos'})});
-                mock.verify();
-            }));
+                    request.flush({data: 'test'}, {headers: new HttpHeaders({'X-Jwt-Token': 'tokenos'})});
+                    mock.verify();
+                })();
+        });
+        afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
+            mock.verify();
+            TestBed.resetTestingModule();
+        }));
     });
 
-    afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
-        mock.verify();
+    afterEach(() => {
         TestBed.resetTestingModule();
-    }));
+    });
 });

@@ -44,10 +44,14 @@ describe('AbstractProfileComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestProfileComponent extends AbstractProfileComponent {

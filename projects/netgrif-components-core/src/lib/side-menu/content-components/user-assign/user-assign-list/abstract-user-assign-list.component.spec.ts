@@ -1,6 +1,5 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CovalentCommonModule} from '@covalent/core/common';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -24,8 +23,7 @@ describe('AbstractUserAssignListComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                BrowserAnimationsModule,
-                CovalentCommonModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
@@ -62,7 +60,7 @@ describe('AbstractUserAssignListComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestUserComponent extends AbstractUserAssignListComponent {
@@ -72,8 +70,8 @@ class TestUserComponent extends AbstractUserAssignListComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-user [searchUserControl]="formControl"></nae-test-user>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-user [searchUserControl]="formControl"></ncc-test-user>'
 })
 class TestWrapperComponent {
     injectedData = {roles: [], value: new UserValue('5', 'admin', 'netgrif', 'super@netgrif.com')} as UserListInjectedData;

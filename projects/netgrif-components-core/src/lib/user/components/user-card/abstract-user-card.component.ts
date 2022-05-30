@@ -1,4 +1,4 @@
-import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../../models/user';
 import {UserService} from '../../services/user.service';
 import {TooltipPosition} from '@angular/material/tooltip';
@@ -10,6 +10,10 @@ import {
 export type Mode = 'full' | 'horizontal' | 'vertical' | 'icon';
 export type IconStyle = 'large' | 'small';
 
+@Component({
+    selector: 'ncc-abstract-user-card',
+    template: ''
+})
 export abstract class AbstractUserCardComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
     @Input() public user: User;

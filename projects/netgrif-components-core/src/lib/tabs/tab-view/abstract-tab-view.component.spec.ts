@@ -17,6 +17,7 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestViewService} from '../../utility/tests/test-view-service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 describe('AbstractTabViewComponent', () => {
     let component: TestTabComponent;
@@ -27,6 +28,7 @@ describe('AbstractTabViewComponent', () => {
             imports: [
                 MaterialModule,
                 NoopAnimationsModule,
+                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -65,7 +67,7 @@ describe('AbstractTabViewComponent', () => {
 
 
 @Component({
-    selector: 'nae-test-tabs',
+    selector: 'ncc-test-tabs',
     template: ''
 })
 class TestTabComponent extends AbstractTabViewComponent {
@@ -75,8 +77,8 @@ class TestTabComponent extends AbstractTabViewComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-tabs [initialTabs]="tabs"></nae-test-tabs>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-tabs [initialTabs]="tabs"></ncc-test-tabs>'
 })
 class TestWrapperComponent {
     tabs: Array<TabContent> = [
@@ -92,7 +94,7 @@ class TestWrapperComponent {
 }
 
 @Component({
-    selector: 'nae-test-div',
+    selector: 'ncc-test-div',
     template: '<div></div>'
 })
 class TestComponent {

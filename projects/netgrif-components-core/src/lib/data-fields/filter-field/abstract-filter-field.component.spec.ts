@@ -7,15 +7,25 @@ import {FilterType} from '../../filter/models/filter-type';
 import {ComponentType} from '@angular/cdk/portal';
 import {AbstractFilterFieldContentComponent} from './abstract-filter-field-content.component';
 import {SearchService} from '../../search/search-service/search.service';
-import {of} from 'rxjs';
+import {of, Subject} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractFilterFieldComponent', () => {
     let component: TestFilterComponent;
     let fixture: ComponentFixture<TestWrapperComponent>;
 
+    let mockSearchService;
+
     beforeEach(() => {
+        mockSearchService = {
+            loadFromMetadata: () => {},
+            loadingFromMetadata$: new Subject<boolean>()
+        };
+
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             declarations: [
                 TestWrapperComponent,
                 TestFilterComponent,
@@ -43,7 +53,7 @@ describe('AbstractFilterFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-filter',
+    selector: 'ncc-test-filter',
     template: ''
 })
 class TestFilterComponent extends AbstractFilterFieldComponent {
@@ -58,8 +68,8 @@ class TestFilterComponent extends AbstractFilterFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-filter [dataField]="field"></nae-test-filter>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-filter [dataField]="field"></ncc-test-filter>'
 })
 class TestWrapperComponent {
     field = new FilterField('', '', '', {
@@ -68,7 +78,7 @@ class TestWrapperComponent {
 }
 
 @Component({
-    selector: 'nae-test-filter-content',
+    selector: 'ncc-test-filter-content',
     template: ''
 })
 class TestFilterContentComponent extends AbstractFilterFieldContentComponent {

@@ -1,4 +1,5 @@
 import {DatafieldMapKey} from './datafield-map-key';
+import {TestBed} from '@angular/core/testing';
 
 describe('DatafieldMapKey', () => {
     it('should create an instance', () => {
@@ -23,5 +24,9 @@ describe('DatafieldMapKey', () => {
         expect(key).toBeTruthy();
         expect(key.type).toBe('type');
         expect(key.title).toBe('title#hash');
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

@@ -1,4 +1,4 @@
-import {Inject, Input, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
 import {UserField} from './models/user-field';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {AbstractDataFieldComponent} from '../models/abstract-data-field-component';
@@ -12,6 +12,10 @@ import {TranslateService} from '@ngx-translate/core';
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
+@Component({
+    selector: 'ncc-abstract-user-field',
+    template: ''
+})
 export abstract class AbstractUserFieldComponent extends AbstractDataFieldComponent implements OnInit {
     /**
      * Represents info about user from backend.

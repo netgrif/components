@@ -23,136 +23,164 @@ describe('CaseResourceService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should count', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.count(new SimpleFilter('', FilterType.CASE, {})).subscribe(res => {
-                expect(res.count).toEqual(0);
-            });
+    it('should count', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.count(new SimpleFilter('', FilterType.CASE, {})).subscribe(res => {
+                        expect(res.count).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/count');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/count');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({count: 0, entity: ''});
-        })
+                    reqLog.flush({count: 0, entity: ''});
+                })();
+        }
     );
 
-    it('should getAllCases', inject([HttpTestingController],
+    it('should getAllCases', (done) => {
+        inject([HttpTestingController],
         (httpMock: HttpTestingController) => {
             service.getAllCase().subscribe(res => {
                 expect(res.length).toEqual(0);
+                done();
             });
 
             const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/all');
             expect(reqLog.request.method).toEqual('GET');
 
             reqLog.flush([]);
-        })
+        })();
+    }
     );
 
-    it('should searchCases', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.searchCases(new SimpleFilter('', FilterType.CASE, {})).subscribe(res => {
-                expect(res.content.length).toEqual(0);
-            });
+    it('should searchCases', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.searchCases(new SimpleFilter('', FilterType.CASE, {})).subscribe(res => {
+                        expect(res.content.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/search');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/search');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should deleteCase', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.deleteCase('id').subscribe(res => {
-                expect(res.success).toEqual('Done');
-            });
+    it('should deleteCase', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.deleteCase('id').subscribe(res => {
+                        expect(res.success).toEqual('Done');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id');
-            expect(reqLog.request.method).toEqual('DELETE');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id');
+                    expect(reqLog.request.method).toEqual('DELETE');
 
-            reqLog.flush({success: 'Done'});
-        })
+                    reqLog.flush({success: 'Done'});
+                })();
+        }
     );
 
-    it('should getCaseFile', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getCaseFile('id', 'id').subscribe(res => {
-                expect(res.description).toEqual('string');
-                expect(res.filename).toEqual('name');
-                expect(res.open).toBeFalse();
-                expect(res.readable).toBeFalse();
-            });
+    it('should getCaseFile', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getCaseFile('id', 'id').subscribe(res => {
+                        expect(res.description).toEqual('string');
+                        expect(res.filename).toEqual('name');
+                        expect(res.open).toBeFalse();
+                        expect(res.readable).toBeFalse();
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/file/id');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/file/id');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush({description: 'string', filename: 'name', open: false, readable: false});
-        })
+                    reqLog.flush({description: 'string', filename: 'name', open: false, readable: false});
+                })();
+        }
     );
 
-    it('should createCase', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.createCase({
-                title: '',
-                netId: ''
-            }).subscribe(res => {
-                expect((res.outcome as CreateCaseEventOutcome).aCase.stringId).toEqual('string');
-            });
+    it('should createCase', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.createCase({
+                        title: '',
+                        netId: ''
+                    }).subscribe(res => {
+                        expect((res.outcome as CreateCaseEventOutcome).aCase.stringId).toEqual('string');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({
-                outcome: {
-                    aCase: {
-                        stringId: 'string'
-                    }
-                }
-            });
-        })
+                    reqLog.flush({
+                        outcome: {
+                            aCase: {
+                                stringId: 'string'
+                            }
+                        }
+                    });
+                })();
+        }
     );
 
-    it('should getAllCaseUser', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAllCaseUser('id', {}).subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getAllCaseUser', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAllCaseUser('id', {}).subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/author/id');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/author/id');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getCasesQueryDSL', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getCasesQueryDSL({}).subscribe(res => {
-                expect(res.content.length).toEqual(0);
-            });
+    it('should getCasesQueryDSL', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getCasesQueryDSL({}).subscribe(res => {
+                        expect(res.content.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/search2');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/search2');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getOptionsEnumeration', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getOptionsEnumeration('id', 'id').subscribe(res => {
-                expect(res.stringId).toEqual('id');
-            });
+    it('should getOptionsEnumeration', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getOptionsEnumeration('id', 'id').subscribe(res => {
+                        expect(res.stringId).toEqual('id');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/field/id');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/workflow/case/id/field/id');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush({stringId: 'id'});
-        })
+                    reqLog.flush({stringId: 'id'});
+                })();
+        }
     );
 
-    afterEach(() => {
+    afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
+        mock.verify();
         TestBed.resetTestingModule();
-    });
+    }));
 });

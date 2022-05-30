@@ -9,7 +9,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
  * that injected data and inherits from an [AbstractDialog]{@link AbstractDialog}.
  */
 @Component({
-    selector: 'nae-simple-dialog',
+    selector: 'ncc-simple-dialog',
     templateUrl: './alert-dialog.component.html',
     styleUrls: ['./alert-dialog.component.scss']
 })

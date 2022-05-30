@@ -1,10 +1,10 @@
 import {AbstractForgottenPasswordComponent} from './abstract-forgotten-password.component';
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
 import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {SignUpService} from '../../authentication/sign-up/services/sign-up.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
@@ -26,7 +26,7 @@ describe('AbstractForgottenPasswordComponent', () => {
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule
             ],
@@ -77,7 +77,7 @@ describe('AbstractForgottenPasswordComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-reg',
+    selector: 'ncc-test-reg',
     template: ''
 })
 class TestRegFormComponent extends AbstractForgottenPasswordComponent {

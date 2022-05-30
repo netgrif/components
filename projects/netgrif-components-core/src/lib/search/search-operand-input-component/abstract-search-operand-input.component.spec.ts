@@ -3,6 +3,8 @@ import {Component} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 import {SearchInputType} from '../models/category/search-input-type';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractSearchOperandInputComponent', () => {
     let component: TestSearchOperandInputComponent;
@@ -10,6 +12,7 @@ describe('AbstractSearchOperandInputComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             declarations: [
                 TestSearchOperandInputComponent,
                 TestWrapperComponent
@@ -33,7 +36,7 @@ describe('AbstractSearchOperandInputComponent', () => {
 });
 
 @Component({
-    selector: 'nae-search-operand-input',
+    selector: 'ncc-search-operand-input',
     template: ''
 })
 class TestSearchOperandInputComponent extends AbstractSearchOperandInputComponent {
@@ -43,9 +46,9 @@ class TestSearchOperandInputComponent extends AbstractSearchOperandInputComponen
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-search-operand-input [inputFormControl]="formControl" [inputType]="searchInputType.TEXT" [first]="true">' +
-        '</nae-search-operand-input>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-search-operand-input [inputFormControl]="formControl" [inputType]="searchInputType.TEXT" [first]="true">' +
+        '</ncc-search-operand-input>'
 })
 class TestWrapperComponent {
 

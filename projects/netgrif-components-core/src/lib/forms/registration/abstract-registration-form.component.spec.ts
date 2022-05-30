@@ -1,7 +1,7 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
@@ -26,7 +26,7 @@ describe('AbstractRegistrationPanelComponent', () => {
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule
             ],
@@ -79,7 +79,7 @@ describe('AbstractRegistrationPanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-reg',
+    selector: 'ncc-test-reg',
     template: ''
 })
 class TestRegFormComponent extends AbstractRegistrationFormComponent {

@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FormSubmitEvent, HasForm} from '../has-form';
 import {UserService} from '../../user/services/user.service';
@@ -6,6 +6,10 @@ import {User} from '../../user/models/user';
 import {LoadingEmitter} from '../../utility/loading-emitter';
 import {take} from 'rxjs/operators';
 
+@Component({
+    selector: 'ncc-abstract-login-field',
+    template: ''
+})
 export abstract class AbstractLoginFormComponent implements HasForm, OnDestroy {
 
     public rootFormGroup: FormGroup;

@@ -1,4 +1,4 @@
-import {AbstractRoleAssignment} from './abstract-role-assignment';
+import {AbstractRoleAssignmentComponent} from './abstract-role-assignment.component';
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -15,7 +15,6 @@ import {RoleAssignmentService} from './services/role-assignment.service';
 import {UserService} from '../../user/services/user.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NullAuthenticationService} from '../../authentication/services/methods/null-authentication/null-authentication.service';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationService} from '../../authentication/services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
@@ -70,10 +69,10 @@ describe('AbstractRoleAssignment', () => {
 });
 
 @Component({
-    selector: 'nae-test-role-assignment',
+    selector: 'ncc-test-role-assignment',
     template: '',
 })
-class TestRoleAssignmentComponent extends AbstractRoleAssignment {
+class TestRoleAssignmentComponent extends AbstractRoleAssignmentComponent {
     constructor(protected _service: RoleAssignmentService, protected _userService: UserService) {
         super(_service, _userService);
     }

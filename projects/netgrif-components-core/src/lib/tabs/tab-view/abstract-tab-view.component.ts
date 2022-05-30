@@ -1,4 +1,4 @@
-import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {TabContent} from '../interfaces';
 import {TabView} from '../classes/tab-view';
 import {ViewService} from '../../routing/view-service/view.service';
@@ -11,6 +11,10 @@ import {take} from 'rxjs/operators';
  *
  * See {@link TabView} for the class that holds the logic for this view.
  */
+@Component({
+    selector: 'ncc-abstract-tab-view',
+    template: ''
+})
 export abstract class AbstractTabViewComponent implements OnInit, OnDestroy {
 
     /**

@@ -83,6 +83,8 @@ describe('AbstractImportNetComponent', () => {
     });
 
     afterEach(() => {
+        logSpy.calls.reset();
+        sideMenuCloseSpy.calls.reset();
         TestBed.resetTestingModule();
     });
 });
@@ -101,7 +103,7 @@ class MyPetriNetResource {
 }
 
 @Component({
-    selector: 'nae-test-import',
+    selector: 'ncc-test-import',
     template: '<input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple" accept="text/xml"/>'
 })
 class TestImportComponent extends AbstractImportNetComponent {

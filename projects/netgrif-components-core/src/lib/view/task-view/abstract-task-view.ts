@@ -1,11 +1,14 @@
 import {Observable} from 'rxjs';
-import {OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {TaskPanelData} from '../../panel/task-panel-list/task-panel-data/task-panel-data';
 import {TaskViewService} from './service/task-view.service';
-import {ViewWithHeaders} from '../abstract/view-with-headers';
+import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
 
-
-export abstract class AbstractTaskView extends ViewWithHeaders implements OnDestroy {
+@Component({
+    selector: 'ncc-abstract-task-view',
+    template: ''
+})
+export abstract class AbstractTaskViewComponent extends AbstractViewWithHeadersComponent implements OnDestroy {
 
     public tasks$: Observable<Array<TaskPanelData>>;
     public loading$: Observable<boolean>;

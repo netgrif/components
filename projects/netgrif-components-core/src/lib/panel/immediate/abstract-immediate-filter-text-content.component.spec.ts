@@ -11,6 +11,7 @@ import {SimpleFilter} from '../../filter/models/simple-filter';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractImmediateFilterTextContentComponent', () => {
     let component: TestImmediateFilterTextContentComponent;
@@ -20,6 +21,7 @@ describe('AbstractImmediateFilterTextContentComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateLibModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
             ],
             providers: [
@@ -52,7 +54,7 @@ describe('AbstractImmediateFilterTextContentComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-immediate-filter-text-content',
+    selector: 'ncc-test-immediate-filter-text-content',
     template: ''
 })
 class TestImmediateFilterTextContentComponent extends AbstractImmediateFilterTextContentComponent {

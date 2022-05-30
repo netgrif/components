@@ -1,10 +1,10 @@
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularResizeEventModule} from 'angular-resize-event';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {FormControl, FormsModule} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {MockAuthenticationMethodService} from '../../../utility/tests/mocks/mock-authentication-method-service';
 import {AuthenticationMethodService} from '../../../authentication/services/authentication-method.service';
@@ -29,10 +29,10 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 CovalentModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
                 QuillModule.forRoot()
@@ -66,7 +66,7 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-text',
+    selector: 'ncc-test-text',
     template: ''
 })
 class TestTextComponent extends AbstractHtmlTextareaFieldComponent {
@@ -76,10 +76,10 @@ class TestTextComponent extends AbstractHtmlTextareaFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: `<nae-test-text [showLargeLayout]="label"
+    selector: 'ncc-test-wrapper',
+    template: `<ncc-test-text [showLargeLayout]="label"
                                  [formControlRef]="formControl"
-                                 [textAreaField]="dataField"></nae-test-text>`
+                                 [textAreaField]="dataField"></ncc-test-text>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

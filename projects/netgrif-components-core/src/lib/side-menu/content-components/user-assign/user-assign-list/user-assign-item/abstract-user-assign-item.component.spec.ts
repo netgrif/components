@@ -5,6 +5,7 @@ import {AbstractUserAssignItemComponent} from './abstract-user-assign-item.compo
 import {UserValue} from '../../../../../data-fields/user-field/models/user-value';
 import {TranslateLibModule} from '../../../../../translate/translate-lib.module';
 import {MaterialModule} from '../../../../../material/material.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractUserAssignItemComponent', () => {
     let component: TestUserComponent;
@@ -15,7 +16,8 @@ describe('AbstractUserAssignItemComponent', () => {
             imports: [
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                HttpClientTestingModule
             ],
             declarations: [
                 TestUserComponent,
@@ -37,7 +39,7 @@ describe('AbstractUserAssignItemComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestUserComponent extends AbstractUserAssignItemComponent {
@@ -47,8 +49,8 @@ class TestUserComponent extends AbstractUserAssignItemComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-user [user]="user"></nae-test-user>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-user [user]="user"></ncc-test-user>'
 })
 class TestWrapperComponent {
     user = new UserValue('0', '', '', '');

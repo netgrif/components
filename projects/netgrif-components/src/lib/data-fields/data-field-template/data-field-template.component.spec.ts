@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DataFieldTemplateComponent} from './data-field-template.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MaterialModule,
@@ -19,7 +19,7 @@ describe('DataFieldTemplateComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, NoopAnimationsModule],
+            imports: [MaterialModule, AngularResizeEventModule, NoopAnimationsModule],
             declarations: [DataFieldTemplateComponent, TestWrapperComponent],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},

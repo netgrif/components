@@ -4,6 +4,7 @@ import {Component} from '@angular/core';
 import {AbstractFilterSelectorListItemComponent} from './abstract-filter-selector-list-item.component';
 import {SimpleFilter} from '../../../../filter/models/simple-filter';
 import {FilterType} from '../../../../filter/models/filter-type';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractFilterSelectorListItemComponent', () => {
     let component: TestFilterComponent;
@@ -12,7 +13,8 @@ describe('AbstractFilterSelectorListItemComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
-                NoopAnimationsModule],
+                NoopAnimationsModule, HttpClientTestingModule
+            ],
             declarations: [
                 TestFilterComponent,
                 TestWrapperComponent
@@ -36,15 +38,15 @@ describe('AbstractFilterSelectorListItemComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-filter',
+    selector: 'ncc-test-filter',
     template: ''
 })
 class TestFilterComponent extends AbstractFilterSelectorListItemComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-filter [filter]="filter"></nae-test-filter>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-filter [filter]="filter"></ncc-test-filter>'
 })
 class TestWrapperComponent {
     filter = new SimpleFilter('', FilterType.CASE, {});

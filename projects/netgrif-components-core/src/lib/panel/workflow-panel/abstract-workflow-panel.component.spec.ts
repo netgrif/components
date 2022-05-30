@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';
@@ -37,7 +37,7 @@ describe('AbstractWorkflowPanelComponent', () => {
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
@@ -86,7 +86,7 @@ describe('AbstractWorkflowPanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-workflow-panel',
+    selector: 'ncc-test-workflow-panel',
     template: ''
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
@@ -96,8 +96,8 @@ class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></nae-test-workflow-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-workflow-panel [workflow]="workflow" [selectedHeaders$]="selectedHeaders"></ncc-test-workflow-panel>'
 })
 class TestWrapperComponent {
     public selectedHeaders = of([

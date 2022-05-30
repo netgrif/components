@@ -3,7 +3,6 @@ import {UserAssignListComponent} from './user-assign-list.component';
 import {UserAssignItemComponent} from './user-assign-item/user-assign-item.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
-import {CovalentCommonModule} from '@covalent/core/common';
 import {FormControl} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -27,7 +26,6 @@ describe('UserAssignListComponent', () => {
             imports: [
                 MaterialModule,
                 BrowserAnimationsModule,
-                CovalentCommonModule,
                 HttpClientTestingModule,
                 TranslateLibModule
             ],

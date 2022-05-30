@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 <% if (primaryDark) { %>
 $bv-dark-primary: ( <%= primaryDark %>
 contrast : (<%= primaryContrastDark %>)

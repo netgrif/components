@@ -1,4 +1,4 @@
-import {AfterViewInit, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {UserListItem, UserListService} from '../../user/services/user-list.service';
@@ -9,7 +9,11 @@ import {UserService} from '../../user/services/user.service';
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
-export abstract class AbstractRoleAssignment implements OnInit, AfterViewInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-role',
+    template: ''
+})
+export abstract class AbstractRoleAssignmentComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('userList') public userList: MatSelectionList;
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;

@@ -48,9 +48,10 @@ describe('AbstractSideMenuContainerComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should open and close', () => {
+    it('should open and close', (done) => {
         service.open(TestImportComponent).onClose.subscribe(event => {
             expect(event).toBeTruthy();
+            done();
         });
         service.close({opened: false});
     });
@@ -61,7 +62,7 @@ describe('AbstractSideMenuContainerComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-sidemenu',
+    selector: 'ncc-test-sidemenu',
     template: '<mat-sidenav-container class="side-menu-container">\n' +
         '    <mat-sidenav #rightSideMenu mode="over" position="end" class="side-menu" ngClass.lt-sm="side-menu-size-mobile"' +
         ' [ngClass.gt-xs]="portalWrapper.size">\n' +
@@ -79,7 +80,7 @@ class TestSideMenuComponent extends AbstractSideMenuContainerComponent {
 }
 
 @Component({
-    selector: 'nae-test-import',
+    selector: 'ncc-test-import',
     template: '<input type="file" id="sidemenu-fileUpload" name="fileUpload" multiple="multiple" accept="text/xml"/>'
 })
 class TestImportComponent extends AbstractImportNetComponent {

@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormSubmitEvent, HasForm} from '../has-form';
 import {FormGroup} from '@angular/forms';
 import {MessageResource} from '../../resources/interface/message-resource';
@@ -13,6 +13,10 @@ import {take} from 'rxjs/operators';
 /**
  * Holds the logic that is shared between `RegistrationFormComponent` and `ForgottenPasswordFormComponent`.
  */
+@Component({
+    selector: 'ncc-abstract-registration',
+    template: ''
+})
 export abstract class AbstractRegistrationComponent implements HasForm, OnDestroy {
 
     protected readonly MIN_PASSWORD_LENGTH = 8;

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
-import {AbstractCustomCard, DashboardEventContent, DashboardResourceService} from '@netgrif/components-core';
+import {AbstractCustomCardComponent, DashboardEventContent, DashboardResourceService} from '@netgrif/components-core';
 import {TranslateService} from '@ngx-translate/core';
 import {AggregationResult, LoggerService} from '@netgrif/components-core';
 
@@ -8,7 +8,7 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
     templateUrl: './linear-gauge-card.component.html',
     styleUrls: ['./linear-gauge-card.component.scss']
 })
-export class LinearGaugeCardComponent extends AbstractCustomCard implements OnInit {
+export class LinearGaugeCardComponent extends AbstractCustomCardComponent implements OnInit {
 
     @Output() selectEvent: EventEmitter<DashboardEventContent>;
 

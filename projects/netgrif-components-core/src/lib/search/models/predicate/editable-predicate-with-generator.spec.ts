@@ -2,6 +2,7 @@ import {EditablePredicateWithGenerator} from './editable-predicate-with-generato
 import {CaseTitle} from '../category/case/case-title';
 import {OperatorService} from '../../operator-service/operator.service';
 import {OperatorResolverService} from '../../operator-service/operator-resolver.service';
+import {TestBed} from '@angular/core/testing';
 
 describe('EditablePredicateWithGenerator', () => {
     let generator: CaseTitle;
@@ -17,6 +18,7 @@ describe('EditablePredicateWithGenerator', () => {
 
     afterEach(() => {
         generator.destroy();
+        TestBed.resetTestingModule();
     });
 
     it(`should create an instance with generator that doesn't provide query`, () => {

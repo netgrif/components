@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularResizeEventModule} from 'angular-resize-event';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
 import {MaterialModule} from '../../material/material.module';
@@ -21,8 +21,8 @@ describe('AbstractUserFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
-                BrowserAnimationsModule,
+                AngularResizeEventModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
@@ -50,7 +50,7 @@ describe('AbstractUserFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestUserComponent extends AbstractUserFieldComponent {
@@ -63,8 +63,8 @@ class TestUserComponent extends AbstractUserFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-user [dataField]="field"> </nae-test-user>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-user [dataField]="field"> </ncc-test-user>'
 })
 class TestWrapperComponent {
     field = new UserField('', '', {

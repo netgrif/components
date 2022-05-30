@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {AbstractDataFieldTemplateComponent} from './abstract-data-field-template.component';
@@ -17,7 +17,7 @@ describe('AbstractDataFieldTemplateComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, NoopAnimationsModule],
+            imports: [MaterialModule, AngularResizeEventModule, NoopAnimationsModule],
             declarations: [TestDatafieldTemplateComponent, TestWrapperComponent],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -41,7 +41,7 @@ describe('AbstractDataFieldTemplateComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-datafield-template',
+    selector: 'ncc-test-datafield-template',
     template: ''
 })
 class TestDatafieldTemplateComponent extends AbstractDataFieldTemplateComponent {
@@ -51,8 +51,8 @@ class TestDatafieldTemplateComponent extends AbstractDataFieldTemplateComponent 
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-datafield-template [dataField]="field"></nae-test-datafield-template>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-datafield-template [dataField]="field"></ncc-test-datafield-template>'
 })
 class TestWrapperComponent {
     field = new TextField('', '', '', {});

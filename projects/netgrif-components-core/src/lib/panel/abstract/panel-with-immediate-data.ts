@@ -1,13 +1,17 @@
-import {PanelWithHeaderBinding} from './panel-with-header-binding';
+import {AbstractPanelWithHeaderBindingComponent} from './panel-with-header-binding';
 import {NaeDate, toMoment} from '../../resources/types/nae-date-type';
 import {DATE_FORMAT_STRING, DATE_TIME_FORMAT_STRING} from '../../moment/time-formats';
 import {TranslateService} from '@ngx-translate/core';
-import {OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {FeaturedValue} from './featured-value';
 import {CurrencyPipe} from '@angular/common';
 import {ImmediateData} from '../../resources/interface/immediate-data';
 
-export abstract class PanelWithImmediateData extends PanelWithHeaderBinding implements OnDestroy {
+@Component({
+    selector: 'ncc-abstract-panel-with-immediate',
+    template: ''
+})
+export abstract class AbstractPanelWithImmediateDataComponent extends AbstractPanelWithHeaderBindingComponent implements OnDestroy {
     protected constructor(protected _translate: TranslateService, protected _currencyPipe: CurrencyPipe) {
         super();
     }

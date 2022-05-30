@@ -16,9 +16,8 @@ import {HeaderComponentModule} from '../../../header/header.module';
     ],
     declarations: [LoadFilterComponent],
     exports: [LoadFilterComponent],
-    entryComponents: [LoadFilterComponent],
     providers: [
-        {provide: NAE_LOAD_FILTER_COMPONENT, useValue: LoadFilterComponent}
+        { provide: NAE_LOAD_FILTER_COMPONENT, useValue: LoadFilterComponent }
     ]
 })
 export class SideMenuLoadFilterComponentModule {

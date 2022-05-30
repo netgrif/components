@@ -88,6 +88,11 @@
             "err": "Nepodarilo sa načítať používateľov",
             "showcase": "Nebol zvolený mód zobrazenia používateľa!"
         },
+        "ldapGroup": {
+            "choose": "Vyhladajťe Ldap skupinu",
+            "noUser": "Neexistuje žiadna Ldap skupina",
+            "err": "Nepodarilo sa načítať Ldap skupiny"
+        },
         "option-selector": {
             "select": "Zvoliť",
             "choose-one-option": "Vyberte jednu z možností"
@@ -211,7 +216,10 @@
             "weekend": "Zadaný dátum musí byť víkendový deň",
             "workday": "Zadaný dátum musí byť pracovný deň",
             "enumeration": "Musí byť vybraná jedna z možností",
-            "min": "Zadané číslo musí byť väčšie ako {{length}}"
+            "min": "Zadané číslo musí byť väčšie ako {{length}}",
+            "translationRequired": "Musí byť vyplnený preklad pre jazyky: <{{translation}}>",
+            "translationOnly": "Je povolený iba preklad pre jazyky: <{{translation}}>",
+            "requiredI18n": "Aspoň jedna hodnota musí byť vyplnená"
         },
         "snackBar": {
             "downloadFail": " sťahovanie zlyhalo",
@@ -239,6 +247,12 @@
             "clickToUpload": "Kliknutím nahrajte súbor",
             "clickToDownload": "Kliknutím stiahnite súbor {{fileName}}",
             "clickToDelete": "Kliknutím vymažte súbor"
+        },
+        "i18n": {
+            "languageSelect": "Výber jazyka",
+            "deleteTranslation": "Zmazanie prekladu",
+            "showTranslations": "Zobrazenie prekladov",
+            "hideTranslations": "Skrytie prekladov"
         },
         "dynamicEnum": {
             "noData": "Vášmu vyhľadávaniu nezodpovedajú žiadne položky"
@@ -350,6 +364,10 @@
         "user-list": {
             "noUsersWereFound": "Momentálne nie sú v systéme žiadni používatelia",
             "listTitle": "Používatelia"
+        },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "Žiadna LDAP skupina nebola najdená",
+            "listTitle": "Ldap Skupiny"
         },
         "process-list": {
             "newestVersion": "Najnovšia verzia",

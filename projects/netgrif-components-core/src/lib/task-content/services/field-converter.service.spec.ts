@@ -7,6 +7,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldResource} from '../model/resource-interface';
 import {FieldAlignment} from '../../resources/interface/field-alignment';
 import {FieldTypeResource} from '../model/field-type-resource';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('FieldConvertorService', () => {
     let service: FieldConverterService;
@@ -14,7 +15,8 @@ describe('FieldConvertorService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                HttpClientTestingModule
             ]
         });
         service = TestBed.inject(FieldConverterService);

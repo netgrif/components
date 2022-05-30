@@ -79,6 +79,22 @@ default mapping don&#39;t affect your existing code.</p>
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#KEYWORD" >KEYWORD</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -88,6 +104,10 @@ default mapping don&#39;t affect your existing code.</p>
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getCoreIndex" >getCoreIndex</a>
+                            </li>
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#getIndex" >getIndex</a>
@@ -115,7 +135,7 @@ default mapping don&#39;t affect your existing code.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-keyword-resolver-service/search-index-resolver.service.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-keyword-resolver-service/search-index-resolver.service.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -132,6 +152,108 @@ default mapping don&#39;t affect your existing code.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getCoreIndex"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>getCoreIndex</b></span>
+                        <a href="#getCoreIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCoreIndex(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, keyword)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="47"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-keyword-resolver-service/search-index-resolver.service.ts:47</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Constructs the index name for the specified core field.</p>
+<p>Note that almost all combinations are valid and will not throw an error when used to query the database, but not all combinations are
+used by the application engine. The <a href="../miscellaneous/enumerations.html#SearchIndex">SearchIndex</a> class has some information about which field types map to which indices, but
+you should consult the backend documentation for more reliable information.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>index</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>the queried index</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>keyword</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>false</code>
+                                    </td>
+
+                                    <td>
+                                        <p>whether the keyword of a TEXT index should be queried</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the full name of the specified index</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getIndex"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -143,15 +265,15 @@ default mapping don&#39;t affect your existing code.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getIndex(dataFieldIdentifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, index: <a href="../undefineds/SearchIndex.html" target="_self">SearchIndex</a>, keyword)</code>
+                    <code>getIndex(dataFieldIdentifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, index: <a href="../miscellaneouss/SearchIndex.html" target="_self">SearchIndex</a>, keyword)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-keyword-resolver-service/search-index-resolver.service.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-keyword-resolver-service/search-index-resolver.service.ts:33</a></div>
                 </td>
             </tr>
 
@@ -249,6 +371,45 @@ you should consult the backend documentation for more reliable information.</p>
         </tbody>
     </table>
 </section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="KEYWORD"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>KEYWORD</b></span>
+                        <a href="#KEYWORD"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;.keyword&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/netgrif-components-core/src/lib/search/search-keyword-resolver-service/search-index-resolver.service.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
 
     </div>
 
@@ -270,7 +431,10 @@ import {SearchIndex} from &#x27;../models/search-index&#x27;;
   providedIn: &#x27;root&#x27;
 })
 export class SearchIndexResolverService {
-  constructor() { }
+
+    public readonly KEYWORD &#x3D; &#x27;.keyword&#x27;;
+
+    constructor() { }
 
     /**
      * Constructs the index name for the specified field.
@@ -284,7 +448,21 @@ export class SearchIndexResolverService {
      * @returns the full name of the specified index
      */
   public getIndex(dataFieldIdentifier: string, index: SearchIndex, keyword &#x3D; false): string {
-      return &#x60;dataSet.${dataFieldIdentifier}.${index}${keyword ? &#x27;.keyword&#x27; : &#x27;&#x27;}&#x60;;
+      return &#x60;dataSet.${dataFieldIdentifier}.${index}${keyword ? this.KEYWORD : &#x27;&#x27;}&#x60;;
+  }
+
+    /**
+     * Constructs the index name for the specified core field.
+     *
+     * Note that almost all combinations are valid and will not throw an error when used to query the database, but not all combinations are
+     * used by the application engine. The {@link SearchIndex} class has some information about which field types map to which indices, but
+     * you should consult the backend documentation for more reliable information.
+     * @param index the queried index
+     * @param keyword whether the keyword of a TEXT index should be queried
+     * @returns the full name of the specified index
+     */
+  public getCoreIndex(index: string, keyword &#x3D; false): string {
+      return &#x60;${index}${keyword ? this.KEYWORD : &#x27;&#x27;}&#x60;;
   }
 }
 </code></pre>

@@ -26,6 +26,7 @@ import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
 import {DefaultSearchCategoriesModule} from '../category-factory/default-search-categories.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractSearchPredicateComponent', () => {
     let component: TestSearchPredicateComponent;
@@ -38,6 +39,7 @@ describe('AbstractSearchPredicateComponent', () => {
                 MaterialModule,
                 TranslateLibModule,
                 DefaultSearchCategoriesModule,
+                NoopAnimationsModule
             ],
             declarations: [
                 TestSearchPredicateComponent,
@@ -75,7 +77,7 @@ describe('AbstractSearchPredicateComponent', () => {
 });
 
 @Component({
-    selector: 'nae-search-predicate',
+    selector: 'ncc-search-predicate',
     template: ''
 })
 class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
@@ -88,8 +90,8 @@ class TestSearchPredicateComponent extends AbstractSearchPredicateComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></nae-search-predicate>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-search-predicate [predicate]="predicate" [predicateId]="0" [remove$]="remove$"></ncc-search-predicate>'
 })
 class TestWrapperComponent implements OnDestroy {
 
