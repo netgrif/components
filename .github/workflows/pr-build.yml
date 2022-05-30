@@ -22,12 +22,12 @@ jobs:
                 run: |
                     npm run ncc:build
                     npm run ncc:full-test
-                    npm i ./dist/netgrif-components-core --save-optional
+                    npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps
             -   name: Build & test components
                 run: |
                     npm run nc:build
                     npm run nc:full-test
-                    npm i ./dist/netgrif-components --save-optional
+                    npm i ./dist/netgrif-components --save-optional --legacy-peer-deps
 
     sonar:
         name: Sonar
