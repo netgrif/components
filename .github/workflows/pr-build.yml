@@ -3,8 +3,8 @@ on:
     pull_request:
         types: [ opened, synchronize, reopened ]
 jobs:
-    test:
-        name: Test
+    build-matrix:
+        name: build-matrix
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -28,9 +28,11 @@ jobs:
                     npm run nc:build
                     npm run nc:full-test
                     npm i ./dist/netgrif-components --save-optional --legacy-peer-deps
+            -   name: Build examples
+                run: npm run example:build
 
-    sonar:
-        name: Sonar
+    test:
+        name: Test
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
