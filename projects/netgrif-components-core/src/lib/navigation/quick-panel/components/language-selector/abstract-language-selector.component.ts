@@ -1,7 +1,11 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {LanguageService} from '../../../../translate/language.service';
 
-export abstract class AbstractLanguageSelectorComponent implements OnInit {
+@Component({
+    selector: 'ncc-abstract-language-selector',
+    template: ''
+})
+export abstract class AbstractLanguageSelectorComponent {
 
     @Input() public language: string;
 
@@ -32,9 +36,6 @@ export abstract class AbstractLanguageSelectorComponent implements OnInit {
                 this._flagOverrides.set(option.key, option.flag);
             }
         });
-    }
-
-    ngOnInit(): void {
     }
 
     get flagCountryCode(): string {

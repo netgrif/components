@@ -97,7 +97,7 @@ describe('AbstractCasePanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-case-panel',
+    selector: 'ncc-test-case-panel',
     template: ''
 })
 class TestCasePanelComponent extends AbstractCasePanelComponent {
@@ -112,8 +112,8 @@ class TestCasePanelComponent extends AbstractCasePanelComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </nae-test-case-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-case-panel [selectedHeaders$]="selectedHeaders" [case_]="case_"> </ncc-test-case-panel>'
 })
 class TestWrapperComponent {
     selectedHeaders =  of([

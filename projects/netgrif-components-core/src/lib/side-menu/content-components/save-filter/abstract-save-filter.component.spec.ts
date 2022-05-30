@@ -71,7 +71,7 @@ describe('AbstractSaveFilterComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-save-filter',
+    selector: 'ncc-test-save-filter',
     template: ''
 })
 class TestSaveFilterComponent extends AbstractSaveFilterComponent {

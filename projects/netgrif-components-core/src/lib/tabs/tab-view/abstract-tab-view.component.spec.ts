@@ -67,7 +67,7 @@ describe('AbstractTabViewComponent', () => {
 
 
 @Component({
-    selector: 'nae-test-tabs',
+    selector: 'ncc-test-tabs',
     template: ''
 })
 class TestTabComponent extends AbstractTabViewComponent {
@@ -77,8 +77,8 @@ class TestTabComponent extends AbstractTabViewComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-tabs [initialTabs]="tabs"></nae-test-tabs>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-tabs [initialTabs]="tabs"></ncc-test-tabs>'
 })
 class TestWrapperComponent {
     tabs: Array<TabContent> = [
@@ -94,7 +94,7 @@ class TestWrapperComponent {
 }
 
 @Component({
-    selector: 'nae-test-div',
+    selector: 'ncc-test-div',
     template: '<div></div>'
 })
 class TestComponent {

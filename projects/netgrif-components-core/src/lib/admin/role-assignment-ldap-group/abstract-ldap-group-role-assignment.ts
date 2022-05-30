@@ -1,4 +1,4 @@
-import {AfterViewInit, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelectionList} from '@angular/material/list';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {ProcessList, ExtendedProcessRole, ProcessVersion} from '../role-assignment/services/ProcessList';
@@ -8,6 +8,10 @@ import {Subscription} from 'rxjs';
 import {RoleAssignmentLdapGroupService} from './services/role-assignment-ldap-group.service';
 import {LdapGroupListItem, LdapGroupListService} from '../../groups/services/ldap-group-list.service';
 
+@Component({
+    selector: 'ncc-abstract-ldap-group-role-assignment',
+    template: ''
+})
 export abstract class AbstractLdapGroupRoleAssignment implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('ldapGroupList') public ldapGroupList: MatSelectionList;

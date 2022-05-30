@@ -1,11 +1,15 @@
 import {DataField} from './abstract-data-field';
 import {FormControl} from '@angular/forms';
-import {Inject, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, Optional} from '@angular/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from './invalid-data-policy-token';
 
 /**
  * Holds the common functionality for all DataFieldComponents.
  */
+@Component({
+    selector: 'ncc-abstract-datafield',
+    template: ''
+})
 export abstract class AbstractDataFieldComponent implements OnInit, OnDestroy {
 
     /**

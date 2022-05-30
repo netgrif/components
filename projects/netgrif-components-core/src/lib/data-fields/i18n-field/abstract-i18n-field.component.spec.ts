@@ -4,7 +4,7 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {I18nField} from './models/i18n-field';
 import {MaterialModule} from '../../material/material.module';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -17,7 +17,7 @@ describe('AbstractI18nFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
@@ -44,7 +44,7 @@ describe('AbstractI18nFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-i18n',
+    selector: 'ncc-test-i18n',
     template: ''
 })
 class TestI18nComponent extends AbstractI18nFieldComponent {
@@ -54,8 +54,8 @@ class TestI18nComponent extends AbstractI18nFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-i18n [dataField]="field"></nae-test-i18n>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-i18n [dataField]="field"></ncc-test-i18n>'
 })
 class TestWrapperComponent {
     field = new I18nField('', '',

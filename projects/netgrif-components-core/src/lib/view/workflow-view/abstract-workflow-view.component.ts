@@ -1,8 +1,8 @@
-import {AfterViewInit, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {SideMenuService} from '../../side-menu/services/side-menu.service';
 import {WorkflowViewService} from './workflow-view.service';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
-import {ViewWithHeaders} from '../abstract/view-with-headers';
+import {AbstractViewWithHeadersComponent} from '../abstract/view-with-headers';
 import {HeaderType} from '../../header/models/header-type';
 import {Observable} from 'rxjs';
 import {Net} from '../../process/net';
@@ -10,7 +10,11 @@ import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ProcessService} from '../../process/process.service';
 
-export abstract class AbstractWorkflowViewComponent extends ViewWithHeaders implements AfterViewInit {
+@Component({
+    selector: 'ncc-abstract-workflow-view',
+    template: ''
+})
+export abstract class AbstractWorkflowViewComponent extends AbstractViewWithHeadersComponent implements AfterViewInit {
 
     @Input() public footerSize: number;
     @Input() showDeleteMenu = false;

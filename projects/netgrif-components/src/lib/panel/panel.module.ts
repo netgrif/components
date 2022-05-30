@@ -49,9 +49,6 @@ import {TaskListPaginationComponent} from './task-panel-list-pagination/task-lis
         PublicWorkflowPanelComponent,
         ImmediateFilterTextComponent,
         TaskListPaginationComponent
-    ],
-    entryComponents: [
-        ImmediateFilterTextContentComponent,
     ]
 })
 export class PanelComponentModule {

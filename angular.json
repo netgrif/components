@@ -15,7 +15,7 @@
             },
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
                         "tsConfig": "projects/netgrif-components-core/tsconfig.lib.json",
                         "project": "projects/netgrif-components-core/ng-package.json"
@@ -41,14 +41,11 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "tsConfig": [
-                            "projects/netgrif-components-core/tsconfig.lib.json",
-                            "projects/netgrif-components-core/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
+                        "lintFilePatterns": [
+                            "projects/netgrif-components-core/src/lib/**/*.ts",
+                            "projects/netgrif-components-core/src/lib/**/*.html"
                         ]
                     }
                 }
@@ -66,7 +63,7 @@
             },
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
                         "tsConfig": "projects/netgrif-components/tsconfig.lib.json",
                         "project": "projects/netgrif-components/ng-package.json"
@@ -92,14 +89,11 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "tsConfig": [
-                            "projects/netgrif-components/tsconfig.lib.json",
-                            "projects/netgrif-components/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
+                        "lintFilePatterns": [
+                            "projects/netgrif-components/**/*.ts",
+                            "projects/netgrif-components/**/*.html"
                         ]
                     }
                 }
@@ -124,7 +118,6 @@
                         "main": "projects/nae-example-app/src/main.ts",
                         "polyfills": "projects/nae-example-app/src/polyfills.ts",
                         "tsConfig": "projects/nae-example-app/tsconfig.app.json",
-                        "aot": true,
                         "assets": [
                             "projects/nae-example-app/src/favicon.ico",
                             "projects/nae-example-app/src/assets"
@@ -133,7 +126,13 @@
                             "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
                             "projects/nae-example-app/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
                     },
                     "configurations": {
                         "production": {
@@ -146,7 +145,6 @@
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
-                            "extractCss": true,
                             "namedChunks": false,
                             "extractLicenses": true,
                             "vendorChunk": false,
@@ -164,7 +162,8 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    "defaultConfiguration": ""
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
@@ -195,6 +194,9 @@
                             "projects/nae-example-app/src/assets"
                         ],
                         "styles": [
+                            "./node_modules/quill/dist/quill.snow.css",
+                            "./node_modules/quill/dist/quill.bubble.css",
+                            "./node_modules/quill/dist/quill.core.css",
                             "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
                             "projects/nae-example-app/src/styles.scss"
                         ],
@@ -202,15 +204,11 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "tsConfig": [
-                            "projects/nae-example-app/tsconfig.app.json",
-                            "projects/nae-example-app/tsconfig.spec.json",
-                            "projects/nae-example-app/e2e/tsconfig.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
+                        "lintFilePatterns": [
+                            "projects/nae-example-app/**/*.ts",
+                            "projects/nae-example-app/**/*.html"
                         ]
                     }
                 },
@@ -231,6 +229,7 @@
     },
     "defaultProject": "nae-example-app",
     "cli": {
-        "analytics": false
+        "analytics": false,
+        "defaultCollection": "@angular-eslint/schematics"
     }
 }

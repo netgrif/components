@@ -1,4 +1,4 @@
-import {ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -6,6 +6,10 @@ import {EnumerationField, EnumerationFieldValidation, EnumerationFieldValue} fro
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
 
+@Component({
+    selector: 'ncc-abstract-enumeration-autocomplete-field',
+    template: ''
+})
 export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implements OnInit, OnDestroy {
 
     @Input() enumerationField: EnumerationField;
@@ -35,7 +39,7 @@ export abstract class AbstractEnumerationAutocompleteSelectFieldComponent implem
      * @return  return matched options
      */
     private _filter(value: string): Array<EnumerationFieldValue> {
-        const filterValue = value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const filterValue = value?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
         return this.enumerationField.choices.filter(option => option.value.toLowerCase().normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '').indexOf(filterValue) === 0);

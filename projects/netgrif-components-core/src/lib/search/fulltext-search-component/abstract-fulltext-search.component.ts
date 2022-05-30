@@ -1,8 +1,13 @@
 import {FormControl} from '@angular/forms';
 import {debounceTime, filter, map} from 'rxjs/operators';
 import {SearchService} from '../search-service/search.service';
+import {Component} from '@angular/core';
 
-export class AbstractFulltextSearchComponent {
+@Component({
+    selector: 'ncc-abstract-fulltext-search',
+    template: ''
+})
+export abstract class AbstractFulltextSearchComponent {
 
     public fullTextFormControl: FormControl;
 

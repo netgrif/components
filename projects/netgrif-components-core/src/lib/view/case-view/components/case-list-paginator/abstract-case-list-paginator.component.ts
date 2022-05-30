@@ -1,4 +1,4 @@
-import {Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {tap} from 'rxjs/operators';
 import {Case} from '../../../../resources/interface/case';
@@ -8,6 +8,10 @@ import {NAE_TAB_DATA} from '../../../../tabs/tab-data-injection-token/tab-data-i
 import {InjectedTabData} from '../../../../tabs/interfaces';
 import {AbstractDefaultCaseList} from '../default-case-list/abstract-default-case-list';
 
+@Component({
+    selector: 'ncc-abstract-case-list-paginator',
+    template: ''
+})
 export abstract class AbstractCaseListPaginatorComponent extends AbstractDefaultCaseList {
 
     public length: number;

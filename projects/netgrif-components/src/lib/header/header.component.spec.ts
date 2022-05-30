@@ -37,7 +37,7 @@ describe('HeaderComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 MatIconModule,
-                RouterModule.forRoot([])
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},

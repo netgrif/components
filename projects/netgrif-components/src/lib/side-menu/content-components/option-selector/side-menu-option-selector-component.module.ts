@@ -16,11 +16,8 @@ import {MaterialModule, NAE_OPTION_SELECTOR_COMPONENT, TranslateLibModule} from 
     exports: [
         OptionSelectorComponent
     ],
-    entryComponents: [
-        OptionSelectorComponent
-    ],
     providers: [
-        {provide: NAE_OPTION_SELECTOR_COMPONENT, useValue: OptionSelectorComponent}
+        { provide: NAE_OPTION_SELECTOR_COMPONENT, useValue: OptionSelectorComponent }
     ]
 })
 export class SideMenuOptionSelectorComponentModule {

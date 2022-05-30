@@ -1,5 +1,9 @@
-import {Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
+@Component({
+    selector: 'ncc-abstract-header-mode',
+    template: ''
+})
 export abstract class AbstractHeaderModeComponent {
 
     @Input()

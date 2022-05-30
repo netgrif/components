@@ -4,7 +4,7 @@ import {
     RedirectService,
     SessionService,
     SpinnerOverlayService,
-    AbstractAuthenticationOverlay,
+    AbstractAuthenticationOverlayComponent,
     UserService
 } from '@netgrif/components-core';
 
@@ -13,7 +13,7 @@ import {
     templateUrl: './authentication-overlay.component.html',
     styleUrls: ['./authentication-overlay.component.scss']
 })
-export class AuthenticationOverlayComponent extends AbstractAuthenticationOverlay {
+export class AuthenticationOverlayComponent extends AbstractAuthenticationOverlayComponent {
 
     constructor(protected _session: SessionService, protected _spinnerOverlay: SpinnerOverlayService,
                 protected router: Router, protected redirectService: RedirectService, protected userService: UserService) {

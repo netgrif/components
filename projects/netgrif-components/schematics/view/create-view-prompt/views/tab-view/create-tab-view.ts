@@ -1,10 +1,7 @@
 import {chain, Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
-import {addEntryComponentToModule} from '@schematics/angular/utility/ast-utils';
 import {
-    commitChangesToFile,
     createFilesFromTemplates,
     createRelativePath,
-    getAppModule,
     getProjectInfo
 } from '../../../../_utility/utility-functions';
 import {EmbeddedView, TabViewParams} from '../../models/params-interfaces';
@@ -87,13 +84,6 @@ export function createTabView(
         new ImportToAdd('FlexModule', '@angular/flex-layout'),
         new ImportToAdd('TabsComponentModule', '@netgrif/components')]);
 
-    tabViews.entryComponentsImports.forEach(imp => {
-        // the tree/fileEntry gets updated with every iteration, so we need to get the current state every time
-        const appModule = getAppModule(tree, projectInfo.path);
-        const changes = addEntryComponentToModule(appModule.sourceFile, appModule.fileEntry.path, imp.className, imp.fileImportPath);
-        commitChangesToFile(tree, appModule.fileEntry, changes);
-    });
-
     if (addViewToService) {
         addViewToViewService(tree, view);
     }
@@ -105,7 +95,7 @@ function processTabViewContents(tree: Tree,
                                 hostViewPath: string,
                                 hostClassName: ViewClassInfo,
                                 createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
-                                viewCounterStartValue: number = 0
+                                viewCounterStartValue = 0
 ): TabViews {
 
     const result = newTabViews();
@@ -130,7 +120,7 @@ function processEmbeddedView(embeddedView: EmbeddedView,
                              viewNumber: number,
                              tree: Tree,
                              createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
-                             isDefaultTabbedTaskView: boolean = false
+                             isDefaultTabbedTaskView = false
 ): void {
     let tabTemplate: TabContentTemplate;
     if (embeddedView.component !== undefined) {
@@ -194,7 +184,7 @@ function processEmbeddedNewView(embeddedView: EmbeddedView,
                                 newViewPath: string,
                                 tree: Tree,
                                 createViewFunctionRef: (tree: Tree, args: CreateViewArguments, addRoute?: boolean) => Rule,
-                                isDefaultTabbedTaskView: boolean = false
+                                isDefaultTabbedTaskView = false
 ): TabContentTemplate {
     if (!embeddedView.view) {
         throw new SchematicsException('processEmbeddedNewView can\'t be called with EmbeddedView object' +

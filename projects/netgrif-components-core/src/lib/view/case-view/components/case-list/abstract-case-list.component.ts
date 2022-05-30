@@ -1,4 +1,5 @@
 import {
+    Component,
     Inject,
     Optional,
     ViewChild
@@ -11,6 +12,10 @@ import {InjectedTabData} from '../../../../tabs/interfaces';
 import {ActivatedRoute} from '@angular/router';
 import {AbstractDefaultCaseList} from '../default-case-list/abstract-default-case-list';
 
+@Component({
+    selector: 'ncc-abstract-case-list',
+    template: ''
+})
 export abstract class AbstractCaseListComponent extends AbstractDefaultCaseList {
 
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;

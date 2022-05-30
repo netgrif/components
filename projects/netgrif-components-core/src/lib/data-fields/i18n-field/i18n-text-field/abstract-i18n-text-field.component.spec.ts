@@ -4,7 +4,7 @@ import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {FormControl} from '@angular/forms';
 import {I18nField} from '../models/i18n-field';
 import {MaterialModule} from '../../../material/material.module';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -31,7 +31,7 @@ describe('AbstractI18nTextFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
@@ -63,7 +63,7 @@ describe('AbstractI18nTextFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-i18n-text',
+    selector: 'ncc-test-i18n-text',
     template: ''
 })
 class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
@@ -75,12 +75,12 @@ class TestI18nTextComponent extends AbstractI18nTextFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
+    selector: 'ncc-test-wrapper',
     template: `
-        <nae-test-i18n-text [showLargeLayout]="label"
+        <ncc-test-i18n-text [showLargeLayout]="label"
                             [textI18nField]="field"
                             [formControlRef]="formControl">
-        </nae-test-i18n-text>`
+        </ncc-test-i18n-text>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

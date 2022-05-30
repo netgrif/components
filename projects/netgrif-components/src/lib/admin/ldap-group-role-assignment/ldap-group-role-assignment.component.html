@@ -46,8 +46,8 @@
                                      [ngClass]="{'list-item-selected':ldapGroup.selected}"
                                      (click)="ldapGroup.toggle();autoSelectRoles()">
                         <h3 matLine>{{ldapGroup.cn}}</h3>
-                        <p *ngIf="ldapGroup.description != undefined" matLine>DN: {{ldapGroup.dn}}, Description: {{ldapGroup.description}}</p>
-                        <p *ngIf="ldapGroup.description == undefined" matLine>DN: {{ldapGroup.dn}}</p>
+                        <p *ngIf="ldapGroup.description !== undefined" matLine>DN: {{ldapGroup.dn}}, Description: {{ldapGroup.description}}</p>
+                        <p *ngIf="ldapGroup.description === undefined" matLine>DN: {{ldapGroup.dn}}</p>
                     </mat-list-option>
 
                     <div *ngIf="ldapGroup.loading$ | async" fxLayout="column" fxLayoutAlign="center center">

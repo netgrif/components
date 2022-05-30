@@ -80,15 +80,8 @@ import {CaseViewComponentModule} from '../view/case-view/case-view.module';
         DefaultTabViewComponent
     ],
     providers: [
-        {provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent},
-        {provide: GroupNavigationComponentResolverService, useClass: DefaultGroupNavigationComponentResolverService}
-    ],
-    entryComponents: [
-        GroupNavigationComponentResolverComponent,
-        DefaultSimpleTaskViewComponent,
-        DefaultTabbedTaskViewComponent,
-        DefaultTabbedCaseViewComponent,
-        DefaultTabViewComponent
+        { provide: NAE_GROUP_NAVIGATION_COMPONENT_RESOLVER_COMPONENT, useValue: GroupNavigationComponentResolverComponent },
+        { provide: GroupNavigationComponentResolverService, useClass: DefaultGroupNavigationComponentResolverService }
     ]
 })
 export class NavigationComponentModule {

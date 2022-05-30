@@ -1,4 +1,4 @@
-import {Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {DEFAULT_LANGUAGE_CODE, I18nField} from '../models/i18n-field';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
@@ -10,6 +10,10 @@ import {AbstractI18nErrorsComponent} from '../abstract-i18n-errors.component';
 import {LanguageIcons} from '../models/language-icons';
 import {I18nFieldTranslations} from '../models/i18n-field-value';
 
+@Component({
+    selector: 'ncc-abstract-i18n-text-field',
+    template: ''
+})
 export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsComponent implements OnInit, OnDestroy {
 
     @Input() textI18nField: I18nField;
@@ -124,6 +128,14 @@ export abstract class AbstractI18nTextFieldComponent extends AbstractI18nErrorsC
             this.cutProperty = `polygon(0 0, 0 100%, 100% 100%, 100% 0%, ${calculatedWidth} 0, ${calculatedWidth} 5%, 0.5em 5%, 0.5em 0)`;
         }
         return this.cutProperty;
+    }
+
+
+    public getTranslation(): string {
+        const locale = this._translateService.currentLang.split('-')[0];
+        return locale in this.textI18nField.value.translations
+            ? this.textI18nField.value.translations[locale]
+            : this.textI18nField.value.defaultValue;
     }
 
     public isPlainText(): boolean {

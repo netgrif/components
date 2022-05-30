@@ -1,4 +1,4 @@
-import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {AbstractHeaderService} from './abstract-header-service';
 import {CaseHeaderService} from './case-header/case-header.service';
 import {TaskHeaderService} from './task-header/task-header.service';
@@ -12,6 +12,10 @@ import {OverflowService} from './services/overflow.service';
 import {stopPropagation} from '../utility/stop-propagation';
 import {Subscription} from 'rxjs';
 
+@Component({
+    selector: 'ncc-abstract-header',
+    template: ''
+})
 export abstract class AbstractHeaderComponent implements OnInit, OnDestroy {
 
     protected readonly DEFAULT_COLUMN_COUNT = 6;

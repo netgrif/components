@@ -1,4 +1,4 @@
-import {Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TaskContentService} from '../services/task-content.service';
 import {DatafieldGridLayoutElement} from '../model/datafield-grid-layout-element';
 import {TaskContentElementType, TaskElementType} from '../model/task-content-element-type';
@@ -8,6 +8,10 @@ import {FieldTypeResource} from '../model/field-type-resource';
 /**
  * Resolves the correct {@link AbstractDataFieldComponent} implementation for the provided data field object.
  */
+@Component({
+    selector: 'ncc-abstract-field-component-resolver',
+    template: ''
+})
 export abstract class AbstractFieldComponentResolverComponent {
     @Input() gridElement: DatafieldGridLayoutElement;
 

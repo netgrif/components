@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MaterialModule} from '../../material/material.module';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -28,7 +28,7 @@ describe('AbstractButtonFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule
@@ -67,7 +67,7 @@ describe('AbstractButtonFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-button',
+    selector: 'ncc-test-button',
     template: ''
 })
 class TestButtonComponent extends AbstractButtonFieldComponent {
@@ -79,8 +79,8 @@ class TestButtonComponent extends AbstractButtonFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-button [dataField]="field"></nae-test-button>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-button [dataField]="field"></ncc-test-button>'
 })
 class TestWrapperComponent {
     field = new ButtonField('', '', {

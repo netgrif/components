@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {Case} from '../../../../resources/interface/case';
 import {HeaderColumn} from '../../../../header/models/header-column';
@@ -10,6 +10,10 @@ import {ActivatedRoute} from '@angular/router';
 import {filter, takeUntil} from 'rxjs/operators';
 import {TabbedVirtualScrollComponent} from '../../../../panel/abstract/tabbed-virtual-scroll.component';
 
+@Component({
+    selector: 'ncc-abstract-default-case-list',
+    template: ''
+})
 export abstract class AbstractDefaultCaseList extends TabbedVirtualScrollComponent implements OnDestroy {
 
     @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;

@@ -1,4 +1,4 @@
-import {EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {Filter} from '../../../filter/models/filter';
 import {CaseTreeService} from './case-tree.service';
@@ -7,6 +7,10 @@ import {TreePetriflowIdentifiers} from '../model/tree-petriflow-identifiers';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {CaseTreePath} from './model/case-tree-path';
 
+@Component({
+    selector: 'ncc-abstract-tree',
+    template: ''
+})
 export abstract class AbstractTreeComponent {
 
     /**

@@ -72,7 +72,7 @@ describe('AbstractCaseListPaginatorComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-case',
+    selector: 'ncc-test-case',
     template: ''
 })
 class TestCaseComponent extends AbstractCaseListPaginatorComponent {
