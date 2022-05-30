@@ -1,6 +1,6 @@
 import {TabTestComponent} from './opened-tab.spec';
 import {TabView} from './tab-view';
-import {TestBed} from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
@@ -15,6 +15,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SimpleFilter} from '../../filter/models/simple-filter';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 describe('TabView', () => {
     let viewService: ViewService;
@@ -24,7 +25,8 @@ describe('TabView', () => {
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule.withRoutes([]),
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                HttpClientTestingModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -183,5 +185,9 @@ describe('TabView', () => {
         });
         tabs.closeTabUniqueId('0');
         tabs.closeTabIndex(0);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

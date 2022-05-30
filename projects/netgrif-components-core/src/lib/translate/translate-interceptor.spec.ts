@@ -39,21 +39,22 @@ describe('TranslateInterceptor', () => {
     });
 
     describe('intercept HTTP request', () => {
-        it('should add Accept-language to headers', inject([HttpClient, HttpTestingController],
-            (http: HttpClient, mock: HttpTestingController) => {
+        it('should add Accept-language to headers', (done) => {
+            inject([HttpClient, HttpTestingController],
+                (http: HttpClient, mock: HttpTestingController) => {
 
-                http.get('/api').subscribe(response => {
-                    expect(response).toBeTruthy();
-                });
-                const request = mock.expectOne(req => req.headers.has('Accept-Language'));
+                    http.get('/api').subscribe(response => {
+                        expect(response).toBeTruthy();
+                        done();
+                    });
+                    const request = mock.expectOne(req => req.headers.has('Accept-Language'));
 
-                request.flush({});
-                mock.verify();
-            }));
+                    request.flush({});
+                })();
+        });
     });
 
-    afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
-        mock.verify();
+    afterEach(() => {
         TestBed.resetTestingModule();
-    }));
+    });
 });

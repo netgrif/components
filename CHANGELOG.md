@@ -8,6 +8,22 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Full
 Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github.com/netgrif/components/commits/v6.0.0)
 
+## [6.1.0](https://github.com/netgrif/components/releases/tag/v6.1.0) (2022-05-18)
+
+### Fixed
+
+- [NAE-1470] Unable to copy from html text area
+- [NAE-1526] Visible HTML text area with no value displays undefined
+- [NAE-1591] Unit tests failing on "An error was thrown in afterAll"
+- [NAE-1435] Number field value NaN causes 'Maximum call stack size exceeded'
+
+### Changed
+
+- [NAE-1061] Resource pagination with paginator footer
+- [NAE-1604] Remove case creation button if there are no nets where user can create an instance
+- [NAE-1363] Refactor panel featured values
+- [NAE-1462] Change BaseAllowedNetService to always use observables
+
 ## [6.0.4](https://github.com/netgrif/components/releases/tag/v6.0.4) (2022-04-12)
 
 ### Fixed

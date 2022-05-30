@@ -1,7 +1,7 @@
 import {CaseProcess} from './case-process';
 import {OperatorService} from '../../../operator-service/operator.service';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
-import {waitForAsync} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {ReplaySubject} from 'rxjs';
 import {Net} from '../../../../process/net';
 import {createMockNet} from '../../../../utility/tests/utility/create-mock-net';
@@ -29,6 +29,7 @@ describe('CaseProcess', () => {
     afterEach(() => {
         allowedNets$.complete();
         category.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {

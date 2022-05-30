@@ -1,85 +1,35 @@
-import {
-    AfterViewInit,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnDestroy,
-    Optional,
-    Output,
-    ViewChild
-} from '@angular/core';
-import {TaskPanelData} from './task-panel-data/task-panel-data';
-import {Observable, Subject} from 'rxjs';
-import {HeaderColumn} from '../../header/models/header-column';
+import {Inject, Input, Optional, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {LoggerService} from '../../logger/services/logger.service';
-import {TaskEventNotification} from '../../task-content/model/task-event-notification';
-import {TabbedVirtualScrollComponent} from '../abstract/tabbed-virtual-scroll.component';
 import {NAE_TAB_DATA} from '../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../tabs/interfaces';
-import {MatExpansionPanel} from '@angular/material/expansion';
 import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {AbstractDefaultTaskList} from './default-task-panel-list/abstract-default-task-list';
+import {Observable} from 'rxjs';
+import {TaskPanelData} from './task-panel-data/task-panel-data';
 
 @Component({
     selector: 'ncc-abstract-task-list',
     template: ''
 })
-export abstract class AbstractTaskListComponent extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
-
-    protected _allowMultiOpen = true;
-    protected taskPanelRefs: Map<string, MatExpansionPanel>;
-    @Input() tasks$: Observable<Array<TaskPanelData>>;
-    @Input() loading$: Observable<boolean>;
-    @Input() selectedHeaders$: Observable<Array<HeaderColumn>>;
-    @Input() responsiveBody = true;
-    @Input() forceLoadDataOnOpen = false;
-    @Input() textEllipsis = false;
+export abstract class AbstractTaskListComponent extends AbstractDefaultTaskList {
 
     @Input()
-    set allowMultiOpen(bool: boolean) {
-        this._allowMultiOpen = bool;
-        this._taskViewService.allowMultiOpen = bool;
+    set tasks$(tasks: Observable<Array<TaskPanelData>>) {
+        this._tasks$ = tasks;
     }
 
-    get allowMultiOpen() {
-        return this._allowMultiOpen;
+    get tasks$(): Observable<Array<TaskPanelData>> {
+        return this._tasks$;
     }
-
-    /**
-     * Emits notifications about task events
-     */
-    @Output() taskEvent: EventEmitter<TaskEventNotification>;
-
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
-
-    private redirectTaskId: string;
-    private unsubscribe$: Subject<void>;
 
     protected constructor(protected _taskViewService: TaskViewService,
                           protected _log: LoggerService,
                           @Optional() @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabData,
                           protected route?: ActivatedRoute) {
-        super(injectedTabData);
-        this.taskEvent = new EventEmitter<TaskEventNotification>();
-        this.taskPanelRefs = new Map<string, MatExpansionPanel>();
-        this.unsubscribe$ = new Subject<void>();
-    }
-
-    ngAfterViewInit() {
-        this.onRedirect();
-    }
-
-    ngOnDestroy(): void {
-        super.ngOnDestroy();
-        this.taskEvent.complete();
-        this.unsubscribe$.complete();
-    }
-
-    public trackBy(idx: number, item: TaskPanelData): any {
-        return item.task.stringId; // + (item.task.user ? item.task.user.email : '');
+        super(_taskViewService, _log, injectedTabData, route);
     }
 
     public loadNextPage(): void {
@@ -87,31 +37,5 @@ export abstract class AbstractTaskListComponent extends TabbedVirtualScrollCompo
             return;
         }
         this._taskViewService.nextPage(this.viewport.getRenderedRange(), this.viewport.getDataLength());
-    }
-
-    /**
-     * Emits an event into this component's @Output attribute
-     * @param event the event that will be emitted
-     */
-    public emitTaskEvent(event: TaskEventNotification) {
-        this.taskEvent.emit(event);
-    }
-
-    public addToPanelRefs(task: TaskPanelData, panelRef: MatExpansionPanel) {
-        this.taskPanelRefs.set(task.task.stringId, panelRef);
-    }
-
-    public onRedirect() {
-        this.route.queryParams.pipe(filter(pm => !!pm['taskId'])).subscribe(pm => {
-            this.redirectTaskId = pm['taskId'];
-            this.tasks$.pipe().subscribe(tasks => {
-                const task = tasks.find(t => t.task.stringId === this.redirectTaskId);
-                if (!!task && !task.initiallyExpanded) {
-                    this.taskPanelRefs.get(this.redirectTaskId).open();
-                    this.taskPanelRefs.get(this.redirectTaskId).expanded = true;
-                    this.unsubscribe$.next();
-                }
-            });
-        });
     }
 }

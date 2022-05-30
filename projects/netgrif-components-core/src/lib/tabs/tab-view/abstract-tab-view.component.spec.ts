@@ -17,6 +17,7 @@ import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authenti
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {TestViewService} from '../../utility/tests/test-view-service';
 import {MockUserResourceService} from '../../utility/tests/mocks/mock-user-resource.service';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 describe('AbstractTabViewComponent', () => {
     let component: TestTabComponent;
@@ -27,6 +28,7 @@ describe('AbstractTabViewComponent', () => {
             imports: [
                 MaterialModule,
                 NoopAnimationsModule,
+                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

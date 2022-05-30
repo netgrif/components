@@ -12,6 +12,7 @@ import {NAE_BASE_FILTER} from '../models/base-filter-injection-token';
 import {TestCaseBaseFilterProvider} from '../../utility/tests/test-factory-methods';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractAdvancedSearchComponent', () => {
     let component: TestAdvancedSearchComponent;
@@ -23,6 +24,7 @@ describe('AbstractAdvancedSearchComponent', () => {
                 MaterialModule,
                 TranslateLibModule,
                 NoopAnimationsModule,
+                HttpClientTestingModule
             ],
             providers: [
                 SearchService,

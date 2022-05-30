@@ -2,6 +2,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ViewIdService} from './view-id.service';
 import {Component, Injectable, Optional} from '@angular/core';
 import {NAE_VIEW_ID_SEGMENT} from '../models/view-id-injection-tokens';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 
 describe('ViewIdService', () => {
@@ -10,6 +12,7 @@ describe('ViewIdService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             declarations: [
                 TestRootComponent,
                 TestDirectComponent,

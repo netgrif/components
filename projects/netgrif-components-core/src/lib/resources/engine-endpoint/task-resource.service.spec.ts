@@ -22,189 +22,241 @@ describe('TaskResourceService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should count', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.count(new SimpleFilter('', FilterType.TASK, {})).subscribe(res => {
-                expect(res.count).toEqual(0);
-            });
+    it('should count', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.count(new SimpleFilter('', FilterType.TASK, {})).subscribe(res => {
+                        expect(res.count).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/count');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/count');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({count: 0, entity: ''});
-        })
+                    reqLog.flush({count: 0, entity: ''});
+                })();
+        }
     );
 
-    it('should getAllTask', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAllTask().subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getAllTask', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAllTask().subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should assignTask', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.assignTask('id').subscribe(res => {
-                expect(res.success).toEqual('Success');
-            });
+    it('should assignTask', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.assignTask('id').subscribe(res => {
+                        expect(res.success).toEqual('Success');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/assign/id');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/assign/id');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush({success: 'Success'});
-        })
+                    reqLog.flush({success: 'Success'});
+                })();
+        }
     );
 
-    it('should cancelTask', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.cancelTask('id').subscribe(res => {
-                expect(res.success).toEqual('Success');
-            });
+    it('should cancelTask', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.cancelTask('id').subscribe(res => {
+                        expect(res.success).toEqual('Success');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/cancel/id');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/cancel/id');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush({success: 'Success'});
-        })
+                    reqLog.flush({success: 'Success'});
+                })();
+        }
     );
 
-    it('should delegateTask', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.delegateTask('id', {userId: 5}).subscribe(res => {
-                expect(res.success).toEqual('Success');
-            });
+    it('should delegateTask', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.delegateTask('id', {userId: 5}).subscribe(res => {
+                        expect(res.success).toEqual('Success');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/delegate/id');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/delegate/id');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({success: 'Success'});
-        })
+                    reqLog.flush({success: 'Success'});
+                })();
+        }
     );
 
-    it('should finishTask', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.finishTask('id').subscribe(res => {
-                expect(res.success).toEqual('Success');
-            });
+    it('should finishTask', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.finishTask('id').subscribe(res => {
+                        expect(res.success).toEqual('Success');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/finish/id');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/finish/id');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush({success: 'Success'});
-        })
+                    reqLog.flush({success: 'Success'});
+                })();
+        }
     );
 
-    it('should searchTask', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.searchTask(new SimpleFilter('', FilterType.TASK, {})).subscribe(res => {
-                expect(res.content.length).toEqual(0);
-            });
+    it('should searchTask', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.searchTask(new SimpleFilter('', FilterType.TASK, {})).subscribe(res => {
+                        expect(res.content.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/search_es');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/search_es');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getTasks', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getTasks(SimpleFilter.emptyTaskFilter()).subscribe(res => {
-                expect(res.content.length).toEqual(0);
-            });
+    it('should getTasks', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getTasks(SimpleFilter.emptyTaskFilter()).subscribe(res => {
+                        expect(res.content.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/search');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/search');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getAllTasksByCases', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAllTasksByCases({}).subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getAllTasksByCases', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAllTasksByCases({}).subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/case');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/case');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getAllTasksByCase', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAllTasksByCase('id').subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getAllTasksByCase', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAllTasksByCase('id').subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/case/id');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/case/id');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getAllMyTasks', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAllMyTasks().subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getAllMyTasks', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAllMyTasks().subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/my');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/my');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getAllFinishedTask', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAllFinishedTask().subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getAllFinishedTask', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAllFinishedTask().subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/my/finished');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/my/finished');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getData', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getData('id').subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getData', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getData('id').subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush({
+                        success: 'Get data groups successful',
+                        outcome: {
+                            outcomes: [],
+                            net: {},
+                            aCase: {},
+                            task: {},
+                            data: []
+                        }
+                    });
+                })();
+        }
     );
 
-    it('should setData', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.setData('id', {}).subscribe(res => {
-                expect(res.outcome).toBeTruthy();
-            });
+    it('should setData', (done) => {
+            inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.setData('id', {}).subscribe(res => {
+                        expect(res.outcome).toBeTruthy();
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/task/id/data');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({outcome: {}});
-        })
+                    reqLog.flush({outcome: {}});
+                })();
+        }
     );
 
-    afterEach(() => {
+    afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
+        mock.verify();
         TestBed.resetTestingModule();
-    });
+    }));
 });

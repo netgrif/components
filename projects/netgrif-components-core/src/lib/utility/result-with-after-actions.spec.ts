@@ -1,4 +1,5 @@
 import {ResultWithAfterActions} from './result-with-after-actions';
+import {TestBed} from '@angular/core/testing';
 
 describe('ResultWithAfterActions', () => {
     it('should create an instance', () => {
@@ -22,5 +23,9 @@ describe('ResultWithAfterActions', () => {
         expect(a).toEqual(0);
         expect(result.executeAfterActions()).toBeUndefined();
         expect(a).toEqual(1);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

@@ -186,6 +186,10 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         return this._closeTab$.asObservable();
     }
 
+    public get pagination(): Pagination {
+        return this._pagination;
+    }
+
     protected get activeFilter(): Filter {
         return this._searchService.activeFilter;
     }
@@ -295,6 +299,19 @@ export class TaskViewService extends AbstractSortableViewComponent implements On
         if (renderedRange.end === totalLoaded) {
             this._requestedPage$.next(requestContext);
         }
+    }
+
+    public nextPagePagination(length: number, pageIndex: number, requestContext?: PageLoadRequestContext): void {
+        if (requestContext === undefined) {
+            requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
+            requestContext.pagination.size = length;
+            requestContext.pagination.number = pageIndex;
+        }
+
+        if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
+            return;
+        }
+        this._requestedPage$.next(requestContext);
     }
 
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {

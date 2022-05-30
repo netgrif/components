@@ -5,6 +5,7 @@ import {LogLevel} from './log-level';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TestLoggingConfigurationService} from '../../utility/tests/test-logging-config';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('LoggerService', () => {
     const testString = 'Testing string to log: ';
@@ -12,7 +13,7 @@ describe('LoggerService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule],
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             providers: [
                 {provide: ConfigurationService, useClass: TestLoggingConfigurationService}
             ]

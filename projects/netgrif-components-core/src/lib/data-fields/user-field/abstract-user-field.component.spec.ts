@@ -1,4 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {AngularResizedEventModule} from 'angular-resize-event';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -23,6 +25,7 @@ describe('AbstractUserFieldComponent', () => {
                 MaterialModule,
                 AngularResizeEventModule,
                 BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule

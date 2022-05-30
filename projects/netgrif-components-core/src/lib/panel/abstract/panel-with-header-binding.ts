@@ -44,10 +44,9 @@ export abstract class AbstractPanelWithHeaderBindingComponent implements OnInit,
         }
 
         this.featuredFieldsValues.splice(0, this.featuredFieldsValues.length);
-        this.firstFeaturedValue = this.getFeaturedValue(this._lastSelectedHeaders[0]).value;
-        for (let i = 1; i < this._lastSelectedHeaders.length; i++) {
-            this.featuredFieldsValues.push(this.getFeaturedValue(this._lastSelectedHeaders[i]));
-        }
+        this.featuredFieldsValues.push(
+            ...this._lastSelectedHeaders.map<FeaturedValue>(item => this.getFeaturedValue(item))
+        );
     }
 
     protected getFeaturedValue(selectedHeader: HeaderColumn): FeaturedValue {

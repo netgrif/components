@@ -2,6 +2,9 @@ import {Pagination} from '../../resources/interface/pagination';
 import {HttpParams} from '@angular/common/http';
 import {loadAllPages} from './load-all-pages';
 import {MockEndpoint} from '../tests/mocks/mock-endpoint';
+import {TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 
 describe('loadAllPages', () => {
@@ -12,6 +15,15 @@ describe('loadAllPages', () => {
         totalPages: undefined,
         number: 0
     };
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientTestingModule,
+                NoopAnimationsModule
+            ]
+        });
+    });
 
     const endpoint = new MockEndpoint();
 
@@ -106,5 +118,9 @@ describe('loadAllPages', () => {
             expect(result).toEqual([]);
             done();
         });
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

@@ -1,4 +1,5 @@
 import {TaskRefField} from './task-ref-field';
+import {TestBed} from '@angular/core/testing';
 
 describe('TaskRefField', () => {
     it('should create an instance', () => {
@@ -9,5 +10,9 @@ describe('TaskRefField', () => {
             editable: true,
             hidden: true
         })).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

@@ -13,6 +13,8 @@ import {PublicWorkflowPanelComponent} from './public-workflow-panel/public-workf
 import {SideMenuUserAssignComponentModule} from '../side-menu/content-components/user-assign/side-menu-user-assign-component.module';
 import {ImmediateFilterTextComponent} from './immediate/immediate-filter-text/immediate-filter-text.component';
 import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-text-content/immediate-filter-text-content.component';
+import { PanelItemComponent } from './panel-item/panel-item.component';
+import {TaskListPaginationComponent} from './task-panel-list-pagination/task-list-pagination.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +26,8 @@ import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-
         PublicWorkflowPanelComponent,
         ImmediateFilterTextComponent,
         ImmediateFilterTextContentComponent,
+        PanelItemComponent,
+        TaskListPaginationComponent
     ],
     imports: [
         CommonModule,
@@ -44,6 +48,7 @@ import {ImmediateFilterTextContentComponent} from './immediate/immediate-filter-
         TaskListComponent,
         PublicWorkflowPanelComponent,
         ImmediateFilterTextComponent,
+        TaskListPaginationComponent
     ]
 })
 export class PanelComponentModule {
