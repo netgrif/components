@@ -34,8 +34,7 @@ describe('I18nFieldComponent', () => {
                 TestWrapperComponent
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        })
-            .compileComponents();
+        }).compileComponents();
         fixture = TestBed.createComponent(TestWrapperComponent);
         component = fixture.debugElement.children[0].componentInstance;
         fixture.detectChanges();
@@ -55,11 +54,14 @@ describe('I18nFieldComponent', () => {
     template: '<nc-i18n-field [dataField]="field"></nc-i18n-field>'
 })
 class TestWrapperComponent {
-    field = new I18nField('', '', '',  {
-        required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
-    });
+    field = new I18nField('', '',
+        {defaultValue: 'Default translation', translations: {en: 'English translation'}},
+        {
+            required: true,
+            optional: true,
+            visible: true,
+            editable: true,
+            hidden: true
+        }
+    );
 }

@@ -58,11 +58,14 @@ class TestI18nComponent extends AbstractI18nFieldComponent {
     template: '<ncc-test-i18n [dataField]="field"></ncc-test-i18n>'
 })
 class TestWrapperComponent {
-    field = new I18nField('', '', '', {
-        required: true,
-        optional: true,
-        visible: true,
-        editable: true,
-        hidden: true
-    });
+    field = new I18nField('', '',
+        {defaultValue: 'Default translation', translations: {en: 'English translation'}},
+        {
+            required: true,
+            optional: true,
+            visible: true,
+            editable: true,
+            hidden: true
+        }
+    );
 }
