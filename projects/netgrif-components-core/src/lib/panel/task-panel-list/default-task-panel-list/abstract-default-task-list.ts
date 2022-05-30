@@ -1,9 +1,8 @@
-
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ActivatedRoute} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {TabbedVirtualScrollComponent} from '../../abstract/tabbed-virtual-scroll.component';
-import {AfterViewInit, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Inject, Input, OnDestroy, Optional, Output} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {TaskPanelData} from '../task-panel-data/task-panel-data';
 import {HeaderColumn} from '../../../header/models/header-column';
@@ -13,6 +12,11 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../tabs/interfaces';
 
+
+@Component({
+    selector: 'ncc-abstract-default-task-list',
+    template: ''
+})
 export abstract class AbstractDefaultTaskList extends TabbedVirtualScrollComponent implements AfterViewInit, OnDestroy {
 
     protected _tasks$: Observable<Array<TaskPanelData>>;

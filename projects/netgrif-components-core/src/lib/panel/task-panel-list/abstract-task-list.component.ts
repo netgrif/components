@@ -1,4 +1,4 @@
-import {Inject, Input, Optional, ViewChild} from '@angular/core';
+import {Component, Inject, Input, Optional, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {TaskViewService} from '../../view/task-view/service/task-view.service';
 import {LoggerService} from '../../logger/services/logger.service';

@@ -1,10 +1,15 @@
 import {TranslateService} from '@ngx-translate/core';
 import {FormControl} from '@angular/forms';
 import {I18nField, I18nFieldValidation} from './models/i18n-field';
-import {Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {WrappedBoolean} from '../data-field-template/models/wrapped-boolean';
 import {LanguageIconsService} from './language-icons.service';
 
+
+@Component({
+    selector: 'ncc-abstract-i18n-errors',
+    template: ''
+})
 export abstract class AbstractI18nErrorsComponent {
 
     @Input() showLargeLayout: WrappedBoolean;
