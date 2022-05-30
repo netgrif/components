@@ -25,6 +25,8 @@ Changelog: [https://github.com/netgrif/components/commits/v6.0.0](https://github
 - [NAE-1363] Refactor panel featured values
 - [NAE-1462] Change BaseAllowedNetService to always use observables
 - [NAE-1381] Public view task loading
+- [NAE-1609] Angular 13 upgrade
+- [NAE-1585] Security update to resolve vulnerabilities
 
 ### Added
 
