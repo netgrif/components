@@ -7,6 +7,7 @@ import {Operators} from '../../operator/operators';
 import {configureCategory} from '../../../../utility/tests/utility/configure-category';
 import {createMockDependencies} from '../../../../utility/tests/search-category-mock-dependencies';
 import {mockUserAutocompleteValue} from '../../../../utility/tests/mocks/mock-user-autocomplete-value';
+import {TestBed} from '@angular/core/testing';
 
 describe('CaseAuthor', () => {
     let category: CaseAuthor;
@@ -19,6 +20,7 @@ describe('CaseAuthor', () => {
 
     afterEach(() => {
         category.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {

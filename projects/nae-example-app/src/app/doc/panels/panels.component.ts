@@ -79,8 +79,8 @@ export class PanelsComponent implements OnInit {
             defaultCaseName: 'Nepoviem',
             createdDate: [2020, 5, 9, 10, 0],
             author: {
-                email: 'kovar@netgrif.com',
-                fullName: 'Jakub Kovář'
+                email: 'test@netgrif.com',
+                fullName: 'Test Testovič'
             },
             immediateData: []
         };

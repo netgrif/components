@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {I18nField} from '../models/i18n-field';

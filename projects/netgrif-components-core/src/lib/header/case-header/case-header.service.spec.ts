@@ -98,9 +98,10 @@ describe('CaseHeaderService', () => {
         expect(service.fieldsGroup.length).toEqual(2);
     });
 
-    it('call sort header changed', () => {
+    it('call sort header changed', (done) => {
         service.headerChange$.subscribe(res => {
             expect(res).toEqual({headerType: HeaderType.CASE, changeType: HeaderChangeType.SORT, description: undefined});
+            done();
         });
         service.sortHeaderChanged(0, '', 'asc');
     });

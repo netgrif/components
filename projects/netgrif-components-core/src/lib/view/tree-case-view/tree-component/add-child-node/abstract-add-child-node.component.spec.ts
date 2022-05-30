@@ -44,6 +44,10 @@ describe('AbstractAddChildNodeComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({

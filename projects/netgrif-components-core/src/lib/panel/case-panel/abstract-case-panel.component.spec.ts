@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule, CurrencyPipe} from '@angular/common';
 import {FlexModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, NO_ERRORS_SCHEMA, Optional} from '@angular/core';
 import {of} from 'rxjs';
@@ -43,7 +43,7 @@ describe('AbstractCasePanelComponent', () => {
                 MaterialModule,
                 CommonModule,
                 FlexModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],

@@ -11,4 +11,4 @@
     <mat-hint>{{numberField.description}}</mat-hint>
     <mat-error *ngIf="numberField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
-<mat-label class="currency-label" *ngIf="fieldType === 'number'">{{getCurrencySymbol()}}</mat-label>
+<mat-label class="currency-label" *ngIf="isNumberType()">{{getCurrencySymbol()}}</mat-label>

@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+    <ng-container *ngIf="tasks$ | async as tasks">
+
+        <div *ngIf="(loading$ | async) === false && tasks.length === 0" fxLayout="column" fxLayoutAlign="center center"
+             fxFlex>
+            <mat-icon color="accent">check_box</mat-icon>
+            <span class="font-size-20">{{ 'tasks.view.noTasksSatisfyingThisFilter' | translate }}</span>
+        </div>
+
+        <mat-accordion [multi]="allowMultiOpen" class="full-width" >
+
+                <nc-task-panel
+                    [textEllipsis]="textEllipsis"
+                    *ngFor="let task of tasks | slice: (pageIndex) * pageSize : (pageIndex + 1) * pageSize;
+                                    let i = index;
+                                    let first = first;
+                                    let last = last;
+                                    trackBy: trackBy"
+                    [taskPanelData]="task" [selectedHeaders$]="selectedHeaders$" [first]="first" [last]="last"
+                    [forceLoadDataOnOpen]="forceLoadDataOnOpen"
+                    [responsiveBody]="responsiveBody"
+                    (taskEvent)="emitTaskEvent($event)"
+                    (panelRefOutput)="addToPanelRefs(task, $event)"
+                    class="panel-expanded-spacing">
+                </nc-task-panel>
+
+                <div *ngIf="loading$ | async" fxLayout="column" fxLayoutAlign="center center">
+                    <mat-spinner color="primary" diameter="52"></mat-spinner>
+                </div>
+
+        </mat-accordion>
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" color="primary"
+                       [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)" showFirstLastButtons>
+        </mat-paginator>
+    </ng-container>
+</div>

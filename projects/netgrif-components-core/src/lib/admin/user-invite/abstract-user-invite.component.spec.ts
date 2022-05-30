@@ -11,6 +11,7 @@ import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {MaterialModule} from '../../material/material.module';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractUserInviteComponent', () => {
     let component: TestUserInviteComponent;
@@ -18,7 +19,7 @@ describe('AbstractUserInviteComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MaterialModule, TranslateLibModule],
+            imports: [HttpClientTestingModule, MaterialModule, NoopAnimationsModule, TranslateLibModule],
             declarations: [ TestUserInviteComponent ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -36,6 +37,10 @@ describe('AbstractUserInviteComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
 

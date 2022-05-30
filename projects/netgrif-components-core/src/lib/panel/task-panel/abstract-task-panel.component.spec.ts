@@ -169,7 +169,6 @@ describe('AbtsractTaskPanelComponent', () => {
         expect(component.canFinish()).toBeFalse();
     });
 
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });

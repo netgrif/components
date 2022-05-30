@@ -2,7 +2,6 @@ import {BooleanOperator} from '../boolean-operator';
 import {Subject} from 'rxjs';
 import {EditableElementaryPredicate} from './editable-elementary-predicate';
 import {IncrementingCounter} from '../../../utility/incrementing-counter';
-import {OnDestroy} from '@angular/core';
 import {Query} from '../query/query';
 import {EditablePredicate} from './editable-predicate';
 import {Predicate} from './predicate';
@@ -39,7 +38,12 @@ export class EditableClausePredicate extends EditablePredicate {
         return this._query;
     }
 
-    show() {
+    public destroy(): void {
+        super.destroy();
+        this._childUpdated$.complete();
+    }
+
+    public show() {
         super.show();
         this.showAll();
     }

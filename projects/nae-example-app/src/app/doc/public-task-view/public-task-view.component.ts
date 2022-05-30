@@ -24,6 +24,7 @@ import {
     publicBaseFilterFactory,
     publicFactoryResolver,
     AllowedNetsService,
+    PublicTaskLoadingService,
     AllowedNetsServiceFactory,
     NAE_VIEW_ID_SEGMENT,
     ViewIdService,
@@ -33,6 +34,8 @@ import {
 import {HeaderComponent} from '@netgrif/components';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import {combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 const localAllowedNetsServiceFactory = (factory: AllowedNetsServiceFactory, route: ActivatedRoute) => {
     const array = [];
@@ -73,6 +76,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
     styleUrls: ['./public-task-view.component.scss'],
     providers: [
         TaskViewService,
+        PublicTaskLoadingService,
         SearchService,
         ChangedFieldsService,
         {
@@ -96,7 +100,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         {
             provide: NAE_BASE_FILTER,
             useFactory: publicBaseFilterFactory,
-            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService, TranslateService]
+            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService, TranslateService, PublicTaskLoadingService]
         },
         {
             provide: AllowedNetsService,
@@ -112,8 +116,13 @@ export class PublicTaskViewComponent extends AbstractTaskViewComponent implement
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
-    constructor(taskViewService: TaskViewService) {
+    constructor(taskViewService: TaskViewService, publicTaskLoadingService: PublicTaskLoadingService) {
         super(taskViewService);
+        this.loading$ = combineLatest(taskViewService.loading$, publicTaskLoadingService.loading$).pipe(
+            map(sources => {
+                return sources[0] || sources[1];
+            })
+        );
     }
 
     ngAfterViewInit(): void {

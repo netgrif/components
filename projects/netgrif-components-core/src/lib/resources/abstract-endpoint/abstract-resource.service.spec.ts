@@ -5,13 +5,14 @@ import {ResourceProvider} from '../resource-provider.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractResourceService', () => {
     let service: TestAbstractResourceService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule, NoopAnimationsModule],
             providers: [
                 TestAbstractResourceService,
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -29,6 +30,10 @@ describe('AbstractResourceService', () => {
         expect(service.changeTypeTest({_embedded: {fields: []}}, 'fields')).toEqual([]);
         expect(service.changeTypeTest({_embedded: []}, 'fields')).toEqual([]);
         expect(service.changeTypeTest({}, undefined)).toEqual({});
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });
 

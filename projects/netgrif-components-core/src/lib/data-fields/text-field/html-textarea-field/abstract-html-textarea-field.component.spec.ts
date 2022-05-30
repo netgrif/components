@@ -2,7 +2,7 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AngularResizeEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
@@ -29,10 +29,10 @@ describe('AbstractHtmlTextareaFieldComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MaterialModule,
                 AngularResizeEventModule,
                 CovalentModule,
-                BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
                 QuillModule.forRoot()

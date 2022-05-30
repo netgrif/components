@@ -3,6 +3,7 @@ import {FilterExtractionService} from './filter-extraction.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('FilterExtractionService', () => {
     let service: FilterExtractionService;
@@ -10,7 +11,8 @@ describe('FilterExtractionService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                NoopAnimationsModule
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService}
@@ -23,5 +25,8 @@ describe('FilterExtractionService', () => {
         expect(service).toBeTruthy();
     });
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
     // TODO do a proper test with mocked backend case structure
 });

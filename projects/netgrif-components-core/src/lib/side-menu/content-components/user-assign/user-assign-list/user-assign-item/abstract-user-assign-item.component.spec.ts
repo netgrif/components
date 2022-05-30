@@ -5,6 +5,7 @@ import {AbstractUserAssignItemComponent} from './abstract-user-assign-item.compo
 import {UserValue} from '../../../../../data-fields/user-field/models/user-value';
 import {TranslateLibModule} from '../../../../../translate/translate-lib.module';
 import {MaterialModule} from '../../../../../material/material.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractUserAssignItemComponent', () => {
     let component: TestUserComponent;
@@ -15,7 +16,8 @@ describe('AbstractUserAssignItemComponent', () => {
             imports: [
                 MaterialModule,
                 TranslateLibModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                HttpClientTestingModule
             ],
             declarations: [
                 TestUserComponent,

@@ -15,6 +15,7 @@ import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-au
 import {AuthenticationService} from '../services/authentication/authentication.service';
 import {MockAuthenticationService} from '../../utility/tests/mocks/mock-authentication.service';
 import {UserService} from '../../user/services/user.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AbstractAuthenticationOverlay', () => {
     let component: TestAuthenticationOverlayComponent;
@@ -26,6 +27,7 @@ describe('AbstractAuthenticationOverlay', () => {
             imports: [
                 HttpClientTestingModule,
                 OverlayModule,
+                NoopAnimationsModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [

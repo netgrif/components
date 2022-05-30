@@ -1,6 +1,6 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {HotkeyModule, HotkeysService} from 'angular2-hotkeys';
 import {of, Subject} from 'rxjs';
@@ -36,7 +36,7 @@ describe('AbstractNewCaseComponent', () => {
             imports: [
                 CommonModule,
                 MaterialModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 SnackBarModule,
                 TranslateLibModule,

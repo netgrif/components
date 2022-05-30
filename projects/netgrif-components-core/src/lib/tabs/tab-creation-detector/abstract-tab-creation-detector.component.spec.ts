@@ -18,6 +18,7 @@ import {TabView} from '../classes/tab-view';
 import {TabContent} from '../interfaces';
 import {LoggerService} from '../../logger/services/logger.service';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractTabCreationDetectorComponent', () => {
     let component: TestTabComponent;
@@ -28,6 +29,7 @@ describe('AbstractTabCreationDetectorComponent', () => {
             imports: [
                 MaterialModule,
                 NoopAnimationsModule,
+                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -35,7 +37,7 @@ describe('AbstractTabCreationDetectorComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: ViewService, useClass: TestViewService}
+                {provide: ViewService, useClass: TestViewService},
             ],
             declarations: [
                 TestComponent,

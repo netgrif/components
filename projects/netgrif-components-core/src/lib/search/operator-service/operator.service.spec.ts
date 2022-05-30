@@ -2,13 +2,14 @@ import {TestBed} from '@angular/core/testing';
 import {OperatorService} from './operator.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Equals} from '../models/operator/equals';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('OperatorService', () => {
     let service: OperatorService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule]
+            imports: [NoopAnimationsModule, HttpClientTestingModule]
         });
         service = TestBed.inject(OperatorService);
     });

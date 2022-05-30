@@ -127,6 +127,10 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return this._cases$;
     }
 
+    public get pagination(): Pagination {
+        return this._pagination;
+    }
+
     protected get activeFilter(): Filter {
         return this._searchService.activeFilter;
     }
@@ -188,6 +192,19 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         }
     }
 
+    public nextPagePagination(length: number, pageIndex: number, requestContext?: PageLoadRequestContext) {
+        if (requestContext === undefined) {
+            requestContext = new PageLoadRequestContext(this.activeFilter, this._pagination);
+            requestContext.pagination.size = length;
+            requestContext.pagination.number = pageIndex;
+        }
+
+        if (this.isLoadingRelevantFilter(requestContext) || this._endOfData) {
+            return;
+        }
+        this._nextPage$.next(requestContext);
+    }
+
     private isLoadingRelevantFilter(requestContext?: PageLoadRequestContext): boolean {
         return requestContext === undefined || this._loading$.isActiveWithFilter(requestContext.filter);
     }
@@ -229,7 +246,7 @@ export class CaseViewService extends AbstractSortableViewComponent implements On
         return myCase;
     }
 
-    protected getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
+    public getNewCaseAllowedNets(): Observable<Array<PetriNetReferenceWithPermissions>> {
         if (this._newCaseConfiguration.useCachedProcesses) {
             return this._allowedNetsService.allowedNets$.pipe(
                 map(net => net.filter(n => this._permissionService.hasNetPermission(PermissionType.CREATE, n)))
