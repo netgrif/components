@@ -6,6 +6,23 @@ jobs:
     test:
         name: Test
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [ 12, 14, 16, 18 ]
+        steps:
+            -   uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
+            -   uses: actions/setup-node@v2
+                name: Full Test on Node.js version ${{ matrix.node-version }}
+                with:
+                    node-version: ${{ matrix.node-version }}
+            -   run: npm i
+            -   name: Project full Test
+                run: project:full-test
+    sonar:
+        name: Sonar
+        runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
                 with:
