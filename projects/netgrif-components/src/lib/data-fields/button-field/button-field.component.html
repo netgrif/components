@@ -6,7 +6,7 @@
 
 <ng-template #button let-showLargeLayout="showLargeLayout">
     <div>
-        <mat-label *ngIf="!showLargeLayout.value">
+        <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
             <br>

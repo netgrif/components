@@ -69,5 +69,91 @@
     .primary-background-color {
         background: mat-color($primary);
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    .netgrif-input {
+        .mat-form-field-infix {
+            padding: 8px 0 12px 0 !important;
+            font-weight: 400 !important;
+            font-size: 14px !important;
+            line-height: 20px !important;
+        }
+
+        .mat-form-field-label-wrapper {
+            top: -1.1em !important;
+            font-weight: 400 !important;
+            font-size: 14px !important;
+            line-height: 20px !important;
+        }
+
+        //.mat-form-field-subscript-wrapper {
+        //    margin-top: 0.2em !important;
+        //}
+
+        .mat-select-arrow-wrapper {
+            transform: translateY(0) !important;
+        }
+
+        .mat-error {
+            font-size: 14px !important;
+            line-height: 20px !important;
+        }
+
+        .mat-hint {
+            font-size: 14px !important;
+            line-height: 20px !important;
+        }
+
+        .ql-toolbar.ql-snow {
+            border-radius: 6px 6px 0 0;
+        }
+
+        .ql-container.ql-snow {
+            border-radius: 0 0 6px 6px;
+        }
+
+        .mat-radio-label {
+            min-height: 36px !important;
+        }
+
+        .netgrif-label {
+            font-weight: 500;
+        }
+
+        .mat-list-option {
+            height: auto !important;
+            min-height: 36px;
+            white-space: normal !important;
+            line-height: normal !important;
+            display: flex !important;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .mat-list-option:focus {
+            outline: none;
+        }
+
+        .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+            min-height: 36px;
+            padding: 0 8px !important;
+        }
+
+        .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        .mat-list-base {
+            padding-top: 4px !important;
+        }
+
+        .mat-form-field-subscript-wrapper {
+            margin-top: 0.45em;
+            top: calc(100% - 2.05em);
+        }
+
+    }
 }
 

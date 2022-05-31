@@ -1,7 +1,7 @@
 <mat-selection-list color="primary"
                     [formControl]="formControlRef"
                     [required]="multichoiceField.behavior.required">
-    <mat-label *ngIf="!showLargeLayout.value">{{multichoiceField.title}}
+    <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{multichoiceField.title}}
         <nc-required-label *ngIf="multichoiceField.behavior.required" [isIn]="true"></nc-required-label>
         <br></mat-label>
     <mat-list-option *ngFor="let option of multichoiceField.choices" [value]="option.key">
