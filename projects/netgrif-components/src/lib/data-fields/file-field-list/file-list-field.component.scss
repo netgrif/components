@@ -47,7 +47,7 @@
 }
 
 .input-margin {
-    margin-top: 7px !important;
+    margin-top: 2px !important;
 }
 
 .form-input {
@@ -57,12 +57,12 @@
     border: 1px solid rgba(0, 0, 0, 0.12);
     text-align: left;
     font-size: 14px;
-    line-height: 15.75px;
+    line-height: 20px;
     border-radius: 6px;
     min-width: 5px;
     padding: 10px 15px 10px 15px;
     box-sizing: border-box;
-    min-height: 54.81px;
+    min-height: 48px;
 }
 
 .form-input:hover {
@@ -76,4 +76,12 @@
 
 .no-cursor {
     cursor: default !important;
+}
+
+.form-input-disabled {
+
+}
+
+.form-input-disabled:hover {
+    border-color: rgba(0, 0, 0, 0.12) !important;
 }

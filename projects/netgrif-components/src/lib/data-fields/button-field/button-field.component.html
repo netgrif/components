@@ -5,7 +5,7 @@
 </nc-data-field-template>
 
 <ng-template #button let-showLargeLayout="showLargeLayout">
-    <div>
+    <div [ngClass]="{'flex-end': align === 'end', 'flex-start': align === 'start', 'flex-center': align === 'center', 'full-button-width': stretch === 'true'}">
         <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">
             {{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
@@ -18,7 +18,8 @@
                 'mat-flat-button': resolveComponentType() === 'flat',
                 'mat-icon-button': resolveComponentType() === 'icon',
                 'mat-fab': resolveComponentType() === 'fab',
-                'mat-mini-fab': resolveComponentType() === 'minifab'}"
+                'mat-mini-fab': resolveComponentType() === 'minifab',
+                'full-button-width': stretch === 'true'}"
                 color="primary"
                 [matTooltip]="dataField.description"
                 [disabled]="formControl.disabled || dataField.waitingForResponse"

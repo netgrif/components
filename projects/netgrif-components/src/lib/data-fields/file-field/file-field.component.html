@@ -12,7 +12,7 @@
                 <nc-required-label *ngIf="dataField.behavior.required" [isIn]="!dataField.disabled"></nc-required-label>
                 <br>
             </mat-label>
-            <div class="form-input button-icon-input full-width input-margin" fxLayout="row" fxLayoutAlign="start center">
+            <div class="form-input button-icon-input full-width input-margin" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'form-input-disabled': formControl.disabled}">
                 <button mat-icon-button color="accent" (click)="chooseFile()"
                         [matTooltip]="'dataField.file.clickToUpload' | translate" *ngIf="!formControl.disabled"
                         [class.do-not-click]="state.uploading">
