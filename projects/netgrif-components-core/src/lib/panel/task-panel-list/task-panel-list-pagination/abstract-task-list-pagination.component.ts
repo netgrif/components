@@ -1,4 +1,4 @@
-import {Inject, Input, Optional} from '@angular/core';
+import {Component, Inject, Input, Optional} from '@angular/core';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
@@ -9,6 +9,10 @@ import {LoggerService} from '../../../logger/services/logger.service';
 import {NAE_TAB_DATA} from '../../../tabs/tab-data-injection-token/tab-data-injection-token';
 import {InjectedTabData} from '../../../tabs/interfaces';
 
+@Component({
+    selector: 'ncc-abstract-task-list-pagination-component',
+    template: ''
+})
 export abstract class AbstractTaskListPaginationComponent extends AbstractDefaultTaskList {
 
     public length: number;

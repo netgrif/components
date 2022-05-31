@@ -23,7 +23,7 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule,
-                RouterModule.forRoot([])
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
             ],
             providers: [
                 {provide: ConfigurationService, useClass: TestConfigurationService},
@@ -52,7 +52,7 @@ describe('AbstractGroupNavigationComponentResolverComponent', () => {
 
 
 @Component({
-    selector: 'nae-test-group-navigation',
+    selector: 'ncc-test-group-navigation',
     template: ''
 })
 class TestAbstractGroupNavigationComponentResolverComponent extends AbstractGroupNavigationComponentResolverComponent {

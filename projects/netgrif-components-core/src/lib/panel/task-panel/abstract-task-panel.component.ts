@@ -1,4 +1,15 @@
-import {AfterViewInit, EventEmitter, Input, OnDestroy, OnInit, Output, Type} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    EventEmitter,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output,
+    Type
+} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TaskContentService} from '../../task-content/services/task-content.service';
@@ -23,19 +34,22 @@ import {AssignPolicyService} from '../../task/services/assign-policy.service';
 import {SubjectTaskOperations} from '../../task/models/subject-task-operations';
 import {CallChainService} from '../../utility/call-chain/call-chain.service';
 import {TaskEventNotification} from '../../task-content/model/task-event-notification';
-import {DisableButtonFuntions} from './models/disable-functions';
+import {DisableButtonFuntions, NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS} from './models/disable-functions';
 import {Task} from '../../resources/interface/task';
 import {ChangedFields} from '../../data-fields/models/changed-fields';
-import {PanelWithImmediateData} from '../abstract/panel-with-immediate-data';
+import {AbstractPanelWithImmediateDataComponent} from '../abstract/panel-with-immediate-data';
 import {TranslateService} from '@ngx-translate/core';
 import {FeaturedValue} from '../abstract/featured-value';
 import {CurrencyPipe} from '@angular/common';
-import {ActivatedRoute, Router} from '@angular/router';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {ChangedFieldsService} from '../../changed-fields/services/changed-fields.service';
 import {ChangedFieldsMap} from '../../event/services/interfaces/changed-fields-map';
 
-export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData implements OnInit, AfterViewInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-legal-notice',
+    template: ''
+})
+export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmediateDataComponent implements OnInit, AfterViewInit, OnDestroy {
 
     /**
      * @ignore
@@ -67,10 +81,6 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
     protected _sub: Subscription;
     protected _subTaskEvent: Subscription;
     protected _subTaskData: Subscription;
-    protected _subOperationOpen: Subscription;
-    protected _subOperationClose: Subscription;
-    protected _subOperationReload: Subscription;
-    protected _subOperationForceReload: Subscription;
     protected _subPanelUpdate: Subscription;
     protected _taskDisableButtonFunctions: DisableButtonFuntions;
 
@@ -88,7 +98,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                           protected _assignPolicyService: AssignPolicyService,
                           protected _callChain: CallChainService,
                           protected _taskOperations: SubjectTaskOperations,
-                          protected _disableFunctions: DisableButtonFuntions,
+                          @Optional() @Inject(NAE_TASK_PANEL_DISABLE_BUTTON_FUNCTIONS) protected _disableFunctions: DisableButtonFuntions,
                           protected _translate: TranslateService,
                           protected _currencyPipe: CurrencyPipe,
                           protected _changedFieldsService: ChangedFieldsService,
@@ -112,16 +122,16 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
                this.taskPanelData.changedFields.next(fields);
             });
         });
-        this._subOperationOpen = _taskOperations.open$.subscribe(() => {
+        _taskOperations.open$.subscribe(() => {
             this.expand();
         });
-        this._subOperationClose = _taskOperations.close$.subscribe(() => {
+        _taskOperations.close$.subscribe(() => {
             this.collapse();
         });
-        this._subOperationReload = _taskOperations.reload$.subscribe(() => {
+        _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();
         });
-        this._subOperationForceReload = _taskOperations.forceReload$.subscribe(() => {
+        _taskOperations.forceReload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage(true);
         });
         this._taskDisableButtonFunctions = {
@@ -358,10 +368,7 @@ export abstract class AbstractTaskPanelComponent extends PanelWithImmediateData 
         this._sub.unsubscribe();
         this._subTaskEvent.unsubscribe();
         this._subTaskData.unsubscribe();
-        this._subOperationOpen.unsubscribe();
-        this._subOperationClose.unsubscribe();
-        this._subOperationReload.unsubscribe();
-        this._subOperationForceReload.unsubscribe();
+        this._taskOperations.destroy();
         this._subPanelUpdate.unsubscribe();
         this.taskEvent.complete();
     }

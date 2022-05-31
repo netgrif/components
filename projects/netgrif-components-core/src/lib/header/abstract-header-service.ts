@@ -1,7 +1,7 @@
 import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {FieldsGroup} from './models/fields-group';
 import {HeaderState, HeaderStateInterface} from './header-state';
-import {OnDestroy, Optional} from '@angular/core';
+import {Injectable, OnDestroy, Optional} from '@angular/core';
 import {SortChangeDescription} from './models/user-changes/sort-change-description';
 import {SearchChangeDescription} from './models/user-changes/search-change-description';
 import {HeaderChange} from './models/user-changes/header-change';
@@ -17,6 +17,7 @@ import {HeaderChangeType} from './models/user-changes/header-change-type';
 import {ViewIdService} from '../user/services/view-id.service';
 import {Net} from '../process/net';
 
+@Injectable()
 export abstract class AbstractHeaderService implements OnDestroy {
 
     public static readonly DEFAULT_HEADER_COUNT = 5;

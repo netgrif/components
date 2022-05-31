@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
-    AbstractTaskView,
+    AbstractTaskViewComponent,
     SearchService,
     SimpleFilter,
     TaskEventNotification,
@@ -76,7 +76,7 @@ const disableButtonsFactory = () => {
             useValue: {enableAsyncRenderingForNewFields: false, enableAsyncRenderingOnTaskExpand: false}}
     ]
 })
-export class TaskViewComponent extends AbstractTaskView implements AfterViewInit {
+export class TaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 

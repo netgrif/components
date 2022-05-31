@@ -44,7 +44,7 @@ describe('AbstractPanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-panel',
+    selector: 'ncc-test-panel',
     template: ''
 })
 class TestPanelComponent extends AbstractPanelComponent {

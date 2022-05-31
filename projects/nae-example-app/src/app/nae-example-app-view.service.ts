@@ -24,6 +24,7 @@ import {ProfileComponent} from './doc/profile/profile.component';
 import {NavigationExampleComponent} from './doc/navigation-example/navigation-example.component';
 import {ButtonsNavComponent} from './doc/navigation-example/buttons-nav/buttons-nav.component';
 import {RolesAssignComponent} from './doc/roles-assign/roles-assign.component';
+import {LdapGroupRolesAssignComponent} from './doc/ldap-group-roles-assign/ldap-group-roles-assign.component';
 import {TreeViewExampleComponent} from './doc/tree-view-example/tree-view-example.component';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ResetPasswordFormComponent} from './doc/forms/reset-password-form/reset-password-form.component';
@@ -43,7 +44,8 @@ export class NaeExampleAppViewService extends ViewService {
     constructor(configurationService: ConfigurationService, router: Router, loggerService: LoggerService) {
         // This class is managed by schematics. Do not modify it by hand.
         // If you want to add views to the application run the 'create-view' schematic.
-        super([{id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
+        super([{id: 'TitleConfigComponent', class: TitleConfigComponent},
+			{id: 'WrapperEmptyViewComponent', class: WrapperEmptyViewComponent},
 			{id: 'ActiveGroupComponent', class: ActiveGroupComponent},
             {id: 'ExampleRedirectComponent', class: ExampleRedirectComponent},
             {id: 'GroupViewComponent', class: GroupViewComponent},
@@ -72,6 +74,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'LoginFormComponent', class: LoginFormComponent},
             {id: 'AuthenticationComponent', class: AuthenticationComponent},
             {id: 'RolesAssignComponent', class: RolesAssignComponent},
+            {id: 'LdapGroupRolesAssignComponent', class: LdapGroupRolesAssignComponent},
             {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
             {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: PublicResolverComponent},

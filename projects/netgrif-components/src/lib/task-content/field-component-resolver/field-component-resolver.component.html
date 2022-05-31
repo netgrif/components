@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input" [ngClass]="{'min-row-height': isField()}" [ngSwitch]="getElementType()">
+<div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input" [ngClass]="{'min-row-height': isField() && !isCustomHeight()}" [ngSwitch]="getElementType()">
     <nc-boolean-field *ngSwitchCase="fieldTypeEnum.BOOLEAN" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-boolean-field>
 
@@ -41,7 +41,7 @@
     <nc-filter-field *ngSwitchCase="fieldTypeEnum.FILTER" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">
     </nc-filter-field>
 
-    <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex="">
+    <nc-i18n-field *ngSwitchCase="fieldTypeEnum.I18N" [dataField]="getDataField()" [taskOffset]="getFieldOffset()" fxFlex>
     </nc-i18n-field>
 
     <div *ngSwitchCase="taskElementEnum.DATA_GROUP_TITLE" fxFlex fxLayout="row" fxLayoutAlign="center center">

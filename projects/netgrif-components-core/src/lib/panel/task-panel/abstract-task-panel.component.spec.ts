@@ -175,7 +175,7 @@ describe('AbtsractTaskPanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-task-panel',
+    selector: 'ncc-test-task-panel',
     template: '<mat-expansion-panel #matExpansionPanel>' +
         '</mat-expansion-panel>'
 })
@@ -218,8 +218,8 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></nae-test-task-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></ncc-test-task-panel>'
 })
 class TestWrapperComponent {
     taskPanel: TaskPanelData = {

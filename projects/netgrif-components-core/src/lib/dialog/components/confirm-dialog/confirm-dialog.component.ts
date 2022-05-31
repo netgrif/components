@@ -10,7 +10,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
  * based on a material design that injected data and inherits from an [AbstractDialog]{@link AbstractDialog}.
  */
 @Component({
-    selector: 'nae-question-dialog',
+    selector: 'ncc-question-dialog',
     templateUrl: './confirm-dialog.component.html',
     styleUrls: ['./confirm-dialog.component.scss']
 })

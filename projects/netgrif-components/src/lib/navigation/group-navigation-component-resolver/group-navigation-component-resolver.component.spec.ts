@@ -13,7 +13,7 @@ describe('GroupNavigationComponentResolverComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterModule.forRoot([]),
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
             ]
         })
             .compileComponents();

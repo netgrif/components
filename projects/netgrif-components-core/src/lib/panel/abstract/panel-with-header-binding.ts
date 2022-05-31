@@ -1,10 +1,13 @@
-import {OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HeaderColumn, HeaderColumnType} from '../../header/models/header-column';
 import {FeaturedValue} from './featured-value';
 
-
-export abstract class PanelWithHeaderBinding implements OnInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-panel-with-header-binding',
+    template: ''
+})
+export abstract class AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
     public selectedHeaders$: Observable<Array<HeaderColumn>>;
     public firstFeaturedValue: string;
     public featuredFieldsValues: Array<FeaturedValue> = [];

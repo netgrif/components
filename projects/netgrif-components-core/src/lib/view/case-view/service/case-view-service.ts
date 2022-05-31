@@ -27,7 +27,7 @@ import {ProcessService} from '../../../process/process.service';
 import {PetriNetReferenceWithPermissions} from '../../../process/petri-net-reference-with-permissions';
 import {SearchIndexResolverService} from '../../../search/search-keyword-resolver-service/search-index-resolver.service';
 import {AllowedNetsService} from '../../../allowed-nets/services/allowed-nets.service';
-import {SortableView} from '../../abstract/sortable-view';
+import {AbstractSortableViewComponent} from '../../abstract/sortable-view';
 import {NewCaseCreationConfigurationData} from '../../../side-menu/content-components/new-case/model/new-case-injection-data';
 import {PermissionService} from '../../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../../resources/interface/message-resource';
@@ -36,7 +36,7 @@ import {PaginationParams} from '../../../utility/pagination/pagination-params';
 import {createSortParam, PaginationSort} from '../../../utility/pagination/pagination-sort';
 
 @Injectable()
-export class CaseViewService extends SortableView implements OnDestroy {
+export class CaseViewService extends AbstractSortableViewComponent implements OnDestroy {
 
     readonly DEFAULT_NEW_CASE_CONFIGURATION: NewCaseConfiguration = {
         useCachedProcesses: true

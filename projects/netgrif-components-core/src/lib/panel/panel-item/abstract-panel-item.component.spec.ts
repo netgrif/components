@@ -42,7 +42,7 @@ describe('AbstractPanelItemComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-immediate-filter-text',
+    selector: 'ncc-test-immediate-filter-text',
     template: ''
 })
 class TestPanelItemComponent extends AbstractPanelItemComponent {

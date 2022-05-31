@@ -15,7 +15,7 @@ import {
     SavedFilterMetadata,
     SearchService,
     SimpleFilter,
-    TabbedCaseView,
+    AbstractTabbedCaseViewComponent,
     ViewIdService
 } from '@netgrif/components-core';
 import {HeaderComponent} from '@netgrif/components';
@@ -73,7 +73,7 @@ const baseFilterFactory = (injectedData: ExampleInjectedData) => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ]
 })
-export class DemoTitleConfigContent1CaseViewComponent extends TabbedCaseView implements AfterViewInit {
+export class DemoTitleConfigContent1CaseViewComponent extends AbstractTabbedCaseViewComponent implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 

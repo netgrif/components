@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -30,7 +30,7 @@ describe('AbstractDatetimeFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 NgxMatDatetimePickerModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
@@ -67,7 +67,7 @@ describe('AbstractDatetimeFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-date-time',
+    selector: 'ncc-test-date-time',
     template: ''
 })
 class TestDateTimeFieldComponent extends AbstractDateTimeFieldComponent {
@@ -78,8 +78,8 @@ class TestDateTimeFieldComponent extends AbstractDateTimeFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-date-time [dataField]="field" [changedFields]="changedFields"></nae-test-date-time>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-date-time [dataField]="field" [changedFields]="changedFields"></ncc-test-date-time>'
 })
 class TestWrapperComponent {
     field = new DateTimeField('', '', moment('2020-03-09'), {

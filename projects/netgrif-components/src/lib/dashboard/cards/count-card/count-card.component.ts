@@ -1,5 +1,5 @@
 import {Component, Injector} from '@angular/core';
-import {AbstractCountCard} from '@netgrif/components-core';
+import {AbstractCountCardComponent} from '@netgrif/components-core';
 
 
 @Component({
@@ -7,7 +7,7 @@ import {AbstractCountCard} from '@netgrif/components-core';
     templateUrl: './count-card.component.html',
     styleUrls: ['./count-card.component.scss']
 })
-export class CountCardComponent extends AbstractCountCard {
+export class CountCardComponent extends AbstractCountCardComponent {
 
     constructor(protected _injector: Injector) {
         super(_injector);

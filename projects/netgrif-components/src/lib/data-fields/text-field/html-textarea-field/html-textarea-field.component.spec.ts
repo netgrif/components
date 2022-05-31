@@ -20,7 +20,7 @@ import {
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormControl} from '@angular/forms';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('HtmlTextareaFieldComponent', () => {
@@ -31,7 +31,7 @@ describe('HtmlTextareaFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 CovalentModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,

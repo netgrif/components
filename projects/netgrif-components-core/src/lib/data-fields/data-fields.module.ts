@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from '../material/material.module';
 import {HttpClientModule} from '@angular/common/http';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {CovalentModule} from '../covalent/covalent.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CustomDateAdapter} from './date-field/models/custom-date-adapter';
@@ -18,7 +18,7 @@ import {DateAdapter} from '@angular/material/core';
         FlexLayoutModule,
         MaterialModule,
         CovalentModule,
-        AngularResizedEventModule,
+        AngularResizeEventModule,
         HttpClientModule,
         ReactiveFormsModule,
         NgxMatDatetimePickerModule,

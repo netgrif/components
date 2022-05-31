@@ -1,14 +1,17 @@
 import {Observable, ReplaySubject} from 'rxjs';
 import {HeaderColumn} from '../../header/models/header-column';
 import {AbstractHeaderComponent} from '../../header/abstract-header.component';
-import {SortableView} from './sortable-view';
-import {OnDestroy} from '@angular/core';
+import {AbstractSortableViewComponent} from './sortable-view';
+import {Component, OnDestroy} from '@angular/core';
 
-
-export abstract class ViewWithHeaders implements OnDestroy {
+@Component({
+    selector: 'ncc-abstract-view-with-headers',
+    template: ''
+})
+export abstract class AbstractViewWithHeadersComponent implements OnDestroy {
     protected _selectedHeaders$: ReplaySubject<Array<HeaderColumn>>;
 
-    protected constructor(private _sortableView?: SortableView) {
+    protected constructor(private _sortableView?: AbstractSortableViewComponent) {
         this._selectedHeaders$ = new ReplaySubject<Array<HeaderColumn>>(1);
     }
 
