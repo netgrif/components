@@ -186,6 +186,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Net} from &#x27;../../../process/net&#x27;;
 import NetRole from &#x27;../../../process/netRole&#x27;;
 import {ImmediateData} from &#x27;../../../resources/interface/immediate-data&#x27;;
+import {Permissions} from &#x27;../../../process/permissions&#x27;;
 
 /**
  * A mock transition representation used by the {@link createMockNet} function to populate the mock net with mock transition objects
@@ -206,7 +207,8 @@ export function createMockNet(stringId &#x3D; &#x27;stringId&#x27;,
                               title &#x3D; &#x27;title&#x27;,
                               roles: Array&lt;NetRole&gt; &#x3D; [],
                               transitions: Array&lt;MockTransition&gt; &#x3D; [],
-                              immediateData: Array&lt;ImmediateData&gt; &#x3D; []): Net {
+                              immediateData: Array&lt;ImmediateData&gt; &#x3D; [],
+                              permissions: Permissions &#x3D; {}): Net {
     const net &#x3D; new Net({
         stringId,
         title,
@@ -227,6 +229,7 @@ export function createMockNet(stringId &#x3D; &#x27;stringId&#x27;,
         petriNetId: &#x27;&#x27;,
         immediateData: []
     }));
+    net.permissions &#x3D; permissions;
     return net;
 }
 </code></pre>

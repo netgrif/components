@@ -142,15 +142,35 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Protected</span>
+                                <a href="#calculateValidity" >calculateValidity</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#fromObject" >fromObject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveFormControlValidators" >resolveFormControlValidators</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#resolveValidations" >resolveValidations</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#toObject" >toObject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#valueEquality" >valueEquality</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#_determineFormControlValidity" >_determineFormControlValidity</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#applyChange" >applyChange</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#calculateValidity" >calculateValidity</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -185,16 +205,8 @@
                                 <a href="#resolveAppearance" >resolveAppearance</a>
                             </li>
                             <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#resolveFormControlValidators" >resolveFormControlValidators</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#resolvePrevValue" >resolvePrevValue</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#resolveValidations" >resolveValidations</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -217,10 +229,6 @@
                                 <a href="#valueChanges" >valueChanges</a>
                             </li>
                             <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#valueEquality" >valueEquality</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#valueWithoutChange" >valueWithoutChange</a>
                             </li>
@@ -232,6 +240,20 @@
 
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#updated" >updated</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
         </tbody>
     </table>
 </section>
@@ -247,7 +269,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/models/i18n-field.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/models/i18n-field.ts:79</a></div>
                             </td>
                         </tr>
 
@@ -764,6 +786,424 @@ without affecting the base configuration.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="calculateValidity"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>calculateValidity</b></span>
+                        <a href="#calculateValidity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>calculateValidity(forValidRequired: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:109</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>forValidRequired</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>formControl</td>
+                                    <td>
+                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fromObject"></a>
+                    <span class="name">
+                        <span class="modifier">Static</span>
+                        <span ><b>fromObject</b></span>
+                        <a href="#fromObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>fromObject(templateValue: <a href="../interfaces/I18nFieldTranslations.html" target="_self">I18nFieldTranslations</a>, templateKey: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/models/i18n-field.ts:66</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>templateValue</td>
+                                    <td>
+                                                <code><a href="../interfaces/I18nFieldTranslations.html" target="_self" >I18nFieldTranslations</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>templateKey</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/I18nFieldValue.html" target="_self" >I18nFieldValue</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveFormControlValidators"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveFormControlValidators</b></span>
+                        <a href="#resolveFormControlValidators"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveFormControlValidators()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:126</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveValidations"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>resolveValidations</b></span>
+                        <a href="#resolveValidations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveValidations()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:145</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toObject"></a>
+                    <span class="name">
+                        <span class="modifier">Static</span>
+                        <span ><b>toObject</b></span>
+                        <a href="#toObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toObject(templateValue: <a href="../interfaces/I18nFieldValue.html" target="_self">I18nFieldValue</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/models/i18n-field.ts:55</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>templateValue</td>
+                                    <td>
+                                                <code><a href="../interfaces/I18nFieldValue.html" target="_self" >I18nFieldValue</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/I18nFieldTranslations.html" target="_self" >I18nFieldTranslations</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="valueEquality"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>valueEquality</b></span>
+                        <a href="#valueEquality"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>valueEquality(a: <a href="../interfaces/I18nFieldValue.html" target="_self">I18nFieldValue</a>, b: <a href="../interfaces/I18nFieldValue.html" target="_self">I18nFieldValue</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:89</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>a</td>
+                                    <td>
+                                                <code><a href="../interfaces/I18nFieldValue.html" target="_self" >I18nFieldValue</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>b</td>
+                                    <td>
+                                                <code><a href="../interfaces/I18nFieldValue.html" target="_self" >I18nFieldValue</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="_determineFormControlValidity"></a>
                     <span class="name">
                         <span class="modifier">Protected</span>
@@ -921,94 +1361,6 @@ without affecting the base configuration.</p>
                     </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="calculateValidity"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>calculateValidity</b></span>
-                        <a href="#calculateValidity"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>calculateValidity(forValidRequired: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, formControl: <a href="../interfaces/Form.html" target="_self">FormControl</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:529</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>forValidRequired</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>formControl</td>
-                                    <td>
-                                                <code><a href="../interfaces/Form.html" target="_self" >FormControl</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                     </div>
                     <div class="io-description">
@@ -1508,58 +1860,6 @@ without affecting the base configuration.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="resolveFormControlValidators"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>resolveFormControlValidators</b></span>
-                        <a href="#resolveFormControlValidators"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>resolveFormControlValidators()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:437</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Creates Validator objects based on field <code>behavior</code>. Only the <code>required</code> behavior is resolved by default.
-Required is resolved as <code>Validators.required</code>.
-If you need to resolve additional Validators or need a different resolution for the <code>required</code> Validator override this method.</p>
-<p>See <a href="../interfaces/Behavior.html">Behavior</a> for information about data field behavior.</p>
-<p>See <a href="ValidatorFn">ValidatorFn</a> and <a href="Validators">Validators</a> for information about Validators.</p>
-<p>Alternatively see <a href="https://angular.io/guide/form-validation#reactive-form-validation">Form Validation guide</a> from Angular.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="resolvePrevValue"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -1627,51 +1927,6 @@ If you need to resolve additional Validators or need a different resolution for 
                     </div>
                     <div class="io-description">
                         
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="resolveValidations"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>resolveValidations</b></span>
-                        <a href="#resolveValidations"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>resolveValidations()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:465</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Array&lt;ValidatorFn&gt;</code>
-
                     </div>
                 </td>
             </tr>
@@ -1968,110 +2223,6 @@ If you need to resolve additional Validators or need a different resolution for 
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="valueEquality"></a>
-                    <span class="name">
-                        <span class="modifier">Protected</span>
-                        <span ><b>valueEquality</b></span>
-                        <a href="#valueEquality"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>valueEquality(a: T, b: T)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classess/DataField.html" target="_self" >DataField</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classess/DataField.html#source" target="_self" >DataField:476</a></code>
-</div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Determines if two values of the data field are equal.</p>
-<p><code>a === b</code> equality is used by default. If you want different behavior override this method.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>a</td>
-                                    <td>
-                                            <code>T</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <ul>
-<li>first compared value</li>
-</ul>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>b</td>
-                                    <td>
-                                            <code>T</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <ul>
-<li>second compared value</li>
-</ul>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="valueWithoutChange"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -2150,6 +2301,33 @@ If you need to resolve additional Validators or need a different resolution for 
 
 
 
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="updated"></a>
+                        <span class="name"><b>updated</b><a href="#updated"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>updated()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="105" class="link-to-prism">projects/netgrif-components-core/src/lib/data-fields/i18n-field/models/i18n-field.ts:105</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
     </div>
 
 
@@ -2159,10 +2337,80 @@ import {Behavior} from &#x27;../../models/behavior&#x27;;
 import {Layout} from &#x27;../../models/layout&#x27;;
 import {Validation} from &#x27;../../models/validation&#x27;;
 import {Component} from &#x27;../../models/component&#x27;;
-import {I18nFieldValue} from &#x27;./i18n-field-value&#x27;;
+import {I18nFieldTranslations, I18nFieldValue} from &#x27;./i18n-field-value&#x27;;
+import {Observable} from &#x27;rxjs&#x27;;
+import {FormControl, ValidatorFn} from &#x27;@angular/forms&#x27;;
 
+export enum I18nFieldValidation {
+    TRANSLATION_REQUIRED &#x3D; &#x27;translationRequired&#x27;,
+    TRANSLATION_ONLY &#x3D; &#x27;translationOnly&#x27;,
+    REQUIRED_I18N &#x3D; &#x27;requiredI18n&#x27;
+}
+
+export const DEFAULT_LANGUAGE_CODE &#x3D; &#x27;xx&#x27;;
 
 export class I18nField extends DataField&lt;I18nFieldValue&gt; {
+
+    private static defaultValueNonEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
+        return (!(!a.defaultValue &amp;&amp; !b.defaultValue)
+            &amp;&amp; (
+                (!a.defaultValue &amp;&amp; !!b.defaultValue)
+                || (!b.defaultValue &amp;&amp; !!a.defaultValue)
+                || (a.defaultValue !&#x3D;&#x3D; b.defaultValue)
+            ));
+    }
+
+    private static keyNonEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
+        return (!(!a.key &amp;&amp; !b.key) &amp;&amp; ((!a.key &amp;&amp; !!b.key) || (!b.key &amp;&amp; !!a.key) || (a.key !&#x3D;&#x3D; b.key)));
+    }
+
+    private static translationsNonEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
+        return (!(!a.translations &amp;&amp; !b.translations)
+            &amp;&amp; ((!a.translations &amp;&amp; !!b.translations) || (!b.translations &amp;&amp; !!a.translations)));
+    }
+
+    private static translationsEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
+        const aKeys &#x3D; Object.keys(a.translations).sort();
+        const bKeys &#x3D; Object.keys(b.translations).sort();
+        if (aKeys.length !&#x3D;&#x3D; bKeys.length
+            || !aKeys.every((element, index) &#x3D;&gt; {
+                return element &#x3D;&#x3D;&#x3D; bKeys[index];
+            })) {
+            return false;
+        }
+        for (const k in a.translations) {
+            if (a.translations[k] !&#x3D;&#x3D; b.translations[k]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static toObject(templateValue: I18nFieldValue): I18nFieldTranslations {
+        const object &#x3D; {};
+        object[DEFAULT_LANGUAGE_CODE] &#x3D; templateValue.defaultValue;
+        for (const k in templateValue.translations) {
+            if (Object.prototype.hasOwnProperty.call(templateValue.translations, k)) {
+                object[k] &#x3D; templateValue.translations[k];
+            }
+        }
+        return object;
+    }
+
+    public static fromObject(templateValue: I18nFieldTranslations, templateKey: string): I18nFieldValue {
+        const i18nObject &#x3D; {
+            defaultValue: templateValue[DEFAULT_LANGUAGE_CODE],
+            key: templateKey,
+            translations: {}
+        };
+        for (const [key, value] of Object.entries(templateValue)) {
+            if (key &#x3D;&#x3D;&#x3D; DEFAULT_LANGUAGE_CODE) {
+                continue;
+            }
+            i18nObject.translations[key] &#x3D; value;
+        }
+        return i18nObject as I18nFieldValue;
+    }
 
     constructor(stringId: string, title: string, value: I18nFieldValue | string, behavior: Behavior, placeholder?: string,
                 description?: string, layout?: Layout, validations?: Array&lt;Validation&gt;, _component?: Component) {
@@ -2170,6 +2418,102 @@ export class I18nField extends DataField&lt;I18nFieldValue&gt; {
             value &#x3D; {defaultValue: value};
         }
         super(stringId, title, value, behavior, placeholder, description, layout, validations, _component);
+    }
+
+    protected valueEquality(a: I18nFieldValue, b: I18nFieldValue): boolean {
+        if (!a &amp;&amp; !b) {
+            return true;
+        }
+        if ((!a &amp;&amp; !!b) || (!b &amp;&amp; !!a)) {
+            return false;
+        }
+        if ((!a.defaultValue &amp;&amp; !b.defaultValue) &amp;&amp; (!a.translations &amp;&amp; !b.translations) &amp;&amp; (!a.key &amp;&amp; !b.key)) {
+            return true;
+        }
+        if (I18nField.defaultValueNonEquality(a, b) || I18nField.keyNonEquality(a, b) || I18nField.translationsNonEquality(a, b)) {
+            return false;
+        }
+        return I18nField.translationsEquality(a, b);
+    }
+
+    get updated(): Observable&lt;void&gt; {
+        return this._update.asObservable();
+    }
+
+    protected calculateValidity(forValidRequired: boolean, formControl: FormControl): boolean {
+        const isDisabled &#x3D; formControl.disabled;
+        if (forValidRequired) {
+            formControl.enable();
+        }
+        formControl.clearValidators();
+        if (forValidRequired) {
+            formControl.setValidators(this.behavior.required ? [this.validRequiredI18n] : []);
+        } else {
+            formControl.setValidators(this.resolveFormControlValidators());
+        }
+        formControl.updateValueAndValidity();
+        const validity &#x3D; this._determineFormControlValidity(formControl);
+        isDisabled ? formControl.disable() : formControl.enable();
+        return validity;
+    }
+
+    protected resolveFormControlValidators(): Array&lt;ValidatorFn&gt; {
+        const result &#x3D; [];
+
+        if (this.behavior.required) {
+            result.push(this.validRequiredI18n);
+        }
+
+        if (this.validations) {
+            if (this._validators) {
+                result.push(...this._validators);
+            } else {
+                this._validators &#x3D; this.resolveValidations();
+                result.push(...this._validators);
+            }
+        }
+
+        return result;
+    }
+
+    protected resolveValidations(): Array&lt;ValidatorFn&gt; {
+        const result &#x3D; [];
+
+        this.validations.forEach(item &#x3D;&gt; {
+            if (item.validationRule.includes(I18nFieldValidation.TRANSLATION_REQUIRED)) {
+                const tmp &#x3D; item.validationRule.split(&#x27; &#x27;);
+                if (tmp[1] !&#x3D;&#x3D; undefined) {
+                    result.push(this.validTranslationRequired(tmp[1].replace(&#x27; &#x27;, &#x27;&#x27;).split(&#x27;,&#x27;)));
+                }
+            }
+            if (item.validationRule.includes(I18nFieldValidation.TRANSLATION_ONLY)) {
+                const tmp &#x3D; item.validationRule.split(&#x27; &#x27;);
+                if (tmp[1] !&#x3D;&#x3D; undefined) {
+                    result.push(this.validTranslationOnly(tmp[1].replace(&#x27; &#x27;, &#x27;&#x27;).split(&#x27;,&#x27;)));
+                }
+            }
+        });
+
+        return result;
+    }
+
+    private validTranslationRequired(countries: Array&lt;string&gt;): ValidatorFn {
+        return (fc: FormControl): { [key: string]: any } | null &#x3D;&gt; {
+            return countries.every(languageCode &#x3D;&gt; languageCode in fc.value.translations)
+                ? (null) : ({translationRequired: true});
+        };
+    }
+
+    private validTranslationOnly(countries: Array&lt;string&gt;): ValidatorFn {
+        return (fc: FormControl): { [key: string]: any } | null &#x3D;&gt; {
+            return Object.keys(fc.value.translations).every(translation &#x3D;&gt; countries.includes(translation))
+                ? (null) : ({translationOnly: true});
+        };
+    }
+
+    private validRequiredI18n(fc: FormControl): { [k: string]: boolean } {
+        return (fc.value.defaultValue &#x3D;&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; Object.keys(fc.value.translations).length &#x3D;&#x3D;&#x3D; 0)
+            ? ({requiredI18n: true}) : null;
     }
 }
 </code></pre>

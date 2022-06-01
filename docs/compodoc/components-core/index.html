@@ -69,13 +69,8 @@ the functionality and compatibility with Application Engine.</p>
 <div><pre class="line-numbers"><code class="language-shell">npm i -S &#64;netgrif/components-core &#64;netgrif/components</code></pre></div><p>If you want to developer own set of NAE components, just install the core library, and you can start developing.</p>
 <h2 id="usage-and-configuration">Usage and configuration</h2>
 <p>To start building your NAE web application, it must be configured as Angular application and as NAE application as well.</p>
-<p>Firstly, create new Angular project. We recommend following <a href="https://angular.io/guide/setup-local">official guide</a>.
-At the moment @netgrif/components does not support Ivy engine, your can turn it off with attribute in <code>tsconfig.json</code>:</p>
-<div><pre class="line-numbers"><code class="language-json">{
-    &quot;angularCompilerOptions&quot;:{
-        &quot;enableIvy&quot;: true
-    }
-}</code></pre></div><h3 id="naejson">NAE.json</h3>
+<p>Firstly, create new Angular project. We recommend following <a href="https://angular.io/guide/setup-local">official guide</a>.</p>
+<h3 id="naejson">NAE.json</h3>
 <p>To configure NAE application more easily the libraries use file nae.json that is placed in root of the project.
 nae.json defines global application configuration like urls to backend resources, services&#39; configurations, routing and views.</p>
 <p>You can find <a href="docs/configuration/nae-minimal.json">minimal nae.json configuration here</a>. </p>
@@ -113,7 +108,7 @@ take a look on <a href="https://github.com/netgrif/ncli">NCLI (Netgrif Command L
 
 
 
-
+                   
 
 
 
@@ -141,7 +136,7 @@ take a look on <a href="https://github.com/netgrif/ncli">NCLI (Netgrif Command L
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-
+       
        <script type="module" src="./js/menu-wc.js" defer></script>
        <script nomodule src="./js/menu-wc_es5.js" defer></script>
 

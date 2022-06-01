@@ -182,8 +182,8 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AbstractCaseView} from &#x27;./abstract-case-view&#x27;;
-import {Inject, Type} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AbstractCaseViewComponent} from &#x27;./abstract-case-view&#x27;;
+import {Component, Inject, Optional, Type} from &#x27;@angular/core&#x27;;
 import {NAE_TAB_DATA} from &#x27;../../tabs/tab-data-injection-token/tab-data-injection-token&#x27;;
 import {InjectedTabData} from &#x27;../../tabs/interfaces&#x27;;
 import {Case} from &#x27;../../resources/interface/case&#x27;;
@@ -192,15 +192,24 @@ import {CaseViewService} from &#x27;./service/case-view-service&#x27;;
 import {SimpleFilter} from &#x27;../../filter/models/simple-filter&#x27;;
 import {FilterType} from &#x27;../../filter/models/filter-type&#x27;;
 import {OverflowService} from &#x27;../../header/services/overflow.service&#x27;;
-import {NewCaseCreationConfigurationData} from &#x27;../../side-menu/content-components/new-case/model/new-case-injection-data&#x27;;
+import {
+    NAE_NEW_CASE_CREATION_CONFIGURATION_DATA,
+    NewCaseCreationConfigurationData
+} from &#x27;../../side-menu/content-components/new-case/model/new-case-injection-data&#x27;;
 import {Observable} from &#x27;rxjs&#x27;;
+import {NAE_AUTOSWITCH_TAB_TOKEN} from &#x27;./models/autoswitch-token&#x27;;
+import {NAE_OPEN_EXISTING_TAB} from &#x27;./models/open-existing-tab-token&#x27;;
 
 export interface InjectedTabbedCaseViewData extends InjectedTabData {
     tabViewComponent: Type&lt;any&gt;;
     tabViewOrder: number;
 }
 
-export abstract class TabbedCaseView extends AbstractCaseView {
+@Component({
+    selector: &#x27;ncc-abstract-tabbed-case-view&#x27;,
+    template: &#x27;&#x27;
+})
+export abstract class AbstractTabbedCaseViewComponent extends AbstractCaseViewComponent {
 
     private readonly _correctlyInjected;
 
@@ -208,9 +217,9 @@ export abstract class TabbedCaseView extends AbstractCaseView {
                           protected _loggerService: LoggerService,
                           @Inject(NAE_TAB_DATA) protected _injectedTabData: InjectedTabbedCaseViewData,
                           protected _overflowService?: OverflowService,
-                          protected _autoswitchToTaskTab &#x3D; true,
-                          protected _openExistingTab &#x3D; true,
-                          protected _newCaseCreationConfig: NewCaseCreationConfigurationData &#x3D; {
+                          @Optional() @Inject(NAE_AUTOSWITCH_TAB_TOKEN) protected _autoswitchToTaskTab &#x3D; true,
+                          @Optional() @Inject(NAE_OPEN_EXISTING_TAB) protected _openExistingTab &#x3D; true,
+                          @Optional() @Inject(NAE_NEW_CASE_CREATION_CONFIGURATION_DATA) protected _newCaseCreationConfig: NewCaseCreationConfigurationData &#x3D; {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true
                           }) {
