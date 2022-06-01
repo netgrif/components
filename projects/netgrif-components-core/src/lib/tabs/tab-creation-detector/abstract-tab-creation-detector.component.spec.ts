@@ -18,6 +18,7 @@ import {TabView} from '../classes/tab-view';
 import {TabContent} from '../interfaces';
 import {LoggerService} from '../../logger/services/logger.service';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractTabCreationDetectorComponent', () => {
     let component: TestTabComponent;
@@ -28,6 +29,7 @@ describe('AbstractTabCreationDetectorComponent', () => {
             imports: [
                 MaterialModule,
                 NoopAnimationsModule,
+                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([])
             ],
             providers: [
@@ -35,7 +37,7 @@ describe('AbstractTabCreationDetectorComponent', () => {
                 {provide: AuthenticationService, useClass: MockAuthenticationService},
                 {provide: UserResourceService, useClass: MockUserResourceService},
                 {provide: ConfigurationService, useClass: TestConfigurationService},
-                {provide: ViewService, useClass: TestViewService}
+                {provide: ViewService, useClass: TestViewService},
             ],
             declarations: [
                 TestComponent,
@@ -65,7 +67,7 @@ describe('AbstractTabCreationDetectorComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-tabs',
+    selector: 'ncc-test-tabs',
     template: ''
 })
 class TestTabComponent extends AbstractTabCreationDetectorComponent {
@@ -75,8 +77,8 @@ class TestTabComponent extends AbstractTabCreationDetectorComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-tabs [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></nae-test-tabs>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-tabs [initializeTabFunction]="initializeTabLambda" [tabIndex]="0"></ncc-test-tabs>'
 })
 class TestWrapperComponent implements OnInit {
     tabGroup: TabView;
@@ -103,7 +105,7 @@ class TestWrapperComponent implements OnInit {
 }
 
 @Component({
-    selector: 'nae-test-div',
+    selector: 'ncc-test-div',
     template: '<div></div>'
 })
 class TestComponent {

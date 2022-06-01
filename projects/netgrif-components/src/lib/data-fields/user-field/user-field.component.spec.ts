@@ -2,7 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {UserFieldComponent} from './user-field.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MaterialModule, SideMenuService, TranslateLibModule, UserField} from '@netgrif/components-core';
@@ -13,7 +13,7 @@ describe('UserFieldComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [MaterialModule, AngularResizedEventModule, BrowserAnimationsModule, HttpClientTestingModule, TranslateLibModule],
+            imports: [MaterialModule, AngularResizeEventModule, BrowserAnimationsModule, HttpClientTestingModule, TranslateLibModule],
             declarations: [UserFieldComponent, TestWrapperComponent],
             providers: [SideMenuService],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]

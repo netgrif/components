@@ -4,7 +4,7 @@ import {SnackBarInjectionData} from '../../models/snack-bar-injection-data';
 import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material/snack-bar';
 
 @Component({
-    selector: 'nae-generic-snack-bar',
+    selector: 'ncc-generic-snack-bar',
     templateUrl: './generic-snack-bar.component.html',
     styleUrls: ['./generic-snack-bar.component.scss']
 })

@@ -1,4 +1,5 @@
 import {DynamicEnumerationField} from './dynamic-enumeration-field';
+import {TestBed} from '@angular/core/testing';
 
 describe('DynamicEnumerationField', () => {
     it('should create an instance', () => {
@@ -9,5 +10,9 @@ describe('DynamicEnumerationField', () => {
             editable: true,
             hidden: true
         })).toBeTruthy();
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

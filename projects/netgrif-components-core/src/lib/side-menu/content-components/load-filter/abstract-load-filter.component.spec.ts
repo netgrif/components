@@ -63,10 +63,14 @@ describe('AbstractLoadFilterComponent', () => {
     it('should create an instance', () => {
         expect(component).toBeTruthy();
     });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
 });
 
 @Component({
-    selector: 'nae-test-save-filter',
+    selector: 'ncc-test-save-filter',
     template: ''
 })
 class TestLoadFilterComponent extends AbstractLoadFilterComponent {

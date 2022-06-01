@@ -1,6 +1,5 @@
 <div class="height-100">
-    <td-text-editor *ngIf="!formControlRef.disabled" [(ngModel)]="textAreaField.value"
-                    [options]="options"></td-text-editor>
+    <nc-easymde-wrapper *ngIf="!formControlRef.disabled" [formControlRef]="formControlRef" [textAreaField]="textAreaField"></nc-easymde-wrapper>
     <mat-error *ngIf="textAreaField.isInvalid(formControlRef)">{{getErrorMessage()}}</mat-error>
 
     <input type="hidden" [formControl]="formControlRef">

@@ -22,12 +22,11 @@ import {AnonymousAuthenticationInterceptor} from './services/anonymous-authentic
         // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true }),
     ],
     providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: AnonymousAuthenticationInterceptor, multi: true},
-        {provide: AuthenticationMethodService, useFactory: authenticationServiceFactory, deps: [ConfigurationService, HttpClient]},
+        { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AnonymousAuthenticationInterceptor, multi: true },
+        { provide: AuthenticationMethodService, useFactory: authenticationServiceFactory, deps: [ConfigurationService, HttpClient] },
         // AuthenticationEffects
-    ],
-    entryComponents: [MatSpinner]
+    ]
 })
 export class AuthenticationModule {
 }

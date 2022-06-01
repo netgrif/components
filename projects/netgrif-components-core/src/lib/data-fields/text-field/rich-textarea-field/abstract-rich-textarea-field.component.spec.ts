@@ -2,8 +2,8 @@ import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractRichTextareaFieldComponent} from './abstract-rich-textarea-field.component';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularResizeEventModule} from 'angular-resize-event';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
@@ -28,9 +28,9 @@ describe('AbstractRichTextareaFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 CovalentModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule
             ],
@@ -63,7 +63,7 @@ describe('AbstractRichTextareaFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-text',
+    selector: 'ncc-test-text',
     template: ''
 })
 class TestTextComponent extends AbstractRichTextareaFieldComponent {
@@ -73,10 +73,10 @@ class TestTextComponent extends AbstractRichTextareaFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: `<nae-test-text [showLargeLayout]="label"
+    selector: 'ncc-test-wrapper',
+    template: `<ncc-test-text [showLargeLayout]="label"
                                  [formControlRef]="formControl"
-                                 [textAreaField]="dataField"></nae-test-text>`
+                                 [textAreaField]="dataField"></ncc-test-text>`
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();

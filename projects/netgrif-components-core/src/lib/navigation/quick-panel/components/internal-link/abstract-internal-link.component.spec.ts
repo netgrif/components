@@ -5,6 +5,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../../../material/material.module';
 import {Component} from '@angular/core';
 import {AbstractInternalLinkComponent} from './abstract-internal-link.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractInternalLinkComponent', () => {
     let component: TestLinkComponent;
@@ -17,7 +18,8 @@ describe('AbstractInternalLinkComponent', () => {
                 CommonModule,
                 RouterTestingModule.withRoutes([]),
                 MaterialModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                HttpClientTestingModule
             ]
         })
             .compileComponents();
@@ -39,7 +41,7 @@ describe('AbstractInternalLinkComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-nav-tree',
+    selector: 'ncc-test-nav-tree',
     template: ''
 })
 class TestLinkComponent extends AbstractInternalLinkComponent {

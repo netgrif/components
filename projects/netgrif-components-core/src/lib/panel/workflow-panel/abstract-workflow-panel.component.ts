@@ -1,6 +1,6 @@
-import {Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
-import {PanelWithHeaderBinding} from '../abstract/panel-with-header-binding';
+import {AbstractPanelWithHeaderBindingComponent} from '../abstract/panel-with-header-binding';
 import {HeaderColumn} from '../../header/models/header-column';
 import {Observable, Subscription} from 'rxjs';
 import {LoggerService} from '../../logger/services/logger.service';
@@ -24,7 +24,11 @@ export interface WorkflowPanelContent {
     uploaded: DateTimeField;
 }
 
-export abstract class AbstractWorkflowPanelComponent extends PanelWithHeaderBinding implements OnInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-workflow-panel',
+    template: ''
+})
+export abstract class AbstractWorkflowPanelComponent extends AbstractPanelWithHeaderBindingComponent implements OnInit, OnDestroy {
 
     @Input() public workflow: Net;
     @Input() public selectedHeaders$: Observable<Array<HeaderColumn>>;

@@ -20,186 +20,220 @@ describe('UserResourceService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should assignAuthority', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.assignAuthority('id', {}).subscribe(res => {
-                expect(res.success).toEqual('Success');
-            });
+    it('should assignAuthority', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.assignAuthority('id', {}).subscribe(res => {
+                        expect(res.success).toEqual('Success');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/id/authority/assign');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/id/authority/assign');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({success: 'Success'});
-        })
+                    reqLog.flush({success: 'Success'});
+                })();
+        }
     );
 
-    it('should assignRoles', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.assignRoles('id', {}).subscribe(res => {
-                expect(res.success).toEqual('Success');
-            });
+    it('should assignRoles', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.assignRoles('id', {}).subscribe(res => {
+                        expect(res.success).toEqual('Success');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/id/role/assign');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/id/role/assign');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({success: 'Success'});
-        })
+                    reqLog.flush({success: 'Success'});
+                })();
+        }
     );
 
-    it('should getAllAuthorities', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAllAuthorities().subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getAllAuthorities', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAllAuthorities().subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/authority');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/authority');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getAll', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAll().subscribe(res => {
-                expect(res.content.length).toEqual(0);
-            });
+    it('should getAll', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAll().subscribe(res => {
+                        expect(res.content.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getAllWithRole', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getAllWithRole({}).subscribe(res => {
-                expect(res.length).toEqual(0);
-            });
+    it('should getAllWithRole', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getAllWithRole({}).subscribe(res => {
+                        expect(res.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/role');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/role');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should getLoggedUser', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getLoggedUser().subscribe(res => {
-                expect(res.id).toEqual('5');
-                expect(res.email).toEqual('string');
-                expect(res.fullName).toEqual('string string');
-            });
+    it('should getLoggedUser', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getLoggedUser().subscribe(res => {
+                        expect(res.id).toEqual('5');
+                        expect(res.email).toEqual('string');
+                        expect(res.fullName).toEqual('string string');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/me');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/me');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush({
-                id: '5',
-                email: 'string',
-                name: 'string',
-                surname: 'string',
-                fullName: 'string string',
-                groups: [],
-                authorities: [],
-                processRoles: [],
-                _links: {}
-            });
-        })
+                    reqLog.flush({
+                        id: '5',
+                        email: 'string',
+                        name: 'string',
+                        surname: 'string',
+                        fullName: 'string string',
+                        groups: [],
+                        authorities: [],
+                        processRoles: [],
+                        _links: {}
+                    });
+                })();
+        }
     );
 
-    it('should getUser', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getUser('5').subscribe(res => {
-                expect(res.id).toEqual('5');
-                expect(res.email).toEqual('string');
-                expect(res.fullName).toEqual('string string');
-            });
+    it('should getUser', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getUser('5').subscribe(res => {
+                        expect(res.id).toEqual('5');
+                        expect(res.email).toEqual('string');
+                        expect(res.fullName).toEqual('string string');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/5');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/5');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush({
-                id: '5',
-                email: 'string',
-                name: 'string',
-                surname: 'string',
-                fullName: 'string string',
-                groups: [],
-                authorities: [],
-                processRoles: [],
-                _links: {}
-            });
-        })
+                    reqLog.flush({
+                        id: '5',
+                        email: 'string',
+                        name: 'string',
+                        surname: 'string',
+                        fullName: 'string string',
+                        groups: [],
+                        authorities: [],
+                        processRoles: [],
+                        _links: {}
+                    });
+                })();
+        }
     );
 
-    it('should getPreferences', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.getPreferences().subscribe(res => {
-                expect(res).toBeTruthy();
-            });
+    it('should getPreferences', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.getPreferences().subscribe(res => {
+                        expect(res).toBeTruthy();
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/preferences');
-            expect(reqLog.request.method).toEqual('GET');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/preferences');
+                    expect(reqLog.request.method).toEqual('GET');
 
-            reqLog.flush({});
-        })
+                    reqLog.flush({});
+                })();
+        }
     );
 
-    it('should setPreferences', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.setPreferences({}).subscribe(res => {
-                expect(res.success).toEqual('Success');
-            });
+    it('should setPreferences', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.setPreferences({}).subscribe(res => {
+                        expect(res.success).toEqual('Success');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/preferences');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/preferences');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({success: 'Success'});
-        })
+                    reqLog.flush({success: 'Success'});
+                })();
+        }
     );
 
-    it('should search', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.search({}).subscribe(res => {
-                expect(res.content.length).toEqual(0);
-            });
+    it('should search', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.search({}).subscribe(res => {
+                        expect(res.content.length).toEqual(0);
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/search');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/search');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush([]);
-        })
+                    reqLog.flush([]);
+                })();
+        }
     );
 
-    it('should updateUser', inject([HttpTestingController],
-        (httpMock: HttpTestingController) => {
-            service.updateUser('5', {}).subscribe(res => {
-                expect(res.id).toEqual('5');
-                expect(res.email).toEqual('string');
-                expect(res.fullName).toEqual('string string');
-            });
+    it('should updateUser', (done) => {
+        inject([HttpTestingController],
+                (httpMock: HttpTestingController) => {
+                    service.updateUser('5', {}).subscribe(res => {
+                        expect(res.id).toEqual('5');
+                        expect(res.email).toEqual('string');
+                        expect(res.fullName).toEqual('string string');
+                        done();
+                    });
 
-            const reqLog = httpMock.expectOne('http://localhost:8080/api/user/5');
-            expect(reqLog.request.method).toEqual('POST');
+                    const reqLog = httpMock.expectOne('http://localhost:8080/api/user/5');
+                    expect(reqLog.request.method).toEqual('POST');
 
-            reqLog.flush({
-                id: '5',
-                email: 'string',
-                name: 'string',
-                surname: 'string',
-                fullName: 'string string',
-                groups: [],
-                authorities: [],
-                processRoles: [],
-                _links: {}
-            });
-        })
+                    reqLog.flush({
+                        id: '5',
+                        email: 'string',
+                        name: 'string',
+                        surname: 'string',
+                        fullName: 'string string',
+                        groups: [],
+                        authorities: [],
+                        processRoles: [],
+                        _links: {}
+                    });
+                })();
+        }
     );
 
-    afterEach(() => {
+    afterEach(inject([HttpTestingController], (mock: HttpTestingController) => {
+        mock.verify();
         TestBed.resetTestingModule();
-    });
+    }));
 });

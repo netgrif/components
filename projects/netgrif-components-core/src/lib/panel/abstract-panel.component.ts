@@ -1,7 +1,11 @@
-import {AfterViewInit, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild} from '@angular/core';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {CaseListFontColorService} from '../utility/service/case-list-font-color.service';
 
+@Component({
+    selector: 'ncc-abstract-panel',
+    template: ''
+})
 export abstract class AbstractPanelComponent implements AfterViewInit, OnDestroy {
 
     @Input() expansionDisabled = false;

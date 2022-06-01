@@ -9,7 +9,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
  * based on a material design that injected data and inherits from an [AbstractDialog]{@link AbstractDialog}.
  */
 @Component({
-    selector: 'nae-question-dialog-with-answer',
+    selector: 'ncc-question-dialog-with-answer',
     templateUrl: './prompt-dialog.component.html',
     styleUrls: ['./prompt-dialog.component.scss']
 })

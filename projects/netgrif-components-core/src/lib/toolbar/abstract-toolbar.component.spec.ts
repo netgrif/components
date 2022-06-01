@@ -54,7 +54,7 @@ describe('AbstractToolbarComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-toolbar',
+    selector: 'ncc-test-toolbar',
     template: ''
 })
 class TestToolbarComponent extends AbstractToolbarComponent {

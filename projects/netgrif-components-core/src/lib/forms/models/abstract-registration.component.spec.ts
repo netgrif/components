@@ -5,12 +5,12 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {UserRegistrationRequest} from '../../authentication/sign-up/models/user-registration-request';
 import {Observable, of, throwError} from 'rxjs';
 import {MessageResource} from '../../resources/interface/message-resource';
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {MockSignUpService} from '../../utility/tests/mocks/mock-sign-up.service';
 import {MaterialModule} from '../../material/material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TranslateLibModule} from '../../translate/translate-lib.module';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import {TestConfigurationService} from '../../utility/tests/test-config';
@@ -28,7 +28,7 @@ describe('AbstractRegistrationComponent', () => {
             imports: [
                 MaterialModule,
                 FlexLayoutModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule
             ],
@@ -71,7 +71,7 @@ describe('AbstractRegistrationComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-reg',
+    selector: 'ncc-test-reg',
     template: ''
 })
 class TestRegFormComponent extends AbstractRegistrationComponent {

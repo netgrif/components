@@ -18,9 +18,6 @@ import {MaterialModule} from '../../../material/material.module';
         MaterialModule,
         FormsModule,
         FlexLayoutModule
-    ],
-    entryComponents: [
-        AlertDialogComponent
     ]
 })
 export class AlertDialogModule {

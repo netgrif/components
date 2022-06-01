@@ -1,6 +1,7 @@
 import {CaseTreeNode} from './case-tree-node';
 import {createMockCase} from '../../../../utility/tests/utility/create-mock-case';
 import {Subscription} from 'rxjs';
+import {TestBed} from '@angular/core/testing';
 
 describe('CaseTreeNode', () => {
     it('should create', () => {
@@ -32,5 +33,9 @@ describe('CaseTreeNode', () => {
         subscriptions.forEach(sub => {
             sub.unsubscribe();
         });
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

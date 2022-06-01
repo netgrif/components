@@ -22,9 +22,6 @@ import {FieldComponentResolverComponent} from './field-component-resolver/field-
     ],
     exports: [
         TaskContentComponent
-    ],
-    entryComponents: [
-        TaskContentComponent
     ]
 })
 export class TaskContentComponentModule {

@@ -2,6 +2,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ViewIdService} from './view-id.service';
 import {Component, Injectable, Optional} from '@angular/core';
 import {NAE_VIEW_ID_SEGMENT} from '../models/view-id-injection-tokens';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 
 describe('ViewIdService', () => {
@@ -10,6 +12,7 @@ describe('ViewIdService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             declarations: [
                 TestRootComponent,
                 TestDirectComponent,
@@ -53,8 +56,8 @@ describe('ViewIdService', () => {
 });
 
 @Component({
-    selector: 'nae-test-root',
-    template: '<nae-test-direct></nae-test-direct><nae-test-skipped></nae-test-skipped>',
+    selector: 'ncc-test-root',
+    template: '<ncc-test-direct></ncc-test-direct><ncc-test-skipped></ncc-test-skipped>',
     providers: [
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'root'},
         ViewIdService
@@ -67,7 +70,7 @@ class TestRootComponent {
 }
 
 @Component({
-    selector: 'nae-test-direct',
+    selector: 'ncc-test-direct',
     template: '',
     providers: [
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'direct'},
@@ -81,8 +84,8 @@ class TestDirectComponent {
 }
 
 @Component({
-    selector: 'nae-test-skipped',
-    template: '<nae-test-bottom></nae-test-bottom>'
+    selector: 'ncc-test-skipped',
+    template: '<ncc-test-bottom></ncc-test-bottom>'
 })
 class TestSkippedComponent {
     constructor(@Optional() id: ViewIdService, helper: ViewIdServiceGetter) {
@@ -91,7 +94,7 @@ class TestSkippedComponent {
 }
 
 @Component({
-    selector: 'nae-test-bottom',
+    selector: 'ncc-test-bottom',
     template: '',
     providers: [
         {provide: NAE_VIEW_ID_SEGMENT, useValue: 'bottom'},

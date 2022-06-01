@@ -31,7 +31,6 @@ import {EventOutcomeMessageResource} from '../../resources/interface/message-res
 import {SetDataEventOutcome} from '../../event/model/event-outcomes/data-outcomes/set-data-event-outcome';
 import {createMockCase} from '../../utility/tests/utility/create-mock-case';
 import {createMockNet} from '../../utility/tests/utility/create-mock-net';
-import {EventOutcome} from '../../resources/interface/event-outcome';
 
 describe('TaskDataService', () => {
     let service: TaskDataService;

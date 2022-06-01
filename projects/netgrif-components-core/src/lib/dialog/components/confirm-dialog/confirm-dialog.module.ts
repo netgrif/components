@@ -18,9 +18,6 @@ import {ConfirmDialogComponent} from './confirm-dialog.component';
         MaterialModule,
         FormsModule,
         FlexLayoutModule
-    ],
-    entryComponents: [
-        ConfirmDialogComponent
     ]
 })
 export class ConfirmDialogModule {

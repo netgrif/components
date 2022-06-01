@@ -1,4 +1,4 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {TranslateService} from '@ngx-translate/core';
@@ -6,6 +6,10 @@ import {AbstractTextErrorsComponent} from '../abstract-text-errors.component';
 import {TextAreaField} from '../models/text-area-field';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
+@Component({
+    selector: 'ncc-abstract-html-area-field',
+    template: ''
+})
 export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErrorsComponent implements OnInit {
 
     public quillModules = {
@@ -39,10 +43,14 @@ export abstract class AbstractHtmlTextareaFieldComponent extends AbstractTextErr
     }
 
     ngOnInit(): void {
-        this.disabledDisplay = this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value);
+        this.disabledDisplay = this.sanitizeValue();
         this.textAreaField.valueChanges().subscribe(() => {
-            this.disabledDisplay = this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value);
+            this.disabledDisplay = this.sanitizeValue();
         });
+    }
+
+    protected sanitizeValue(): SafeHtml {
+        return this._sanitizer.bypassSecurityTrustHtml(this.textAreaField.value !== undefined ? this.textAreaField.value : '');
     }
 
     public getErrorMessage() {

@@ -29,8 +29,7 @@ describe('AbstractFilterSelectorComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                NoopAnimationsModule,
-                HttpClientTestingModule
+                NoopAnimationsModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -76,7 +75,7 @@ describe('AbstractFilterSelectorComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-files',
+    selector: 'ncc-test-files',
     template: ''
 })
 class TestFilterSelectorComponent extends AbstractFilterSelectorComponent {

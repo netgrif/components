@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {
     NAE_TAB_DATA,
     TaskViewService,
-    TabbedTaskView,
+    AbstractTabbedTaskViewComponent,
     InjectedTabbedTaskViewData,
     CategoryFactory,
     SearchService,
@@ -50,7 +50,7 @@ export function baseFilterFactory(injectedTabData: InjectedTabbedTaskViewData) {
         }
     ]
 })
-export class DefaultTabbedTaskViewComponent extends TabbedTaskView implements AfterViewInit {
+export class DefaultTabbedTaskViewComponent extends AbstractTabbedTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 

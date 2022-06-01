@@ -8,7 +8,7 @@ import {TestConfigurationService} from '../../../utility/tests/test-config';
 import {SnackBarModule} from '../../../snack-bar/snack-bar.module';
 import {TranslateLibModule} from '../../../translate/translate-lib.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../../../material/material.module';
 import {Component, Inject} from '@angular/core';
 import {AbstractUserAssignComponent} from './abstract-user-assign.component';
@@ -21,7 +21,7 @@ describe('AbstractUserAssignComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                BrowserAnimationsModule,
+                NoopAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
                 SnackBarModule
@@ -54,7 +54,7 @@ describe('AbstractUserAssignComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-user',
+    selector: 'ncc-test-user',
     template: ''
 })
 class TestUserComponent extends AbstractUserAssignComponent {

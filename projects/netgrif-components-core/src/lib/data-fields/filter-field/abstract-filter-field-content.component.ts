@@ -1,10 +1,14 @@
-import {Inject, OnDestroy} from '@angular/core';
+import {Component, Inject, OnDestroy} from '@angular/core';
 import {NAE_FILTER_FIELD} from './models/filter-field-injection-token';
 import {FilterField} from './models/filter-field';
 import {SearchService} from '../../search/search-service/search.service';
 import {filter, take} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
+@Component({
+    selector: 'ncc-abstract-filtercontent-field',
+    template: ''
+})
 export abstract class AbstractFilterFieldContentComponent implements OnDestroy {
 
     public filterLoaded = false;

@@ -1,0 +1,46 @@
+@import "projects/netgrif-components/src/styles/core";
+
+.user-list-item-margin {
+    margin: 4px 0;
+}
+
+.net-panel-content {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.font-size-15 {
+    font-size: 15px;
+}
+
+.no-user-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+}
+
+.process-item-description {
+    text-align: right;
+}
+
+.process-list-accordion {
+    overflow-y: auto;
+    padding: 0 2px 4px;
+}
+
+.user-assign-search {
+    width: 100%;
+}
+
+.search-icon {
+    margin-right: 10px;
+}
+
+.height-96 {
+    min-height: 96px;
+}

@@ -16,9 +16,6 @@ import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
     ],
     exports: [
         FilterSelectorComponent,
-    ],
-    entryComponents: [
-        FilterSelectorComponent
     ]
 })
 export class SideMenuFilterSelectorComponentModule {

@@ -25,4 +25,8 @@ export abstract class EditablePredicate extends Predicate {
     public set parentNotifier(parentNotifier: Subject<void>) {
         this._parentNotifier = parentNotifier;
     }
+
+    public destroy() {
+        this._parentNotifier.complete();
+    }
 }

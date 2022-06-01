@@ -6,6 +6,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NAE_FILTER_FIELD} from './models/filter-field-injection-token';
 import {FilterType} from '../../filter/models/filter-type';
 import {Subject} from 'rxjs';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AbstractFilterFieldContentComponent', () => {
     let component: TestFilterContentComponent;
@@ -25,6 +27,7 @@ describe('AbstractFilterFieldContentComponent', () => {
         };
 
         TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, HttpClientTestingModule],
             providers: [
                 {provide: NAE_FILTER_FIELD, useValue: field},
                 {provide: SearchService, useValue: mockSearchService}
@@ -39,8 +42,8 @@ describe('AbstractFilterFieldContentComponent', () => {
     });
 
     afterEach(() => {
-        TestBed.resetTestingModule();
         mockSearchService.loadingFromMetadata$.complete();
+        TestBed.resetTestingModule();
     });
 
     it('should create an instance', () => {
@@ -64,7 +67,7 @@ describe('AbstractFilterFieldContentComponent', () => {
 
 
 @Component({
-    selector: 'nae-test-filter-content',
+    selector: 'ncc-test-filter-content',
     template: ''
 })
 class TestFilterContentComponent extends AbstractFilterFieldContentComponent {

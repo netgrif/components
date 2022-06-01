@@ -712,6 +712,10 @@ describe('AbstractTaskContentComponent', () => {
             expect(component.dataSource[6].content.length).toEqual(1);
             expect(component.dataSource[6].content[0].type).toEqual(FieldTypeResource.BOOLEAN);
         });
+
+        afterEach(() => {
+            TestBed.resetTestingModule();
+        });
     });
 
     describe('with async datafield rendering', () => {
@@ -1026,7 +1030,7 @@ function transformStringToGrid(gridString: string): Array<Array<string>> {
 }
 
 @Component({
-    selector: 'nae-test-panel',
+    selector: 'ncc-test-panel',
     template: ''
 })
 class TestTaskContentComponent extends AbstractTaskContentComponent {

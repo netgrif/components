@@ -4,6 +4,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {LogPublisherService} from '../../logger/services/log-publisher.service';
 import {DashboardParams} from '../../dashboard/dashboard-content/dashboard-params';
 import {TestConfigurationService} from '../tests/test-config';
+import {TestBed} from '@angular/core/testing';
 
 describe('GridLayoutHelper', () => {
     it('should create an instance', () => {
@@ -49,5 +50,9 @@ describe('GridLayoutHelper', () => {
         const gridHelper = new GridLayoutHelper(new LoggerService(new LogPublisherService(new TestConfigurationService()),
             new TestConfigurationService()));
         expect(gridHelper.fillBlankSpace(params.cards, params.columns).length).toEqual(5);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

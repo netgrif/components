@@ -1,0 +1,137 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="full-height full-width padding-default">
+
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="44" class="full-height">
+        <ng-container *ngIf="ldapGroup.ldapGroups$ | async as ldapGroups_">
+
+            <mat-toolbar color="primary" class="height-96">
+                <span matTooltip="{{ldapGroups_.length}}/{{ldapGroup.totalLdapGroups}}">
+                    {{'admin.ldapGroup-list.listTitle' | translate}}
+                </span>
+                <div fxFlex="5"></div>
+
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon fxFlex class="search-icon">search</mat-icon>
+                    <mat-form-field fxFlex="100" class="ldapGroup-assign-search" color="primary">
+                        <input matInput placeholder="{{ 'side-menu.ldapGroup.choose' | translate }}"
+                               [formControl]="searchLdapGroupControl">
+                        <button mat-button *ngIf="searchLdapGroupControl.value" matSuffix mat-icon-button
+                                (click)="searchLdapGroupControl.setValue('')">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+                <span style="flex: 1 1 auto;"></span>
+                <button mat-icon-button matTooltip="Select All" (click)="selectAllLdapGroup(true)">
+                    <mat-icon>done_all</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Deselect All" (click)="selectAllLdapGroup(false)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </mat-toolbar>
+
+            <div *ngIf="(ldapGroup.loading$ | async) === false && ldapGroups_.length === 0" fxLayout="column"
+                 fxLayoutAlign="center center" fxFlex class="margin-top-x2">
+                <mat-icon color="accent" class="margin-bottom-default no-ldapGroup-icon">perm_identity</mat-icon>
+                <span class="font-size-20">{{ 'admin.ldapGroup-list.noLdapGroupsWereFound' | translate}}</span>
+            </div>
+
+            <mat-selection-list #ldapGroupList color="accent" fxFlex="100" class="full-width">
+
+                <cdk-virtual-scroll-viewport itemSize="72" (scrolledIndexChange)="loadNextLdapGroupPage()"
+                                             class="full-width full-height">
+                    <mat-list-option *cdkVirtualFor="let ldapGroup of ldapGroups_; let i = index;" checkboxPosition="before"
+                                     [selected]="ldapGroup.selected"
+                                     [value]="ldapGroup"
+                                     [ngClass]="{'list-item-selected':ldapGroup.selected}"
+                                     (click)="ldapGroup.toggle();autoSelectRoles()">
+                        <h3 matLine>{{ldapGroup.cn}}</h3>
+                        <p *ngIf="ldapGroup.description !== undefined" matLine>DN: {{ldapGroup.dn}}, Description: {{ldapGroup.description}}</p>
+                        <p *ngIf="ldapGroup.description === undefined" matLine>DN: {{ldapGroup.dn}}</p>
+                    </mat-list-option>
+
+                    <div *ngIf="ldapGroup.loading$ | async" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-spinner color="primary" diameter="50"></mat-spinner>
+                    </div>
+
+                </cdk-virtual-scroll-viewport>
+
+            </mat-selection-list>
+        </ng-container>
+    </div>
+
+    <div fxFlex="6"></div>
+
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50" class="full-height">
+
+        <mat-toolbar color="primary" class="height-96">
+            <span>{{'admin.process-list.listTitle' | translate}}</span>
+            <span style="flex: 1 1 auto;"></span>
+            <mat-spinner *ngIf="ldapGroup.updating$ | async" color="accent" diameter="30"></mat-spinner>
+        </mat-toolbar>
+
+        <div *ngIf="(ldapGroup.loading$ | async) === false && nets.processes.length === 0" fxLayout="column"
+             fxLayoutAlign="center center" fxFlex class="margin-top-x2">
+            <mat-icon color="accent" class="margin-bottom-default no-ldapGroup-icon">timeline</mat-icon>
+            <span class="font-size-20">{{ 'admin.process-list.noProcessesWereFound' | translate}}</span>
+        </div>
+
+        <mat-accordion class="full-width margin-top-default process-list-accordion" multi fxFlex>
+
+            <mat-expansion-panel *ngFor="let item of nets.processes" (afterExpand)="nets.loadProcessItemRoles(item)"
+                                 (afterCollapse)="nets.prepareToTryAgainToLoadRoles(item)">
+
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon *ngIf="item.someRolesSelected" color="accent" class="margin-right-x2">tour</mat-icon>
+                        <span>{{item.initials}} - {{item.title}}</span>
+                    </mat-panel-title>
+                    <mat-panel-description class="process-item-description">
+                        <span
+                            class="process-item-description full-width">{{'admin.process-list.newestVersion' | translate}}
+                            : {{item.newestVersion}}</span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div *ngIf="item.loading" fxFlex="100" class="full-width">
+                    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+                </div>
+
+                <div *ngIf="!item.loading && item.emptyRoles" fxLayout="column"
+                     fxLayoutAlign="center center" fxFlex class="full-width full-height net-panel-content">
+                    <mat-icon color="accent" class="margin-bottom-default">account_circle</mat-icon>
+                    <span class="font-size-15">{{ 'admin.process-list.noRoles' | translate}}</span>
+                </div>
+
+                <div *ngIf="!item.loading && !item.emptyRoles" fxLayout="column" fxLayoutAlign="start start"
+                     class="full-height full-width net-panel-content">
+                    <h3>{{ 'admin.process-list.roles' | translate}}</h3>
+                    <div *ngFor="let net of item.processes; let first = first" fxLayout="column"
+                         fxLayoutAlign="start center" class="full-width">
+                        <mat-divider *ngIf="!first" style="position: relative"></mat-divider>
+
+                        <button mat-button matTooltip="{{item.someRolesSelected ? 'Deselect All' : 'Select All'}}"
+                                (click)="toggleAllRoles(net, !item.someRolesSelected)">
+                            {{net.version}}
+                        </button>
+
+                        <mat-selection-list color="accent" fxLayout="row wrap" fxLayoutAlign="start center"
+                                            class="full-width">
+                            <mat-list-option *ngFor="let role of net.roles" checkboxPosition="before"
+                                             [selected]="role.selected" (click)="role.toggle();update(role)"
+                                             fxFlex="50">
+                                <h3 matLine>{{role.name}}</h3>
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+
+        </mat-accordion>
+
+        <div *ngIf="nets.loading$ | async" fxLayout="column" fxLayoutAlign="center center" fxFlex="100">
+            <mat-spinner color="primary" diameter="65"></mat-spinner>
+        </div>
+    </div>
+</div>

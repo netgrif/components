@@ -1,6 +1,6 @@
 import {TabTestComponent} from './opened-tab.spec';
 import {TabView} from './tab-view';
-import {TestBed} from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 import {ViewService} from '../../routing/view-service/view.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {AuthenticationMethodService} from '../../authentication/services/authentication-method.service';
@@ -15,6 +15,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockAuthenticationMethodService} from '../../utility/tests/mocks/mock-authentication-method-service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SimpleFilter} from '../../filter/models/simple-filter';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 describe('TabView', () => {
     let viewService: ViewService;
@@ -24,7 +25,8 @@ describe('TabView', () => {
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule.withRoutes([]),
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                HttpClientTestingModule
             ],
             providers: [
                 {provide: AuthenticationMethodService, useClass: MockAuthenticationMethodService},
@@ -60,11 +62,11 @@ describe('TabView', () => {
             tabContentComponent: TabTestComponent
         }, true);
 
-        expect(tabs.selectedIndex).toEqual(1);
+        expect(tabs.selectedIndex.value).toEqual(1);
         tabs.switchToTabIndex(0);
-        expect(tabs.selectedIndex).toEqual(0);
+        expect(tabs.selectedIndex.value).toEqual(0);
         tabs.switchToTabUniqueId('1');
-        expect(tabs.selectedIndex).toEqual(1);
+        expect(tabs.selectedIndex.value).toEqual(1);
 
         tabs.openTab({
             label: {
@@ -76,7 +78,7 @@ describe('TabView', () => {
         }, false);
         tabs.initializeTab(2);
         tabs.switchToTabIndex(2);
-        expect(tabs.selectedIndex).toEqual(2);
+        expect(tabs.selectedIndex.value).toEqual(2);
 
         tabs.closeTabIndex(2);
         expect(tabs.openedTabs.length).toEqual(2);
@@ -105,7 +107,7 @@ describe('TabView', () => {
             }
         }, true);
         expect(tabView.openedTabs.length).toEqual(1);
-        expect(tabView.selectedIndex).toEqual(0);
+        expect(tabView.selectedIndex.value).toEqual(0);
         tabView.openTab({
             canBeClosed: false,
             tabContentComponent: TabTestComponent,
@@ -114,7 +116,7 @@ describe('TabView', () => {
             }
         }, true);
         expect(tabView.openedTabs.length).toEqual(2);
-        expect(tabView.selectedIndex).toEqual(1);
+        expect(tabView.selectedIndex.value).toEqual(1);
         tabView.openTab({
             canBeClosed: false,
             tabContentComponent: TabTestComponent,
@@ -123,7 +125,7 @@ describe('TabView', () => {
             }
         }, true);
         expect(tabView.openedTabs.length).toEqual(2);
-        expect(tabView.selectedIndex).toEqual(0);
+        expect(tabView.selectedIndex.value).toEqual(0);
     });
 
     it('should return correct tab uniqueId', () => {
@@ -183,5 +185,9 @@ describe('TabView', () => {
         });
         tabs.closeTabUniqueId('0');
         tabs.closeTabIndex(0);
+    });
+
+    afterEach(() => {
+        TestBed.resetTestingModule();
     });
 });

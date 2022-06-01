@@ -59,7 +59,7 @@ describe('AbstractQuickPanelComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-quick-panel',
+    selector: 'ncc-test-quick-panel',
     template: ''
 })
 class TestQuickPanelComponent extends AbstractQuickPanelComponent {
@@ -69,8 +69,8 @@ class TestQuickPanelComponent extends AbstractQuickPanelComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-quick-panel [items]="items"></nae-test-quick-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-quick-panel [items]="items"></ncc-test-quick-panel>'
 })
 class TestWrapperComponent {
     items = [];

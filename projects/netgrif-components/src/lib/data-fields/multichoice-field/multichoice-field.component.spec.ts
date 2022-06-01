@@ -1,7 +1,7 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MultichoiceFieldComponent} from './multichoice-field.component';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
@@ -19,7 +19,7 @@ describe('MultichoiceFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,

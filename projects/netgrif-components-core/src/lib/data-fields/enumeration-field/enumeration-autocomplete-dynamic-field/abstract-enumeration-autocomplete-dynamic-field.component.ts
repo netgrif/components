@@ -1,4 +1,4 @@
-import {ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
@@ -7,6 +7,10 @@ import {DynamicEnumerationField} from '../models/dynamic-enumeration-field';
 import {WrappedBoolean} from '../../data-field-template/models/wrapped-boolean';
 import {EnumerationFieldValidation, EnumerationFieldValue} from '../models/enumeration-field';
 
+@Component({
+    selector: 'ncc-abstract-enumeration-autocomplete-dynamic-field',
+    template: ''
+})
 export abstract class AbstractEnumerationAutocompleteDynamicFieldComponent implements OnInit, OnDestroy {
 
     @Input() enumerationField: DynamicEnumerationField;

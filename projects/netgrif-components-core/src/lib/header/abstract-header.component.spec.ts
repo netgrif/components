@@ -2,7 +2,6 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatIconModule} from '@angular/material/icon';
-import {of} from 'rxjs';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MockAuthenticationMethodService} from '../utility/tests/mocks/mock-authentication-method-service';
 import {Component, Injector, Optional} from '@angular/core';
@@ -17,7 +16,6 @@ import {MockAuthenticationService} from '../utility/tests/mocks/mock-authenticat
 import {MockUserResourceService} from '../utility/tests/mocks/mock-user-resource.service';
 import {ConfigurationService} from '../configuration/configuration.service';
 import {TestConfigurationService} from '../utility/tests/test-config';
-import {CaseViewService} from '../view/case-view/service/case-view-service';
 import {ViewService} from '../routing/view-service/view.service';
 import {TestViewService} from '../utility/tests/test-view-service';
 import {ErrorSnackBarComponent} from '../snack-bar/components/error-snack-bar/error-snack-bar.component';
@@ -85,7 +83,7 @@ describe('AbstractHeaderComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-head',
+    selector: 'ncc-test-head',
     template: ''
 })
 class TestHeaderComponent extends AbstractHeaderComponent {

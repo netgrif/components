@@ -53,7 +53,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {NAE_BASE_FILTER} from '../../search/models/base-filter-injection-token';
 import {AllowedNetsService} from '../../allowed-nets/services/allowed-nets.service';
 import {AllowedNetsServiceFactory} from '../../allowed-nets/services/factory/allowed-nets-service-factory';
-import {UserService} from '../../user/services/user.service';
 import {PermissionService} from '../../authorization/permission/permission.service';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
 import {AssignTaskEventOutcome} from '../../event/model/event-outcomes/task-outcomes/assign-task-event-outcome';
@@ -170,14 +169,13 @@ describe('AbtsractTaskPanelComponent', () => {
         expect(component.canFinish()).toBeFalse();
     });
 
-
     afterEach(() => {
         TestBed.resetTestingModule();
     });
 });
 
 @Component({
-    selector: 'nae-test-task-panel',
+    selector: 'ncc-test-task-panel',
     template: '<mat-expansion-panel #matExpansionPanel>' +
         '</mat-expansion-panel>'
 })
@@ -220,8 +218,8 @@ class TestTaskPanelComponent extends AbstractTaskPanelComponent implements After
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></nae-test-task-panel>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-task-panel [taskPanelData]="taskPanel" [selectedHeaders$]="selectedHeaders$"></ncc-test-task-panel>'
 })
 class TestWrapperComponent {
     taskPanel: TaskPanelData = {

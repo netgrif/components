@@ -88,6 +88,11 @@
             "err": "Beim laden der Benützer ist eine Fehler aufgetreten",
             "showcase": "Benützeransichtmodus ist nicht ausgewählt!"
         },
+        "ldapGroup": {
+            "choose": "LDAP-Gruppe suchen",
+            "noUser": "LDAP-Gruppe nicht gefunden",
+            "err": "LDAP-Gruppe konnte nicht geladen werden"
+        },
         "option-selector": {
             "select": "Auswählen",
             "choose-one-option": "Wählen Sie eine Option aus"
@@ -211,7 +216,10 @@
             "weekend": "Das eingegebene Datum muss das Wochenende sein",
             "workday": "Das eingegebene Datum muss ein Wochentag sein",
             "enumeration": "Eine von der angebotenen Optionen muss ausgewählt sein",
-            "min": "Die eingegebene Nummer muss größer als {{length}} sein"
+            "min": "Die eingegebene Nummer muss größer als {{length}} sein",
+            "translationRequired": "Übersetzung für Sprachen: <{{translation}}> muss eingegeben werden",
+            "translationOnly": "Nur die Übersetzung für Sprachen: <{{translation}}> ist erlaubt",
+            "requiredI18n": "Es muss mindestens ein Wert eingegeben werden"
         },
         "snackBar": {
             "downloadFail": " könnte nicht heruntergeladen werden",
@@ -239,6 +247,12 @@
             "clickToUpload": "Klicken Sie, um eine Datei hochzuladen",
             "clickToDownload": "Klicken Sie, um {{fileName}} herunterzuladen",
             "clickToDelete": "Klicken Sie, um die Datei zu löschen"
+        },
+        "i18n": {
+            "languageSelect": "Sprache auswählen",
+            "deleteTranslation": "Übersetzung löschen",
+            "showTranslations": "Übersetzungen anzeigen",
+            "hideTranslations": "Übersetzungen ausblenden"
         },
         "dynamicEnum": {
             "noData": "Keine Einträge entsprechen Ihrer Suchanfrage"
@@ -350,6 +364,10 @@
         "user-list": {
             "noUsersWereFound": "Derzeit befinden sich keine Benutzer im System",
             "listTitle": "Benutzer"
+        },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "Keine LDAP Gruppe wurde gefunden",
+            "listTitle": "LDAP Gruppen"
         },
         "process-list": {
             "newestVersion": "Neuste Version",

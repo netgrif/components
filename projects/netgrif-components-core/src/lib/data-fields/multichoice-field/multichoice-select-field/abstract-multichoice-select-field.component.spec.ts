@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
@@ -18,7 +18,7 @@ describe('AbstractMultichoiceSelectFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
@@ -43,7 +43,7 @@ describe('AbstractMultichoiceSelectFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-enum',
+    selector: 'ncc-test-enum',
     template: ''
 })
 class TestEnumComponent extends AbstractMultichoiceSelectFieldComponent {
@@ -53,9 +53,9 @@ class TestEnumComponent extends AbstractMultichoiceSelectFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-enum [showLargeLayout]="label" [multichoiceField]="field" [formControlRef]="form">' +
-        '</nae-test-enum>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-enum [showLargeLayout]="label" [multichoiceField]="field" [formControlRef]="form">' +
+        '</ncc-test-enum>'
 })
 class TestWrapperComponent {
     label = new WrappedBoolean();
