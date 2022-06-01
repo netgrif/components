@@ -8,6 +8,7 @@
       "strictMetadataEmit": true,
       "enableResourceInlining": true,
       "fullTemplateTypeCheck": true,
-      "enableIvy": true
+      "enableIvy": true,
+      "compilationMode": "partial"
   }
 }
