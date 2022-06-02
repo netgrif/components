@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { AfterViewInit, Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CurrencyPipe, getCurrencySymbol} from '@angular/common';
 import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component';
@@ -7,9 +7,9 @@ import {AbstractNumberErrorsComponent} from '../abstract-number-errors.component
     selector: 'ncc-abstract-currency-field',
     template: ''
 })
-export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberErrorsComponent implements OnInit {
+export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumberErrorsComponent implements AfterViewInit {
 
-    @Input() transformedValue: string;
+    transformedValue: string;
     fieldType: string;
     public readonly NUMBER_TYPE = 'number';
     public readonly TEXT_TYPE = 'text';
@@ -18,7 +18,7 @@ export abstract class AbstractCurrencyNumberFieldComponent extends AbstractNumbe
         super(translateService);
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.fieldType = this.TEXT_TYPE;
         this.transformedValue = this.transformCurrency(this.numberField.value?.toString());
         this.numberField.valueChanges().subscribe(value => {

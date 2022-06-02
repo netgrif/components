@@ -54,15 +54,7 @@ After successful installation you can use all components available in library an
 To start building your NAE web application, it must be configured as Angular application and as NAE application as well.
 
 Firstly, create new Angular project. We recommend following [official guide](https://angular.io/guide/setup-local).
-At the moment @netgrif/components does not support Ivy engine, your can turn it off with attribute in `tsconfig.json`:
 
-```json
-{
-    "angularCompilerOptions":{
-        "enableIvy": false
-    }
-}
-```
 
 If you want to create own library of components for NAE applications, please see the library [@netgrif/components-core](https://github.com/netgrif/components/blob/master/projects/netgrif-components-core/README.md).
 
