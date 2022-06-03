@@ -7,7 +7,8 @@ import {
     DataGroup,
     extractIconAndTitle,
     NAE_VIEW_ID_SEGMENT,
-    groupNavigationViewIdSegmentFactory
+    groupNavigationViewIdSegmentFactory,
+    NewCaseCreationConfigurationData
 } from '@netgrif/components-core';
 import {DefaultTabbedCaseViewComponent} from '../default-tabbed-case-view/default-tabbed-case-view.component';
 import {DefaultTabbedTaskViewComponent} from '../default-tabbed-task-view/default-tabbed-task-view.component';
@@ -28,6 +29,18 @@ export class DefaultTabViewComponent {
 
     constructor(@Inject(NAE_NAVIGATION_ITEM_TASK_DATA) protected _navigationItemTaskData: Array<DataGroup>) {
         const labelData = extractIconAndTitle(this._navigationItemTaskData);
+        const createCaseButtonTitle: string = _navigationItemTaskData[0].fields
+            .find(field => field.stringId === 'create_case_button_title').value;
+        const createCaseButtonIcon: string = _navigationItemTaskData[0].fields
+            .find(field => field.stringId === 'create_case_button_icon').value;
+        const newCaseButtonConfig: NewCaseCreationConfigurationData = {
+            enableCaseTitle: true,
+            isCaseTitleRequired: true,
+            newCaseButtonConfig: {
+                createCaseButtonTitle,
+                createCaseButtonIcon
+            }
+        };
         this.tabs = [
             {
                 label: {text: labelData.name, icon: labelData.icon},
@@ -36,7 +49,8 @@ export class DefaultTabViewComponent {
                 injectedObject: {
                     tabViewComponent: DefaultTabbedTaskViewComponent,
                     tabViewOrder: 0,
-                    navigationItemTaskData: this._navigationItemTaskData
+                    navigationItemTaskData: this._navigationItemTaskData,
+                    newCaseButtonConfiguration: newCaseButtonConfig
                 }
             }
         ];

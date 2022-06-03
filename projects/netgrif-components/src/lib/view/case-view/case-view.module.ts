@@ -4,11 +4,12 @@ import {CaseListComponent} from './components/case-list/case-list.component';
 import {FlexModule} from '@angular/flex-layout';
 import {PanelComponentModule} from '../../panel/panel.module';
 import {MaterialModule, TranslateLibModule} from '@netgrif/components-core';
+import { CreateCaseButtonComponent } from './components/create-case-button/create-case-button.component';
 
 
 @NgModule({
-    declarations: [CaseListComponent],
-    exports: [CaseListComponent],
+    declarations: [CaseListComponent, CreateCaseButtonComponent],
+    exports: [CaseListComponent, CreateCaseButtonComponent],
     imports: [
         CommonModule,
         MaterialModule,

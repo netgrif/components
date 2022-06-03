@@ -15,4 +15,14 @@ export interface NewCaseCreationConfigurationData {
 
     isCaseTitleRequired: boolean;
 
+    newCaseButtonConfig?: NewCaseButtonConfiguration;
+
+}
+
+export interface NewCaseButtonConfiguration {
+
+    createCaseButtonTitle?: string;
+
+    createCaseButtonIcon?: string;
+
 }

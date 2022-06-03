@@ -6,9 +6,7 @@
                 <nc-search class="search-width" [additionalFilterData]="additionalFilterData"></nc-search>
             </div>
             <div fxLayoutAlign="end center">
-                <button mat-mini-fab color="primary" *ngIf="hasAuthority()" (click)="createNewCase()">
-                    <mat-icon class="net-upload" aria-hidden="false">add</mat-icon>
-                </button>
+                <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
             </div>
         </div>
     </mat-card>
