@@ -30,7 +30,6 @@ export abstract class TabbedCaseView extends AbstractCaseView {
                               enableCaseTitle: true,
                               isCaseTitleRequired: true
                           }) {
-
         super(caseViewService, _overflowService, undefined, _newCaseCreationConfig);
         this._correctlyInjected = !!this._injectedTabData.tabViewComponent && this._injectedTabData.tabViewOrder !== undefined;
         if (!this._correctlyInjected) {
@@ -42,16 +41,6 @@ export abstract class TabbedCaseView extends AbstractCaseView {
         if (this._correctlyInjected) {
             this.openTab(clickedCase);
         }
-    }
-
-    public createNewCase(): Observable<Case> {
-        const myCase = super.createNewCase();
-        myCase.subscribe( kaze => {
-            if (this._caseViewService.viewEnabled(kaze)) {
-                this.openTab(kaze);
-            }
-        });
-        return myCase;
     }
 
     protected openTab(openCase: Case) {

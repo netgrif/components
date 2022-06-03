@@ -5,11 +5,7 @@
             <div fxLayoutAlign="start center" fxFlex>
                 <nc-search class="search-width" (filterLoaded)="loadFilter($event)" (filterSaved)="saveFilter($event)"></nc-search>
             </div>
-            <div fxLayoutAlign="end center">
-                <button mat-mini-fab color="primary" (click)="createNewCase()">
-                    <mat-icon class="net-upload" aria-hidden="false">add</mat-icon>
-                </button>
-            </div>
+            <nc-create-case-button [newCaseCreationConfig]="newCaseCreationConfig" (caseCreatedEvent)="handleCaseClick($event)"></nc-create-case-button>
         </div>
     </mat-card>
 

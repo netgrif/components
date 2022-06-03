@@ -1,4 +1,4 @@
-import {InjectedTabbedCaseViewData, DataGroup} from '@netgrif/components-core';
+import {InjectedTabbedCaseViewData, DataGroup, NewCaseCreationConfigurationData } from '@netgrif/components-core';
 
 /**
  * A variation of {@link InjectedTabbedCaseViewData} that contain the task data of a navigation item task.
@@ -7,4 +7,5 @@ import {InjectedTabbedCaseViewData, DataGroup} from '@netgrif/components-core';
  */
 export interface InjectedTabbedCaseViewDataWithNavigationItemTaskData extends InjectedTabbedCaseViewData {
     navigationItemTaskData: Array<DataGroup>;
+    newCaseButtonConfiguration: NewCaseCreationConfigurationData;
 }

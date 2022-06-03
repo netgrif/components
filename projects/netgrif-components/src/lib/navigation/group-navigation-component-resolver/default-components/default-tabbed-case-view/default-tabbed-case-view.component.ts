@@ -59,7 +59,7 @@ export class DefaultTabbedCaseViewComponent extends TabbedCaseView implements Af
     constructor(caseViewService: CaseViewService,
                 loggerService: LoggerService,
                 @Inject(NAE_TAB_DATA) injectedTabData: InjectedTabbedCaseViewDataWithNavigationItemTaskData) {
-        super(caseViewService, loggerService, injectedTabData);
+        super(caseViewService, loggerService, injectedTabData, undefined, undefined, undefined, injectedTabData.newCaseButtonConfiguration);
     }
 
     ngAfterViewInit(): void {
