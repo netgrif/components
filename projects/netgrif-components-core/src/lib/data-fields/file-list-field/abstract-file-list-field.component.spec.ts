@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
@@ -35,7 +35,7 @@ describe('AbstractFileListFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
                 TranslateLibModule,
@@ -77,7 +77,7 @@ describe('AbstractFileListFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-filelist',
+    selector: 'ncc-test-filelist',
     template: ''
 })
 class TestFileListComponent extends AbstractFileListFieldComponent {
@@ -92,8 +92,8 @@ class TestFileListComponent extends AbstractFileListFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-filelist [dataField]="field" taskId="666"></nae-test-filelist>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-filelist [dataField]="field" taskId="666"></ncc-test-filelist>'
 })
 class TestWrapperComponent {
     field = new FileListField('', '', {

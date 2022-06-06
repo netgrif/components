@@ -1,4 +1,4 @@
-import {Injector, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {Filter} from '../../../filter/models/filter';
 import {CustomCard} from '../model/custom-dashboard-model/custom-card';
 import {DashboardResourceService} from '../../../resources/engine-endpoint/dashboard-resource.service';
@@ -8,8 +8,13 @@ import {DashboardSingleData} from '../model/custom-dashboard-model/dashboard-sin
 import {DashboardMultiData} from '../model/custom-dashboard-model/dashboard-multi-data';
 import {LoggerService} from '../../../logger/services/logger.service';
 import {AggregationResult} from '../model/custom-dashboard-model/aggregation-result';
+import {Color} from "@swimlane/ngx-charts";
 
-export abstract class AbstractCustomCard implements OnInit, OnDestroy {
+@Component({
+    selector: 'ncc-abstract-custom-card',
+    template: ''
+})
+export abstract class AbstractCustomCardComponent implements OnInit, OnDestroy {
 
     @Input() public card: CustomCard;
     protected _filter: Filter;
@@ -35,7 +40,7 @@ export abstract class AbstractCustomCard implements OnInit, OnDestroy {
             '#a10ed6', '#b9c9e3', '#a8385d', '#aae3f5',
             '#bbbfbf', '#e7a897', '#854618', '#7aa3e5',
             '#a8385d', '#0db8ee']
-    };
+    } as Color;
 
     protected constructor(protected _injector: Injector,
                           protected resourceService: DashboardResourceService,
@@ -44,6 +49,8 @@ export abstract class AbstractCustomCard implements OnInit, OnDestroy {
         this.loading = new LoadingEmitter();
         this.single = new Array<DashboardSingleData>();
         this.multi = new Array<DashboardMultiData>();
+        this.value = 0;
+        this.count = 0;
     }
 
     ngOnInit(): void {

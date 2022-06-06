@@ -69,7 +69,7 @@ describe('AbstractCaseListComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-case',
+    selector: 'ncc-test-case',
     template: ''
 })
 class TestCaseComponent extends AbstractCaseListComponent {

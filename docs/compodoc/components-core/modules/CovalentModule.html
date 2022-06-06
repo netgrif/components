@@ -73,22 +73,11 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {NgModule} from &#x27;@angular/core&#x27;;
-import {CovalentHighlightModule} from &#x27;@covalent/highlight&#x27;;
 import {CovalentMarkdownModule} from &#x27;@covalent/markdown&#x27;;
-import {CovalentCommonModule} from &#x27;@covalent/core/common&#x27;;
-import {CovalentLayoutModule} from &#x27;@covalent/core/layout&#x27;;
-import {CovalentStepsModule} from &#x27;@covalent/core/steps&#x27;;
-import {CovalentTextEditorModule} from &#x27;@covalent/text-editor&#x27;;
-
 
 @NgModule({
     exports: [
-        CovalentHighlightModule,
-        CovalentMarkdownModule,
-        CovalentLayoutModule,
-        CovalentStepsModule,
-        CovalentCommonModule,
-        CovalentTextEditorModule,
+        CovalentMarkdownModule
     ]
 })
 export class CovalentModule {

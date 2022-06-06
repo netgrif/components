@@ -36,7 +36,7 @@ describe('AbstractSearchOperandInputComponent', () => {
 });
 
 @Component({
-    selector: 'nae-search-operand-input',
+    selector: 'ncc-search-operand-input',
     template: ''
 })
 class TestSearchOperandInputComponent extends AbstractSearchOperandInputComponent {
@@ -46,9 +46,9 @@ class TestSearchOperandInputComponent extends AbstractSearchOperandInputComponen
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-search-operand-input [inputFormControl]="formControl" [inputType]="searchInputType.TEXT" [first]="true">' +
-        '</nae-search-operand-input>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-search-operand-input [inputFormControl]="formControl" [inputType]="searchInputType.TEXT" [first]="true">' +
+        '</ncc-search-operand-input>'
 })
 class TestWrapperComponent {
 

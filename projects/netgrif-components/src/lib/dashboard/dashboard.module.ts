@@ -10,6 +10,7 @@ import {BarchartCardComponent} from './cards/barchart-card/barchart-card.compone
 import {LinearGaugeCardComponent} from './cards/lineargauge-card/linear-gauge-card.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {PortalCardComponent} from './cards/portal-card/portal-card.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
     declarations: [
@@ -35,7 +36,9 @@ import {PortalCardComponent} from './cards/portal-card/portal-card.component';
         CommonModule,
         MaterialModule,
         TranslateLibModule,
-        NgxChartsModule
+        NgxChartsModule,
+        MaterialModule,
+        MatGridListModule
     ]
 })
 export class DashboardComponentModule {

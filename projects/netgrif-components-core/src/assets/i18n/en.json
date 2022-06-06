@@ -88,6 +88,11 @@
             "err": "Users failed to load",
             "showcase": "User showcase mode not set!"
         },
+        "ldapGroup": {
+            "choose": "Search Ldap group",
+            "noUser": "Not found Ldap group",
+            "err": "Failed to load Ldap group"
+        },
         "option-selector": {
             "select": "Select",
             "choose-one-option": "Choose one of the provided options"
@@ -211,7 +216,10 @@
             "weekend": "Entered date must be weekend day",
             "workday": "Entered date must be week day",
             "enumeration": "One of the options must be selected",
-            "min": "Entered number must be greater than {{length}}"
+            "min": "Entered number must be greater than {{length}}",
+            "translationRequired": "Translation for languages: <{{translation}}> must be entered",
+            "translationOnly": "Only translation for languages: <{{translation}}> is allowed",
+            "requiredI18n": "At least one value must be entered"
         },
         "snackBar": {
             "downloadFail": " failed to download",
@@ -239,6 +247,12 @@
             "clickToUpload": "Click to upload file",
             "clickToDownload": "Click to download {{fileName}}",
             "clickToDelete": "Click to delete file"
+        },
+        "i18n": {
+            "languageSelect": "Select language",
+            "deleteTranslation": "Delete translation",
+            "showTranslations": "Show translations",
+            "hideTranslations": "Hide translations"
         },
         "dynamicEnum": {
             "noData": "No items match your search"
@@ -350,6 +364,10 @@
         "user-list": {
             "noUsersWereFound": "There are any user in the system at the moment",
             "listTitle": "Users"
+        },
+        "ldapGroup-list": {
+            "noLdapGroupsWereFound": "No LDAP group was found",
+            "listTitle": "Ldap Groups"
         },
         "process-list": {
             "newestVersion": "Newest version",

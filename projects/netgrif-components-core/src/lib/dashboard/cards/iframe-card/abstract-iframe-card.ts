@@ -1,8 +1,12 @@
-import {Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {IframeCard} from '../model/iframe-card';
 
-export abstract class AbstractIframeCard implements OnInit {
+@Component({
+    selector: 'ncc-abstract-iframe-card',
+    template: ''
+})
+export abstract class AbstractIframeCardComponent implements OnInit {
 
     @Input() public card: IframeCard;
     public sanitizedURL: SafeResourceUrl;

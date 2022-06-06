@@ -1,14 +1,15 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {EnumerationFieldComponent} from './enumeration-field.component';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {DataFieldTemplateComponent} from '../data-field-template/data-field-template.component';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {RequiredLabelComponent} from '../required-label/required-label.component';
 import {EnumerationSelectFieldComponent} from './enumeration-select-field/enumeration-select-field.component';
 import {EnumerationListFieldComponent} from './enumeration-list-field/enumeration-list-field.component';
-// tslint:disable-next-line:max-line-length
-import {EnumerationAutocompleteSelectFieldComponent} from './enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
+import {
+    EnumerationAutocompleteSelectFieldComponent
+} from './enumeration-autocomplete-select-field/enumeration-autocomplete-select-field.component';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {EnumerationField, MaterialModule, TranslateLibModule} from '@netgrif/components-core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -22,7 +23,7 @@ describe('EnumerationFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 BrowserAnimationsModule,
                 TranslateLibModule,
                 HttpClientTestingModule,

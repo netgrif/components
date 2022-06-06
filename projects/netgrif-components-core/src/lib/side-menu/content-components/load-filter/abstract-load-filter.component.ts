@@ -1,9 +1,9 @@
-import {Inject} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {NAE_SIDE_MENU_CONTROL} from '../../side-menu-injection-token';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {LoadFilterInjectionData} from './model/load-filter-injection-data';
 import {LoggerService} from '../../../logger/services/logger.service';
-import {AbstractCaseView} from '../../../view/case-view/abstract-case-view';
+import {AbstractCaseViewComponent} from '../../../view/case-view/abstract-case-view';
 import {CaseViewService} from '../../../view/case-view/service/case-view-service';
 import {Case} from '../../../resources/interface/case';
 import {getImmediateData} from '../../../utility/get-immediate-data';
@@ -11,7 +11,11 @@ import {UserFilterConstants} from '../../../filter/models/user-filter-constants'
 import {SavedFilterMetadata} from '../../../search/models/persistance/saved-filter-metadata';
 import {SimpleFilter} from '../../../filter/models/simple-filter';
 
-export abstract class AbstractLoadFilterComponent extends AbstractCaseView {
+@Component({
+    selector: 'ncc-abstract-load-filter',
+    template: ''
+})
+export abstract class AbstractLoadFilterComponent extends AbstractCaseViewComponent {
 
     protected _injectedData: LoadFilterInjectionData;
 

@@ -350,7 +350,7 @@ describe('AbstractNavigationTreeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-nav-tree',
+    selector: 'ncc-test-nav-tree',
     template: ''
 })
 class TestTreeComponent extends AbstractNavigationTreeComponent {

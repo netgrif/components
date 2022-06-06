@@ -19,7 +19,7 @@ describe('DefaultSimpleTaskViewComponent', () => {
             imports: [
                 NavigationComponentModule,
                 TestMockDependenciesModule,
-                RouterModule.forRoot([]),
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
                 NoopAnimationsModule,
             ],
             providers: [

@@ -1,4 +1,4 @@
-import {AfterViewInit, OnInit} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {SideMenuControl} from '../../models/side-menu-control';
 import {PetriNetResourceService} from '../../../resources/engine-endpoint/petri-net-resource.service';
@@ -27,7 +27,11 @@ interface FileList {
     [key: string]: FileUploadModel;
 }
 
-export abstract class AbstractImportNetComponent implements OnInit, AfterViewInit {
+@Component({
+    selector: 'ncc-abstract-import-net',
+    template: ''
+})
+export abstract class AbstractImportNetComponent implements AfterViewInit {
 
     public files: FileList = {};
     public releaseTypes: Array<string> = ['Major', 'Minor', 'Patch'];
@@ -41,9 +45,6 @@ export abstract class AbstractImportNetComponent implements OnInit, AfterViewIni
                 protected _log: LoggerService,
                 protected _snackbar: SnackBarService,
                 protected _translate: TranslateService) {
-    }
-
-    ngOnInit() {
     }
 
     ngAfterViewInit(): void {

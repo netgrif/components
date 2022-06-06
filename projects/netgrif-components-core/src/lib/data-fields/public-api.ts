@@ -36,6 +36,7 @@ export * from './filter-field/abstract-filter-field-content.component';
 export * from './i18n-field/abstract-i18n-field.component';
 export * from './i18n-field/i18n-text-field/abstract-i18n-text-field.component';
 export * from './i18n-field/i18n-divider-field/abstract-i18n-divider-field.component';
+export * from './i18n-field/abstract-i18n-errors.component';
 
 /* Class */
 export * from './models/abstract-data-field';
@@ -66,6 +67,7 @@ export * from './models/format-filter';
 export * from './models/component';
 export * from './models/properties';
 export * from './data-field-template/models/wrapped-boolean';
+export * from './i18n-field/models/language-icons';
 
 /* Tokens */
 export * from './models/boolean-label-enabled-token';
@@ -75,3 +77,6 @@ export * from './filter-field/models/filter-field-injection-token';
 /* Enums */
 export * from './models/template-appearance';
 export * from './models/material-appearance';
+
+/* Services */
+export * from './i18n-field/language-icons.service';

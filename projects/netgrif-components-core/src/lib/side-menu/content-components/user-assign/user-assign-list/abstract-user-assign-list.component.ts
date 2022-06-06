@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
@@ -9,6 +9,10 @@ import {UserValue} from '../../../../data-fields/user-field/models/user-value';
 /**
  * Is responsible for displaying, filtering, loading and selecting users.
  */
+@Component({
+    selector: 'ncc-abstract-user-assign-list',
+    template: ''
+})
 export abstract class AbstractUserAssignListComponent implements OnInit, OnDestroy {
 
     /**

@@ -79,7 +79,7 @@ describe('AbstractTaskListComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-task-list',
+    selector: 'ncc-test-task-list',
     template: ''
 })
 class TestTaskListComponent extends AbstractTaskListComponent {
@@ -92,8 +92,8 @@ class TestTaskListComponent extends AbstractTaskListComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-task-list [tasks$]="taskPanels"></nae-test-task-list>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-task-list [tasks$]="taskPanels"></ncc-test-task-list>'
 })
 class TestWrapperComponent {
     taskPanels = of([]);

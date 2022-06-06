@@ -1,31 +1,31 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
 @mixin panel-component($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     .panel-color:hover {
-        background: mat-color($primary) !important;
+        background: mat.get-color-from-palette($primary) !important;
         color: white !important;
 
         .panel-primary-icon {
-            color: mat-color($accent);
+            color: mat.get-color-from-palette($accent);
         }
 
         .panel-accent-icon {
-            color: mat-color($accent);
+            color: mat.get-color-from-palette($accent);
         }
     }
 
     .line-datagroup {
         height: 1px;
-        background: mat-color($primary) !important;
+        background: mat.get-color-from-palette($primary) !important;
     }
 
     .panel-primary-icon {
-        color: mat-color($primary);
+        color: mat.get-color-from-palette($primary);
     }
 
     .panel-accent-icon {
-        color: mat-color($accent);
+        color: mat.get-color-from-palette($accent);
     }
 }

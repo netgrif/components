@@ -92,7 +92,7 @@ describe('AbstractSearchModeComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-search',
+    selector: 'ncc-test-search',
     template: ''
 })
 class TestSeaarchModeComponent extends AbstractSearchModeComponent {
@@ -102,8 +102,8 @@ class TestSeaarchModeComponent extends AbstractSearchModeComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-search [headerService]="service"></nae-test-search>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-search [headerService]="service"></ncc-test-search>'
 })
 class TestWrapperComponent {
     constructor(public service: CaseHeaderService) {

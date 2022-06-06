@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
 @mixin view-theme($theme) {
     $primary: map-get($theme, primary);
@@ -9,8 +9,8 @@
     }
 
     .selected-tree-node {
-        color: mat-color($primary);
-        background: mat-color($primary, 50);
+        color: mat.get-color-from-palette($primary);
+        background: mat.get-color-from-palette($primary, 50);
     }
 }
 

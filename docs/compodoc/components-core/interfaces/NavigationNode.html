@@ -356,7 +356,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Input, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
 import {NestedTreeControl} from &#x27;@angular/cdk/tree&#x27;;
 import {ConfigurationService} from &#x27;../../configuration/configuration.service&#x27;;
 import {Services, View, Views} from &#x27;../../../commons/schema&#x27;;
@@ -393,6 +393,10 @@ export interface NavigationNode {
     translate?: boolean;
 }
 
+@Component({
+    selector: &#x27;ncc-abstract-navigation-tree&#x27;,
+    template: &#x27;&#x27;
+})
 export abstract class AbstractNavigationTreeComponent extends AbstractNavigationResizableDrawerComponent implements OnInit, OnDestroy {
 
     @Input() public viewPath: string;

@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AngularResizedEventModule} from 'angular-resize-event';
+import {AngularResizeEventModule} from 'angular-resize-event';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Optional} from '@angular/core';
@@ -27,7 +27,7 @@ describe('AbstractNumberFieldComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                AngularResizedEventModule,
+                AngularResizeEventModule,
                 TranslateLibModule,
                 HttpClientTestingModule,
                 NoopAnimationsModule
@@ -61,7 +61,7 @@ describe('AbstractNumberFieldComponent', () => {
 });
 
 @Component({
-    selector: 'nae-test-num',
+    selector: 'ncc-test-num',
     template: ''
 })
 class TestNumComponent extends AbstractNumberFieldComponent {
@@ -72,8 +72,8 @@ class TestNumComponent extends AbstractNumberFieldComponent {
 }
 
 @Component({
-    selector: 'nae-test-wrapper',
-    template: '<nae-test-num [dataField]="field"></nae-test-num>'
+    selector: 'ncc-test-wrapper',
+    template: '<ncc-test-num [dataField]="field"></ncc-test-num>'
 })
 class TestWrapperComponent {
     field = new NumberField('', '', 4, {

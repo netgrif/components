@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
 import {
-    AbstractCustomCard,
+    AbstractCustomCardComponent,
     DashboardEventContent,
     DashboardMultiData,
     DashboardResourceService,
@@ -14,7 +14,7 @@ import {AggregationResult, LoggerService} from '@netgrif/components-core';
     templateUrl: './line-chart-card.component.html',
     styleUrls: ['./line-chart-card.component.scss']
 })
-export class LineChartCardComponent extends AbstractCustomCard implements OnInit {
+export class LineChartCardComponent extends AbstractCustomCardComponent implements OnInit {
 
     timeline = true;
     @Output() selectEvent: EventEmitter<DashboardEventContent>;

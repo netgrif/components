@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {
-    AbstractCaseView,
+    AbstractCaseViewComponent,
     Case,
     CaseViewService,
     SearchService,
@@ -46,7 +46,7 @@ const baseFilterFactory = () => {
         {provide: NAE_SEARCH_CATEGORIES, useFactory: defaultCaseSearchCategoriesFactory, deps: [CategoryFactory]},
     ],
 })
-export class CaseViewComponent extends AbstractCaseView implements AfterViewInit {
+export class CaseViewComponent extends AbstractCaseViewComponent implements AfterViewInit {
 
     @ViewChild('header') public caseHeaderComponent: HeaderComponent;
 
