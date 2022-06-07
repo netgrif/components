@@ -36,6 +36,7 @@ import { TitleConfigComponent } from './doc/demo-title-config/title-config.compo
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import { PublicTaskSingleViewComponent } from './doc/public-task-single-view/public-task-single-view.component';
 
 @Injectable({
     providedIn: 'root'
@@ -76,6 +77,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'RolesAssignComponent', class: RolesAssignComponent},
             {id: 'LdapGroupRolesAssignComponent', class: LdapGroupRolesAssignComponent},
             {id: 'PublicTaskViewComponent', class: PublicTaskViewComponent},
+            {id: 'PublicTaskSingleViewComponent', class: PublicTaskSingleViewComponent},
             {id: 'PublicWorkflowViewComponent', class: PublicWorkflowViewComponent},
             {id: 'PublicResolverComponent', class: PublicResolverComponent},
             {id: 'ResetPasswordFormComponent', class: ResetPasswordFormComponent}], configurationService, router, loggerService);

@@ -21,6 +21,7 @@
                     [taskPanelData]="task" [selectedHeaders$]="selectedHeaders$" [first]="first" [last]="last"
                     [forceLoadDataOnOpen]="forceLoadDataOnOpen"
                     [responsiveBody]="responsiveBody"
+                    [singleTask]="singleTask"
                     (taskEvent)="emitTaskEvent($event)"
                     (panelRefOutput)="addToPanelRefs(task, $event)"
                     class="panel-expanded-spacing">

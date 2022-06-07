@@ -62,6 +62,7 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
     @Input() public first: boolean;
     @Input() public last: boolean;
     @Input() responsiveBody = true;
+    @Input() singleTask = false;
 
     @Input()
     set forceLoadDataOnOpen(force: boolean) {
@@ -126,7 +127,9 @@ export abstract class AbstractTaskPanelComponent extends AbstractPanelWithImmedi
             this.expand();
         });
         _taskOperations.close$.subscribe(() => {
-            this.collapse();
+            if (!this.singleTask) {
+                this.collapse();
+            }
         });
         _taskOperations.reload$.subscribe(() => {
             this._taskViewService.reloadCurrentPage();

@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {AbstractDefaultTaskList} from './default-task-panel-list/abstract-default-task-list';
 import {Observable} from 'rxjs';
 import {TaskPanelData} from './task-panel-data/task-panel-data';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'ncc-abstract-task-list',
@@ -15,9 +16,25 @@ import {TaskPanelData} from './task-panel-data/task-panel-data';
 })
 export abstract class AbstractTaskListComponent extends AbstractDefaultTaskList {
 
+    @Input() singleTask = false;
+
     @Input()
     set tasks$(tasks: Observable<Array<TaskPanelData>>) {
-        this._tasks$ = tasks;
+        if (!this.singleTask) {
+            this._tasks$ = tasks;
+        } else {
+            let transitionId = '';
+            this.route.paramMap.subscribe(params => {
+                transitionId = params.get('transitionId');
+            });
+             this._tasks$ = this._taskViewService.tasks$.pipe(map(tasks => {
+                let reducedTasks = tasks.filter(t => t.task.transitionId === transitionId);
+                if (!!reducedTasks && !!reducedTasks[0]) {
+                    reducedTasks[0].initiallyExpanded = true;
+                }
+                return reducedTasks;
+            }));
+        }
     }
 
     get tasks$(): Observable<Array<TaskPanelData>> {
