@@ -18,7 +18,7 @@ import {SnackBarService} from '../../snack-bar/services/snack-bar.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NAE_INFORM_ABOUT_INVALID_DATA} from '../models/invalid-data-policy-token';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {BehaviorSubject} from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import {ResizedEvent} from 'angular-resize-event';
 import {take} from 'rxjs/operators';
 import {EventOutcomeMessageResource} from '../../resources/interface/message-resource';
@@ -113,6 +113,10 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
      * Extension of file to preview
      */
     public previewExtension: FilePreviewType;
+    /**
+     * Form control subscription
+     */
+    private updatedFieldSubscription: Subscription;
 
     /**
      * Only inject services.
@@ -161,11 +165,19 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
                 }
             }
         }
+        this.updatedFieldSubscription = this.dataField.updated.subscribe( () => {
+            if (!!this.filePreview
+                && !!this.dataField.value
+                && !!this.dataField.value.name) {
+                this.initializePreviewIfDisplayable();
+            }
+        })
     }
 
     ngOnDestroy(): void {
         super.ngOnDestroy();
         this.fullSource.complete();
+        this.updatedFieldSubscription.unsubscribe();
     }
 
     public chooseFile() {
