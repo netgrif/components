@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsCreateViewPrompt",
+    "$id": "SchematicsCreateViewPrompt",
     "title": "Create new View with prompt for settings",
     "type": "object",
     "properties": {
