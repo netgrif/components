@@ -43,7 +43,7 @@ export abstract class AbstractTabbedCaseViewComponent extends AbstractCaseViewCo
         super(caseViewService, _overflowService, undefined, _newCaseCreationConfig);
         this._correctlyInjected = !!this._injectedTabData.tabViewComponent && this._injectedTabData.tabViewOrder !== undefined;
         if (!this._correctlyInjected) {
-            this._loggerService.warn('TabbedCaseView must inject a filled object of type InjectedTabbedCaseViewData to work properly!');
+            this._loggerService.warn('AbstractTabbedCaseViewComponent must inject a filled object of type InjectedTabbedCaseViewData to work properly!');
         }
     }
 
