@@ -16,6 +16,8 @@ import { map } from 'rxjs/operators';
 })
 export abstract class AbstractTaskListComponent extends AbstractDefaultTaskList {
 
+    private readonly TRANSITION_ID = 'transitionId';
+
     @Input() singleTask = false;
 
     @Input()
@@ -25,7 +27,7 @@ export abstract class AbstractTaskListComponent extends AbstractDefaultTaskList 
         } else {
             let transitionId = '';
             this.route.paramMap.subscribe(params => {
-                transitionId = params.get('transitionId');
+                transitionId = params.get(this.TRANSITION_ID);
             });
              this._tasks$ = this._taskViewService.tasks$.pipe(map(tasks => {
                 let reducedTasks = tasks.filter(t => t.task.transitionId === transitionId);
