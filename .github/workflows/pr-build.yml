@@ -13,18 +13,18 @@ jobs:
             -   uses: actions/setup-node@v2
                 name: Full Test
                 with:
-                    node-version: 12
-            -   run: npm i
+                    node-version: 16
+            -   run: npm i --legacy-peer-deps
             -   name: Build & test components-core
                 run: |
                     npm run ncc:build
                     npm run ncc:full-test
-                    npm i ./dist/netgrif-components-core --save-optional
+                    npm i ./dist/netgrif-components-core --save-optional --legacy-peer-deps
             -   name: Build & test components
                 run: |
                     npm run nc:build
                     npm run nc:full-test
-                    npm i ./dist/netgrif-components --save-optional
+                    npm i ./dist/netgrif-components --save-optional --legacy-peer-deps
             -   name: Edit Path
                 run: |
                     sed -i 's/SF:.*.projects/SF:projects/g' coverage/netgrif-components/lcov.info
