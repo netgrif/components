@@ -18,25 +18,13 @@ export abstract class AbstractTaskListComponent extends AbstractDefaultTaskList 
 
     private readonly TRANSITION_ID = 'transitionId';
 
+    private transitionId: string;
+
     @Input() singleTask = false;
 
     @Input()
     set tasks$(tasks: Observable<Array<TaskPanelData>>) {
-        if (!this.singleTask) {
-            this._tasks$ = tasks;
-        } else {
-            let transitionId = '';
-            this.route.paramMap.subscribe(params => {
-                transitionId = params.get(this.TRANSITION_ID);
-            });
-             this._tasks$ = this._taskViewService.tasks$.pipe(map(tasks => {
-                let reducedTasks = tasks.filter(t => t.task.transitionId === transitionId);
-                if (!!reducedTasks && !!reducedTasks[0]) {
-                    reducedTasks[0].initiallyExpanded = true;
-                }
-                return reducedTasks;
-            }));
-        }
+        this.resolveTaskArray(tasks);
     }
 
     get tasks$(): Observable<Array<TaskPanelData>> {
@@ -51,10 +39,38 @@ export abstract class AbstractTaskListComponent extends AbstractDefaultTaskList 
         super(_taskViewService, _log, injectedTabData, route);
     }
 
+    get transitionId$(): string {
+        return this.transitionId;
+    }
+
+    set transitionId$(id: string ) {
+        this.transitionId = id;
+    }
+
     public loadNextPage(): void {
         if (!this.viewport) {
             return;
         }
         this._taskViewService.nextPage(this.viewport.getRenderedRange(), this.viewport.getDataLength());
+    }
+
+    public resolveTaskArray(tasks: Observable<Array<TaskPanelData>>): void {
+        if (!this.singleTask) {
+            this._tasks$ = tasks;
+        } else {
+            this.route.paramMap.subscribe(params => {
+                if (params.has(this.transitionId))
+                    this.transitionId = params.get(this.TRANSITION_ID);
+            });
+            this._tasks$ = this._taskViewService.tasks$.pipe(map(tasks => {
+                if (!!this.transitionId) {
+                    let reducedTasks = tasks.filter(t => t.task.transitionId === this.transitionId);
+                    if (!!reducedTasks && !!reducedTasks[0]) {
+                        reducedTasks[0].initiallyExpanded = true;
+                    }
+                    return reducedTasks;
+                }
+            }));
+        }
     }
 }
