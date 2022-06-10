@@ -69,9 +69,9 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
 };
 
 @Component({
-  selector: 'nae-app-public-task-single-view',
-  templateUrl: './public-task-single-view.component.html',
-  styleUrls: ['./public-task-single-view.component.scss'],
+  selector: 'nae-app-public-single-task-view',
+  templateUrl: './public-single-task-view.component.html',
+  styleUrls: ['./public-single-task-view.component.scss'],
     providers: [
         TaskViewService,
         PublicTaskLoadingService,
@@ -110,7 +110,7 @@ const caseResourceServiceFactory = (userService: UserService, sessionService: Se
         ViewIdService,
     ]
 })
-export class PublicTaskSingleViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
+export class PublicSingleTaskViewComponent extends AbstractTaskViewComponent implements AfterViewInit {
 
     @ViewChild('header') public taskHeaderComponent: HeaderComponent;
 
