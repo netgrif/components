@@ -42,6 +42,7 @@ import {TaskListPaginationComponent} from './task-panel-list-pagination/task-lis
     ],
     exports: [
         PanelComponent,
+        PanelItemComponent,
         TaskPanelComponent,
         CasePanelComponent,
         WorkflowPanelComponent,

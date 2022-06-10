@@ -171,27 +171,27 @@
                                         <tbody>
                                                 <tr>
                                                         <td>taskViewService</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/TaskViewService.html" target="_self" >TaskViewService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>_injectedTabData</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../interfaces/InjectedTabbedTaskViewData.html" target="_self" >InjectedTabbedTaskViewData</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -203,7 +203,7 @@
 </section>
 
             <section>
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -339,7 +339,7 @@
 </section>
 
             <section>
-    
+
     <h3 id="methods">
         Methods
     </h3>
@@ -456,7 +456,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -479,7 +479,7 @@ import {NAE_TAB_DATA} from &#x27;../../tabs/tab-data-injection-token/tab-data-in
 import {InjectedTabbedTaskViewData} from &#x27;./models/injected-tabbed-task-view-data&#x27;;
 import {Subscription} from &#x27;rxjs&#x27;;
 
-export abstract class TabbedTaskView extends AbstractTaskView implements OnDestroy {
+export abstract class AbstractTabbedTaskViewComponent extends AbstractTaskViewComponent implements OnDestroy {
     protected subTaskView: Subscription;
 
     protected constructor(taskViewService: TaskViewService,
@@ -501,7 +501,7 @@ export abstract class TabbedTaskView extends AbstractTaskView implements OnDestr
 
 
 
-                   
+
 
 
 
@@ -529,7 +529,7 @@ export abstract class TabbedTaskView extends AbstractTaskView implements OnDestr
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
+
        <script type="module" src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 

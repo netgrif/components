@@ -293,7 +293,17 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, ElementRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild
+} from &#x27;@angular/core&#x27;;
 import {FileField, FilePreviewType} from &#x27;./models/file-field&#x27;;
 import {AbstractDataFieldComponent} from &#x27;../models/abstract-data-field-component&#x27;;
 import {TaskResourceService} from &#x27;../../resources/engine-endpoint/task-resource.service&#x27;;
@@ -328,6 +338,10 @@ const fieldPadding &#x3D; 16;
 /**
  * Component that is created in the body of the task panel accord on the Petri Net, which must be bind properties.
  */
+@Component({
+    selector: &#x27;ncc-abstract-file-field&#x27;,
+    template: &#x27;&#x27;
+})
 export abstract class AbstractFileFieldComponent extends AbstractDataFieldComponent implements OnInit, AfterViewInit, OnDestroy {
 
     /**
@@ -715,7 +729,7 @@ export abstract class AbstractFileFieldComponent extends AbstractDataFieldCompon
 
     public changeMaxWidth(event: ResizedEvent) {
         if (!!this.imageEl) {
-            this.imageEl.nativeElement.style.maxWidth &#x3D; event.newWidth + &#x27;px&#x27;;
+            this.imageEl.nativeElement.style.maxWidth &#x3D; event.newRect.width + &#x27;px&#x27;;
         }
     }
 

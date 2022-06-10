@@ -1,0 +1,1591 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Netgrif Components Core library Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Netgrif Components Core library Documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >LdapGroupListService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_clear" >_clear</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_endOfData" >_endOfData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#_ldapGroups$" >_ldapGroups$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_ldapGroupsReload$" >_ldapGroupsReload$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_loading$" >_loading$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_nextPage$" >_nextPage$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_pagination" >_pagination</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_searchQuery" >_searchQuery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#_updateProgress$" >_updateProgress$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#negativeRolesQuery" >negativeRolesQuery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#rolesQuery" >rolesQuery</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#addPageParams" >addPageParams</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadPage" >loadPage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nextPage" >nextPage</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#reload" >reload</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateRoles" >updateRoles</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#loading" >loading</a>
+                                </li>
+                                <li>
+                                    <a href="#loading$" >loading$</a>
+                                </li>
+                                <li>
+                                    <a href="#ldapGroupsReload$" >ldapGroupsReload$</a>
+                                </li>
+                                <li>
+                                    <a href="#ldapGroups$" >ldapGroups$</a>
+                                </li>
+                                <li>
+                                    <a href="#updating$" >updating$</a>
+                                </li>
+                                <li>
+                                    <a href="#totalLdapGroups" >totalLdapGroups</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_resources: <a href="../injectables/LdapGroupResourceService.html" target="_self">LdapGroupResourceService</a>, _log: <a href="../injectables/LoggerService.html" target="_self">LoggerService</a>, _snackbar: <a href="../injectables/SnackBarService.html" target="_self">SnackBarService</a>, _translate: TranslateService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Inject services.
+Initialize declared attributes.</p>
+<p>Loading and mapped stream of ldap groups.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_resources</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LdapGroupResourceService.html" target="_self" >LdapGroupResourceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Loading ldap groups from backend.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_log</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LoggerService.html" target="_self" >LoggerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Logging action status.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_snackbar</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SnackBarService.html" target="_self" >SnackBarService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Display info about loading from backend for ldap group.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_translate</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Translate messages for ldap group.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addPageParams"></a>
+                    <span class="name">
+                        <span class="modifier">Protected</span>
+                        <span ><b>addPageParams</b></span>
+                        <a href="#addPageParams"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addPageParams(params: <a href="../miscellaneouss/Params.html" target="_self">HttpParams</a>, page?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="244"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:244</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns HttpParams with page params addition.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Existing HttpParams.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>page</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <p>Page number that is requested. / Next page ldapGroups list.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Params" target="_self" >HttpParams</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPage"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>loadPage</b></span>
+                        <a href="#loadPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadPage(page: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="148"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:148</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get all ldapGroups from backend and mapped to <a href="ldapGroupValue">ldapGroupValue</a> interface with catching errors.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>page</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Page number that is requested. / Next page ldapGroups list.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;literal type&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextPage"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>nextPage</b></span>
+                        <a href="#nextPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nextPage(lastRendered: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, totalRendered: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="188"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:188</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set value to nextPage stream as next page ldapGroups list.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>lastRendered</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Last rendered ldapGroup index.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>totalRendered</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Total loaded size ldapGroups.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="113"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:113</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reload"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>reload</b></span>
+                        <a href="#reload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reload(newSearchQuery: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="201"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:201</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reload page with ldapGroups.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>newSearchQuery</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>&#x27;&#x27;</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateRoles"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>updateRoles</b></span>
+                        <a href="#updateRoles"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateRoles(selectedLdapGroups: Array<LdapGroupListItem>, selectedRoles: Array<string>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="216"
+                            class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:216</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>selectedLdapGroups</td>
+                                    <td>
+                                            <code>Array&lt;LdapGroupListItem&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>selectedRoles</td>
+                                    <td>
+                                            <code>Array&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>[]</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;Array&lt;MessageResource&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_clear"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_clear</b></span>
+                        <a href="#_clear"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:48</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Signals if response is empty or no.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_endOfData"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_endOfData</b></span>
+                        <a href="#_endOfData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Signals the end of loaded ldap groups.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_ldapGroups$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>_ldapGroups$</b></span>
+                        <a href="#_ldapGroups$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Observable&lt;Array&lt;LdapGroupListItem&gt;&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Ldap Group Value array stream, that represents ldap group loading from backend.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_ldapGroupsReload$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_ldapGroupsReload$</b></span>
+                        <a href="#_ldapGroupsReload$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subject&lt;void&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_loading$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_loading$</b></span>
+                        <a href="#_loading$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LoadingEmitter.html" target="_self" >LoadingEmitter</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:32</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Emit ldap group loading status from backend.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_nextPage$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_nextPage$</b></span>
+                        <a href="#_nextPage$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Behavior.html" target="_self" >BehaviorSubject&lt;number&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Number stream of next page ldap group list, that to be requested from backend.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_pagination"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_pagination</b></span>
+                        <a href="#_pagination"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Pagination.html" target="_self" >Pagination</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:44</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Necessary for pagination parameters in ldap group assign loading from backend.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_searchQuery"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_searchQuery</b></span>
+                        <a href="#_searchQuery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:52</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The search content that should be applied to the request</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_updateProgress$"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>_updateProgress$</b></span>
+                        <a href="#_updateProgress$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LoadingEmitter.html" target="_self" >LoadingEmitter</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="negativeRolesQuery"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>negativeRolesQuery</b></span>
+                        <a href="#negativeRolesQuery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;string&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:60</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>negative Roles that should be applied to the request</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rolesQuery"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>rolesQuery</b></span>
+                        <a href="#rolesQuery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;string&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:56</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Roles that should be applied to the request</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loading"></a>
+                        <span class="name"><b>loading</b><a href="#loading"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>loading()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:120</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loading$"></a>
+                        <span class="name"><b>loading$</b><a href="#loading$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>loading$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:124</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ldapGroupsReload$"></a>
+                        <span class="name"><b>ldapGroupsReload$</b><a href="#ldapGroupsReload$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>ldapGroupsReload$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:128</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ldapGroups$"></a>
+                        <span class="name"><b>ldapGroups$</b><a href="#ldapGroups$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>ldapGroups$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:132</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="updating$"></a>
+                        <span class="name"><b>updating$</b><a href="#updating$"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>updating$()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:136</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="totalLdapGroups"></a>
+                        <span class="name"><b>totalLdapGroups</b><a href="#totalLdapGroups"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>totalLdapGroups()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">projects/netgrif-components-core/src/lib/groups/services/ldap-group-list.service.ts:140</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, OnDestroy} from &#x27;@angular/core&#x27;;
+import {BehaviorSubject, forkJoin, Observable, of, Subject, timer} from &#x27;rxjs&#x27;;
+import {LoadingEmitter} from &#x27;../../utility/loading-emitter&#x27;;
+import {Pagination} from &#x27;../../resources/interface/pagination&#x27;;
+import {LoggerService} from &#x27;../../logger/services/logger.service&#x27;;
+import {SnackBarService} from &#x27;../../snack-bar/services/snack-bar.service&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {catchError, map, mergeMap, scan, tap} from &#x27;rxjs/operators&#x27;;
+import {HttpParams} from &#x27;@angular/common/http&#x27;;
+import {PaginationParams} from &#x27;../../utility/pagination/pagination-params&#x27;;
+import {LdapGroup, LdapGroupResponseBody} from &#x27;../../resources/interface/ldapGroupResponseBody&#x27;;
+import {LdapGroupResourceService} from &#x27;../../resources/engine-endpoint/ldap-group-resource.service&#x27;;
+import {MessageResource} from &#x27;../../resources/interface/message-resource&#x27;;
+
+export interface LdapGroupListItem extends LdapGroup {
+    selected: boolean;
+    roles: Set&lt;string&gt;;
+
+    toggle(): void;
+}
+
+@Injectable()
+export class LdapGroupListService implements OnDestroy {
+
+    /**
+     * Ldap Group Value array stream, that represents ldap group loading from backend.
+     */
+    protected readonly _ldapGroups$: Observable&lt;Array&lt;LdapGroupListItem&gt;&gt;;
+    /**
+     * Emit ldap group loading status from backend.
+     */
+    protected _loading$: LoadingEmitter;
+    /**
+     * Number stream of next page ldap group list, that to be requested from backend.
+     */
+    protected _nextPage$: BehaviorSubject&lt;number&gt;;
+    /**
+     * Signals the end of loaded ldap groups.
+     */
+    protected _endOfData: boolean;
+    /**
+     * Necessary for pagination parameters in ldap group assign loading from backend.
+     */
+    protected _pagination: Pagination;
+    /**
+     * Signals if response is empty or no.
+     */
+    protected _clear: boolean;
+    /**
+     * The search content that should be applied to the request
+     */
+    protected _searchQuery: string;
+    /**
+     * Roles that should be applied to the request
+     */
+    public rolesQuery: Array&lt;string&gt;;
+    /**
+     * negative Roles that should be applied to the request
+     */
+    public negativeRolesQuery: Array&lt;string&gt;;
+    protected _updateProgress$: LoadingEmitter;
+    protected _ldapGroupsReload$: Subject&lt;void&gt;;
+
+
+    /**
+     * Inject services.
+     * Initialize declared attributes.
+     *
+     * Loading and mapped stream of ldap groups.
+     * @param _resources Loading ldap groups from backend.
+     * @param _log Logging action status.
+     * @param _snackbar Display info about loading from backend for ldap group.
+     * @param _translate Translate messages for ldap group.
+     */
+    constructor(protected _resources: LdapGroupResourceService,
+                protected _log: LoggerService,
+                protected _snackbar: SnackBarService,
+                protected _translate: TranslateService) {
+        this._loading$ &#x3D; new LoadingEmitter();
+        this._updateProgress$ &#x3D; new LoadingEmitter();
+        this._ldapGroupsReload$ &#x3D; new Subject&lt;void&gt;();
+        this._nextPage$ &#x3D; new BehaviorSubject&lt;number&gt;(null);
+        this._endOfData &#x3D; false;
+        this._pagination &#x3D; {
+            size: 20,
+            totalElements: undefined,
+            totalPages: undefined,
+            number: -1
+        };
+        this._searchQuery &#x3D; &#x27;&#x27;;
+        this._clear &#x3D; false;
+        this.negativeRolesQuery &#x3D; new Array&lt;string&gt;();
+        this.rolesQuery &#x3D; new Array&lt;string&gt;();
+
+        const ldapGroupsMap &#x3D; this._nextPage$.pipe(
+            mergeMap(p &#x3D;&gt; this.loadPage(p)),
+            tap(() &#x3D;&gt; {
+                if (!this._clear) {
+                    this._ldapGroupsReload$.next();
+                }
+            }),
+            scan((acc, value) &#x3D;&gt; {
+                const result &#x3D; this._clear ? {} : {...acc, ...value};
+                this._clear &#x3D; false;
+                return result;
+            }, {})
+        );
+        this._ldapGroups$ &#x3D; ldapGroupsMap.pipe(
+            map(v &#x3D;&gt; Object.values(v) as Array&lt;LdapGroupListItem&gt;),
+        );
+    }
+
+    ngOnDestroy(): void {
+        this._loading$.complete();
+        this._updateProgress$.complete();
+        this._ldapGroupsReload$.complete();
+        this._nextPage$.complete();
+    }
+
+    public get loading(): boolean {
+        return this._loading$.isActive;
+    }
+
+    public get loading$(): Observable&lt;boolean&gt; {
+        return this._loading$.asObservable();
+    }
+
+    public get ldapGroupsReload$(): Observable&lt;void&gt; {
+        return this._ldapGroupsReload$.asObservable();
+    }
+
+    public get ldapGroups$(): Observable&lt;Array&lt;LdapGroupListItem&gt;&gt; {
+        return this._ldapGroups$;
+    }
+
+    public get updating$(): Observable&lt;boolean&gt; {
+        return this._updateProgress$.asObservable();
+    }
+
+    public get totalLdapGroups(): number {
+        return this._pagination.totalElements ? this._pagination.totalElements : 0;
+    }
+
+    /**
+     * Get all ldapGroups from backend and mapped to [ldapGroupValue]{@link ldapGroupValue} interface with catching errors.
+     * @param page Page number that is requested. / Next page ldapGroups list.
+     */
+    public loadPage(page: number): Observable&lt;{ [k: string]: LdapGroupListItem }&gt; {
+        if (page &#x3D;&#x3D;&#x3D; null || page &#x3D;&#x3D;&#x3D; undefined || this._clear) {
+            return of({});
+        }
+        let params: HttpParams &#x3D; new HttpParams();
+        params &#x3D; this.addPageParams(params, page);
+        this._loading$.on();
+        return this._resources.searchLdapGroups({fulltext: this._searchQuery}).pipe(
+            catchError(err &#x3D;&gt; {
+                this._log.error(&#x27;Loading ldap groups has failed on page &#x27; + this._pagination.number, err);
+                return of({ldapGroupResponseBodies: [], pagination: {...this._pagination, number: this._pagination.number - 1}});
+            }),
+            tap(ldapGroupResponseBody &#x3D;&gt; this._endOfData &#x3D; !Array.isArray(ldapGroupResponseBody.ldapGroupResponseBodies) ||
+                (Array.isArray(ldapGroupResponseBody.ldapGroupResponseBodies)
+                    &amp;&amp; ldapGroupResponseBody.ldapGroupResponseBodies.length &#x3D;&#x3D;&#x3D; 0)),
+            map(ldapGroupResponseBody &#x3D;&gt; (Array.isArray(ldapGroupResponseBody.ldapGroupResponseBodies) ?
+                ldapGroupResponseBody : {...ldapGroupResponseBody, ldapGroupResponseBodies: []})),
+            map( ldapGroupResponseBody &#x3D;&gt; {
+                const result &#x3D; {};
+                ldapGroupResponseBody.ldapGroupResponseBodies.forEach( ldapGroup &#x3D;&gt; {
+                    const item &#x3D; ldapGroup as LdapGroupListItem;
+                    item.roles &#x3D; new Set&lt;string&gt;(ldapGroup.processRoles.map(pr &#x3D;&gt; pr.stringId));
+                    item.processRoles &#x3D; undefined;
+                    item.selected &#x3D; false;
+                    item.toggle &#x3D; function() {
+                        this.selected &#x3D; !this.selected;
+                    };
+                    result[ldapGroup.dn] &#x3D; item;
+                });
+                return result;
+            }),
+            tap(_ &#x3D;&gt; this._loading$.off())
+        );
+    }
+
+    /**
+     * Set value to nextPage stream as next page ldapGroups list.
+     * @param lastRendered Last rendered ldapGroup index.
+     * @param totalRendered Total loaded size ldapGroups.
+     */
+    public nextPage(lastRendered: number, totalRendered: number) {
+        if (this.loading || this._endOfData) {
+            return;
+        }
+
+        if (lastRendered &#x3D;&#x3D;&#x3D; totalRendered) {
+            this._nextPage$.next(this._pagination.number + 1);
+        }
+    }
+
+    /**
+     * Reload page with ldapGroups.
+     */
+    public reload(newSearchQuery &#x3D; &#x27;&#x27;): void {
+        if (!this._ldapGroups$ || !this._pagination) {
+            return;
+        }
+        this._clear &#x3D; true;
+        this._endOfData &#x3D; false;
+        this._pagination.number &#x3D; -1;
+        this._searchQuery &#x3D; newSearchQuery;
+        this.nextPage(0, 0);
+        timer(100).subscribe(_ &#x3D;&gt; {
+            this._pagination.number &#x3D; -1;
+            this.nextPage(0, 0);
+        });
+    }
+
+    public updateRoles(selectedLdapGroups: Array&lt;LdapGroupListItem&gt;, selectedRoles: Array&lt;string&gt; &#x3D; []):
+    Observable&lt;Array&lt;MessageResource&gt;&gt; {
+        if (!selectedLdapGroups || selectedLdapGroups.length &#x3D;&#x3D;&#x3D; 0) {
+            return of([]);
+        }
+        this._updateProgress$.on();
+        return forkJoin(selectedLdapGroups.map(ldapGroup &#x3D;&gt; this._resources.assignRolesToLdapGroup(
+            {groupDn: ldapGroup.dn, roleIds: selectedRoles}))).pipe(
+            tap(messages &#x3D;&gt; {
+                messages.forEach((message, idx) &#x3D;&gt; {
+                    if (message.error) {
+                        this._log.error(message.error, message);
+                        this._snackbar.openErrorSnackBar(message.error);
+                    } else {
+                        this._log.info(message.success);
+                        selectedLdapGroups[idx].roles &#x3D; new Set&lt;string&gt;(selectedRoles);
+                        this._snackbar.openSuccessSnackBar(this._translate.instant(&#x27;tasks.snackbar.rolesSuccessAssign&#x27;));
+                    }
+                });
+                this._updateProgress$.off();
+            }));
+    }
+
+    /**
+     * Returns HttpParams with page params addition.
+     * @param params Existing HttpParams.
+     * @param page Page number that is requested. / Next page ldapGroups list.
+     */
+    protected addPageParams(params: HttpParams, page?: number): HttpParams {
+        params &#x3D; params.set(PaginationParams.PAGE_SIZE, &#x60;${this._pagination.size}&#x60;);
+        page &#x3D; page !&#x3D;&#x3D; null ? page : this._pagination.number;
+        params &#x3D; params.set(PaginationParams.PAGE_NUMBER, &#x60;${page}&#x60;);
+        return params;
+    }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'LdapGroupListService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
