@@ -1,144 +1,122 @@
 # Public view
 
-Public view is breaking change in NAE v5.0.0. It provides anonymous access to view, that are marked as public with no
-authorization needed, users can access tasks and cases without any login or registration needed. Public view can be
-implemented in case of workflow-view and task-view.
+Public view provides anonymous access to view, that are marked as public with no
+authorization needed. Users can access tasks and cases without any login or registration needed. Public view can be
+implemented as workflow view (list of processes), task list view (list of tasks of a case created from a public process) and
+a single task view (displays only data of single task without header and panel).
 
 ## Frontend
 
-In this manual we will define a public task view. This public task view can be accessed with
-`<url>/process/:petriNetId/:caseId`. This route is set to navigate to our task view, that will send a request to
-backend, search for case with defined route parameters petriNetId and caseId. Backend then returns tasks of this case
-and our task view will list them. Follow these steps to implement such a public task or case view:
+In this manual we will show, how to set up a public view component. 
 
-- Create a component with any name you want. We will now use PublicTaskViewComponent.
-- In the config JSON (where you define views parameters) you can define a new view as follows:
-    - the access attribute should be public
-    - under component, you have to define the class and path of your component.
+### Public workflow view
+In ``nae.json``, into ``view`` array, define new view object for public view as follows (you can
+define your own names for layout, class and name, it is not strictly defined):
 
 ```json
 {
-  "demo-public-view": {
-    "layout": {
-      "name": "publicTaskView",
-      "params": {
-        "allowedNets": []
+  "view": {
+    "demo-public-view-workflow": {
+      "layout": {
+        "name": "publicWorkflowView",
+        "params": {
+          "allowedNets": []
+        }
+      },
+      "component": {
+        "class": "PublicWorkflowViewComponent",
+        "from": "./doc/public-workflow-view/public-workflow-view.component"
+      },
+      "access": "public",
+      "navigation": {
+        "title": "Public view - process"
+      },
+      "routing": {
+        "path": "process"
       }
-    },
-    "component": {
-      "class": "PublicTaskViewComponent",
-      "from": "./doc/public-task-view/public-task-view.component"
-    },
-    "access": "public",
-    "navigation": false,
-    "routing": {
-      "path": "process/:petriNetId/:caseId"
     }
   }
 }
 ```
 
-- In our component class, we have to define public services, resolvers and abstract components to be used instead of
-  default ones, and then we have to provide them to this component:
+The @netgrif/components:create-view schematic will use this configuration file to create view.
+You can find more about ``nae.json`` on [this link](https://engine.netgrif.com/#/views/viewid_generation?id=view-id-generation).
 
-```ts
-const localTaskViewServiceFactory = (factory: ConfigTaskViewServiceFactory) => {
-    return factory.create('demo-public-view');
-};
+After that, open terminal and generate the defined view with Angular Schematic using the following
+command:
 
-const searchServiceFactory = (router: Router, route: ActivatedRoute, process: ProcessService,
-                              caseResourceService: CaseResourceService, snackBarService: SnackBarService) => {
-    return publicSearchServiceFactory(router, route, process, caseResourceService, snackBarService);
-};
+```console
+foo@bar:~$ ng generate @netgrif/components:create-view
+```
 
-const processServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
-                               router: Router, publicResolverService: PublicUrlResolverService, petriNetResource: PetriNetResourceService,
-                               publicPetriNetResource: PublicPetriNetResourceService, loggerService: LoggerService) => {
-    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
-        new ProcessService(petriNetResource, loggerService),
-        new PublicProcessService(publicPetriNetResource, loggerService));
-};
+This will detect the new public component definition in ``nae.json`` and will create the new component.
+After that, just serve your application with ``ng serve`` and the public view will be awailable on
+path you defined in ``nae.json``.
 
-const taskResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
-                                    router: Router, publicResolverService: PublicUrlResolverService,
-                                    logger: LoggerService, provider: ResourceProvider, config: ConfigurationService,
-                                    fieldConverter: FieldConverterService) => {
-    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
-        new TaskResourceService(provider, config, fieldConverter, logger),
-        new PublicTaskResourceService(provider, config, fieldConverter, logger));
-};
+### Public task view
 
-const caseResourceServiceFactory = (userService: UserService, sessionService: SessionService, authService: AuthenticationService,
-                                    router: Router, publicResolverService: PublicUrlResolverService,
-                                    provider: ResourceProvider, config: ConfigurationService) => {
-    return publicFactoryResolver(userService, sessionService, authService, router, publicResolverService,
-        new CaseResourceService(provider, config),
-        new PublicCaseResourceService(provider, config));
-};
+The steps are the same as in case public workflow view, the JSON definition differs in layout name,
+that is ``publicTaskView`` and path, that must be ``process/:petriNetId/:caseId``:
 
-@Component({
-    selector: 'nae-app-public-task-view',
-    templateUrl: './public-task-view.component.html',
-    styleUrls: ['./public-task-view.component.scss'],
-    providers: [
-        ConfigTaskViewServiceFactory,
-        {
-            provide: ProcessService,
-            useFactory: processServiceFactory,
-            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService, PetriNetResourceService,
-                PublicPetriNetResourceService, LoggerService]
-        },
-        {
-            provide: TaskResourceService,
-            useFactory: taskResourceServiceFactory,
-            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
-                LoggerService, ResourceProvider, ConfigurationService, FieldConverterService]
-        },
-        {
-            provide: CaseResourceService,
-            useFactory: caseResourceServiceFactory,
-            deps: [UserService, SessionService, AuthenticationService, Router, PublicUrlResolverService,
-                ResourceProvider, ConfigurationService]
-        },
-        {
-            provide: SearchService,
-            useFactory: searchServiceFactory,
-            deps: [Router, ActivatedRoute, ProcessService, CaseResourceService, SnackBarService]
-        },
-        {
-            provide: TaskViewService,
-            useFactory: localTaskViewServiceFactory,
-            deps: [ConfigTaskViewServiceFactory]
-        },
-    ]
-})
-export class PublicTaskViewComponent extends AbstractTaskView implements AfterViewInit {
-
-    @ViewChild('header') public taskHeaderComponent: HeaderComponent;
-
-    constructor(taskViewService: TaskViewService) {
-        super(taskViewService);
-    }
-
-    ngAfterViewInit(): void {
-        this.initializeHeader(this.taskHeaderComponent);
-    }
-
-    logEvent(event: TaskEventNotification) {
-        console.log(event);
+```json
+{
+    "view": {
+        "public-task-view": {
+            "layout": {
+                "name": "publicTaskView",
+                "params": {
+                    "allowedNets": []
+                }
+            },
+            "component": {
+                "class": "PublicTaskViewComponent",
+                "from": "./doc/public-task-view/public-task-view.component"
+            },
+            "access": "public",
+            "navigation": {
+                "title": "Public view - task"
+            },
+            "routing": {
+                "path": "process/:petriNetId/:caseId"
+            }
+        }
     }
 }
 ```
 
-That's all for frontend.
+### Public single task view
+If you want to generate a URL, that redirects you directly to task, you can use direct redirect functionality
+of public view. At first, you will have to define a view in ``nae.json`` as follows:
 
-## Direct redirect to task
+```json
+{
+    "view": {
+        "public-single-task-view": {
+            "layout": {
+                "name": "publicSingleTaskView",
+                "params": {
+                    "allowedNets": []
+                }
+            },
+            "component": {
+                "class": "PublicTaskSingleViewComponent",
+                "from": "./doc/public-task-view/public-task-single-view.component"
+            },
+            "access": "public",
+            "navigation": {
+                "title": "Public view - task"
+            },
+            "routing": {
+                "path": "process/:petriNetId/:caseId/:transitionId"
+            }
+        }
+    }
+}
+```
 
-If you want to generate an URL, that redirects to task that has no header 
-(only has task data and task event buttons), you can use direct redirect functionality
-of public view.
+Then just generate the view using schematics with command from previous examples.
 
-It is quiet simple, you just have to construct the right URL, which must have the following form:
+Then it is simple to navigate to the view, you just have to construct the right URL, which must have the following form:
 ``https://<app_address>/process/<process_identifier>/<case_id>/<transition_id>``
 
 For example:

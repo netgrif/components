@@ -468,7 +468,7 @@
                 "path": "process/:petriNetId/:caseId"
             }
         },
-        "demo-public-view-task-single": {
+        "demo-public-single-task-view": {
             "layout": {
                 "name": "publicSingleTaskView",
                 "params": {
@@ -476,8 +476,8 @@
                 }
             },
             "component": {
-                "class": "PublicTaskSingleViewComponent",
-                "from": "./doc/public-task-view/public-task-single-view.component"
+                "class": "PublicSingleTaskViewComponent",
+                "from": "./doc/public-task-view/public-single-task-view.component"
             },
             "access": "public",
             "navigation": {
