@@ -37,6 +37,7 @@
         },
         "view": {
             "noTasksSatisfyingThisFilter": "There are no tasks satisfying this filter",
+            "noTaskSatisfyingThisTransitionInCase": "There is no task for this transition ID in this case",
             "collapse": "Collapse",
             "assign": "Assign",
             "reassign": "Reassign",

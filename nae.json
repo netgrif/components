@@ -449,7 +449,7 @@
                 "path": "tree-view"
             }
         },
-        "demo-public-view": {
+        "public-task-view": {
             "layout": {
                 "name": "publicTaskView",
                 "params": {
@@ -470,7 +470,7 @@
         },
         "demo-public-view-task-single": {
             "layout": {
-                "name": "publicTaskSingleView",
+                "name": "publicSingleTaskView",
                 "params": {
                     "allowedNets": []
                 }

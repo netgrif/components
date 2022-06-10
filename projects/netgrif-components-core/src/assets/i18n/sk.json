@@ -37,6 +37,7 @@
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Pre tento filter nie sú vyhovujúce žiadne úlohy",
+            "noTaskSatisfyingThisTransitionInCase": "Pre tento identifikátor prechodu neexistuje žiadna úloha v tomto prípade",
             "collapse": "Skryť",
             "assign": "Priradiť",
             "reassign": "Preradiť",

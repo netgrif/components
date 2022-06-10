@@ -59,7 +59,7 @@ export abstract class AbstractTaskListComponent extends AbstractDefaultTaskList 
             this._tasks$ = tasks;
         } else {
             this.route.paramMap.subscribe(params => {
-                if (params.has(this.transitionId))
+                if (params.has(this.TRANSITION_ID))
                     this.transitionId = params.get(this.TRANSITION_ID);
             });
             this._tasks$ = this._taskViewService.tasks$.pipe(map(tasks => {

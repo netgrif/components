@@ -67,6 +67,12 @@ export class ViewClassInfo extends ImportToAdd {
                 return 'Dashboard';
             case 'treeCaseView':
                 return 'TreeCaseView';
+            case 'publicTaskView':
+                return 'PublicTaskView';
+            case 'publicWorkflowView':
+                return 'PublicTaskView';
+            case 'publicSingleTaskView':
+                return 'publicSingleTaskView';
             default:
                 throw new SchematicsException(`Unknown view type '${view}'`);
         }

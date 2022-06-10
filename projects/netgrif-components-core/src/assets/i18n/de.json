@@ -37,6 +37,7 @@
         },
         "view": {
             "noTasksSatisfyingThisFilter": "Es gibt keine Aufgaben, die den ausgewählten Filter erfüllen",
+            "noTaskSatisfyingThisTransitionInCase": "Es gibt keine Aufgaben, die den ausgewählten ID erfüllen",
             "collapse": "Schrumpfen",
             "assign": "Zuweisen",
             "reassign": "Neu zuweisen",
