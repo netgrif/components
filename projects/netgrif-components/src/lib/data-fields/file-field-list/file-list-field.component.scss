@@ -67,6 +67,7 @@
 
 .form-input:hover {
     border-color: black;
+    border-width: 2px;
 }
 
 .file-hint-error {
@@ -84,4 +85,5 @@
 
 .form-input-disabled:hover {
     border-color: rgba(0, 0, 0, 0.12) !important;
+    border-width: 1px;
 }

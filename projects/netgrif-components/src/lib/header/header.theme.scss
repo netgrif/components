@@ -7,7 +7,7 @@
     }
 
     .header-color {
-        background: mat-color($primary, 500);
-        color: white;
+        background: mat.get-color-from-palette($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 500);
     }
 }
