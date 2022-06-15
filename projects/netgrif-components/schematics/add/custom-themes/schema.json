@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsCustomThemes",
+    "$id": "SchematicsCustomThemes",
     "title": "Project custom themes",
     "type": "object",
     "properties": {}
