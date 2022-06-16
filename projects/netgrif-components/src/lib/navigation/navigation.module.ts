@@ -39,6 +39,7 @@ import {HeaderComponentModule} from '../header/header.module';
 import {PanelComponentModule} from '../panel/panel.module';
 import {TabsComponentModule} from '../tabs/tabs.module';
 import {CaseViewComponentModule} from '../view/case-view/case-view.module';
+import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navigation-double-drawer.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {CaseViewComponentModule} from '../view/case-view/case-view.module';
         DefaultSimpleTaskViewComponent,
         DefaultTabbedTaskViewComponent,
         DefaultTabbedCaseViewComponent,
-        DefaultTabViewComponent
+        DefaultTabViewComponent,
+        NavigationDoubleDrawerComponent
     ],
     imports: [
         CommonModule,
