@@ -39,4 +39,8 @@ export class AppComponent {
             });
         });
     }
+
+    isDoubleDrawer() {
+        return !!this.routes.url.match(/^\/drawer-double|/);
+    }
 }

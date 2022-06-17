@@ -73,6 +73,7 @@ import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navi
     ],
     exports: [
         NavigationDrawerComponent,
+        NavigationDoubleDrawerComponent,
         NavigationRailComponent,
         NavigationTreeComponent,
         GroupNavigationComponentResolverComponent,

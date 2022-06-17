@@ -1,0 +1,155 @@
+.rail-container {
+    height: 100%;
+}
+
+.rail-content {
+    width: 60px;
+    min-width: 60px;
+    top: 48px;
+    border-right: none !important;
+}
+
+.drawer-container {
+    height: 100%;
+}
+
+.mat-button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.drawer-content {
+    width: 300px;
+    min-width: 300px;
+}
+
+.logo {
+    width: 359px;
+    height: 48px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo-closed {
+    width: 60px !important;
+}
+
+//.rail-color {
+//  background: #f8f8f8;
+//}
+
+.logoimg {
+    margin-left: auto;
+    margin-right: auto;
+    height: 46px;
+    outline: none !important;
+    cursor: pointer;
+}
+
+.icon-large {
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.icon-container {
+    outline: none !important;
+    height: 46px;
+}
+
+.icon-large:hover {
+    cursor: pointer;
+}
+
+.margin-top-65 {
+    margin-top: 49px;
+}
+
+.padding-top-65 {
+    padding-top: 49px;
+}
+
+.padding-top-8 {
+    padding-top: 8px;
+}
+
+.margin-bottom-x2 {
+    margin-bottom: 16px;
+}
+
+.tree-node {
+    outline: none !important;
+    cursor: pointer;
+    padding: 2px;
+    color: rgba(0, 0, 0, 0.6);
+
+    mat-icon.tree-node-icon {
+        line-height: 40px;
+        height: 40px;
+        width: 24px;
+        margin-right: 4px;
+    }
+
+    .margin-component {
+        width: 8px;
+        margin-right: 4px;
+    }
+}
+
+.margin-top-default {
+    margin-top: 8px;
+}
+
+.margin-top-x2 {
+    margin-top: 16px;
+}
+
+.logo-tool {
+    height: 48px;
+}
+
+.logoimg-tool {
+    height: 46px;
+    outline: none !important;
+    cursor: pointer;
+    background: #fafafa;
+}
+
+.toolbar {
+    min-height: 48px !important;
+    height: 48px;
+    border-bottom: 1px solid #ddd;
+}
+
+@media screen and (max-width: 959.99px) {
+    .rail-container {
+        height: calc(100% - 49px);
+    }
+
+    .rail-content {
+        width: 60px;
+        min-width: 60px;
+        top: 0px;
+        border-right: none !important;
+    }
+
+    .margin-top-65 {
+        margin-top: 16px;
+    }
+
+    .padding-top-65 {
+        padding-top: 16px;
+    }
+}
+
+.profile-tooltip {
+    font-size: 20px;
+}
+
+.sidemenu-icon {
+    line-height: unset !important;
+}
