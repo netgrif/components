@@ -14,13 +14,13 @@
 <title>cluster_TreeCaseViewComponentModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-32.8 8,-230.8 705,-230.8 705,-32.8 8,-32.8"/>
 </g>
-<g id="clust8" class="cluster">
-<title>cluster_TreeCaseViewComponentModule_exports</title>
-<polygon fill="none" stroke="black" points="95,-170.8 95,-222.8 421,-222.8 421,-170.8 95,-170.8"/>
-</g>
 <g id="clust2" class="cluster">
 <title>cluster_TreeCaseViewComponentModule_declarations</title>
 <polygon fill="none" stroke="black" points="16,-40.8 16,-92.8 697,-92.8 697,-40.8 16,-40.8"/>
+</g>
+<g id="clust8" class="cluster">
+<title>cluster_TreeCaseViewComponentModule_exports</title>
+<polygon fill="none" stroke="black" points="95,-170.8 95,-222.8 421,-222.8 421,-170.8 95,-170.8"/>
 </g>
 <!-- AddChildNodeComponent -->
 <g id="node1" class="node">
