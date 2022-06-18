@@ -2,7 +2,7 @@
     <button mat-icon-button (click)="toggleMenu2()" class="mat-button">
         <mat-icon>menu</mat-icon>
     </button>
-    <img *ngIf="configMenu2.opened && image !== undefined" #logo [src]="image" class="logoimg"
+    <img *ngIf="configMenu2.opened && image !== undefined" #logo [alt]="imageAlt" [src]="image" class="logoimg"
          [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
 </div>
 <mat-toolbar fxHide.gt-sm class="toolbar">
@@ -13,7 +13,7 @@
             </button>
         </div>
         <div class="logo-tool" fxLayoutAlign="center center" fxFlex >
-            <img #logo [src]="image" class="logoimg-tool"
+            <img #logo [alt]="imageAlt" [src]="image" class="logoimg-tool"
                  [routerLink]="imageRouterLink !== undefined ? imageRouterLink : []">
         </div>
         <div fxFlex></div>
@@ -37,7 +37,7 @@
             <mat-menu #railMenu="matMenu">
                 <button mat-menu-item (click)="logout()" fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>exit_to_app</mat-icon>
-                    <span>Odhlásiť sa</span>
+                    <span>{{ 'toolbar.menu.logout' | translate }}</span>
                 </button>
             </mat-menu>
 

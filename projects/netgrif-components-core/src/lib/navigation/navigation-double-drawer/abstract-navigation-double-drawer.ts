@@ -7,6 +7,12 @@ import {UserService} from '../../user/services/user.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 
+export interface ConfigDoubleMenu {
+    mode: string;
+    opened: boolean;
+    disableClose: boolean;
+}
+
 @Component({
     selector: 'ncc-abstract-navigation-double-drawer',
     template: '',
@@ -16,16 +22,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() portalLeftMenu: TemplateRef<any>;
     @Input() portalRightMenu: TemplateRef<any>;
     @Input() imageRouterLink: String;
+    @Input() imageAlt: String = "Icon";
     @Input() image: String;
 
     protected _breakpointSubsc: Subscription;
 
-    protected _configMenu = {
+    protected _configMenu: ConfigDoubleMenu = {
         mode: 'side',
         opened: true,
         disableClose: true
     };
-    protected _configMenu2 = {
+    protected _configMenu2: ConfigDoubleMenu = {
         mode: 'side',
         opened: true,
         disableClose: true
@@ -41,7 +48,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     ngOnInit(): void {
         this._breakpointSubsc = this._breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe(() => {
-            console.log(this._breakpoint.isMatched('(max-width: 959.99px)'));
             if (this._breakpoint.isMatched('(max-width: 959.99px)')) {
                 this.resolveLayout(false);
             } else {

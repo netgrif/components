@@ -3,7 +3,7 @@
     <div fxLayout="column" fxLayoutAlign="start center" fxFlex="47" class="full-height">
         <ng-container *ngIf="users.users$ | async as users_">
 
-            <mat-toolbar color="primary" class="height-72">
+            <mat-toolbar color="primary" class="min-height-72">
                 <span matTooltip="{{users_.length}}/{{users.totalUsers}}">
                     {{'admin.user-list.listTitle' | translate}}
                 </span>
@@ -68,7 +68,7 @@
 
     <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50" class="full-height">
 
-        <mat-toolbar color="primary" class="height-72">
+        <mat-toolbar color="primary" class="min-height-72">
             <span>{{'admin.process-list.listTitle' | translate}}</span>
             <span style="flex: 1 1 auto;"></span>
             <mat-spinner *ngIf="users.updating$ | async" color="accent" diameter="30"></mat-spinner>
