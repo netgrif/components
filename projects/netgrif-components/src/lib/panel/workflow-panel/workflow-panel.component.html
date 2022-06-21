@@ -44,6 +44,8 @@
                 </div>
             </div>
             <mat-action-row>
+                <button mat-raised-button color="primary"
+                        (click)="downloadNetFile()">{{'workflow.download' | translate | uppercase }}</button>
                 <button *ngIf="showDeleteMenu" mat-raised-button color="warn"
                         (click)="deleteWorkflow()">{{'workflow.delete' | translate | uppercase }}</button>
                 <button mat-button color="primary"

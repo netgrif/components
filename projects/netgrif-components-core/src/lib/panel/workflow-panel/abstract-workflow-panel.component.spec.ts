@@ -24,6 +24,7 @@ import {PetriNetReference} from '../../resources/interface/petri-net-reference';
 import {RouterTestingModule} from '@angular/router/testing';
 import {WorkflowViewService} from '../../view/workflow-view/workflow-view.service';
 import {take} from 'rxjs/operators';
+import {PetriNetResourceService} from '../../resources/engine-endpoint/petri-net-resource.service';
 
 describe('AbstractWorkflowPanelComponent', () => {
     let component: TestWorkflowPanelComponent;
@@ -90,8 +91,11 @@ describe('AbstractWorkflowPanelComponent', () => {
     template: ''
 })
 class TestWorkflowPanelComponent extends AbstractWorkflowPanelComponent {
-    constructor(log: LoggerService, translate: TranslateService, workflowService: WorkflowViewService) {
-        super(log, translate, workflowService);
+    constructor(log: LoggerService,
+                translate: TranslateService,
+                workflowService: WorkflowViewService,
+                petriNetResource: PetriNetResourceService) {
+        super(log, translate, workflowService, petriNetResource);
     }
 }
 
