@@ -703,9 +703,11 @@ export class CaseTreeService implements OnDestroy {
                 }
 
                 const body = {};
-                body[TreePetriflowIdentifiers.CHILDREN_CASE_REF] = {
-                    type: 'caseRef',
-                    value: newCaseRefValue
+                body[task.stringId] = {
+                    [TreePetriflowIdentifiers.CHILDREN_CASE_REF]: {
+                        type: 'caseRef',
+                        value: newCaseRefValue
+                    }
                 };
                 this._taskResourceService.setData(task.stringId, body).subscribe((outcomeResource: EventOutcomeMessageResource) => {
                     const changedFields = (outcomeResource.outcome as SetDataEventOutcome).changedFields.changedFields;
