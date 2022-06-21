@@ -82,11 +82,11 @@ export function createSidenavOrToolbarView(tree: Tree, sidenavOptions: SidenavPr
             return;
         }
         if (sidenavOptions.user)
-            drawerType += ' user="true"';
+            drawerType += ' [user]="true"';
         if (sidenavOptions.quickPanel)
-            drawerType += ' quickPanel="true"';
+            drawerType += ' [quickPanel]="true"';
         if (sidenavOptions.navigation)
-            drawerType += ' navigation="true"';
+            drawerType += ' [navigation]="true"';
         drawerType += '>';
     }
 }
