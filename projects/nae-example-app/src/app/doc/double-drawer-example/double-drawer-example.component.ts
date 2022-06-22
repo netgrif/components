@@ -1,17 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'nae-app-drawer-example',
-    templateUrl: './drawer-example.component.html',
-    styleUrls: ['./drawer-example.component.scss']
+    templateUrl: './double-drawer-example.component.html',
+    styleUrls: ['./double-drawer-example.component.scss']
 })
-export class DrawerExampleComponent {
+export class DoubleDrawerExampleComponent {
 
     fixed: boolean;
 
     constructor() {
         this.fixed = true;
     }
+
 
     openStatusChanged($event) {
         console.log('Drawer status:');

@@ -175,6 +175,17 @@
                 "path": "drawer"
             }
         },
+        "demo-double-drawer": {
+            "component": {
+                "class": "DoubleDrawerExampleComponent",
+                "from": "./doc/double-drawer-example/double-drawer-example.component"
+            },
+            "access": "private",
+            "navigation": true,
+            "routing": {
+                "path": "drawer-double"
+            }
+        },
         "demo-rail": {
             "component": {
                 "class": "RailExampleComponent",

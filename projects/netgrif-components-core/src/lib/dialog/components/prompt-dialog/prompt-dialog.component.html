@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>{{data.title}}</h1>
 
-<div mat-dialog-content class="dialog-container dialog-content-margin">
+<div mat-dialog-content class="dialog-container dialog-content-margin netgrif-input netgrif-input-fix">
     <span>{{data.content}}</span>
     <br>
-    <mat-form-field class="dialog-prompt-margin">
+    <mat-form-field class="dialog-prompt-margin" appearance="outline">
         <mat-label>{{data.placeholder}}</mat-label>
         <input matInput [(ngModel)]="prompt" (ngModelChange)="disableButton = !prompt || prompt.trim().length === 0">
     </mat-form-field>

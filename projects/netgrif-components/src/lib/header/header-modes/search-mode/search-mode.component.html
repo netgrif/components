@@ -8,8 +8,8 @@
             *ngIf="!!header && header.fieldType !== 'button'; then thenBlock else elseBlock"
             fxFlex></div>
         <ng-template #thenBlock>
-            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType">
-                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'">
+            <div fxLayout="row" fxLayoutAlign=" center" fxFlex [ngSwitch]="header.fieldType" class="netgrif-input netgrif-input-fix netgrif-input-primary-fix">
+                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'date'" appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput autocomplete="off"
                            [matDatepicker]="datepicker"
@@ -20,7 +20,7 @@
                     <mat-datepicker-toggle matPrefix [for]="datepicker"></mat-datepicker-toggle>
                     <mat-datepicker #datepicker></mat-datepicker>
                 </mat-form-field>
-                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'dateTime'">
+                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'dateTime'" appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput autocomplete="off"
                            [ngxMatDatetimePicker]="datetimepicker"
@@ -38,25 +38,25 @@
                                              [enableMeridian]="false">
                     </ngx-mat-datetime-picker>
                 </mat-form-field>
-                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'number'">
+                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchCase="'number'" appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput type="number" [formControl]="formControls[i]">
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'boolean'">
-                    <mat-slide-toggle color="primary" [formControl]="formControls[i]">
+                <div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'boolean'" >
+                    <mat-slide-toggle color="accent" [formControl]="formControls[i]">
                         {{header.title | translate}}
                     </mat-slide-toggle>
                 </div>
                 <div fxLayout="column" fxLayoutAlign="center start" *ngSwitchCase="'user'">
                     <mat-label>{{header.title | translate}}</mat-label>
-                    <button mat-stroked-button
-                            color="primary"
+                    <button mat-flat-button
+                            color="accent"
                             (click)="selectUser(i)">
                         <mat-icon>person_search</mat-icon>
                         {{formControls[i].value ? formControls[i].value.fullName : ('headers.selectUser' | translate)}}
                     </button>
                 </div>
-                <mat-form-field fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault>
+                <mat-form-field color="primary" fxLayout="row" fxLayoutAlign=" center" fxFlex *ngSwitchDefault appearance="outline">
                     <mat-label>{{header.title | translate}}</mat-label>
                     <input matInput [formControl]="formControls[i]">
                 </mat-form-field>

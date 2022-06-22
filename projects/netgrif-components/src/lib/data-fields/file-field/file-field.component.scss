@@ -53,7 +53,7 @@
 }
 
 .input-margin {
-    margin-top: 7px !important;
+    margin-top: 2px !important;
 }
 
 .form-input {
@@ -63,16 +63,24 @@
     border: 1px solid rgba(0, 0, 0, 0.12);
     text-align: left;
     font-size: 14px;
-    line-height: 15.75px;
+    line-height: 20px;
     border-radius: 6px;
     min-width: 5px;
     padding: 10px 15px 10px 15px;
     box-sizing: border-box;
-    height: 54.81px;
+    height: 48px;
 }
 
 .form-input:hover {
     border-color: black;
+    border-width: 2px;
+}
+
+
+.form-input-disabled:hover {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    border-width: 1px;
+    padding: 2px !important;
 }
 
 .placeholder {
