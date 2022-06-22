@@ -21,9 +21,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     @Input() portalLeftMenu: TemplateRef<any>;
     @Input() portalRightMenu: TemplateRef<any>;
-    @Input() imageRouterLink: String;
-    @Input() imageAlt: String = "Icon";
-    @Input() image: String;
+    @Input() imageRouterLink: string;
+    @Input() imageAlt: string = "Icon";
+    @Input() image: string;
 
     protected _breakpointSubsc: Subscription;
 
