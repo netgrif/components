@@ -6,6 +6,7 @@ import {UserAssignListComponent} from './user-assign-list/user-assign-list.compo
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {FormsModule} from '@angular/forms';
 import {CovalentModule, MaterialModule, NAE_USER_ASSIGN_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {CovalentModule, MaterialModule, NAE_USER_ASSIGN_COMPONENT, TranslateLibM
         FlexLayoutModule,
         FlexModule,
         FormsModule,
-        TranslateLibModule
+        TranslateLibModule,
+        MatFormFieldModule
     ],
     exports: [UserAssignComponent],
     providers: [

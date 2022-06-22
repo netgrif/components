@@ -77,8 +77,7 @@ import {
     TabsComponentModule,
     ToolbarComponentModule,
     TreeCaseViewComponentModule,
-    WorkflowViewComponentModule,
-    NewCaseComponent,
+    WorkflowViewComponentModule
 } from '@netgrif/components';
 import {UserInviteComponent} from './doc/user-invite/user-invite.component';
 import {ExamplePortalCardComponent} from './doc/dashboard-example/piechart-card/example-portal-card.component';
@@ -96,6 +95,7 @@ import { TitleConfigComponent } from './doc/demo-title-config/title-config.compo
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -148,6 +148,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TitleConfigComponent,
         ActiveGroupComponent,
         WrapperEmptyViewComponent,
+        DoubleDrawerExampleComponent
     ],
     imports: [
         BrowserModule,

@@ -4,6 +4,7 @@ export * from './quick-panel/public-api';
 /* COMPONENTS */
 export * from './navigation-tree/abstract-navigation-tree.component';
 export * from './navigation-drawer/abstract-navigation-drawer.component';
+export * from './navigation-double-drawer/abstract-navigation-double-drawer';
 export * from './navigation-rail/abstract-navigation-rail.component';
 export * from './group-navigation-component-resolver/abstract-group-navigation-component-resolver.component';
 

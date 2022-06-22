@@ -2,13 +2,15 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {OptionSelectorComponent} from './option-selector.component';
 import {MaterialModule, NAE_OPTION_SELECTOR_COMPONENT, TranslateLibModule} from '@netgrif/components-core';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateLibModule
+        TranslateLibModule,
+        MatFormFieldModule
     ],
     declarations: [
         OptionSelectorComponent

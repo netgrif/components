@@ -36,7 +36,7 @@ export interface FileState {
 
 const preview = 'preview';
 
-const fieldHeight = 105;
+const fieldHeight = 75;
 
 const fieldPadding = 16;
 

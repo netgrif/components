@@ -5,4 +5,9 @@
     .active-header-item {
         background: rgba(mat.get-color-from-palette($primary), 0.3);
     }
+
+    .header-color {
+        background: mat.get-color-from-palette($primary, 500);
+        color: mat.get-contrast-color-from-palette($primary, 500);
+    }
 }

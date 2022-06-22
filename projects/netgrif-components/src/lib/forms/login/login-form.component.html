@@ -1,8 +1,8 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="8px">
-    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width">
+    <form [formGroup]="rootFormGroup" (ngSubmit)="onSubmit()" class="full-width netgrif-input netgrif-input-fix">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">account_circle</mat-icon>
-            <mat-form-field fxFlex="100">
+            <mat-form-field fxFlex="100" appearance="outline">
                 <input matInput placeholder="{{ 'forms.login.login' | translate}}" formControlName="login" minlength="4"
                        required autocomplete="username">
                 <mat-error *ngIf="rootFormGroup.controls['login'].hasError('minlength')">
@@ -12,7 +12,7 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <mat-icon color="primary">vpn_key</mat-icon>
-            <mat-form-field fxFlex="100">
+            <mat-form-field fxFlex="100" appearance="outline">
                 <input matInput placeholder="{{ 'forms.login.enterPass' | translate}}"
                        [type]="hidePassword ? 'password' : 'text'"
                        formControlName="password" required autocomplete="current-password">

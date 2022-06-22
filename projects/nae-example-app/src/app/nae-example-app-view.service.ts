@@ -36,6 +36,7 @@ import { TitleConfigComponent } from './doc/demo-title-config/title-config.compo
 import { ExampleRedirectComponent } from './doc/redirect/example-redirect.component';
 import { ActiveGroupComponent } from './doc/active-group/active-group.component';
 import { WrapperEmptyViewComponent } from './views/wrapper/wrapper-empty-view.component';
+import {DoubleDrawerExampleComponent} from './doc/double-drawer-example/double-drawer-example.component';
 
 @Injectable({
     providedIn: 'root'
@@ -69,6 +70,7 @@ export class NaeExampleAppViewService extends ViewService {
             {id: 'HeadersComponent', class: HeadersComponent},
             {id: 'RailExampleComponent', class: RailExampleComponent},
             {id: 'DrawerExampleComponent', class: DrawerExampleComponent},
+            {id: 'DoubleDrawerExampleComponent', class: DoubleDrawerExampleComponent},
             {id: 'RegisterFormComponent', class: RegisterFormComponent},
             {id: 'PasswordFormComponent', class: PasswordFormComponent},
             {id: 'LoginFormComponent', class: LoginFormComponent},

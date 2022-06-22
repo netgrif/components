@@ -1,19 +1,19 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="full-height full-width padding-default">
 
-    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="44" class="full-height">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="47" class="full-height">
         <ng-container *ngIf="users.users$ | async as users_">
 
-            <mat-toolbar color="primary" class="height-96">
+            <mat-toolbar color="primary" class="min-height-72">
                 <span matTooltip="{{users_.length}}/{{users.totalUsers}}">
                     {{'admin.user-list.listTitle' | translate}}
                 </span>
                 <div fxFlex="5"></div>
 
-                <div fxLayout="row" fxLayoutAlign="start center">
+                <div fxLayout="row" fxLayoutAlign="start center" class="netgrif-input netgrif-input-fix netgrif-input-primary-fix netgrif-input-search-fix">
                     <mat-icon fxFlex class="search-icon">search</mat-icon>
-                    <mat-form-field fxFlex="100" class="user-assign-search" color="primary">
-                        <input matInput placeholder="{{ 'side-menu.user.choose' | translate }}"
-                               [formControl]="searchUserControl">
+                    <mat-form-field fxFlex="100" class="user-assign-search" color="primary" appearance="outline">
+                        <mat-label>{{ 'side-menu.user.choose' | translate }}</mat-label>
+                        <input matInput [formControl]="searchUserControl">
                         <button mat-button *ngIf="searchUserControl.value" matSuffix mat-icon-button
                                 (click)="searchUserControl.setValue('')">
                             <mat-icon>close</mat-icon>
@@ -64,11 +64,11 @@
         </ng-container>
     </div>
 
-    <div fxFlex="6"></div>
+    <div fxFlex="3"></div>
 
     <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50" class="full-height">
 
-        <mat-toolbar color="primary" class="height-96">
+        <mat-toolbar color="primary" class="min-height-72">
             <span>{{'admin.process-list.listTitle' | translate}}</span>
             <span style="flex: 1 1 auto;"></span>
             <mat-spinner *ngIf="users.updating$ | async" color="accent" diameter="30"></mat-spinner>

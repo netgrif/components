@@ -14,7 +14,7 @@
     background: transparent;
 }
 
-.form-input {
+.form-input-interfield {
     background: transparent;
     color: #333333;
     outline: none;
@@ -25,10 +25,10 @@
     border-radius: 6px;
     min-width: 5px;
     box-sizing: border-box;
-    height: 52px;
+    height: 48px;
 }
 
-.form-input:hover {
+.form-input-interfield:hover {
     border: solid 2px black;
 }
 
@@ -120,4 +120,9 @@
     width: fit-content;
     padding: 0 0.5em;
     height: 0;
+}
+
+.form-input-disabled:hover {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    border-width: 1px;
 }

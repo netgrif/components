@@ -6,7 +6,7 @@
 
 <ng-template #boolean let-showLargeLayout="showLargeLayout">
     <div>
-        <mat-label *ngIf="!showLargeLayout.value">{{dataField.title}}
+        <mat-label class="netgrif-label" *ngIf="!showLargeLayout.value">{{dataField.title}}
             <nc-required-label *ngIf="dataField.behavior.required" [isIn]="true"></nc-required-label>
             <br></mat-label>
         <mat-slide-toggle color="primary" [formControl]="formControl">
