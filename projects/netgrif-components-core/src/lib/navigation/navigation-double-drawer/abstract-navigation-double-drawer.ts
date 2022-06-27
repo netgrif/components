@@ -127,20 +127,41 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
+    /**
+     * On back click, the parent is set to parent of left nodes, that will solve
+     * the right side menu (elements that were in left side, after backward
+     * navigation will be on the right side).
+     * Current level is set to a lower number in order to set the left side menu.
+     * */
     onBackClick(): void {
         this._uriService.$currentParent.next(this._leftNodes[0].parentId);
         this._uriService.$currentLevel.next(this._uriService.$currentLevel.value - 1);
     }
 
+    /**
+     * The function calls the UriService.resolveRightNodes(parentID: string)
+     * function in order to load all nodes by parent ID.
+     * @param nodeId the ID of node that was clicked
+     * */
     onLeftSideClick(nodeId: string): void {
         this._uriService.resolveRightNodes(nodeId);
     }
 
+    /**
+     * The function increases the level to load right side nodes into left side
+     * and calls the UriService.resolveRightNodes(parentID: string) function
+     * to load all nodes by parent ID.
+     * @param nodeId the ID of node that was clicked
+     * */
     onRightSideClick(nodeId: string): void {
         this._uriService.$currentLevel.next(this._uriService.$currentLevel.value + 1)
-        this.onLeftSideClick(nodeId);
+        this._uriService.resolveRightNodes(nodeId);
     }
 
+    /**
+     * Function to check whether the back button should be displayed
+     * @returns boolean if the back button should be displayed
+     * */
     isOnZeroLevel(): boolean {
         return this._uriService.$currentLevel.value > 0;
     }

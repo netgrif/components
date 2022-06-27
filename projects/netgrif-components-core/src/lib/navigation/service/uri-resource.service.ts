@@ -6,6 +6,9 @@ import { UriNodeResource } from '../model/uri-resource';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+/**
+ * Service for accessing backend resource to resolve URI objects
+ * */
 @Injectable({
     providedIn: 'root'
 })
@@ -13,11 +16,6 @@ export class UriResourceService extends AbstractResourceService {
 
     constructor(provider: ResourceProvider, configService: ConfigurationService) {
         super('user', provider, configService);
-    }
-
-    public getRoots(): Observable<Array<UriNodeResource>> {
-        return this._resourceProvider.get$('uri/roots', this.SERVER_URL).pipe(
-            map(r => this.changeType(r, 'uriNodes')));
     }
 
     public getByLevel(level: number): Observable<Array<UriNodeResource>> {

@@ -5,7 +5,9 @@ import { UriResourceService } from './uri-resource.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { UriNodeResource } from '../model/uri-resource';
 
-
+/**
+ * Service for managing URIs
+ * */
 @Injectable({
     providedIn: 'root'
 })
@@ -17,6 +19,9 @@ export class UriService implements OnDestroy {
     private readonly _leftNodes: BehaviorSubject<Array<UriNodeResource>>
     private readonly _rightNodes: BehaviorSubject<Array<UriNodeResource>>
 
+    /**
+     * The path, name for the root URI
+     * */
     private readonly rootUri: string = 'root';
 
     /**
@@ -38,10 +43,18 @@ export class UriService implements OnDestroy {
         this._leftNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
         this._rightNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
 
+        /**
+         * If current level is set by click to URI element on the right menu,
+         * the new elements has to be loaded into left side.
+         * */
         this.currentLevel.subscribe(value => {
             this.resolveLeftNodes(value);
         });
 
+        /**
+         * If the parent is set by click for backward navigation button on the left menu,
+         * the new elements has to be loaded into right side.
+         * */
         this.currentParent.subscribe(value => {
             this.resolveRightNodes(value);
         });
@@ -49,6 +62,7 @@ export class UriService implements OnDestroy {
 
     public ngOnDestroy() {
         this.currentLevel.complete();
+        this.currentParent.complete();
         this.leftNodesSubscription.unsubscribe();
     }
 
@@ -70,7 +84,7 @@ export class UriService implements OnDestroy {
 
     public resolveRightNodes(parentId: string): void {
         this.rightNodesSubscription = this._resourceService.getNodesByParent(parentId).subscribe(nodes => {
-            this._rightNodes.next(nodes);
+            this.rightNodes.next(nodes);
         });
     }
 
