@@ -14,26 +14,27 @@ export class UriService implements OnDestroy {
     private leftNodesSubscription: Subscription;
     private rightNodesSubscription: Subscription;
 
-    private _leftNodes: BehaviorSubject<Array<UriNodeResource>>
-    private _rightNodes: BehaviorSubject<Array<UriNodeResource>>
+    private readonly _leftNodes: BehaviorSubject<Array<UriNodeResource>>
+    private readonly _rightNodes: BehaviorSubject<Array<UriNodeResource>>
 
+    private readonly rootUri: string = 'root';
 
     /**
      * Current level of nodes in _leftNodes
      * */
-    private currentLevel: BehaviorSubject<number>;
+    private readonly currentLevel: BehaviorSubject<number>;
 
     /**
      * Parents of nodes in _leftNodes
      * */
-    private currentParent: BehaviorSubject<string>
+    private readonly currentParent: BehaviorSubject<string>
 
     constructor(protected _logger: LoggerService,
                 protected _route: ActivatedRoute,
                 protected _router: Router,
                 protected _resourceService: UriResourceService) {
         this.currentLevel = new BehaviorSubject<number>(0);
-        this.currentParent = new BehaviorSubject<string>('');
+        this.currentParent = new BehaviorSubject<string>(this.rootUri);
         this._leftNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
         this._rightNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
 
