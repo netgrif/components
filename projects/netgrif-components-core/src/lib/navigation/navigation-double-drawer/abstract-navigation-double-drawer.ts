@@ -7,6 +7,7 @@ import {UserService} from '../../user/services/user.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import { UriService } from '../service/uri.service';
+import { UriNodeResource } from '../model/uri-resource';
 
 export interface ConfigDoubleMenu {
     mode: string;
@@ -25,7 +26,11 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() imageRouterLink: string;
     @Input() imageAlt: string = "Icon";
     @Input() image: string;
+    _leftNodes: Array<UriNodeResource>;
+    _rightNodes: Array<UriNodeResource>;
 
+    protected _leftNodesSubscription: Subscription;
+    protected _rightNodesSubscription: Subscription;
     protected _breakpointSubsc: Subscription;
 
     protected _configMenu: ConfigDoubleMenu = {
@@ -46,9 +51,17 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
                 protected _uriService: UriService) {
+        this._leftNodes = new Array<UriNodeResource>();
+        this._rightNodes = new Array<UriNodeResource>();
     }
 
     ngOnInit(): void {
+        this._leftNodesSubscription = this._uriService.leftNodes.subscribe(nodes => {
+            this._leftNodes = nodes instanceof Array ? nodes : [];
+        });
+        this._rightNodesSubscription = this._uriService.rightNodes.subscribe(nodes => {
+            this._rightNodes = nodes instanceof Array ? nodes : [];
+        });
         this._breakpointSubsc = this._breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe(() => {
             if (this._breakpoint.isMatched('(max-width: 959.99px)')) {
                 this.resolveLayout(false);
@@ -56,10 +69,14 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.resolveLayout(true);
             }
         });
+
+        this._uriService.$currentLevel.next(1);
     }
 
     ngOnDestroy(): void {
         this._breakpointSubsc.unsubscribe();
+        this._leftNodesSubscription.unsubscribe();
+        this._rightNodesSubscription.unsubscribe();
     }
 
     get configMenu() {
@@ -108,6 +125,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this._router.navigate([redirectPath]);
             }
         });
+    }
+
+    onNodeClick(nodeId: string): void {
+        this._uriService.resolveRightNodes(nodeId);
+    }
+
+    onRightSideClick(nodeId: string): void {
+        this._leftNodes = this._rightNodes;
+        this.onNodeClick(nodeId);
     }
 
 }

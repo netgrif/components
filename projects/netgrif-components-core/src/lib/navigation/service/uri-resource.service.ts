@@ -19,4 +19,14 @@ export class UriResourceService extends AbstractResourceService {
         return this._resourceProvider.get$('uri/roots', this.SERVER_URL).pipe(
             map(r => this.changeType(r, 'uriNodes')));
     }
+
+    public getByLevel(level: number): Observable<Array<UriNodeResource>> {
+        return this._resourceProvider.get$('uri/level/' + level, this.SERVER_URL).pipe(
+            map(r => this.changeType(r, 'uriNodes')));
+    }
+
+    public getNodesByParent(parentId: string): Observable<Array<UriNodeResource>> {
+        return this._resourceProvider.get$('uri/parent/' + parentId, this.SERVER_URL).pipe(
+            map(r => this.changeType(r, 'uriNodes')));
+    }
 }

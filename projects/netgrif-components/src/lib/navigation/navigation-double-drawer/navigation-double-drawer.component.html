@@ -70,24 +70,18 @@
 </mat-sidenav-container>
 
 <ng-template #defaultRightSide>
-    <div ngClass.gt-sm="padding-top-65">
-        <div class="tree-node" fxLayoutAlign="start center" routerLink="/workflow-view"
-             routerLinkActive="active">
+    <div *ngFor='let node of _rightNodes' ngClass.gt-sm="padding-top-65" (click)='onRightSideClick(node.id)'>
+        <div class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
             <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
-            <span class="span">Workflow</span>
-        </div>
-        <div class="tree-node" fxLayoutAlign="start center" routerLink="/drawer-double"
-             routerLinkActive="active">
-            <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
-            <span class="span">Double drawer</span>
+            <span class="span">{{node.name}}</span>
         </div>
     </div>
 </ng-template>
 
 <ng-template #defaultLeftSide>
-    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"
-         routerLink="/workflow-view" routerLinkActive="active-rail">
-        <mat-icon class="icon-large" matTooltip="Konzola">settings
+    <div *ngFor='let node of _leftNodes' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
+         routerLinkActive="active-rail" (click)='onNodeClick(node.id)'>
+        <mat-icon class="icon-large" [matTooltip]="node.name">settings
         </mat-icon>
     </div>
 </ng-template>
