@@ -127,13 +127,22 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
     }
 
-    onNodeClick(nodeId: string): void {
+    onBackClick(): void {
+        this._uriService.$currentParent.next(this._leftNodes[0].parentId);
+        this._uriService.$currentLevel.next(this._uriService.$currentLevel.value - 1);
+    }
+
+    onLeftSideClick(nodeId: string): void {
         this._uriService.resolveRightNodes(nodeId);
     }
 
     onRightSideClick(nodeId: string): void {
-        this._leftNodes = this._rightNodes;
-        this.onNodeClick(nodeId);
+        this._uriService.$currentLevel.next(this._uriService.$currentLevel.value + 1)
+        this.onLeftSideClick(nodeId);
+    }
+
+    isOnZeroLevel(): boolean {
+        return this._uriService.$currentLevel.value > 0;
     }
 
 }

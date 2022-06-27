@@ -17,20 +17,32 @@ export class UriService implements OnDestroy {
     private _leftNodes: BehaviorSubject<Array<UriNodeResource>>
     private _rightNodes: BehaviorSubject<Array<UriNodeResource>>
 
+
+    /**
+     * Current level of nodes in _leftNodes
+     * */
     private currentLevel: BehaviorSubject<number>;
+
+    /**
+     * Parents of nodes in _leftNodes
+     * */
+    private currentParent: BehaviorSubject<string>
 
     constructor(protected _logger: LoggerService,
                 protected _route: ActivatedRoute,
                 protected _router: Router,
                 protected _resourceService: UriResourceService) {
         this.currentLevel = new BehaviorSubject<number>(0);
+        this.currentParent = new BehaviorSubject<string>('');
         this._leftNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
         this._rightNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
 
         this.currentLevel.subscribe(value => {
-            this.leftNodesSubscription = this._resourceService.getByLevel(value).subscribe(res => {
-                this._leftNodes.next(res);
-            });
+            this.resolveLeftNodes(value);
+        });
+
+        this.currentParent.subscribe(value => {
+            this.resolveRightNodes(value);
         });
     }
 
@@ -41,6 +53,10 @@ export class UriService implements OnDestroy {
 
     public get $currentLevel(): BehaviorSubject<number> {
         return this.currentLevel;
+    }
+
+    public get $currentParent(): BehaviorSubject<string> {
+        return this.currentParent;
     }
 
     public get leftNodes(): BehaviorSubject<Array<UriNodeResource>> {
@@ -54,6 +70,12 @@ export class UriService implements OnDestroy {
     public resolveRightNodes(parentId: string): void {
         this.rightNodesSubscription = this._resourceService.getNodesByParent(parentId).subscribe(nodes => {
             this._rightNodes.next(nodes);
+        });
+    }
+
+    public resolveLeftNodes(level: number): void {
+        this.leftNodesSubscription = this._resourceService.getByLevel(level).subscribe(nodes => {
+            this.leftNodes.next(nodes);
         });
     }
 }

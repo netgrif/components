@@ -70,8 +70,8 @@
 </mat-sidenav-container>
 
 <ng-template #defaultRightSide>
-    <div *ngFor='let node of _rightNodes' ngClass.gt-sm="padding-top-65" (click)='onRightSideClick(node.id)'>
-        <div class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
+    <div ngClass.gt-sm="padding-top-65">
+        <div *ngFor='let node of _rightNodes' (click)="onRightSideClick(node.id)" class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
             <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
             <span class="span">{{node.name}}</span>
         </div>
@@ -79,8 +79,12 @@
 </ng-template>
 
 <ng-template #defaultLeftSide>
+    <div *ngIf='isOnZeroLevel()' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
+         (click)='onBackClick()'>
+        <mat-icon class="icon-large" [matTooltip]="'Back'">arrow_back</mat-icon>
+    </div>
     <div *ngFor='let node of _leftNodes' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
-         routerLinkActive="active-rail" (click)='onNodeClick(node.id)'>
+         (click)='onLeftSideClick(node.id)'>
         <mat-icon class="icon-large" [matTooltip]="node.name">settings
         </mat-icon>
     </div>
