@@ -26,7 +26,7 @@
 
         <div fxLayout="column" class="rail-color" fxFlex>
 
-            <div *ngTemplateOutlet="portalLeftMenu"></div>
+            <div *ngTemplateOutlet="portalLeftMenu || defaultLeftSide"></div>
 
             <div fxFlex></div>
 
@@ -58,7 +58,7 @@
                          [disableClose]="configMenu2.disableClose"
                          class="drawer-content mat-elevation-z8">
 
-                <div *ngTemplateOutlet="portalRightMenu"></div>
+                <div *ngTemplateOutlet="portalRightMenu || defaultRightSide"></div>
 
             </mat-sidenav>
 
@@ -68,3 +68,26 @@
         </mat-sidenav-container>
     </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-template #defaultRightSide>
+    <div ngClass.gt-sm="padding-top-65">
+        <div class="tree-node" fxLayoutAlign="start center" routerLink="/workflow-view"
+             routerLinkActive="active">
+            <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
+            <span class="span">Workflow</span>
+        </div>
+        <div class="tree-node" fxLayoutAlign="start center" routerLink="/drawer-double"
+             routerLinkActive="active">
+            <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
+            <span class="span">Double drawer</span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #defaultLeftSide>
+    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"
+         routerLink="/workflow-view" routerLinkActive="active-rail">
+        <mat-icon class="icon-large" matTooltip="Konzola">settings
+        </mat-icon>
+    </div>
+</ng-template>

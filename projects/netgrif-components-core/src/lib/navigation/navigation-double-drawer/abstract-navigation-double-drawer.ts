@@ -6,6 +6,7 @@ import {LanguageService} from '../../translate/language.service';
 import {UserService} from '../../user/services/user.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
+import { UriService } from '../service/uri.service';
 
 export interface ConfigDoubleMenu {
     mode: string;
@@ -43,7 +44,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 protected _languageService: LanguageService,
                 protected _userService: UserService,
                 protected _log: LoggerService,
-                protected _config: ConfigurationService) {
+                protected _config: ConfigurationService,
+                protected _uriService: UriService) {
     }
 
     ngOnInit(): void {
