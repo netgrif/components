@@ -18,6 +18,11 @@ export class UriResourceService extends AbstractResourceService {
         super('user', provider, configService);
     }
 
+    public getRoot(): Observable<UriNodeResource> {
+        return this._resourceProvider.get$('uri/root', this.SERVER_URL).pipe(
+            map(r => this.changeType(r, 'uriNode')));
+    }
+
     public getByLevel(level: number): Observable<Array<UriNodeResource>> {
         return this._resourceProvider.get$('uri/level/' + level, this.SERVER_URL).pipe(
             map(r => this.changeType(r, 'uriNodes')));

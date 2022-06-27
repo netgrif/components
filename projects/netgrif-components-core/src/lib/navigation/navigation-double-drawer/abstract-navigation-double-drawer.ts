@@ -128,6 +128,15 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     }
 
     /**
+     * On home click, the current level is set to 0, and current parent is
+     * set to root node.
+     * */
+    onHomeClick(): void {
+        this._uriService.$currentLevel.next(0);
+        this._uriService.resetToRoot();
+    }
+
+    /**
      * On back click, the parent is set to parent of left nodes, that will solve
      * the right side menu (elements that were in left side, after backward
      * navigation will be on the right side).
@@ -163,7 +172,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * @returns boolean if the back button should be displayed
      * */
     isOnZeroLevel(): boolean {
-        return this._uriService.$currentLevel.value > 0;
+        return this._uriService.$currentLevel.value == 0;
     }
 
 }

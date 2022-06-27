@@ -79,10 +79,15 @@
 </ng-template>
 
 <ng-template #defaultLeftSide>
-    <div *ngIf='isOnZeroLevel()' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
+    <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"
+         (click)='onHomeClick()'>
+        <mat-icon class="icon-large" [matTooltip]="'Home'">home</mat-icon>
+    </div>
+    <div *ngIf='!isOnZeroLevel()' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
          (click)='onBackClick()'>
         <mat-icon class="icon-large" [matTooltip]="'Back'">arrow_back</mat-icon>
     </div>
+    <mat-divider></mat-divider>
     <div *ngFor='let node of _leftNodes' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
          (click)='onLeftSideClick(node.id)'>
         <mat-icon class="icon-large" [matTooltip]="node.name">settings
