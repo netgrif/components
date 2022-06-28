@@ -69,8 +69,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 this.resolveLayout(true);
             }
         });
-
-        this._uriService.$currentLevel.next(1);
     }
 
     ngOnDestroy(): void {
@@ -132,7 +130,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * set to root node.
      * */
     onHomeClick(): void {
-        this._uriService.$currentLevel.next(0);
         this._uriService.resetToRoot();
     }
 
@@ -143,28 +140,34 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * Current level is set to a lower number in order to set the left side menu.
      * */
     onBackClick(): void {
-        this._uriService.$currentParent.next(this._leftNodes[0].parentId);
-        this._uriService.$currentLevel.next(this._uriService.$currentLevel.value - 1);
+        const leftParent = this._uriService.$backStack.pop();
+        this._uriService.decLevel();
+        this._uriService.$rightParent.next(this._uriService.$leftParent.value);
+        this._uriService.$leftParent.next(leftParent);
     }
 
     /**
      * The function calls the UriService.resolveRightNodes(parentID: string)
      * function in order to load all nodes by parent ID.
-     * @param nodeId the ID of node that was clicked
+     * @param node the object of node that was clicked
      * */
-    onLeftSideClick(nodeId: string): void {
-        this._uriService.resolveRightNodes(nodeId);
+    onLeftSideClick(node: UriNodeResource): void {
+        this._uriService.$backStack.pop();
+        this._uriService.$backStack.push(node.id);
+        this._uriService.$rightParent.next(node.id);
     }
 
     /**
      * The function increases the level to load right side nodes into left side
      * and calls the UriService.resolveRightNodes(parentID: string) function
      * to load all nodes by parent ID.
-     * @param nodeId the ID of node that was clicked
+     * @param node the object of node that was clicked
      * */
-    onRightSideClick(nodeId: string): void {
-        this._uriService.$currentLevel.next(this._uriService.$currentLevel.value + 1)
-        this._uriService.resolveRightNodes(nodeId);
+    onRightSideClick(node: UriNodeResource): void {
+        this._uriService.$backStack.push(this._uriService.$leftParent.value);
+        this._uriService.incLevel();
+        this._uriService.$leftParent.next(node.parentId);
+        this._uriService.$rightParent.next(node.id);
     }
 
     /**
@@ -172,7 +175,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * @returns boolean if the back button should be displayed
      * */
     isOnZeroLevel(): boolean {
-        return this._uriService.$currentLevel.value == 0;
+        return this._uriService.$currentLevel == 0;
     }
 
 }

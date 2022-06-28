@@ -71,7 +71,7 @@
 
 <ng-template #defaultRightSide>
     <div ngClass.gt-sm="padding-top-65">
-        <div *ngFor='let node of _rightNodes' (click)="onRightSideClick(node.id)" class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
+        <div *ngFor='let node of _rightNodes' (click)="onRightSideClick(node)" class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
             <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
             <span class="span">{{node.name}}</span>
         </div>
@@ -89,7 +89,7 @@
     </div>
     <mat-divider></mat-divider>
     <div *ngFor='let node of _leftNodes' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
-         (click)='onLeftSideClick(node.id)'>
+         (click)='onLeftSideClick(node)'>
         <mat-icon class="icon-large" [matTooltip]="node.name">settings
         </mat-icon>
     </div>

@@ -23,56 +23,84 @@ export class UriService implements OnDestroy {
     /**
      * Current level of nodes in _leftNodes
      * */
-    private readonly currentLevel: BehaviorSubject<number>;
+    private currentLevel: number;
 
     /**
      * Parents of nodes in _leftNodes
      * */
-    private readonly currentParent: BehaviorSubject<string>
+    private readonly leftParent: BehaviorSubject<string>
+
+    /**
+     * Parents of nodes in _rightNodes
+     * */
+    private readonly rightParent: BehaviorSubject<string>
+
+    /**
+     * Stack of parent nodes that will be loaded into leftNodes when backward navigation
+     * is triggered.
+     * On each right menu click the parent of left nodes will be saved to this, and
+     * on each backward navigation the last element will be popped out and used
+     * as parent ID for left side menu.
+     * */
+    private backStack: string[];
 
     constructor(protected _logger: LoggerService,
                 protected _route: ActivatedRoute,
                 protected _router: Router,
                 protected _resourceService: UriResourceService) {
-        this.currentLevel = new BehaviorSubject<number>(undefined);
-        this.currentParent = new BehaviorSubject<string>(undefined);
+        this.currentLevel = 0;
+        this.backStack = [];
+        this.leftParent = new BehaviorSubject<string>(undefined);
+        this.rightParent = new BehaviorSubject<string>(undefined);
         this._leftNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
         this._rightNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
         this.loadRoot();
 
         /**
-         * If current level is set by click to URI element on the right menu,
-         * the new elements has to be loaded into left side.
+         * Left parent is responsible for loading left nodes at init and backward
+         * navigation
          * */
-        this.currentLevel.subscribe(value => {
-            if (!!value)
-                this.resolveLeftNodes(value);
+        this.leftParent.subscribe(value => {
+            this.resolveLeftNodes(value);
         });
 
         /**
-         * If the parent is set by click for backward navigation button on the left menu,
-         * the new elements has to be loaded into right side.
+         * Right parent is responsible for loading right nodes at right node click
+         * and backward navigation
          * */
-        this.currentParent.subscribe(value => {
-            if (!!value)
+        this.rightParent.subscribe(value => {
+            if (!!value) {
                 this.resolveRightNodes(value);
+            }
         });
     }
 
     public ngOnDestroy() {
-        this.currentLevel.complete();
-        this.currentParent.complete();
+        this.leftParent.complete();
+        this.rightParent.complete();
         this._rightNodes.complete();
         this._leftNodes.complete();
         this.leftNodesSubscription.unsubscribe();
     }
 
-    public get $currentLevel(): BehaviorSubject<number> {
+    public get $currentLevel(): number {
         return this.currentLevel;
     }
 
-    public get $currentParent(): BehaviorSubject<string> {
-        return this.currentParent;
+    public get $backStack(): string[] {
+        return this.backStack;
+    }
+
+    public set $backStack(backStack: string[]) {
+        this.backStack = backStack;
+    }
+
+    public get $leftParent(): BehaviorSubject<string> {
+        return this.leftParent;
+    }
+
+    public get $rightParent(): BehaviorSubject<string> {
+        return this.rightParent;
     }
 
     public get leftNodes(): BehaviorSubject<Array<UriNodeResource>> {
@@ -81,6 +109,18 @@ export class UriService implements OnDestroy {
 
     public get rightNodes(): BehaviorSubject<Array<UriNodeResource>> {
         return this._rightNodes;
+    }
+
+    public incLevel(): void {
+        this.currentLevel++;
+    }
+
+    public decLevel(): void {
+        this.currentLevel--;
+    }
+
+    public zeroLevel(): void {
+        this.currentLevel = 0;
     }
 
     /**
@@ -95,11 +135,14 @@ export class UriService implements OnDestroy {
 
     /**
      * Parent nodes (left panel) are loaded by level number
-     * @param level the nodes are searched by
+     * @param parentId to be filtered by
      * */
-    public resolveLeftNodes(level: number): void {
-        this.leftNodesSubscription = this._resourceService.getByLevel(level).subscribe(nodes => {
-            this.leftNodes.next(nodes);
+    public resolveLeftNodes(parentId?: string): void {
+        this.leftNodesSubscription = this._resourceService.getByLevel(this.currentLevel).subscribe(nodes => {
+            if (!!parentId)
+                this.leftNodes.next(nodes.filter(n => n.parentId === parentId));
+            else
+                this.leftNodes.next(nodes);
         });
     }
 
@@ -107,8 +150,10 @@ export class UriService implements OnDestroy {
      * Resets parent ID when home button is clicked
      * */
     public resetToRoot(): void {
-        this.currentParent.next(this.rootNode.id);
-
+        this.zeroLevel();
+        this.leftParent.next(undefined);
+        this.rightParent.next(this.rootNode.id)
+        this.$backStack = [];
     }
 
     /**
@@ -118,7 +163,8 @@ export class UriService implements OnDestroy {
         this._resourceService.getRoot().subscribe(node => {
             if (!!node) {
                 this.rootNode = node;
-                this.currentParent.next(node.parentId);
+                this.leftParent.next(undefined);
+                this.rightParent.next(node.id);
             }
         })
     }
