@@ -149,3 +149,20 @@
 .sidemenu-icon {
     line-height: unset !important;
 }
+.container {
+    width: 95%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.line {
+    flex: 1;
+}
+
+.text {
+    padding-left: 10px;
+    padding-right: 10px;
+}

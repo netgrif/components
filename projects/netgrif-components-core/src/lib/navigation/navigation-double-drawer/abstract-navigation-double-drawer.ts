@@ -178,4 +178,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         return this._uriService.$currentLevel == 0;
     }
 
+    isLeftNodesEmpty(): boolean {
+        return !this._leftNodes || this._leftNodes.length === 0;
+    }
+
+    isRightNodesEmpty(): boolean {
+        return !this._rightNodes || this._rightNodes.length === 0;
+    }
+
+    isRightParent(nodeId: string): boolean {
+        return this._uriService.$rightParent.value === nodeId;
+    }
+
 }

@@ -71,9 +71,20 @@
 
 <ng-template #defaultRightSide>
     <div ngClass.gt-sm="padding-top-65">
+        <div class="container" *ngIf='!isRightNodesEmpty()'>
+            <div class="line"><mat-divider></mat-divider></div>
+            <div class="text mat-typography"> Folders </div>
+            <div class="line"><mat-divider></mat-divider></div>
+        </div>
         <div *ngFor='let node of _rightNodes' (click)="onRightSideClick(node)" class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
-            <mat-icon class="tree-node-icon">miscellaneous_services</mat-icon>
+            <mat-icon class="tree-node-icon">folder</mat-icon>
             <span class="span">{{node.name}}</span>
+        </div>
+
+        <div class="container">
+            <div class="line"><mat-divider></mat-divider></div>
+            <div class="text mat-typography"> Processes </div>
+            <div class="line"><mat-divider></mat-divider></div>
         </div>
     </div>
 </ng-template>
@@ -81,16 +92,15 @@
 <ng-template #defaultLeftSide>
     <div fxLayout="row" class="icon-container" fxLayoutAlign="center center"
          (click)='onHomeClick()'>
-        <mat-icon class="icon-large" [matTooltip]="'Home'">home</mat-icon>
+        <mat-icon class="icon-large" [matTooltip]="'Home'" [matTooltipPosition]="'right'">home</mat-icon>
     </div>
     <div *ngIf='!isOnZeroLevel()' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
          (click)='onBackClick()'>
-        <mat-icon class="icon-large" [matTooltip]="'Back'">arrow_back</mat-icon>
+        <mat-icon class="icon-large" [matTooltip]="'Back'" [matTooltipPosition]="'right'">arrow_back</mat-icon>
     </div>
     <mat-divider></mat-divider>
     <div *ngFor='let node of _leftNodes' fxLayout="row" class="icon-container" fxLayoutAlign="center center"
          (click)='onLeftSideClick(node)'>
-        <mat-icon class="icon-large" [matTooltip]="node.name">settings
-        </mat-icon>
+        <mat-icon class="icon-large" [matTooltip]="node.name" [matTooltipPosition]="'right'">{{isRightParent(node.id) ? 'folder_open' : 'folder'}}</mat-icon>
     </div>
 </ng-template>

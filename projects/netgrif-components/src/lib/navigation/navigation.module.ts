@@ -40,6 +40,7 @@ import {PanelComponentModule} from '../panel/panel.module';
 import {TabsComponentModule} from '../tabs/tabs.module';
 import {CaseViewComponentModule} from '../view/case-view/case-view.module';
 import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navigation-double-drawer.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -54,23 +55,24 @@ import { NavigationDoubleDrawerComponent } from './navigation-double-drawer/navi
         DefaultTabViewComponent,
         NavigationDoubleDrawerComponent
     ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        MaterialModule,
-        FlexModule,
-        FlexLayoutModule,
-        QuickPanelComponentModule,
-        TranslateLibModule,
-        UserComponentModule,
-        ResizableModule,
-        MatProgressSpinnerModule,
-        SearchComponentModule,
-        HeaderComponentModule,
-        PanelComponentModule,
-        TabsComponentModule,
-        CaseViewComponentModule,
-    ],
+	imports: [
+		CommonModule,
+		RouterModule,
+		MaterialModule,
+		FlexModule,
+		FlexLayoutModule,
+		QuickPanelComponentModule,
+		TranslateLibModule,
+		UserComponentModule,
+		ResizableModule,
+		MatProgressSpinnerModule,
+		SearchComponentModule,
+		HeaderComponentModule,
+		PanelComponentModule,
+		TabsComponentModule,
+		CaseViewComponentModule,
+		MatDividerModule
+	],
     exports: [
         NavigationDrawerComponent,
         NavigationDoubleDrawerComponent,
