@@ -81,10 +81,14 @@
             <span class="span">{{node.name}}</span>
         </div>
 
-        <div class="container">
+        <div class="container" *ngIf='!isFiltersEmpty()'>
             <div class="line"><mat-divider></mat-divider></div>
-            <div class="text mat-typography"> Processes </div>
+            <div class="text mat-typography"> Filters </div>
             <div class="line"><mat-divider></mat-divider></div>
+        </div>
+        <div *ngFor='let filter of _filters' class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
+            <mat-icon class="tree-node-icon">filter_alt</mat-icon>
+            <span class="span">{{filter.title}}</span>
         </div>
     </div>
 </ng-template>

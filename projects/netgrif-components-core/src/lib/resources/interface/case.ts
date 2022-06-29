@@ -42,6 +42,11 @@ export interface Case {
      * **Example:** personal_information
      */
     processIdentifier: string;
+
+    /**
+     * Uri node ID
+     * */
+
     /**
      * **Example:** New instance - Personal information
      */

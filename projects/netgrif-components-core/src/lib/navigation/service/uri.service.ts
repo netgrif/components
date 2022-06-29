@@ -4,6 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UriResourceService } from './uri-resource.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { UriNodeResource } from '../model/uri-resource';
+import { hasContent } from '../../utility/pagination/page-has-content';
+import { Case } from '../../resources/interface/case';
+import { CaseResourceService } from '../../resources/engine-endpoint/case-resource.service';
+import { SimpleFilter } from '../../filter/models/simple-filter';
+import { PetriNetSearchRequest } from '../../filter/models/case-search-request-body';
 
 /**
  * Service for managing URIs
@@ -13,17 +18,34 @@ import { UriNodeResource } from '../model/uri-resource';
 })
 export class UriService implements OnDestroy {
 
-    private leftNodesSubscription: Subscription;
-    private rightNodesSubscription: Subscription;
+    private _leftNodesSubscription: Subscription;
+    private _rightNodesSubscription: Subscription;
+    private _filtersSubscription: Subscription;
 
     private readonly _leftNodes: BehaviorSubject<Array<UriNodeResource>>;
     private readonly _rightNodes: BehaviorSubject<Array<UriNodeResource>>;
+    private readonly _filters: BehaviorSubject<Array<Case>>
     private rootNode: UriNodeResource;
+
+    private readonly FILTER_IDENTIFIERS = [
+        "netgrif/organisation/filters/filter",
+        "netgrif/organisation/filters/export_filters",
+        "netgrif/organisation/filters/import_filters"
+    ];
 
     /**
      * Current level of nodes in _leftNodes
      * */
     private currentLevel: number;
+
+    /**
+     * Stack of parent nodes that will be loaded into leftNodes when backward navigation
+     * is triggered.
+     * On each right menu click the parent of left nodes will be saved to this, and
+     * on each backward navigation the last element will be popped out and used
+     * as parent ID for left side menu.
+     * */
+    private backStack: string[];
 
     /**
      * Parents of nodes in _leftNodes
@@ -35,25 +57,18 @@ export class UriService implements OnDestroy {
      * */
     private readonly rightParent: BehaviorSubject<string>
 
-    /**
-     * Stack of parent nodes that will be loaded into leftNodes when backward navigation
-     * is triggered.
-     * On each right menu click the parent of left nodes will be saved to this, and
-     * on each backward navigation the last element will be popped out and used
-     * as parent ID for left side menu.
-     * */
-    private backStack: string[];
-
     constructor(protected _logger: LoggerService,
                 protected _route: ActivatedRoute,
                 protected _router: Router,
-                protected _resourceService: UriResourceService) {
+                protected _resourceService: UriResourceService,
+                protected _caseResourceService: CaseResourceService) {
         this.currentLevel = 0;
         this.backStack = [];
         this.leftParent = new BehaviorSubject<string>(undefined);
         this.rightParent = new BehaviorSubject<string>(undefined);
         this._leftNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
         this._rightNodes = new BehaviorSubject<Array<UriNodeResource>>([]);
+        this._filters = new BehaviorSubject<Array<Case>>([]);
         this.loadRoot();
 
         /**
@@ -80,7 +95,9 @@ export class UriService implements OnDestroy {
         this.rightParent.complete();
         this._rightNodes.complete();
         this._leftNodes.complete();
-        this.leftNodesSubscription.unsubscribe();
+        this._leftNodesSubscription.unsubscribe();
+        this._rightNodesSubscription.unsubscribe();
+        this._filtersSubscription.unsubscribe();
     }
 
     public get $currentLevel(): number {
@@ -111,6 +128,10 @@ export class UriService implements OnDestroy {
         return this._rightNodes;
     }
 
+    public get filters(): BehaviorSubject<Array<Case>> {
+        return this._filters;
+    }
+
     public incLevel(): void {
         this.currentLevel++;
     }
@@ -128,8 +149,21 @@ export class UriService implements OnDestroy {
      * @param parentId the nodes are searched by
      * */
     public resolveRightNodes(parentId: string): void {
-        this.rightNodesSubscription = this._resourceService.getNodesByParent(parentId).subscribe(nodes => {
+        this._rightNodesSubscription = this._resourceService.getNodesByParent(parentId).subscribe(nodes => {
             this.rightNodes.next(nodes);
+        });
+        this._filtersSubscription = this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(
+            {process: this.FILTER_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)), uriNodeId: parentId})
+        ).subscribe(casesPage => {
+            if (hasContent(casesPage)) {
+                const array: Array<Case> = [];
+                casesPage.content.forEach(c => {
+                    array.push(c);
+                });
+                this.filters.next(array);
+            } else {
+                this.filters.next([]);
+            }
         });
     }
 
@@ -138,7 +172,7 @@ export class UriService implements OnDestroy {
      * @param parentId to be filtered by
      * */
     public resolveLeftNodes(parentId?: string): void {
-        this.leftNodesSubscription = this._resourceService.getByLevel(this.currentLevel).subscribe(nodes => {
+        this._leftNodesSubscription = this._resourceService.getByLevel(this.currentLevel).subscribe(nodes => {
             if (!!parentId)
                 this.leftNodes.next(nodes.filter(n => n.parentId === parentId));
             else

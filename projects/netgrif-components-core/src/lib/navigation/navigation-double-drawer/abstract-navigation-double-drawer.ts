@@ -8,6 +8,7 @@ import {LoggerService} from '../../logger/services/logger.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
 import { UriService } from '../service/uri.service';
 import { UriNodeResource } from '../model/uri-resource';
+import { Case } from '../../resources/interface/case';
 
 export interface ConfigDoubleMenu {
     mode: string;
@@ -26,11 +27,25 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
     @Input() imageRouterLink: string;
     @Input() imageAlt: string = "Icon";
     @Input() image: string;
+
+    /**
+     * Array of folder nodes on left side
+     * */
     _leftNodes: Array<UriNodeResource>;
+
+    /**
+     * Array of folder nodes on right side
+     * */
     _rightNodes: Array<UriNodeResource>;
+
+    /**
+     * Processes that can be displayed under folders on right side menu
+     * */
+    _filters: Array<Case>;
 
     protected _leftNodesSubscription: Subscription;
     protected _rightNodesSubscription: Subscription;
+    protected _filtersSubscription: Subscription;
     protected _breakpointSubsc: Subscription;
 
     protected _configMenu: ConfigDoubleMenu = {
@@ -53,6 +68,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 protected _uriService: UriService) {
         this._leftNodes = new Array<UriNodeResource>();
         this._rightNodes = new Array<UriNodeResource>();
+        this._filters = new Array<Case>();
     }
 
     ngOnInit(): void {
@@ -61,6 +77,9 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         });
         this._rightNodesSubscription = this._uriService.rightNodes.subscribe(nodes => {
             this._rightNodes = nodes instanceof Array ? nodes : [];
+        });
+        this._filtersSubscription = this._uriService.filters.subscribe(cases => {
+            this._filters = cases instanceof Array ? cases : [];
         });
         this._breakpointSubsc = this._breakpoint.observe([Breakpoints.HandsetLandscape]).subscribe(() => {
             if (this._breakpoint.isMatched('(max-width: 959.99px)')) {
@@ -75,6 +94,7 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
         this._breakpointSubsc.unsubscribe();
         this._leftNodesSubscription.unsubscribe();
         this._rightNodesSubscription.unsubscribe();
+        this._filtersSubscription.unsubscribe();
     }
 
     get configMenu() {
@@ -152,8 +172,6 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
      * @param node the object of node that was clicked
      * */
     onLeftSideClick(node: UriNodeResource): void {
-        this._uriService.$backStack.pop();
-        this._uriService.$backStack.push(node.id);
         this._uriService.$rightParent.next(node.id);
     }
 
@@ -184,6 +202,10 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     isRightNodesEmpty(): boolean {
         return !this._rightNodes || this._rightNodes.length === 0;
+    }
+
+    isFiltersEmpty(): boolean {
+        return !this._filters || this._filters.length === 0;
     }
 
     isRightParent(nodeId: string): boolean {
