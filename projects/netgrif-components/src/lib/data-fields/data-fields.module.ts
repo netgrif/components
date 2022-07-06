@@ -61,6 +61,9 @@ import { I18nTextFieldComponent } from './i18n-field/i18n-text-field/i18n-text-f
 import { EasymdeWrapperComponent } from './text-field/rich-textarea-field/easymde-wrapper/easymde-wrapper.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {
+    MultichoiceAutocompleteFieldComponent
+} from './multichoice-field/multichoice-autocomplete-field/multichoice-autocomplete-field.component';
 
 @NgModule({
     declarations: [
@@ -78,6 +81,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         MultichoiceFieldComponent,
         MultichoiceSelectFieldComponent,
         MultichoiceListFieldComponent,
+        MultichoiceAutocompleteFieldComponent,
         NumberFieldComponent,
         TextFieldComponent,
         TextareaFieldComponent,
