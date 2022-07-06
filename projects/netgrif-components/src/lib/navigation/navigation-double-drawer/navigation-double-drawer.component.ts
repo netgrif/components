@@ -1,7 +1,15 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {ConfigurationService, LanguageService, UriService, LoggerService, UserService, AbstractNavigationDoubleDrawerComponent} from '@netgrif/components-core';
+import {
+    ConfigurationService,
+    LanguageService,
+    UriService,
+    LoggerService,
+    UserService,
+    AbstractNavigationDoubleDrawerComponent,
+    DynamicNavigationRouteProviderService
+} from '@netgrif/components-core';
 
 @Component({
   selector: 'nc-navigation-double-drawer',
@@ -16,8 +24,10 @@ export class NavigationDoubleDrawerComponent extends AbstractNavigationDoubleDra
                 protected _userService: UserService,
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
-                protected _uriService: UriService) {
-        super(_router, _breakpoint, _languageService, _userService, _log, _config, _uriService)
+                protected _uriService: UriService,
+                protected _dynamicRouteProviderService: DynamicNavigationRouteProviderService) {
+        super(_router, _breakpoint, _languageService, _userService, _log, _config, _uriService,
+            _dynamicRouteProviderService)
     }
 
 }

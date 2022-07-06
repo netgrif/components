@@ -86,7 +86,7 @@
             <div class="text mat-typography"> Filters </div>
             <div class="line"><mat-divider></mat-divider></div>
         </div>
-        <div *ngFor='let filter of _filters' class="tree-node" fxLayoutAlign="start center" routerLinkActive="active">
+        <div *ngFor='let filter of _filters' class="tree-node" fxLayoutAlign="start center" [routerLink]='buildUrl(filter)' routerLinkActive="active">
             <mat-icon class="tree-node-icon">filter_alt</mat-icon>
             <span class="span">{{filter.title}}</span>
         </div>

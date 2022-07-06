@@ -8,7 +8,14 @@ import { hasContent } from '../../utility/pagination/page-has-content';
 import { Case } from '../../resources/interface/case';
 import { CaseResourceService } from '../../resources/engine-endpoint/case-resource.service';
 import { SimpleFilter } from '../../filter/models/simple-filter';
-import { PetriNetSearchRequest } from '../../filter/models/case-search-request-body';
+import { CaseSearchRequestBody, PetriNetSearchRequest } from '../../filter/models/case-search-request-body';
+import { ActiveGroupService } from '../../groups/services/active-group.service';
+import { TaskResourceService } from '../../resources/engine-endpoint/task-resource.service';
+import { strings } from '@angular-devkit/core';
+
+export class UriConstants {
+    public static FILTER_VIEW_TASK_TRANSITION_ID = 'view';
+}
 
 /**
  * Service for managing URIs
@@ -28,9 +35,7 @@ export class UriService implements OnDestroy {
     private rootNode: UriNodeResource;
 
     private readonly FILTER_IDENTIFIERS = [
-        "netgrif/organisation/filters/filter",
-        "netgrif/organisation/filters/export_filters",
-        "netgrif/organisation/filters/import_filters"
+        "preference_filter_item"
     ];
 
     /**
@@ -61,7 +66,8 @@ export class UriService implements OnDestroy {
                 protected _route: ActivatedRoute,
                 protected _router: Router,
                 protected _resourceService: UriResourceService,
-                protected _caseResourceService: CaseResourceService) {
+                protected _caseResourceService: CaseResourceService,
+                protected _activeGroupService: ActiveGroupService) {
         this.currentLevel = 0;
         this.backStack = [];
         this.leftParent = new BehaviorSubject<string>(undefined);
@@ -95,6 +101,7 @@ export class UriService implements OnDestroy {
         this.rightParent.complete();
         this._rightNodes.complete();
         this._leftNodes.complete();
+        this._filters.complete();
         this._leftNodesSubscription.unsubscribe();
         this._rightNodesSubscription.unsubscribe();
         this._filtersSubscription.unsubscribe();
@@ -152,18 +159,28 @@ export class UriService implements OnDestroy {
         this._rightNodesSubscription = this._resourceService.getNodesByParent(parentId).subscribe(nodes => {
             this.rightNodes.next(nodes);
         });
-        this._filtersSubscription = this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(
-            {process: this.FILTER_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)), uriNodeId: parentId})
-        ).subscribe(casesPage => {
-            if (hasContent(casesPage)) {
+
+        const searchBody: CaseSearchRequestBody = {
+            process: this.FILTER_IDENTIFIERS.map(id => ({identifier: id} as PetriNetSearchRequest)),
+            uriNodeId: parentId
+        };
+
+        if (!!this._activeGroupService.activeGroup) {
+            searchBody.data = {};
+            searchBody.data['parentId'] = this._activeGroupService.activeGroup.stringId;
+        }
+
+        this._filtersSubscription = this._caseResourceService.searchCases(SimpleFilter.fromCaseQuery(searchBody))
+            .subscribe(casesPage => {
                 const array: Array<Case> = [];
-                casesPage.content.forEach(c => {
-                    array.push(c);
-                });
-                this.filters.next(array);
-            } else {
-                this.filters.next([]);
-            }
+                if (!!casesPage && hasContent(casesPage)) {
+                    casesPage.content.forEach(c => {
+                        array.push(c);
+                    });
+                    this.filters.next(array);
+                } else {
+                    this.filters.next([]);
+                }
         });
     }
 

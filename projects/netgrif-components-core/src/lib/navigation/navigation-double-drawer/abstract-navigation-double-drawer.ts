@@ -1,14 +1,17 @@
 import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {LanguageService} from '../../translate/language.service';
 import {UserService} from '../../user/services/user.service';
 import {LoggerService} from '../../logger/services/logger.service';
 import {ConfigurationService} from '../../configuration/configuration.service';
-import { UriService } from '../service/uri.service';
+import { UriConstants, UriService } from '../service/uri.service';
 import { UriNodeResource } from '../model/uri-resource';
 import { Case } from '../../resources/interface/case';
+import {
+    DynamicNavigationRouteProviderService
+} from '../../routing/dynamic-navigation-route-provider/dynamic-navigation-route-provider.service';
 
 export interface ConfigDoubleMenu {
     mode: string;
@@ -65,7 +68,8 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
                 protected _userService: UserService,
                 protected _log: LoggerService,
                 protected _config: ConfigurationService,
-                protected _uriService: UriService) {
+                protected _uriService: UriService,
+                protected _dynamicRoutingService: DynamicNavigationRouteProviderService) {
         this._leftNodes = new Array<UriNodeResource>();
         this._rightNodes = new Array<UriNodeResource>();
         this._filters = new Array<Case>();
@@ -210,6 +214,16 @@ export abstract class AbstractNavigationDoubleDrawerComponent implements OnInit,
 
     isRightParent(nodeId: string): boolean {
         return this._uriService.$rightParent.value === nodeId;
+    }
+
+    findFilterTaskId(filterCase: Case): string {
+        return !!filterCase.tasks ? filterCase.tasks.find(taskPair => taskPair.transition === 'view').task : '';
+    }
+
+    buildUrl(filterCase: Case) {
+        const viewTaskId = filterCase.tasks.find(taskPair => taskPair.transition === UriConstants.FILTER_VIEW_TASK_TRANSITION_ID).task;
+        const url = this._dynamicRoutingService.route;
+        return `/${url}/${viewTaskId}`;
     }
 
 }
