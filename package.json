@@ -93,7 +93,7 @@
         "json-schema-to-typescript": "~8.1.0",
         "jszip": "~3.2.2",
         "marked": "~4.0.12",
-        "moment": "~2.24.0",
+        "moment": "~2.29.4",
         "mousetrap": "~1.6.5",
         "natural-orderby": "~2.0.3",
         "ngx-quill": "~16.2.0",
